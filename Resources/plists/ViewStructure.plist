@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Children</key>
+	<array>
+		<dict>
+			<key>Children</key>
+			<array>
+				<dict>
+					<key>Children</key>
+					<array>
+						<dict>
+							<key>Description</key>
+							<string>&lt;SBButton: 0x24c490&gt; {{200, 0}, {24, 24}}</string>
+						</dict>
+						<dict>
+							<key>Children</key>
+							<array>
+								<dict>
+									<key>Description</key>
+									<string>&lt;SBCircleProgressIndicator: 0x257d50&gt; {{179, 3}, {18, 18}}</string>
+								</dict>
+							</array>
+							<key>Description</key>
+							<string>&lt;SBTabbarItem: 0x2579a0&gt; {{0, 0}, {200, 24}}</string>
+						</dict>
+					</array>
+					<key>Description</key>
+					<string>&lt;SBTabbar: 0x24b800&gt; {{0, 951}, {1618, 24}}</string>
+				</dict>
+				<dict>
+					<key>Children</key>
+					<array>
+						<dict>
+							<key>Children</key>
+							<array>
+								<dict>
+									<key>Children</key>
+									<array>
+										<dict>
+											<key>Children</key>
+											<array>
+												<dict>
+													<key>Children</key>
+													<array>
+														<dict>
+															<key>Children</key>
+															<array>
+																<dict>
+																	<key>Children</key>
+																	<array>
+																		<dict>
+																			<key>Children</key>
+																			<array>
+																				<dict>
+																					<key>Description</key>
+																					<string>&lt;WebHTMLView: 0x171c20&gt; {{0, 0}, {1169, 951}}</string>
+																				</dict>
+																			</array>
+																			<key>Description</key>
+																			<string>&lt;WebClipView: 0x16f790&gt; {{0, 0}, {1169, 951}}</string>
+																		</dict>
+																		<dict>
+																			<key>Description</key>
+																			<string>&lt;NSScroller: 0x17d2d0&gt; {{-100, -100}, {15, 951}}</string>
+																		</dict>
+																	</array>
+																	<key>Description</key>
+																	<string>&lt;WebDynamicScrollBarsView: 0x14fd10&gt; {{0, 0}, {1169, 951}}</string>
+																</dict>
+															</array>
+															<key>Description</key>
+															<string>&lt;WebFrameView: 0x15b980&gt; {{0, 0}, {1169, 951}}</string>
+														</dict>
+													</array>
+													<key>Description</key>
+													<string>&lt;SBWebView: 0x25aec0&gt; {{0, 0}, {1169, 951}}</string>
+												</dict>
+											</array>
+											<key>Description</key>
+											<string>&lt;SBTabSplitView: 0x25a4f0&gt; {{0, 0}, {1169, 951}}</string>
+										</dict>
+									</array>
+									<key>Description</key>
+									<string>&lt;NSView: 0x25a3c0&gt; {{0, 0}, {1169, 951}}</string>
+								</dict>
+							</array>
+							<key>Description</key>
+							<string>&lt;SBTabView: 0x151550&gt; {{0, 0}, {1169, 951}}</string>
+						</dict>
+						<dict>
+							<key>Children</key>
+							<array>
+								<dict>
+									<key>Children</key>
+									<array>
+										<dict>
+											<key>Children</key>
+											<array>
+												<dict>
+													<key>Children</key>
+													<array>
+														<dict>
+															<key>Children</key>
+															<array>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x124000&gt; {{0, 0}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x14fc00&gt; {{143.393, 0}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15bdf0&gt; {{286.786, 0}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15c060&gt; {{0, 140.571}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15c1f0&gt; {{143.393, 140.571}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15c380&gt; {{286.786, 140.571}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15c5d0&gt; {{0, 281.143}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15c730&gt; {{143.393, 281.143}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15c8f0&gt; {{286.786, 281.143}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15cab0&gt; {{0, 421.714}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15cc70&gt; {{143.393, 421.714}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15ce30&gt; {{286.786, 421.714}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15cff0&gt; {{0, 562.286}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15d1b0&gt; {{143.393, 562.286}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15d490&gt; {{286.786, 562.286}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15d600&gt; {{0, 702.857}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15d7c0&gt; {{143.393, 702.857}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15d980&gt; {{286.786, 702.857}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15db40&gt; {{0, 843.429}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15dd00&gt; {{143.393, 843.429}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15dec0&gt; {{286.786, 843.429}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15e080&gt; {{0, 984}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15e240&gt; {{143.393, 984}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15e400&gt; {{286.786, 984}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15e5c0&gt; {{0, 1124.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15e780&gt; {{143.393, 1124.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15e940&gt; {{286.786, 1124.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15eb00&gt; {{0, 1265.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15ecc0&gt; {{143.393, 1265.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15ee80&gt; {{286.786, 1265.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15d370&gt; {{0, 1405.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15f340&gt; {{143.393, 1405.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15f500&gt; {{286.786, 1405.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15f6c0&gt; {{0, 1546.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15f880&gt; {{143.393, 1546.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15fa40&gt; {{286.786, 1546.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15fc00&gt; {{0, 1686.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15fdc0&gt; {{143.393, 1686.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15ff80&gt; {{286.786, 1686.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x160140&gt; {{0, 1827.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x160300&gt; {{143.393, 1827.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1604c0&gt; {{286.786, 1827.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x160680&gt; {{0, 1968}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x160840&gt; {{143.393, 1968}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x160a00&gt; {{286.786, 1968}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x160bc0&gt; {{0, 2108.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x160d80&gt; {{143.393, 2108.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x160f40&gt; {{286.786, 2108.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x161100&gt; {{0, 2249.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1612c0&gt; {{143.393, 2249.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x161480&gt; {{286.786, 2249.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x161640&gt; {{0, 2389.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x161800&gt; {{143.393, 2389.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1619c0&gt; {{286.786, 2389.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x161b80&gt; {{0, 2530.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x161d40&gt; {{143.393, 2530.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x161f00&gt; {{286.786, 2530.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1620c0&gt; {{0, 2670.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x162280&gt; {{143.393, 2670.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x162440&gt; {{286.786, 2670.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x162600&gt; {{0, 2811.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1627c0&gt; {{143.393, 2811.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x15f040&gt; {{286.786, 2811.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x162980&gt; {{0, 2952}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x162ae0&gt; {{143.393, 2952}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x162ca0&gt; {{286.786, 2952}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x162e60&gt; {{0, 3092.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x163020&gt; {{143.393, 3092.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1631e0&gt; {{286.786, 3092.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1633a0&gt; {{0, 3233.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x163560&gt; {{143.393, 3233.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x163720&gt; {{286.786, 3233.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1638e0&gt; {{0, 3373.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x163aa0&gt; {{143.393, 3373.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x163c60&gt; {{286.786, 3373.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x163e20&gt; {{0, 3514.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x163fe0&gt; {{143.393, 3514.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1641a0&gt; {{286.786, 3514.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x164360&gt; {{0, 3654.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x164520&gt; {{143.393, 3654.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1646e0&gt; {{286.786, 3654.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1648a0&gt; {{0, 3795.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x164a60&gt; {{143.393, 3795.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x164c20&gt; {{286.786, 3795.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x164de0&gt; {{0, 3936}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x164fa0&gt; {{143.393, 3936}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x165160&gt; {{286.786, 3936}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x165320&gt; {{0, 4076.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1654e0&gt; {{143.393, 4076.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1656a0&gt; {{286.786, 4076.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x165860&gt; {{0, 4217.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x165a20&gt; {{143.393, 4217.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x165be0&gt; {{286.786, 4217.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x165da0&gt; {{0, 4357.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x165f60&gt; {{143.393, 4357.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x166120&gt; {{286.786, 4357.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1662e0&gt; {{0, 4498.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1664a0&gt; {{143.393, 4498.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x166660&gt; {{286.786, 4498.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x166820&gt; {{0, 4638.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1669e0&gt; {{143.393, 4638.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x166ba0&gt; {{286.786, 4638.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x166d60&gt; {{0, 4779.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x166f20&gt; {{143.393, 4779.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1670e0&gt; {{286.786, 4779.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1672a0&gt; {{0, 4920}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x167460&gt; {{143.393, 4920}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x167620&gt; {{286.786, 4920}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1677e0&gt; {{0, 5060.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1679a0&gt; {{143.393, 5060.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x167b60&gt; {{286.786, 5060.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x167d20&gt; {{0, 5201.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x167ee0&gt; {{143.393, 5201.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1680a0&gt; {{286.786, 5201.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x168260&gt; {{0, 5341.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x168420&gt; {{143.393, 5341.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1685e0&gt; {{286.786, 5341.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1687a0&gt; {{0, 5482.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x168960&gt; {{143.393, 5482.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x168b20&gt; {{286.786, 5482.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x168ce0&gt; {{0, 5622.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x168ea0&gt; {{143.393, 5622.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x169060&gt; {{286.786, 5622.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x169220&gt; {{0, 5763.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1693e0&gt; {{143.393, 5763.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x1695a0&gt; {{286.786, 5763.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x169760&gt; {{0, 5904}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x169920&gt; {{143.393, 5904}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x169ae0&gt; {{286.786, 5904}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x169ca0&gt; {{0, 6044.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x169e60&gt; {{143.393, 6044.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16a020&gt; {{286.786, 6044.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16a1e0&gt; {{0, 6185.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16a3a0&gt; {{143.393, 6185.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16a560&gt; {{286.786, 6185.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16a720&gt; {{0, 6325.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16a8e0&gt; {{143.393, 6325.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16aaa0&gt; {{286.786, 6325.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16ac60&gt; {{0, 6466.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16ae20&gt; {{143.393, 6466.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16afe0&gt; {{286.786, 6466.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16b1a0&gt; {{0, 6606.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16b360&gt; {{143.393, 6606.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16b520&gt; {{286.786, 6606.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16b6e0&gt; {{0, 6747.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16b8a0&gt; {{143.393, 6747.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16ba60&gt; {{286.786, 6747.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16bc20&gt; {{0, 6888}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16bde0&gt; {{143.393, 6888}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16bfa0&gt; {{286.786, 6888}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16c160&gt; {{0, 7028.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16c320&gt; {{143.393, 7028.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16c4e0&gt; {{286.786, 7028.57}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16c6a0&gt; {{0, 7169.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16c860&gt; {{143.393, 7169.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16ca20&gt; {{286.786, 7169.14}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16cbe0&gt; {{0, 7309.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16cda0&gt; {{143.393, 7309.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16cf60&gt; {{286.786, 7309.71}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16d120&gt; {{0, 7450.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16d2e0&gt; {{143.393, 7450.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16d4a0&gt; {{286.786, 7450.29}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16d660&gt; {{0, 7590.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16d820&gt; {{143.393, 7590.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16d9e0&gt; {{286.786, 7590.86}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16dba0&gt; {{0, 7731.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16dd60&gt; {{143.393, 7731.43}, {140.571, 140.571}}</string>
+																</dict>
+																<dict>
+																	<key>Description</key>
+																	<string>&lt;SBBookmarkListItemView: 0x16df20&gt; {{286.786, 7731.43}, {140.571, 140.571}}</string>
+																</dict>
+															</array>
+															<key>Description</key>
+															<string>&lt;SBBookmarkListView: 0x24cd40&gt; {{0, 0}, {433, 7872}}</string>
+														</dict>
+													</array>
+													<key>Description</key>
+													<string>&lt;SBBLKGUIClipView: 0x1528f0&gt; {{0, 0}, {433, 926}}</string>
+												</dict>
+												<dict>
+													<key>Description</key>
+													<string>&lt;SBBLKGUIScroller: 0x24c940&gt; {{433, 0}, {15, 926}}</string>
+												</dict>
+												<dict>
+													<key>Description</key>
+													<string>&lt;SBBLKGUIScroller: 0x24caa0&gt; {{-100, -100}, {433, 15}}</string>
+												</dict>
+											</array>
+											<key>Description</key>
+											<string>&lt;SBBLKGUIScrollView: 0x152450&gt; {{0, 0}, {448, 926}}</string>
+										</dict>
+									</array>
+									<key>Description</key>
+									<string>&lt;SBBookmarksView: 0x151f70&gt; {{0, 0}, {448, 926}}</string>
+								</dict>
+								<dict>
+									<key>Children</key>
+									<array>
+										<dict>
+											<key>Children</key>
+											<array>
+												<dict>
+													<key>Description</key>
+													<string>&lt;SBButton: 0x16e530&gt; {{24, 0}, {24, 24}}</string>
+												</dict>
+												<dict>
+													<key>Description</key>
+													<string>&lt;SBButton: 0x16e750&gt; {{48, 0}, {24, 24}}</string>
+												</dict>
+												<dict>
+													<key>Description</key>
+													<string>&lt;SBBLKGUISlider: 0x16e9d0&gt; {{294, 0}, {120, 21}}</string>
+												</dict>
+											</array>
+											<key>Description</key>
+											<string>&lt;SBSideBottombar: 0x16e1a0&gt; {{0, 0}, {448, 24}}</string>
+										</dict>
+									</array>
+									<key>Description</key>
+									<string>&lt;SBDrawer: 0x152230&gt; {{0, 927}, {448, 24}}</string>
+								</dict>
+							</array>
+							<key>Description</key>
+							<string>&lt;SBSidebar: 0x151ab0&gt; {{1170, 0}, {448, 951}}</string>
+						</dict>
+					</array>
+					<key>Description</key>
+					<string>&lt;SBSplitView: 0x120ea0&gt; {{0, 0}, {1618, 951}}</string>
+				</dict>
+			</array>
+			<key>Description</key>
+			<string>&lt;SBInnerView: 0x120980&gt; {{0, 0}, {1618, 975}}</string>
+		</dict>
+	</array>
+	<key>Description</key>
+	<string>&lt;NSView: 0x121290&gt; {{0, 0}, {1618, 975}}</string>
+</dict>
+</plist>

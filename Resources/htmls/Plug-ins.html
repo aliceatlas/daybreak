@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Installed Plug-ins</title>
+    <link rel="stylesheet" media="all" href="style.css" type="text/css" />
+	<style type="text/css">
+        body {
+			color: #666;
+		}
+		.hrow {
+			border-style: solid;
+			border-width: 0px;
+			border-bottom-width: 1px;
+			border-color: #ccc;
+		}
+		.row {
+		}
+		.hcol {
+			float:left;
+			text-align: center;
+		}
+		.col {
+			float:left;
+			border-color: #ccc;
+		}
+    </style>
+</head>
+<body>
+    <div>
+        <script type="application/x-javascript">
+
+            // Localizers: Translate the title above, and these six strings, and leave the rest of the file intact.
+
+            var InstalledPlugIns = "Installed Plug-ins";
+            var BetweenDescriptionAndFilename = " &mdash; from file &ldquo;";
+            var AfterFilename = "&rdquo;.";
+            var MIMETypeColumnHeader = "MIME Type";
+            var DescriptionColumnHeader = "Description";
+            var ExtensionsColumnHeader = "Extensions";
+
+            navigator.plugins.refresh(false); // Supposedly helps if new plug-ins were added.
+
+            for (var pi = 0; pi != navigator.plugins.length; pi++) {
+                var plugin = navigator.plugins[pi];
+
+                document.writeln("<div class=\"description\">");
+                document.writeln("<h2>" + plugin.name + "<\/h2>");
+                document.writeln("<p>" + plugin.description + BetweenDescriptionAndFilename + plugin.filename + AfterFilename + "<\/p>");
+                document.writeln("<\/div>");
+
+                document.writeln("<div class=\"container\">");
+                document.writeln("<div class=\"hrow\">");
+                document.writeln("<div class=\"hcol\" style=\"width:29%;\">" + MIMETypeColumnHeader + "<\/div>");
+                document.writeln("<div class=\"hcol\" style=\"width:29%;\">" + DescriptionColumnHeader + "<\/div>");
+                document.writeln("<div class=\"hcol\" style=\"width:39%;\">" + ExtensionsColumnHeader + "<\/div>");
+                document.writeln("<br clear=\"all\">");
+                document.writeln("<\/div>");
+
+				if (plugin.length > 0)
+				{
+					for (var i = 0; i != plugin.length; ++i)
+					{
+						document.writeln("<div class=\"row\">");
+						document.writeln("<div class=\"col\" style=\"width:29%;\">" + plugin[i].type + "<\/div>");
+						document.writeln("<div class=\"col\" style=\"width:29%;\">" + plugin[i].description + "<\/div>");
+						document.writeln("<div class=\"col\" style=\"width:39%;\">" + plugin[i].suffixes + "<\/div>");
+						document.writeln("<br clear=\"all\">");
+						document.writeln("<\/div>");
+					}
+				}
+				else {
+						document.writeln("<div class=\"row\" style=\"text-align:center;\">");
+						document.writeln("None");
+						document.writeln("<\/div>");
+				}
+                document.writeln("<\/div>");
+            }
+
+        </script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+.description {
+	position: relative;
+	padding: 10px;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 44px;
+}
+
+.container {
+	position: relative;
+	padding: 10px;
+	min-height: 90px;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+	margin-bottom: 5px;
+	background-color: #f2f2f2;
+	border: 1px solid #999999;
+	-webkit-border-radius: 8px;
+}
+
+h2 {
+	color: white;
+	text-shadow: #000 0px 1px 3px;
+}
