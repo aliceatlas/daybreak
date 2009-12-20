@@ -28,6 +28,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBCircleProgressIndicator.h"
 #import "SBView.h"
 
+@class SBBookmarkListView;
+@protocol SBBookmarkListViewDelegate <NSObject>
+- (void)bookmarkListViewShouldOpenSearchbar:(SBBookmarkListView *)bookmarkListView;
+- (BOOL)bookmarkListViewShouldCloseSearchbar:(SBBookmarkListView *)bookmarkListView;
+@end
+
 @class SBBookmarkListItemView;
 @interface SBBookmarkListView : SBView
 {
@@ -47,15 +53,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSTimer *toolsTimer;
 	NSPoint _block;
 	NSPoint _point;
+	NSSize _offset;
+	id<SBBookmarkListViewDelegate> delegate;
+	NSUInteger _animationIndex;
+	NSViewAnimation *searchAnimations;
 }
 @property (nonatomic, assign) SBBookmarksView *wrapperView;
 @property (nonatomic) SBBookmarkMode mode;
 @property (nonatomic) CGFloat cellWidth;
 @property (nonatomic, readonly) NSMutableArray *items;
 @property (nonatomic, retain) NSArray *draggedItems;
+@property (nonatomic, assign) id<SBBookmarkListViewDelegate> delegate;
 
 // Getter
 - (CGFloat)width;
+- (CGFloat)minimumHeight;
 - (NSPoint)spacing;
 - (NSPoint)block;
 - (NSRect)itemRectAtIndex:(NSInteger)index;
@@ -77,6 +89,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)destructSelectionView;
 - (void)destructDraggingLineView;
 - (void)destructToolsTimer;
+- (void)destructSearchAnimations;
 // Setter
 - (void)setCellSizeForMode:(SBBookmarkMode)inMode;
 - (void)setMode:(SBBookmarkMode)inMode;
@@ -93,6 +106,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)editItemView:(SBBookmarkListItemView *)itemView;
 - (void)editItemViewsAtIndex:(NSUInteger)index;
 - (void)openItemsAtIndexes:(NSIndexSet *)indexes;
+- (void)selectPoint:(NSPoint)point toPoint:(NSPoint)toPoint exclusive:(BOOL)exclusive;
 - (void)layout:(NSTimeInterval)animationTime;
 - (void)layoutFrame;
 - (void)layoutItemViews;
@@ -107,6 +121,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)scrollToNext;
 - (void)scrollToPrevious;
 - (void)needsDisplaySelectedItemViews;
+- (void)executeShouldOpenSearchbar;
+- (BOOL)executeShouldCloseSearchbar;
+- (void)searchWithText:(NSString *)text;
+- (void)showIndexes:(NSIndexSet *)indexes;
+- (void)startAnimations:(NSArray *)infos;
 // Menu Actions
 - (void)delete:(id)sender;
 - (void)selectAll:(id)sender;

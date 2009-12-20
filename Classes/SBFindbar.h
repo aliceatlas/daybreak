@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, retain) NSString *searchedString;
 
 + (CGFloat)minimumWidth;
-+ (CGFloat)visibleWidth;
++ (CGFloat)availableWidth;
 // Rects
 - (NSRect)contentRect;
 - (NSRect)closeRect;

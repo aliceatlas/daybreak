@@ -24,13 +24,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDefinitions.h"
 #import "SBBLKGUI.h"
+#import "SBBookmarkListView.h"
+#import "SBFixedSplitView.h"
+#import "SBSearchbar.h"
 #import "SBView.h"
 
-@class SBBookmarkListView;
-@interface SBBookmarksView : SBView
+@interface SBBookmarksView : SBView <SBBookmarkListViewDelegate>
 {
+	SBFixedSplitView *splitView;
 	SBBLKGUIScrollView *scrollView;
 	SBBookmarkListView *listView;
+	SBSearchbar *searchbar;
 	id delegate;
 }
 @property (nonatomic, retain) SBBookmarkListView *listView;
@@ -44,12 +48,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructListView:(SBBookmarkMode)inMode;
 // Setter
 - (void)setCellWidth:(CGFloat)cellWidth;
+- (BOOL)setShowSearchbar:(BOOL)showSearchbar;
+- (void)searchWithText:(NSString *)text;
+- (void)closeSearchbar;
 // Execute
 - (void)executeDidChangeMode;
 - (void)executeShouldEditItemAtIndex:(NSUInteger)index;
 // Actions
 - (void)addForBookmarkItem:(NSDictionary *)item;
-- (void)scrollToItem:(NSDictionary *)bookmarKItem;
+- (void)scrollToItem:(NSDictionary *)bookmarkItem;
 - (void)reload;
 
 @end

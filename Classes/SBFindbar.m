@@ -64,7 +64,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return 750;
 }
 
-+ (CGFloat)visibleWidth
++ (CGFloat)availableWidth
 {
 	return 300;
 }
@@ -324,6 +324,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)command
+{
+	BOOL r = NO;
+	if (control == searchField)
+	{
+		if (command == @selector(cancelOperation:))
+		{
+			if ([[searchField stringValue] length] == 0)
+			{
+				[self executeClose];
+				r = YES;
+			}
+		}
+	}
+	return r;
+}
+
 #pragma mark Setter
 
 - (void)setFrame:(NSRect)frame
@@ -353,8 +370,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if ([string length] > 0)
 	{
 		[self executeSearch:YES continuous:NO];
+		[self executeClose];
 	}
-	[self executeClose];
 }
 
 - (void)searchBackward:(id)sender

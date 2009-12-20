@@ -38,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Flags for Debug
 #define kSBFlagCreateTabItemWhenLaunched 1
 #define kSBFlagShowRenderWindow 0
+#define kSBCountOfDebugBookmarks 0	/* If more than 0, the bookmarks creates bookmark items for the count. */
 
 // Versions
 extern NSString *SBBookmarkVersion;

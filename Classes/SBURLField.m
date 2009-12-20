@@ -463,7 +463,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *identifier = [aTableColumn identifier];
 	NSDictionary *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
 	if ([identifier isEqual:kSBURL])
+	{
+		NSString *title = item ? [item objectForKey:kSBTitle] : nil;
 		object = item ? [item objectForKey:kSBURL] : nil;
+		if (title)
+			object = [title stringByAppendingFormat:@" - %@", object];
+	}
 	return object;
 }
 

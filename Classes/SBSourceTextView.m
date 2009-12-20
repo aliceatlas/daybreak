@@ -46,7 +46,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)performFind:(id)sender
 {
-	if (self.bounds.size.width >= [SBFindbar visibleWidth])
+	if (self.bounds.size.width >= [SBFindbar availableWidth])
 	{
 		[self executeOpenFindbar];
 	}

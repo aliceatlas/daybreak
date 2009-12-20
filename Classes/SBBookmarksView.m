@@ -23,7 +23,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBBookmarksView.h"
-#import "SBBookmarkListView.h"
 #import "SBBookmarks.h"
 #import "SBUtil.h"
 
@@ -36,6 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
+	[splitView release];
 	[listView release];
 	[scrollView release];
 	delegate = nil;
@@ -54,6 +54,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //	[listView layoutFrame];
 //	[listView layoutItemViews];
 	[super resizeSubviewsWithOldSize:oldBoundsSize];
+}
+
+#pragma mark Delegate
+
+- (void)bookmarkListViewShouldOpenSearchbar:(SBBookmarkListView *)bookmarkListView
+{
+	if (self.bounds.size.width >= [SBSearchbar availableWidth])
+	{
+		[self setShowSearchbar:YES];
+	}
+	else {
+		NSBeep();
+	}
+}
+
+- (BOOL)bookmarkListViewShouldCloseSearchbar:(SBBookmarkListView *)bookmarkListView
+{
+	return [self setShowSearchbar:NO];
 }
 
 #pragma mark Destruction
@@ -89,6 +107,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self addSubview:scrollView];
 	[listView setCellSizeForMode:inMode];
 	[listView createItemViews];
+	listView.delegate = self;
 }
 
 #pragma mark Getter
@@ -119,6 +138,50 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	listView.mode = mode;
 	[[NSUserDefaults standardUserDefaults] setInteger:mode forKey:kSBBookmarkMode];
 	[self executeDidChangeMode];
+}
+
+- (BOOL)setShowSearchbar:(BOOL)showSearchbar
+{
+	BOOL r = NO;
+	if (showSearchbar)
+	{
+		if (!splitView)
+		{
+			searchbar = [[SBSearchbar alloc] initWithFrame:NSMakeRect(0, 0, scrollView.frame.size.width, 24.0)];
+			searchbar.target = self;
+			searchbar.doneSelector = @selector(searchWithText:);
+			searchbar.cancelSelector = @selector(closeSearchbar);
+			splitView = [[SBFixedSplitView splitViewWithEmbedViews:[NSArray arrayWithObjects:searchbar, scrollView, nil] frameRect:scrollView.frame] retain];
+			[splitView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+			[searchbar autorelease];
+			r = YES;
+		}
+		[searchbar selectText:nil];
+	}
+	else {
+		if (splitView)
+		{
+			SBDisembedViewInSplitView(scrollView, splitView);
+			[splitView release];
+			splitView = nil;
+			[[scrollView window] makeFirstResponder:scrollView];
+			r = YES;
+		}
+	}
+	return r;
+}
+
+- (void)searchWithText:(NSString *)text
+{
+	if ([text length] > 0)
+	{
+		[listView searchWithText:text];
+	}
+}
+
+- (void)closeSearchbar
+{
+	[self setShowSearchbar:NO];
 }
 
 #pragma mark Execute
@@ -152,12 +215,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[listView addForItem:item];
 }
 
-- (void)scrollToItem:(NSDictionary *)bookmarKItem
+- (void)scrollToItem:(NSDictionary *)bookmarkItem
 {
 	SBBookmarks *bookmarks = [SBBookmarks sharedBookmarks];
-	NSInteger index = [bookmarks indexOfItem:bookmarKItem];
-	NSRect itemRect = [listView itemRectAtIndex:index];
-	[scrollView scrollRectToVisible:itemRect];
+	NSInteger index = [bookmarks indexOfItem:bookmarkItem];
+	if (index != NSNotFound)
+	{
+		NSRect itemRect = [listView itemRectAtIndex:index];
+		[scrollView scrollRectToVisible:itemRect];
+	}
 }
 
 - (void)reload

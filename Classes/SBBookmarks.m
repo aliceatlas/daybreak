@@ -169,6 +169,17 @@ static SBBookmarks *sharedBookmarks;
 - (BOOL)readFromFile
 {
 	BOOL r = NO;
+	if (!items)
+		items = [[NSMutableArray alloc] initWithCapacity:0];
+#if kSBCountOfDebugBookmarks > 0
+	for (NSUInteger index = 0; index < kSBCountOfDebugBookmarks; index++)
+	{
+		NSString *title = [NSString stringWithFormat:@"Title %d", index];
+		NSString *url = [NSString stringWithFormat:@"http://%d.com/", index];
+		NSDictionary *item = SBCreateBookmarkItem(title, url, SBDefaultBookmarkImageData(), [NSDate date], nil, NSStringFromPoint(NSZeroPoint));
+		[items addObject:item];
+	}
+#else
 	NSString *path = SBBookmarksFilePath();
 	NSDictionary *info = [NSDictionary dictionaryWithContentsOfFile:path];
 	if (info)
@@ -176,14 +187,12 @@ static SBBookmarks *sharedBookmarks;
 		NSArray *bookmarkItems = [info objectForKey:kSBBookmarkItems];
 		if ([bookmarkItems count] > 0)
 		{
-			if (!items)
-				items = [[NSMutableArray alloc] initWithCapacity:0];
-			else
-				[items removeAllObjects];
+			[items removeAllObjects];
 			[items addObjectsFromArray:bookmarkItems];
 			r = YES;
 		}
 	}
+#endif
 	return r;
 }
 

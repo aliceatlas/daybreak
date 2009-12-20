@@ -194,7 +194,25 @@ static SBAboutView *_sharedView;
 - (void)constructCreditLabel
 {
 	NSRect r = [self creditLabelRect];
-	NSString *path = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtf"];
+	NSString *rtfdPath = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtfd"];
+#if 1
+	NSTextView *creditLabel = nil;
+	creditScrollView = [[SBBLKGUIScrollView alloc] initWithFrame:r];
+	[creditScrollView setBackgroundColor:[NSColor darkGrayColor]];
+	[creditScrollView setDrawsBackground:NO];
+	[creditScrollView setAutohidesScrollers:YES];
+	[creditScrollView setHasHorizontalScroller:NO];
+	[creditScrollView setHasVerticalScroller:YES];
+	creditLabel = [[[NSTextView alloc] initWithFrame:r] autorelease];
+	[creditLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
+	[creditLabel setEditable:NO];
+	[creditLabel setSelectable:YES];
+	[creditLabel setDrawsBackground:NO];
+	[creditLabel readRTFDFromFile:rtfdPath];
+	[creditScrollView setDocumentView:creditLabel];
+	[self addSubview:creditScrollView];
+#else
+	NSString *path = rtfdPath ? [rtfdPath stringByAppendingPathComponent:@"TXT.rtf"] : nil;
 	NSData *data = path ? [NSData dataWithContentsOfFile:path] : nil;
 	NSMutableAttributedString *attributedString = nil;
 	if (data)
@@ -225,6 +243,7 @@ static SBAboutView *_sharedView;
 		[creditScrollView setDocumentView:creditLabel];
 		[self addSubview:creditScrollView];
 	}
+#endif
 }
 
 - (void)constructCopyrightLabel

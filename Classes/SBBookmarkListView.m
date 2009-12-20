@@ -35,6 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize cellWidth;
 @dynamic items;
 @synthesize draggedItems;
+@synthesize delegate;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -54,6 +55,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
+	delegate = nil;
 	wrapperView = nil;
 	draggedItemView = nil;
 	toolsItemView = nil;
@@ -63,6 +65,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructDraggingLineView];
 	[self destructControls];
 	[self destructToolsTimer];
+	[self destructSearchAnimations];
 	[super dealloc];
 }
 
@@ -97,6 +100,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return [[self enclosingScrollView] contentSize].width;
 }
 
+- (CGFloat)minimumHeight
+{
+	return [[self enclosingScrollView] contentSize].height;
+}
+
 - (NSPoint)spacing
 {
 	NSPoint s = NSZeroPoint;
@@ -111,9 +119,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSInteger count = [self.items count];
 	CGFloat width = [self width];
 	block.x = (NSInteger)(width / cellSize.width);
-	if (block.x == 0)
-		block.x = 1;
+	if (block.x == 0) block.x = 1;
 	block.y = (NSInteger)(count / (NSInteger)block.x) + (SBRemainderIsZero(count, (NSInteger)block.x) ? 0 : 1);
+	if (block.y == 0) block.y = 1;
 	return block;
 }
 
@@ -133,6 +141,37 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (SBBookmarkListItemView *)itemViewAtPoint:(NSPoint)point
 {
 	SBBookmarkListItemView *view = nil;
+#if 1
+	NSUInteger index = NSNotFound;
+	NSUInteger count = [self.items count];
+	NSPoint loc = NSZeroPoint;
+	CGFloat location = 0;
+	if (mode == SBBookmarkIconMode)
+	{
+		NSPoint spacing = [self spacing];
+		loc.y = (NSInteger)(point.y / cellSize.height);
+		location = (point.x / (cellSize.width + spacing.x));
+		loc.x = (NSInteger)location;
+		index = _block.x * loc.y + loc.x;
+		if (index > count)
+		{
+			loc.x = count - _block.x * loc.y;
+			index = _block.x * loc.y + loc.x;
+		}
+	}
+	else if (mode == SBBookmarkListMode)
+	{
+		loc.y = (NSInteger)(point.y / 22.0);
+		location = (point.y - loc.y * 22.0);
+		if (location > 22.0 / 2)
+		{
+			loc.y += 1;
+		}
+		index = loc.y;
+	}
+	if (index != NSNotFound)
+		view = [itemViews objectAtIndex:index];
+#else
 	for (SBBookmarkListItemView *itemView in itemViews)
 	{
 		NSRect r = itemView.frame;
@@ -142,6 +181,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			break;
 		}
 	}
+#endif
 	return view;
 }
 
@@ -229,7 +269,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			loc.x = count - _block.x * loc.y;
 		}
-		NSLog(@"loc %@ index %d count %d location %f", NSStringFromPoint(loc), index, count, location);
 		r.size.width = 5.0;
 		r.size.height = cellSize.height;
 		spacingX = loc.x > 0 ? (loc.x * spacing.x - spacing.x / 2) : 0;
@@ -379,6 +418,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
+- (void)destructSearchAnimations
+{
+	if (searchAnimations)
+	{
+		if ([searchAnimations isAnimating])
+			[searchAnimations stopAnimation];
+		[searchAnimations release];
+		searchAnimations = nil;
+	}
+}
+
 #pragma mark Construction
 
 - (void)constructControls
@@ -439,7 +489,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)addForItem:(NSDictionary *)item
 {
-	NSInteger index = [self.items count] - 1;
+	NSUInteger count = [self.items count];
+	NSInteger index = count - 1;//count > 0 ? count - 1 : 0;
 	[self layoutFrame];
 	[self addItemViewAtIndex:index item:item];
 }
@@ -549,7 +600,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[bookmarks doubleClickItemsAtIndexes:indexes];
 }
 
-- (void)selectPoint:(NSPoint)point toPoint:(NSPoint)toPoint
+- (void)selectPoint:(NSPoint)point toPoint:(NSPoint)toPoint exclusive:(BOOL)exclusive
 {
 	if (selectionView)
 	{
@@ -560,7 +611,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			NSRect intersectionRect = NSIntersectionRect(r, itemView.frame);
 			if (NSEqualRects(intersectionRect, NSZeroRect))
 			{
-				itemView.selected = NO;
+				if (exclusive)
+					itemView.selected = NO;
 			}
 			else {
 				NSRect intersectionRectInView = intersectionRect;
@@ -575,6 +627,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)layout:(NSTimeInterval)animationTime
 {
+	_animationIndex = NSNotFound;
 	[self layoutFrame];
 	if (animationTime > 0)
 	{
@@ -588,9 +641,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)layoutFrame
 {
 	NSRect r = self.frame;
+	NSSize size = NSMakeSize([self width], [self minimumHeight]);
 	_block = [self block];
-	r.size.width = [self width];
+	r.size.width = size.width;
 	r.size.height = _block.y * cellSize.height;
+	if (r.size.height < size.height) r.size.height = size.height;
 	self.frame = r;
 }
 
@@ -769,6 +824,201 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
+- (void)executeShouldOpenSearchbar
+{
+	_animationIndex = NSNotFound;
+	if (delegate)
+	{
+		if ([delegate respondsToSelector:@selector(bookmarkListViewShouldOpenSearchbar:)])
+		{
+			[delegate bookmarkListViewShouldOpenSearchbar:self];
+		}
+	}
+}
+
+- (BOOL)executeShouldCloseSearchbar
+{
+	BOOL r = NO;
+	_animationIndex = NSNotFound;
+	if (delegate)
+	{
+		if ([delegate respondsToSelector:@selector(bookmarkListViewShouldCloseSearchbar:)])
+		{
+			r = [delegate bookmarkListViewShouldCloseSearchbar:self];
+		}
+	}
+	return r;
+}
+
+- (void)searchWithText:(NSString *)text
+{
+	if ([text length] > 0)
+	{
+		NSMutableIndexSet *indexes = [NSMutableIndexSet indexSet];
+		NSUInteger index = 0;
+		
+		// Search in bookmarks
+		for (NSDictionary *bookmarkItem in self.items)
+		{
+			NSString *title = [bookmarkItem objectForKey:kSBBookmarkTitle];
+			NSString *urlString = [bookmarkItem objectForKey:kSBBookmarkURL];
+			NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
+			NSRange range = [title rangeOfString:text options:NSCaseInsensitiveSearch];
+			if (range.location == NSNotFound)
+			{
+				range = [urlString rangeOfString:text];
+			}
+			if (range.location == NSNotFound)
+			{
+				range = [SchemelessUrlString rangeOfString:text];
+			}
+			if (range.location != NSNotFound)
+			{
+				[indexes addIndex:index];
+			}
+			index++;
+		}
+		if ([indexes count] > 0)
+		{
+			[self showIndexes:[[indexes copy] autorelease]];
+		}
+		else {
+			NSBeep();
+		}
+//		if ([indexes count] > 0)
+//			firstIndex = [indexes firstIndex];
+//		if (firstIndex != NSNotFound && [itemViews count] > firstIndex)
+//		{
+//			[self scrollRectToVisible:[self itemRectAtIndex:firstIndex]];
+//		}
+		
+//		if ([indexes count] > 0)
+//		{
+//			[self showIndexes:[[indexes copy] autorelease]];
+//		}
+//		else {
+//			[self showAll];
+//		}
+	}
+}
+
+- (void)showIndexes:(NSIndexSet *)indexes
+{
+	NSUInteger index = 0;
+	NSMutableArray *infos = [NSMutableArray arrayWithCapacity:0];
+	NSUInteger firstIndex = NSNotFound;
+	if (_animationIndex == [indexes lastIndex] || ![indexes containsIndex:_animationIndex])
+		_animationIndex = NSNotFound;
+	for (index = [indexes firstIndex]; index != NSNotFound; index = [indexes indexGreaterThanIndex:index])
+	{
+		SBBookmarkListItemView *itemView = [itemViews objectAtIndex:index];
+		if (firstIndex == NSNotFound && 
+			(_animationIndex == NSNotFound || (_animationIndex != NSNotFound && _animationIndex < index)))
+		{
+			// Get first index
+			firstIndex = index;
+			
+			// Add animation
+			NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
+			NSRect startRect = NSZeroRect;
+			NSRect endRect = NSZeroRect;
+			endRect = [self itemRectAtIndex:firstIndex];
+			startRect = endRect;
+			if (mode == SBBookmarkIconMode)
+			{
+				startRect.size.width = startRect.size.width * 1.5;
+				startRect.size.height = startRect.size.height * 1.5;
+			}
+			else if (mode == SBBookmarkListMode)
+			{
+				startRect.size.width = startRect.size.width * 1.2;
+				startRect.size.height = startRect.size.height * 2.0;
+			}
+			startRect.origin.x -= (startRect.size.width - endRect.size.width) / 2;
+			startRect.origin.y -= (startRect.size.height - endRect.size.height) / 2;
+			[info setObject:itemView forKey:NSViewAnimationTargetKey];
+			[info setObject:[NSValue valueWithRect:startRect] forKey:NSViewAnimationStartFrameKey];
+			[info setObject:[NSValue valueWithRect:endRect] forKey:NSViewAnimationEndFrameKey];
+			[infos addObject:[[info copy] autorelease]];
+			
+			// Put to top level
+			[[itemView superview] addSubview:itemView];
+			
+			// Scroll to item as top
+			[self scrollPoint:endRect.origin];
+			_animationIndex = index;
+			break;
+		}
+	}
+	if ([infos count] > 0)
+	{
+		[self performSelector:@selector(startAnimations:) withObject:[[infos copy] autorelease] afterDelay:0];
+	}
+}
+
+- (void)startAnimations:(NSArray *)infos
+{
+	if (infos)
+	{
+		[self destructSearchAnimations];
+		searchAnimations = [[NSViewAnimation alloc] initWithViewAnimations:infos];
+		[searchAnimations setDuration:0.25];
+		[searchAnimations setAnimationCurve:NSAnimationEaseIn];
+		[searchAnimations setDelegate:self];
+		[searchAnimations startAnimation];
+	}
+}
+
+- (void)animationDidEnd:(NSAnimation *)animation
+{
+	if (animation == searchAnimations)
+	{
+		
+	}
+}
+
+//- (void)showAll
+//{
+//	for (SBBookmarkListItemView *itemView in itemViews)
+//	{
+//		if ([itemView alphaValue] < 1.0)
+//		{
+//			[itemView setAlphaValue:1.0];
+//		}
+//	}
+//}
+//
+//- (void)showIndexes:(NSIndexSet *)indexes
+//{
+//	NSUInteger index = 0;
+//	NSUInteger firstIndex = NSNotFound;
+//	for (SBBookmarkListItemView *itemView in itemViews)
+//	{
+//		if ([indexes containsIndex:index])
+//		{
+//			if ([itemView alphaValue] < 1.0)
+//			{
+//				[itemView setAlphaValue:1.0];
+//			}
+//			if (firstIndex == NSNotFound)
+//			{
+//				firstIndex = index;
+//			}
+//		}
+//		else {
+//			if ([itemView alphaValue] != 0.25)
+//			{
+//				[itemView setAlphaValue:0.25];
+//			}
+//		}
+//		index++;
+//	}
+//	if (firstIndex != NSNotFound && [itemViews count] > firstIndex)
+//	{
+//		[self scrollRectToVisible:[self itemRectAtIndex:firstIndex]];
+//	}
+//}
+
 #pragma mark Menu Actions
 
 - (void)delete:(id)sender
@@ -865,18 +1115,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructDraggingLineView];
 }
 
-- (void)mouseDragged:(NSEvent*)theEvent
+- (void)mouseDragged:(NSEvent *)theEvent
 {
 	NSPoint location = [theEvent locationInWindow];
 	NSPoint point = [self convertPoint:location fromView:nil];
+	NSUInteger modifierFlags = [theEvent modifierFlags];
+	BOOL exclusive = !(modifierFlags & NSShiftKeyMask);
 	if (NSEqualPoints(_point, NSZeroPoint))
 	{
 		// Drag
 		if (draggedItemView && draggedItems)
 		{
 			NSImage *image = [NSImage imageWithView:draggedItemView];
-			NSSize offset = NSMakeSize(draggedItemView.frame.origin.x - point.x, point.y - draggedItemView.frame.origin.y);
-			NSPoint dragLocation = NSMakePoint(point.x + offset.width, point.y + (draggedItemView.frame.size.height - offset.height));
+			NSPoint dragLocation = NSMakePoint(point.x + _offset.width, point.y + (draggedItemView.frame.size.height - _offset.height));
 			NSPasteboard *pasteboard = [NSPasteboard pasteboardWithName:NSDragPboard];
 			NSString *title = [draggedItemView.item objectForKey:kSBBookmarkTitle];
 			NSData *imageData = [draggedItemView.item objectForKey:kSBBookmarkImage];
@@ -899,6 +1150,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			self.draggedItems = [self getSelectedItems];
 			if (draggedItemView && draggedItems)	
 			{
+				_offset = NSMakeSize(draggedItemView.frame.origin.x - point.x, point.y - draggedItemView.frame.origin.y);
 				draggedItemView.dragged = YES;
 				[self layoutToolsHidden];
 			}
@@ -908,7 +1160,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		// Selection
 		[self autoscroll:theEvent];
 		[self layoutSelectionView:point];
-		[self selectPoint:point toPoint:_point];
+		[self selectPoint:point toPoint:_point exclusive:exclusive];
 	}
 }
 
@@ -970,11 +1222,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	unichar character = [characters characterAtIndex:0];
 	if (character == NSDeleteCharacter)
 	{
+		// Delete
 		[self delete:nil];
 	}
 	else if (character == NSEnterCharacter || character == NSCarriageReturnCharacter)
 	{
+		// Open URL
 		[self openSelectedItems:nil];
+	}
+	else if (character == 'f' && ([theEvent modifierFlags] & NSCommandKeyMask))
+	{
+		// Open searchbar
+		[self executeShouldOpenSearchbar];
+	}
+	else if (character == '\e')
+	{
+		// Close searchbar
+		[self executeShouldCloseSearchbar];
 	}
 }
 

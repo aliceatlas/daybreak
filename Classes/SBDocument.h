@@ -194,6 +194,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)editBookmarkItemAtIndex:(NSUInteger)index;
 - (void)doneEditBookmark;
 - (void)cancelEditBookmark;
+- (void)searchInBookmarks:(id)sender;
 - (void)switchMode:(id)sender;
 // Window menu
 - (void)selectPreviousTab:(id)sender;
@@ -238,6 +239,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)doneTextInputView;
 - (void)cancelTextInputView;
 - (void)toggleEditableForSelectedWebView;
+- (void)toggleFlip;
 // Debug
 - (void)debug:(NSNumber *)value;
 

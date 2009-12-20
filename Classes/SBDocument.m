@@ -653,6 +653,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		splitView.sidebar = sidebar;
 		bookmarksView = [[[SBBookmarksView alloc] initWithFrame:[sidebar viewRect]] autorelease];
 		drawer = [[[SBDrawer alloc] initWithFrame:[sidebar drawerRect]] autorelease];
+		[bookmarksView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 		bookmarksView.delegate = self;
 		bookmarksView.cellWidth = [defaults integerForKey:kSBBookmarkCellWidth];
 		[bookmarksView constructListView:[defaults integerForKey:kSBBookmarkMode]];
@@ -1048,7 +1049,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
-#pragma mark URL Delegate
+#pragma mark URL Field Delegate
 
 - (void)urlFieldDidSelectBackward:(SBURLField *)aUrlField
 {
@@ -1093,9 +1094,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// Search in bookmarks
 	for (NSDictionary *bookmarkItem in bookmarks.items)
 	{
+		NSString *title = [bookmarkItem objectForKey:kSBBookmarkTitle];
 		NSString *urlString = [bookmarkItem objectForKey:kSBBookmarkURL];
 		NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
-		NSRange range = [urlString rangeOfString:string];
+		NSRange range = [title rangeOfString:string options:NSCaseInsensitiveSearch];
+		BOOL matchWithTitle = NO;
+		if (range.location == NSNotFound)
+		{
+			range = [urlString rangeOfString:string];
+		}
+		else {
+			// Match with title
+			matchWithTitle = YES;
+		}
 		if (range.location == NSNotFound)
 		{
 			range = [SchemelessUrlString rangeOfString:string];
@@ -1103,6 +1114,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (range.location != NSNotFound)
 		{
 			NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
+			if (matchWithTitle)
+				[item setObject:title forKey:kSBTitle];
 			[item setObject:urlString forKey:kSBURL];
 			if ([bookmarkItem objectForKey:kSBBookmarkImage])
 			{
@@ -1329,7 +1342,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)tabView:(SBTabView *)aTabView selectedItemDidStartLoading:(SBTabViewItem *)aTabViewItem
 {
-	if (![urlField isFirstResponder])
+	if (![urlField isFirstResponder] || [urlField.stringValue length] == 0)
 		urlField.stringValue = [aTabViewItem.mainFrameURLString URLDencodedString];
 	[self updateMenuWithTag:SBViewMenuTag];
 	loadButton.on = YES;
@@ -1340,7 +1353,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //	WebView *webView = [self selectedWebView];
 	urlField.enabledBackward = aTabViewItem.canBackward;
 	urlField.enabledForward = aTabViewItem.canForward;
-	if (![urlField isFirstResponder])
+	if (![urlField isFirstResponder] || [urlField.stringValue length] == 0)
 		urlField.stringValue = [aTabViewItem.mainFrameURLString URLDencodedString];
 //	if (![urlField isFirstResponder] && webView)
 //	{
@@ -1354,7 +1367,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	urlField.enabledBackward = aTabViewItem.canBackward;
 	urlField.enabledForward = aTabViewItem.canForward;
-	if (![urlField isFirstResponder])
+	if (![urlField isFirstResponder] || [urlField.stringValue length] == 0)
 		urlField.stringValue = [aTabViewItem.mainFrameURLString URLDencodedString];
 	[self updateMenuWithTag:SBViewMenuTag];
 	loadButton.on = NO;
@@ -1375,7 +1388,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)tabView:(SBTabView *)aTabView selectedItemDidReceiveServerRedirect:(SBTabViewItem *)aTabViewItem
 {
-	if (![urlField isFirstResponder])
+	if (![urlField isFirstResponder] || [urlField.stringValue length] == 0)
 		urlField.stringValue = [aTabViewItem.mainFrameURLString URLDencodedString];
 }
 
@@ -1654,6 +1667,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		r = ![[self selectedWebView] isEmpty];
 	}
+	else if (selector == @selector(searchInBookmarks:))
+	{
+		SBBookmarksView *bookmarksView = (SBBookmarksView *)sidebar.view;
+		r = (bookmarksView != nil);
+	}
 	else if (selector == @selector(switchMode:))
 	{
 		BOOL visibleSidebar = splitView.visibleSidebar && sidebar;
@@ -1714,7 +1732,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if ([itemIdentifier isEqualToString:kSBToolbarHomeItemIdentifier])
 	{
-		
+		NSString *homepage = [[NSUserDefaults standardUserDefaults] objectForKey:kSBHomePage];
+		r = [homepage length] > 0;
 	}
 	else if ([itemIdentifier isEqualToString:kSBToolbarSourceItemIdentifier])
 	{
@@ -2265,6 +2284,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	[window hideCoverWindow];
 	[self destructEditBookmarkView];
+}
+
+- (void)searchInBookmarks:(id)sender
+{
+	SBBookmarksView *bookmarksView = (SBBookmarksView *)sidebar.view;
+	if (bookmarksView)
+	{
+		[bookmarksView setShowSearchbar:YES];
+	}
 }
 
 - (void)switchMode:(id)sender
