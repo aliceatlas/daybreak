@@ -147,12 +147,12 @@
 		08B00EE210AE5A33002277E5 /* UserAgent.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B00EE110AE5A33002277E5 /* UserAgent.png */; };
 		08B6E2A2103451DA00BD15D8 /* SBSectionGroupe.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B6E2A1103451DA00BD15D8 /* SBSectionGroupe.m */; };
 		08C1D4B70FF9092A005709D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C1D4B60FF9092A005709D7 /* QuartzCore.framework */; };
+		08C3F2E610DDFCFA00340900 /* Credits.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 08C3F2E510DDFCFA00340900 /* Credits.rtfd */; };
 		08C8D68F1036DD0C005540AF /* Icon_Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C8D68D1036DD0C005540AF /* Icon_Camera.png */; };
 		08C8D6A01036DEF4005540AF /* Icon_Lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C8D69E1036DEF4005540AF /* Icon_Lock.png */; };
 		08C8D6A11036DEF4005540AF /* Icon_Unlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C8D69F1036DEF4005540AF /* Icon_Unlock.png */; };
 		08C902CA100CC74600A46719 /* Plug-ins.html in Resources */ = {isa = PBXBuildFile; fileRef = 08C902C9100CC74600A46719 /* Plug-ins.html */; };
 		08DA3D251057D9BE00DD4D3E /* SBBookmarkListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA3D241057D9BE00DD4D3E /* SBBookmarkListItemView.m */; };
-		08DE0CED1065D3AD00BA96F7 /* Credits.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 08DE0CEC1065D3AD00BA96F7 /* Credits.rtfd */; };
 		08E310370FFE58B300760CEC /* SBAboutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08E310360FFE58B300760CEC /* SBAboutView.m */; };
 		08EB0675102EF160003B3A91 /* SBPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EB0674102EF160003B3A91 /* SBPreferencesWindowController.m */; };
 		08EB067B102EF1CA003B3A91 /* SBWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EB067A102EF1CA003B3A91 /* SBWindowController.m */; };
@@ -384,13 +384,13 @@
 		08BC84FF107F9158005C9030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08BC851D107F9160005C9030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08C1D4B60FF9092A005709D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
+		08C3F2E510DDFCFA00340900 /* Credits.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; name = Credits.rtfd; path = Resources/Credits.rtfd; sourceTree = "<group>"; };
 		08C8D68D1036DD0C005540AF /* Icon_Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Camera.png; path = Resources/Images/Icon_Camera.png; sourceTree = "<group>"; };
 		08C8D69E1036DEF4005540AF /* Icon_Lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Lock.png; path = Resources/Images/Icon_Lock.png; sourceTree = "<group>"; };
 		08C8D69F1036DEF4005540AF /* Icon_Unlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Unlock.png; path = Resources/Images/Icon_Unlock.png; sourceTree = "<group>"; };
 		08C902C9100CC74600A46719 /* Plug-ins.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "Plug-ins.html"; path = "Resources/htmls/Plug-ins.html"; sourceTree = "<group>"; };
 		08DA3D231057D9BE00DD4D3E /* SBBookmarkListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarkListItemView.h; path = Classes/SBBookmarkListItemView.h; sourceTree = "<group>"; };
 		08DA3D241057D9BE00DD4D3E /* SBBookmarkListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBookmarkListItemView.m; path = Classes/SBBookmarkListItemView.m; sourceTree = "<group>"; };
-		08DE0CEC1065D3AD00BA96F7 /* Credits.rtfd */ = {isa = PBXFileReference; lastKnownFileType = text; name = Credits.rtfd; path = Resources/Credits.rtfd; sourceTree = "<group>"; };
 		08DE5E81107D8104006A1B94 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08DE5E93107D8112006A1B94 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08E310350FFE58B300760CEC /* SBAboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBAboutView.h; path = Classes/SBAboutView.h; sourceTree = "<group>"; };
@@ -829,7 +829,7 @@
 				0891D41E1000436C000CE426 /* Localizable.strings */,
 				0896C1290FFF136300B97498 /* ViewStructure.plist */,
 				084067440FE2B5B400CC80E3 /* MainMenu.xib */,
-				08DE0CEC1065D3AD00BA96F7 /* Credits.rtfd */,
+				08C3F2E510DDFCFA00340900 /* Credits.rtfd */,
 				08C902CC100CC74F00A46719 /* htmls */,
 				0840677E0FE2BF9100CC80E3 /* Icons */,
 				084067040FE2B53C00CC80E3 /* Images */,
@@ -979,10 +979,10 @@
 				0893E614104FF4E800AF3283 /* BLKGUI_Radio-Selected-Highlighted.png in Resources */,
 				0893E615104FF4E800AF3283 /* BLKGUI_Radio-Highlighted.png in Resources */,
 				083F27421053F4EE00346934 /* Update.png in Resources */,
-				08DE0CED1065D3AD00BA96F7 /* Credits.rtfd in Resources */,
 				0853D16B106724E200DB577C /* Releasenotes.html in Resources */,
 				085A738D1091CDC600FE7556 /* History.png in Resources */,
 				08B00EE210AE5A33002277E5 /* UserAgent.png in Resources */,
+				08C3F2E610DDFCFA00340900 /* Credits.rtfd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
