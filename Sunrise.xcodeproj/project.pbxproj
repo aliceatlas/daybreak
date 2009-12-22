@@ -206,8 +206,6 @@
 		085C2AB70FE2ABB60099A0F6 /* SBDocumentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDocumentWindow.m; path = Classes/SBDocumentWindow.m; sourceTree = "<group>"; };
 		086D732C10D7867B006A4F25 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "Resources/zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		086D732D10D78682006A4F25 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "Resources/zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		086D732E10D7868A006A4F25 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "Resources/zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		086D733110D786C0006A4F25 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "Resources/zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		08742F3E10233A60001F7EAF /* NSImage-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSImage-SBAdditions.h"; path = "Classes/NSImage-SBAdditions.h"; sourceTree = "<group>"; };
 		08742F3F10233A60001F7EAF /* NSImage-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSImage-SBAdditions.m"; path = "Classes/NSImage-SBAdditions.m"; sourceTree = "<group>"; };
 		08742F5410234024001F7EAF /* Plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Plain.png; path = Resources/Images/Plain.png; sourceTree = "<group>"; };
@@ -1081,7 +1079,6 @@
 				08DE5E93107D8112006A1B94 /* es */,
 				0820DF67109070C40068FD46 /* it */,
 				086D732C10D7867B006A4F25 /* zh-Hans */,
-				086D733110D786C0006A4F25 /* zh-Hant */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1095,7 +1092,6 @@
 				08DE5E81107D8104006A1B94 /* es */,
 				0820DF5B109070B70068FD46 /* it */,
 				086D732D10D78682006A4F25 /* zh-Hans */,
-				086D732E10D7868A006A4F25 /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
