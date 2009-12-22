@@ -173,6 +173,8 @@
 		081E0F0010C115BE00C6AD2B /* SBTextInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTextInputView.m; path = Classes/SBTextInputView.m; sourceTree = "<group>"; };
 		0820DF5B109070B70068FD46 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = Resources/it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0820DF67109070C40068FD46 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = Resources/it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		082886C610E11FAF0018B591 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "Resources/zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		082886D610E11FD90018B591 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "Resources/zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		08313CA610B6B9CD004198C3 /* SBMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBMessageView.h; path = Classes/SBMessageView.h; sourceTree = "<group>"; };
 		08313CA710B6B9CD004198C3 /* SBMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBMessageView.m; path = Classes/SBMessageView.m; sourceTree = "<group>"; };
 		083F27411053F4EE00346934 /* Update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Update.png; path = Resources/Images/Update.png; sourceTree = "<group>"; };
@@ -1079,6 +1081,7 @@
 				08DE5E93107D8112006A1B94 /* es */,
 				0820DF67109070C40068FD46 /* it */,
 				086D732C10D7867B006A4F25 /* zh-Hans */,
+				082886D610E11FD90018B591 /* zh-Hant */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1092,6 +1095,7 @@
 				08DE5E81107D8104006A1B94 /* es */,
 				0820DF5B109070B70068FD46 /* it */,
 				086D732D10D78682006A4F25 /* zh-Hans */,
+				082886C610E11FAF0018B591 /* zh-Hant */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
