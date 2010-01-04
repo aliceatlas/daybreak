@@ -4,7 +4,7 @@ SBDocument.m
  
 Authoring by Atsushi Jike
 
-Copyright 2009 Atsushi Jike. All rights reserved.
+Copyright 2010 Atsushi Jike. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -1094,46 +1094,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// Search in bookmarks
 	for (NSDictionary *bookmarkItem in bookmarks.items)
 	{
-		NSString *title = [bookmarkItem objectForKey:kSBBookmarkTitle];
-		NSString *urlString = [bookmarkItem objectForKey:kSBBookmarkURL];
-		NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
-		NSRange range = [title rangeOfString:string options:NSCaseInsensitiveSearch];
-		BOOL matchWithTitle = NO;
-		if (range.location == NSNotFound)
+		NSString *urlString = nil;
+		if (urlString = [bookmarkItem objectForKey:kSBBookmarkURL])
 		{
-			range = [urlString rangeOfString:string];
-		}
-		else {
-			// Match with title
-			matchWithTitle = YES;
-		}
-		if (range.location == NSNotFound)
-		{
-			range = [SchemelessUrlString rangeOfString:string];
-		}
-		if (range.location != NSNotFound)
-		{
-			NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
-			if (matchWithTitle)
-				[item setObject:title forKey:kSBTitle];
-			[item setObject:urlString forKey:kSBURL];
-			if ([bookmarkItem objectForKey:kSBBookmarkImage])
-			{
-				[item setObject:[bookmarkItem objectForKey:kSBBookmarkImage] forKey:kSBImage];
-			}
-			[items addObject:[[item copy] autorelease]];
-			[urlStrings addObject:urlString];
-		}
-	}
-	
-	// Search in history
-	for (WebHistoryItem *historyItem in history.items)
-	{
-		NSString *urlString = [historyItem URLString];
-		if (![urlStrings containsObject:urlString])
-		{
+			NSString *title = [bookmarkItem objectForKey:kSBBookmarkTitle];
 			NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
-			NSRange range = [urlString rangeOfString:string];
+			NSRange range = [title rangeOfString:string options:NSCaseInsensitiveSearch];
+			BOOL matchWithTitle = NO;
+			if (range.location == NSNotFound)
+			{
+				range = [urlString rangeOfString:string];
+			}
+			else {
+				// Match with title
+				matchWithTitle = title != nil;
+			}
 			if (range.location == NSNotFound)
 			{
 				range = [SchemelessUrlString rangeOfString:string];
@@ -1141,13 +1116,44 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if (range.location != NSNotFound)
 			{
 				NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
-				NSData *iconData = [historyItem icon] ? [[historyItem icon] TIFFRepresentation] : nil;
+				if (matchWithTitle)
+					[item setObject:title forKey:kSBTitle];
 				[item setObject:urlString forKey:kSBURL];
-				if (iconData)
+				if ([bookmarkItem objectForKey:kSBBookmarkImage])
 				{
-					[item setObject:iconData forKey:kSBImage];
+					[item setObject:[bookmarkItem objectForKey:kSBBookmarkImage] forKey:kSBImage];
 				}
 				[items addObject:[[item copy] autorelease]];
+				[urlStrings addObject:urlString];
+			}
+		}
+	}
+	
+	// Search in history
+	for (WebHistoryItem *historyItem in history.items)
+	{
+		NSString *urlString = nil;
+		if (urlString = [historyItem URLString])
+		{
+			if (![urlStrings containsObject:urlString])
+			{
+				NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
+				NSRange range = [urlString rangeOfString:string];
+				if (range.location == NSNotFound)
+				{
+					range = [SchemelessUrlString rangeOfString:string];
+				}
+				if (range.location != NSNotFound)
+				{
+					NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
+					NSData *iconData = [historyItem icon] ? [[historyItem icon] TIFFRepresentation] : nil;
+					[item setObject:urlString forKey:kSBURL];
+					if (iconData)
+					{
+						[item setObject:iconData forKey:kSBImage];
+					}
+					[items addObject:[[item copy] autorelease]];
+				}
 			}
 		}
 	}

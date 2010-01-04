@@ -3,7 +3,7 @@
 //  Sunrise
 //
 //  Created by Atsushi Jike on 09/11/20.
-//  Copyright 2009 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
 #import "SBMessageView.h"

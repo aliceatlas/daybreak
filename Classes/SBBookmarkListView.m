@@ -4,7 +4,7 @@ SBBookmarkListView.m
  
 Authoring by Atsushi Jike
 
-Copyright 2009 Atsushi Jike. All rights reserved.
+Copyright 2010 Atsushi Jike. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -1323,8 +1323,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			// Move item
 			[bookmarks moveItemsAtIndexes:indexes toIndex:toIndex];
 			[self moveItemViewsAtIndexes:indexes toIndex:toIndex];
-			[self layoutItemViewsWithAnimationFromIndex:0];
 		}
+		else {
+			// Add as new item
+			[bookmarks addItems:pbItems toIndex:toIndex];
+			[self addForItems:pbItems toIndex:toIndex];
+		}
+		[self layoutItemViewsWithAnimationFromIndex:0];
 	}
 	else if ([types containsObject:NSURLPboardType])
 	{
@@ -1377,7 +1382,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				[self layoutItemViewsWithAnimationFromIndex:0];
 			}
 			else {
-				// add as new item
+				// Add as new item
 				if (toIndex != NSNotFound)
 				{
 					[bookmarkItems addObject:item];

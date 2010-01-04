@@ -4,7 +4,7 @@ SBDefinitions.h
  
 Authoring by Atsushi Jike
 
-Copyright 2009 Atsushi Jike. All rights reserved.
+Copyright 2010 Atsushi Jike. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -88,8 +88,8 @@ extern NSString *kSBSidebarPosition;					// Integer
 extern NSString *kSBSidebarWidth;						// Float
 extern NSString *kSBSidebarVisibilityFlag;				// BOOL
 extern NSString *kSBTabbarVisibilityFlag;				// BOOL
-extern NSString *kSBBookmarkCellWidth;					// Float
-extern NSString *kSBBookmarkMode;				// Integer
+extern NSString *kSBBookmarkCellWidth;					// Integer
+extern NSString *kSBBookmarkMode;						// Integer
 extern NSString *kSBUpdaterSkipVersion;					// String
 extern NSString *kSBFindCaseFlag;						// BOOL
 extern NSString *kSBFindWrapFlag;						// BOOL

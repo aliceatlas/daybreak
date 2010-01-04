@@ -4,7 +4,7 @@ SBBookmarks.m
  
 Authoring by Atsushi Jike
 
-Copyright 2009 Atsushi Jike. All rights reserved.
+Copyright 2010 Atsushi Jike. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -256,7 +256,8 @@ static SBBookmarks *sharedBookmarks;
 {
 	if ([inItems count] > 0 && toIndex <= [items count] && toIndex >= 0)
 	{
-		[items insertObjects:inItems atIndexes:[NSIndexSet indexSetWithIndex:toIndex]];
+//		[items insertObjects:inItems atIndexes:[NSIndexSet indexSetWithIndex:toIndex]];
+		[items insertObjects:inItems atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(toIndex, [inItems count])]];
 		[self writeToFile];
 		[self performSelector:@selector(notifyDidUpdate) withObject:nil afterDelay:0];
 	}

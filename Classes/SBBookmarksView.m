@@ -4,7 +4,7 @@ SBBookmarksView.m
  
 Authoring by Atsushi Jike
 
-Copyright 2009 Atsushi Jike. All rights reserved.
+Copyright 2010 Atsushi Jike. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, 
 are permitted provided that the following conditions are met:
@@ -101,7 +101,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[scrollView setHasHorizontalScroller:NO];
 	[scrollView setHasVerticalScroller:YES];
 	listView.wrapperView = self;
-	listView.cellWidth = 128.0;
+	listView.cellWidth = (CGFloat)[[NSUserDefaults standardUserDefaults] integerForKey:kSBBookmarkCellWidth];
 	[scrollView setDocumentView:listView];
 	[[scrollView contentView] setCopiesOnScroll:YES];
 	[self addSubview:scrollView];
