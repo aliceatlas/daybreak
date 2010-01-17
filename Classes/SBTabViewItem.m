@@ -1091,12 +1091,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	if ([selectedString length] > 0)
 	{
-		NSMenuItem *newItem = nil;
-		BOOL added = NO;
-		// Create item
-		newItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Search in Google", nil) action:@selector(searchStringFromMenu:) keyEquivalent:@""] autorelease];
-		[newItem setTarget:self];
-		[newItem setRepresentedObject:selectedString];
+		NSMenuItem *newItem0 = nil;
+		NSMenuItem *newItem1 = nil;
+		BOOL replaced = NO;
+		// Create items
+		newItem0 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Search in Google", nil) action:@selector(searchStringFromMenu:) keyEquivalent:@""] autorelease];
+		[newItem0 setTarget:self];
+		[newItem0 setRepresentedObject:selectedString];
+		newItem1 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Google Search Results in New Tab", nil) action:@selector(searchStringInNewTabFromMenu:) keyEquivalent:@""] autorelease];
+		[newItem1 setTarget:self];
+		[newItem1 setRepresentedObject:selectedString];
 		// Find an item
 		index = [menuItems count] - 1;
 		for (NSMenuItem *item in [menuItems reverseObjectEnumerator])
@@ -1104,15 +1108,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			NSInteger tag = [item tag];
 			if (tag == 21)
 			{
-				[menuItems replaceObjectAtIndex:index withObject:newItem];
-				added = YES;
+				[menuItems replaceObjectAtIndex:index withObject:newItem0];
+				[menuItems insertObject:newItem1 atIndex:index + 1];
+				replaced = YES;
 			}
 			index--;
 		}
-		if (!added)
+		if (!replaced)
 		{
 			[menuItems insertObject:[NSMenuItem separatorItem] atIndex:0];
-			[menuItems insertObject:newItem atIndex:0];
+			[menuItems insertObject:newItem0 atIndex:0];
+			[menuItems insertObject:newItem1 atIndex:1];
 		}
 	}
 	if (frame != [sender mainFrame])
@@ -1160,10 +1166,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				if (modifierFlags & NSCommandKeyMask)	// Command
 				{
 					BOOL selection = YES;
-					if (modifierFlags & NSShiftKeyMask)	// Shift
+					BOOL makeActiveFlag = [[NSUserDefaults standardUserDefaults] boolForKey:kSBWhenNewTabOpensMakeActiveFlag];
+					// Make it active flag and Shift key mask
+					if (makeActiveFlag)
 					{
-						// Open URL in new tab
-						selection = NO;
+						if (modifierFlags & NSShiftKeyMask)
+						{
+							selection = NO;
+						}
+					}
+					else {
+						if (modifierFlags & NSShiftKeyMask)
+						{
+						}
+						else {
+							selection = NO;
+						}
 					}
 					[self.tabView executeShouldAddNewItemForURL:url selection:selection];
 					[listener ignore];
@@ -1320,7 +1338,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *searchString = [menuItem representedObject];
 	if (searchString)
 	{
-		[self.tabView executeShouldSearchString:searchString];
+		[self.tabView executeShouldSearchString:searchString newTab:NO];
+	}
+}
+
+- (void)searchStringInNewTabFromMenu:(NSMenuItem *)menuItem
+{
+	NSString *searchString = [menuItem representedObject];
+	if (searchString)
+	{
+		[self.tabView executeShouldSearchString:searchString newTab:YES];
 	}
 }
 

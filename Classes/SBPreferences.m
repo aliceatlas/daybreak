@@ -83,6 +83,10 @@ static SBPreferences *_sharedPreferences;
 	[info setObject:@"Only visited sites" forKey:kSBAcceptCookies];
 	// History
 	[info setObject:[NSNumber numberWithDouble:SBDefaultHistorySaveSeconds] forKey:kSBHistorySaveDays];
+	// Advanced
+	// WebKitDeveloper
+	[info setObject:[NSNumber numberWithBool:YES] forKey:kWebKitDeveloperExtras];
+	[info setObject:[NSNumber numberWithBool:YES] forKey:kSBWhenNewTabOpensMakeActiveFlag];
 	[defaults registerDefaults:[[info copy] autorelease]];
 }
 

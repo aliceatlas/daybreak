@@ -120,7 +120,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self constructTabbar];
 	[self constructSplitView];
 #if kSBFlagCreateTabItemWhenLaunched
-	[self constructNewTabWithURL:self.initialURL selection:YES];
+	[self constructNewTabWithString:[self.initialURL absoluteString] selection:YES];
 #endif
     [self addWindowController:windowController];
 	[self addObserverNotifications];
@@ -665,11 +665,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
+- (void)constructNewTabWithString:(NSString *)string selection:(BOOL)selection
+{
+	NSString *requestURLString = [string length] > 0 ? [string requestURLString] : nil;
+	NSURL *URL = [requestURLString length] > 0 ? [NSURL URLWithString:requestURLString] : nil;
+	[self constructNewTabWithURL:URL selection:selection];
+}
+
 - (void)constructNewTabWithURL:(NSURL *)URL selection:(BOOL)selection
 {
 	SBTabbarItem *tabbarItem = nil;
 	SBTabViewItem *tabViewItem = nil;
-	NSNumber *identifier = [self newIdentifier];
+	NSNumber *identifier = nil;
+	identifier = [self newIdentifier];
 	tabbarItem = [self constructTabbarItemWithIdentifier:identifier];
 	tabbarItem.title = [self displayName];
 	tabbarItem.progress = -1;
@@ -962,6 +970,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			 [characters isEqualToString:@"f"])
 	{
 		[self toggleFlip];
+		r = YES;
+	}
+	else if ([theEvent modifierFlags] & NSCommandKeyMask && 
+			 [theEvent modifierFlags] & NSShiftKeyMask && 
+			 [characters isEqualToString:@"i"])
+	{
+		WebView *webView = [self selectedWebView];
+		id inspector = [webView respondsToSelector:@selector(inspector)] ? [webView inspector] : nil;
+		if (inspector) if ([inspector respondsToSelector:@selector(show:)]) [inspector show:nil];
+		r = YES;
+	}
+	else if ([theEvent modifierFlags] & NSCommandKeyMask && 
+			 [theEvent modifierFlags] & NSShiftKeyMask && 
+			 [characters isEqualToString:@"c"])
+	{
+		WebView *webView = [self selectedWebView];
+		id inspector = [webView respondsToSelector:@selector(inspector)] ? [webView inspector] : nil;
+		if (inspector) if ([inspector respondsToSelector:@selector(show:)]) [inspector show:nil];
+		if (inspector) if ([inspector respondsToSelector:@selector(showConsole:)]) [inspector showConsole:nil];
 		r = YES;
 	}
 	return r;
@@ -1403,9 +1430,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self constructNewTabWithURL:url selection:selection];
 }
 
-- (void)tabView:(SBTabView *)aTabView shouldSearchString:(NSString *)string
+- (void)tabView:(SBTabView *)aTabView shouldSearchString:(NSString *)string newTab:(BOOL)newTab
 {
-	[self searchString:string newTab:NO];
+	[self searchString:string newTab:newTab];
 }
 
 - (BOOL)tabView:(SBTabView *)aTabView shouldConfirmWithMessage:(NSString *)message
@@ -1642,6 +1669,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	else if (selector == @selector(source:))
 	{
 		[menuItem setTitle:self.selectedTabViewItem.showSource ? NSLocalizedString(@"Hide Source", nil) : NSLocalizedString(@"Show Source", nil)];
+	}
+	else if (selector == @selector(showWebInspector:))
+	{
+		r = [[NSUserDefaults standardUserDefaults] boolForKey:kWebKitDeveloperExtras] && ![[self selectedWebView] isEmpty];
+	}
+	else if (selector == @selector(showConsole:))
+	{
+		r = [[NSUserDefaults standardUserDefaults] boolForKey:kWebKitDeveloperExtras] && ![[self selectedWebView] isEmpty];
 	}
 	else if (selector == @selector(backward:))
 	{
@@ -1897,10 +1932,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)createNewTab:(id)sender
 {
 	NSString *homepage = [[SBPreferences sharedPreferences] homepage:NO];
-	NSURL *url = homepage ? [NSURL URLWithString:homepage] : nil;
 	if (!self.window.tabbarVisivility && [tabbar.items count] > 0)
 		[self showTabbar];
-	[self constructNewTabWithURL:url selection:YES];
+	[self constructNewTabWithString:homepage selection:YES];
 }
 
 - (void)openLocation:(id)sender
@@ -2053,15 +2087,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)reload:(id)sender
 {
-	WebView *webView = [self selectedWebView];
-	if ([webView isLoading])
-		[webView stopLoading:nil];
-	[webView reload:nil];
+	SBWebView *webView = nil;
+	if (webView = [self selectedWebView])
+	{
+		if ([webView isLoading])
+			[webView stopLoading:nil];
+		[webView reload:nil];
+	}
 }
 
 - (void)stopLoading:(id)sender
 {
-	[[self selectedWebView] stopLoading:nil];
+	SBWebView *webView = nil;
+	if (webView = [self selectedWebView])
+		[webView stopLoading:nil];
 }
 
 - (void)scaleToActualSizeForView:(id)sender
@@ -2093,20 +2132,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)scaleToActualSizeForText:(id)sender
 {
-	WebView *webView = [self selectedWebView];
-	[webView makeTextStandardSize:nil];
+	SBWebView *webView = nil;
+	if (webView = [self selectedWebView])
+		[webView makeTextStandardSize:nil];
 }
 
 - (void)zoomInText:(id)sender
 {
-	WebView *webView = [self selectedWebView];
-	[webView makeTextLarger:nil];
+	SBWebView *webView = nil;
+	if (webView = [self selectedWebView])
+		[webView makeTextLarger:nil];
 }
 
 - (void)zoomOutText:(id)sender
 {
-	WebView *webView = [self selectedWebView];
-	[webView makeTextSmaller:nil];
+	SBWebView *webView = nil;
+	if (webView = [self selectedWebView])
+		[webView makeTextSmaller:nil];
 }
 
 - (void)source:(id)sender
@@ -2114,12 +2156,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self.selectedTabViewItem toggleShowSource];
 }
 
+- (void)showWebInspector:(id)sender
+{
+	SBWebView *webView = nil;
+	if (webView = [self selectedWebView])
+		[webView showWebInspector:nil];
+}
+
+- (void)showConsole:(id)sender
+{
+	SBWebView *webView = nil;
+	if (webView = [self selectedWebView])
+	{
+		[webView showConsole:nil];
+	}
+}
+
 // History menu
 
 - (void)backward:(id)sender
 {
-	SBTabViewItem *tabViewItem = [tabView selectedTabViewItem];
-	if (tabViewItem)
+	SBTabViewItem *tabViewItem = nil;
+	if (tabViewItem = [tabView selectedTabViewItem])
 	{
 		[tabViewItem backward:nil];
 	}
@@ -2127,8 +2185,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)forward:(id)sender
 {
-	SBTabViewItem *tabViewItem = [tabView selectedTabViewItem];
-	if (tabViewItem)
+	SBTabViewItem *tabViewItem = nil;
+	if (tabViewItem = [tabView selectedTabViewItem])
 	{
 		[tabViewItem forward:nil];
 	}
@@ -2362,30 +2420,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (stringValue)
 	{
-		BOOL hasScheme = NO;
-		if ([stringValue isURLString:&hasScheme])
+		NSString *requestURLString = [stringValue requestURLString];
+		if (newer)
 		{
-			if (!hasScheme)
-			{
-				if ([stringValue hasPrefix:@"/"])
-				{
-					stringValue = [@"file://" stringByAppendingFormat:stringValue];
-				}
-				else {
-					stringValue = [@"http://" stringByAppendingFormat:stringValue];
-				}
-			}
-			stringValue = [stringValue URLEncodedString];
-			if (newer)
-			{
-				[self constructNewTabWithURL:[NSURL URLWithString:stringValue] selection:YES];
-			}
-			else {
-				[self openURLStringInSelectedTabViewItem:stringValue];
-			}
+			NSURL *URL = [requestURLString length] > 0 ? [NSURL URLWithString:requestURLString] : nil;
+			[self constructNewTabWithURL:URL selection:YES];
 		}
 		else {
-			[self searchString:stringValue newTab:newer];
+			[self openURLStringInSelectedTabViewItem:requestURLString];
 		}
 	}
 }
@@ -2394,26 +2436,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (stringValue)
 	{
-		NSString *string = nil;
-		NSURL *requestURL = nil;
-		NSString *requestURLString = nil;
-		NSDictionary *info = nil;
-		NSString *gSearchFormat = nil;
-		
-		info = [[NSBundle mainBundle] localizedInfoDictionary];
-		gSearchFormat = info ? [info objectForKey:@"SBGSearchFormat"] : nil;
-		if (gSearchFormat)
+		NSString *searchURLString = [stringValue searchURLString];
+		if (newer)
 		{
-			string = [NSString stringWithFormat:gSearchFormat, stringValue];
-			requestURL = [NSURL _web_URLWithUserTypedString:string];
-			requestURLString = [requestURL absoluteString];
-			if (newer)
-			{
-				[self constructNewTabWithURL:[NSURL URLWithString:requestURLString] selection:YES];
-			}
-			else {
-				[self openURLStringInSelectedTabViewItem:requestURLString];
-			}
+			NSURL *URL = [searchURLString length] > 0 ? [NSURL URLWithString:searchURLString] : nil;
+			[self constructNewTabWithURL:URL selection:YES];
+		}
+		else {
+			[self openURLStringInSelectedTabViewItem:searchURLString];
 		}
 	}
 }

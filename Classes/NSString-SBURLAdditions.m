@@ -210,4 +210,47 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return string;
 }
 
+- (NSString *)requestURLString
+{
+	NSString *stringValue = self;
+	BOOL hasScheme = NO;
+	if ([stringValue isURLString:&hasScheme])
+	{
+		if (!hasScheme)
+		{
+			if ([stringValue hasPrefix:@"/"])
+			{
+				stringValue = [@"file://" stringByAppendingFormat:stringValue];
+			}
+			else {
+				stringValue = [@"http://" stringByAppendingFormat:stringValue];
+			}
+		}
+		stringValue = [stringValue URLEncodedString];
+	}
+	else {
+		stringValue = [self searchURLString];
+	}
+	return stringValue;
+}
+
+- (NSString *)searchURLString
+{
+	NSString *stringValue = self;
+	NSString *str = nil;
+	NSURL *requestURL = nil;
+	NSDictionary *info = nil;
+	NSString *gSearchFormat = nil;
+	
+	info = [[NSBundle mainBundle] localizedInfoDictionary];
+	gSearchFormat = info ? [info objectForKey:@"SBGSearchFormat"] : nil;
+	if (gSearchFormat)
+	{
+		str = [NSString stringWithFormat:gSearchFormat, stringValue];
+		requestURL = [NSURL _web_URLWithUserTypedString:str];
+		stringValue = [requestURL absoluteString];
+	}
+	return stringValue;
+}
+
 @end

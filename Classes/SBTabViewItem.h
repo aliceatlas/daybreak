@@ -91,6 +91,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)removeFromTabView;
 // Menu Actions
 - (void)searchStringFromMenu:(NSMenuItem *)menuItem;
+- (void)searchStringInNewTabFromMenu:(NSMenuItem *)menuItem;
 - (void)openFrameInCurrentFrameFromMenu:(NSMenuItem *)menuItem;
 - (void)openURLInNewTabFromMenu:(NSMenuItem *)menuItem;
 

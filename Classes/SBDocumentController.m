@@ -52,7 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSString *homepage = [[SBPreferences sharedPreferences] homepage:YES];
 	BOOL sidebarVisibility = [[NSUserDefaults standardUserDefaults] boolForKey:kSBSidebarVisibilityFlag];
-	NSURL *url = homepage ? [NSURL URLWithString:homepage] : nil;
+	NSURL *url = [homepage length] > 0 ? [NSURL URLWithString:[homepage requestURLString]] : nil;
 	return [self openUntitledDocumentAndDisplay:displayDocument sidebarVisibility:sidebarVisibility initialURL:url error:outError];
 }
 

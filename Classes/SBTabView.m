@@ -205,13 +205,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
-- (void)executeShouldSearchString:(NSString *)string
+- (void)executeShouldSearchString:(NSString *)string newTab:(BOOL)newTab
 {
 	if (delegate)
 	{
-		if ([delegate respondsToSelector:@selector(tabView:shouldSearchString:)])
+		if ([delegate respondsToSelector:@selector(tabView:shouldSearchString:newTab:)])
 		{
-			[delegate tabView:self shouldSearchString:string];
+			[delegate tabView:self shouldSearchString:string newTab:newTab];
 		}
 	}
 }

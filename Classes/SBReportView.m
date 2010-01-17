@@ -23,6 +23,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBReportView.h"
+#include <mach/mach_host.h>
 
 #define kSBMinFrameSizeWidth 600
 #define kSBMaxFrameSizeWidth 900

@@ -111,6 +111,10 @@ NSString *kSBURLFieldShowsIDNAsASCII = @"URLFieldShowsIDNAsASCII";
 NSString *kSBAcceptCookies = @"AcceptCookies";
 // History
 NSString *kSBHistorySaveDays = @"HistorySaveDays";
+// Advanced
+// WebKitDeveloper
+NSString *kWebKitDeveloperExtras = @"WebKitDeveloperExtras";
+NSString *kSBWhenNewTabOpensMakeActiveFlag = @"WhenNewTabOpensMakeActive";
 
 // Method values
 NSInteger SBCountOfOpenMethods = 3;

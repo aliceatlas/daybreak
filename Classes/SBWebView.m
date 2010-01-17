@@ -238,4 +238,33 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
+#pragma mark Private API
+
+- (id)inspector
+{
+	return [super respondsToSelector:@selector(inspector)] ? [super inspector] : nil;
+}
+
+- (void)showWebInspector:(id)sender
+{
+	id inspector = [self inspector];
+	if (inspector)
+	{
+		if ([inspector respondsToSelector:@selector(show:)])
+			[inspector show:nil];
+	}
+}
+
+- (void)showConsole:(id)sender
+{
+	id inspector = [self inspector];
+	if (inspector)
+	{
+		if ([inspector respondsToSelector:@selector(show:)])
+			[inspector show:nil];
+		if ([inspector respondsToSelector:@selector(showConsole:)])
+			[inspector performSelector:@selector(showConsole:) withObject:nil afterDelay:0.25];
+	}
+}
+
 @end

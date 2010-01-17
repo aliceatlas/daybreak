@@ -185,7 +185,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if (centerImage)
 			{
 				r.origin.x = leftImage ? [leftImage size].width : 0.0;
-				r.size.width = cellFrame.size.width - ([leftImage size].width + [rightImage size].width);
+				r.size.width = cellFrame.size.width - (leftImage ? [leftImage size].width : 0 + rightImage ? [rightImage size].width : 0);
 				r.size.height = [centerImage size].height;
 				r.origin.y = (cellFrame.size.height - r.size.height) / 2;
 				[centerImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5)];

@@ -84,11 +84,11 @@ static SBUpdater *_sharedUpdater;
 		NSString *string = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 		if ([string length] > 0)
 		{
-			NSRange range0 = NSMakeRange(NSNotFound, 0);
+			NSRange range0;
 			range0 = [string rangeOfString:@"version=\""];
 			if (range0.location != NSNotFound)
 			{
-				NSRange range1 = NSMakeRange(NSNotFound, 0);
+				NSRange range1;
 				range1 = [string rangeOfString:@"\";" options:0 range:NSMakeRange(NSMaxRange(range0), [string length] - NSMaxRange(range0))];
 				if (range1.location != NSNotFound)
 				{

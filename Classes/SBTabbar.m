@@ -56,6 +56,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructClosableTimer];
 	delegate = nil;
 	_draggedItem = nil;
+	_shouldReselectItem = nil;
 	closableItem = nil;
 	[super dealloc];
 }
@@ -358,6 +359,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
+- (void)executeShouldReselect:(SBTabbarItem *)item
+{
+	_shouldReselectItem = item;
+}
+
 - (void)executeDidChangeSelection:(SBTabbarItem *)item
 {
 	if (delegate)
@@ -369,7 +375,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
-- (void)executeDidReselection:(SBTabbarItem *)item
+- (void)executeDidReselectItem:(SBTabbarItem *)item
 {
 	if (delegate)
 	{
@@ -449,9 +455,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (changed)
 		{
 			[self executeDidChangeSelection:item];
-		}
-		else {
-			[self executeDidReselection:item];
 		}
 	}
 	else {
@@ -730,6 +733,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)applyDisclosableAllItem
 {
+	[self destructClosableTimer];
 	for (SBTabbarItem *item in items)
 	{
 		item.closable = NO;
@@ -741,9 +745,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)updateItems
 {
-//	BOOL closable = [items count] > 1;
 	NSRect r = NSZeroRect;
 	NSInteger index = 0;
+	NSEvent *currentEvent = [[NSApplication sharedApplication] currentEvent];
+	NSPoint location = [currentEvent locationInWindow];
 	for (SBTabbarItem *item in items)
 	{
 		// Update frame of item
@@ -759,10 +764,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			// Ignore while dragging
 		}
-//		else {
-//			// Update closable of item
-//			item.closable = closable;
-//		}
+		else {
+			if ([self canClosable])
+			{
+				// If the mouse is entered in the closable rect, make a tabbar item closable
+				NSPoint point = [item convertPoint:location fromView:nil];
+				if (CGRectContainsPoint([item closableRect], NSPointToCGPoint(point)))
+				{
+					[self constructClosableTimerForItem:item];
+				}
+			}
+		}
 		index++;
 	}
 	addButton.frame = [self addButtonRect];
@@ -890,6 +902,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		NSPoint location = [theEvent locationInWindow];
 		_draggedItem = nil;
+		_shouldReselectItem = nil;
 		_draggedItemRect = NSZeroRect;
 		_downPoint = [contentView convertPoint:location fromView:nil];
 	}
@@ -908,6 +921,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				// Get dragging item
 				if (_draggedItem = [self itemAtPoint:_downPoint])
 				{
+					_shouldReselectItem = nil;
 					_draggedItemRect = _draggedItem.frame;
 					[items removeObject:_draggedItem];
 					[contentView addSubview:_draggedItem];	// Bring to front
@@ -972,6 +986,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 		_draggedItem = nil;
 		[self destructAutoScrollTimer];
+	}
+	if (_shouldReselectItem)
+	{
+		[self executeDidReselectItem:_shouldReselectItem];
+		_shouldReselectItem = nil;
 	}
 }
 

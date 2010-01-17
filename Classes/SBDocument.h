@@ -137,6 +137,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructSplitView;
 - (void)constructTabView;
 - (void)constructSidebar;
+- (void)constructNewTabWithString:(NSString *)string selection:(BOOL)selection;
 - (void)constructNewTabWithURL:(NSURL *)URL selection:(BOOL)selection;
 - (SBTabbarItem *)constructTabbarItemWithIdentifier:(NSNumber *)identifier;
 - (SBTabViewItem *)constructTabViewItemWithIdentifier:(NSNumber *)identifier;
@@ -179,6 +180,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)zoomInText:(id)sender;
 - (void)zoomOutText:(id)sender;
 - (void)source:(id)sender;
+- (void)showWebInspector:(id)sender;
+- (void)showConsole:(id)sender;
 // History menu
 - (void)backward:(id)sender;
 - (void)forward:(id)sender;

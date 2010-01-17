@@ -42,5 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSString *)stringByDeletingScheme;
 - (NSString *)URLEncodedString;
 - (NSString *)URLDencodedString;
+- (NSString *)requestURLString;
+- (NSString *)searchURLString;
 
 @end

@@ -127,6 +127,10 @@ extern NSString *kSBURLFieldShowsIDNAsASCII;// BOOL
 extern NSString *kSBAcceptCookies;			// String (SBCookieMethod)
 // History
 extern NSString *kSBHistorySaveDays;	// Double (seconds)
+// Advanced
+// WebKitDeveloper
+extern NSString *kWebKitDeveloperExtras;			// BOOL
+extern NSString *kSBWhenNewTabOpensMakeActiveFlag;	// BOOL
 
 // Method values
 extern NSInteger SBCountOfOpenMethods;
@@ -284,7 +288,7 @@ extern NSString *SBBookmarkPboardType;
 - (void)tabView:(SBTabView *)aTabView selectedItemDidReceiveIcon:(SBTabViewItem *)aTabViewItem;
 - (void)tabView:(SBTabView *)aTabView selectedItemDidReceiveServerRedirect:(SBTabViewItem *)aTabViewItem;
 - (void)tabView:(SBTabView *)aTabView shouldAddNewItemForURL:(NSURL *)url selection:(BOOL)selection;
-- (void)tabView:(SBTabView *)aTabView shouldSearchString:(NSString *)string;
+- (void)tabView:(SBTabView *)aTabView shouldSearchString:(NSString *)string newTab:(BOOL)newTab;
 - (BOOL)tabView:(SBTabView *)aTabView shouldConfirmWithMessage:(NSString *)message;
 - (void)tabView:(SBTabView *)aTabView shouldShowMessage:(NSString *)message;
 - (NSString *)tabView:(SBTabView *)aTabView shouldTextInput:(NSString *)prompt;
@@ -333,7 +337,12 @@ extern NSString *SBBookmarkPboardType;
 - (void)zoomPageOut:(id)sender;
 - (BOOL)canResetPageZoom;
 - (void)resetPageZoom:(id)sender;
+- (id)inspector;
+// WebInspector
+- (void)show:(id)arg1;
+- (void)showConsole:(id)arg1;
 @end
+
 
 // Methods for Snow Leopard 10.6
 @interface NSEvent (SBSnowLeopardAddition)

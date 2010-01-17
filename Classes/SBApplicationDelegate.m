@@ -283,7 +283,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBDocumentWindow *window = document.window;
 	NSString *versionString = updateView.versionString;
 	NSMutableString *mutableVString = [versionString mutableCopy];
-	NSRange r = NSMakeRange(NSNotFound, 0);
+	NSRange r;
 	do {
 		r = [mutableVString rangeOfString:@" "];
 		if (r.location != NSNotFound && r.length > 0)
@@ -476,10 +476,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructDebugMenu
 {
-	NSMenu *mainMenu, *debugMenu;
-	NSMenuItem *debugMenuItem, *writeViewStructure, *writeMainMenu, *validateStrings;
-	mainMenu = debugMenu = nil;
-	debugMenuItem = writeViewStructure = writeMainMenu = validateStrings = nil;
+	NSMenu *mainMenu = nil;
+	NSMenu *debugMenu = nil;
+	NSMenuItem *debugMenuItem = nil;
+	NSMenuItem *writeViewStructure = nil;
+	NSMenuItem *writeMainMenu = nil;
+	NSMenuItem *validateStrings = nil;
 	mainMenu = [NSApp mainMenu];
 	debugMenuItem = [[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""] autorelease];
 	debugMenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];

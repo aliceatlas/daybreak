@@ -90,7 +90,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSRect r = NSZeroRect;
 	NSToolbarItem *item = nil;
-	id toolbarView = nil;
 	NSArray *items = [self visibleItems];
 	NSEnumerator *enumerator = [items objectEnumerator];
 	NSPoint delta = NSZeroPoint;
@@ -112,7 +111,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					delta.y += [view frame].origin.y;
 					if ([view isKindOfClass:NSClassFromString(@"NSToolbarView")])
 					{
-						toolbarView = view;
 						break;
 					}
 				}

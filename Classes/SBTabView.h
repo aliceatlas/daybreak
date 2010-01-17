@@ -49,7 +49,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)executeSelectedItemDidReceiveIcon:(SBTabViewItem *)aTabViewItem;
 - (void)executeSelectedItemDidReceiveServerRedirect:(SBTabViewItem *)aTabViewItem;
 - (void)executeShouldAddNewItemForURL:(NSURL *)url selection:(BOOL)selection;
-- (void)executeShouldSearchString:(NSString *)string;
+- (void)executeShouldSearchString:(NSString *)string newTab:(BOOL)newTab;
 - (BOOL)executeShouldConfirmMessage:(NSString *)message;
 - (void)executeShouldShowMessage:(NSString *)message;
 - (NSString *)executeShouldTextInput:(NSString *)prompt;

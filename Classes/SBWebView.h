@@ -54,4 +54,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)isEmpty;
 - (NSRange)rageOfStringInWebDocument:(NSString *)string caseSensitive:(BOOL)caseFlag;
 
+- (id)inspector;
+- (void)showWebInspector:(id)sender;
+- (void)showConsole:(id)sender;
+
 @end

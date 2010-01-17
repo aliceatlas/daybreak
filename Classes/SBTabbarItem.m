@@ -178,6 +178,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if ([target respondsToSelector:closeSelector])
 		{
+			[[NSRunLoop currentRunLoop] cancelPerformSelector:closeSelector target:target argument:nil];
 			[target performSelector:closeSelector withObject:self afterDelay:0];
 		}
 	}
@@ -216,7 +217,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (!_dragInClose)
 	{
 		[[self superview] mouseDown:theEvent];
-		[self executeShouldSelect];
+		if (!self.selected)
+		{
+			[self executeShouldSelect];
+		}
+		else {
+			[tabbar executeShouldReselect:self];
+		}
 	}
 }
 
@@ -246,9 +253,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSPoint location = [theEvent locationInWindow];
 		NSPoint point = [self convertPoint:location fromView:nil];
 		[[self superview] mouseMoved:theEvent];
-		if (NSPointInRect(point, self.bounds))
+		if (CGRectContainsPoint([self closableRect], NSPointToCGPoint(point)))
 		{
 			[tabbar constructClosableTimerForItem:self];
+		}
+		else {
+			[tabbar applyDisclosableAllItem];
 		}
 	}
 }
@@ -256,10 +266,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)mouseEntered:(NSEvent *)theEvent
 {
 	[[self superview] mouseEntered:theEvent];
-	if ([tabbar canClosable])
-	{
-		[tabbar constructClosableTimerForItem:self];
-	}
 }
 
 - (void)mouseExited:(NSEvent *)theEvent

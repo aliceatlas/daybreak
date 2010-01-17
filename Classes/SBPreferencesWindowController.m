@@ -34,6 +34,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @synthesize sections;
 
+- (id)initWithViewSize:(NSSize)inViewSize
+{
+	if (self = [super initWithViewSize:inViewSize])
+	{
+		NSWindow *window = [self window];
+		NSRect r = [window frame];
+		[window setMaxSize:NSMakeSize(r.size.width, ULONG_MAX)];
+		[window setMinSize:NSMakeSize(r.size.width, 100.0)];
+	}
+	return self;
+}
+
 - (void)dealloc
 {
 	[sections release];
@@ -67,6 +79,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //	SBSectionGroupe *groupe2 = nil;
 	SBSectionGroupe *groupe3 = nil;
 //	SBSectionGroupe *groupe4 = nil;
+	SBSectionGroupe *groupe5 = nil;
 	SBSectionItem *item = nil;
 	NSInteger index = 0;
 	id context = nil;
@@ -166,6 +179,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //	[groupe4 addItem:item];
 //	if (context) context = nil;
 //	[sections addObject:groupe4];
+	
+	groupe5 = [SBSectionGroupe groupeWithTitle:NSLocalizedString(@"Advanced", nil)];
+	if (context) context = nil;
+	item = [SBSectionItem itemWithTitle:NSLocalizedString(@"Enable Web Inspector", nil) keyName:kWebKitDeveloperExtras controlClass:[NSButton class] context:context];
+	[groupe5 addItem:item];
+	if (context) context = nil;
+	item = [SBSectionItem itemWithTitle:NSLocalizedString(@"When a new tab opens, make it active", nil) keyName:kSBWhenNewTabOpensMakeActiveFlag controlClass:[NSButton class] context:context];
+	[groupe5 addItem:item];
+	if (context) context = nil;
+	[sections addObject:groupe5];
 }
 
 - (void)constructSectionListView

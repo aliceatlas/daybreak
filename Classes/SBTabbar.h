@@ -38,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSPoint _downPoint;
 	NSRect _draggedItemRect;
 	SBTabbarItem *_draggedItem;
+	SBTabbarItem *_shouldReselectItem;
 	BOOL _animating;
 	NSTimer *autoScrollTimer;
 	CGFloat _autoScrollDeltaX;
@@ -76,8 +77,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Exec
 - (void)executeShouldAddNewItemForURLs:(NSArray *)urls;
 - (void)executeShouldOpenURLs:(NSArray *)urls startInItem:(SBTabbarItem *)item;
+- (void)executeShouldReselect:(SBTabbarItem *)item;
 - (void)executeShouldReloadItem:(SBTabbarItem *)item;
 - (void)executeDidChangeSelection:(SBTabbarItem *)item;
+- (void)executeDidReselectItem:(SBTabbarItem *)item;
 - (void)executeDidRemoveItem:(NSString *)identifier;
 // Actions
 - (SBTabbarItem *)addItemWithIdentifier:(NSNumber *)identifier;

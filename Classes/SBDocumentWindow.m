@@ -451,12 +451,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[CATransaction setValue:[NSNumber numberWithBool:YES] forKey:kCATransactionDisableActions];
 		
 		flipping = YES;
-		r = self.frame;
 		d.x = r.size.width < kSBBackWindowFrameWidth ? (kSBBackWindowFrameWidth - r.size.width) : 0.0;
 		d.y = r.size.height < kSBBackWindowFrameHeight ? (kSBBackWindowFrameHeight - r.size.height) : 0.0;
 		margin.x += d.x;
 		margin.y += d.y;
-		wr = r;
 		wr.origin.x -= margin.x;
 		wr.origin.y -= margin.y;
 		wr.size.width += margin.x * 2;
@@ -869,6 +867,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	image = CGBitmapContextCreateImage(ctx);
 	CGContextRelease(ctx);
+	CGColorSpaceRelease(colorSpace);
 	return (CGImageRef)[(id)image autorelease];
 }
 
