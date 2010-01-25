@@ -171,6 +171,8 @@
 		0816F599102D52CD00DFA5F0 /* SBUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBUpdater.m; path = Classes/SBUpdater.m; sourceTree = "<group>"; };
 		0819483910FBE8D400CCBABF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0819484810FBE8EF00CCBABF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		081DA8C5110DB6D000CF89D2 /* pt_PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_PT; path = Resources/pt_PT.lproj/Localizable.strings; sourceTree = "<group>"; };
+		081DA8D9110DB6E100CF89D2 /* pt_PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt_PT; path = Resources/pt_PT.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		081E0EFF10C115BE00C6AD2B /* SBTextInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTextInputView.h; path = Classes/SBTextInputView.h; sourceTree = "<group>"; };
 		081E0F0010C115BE00C6AD2B /* SBTextInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTextInputView.m; path = Classes/SBTextInputView.m; sourceTree = "<group>"; };
 		0820DF5B109070B70068FD46 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = Resources/it.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -498,9 +500,9 @@
 				0890708D0FFE3F4E00B2B505 /* SBInnerView.m */,
 				088440641032950200AF4E2D /* SBSectionListView.h */,
 				088440651032950200AF4E2D /* SBSectionListView.m */,
-				08B6E2A0103451DA00BD15D8 /* SBSectionGroupe.h */,
 				0899556C0FE380D400DED3BA /* SBSplitView.h */,
 				0899556D0FE380D400DED3BA /* SBSplitView.m */,
+				08B6E2A0103451DA00BD15D8 /* SBSectionGroupe.h */,
 				08B6E2A1103451DA00BD15D8 /* SBSectionGroupe.m */,
 				084067890FE2C11700CC80E3 /* SBURLField.h */,
 				0840678A0FE2C11700CC80E3 /* SBURLField.m */,
@@ -890,6 +892,7 @@
 				"zh-Hant",
 				"zh-Hans",
 				de,
+				pt_PT,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Sunrise */;
 			projectDirPath = "";
@@ -1079,11 +1082,12 @@
 			isa = PBXVariantGroup;
 			children = (
 				08BC84FF107F9158005C9030 /* en */,
-				0892A727106F9D0900AC57D1 /* ja */,
-				089B72151072AF30000D00B5 /* fr */,
-				08DE5E93107D8112006A1B94 /* es */,
-				0820DF67109070C40068FD46 /* it */,
 				0819484810FBE8EF00CCBABF /* de */,
+				08DE5E93107D8112006A1B94 /* es */,
+				089B72151072AF30000D00B5 /* fr */,
+				0820DF67109070C40068FD46 /* it */,
+				0892A727106F9D0900AC57D1 /* ja */,
+				081DA8D9110DB6E100CF89D2 /* pt_PT */,
 				086D732C10D7867B006A4F25 /* zh-Hans */,
 				082886D610E11FD90018B591 /* zh-Hant */,
 			);
@@ -1094,11 +1098,12 @@
 			isa = PBXVariantGroup;
 			children = (
 				08BC851D107F9160005C9030 /* en */,
-				0892A72B106F9D2100AC57D1 /* ja */,
-				089B71FE1072AEF3000D00B5 /* fr */,
-				08DE5E81107D8104006A1B94 /* es */,
-				0820DF5B109070B70068FD46 /* it */,
 				0819483910FBE8D400CCBABF /* de */,
+				08DE5E81107D8104006A1B94 /* es */,
+				089B71FE1072AEF3000D00B5 /* fr */,
+				0820DF5B109070B70068FD46 /* it */,
+				0892A72B106F9D2100AC57D1 /* ja */,
+				081DA8C5110DB6D000CF89D2 /* pt_PT */,
 				086D732D10D78682006A4F25 /* zh-Hans */,
 				082886C610E11FAF0018B591 /* zh-Hant */,
 			);
