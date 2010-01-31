@@ -32,6 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSMenuItem *)selectItemWithRepresentedObject:(id)representedObject;
 - (void)deselectItem;
 - (NSMenuItem *)addItemWithTitle:(NSString *)aString target:(id)target action:(SEL)aSelector tag:(NSInteger)tag;
-- (NSMenuItem *)addItemWithTitle:(NSString *)aString representedObject:(id)representedObject;
+- (NSMenuItem *)addItemWithTitle:(NSString *)aString representedObject:(id)representedObject target:(id)target action:(SEL)aSelector;
 
 @end

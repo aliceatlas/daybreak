@@ -67,6 +67,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Getter
 - (CGFloat)sourceBottomMargin;
 - (NSString *)URLString;
+- (NSMutableArray *)webFramesInFrame:(WebFrame *)frame;
 // Setter
 - (void)setURL:(NSURL *)inURL;
 - (void)setURLString:(NSString *)URLString;

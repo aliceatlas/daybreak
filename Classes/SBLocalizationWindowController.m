@@ -26,6 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBSavePanel.h"
 #import "SBUtil.h"
 
+#define kSBLocalizationAvailableSubversionAccess 0
+
 
 @implementation SBLocalizationWindowController
 
@@ -37,24 +39,39 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (self = [super initWithViewSize:inViewSize])
 	{
 		NSWindow *window = [self window];
-		[window setMinSize:NSMakeSize([window frame].size.width, 200.0)];
+		[window setMinSize:NSMakeSize([window frame].size.width, 520.0)];
 		[window setMaxSize:NSMakeSize([window frame].size.width, viewSize.height + 100)];
 		[window setTitle:NSLocalizedString(@"Localize", nil)];
-		[self constructButtons];
+		[[window contentView] setWantsLayer:YES];
+		animating = NO;
+		[self constructCommonViews];
+		[self constructEditView];
+		[self constructContributeView];
 	}
 	return self;
 }
 
 - (void)dealloc
 {
+	[langField release];
 	[langPopup release];
-	[scrollView release];
-	[contentView release];
+	[switchButton release];
 	[textSet release];
 	[fieldSet release];
 	[openButton release];
 	[cancelButton release];
-	[doneButton release];
+	[createButton release];
+	[editContentView release];
+	[editScrollView release];
+	[editView release];
+	
+	[iconImageView release];
+	[textField release];
+	[checkoutTitleField release];
+	[checkoutButton release];
+	[commitTitleField release];
+	[commitButton release];
+	[contributeView release];
 	[super dealloc];
 }
 
@@ -70,21 +87,100 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (CGFloat)bottomMargin
 {
-	return 30.0;
+	return 40.0;
 }
 
-- (void)constructButtons
+- (void)constructCommonViews
+{
+	NSUserDefaults *defaults = nil;
+	NSArray *languages = nil;
+	NSMenu *menu = nil;
+	CGFloat margin = [self margin];
+	CGFloat topMargin = [self topMargin];
+	NSRect langRect = NSZeroRect;
+	NSRect langFRect = NSZeroRect;
+	NSRect contentRect = NSZeroRect;
+	NSRect switchRect = NSZeroRect;
+	NSView *aContentView = nil;
+	defaults = [NSUserDefaults standardUserDefaults];
+	languages = [defaults objectForKey:@"AppleLanguages"];
+	menu = [[[NSMenu alloc] init] autorelease];
+	aContentView = [[self window] contentView];
+	contentRect = [aContentView bounds];
+	langFRect.size.width = 100.0;
+	langFRect.size.height = 22.0;
+	langFRect.origin.x = margin;
+	langFRect.origin.y = (contentRect.size.height - topMargin) + (topMargin - langFRect.size.height) / 2;
+	langRect = langFRect;
+	langRect.size.width = 250.0;
+	langRect.size.height = 22.0;
+	langRect.origin.x = NSMaxX(langFRect) + 8.0;
+	switchRect.size = NSMakeSize(118.0, 25.0);
+	switchRect.origin.x = contentRect.size.width - switchRect.size.width - margin;
+	switchRect.origin.y = (contentRect.size.height - topMargin) + (topMargin - switchRect.size.height) / 2;
+	langField = [[NSTextField alloc] initWithFrame:langFRect];
+	[langField setAutoresizingMask:(NSViewMinYMargin)];
+	[langField setEditable:NO];
+	[langField setSelectable:NO];
+	[langField setBezeled:NO];
+	[langField setDrawsBackground:NO];
+	[langField setFont:[NSFont systemFontOfSize:14.0]];
+	[langField setTextColor:[NSColor blackColor]];
+	[langField setAlignment:NSRightTextAlignment];
+	[langField setStringValue:[NSLocalizedString(@"Language", nil) stringByAppendingString:@" :"]];
+	langPopup = [[NSPopUpButton alloc] initWithFrame:langRect pullsDown:NO];
+	[langPopup setAutoresizingMask:(NSViewMinYMargin)];
+	[langPopup setBezelStyle:NSTexturedRoundedBezelStyle];
+	[[langPopup cell] setArrowPosition:NSPopUpArrowAtBottom];
+	for (NSString *lang in languages)
+	{
+		NSString *title = [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier value:lang];
+		[menu addItemWithTitle:title representedObject:lang target:self action:@selector(selectLanguage:)];
+	}
+	[langPopup setMenu:menu];
+	switchButton = [[NSButton alloc] initWithFrame:switchRect];
+	[switchButton setAutoresizingMask:(NSViewMinYMargin)];
+	[switchButton setButtonType:NSMomentaryPushInButton];
+	[switchButton setBezelStyle:NSTexturedRoundedBezelStyle];
+	[switchButton setTarget:self];
+	[switchButton setTitle:NSLocalizedString(@"Contibute", nil)];
+	[switchButton setAction:@selector(showContribute)];
+	[aContentView addSubview:langPopup];
+	[aContentView addSubview:langField];
+#if kSBLocalizationAvailableSubversionAccess
+	[aContentView addSubview:switchButton];
+#endif
+}
+
+- (void)constructEditView
+{
+	NSRect editRect = NSZeroRect;
+	NSRect contentRect = NSZeroRect;
+	CGFloat topMargin = [self topMargin];
+	NSView *aContentView = nil;
+	aContentView = [[self window] contentView];
+	contentRect = [aContentView bounds];
+	editRect = contentRect;
+	editRect.size.height -= topMargin;
+	editView = [[NSView alloc] initWithFrame:editRect];
+	[editView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+	[self constructButtonsInEditView];
+	[aContentView addSubview:editView];
+	aContentView.layer.backgroundColor = CGColorCreateGenericGray(0.8, 1.0);
+}
+
+- (void)constructButtonsInEditView
 {
 	NSRect openRect = NSZeroRect;
 	NSRect cancelRect = NSZeroRect;
 	NSRect doneRect = NSZeroRect;
 	CGFloat margin = [self margin];
 	CGFloat bottomMargin = [self bottomMargin];
-	NSRect contentRect = [[[self window] contentView] bounds];
+	NSRect contentRect = [editView bounds];
 	openRect.size = NSMakeSize(118.0, 25.0);
 	cancelRect.size = NSMakeSize(118.0, 25.0);
 	doneRect.size = NSMakeSize(118.0, 25.0);
-	doneRect.origin.y = ((bottomMargin + margin) - doneRect.size.height) / 2;
+	doneRect.origin.y = (bottomMargin - doneRect.size.height) / 2;
 	doneRect.origin.x = contentRect.size.width - doneRect.size.width - margin;
 	cancelRect.origin.y = doneRect.origin.y;
 	cancelRect.origin.x = doneRect.origin.x - cancelRect.size.width - margin;
@@ -92,10 +188,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	openRect.origin.x = margin;
 	openButton = [[NSButton alloc] initWithFrame:openRect];
 	cancelButton = [[NSButton alloc] initWithFrame:cancelRect];
-	doneButton = [[NSButton alloc] initWithFrame:doneRect];
+	createButton = [[NSButton alloc] initWithFrame:doneRect];
 	[openButton setButtonType:NSMomentaryPushInButton];
 	[openButton setBezelStyle:NSTexturedRoundedBezelStyle];
-	[openButton setTitle:NSLocalizedString(@"Open...", nil)];
+	[openButton setTitle:NSLocalizedString(@"Open…", nil)];
 	[openButton setTarget:self];
 	[openButton setAction:@selector(open)];
 	[cancelButton setButtonType:NSMomentaryPushInButton];
@@ -104,15 +200,103 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[cancelButton setTarget:self];
 	[cancelButton setAction:@selector(cancel)];
 	[cancelButton setKeyEquivalent:@"\e"];
-	[doneButton setTitle:NSLocalizedString(@"Create", nil)];
-	[doneButton setButtonType:NSMomentaryPushInButton];
-	[doneButton setBezelStyle:NSTexturedRoundedBezelStyle];
-	[doneButton setTarget:self];
-	[doneButton setAction:@selector(done)];
-	[doneButton setKeyEquivalent:@"\r"];
-	[[[self window] contentView] addSubview:openButton];
-	[[[self window] contentView] addSubview:cancelButton];
-	[[[self window] contentView] addSubview:doneButton];
+	[createButton setTitle:NSLocalizedString(@"Create", nil)];
+	[createButton setButtonType:NSMomentaryPushInButton];
+	[createButton setBezelStyle:NSTexturedRoundedBezelStyle];
+	[createButton setTarget:self];
+	[createButton setAction:@selector(done)];
+	[createButton setKeyEquivalent:@"\r"];
+	[editView addSubview:openButton];
+	[editView addSubview:cancelButton];
+	[editView addSubview:createButton];
+}
+
+- (void)constructContributeView
+{
+	NSRect contributeRect = NSZeroRect;
+	NSRect contentRect = NSZeroRect;
+	CGFloat topMargin = [self topMargin];
+	contentRect = [[[self window] contentView] bounds];
+	contributeRect = contentRect;
+	contributeRect.size.height -= topMargin;
+	contributeView = [[NSView alloc] initWithFrame:contributeRect];
+	[contributeView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+	[self constructButtonsInContributeView];
+}
+
+- (void)constructButtonsInContributeView
+{
+	NSRect iconRect = NSZeroRect;
+	NSRect textRect = NSZeroRect;
+	NSRect checkoutTitleRect = NSZeroRect;
+	NSRect checkoutButtonRect = NSZeroRect;
+	NSRect commitTitleRect = NSZeroRect;
+	NSRect commitButtonRect = NSZeroRect;
+	iconRect = NSMakeRect(50.0, 840.0, 128.0, 128.0);
+	textRect = NSMakeRect(200.0, 840.0, 490.0, 128.0);
+	checkoutTitleRect = NSMakeRect(70.0, 775.0, 615.0, 25.0);
+	checkoutButtonRect = NSMakeRect(70.0, 690.0, 615.0, 80.0);
+	commitTitleRect = NSMakeRect(70.0, 630.0, 615.0, 25.0);
+	commitButtonRect = NSMakeRect(70.0, 545.0, 615.0, 80.0);
+	
+	iconImageView = [[NSImageView alloc] initWithFrame:iconRect];
+	[iconImageView setAutoresizingMask:(NSViewMinYMargin)];
+	[iconImageView setImage:[NSImage imageNamed:@"Icon_Contribute.png"]];
+	textField = [[NSTextField alloc] initWithFrame:textRect];
+	[textField setAutoresizingMask:(NSViewMinYMargin)];
+	[textField setEditable:NO];
+	[textField setSelectable:NO];
+	[textField setBezeled:NO];
+	[textField setDrawsBackground:NO];
+	[textField setFont:[NSFont systemFontOfSize:16.0]];
+	[textField setTextColor:[NSColor whiteColor]];
+	[textField setAlignment:NSLeftTextAlignment];
+	[textField setStringValue:NSLocalizedString(@"You can contribute the translation file for the Sunrise project if you participate in the project on Google Code.", nil)];
+	checkoutTitleField = [[NSTextField alloc] initWithFrame:checkoutTitleRect];
+	[checkoutTitleField setAutoresizingMask:(NSViewMinYMargin)];
+	[checkoutTitleField setEditable:NO];
+	[checkoutTitleField setSelectable:NO];
+	[checkoutTitleField setBezeled:NO];
+	[checkoutTitleField setDrawsBackground:NO];
+	[checkoutTitleField setFont:[NSFont boldSystemFontOfSize:16.0]];
+	[checkoutTitleField setTextColor:[NSColor whiteColor]];
+	[checkoutTitleField setAlignment:NSLeftTextAlignment];
+	[checkoutTitleField setStringValue:NSLocalizedString(@"Check out", nil)];
+	checkoutButton = [[NSButton alloc] initWithFrame:checkoutButtonRect];
+	[checkoutButton setAutoresizingMask:(NSViewMinYMargin)];
+	[checkoutButton setButtonType:NSMomentaryPushInButton];
+	[checkoutButton setBezelStyle:NSTexturedSquareBezelStyle];
+	[checkoutButton setImage:[NSImage imageNamed:@"Icon_Checkout.png"]];
+	[checkoutButton setImagePosition:NSImageLeft];
+	[checkoutButton setTitle:NSLocalizedString(@"Check out the translation file from the project on Google Code.", nil)];
+	[checkoutButton setTarget:self];
+	[checkoutButton setAction:@selector(openCheckoutDirectory)];
+	commitTitleField = [[NSTextField alloc] initWithFrame:commitTitleRect];
+	[commitTitleField setAutoresizingMask:(NSViewMinYMargin)];
+	[commitTitleField setEditable:NO];
+	[commitTitleField setSelectable:NO];
+	[commitTitleField setBezeled:NO];
+	[commitTitleField setDrawsBackground:NO];
+	[commitTitleField setFont:[NSFont boldSystemFontOfSize:16.0]];
+	[commitTitleField setTextColor:[NSColor whiteColor]];
+	[commitTitleField setAlignment:NSLeftTextAlignment];
+	[commitTitleField setStringValue:NSLocalizedString(@"Commit", nil)];
+	commitButton = [[NSButton alloc] initWithFrame:commitButtonRect];
+	[commitButton setAutoresizingMask:(NSViewMinYMargin)];
+	[commitButton setButtonType:NSMomentaryPushInButton];
+	[commitButton setBezelStyle:NSTexturedSquareBezelStyle];
+	[commitButton setImage:[NSImage imageNamed:@"Icon_Commit.png"]];
+	[commitButton setImagePosition:NSImageLeft];
+	[commitButton setTitle:NSLocalizedString(@"Commit your translation file to the project.", nil)];
+	[commitButton setTarget:self];
+	[commitButton setAction:@selector(openCommitDirectory)];
+	
+	[contributeView addSubview:iconImageView];
+	[contributeView addSubview:textField];
+	[contributeView addSubview:checkoutTitleField];
+	[contributeView addSubview:checkoutButton];
+	[contributeView addSubview:commitTitleField];
+	[contributeView addSubview:commitButton];
 }
 
 - (void)setTextSet:(NSMutableArray *)inTextSet
@@ -148,15 +332,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (fieldSet != inFieldSet)
 	{
 		NSRect contentRect = NSZeroRect;
-		NSRect langRect = NSZeroRect;
-		NSRect langFRect = NSZeroRect;
 		NSRect scrollRect = NSZeroRect;
 		CGFloat margin = [self margin];
-		CGFloat topMargin = [self topMargin];
 		CGFloat bottomMargin = [self bottomMargin];
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		NSArray *languages = [defaults objectForKey:@"AppleLanguages"];
-		NSMenu *menu = [[[NSMenu alloc] init] autorelease];
 		[inFieldSet retain];
 		if (fieldSet)
 		{
@@ -164,79 +342,47 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			fieldSet = nil;
 		}
 		fieldSet = inFieldSet;
-		if (langField)
+		if (editContentView)
 		{
-			[langField removeFromSuperview];
-			[langField release];
-			langField = nil;
+			[editContentView removeFromSuperview];
+			[editContentView release];
+			editContentView = nil;
 		}
-		if (langPopup)
+		if (editScrollView)
 		{
-			[langPopup removeFromSuperview];
-			[langPopup release];
-			langPopup = nil;
+			[editScrollView removeFromSuperview];
+			[editScrollView release];
+			editScrollView = nil;
 		}
-		if (contentView)
-		{
-			[contentView removeFromSuperview];
-			[contentView release];
-			contentView = nil;
-		}
-		if (scrollView)
-		{
-			[scrollView removeFromSuperview];
-			[scrollView release];
-			scrollView = nil;
-		}
-		contentView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, viewSize.width, viewSize.height)];
+		editContentView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, viewSize.width, viewSize.height)];
 		for (NSArray *fields in fieldSet)
 		{
 			for (NSTextField *field in fields)
 			{
-				[contentView addSubview:field];
+				[editContentView addSubview:field];
 			}
 		}
-		contentRect = [[[self window] contentView] bounds];
-		scrollRect = NSMakeRect(margin, bottomMargin + margin, contentRect.size.width - margin * 2, contentRect.size.height - topMargin - bottomMargin - margin * 2);
-		langFRect.size.width = 100.0;
-		langFRect.size.height = 22.0;
-		langFRect.origin.x = margin;
-		langFRect.origin.y = NSMaxY(scrollRect);
-		langRect = langFRect;
-		langRect.size.width = 250.0;
-		langRect.size.height = 22.0;
-		langRect.origin.x = NSMaxX(langFRect) + 8.0;
-		langField = [[NSTextField alloc] initWithFrame:langFRect];
-		[langField setEditable:NO];
-		[langField setSelectable:NO];
-		[langField setBezeled:NO];
-		[langField setDrawsBackground:NO];
-		[langField setFont:[NSFont systemFontOfSize:14.0]];
-		[langField setTextColor:[NSColor darkGrayColor]];
-		[langField setAlignment:NSRightTextAlignment];
-		[langField setStringValue:[NSLocalizedString(@"Language", nil) stringByAppendingString:@" :"]];
-		langPopup = [[NSPopUpButton alloc] initWithFrame:langRect pullsDown:NO];
-		[langPopup setBezelStyle:NSTexturedRoundedBezelStyle];
-		[[langPopup cell] setArrowPosition:NSPopUpArrowAtBottom];
-		for (NSString *lang in languages)
-		{
-			NSString *title = [[NSLocale systemLocale] displayNameForKey:NSLocaleIdentifier value:lang];
-			[menu addItemWithTitle:title representedObject:lang];
-		}
-		[langPopup setMenu:menu];
-		scrollView = [[NSScrollView alloc] initWithFrame:scrollRect];
-		[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-		[scrollView setBackgroundColor:[NSColor clearColor]];
-		[scrollView setDrawsBackground:NO];
-		[scrollView setHasVerticalScroller:YES];
-		[scrollView setHasHorizontalScroller:NO];
-		[scrollView setAutohidesScrollers:YES];
-		[[[self window] contentView] addSubview:langPopup];
-		[[[self window] contentView] addSubview:langField];
-		[[[self window] contentView] addSubview:scrollView];
-		[scrollView setDocumentView:contentView];	// Set document view after adding as subview
-		[contentView scrollRectToVisible:NSMakeRect(0, viewSize.height, 0, 0)];
+		contentRect = [editView bounds];
+		scrollRect = NSMakeRect(margin, bottomMargin, contentRect.size.width - margin * 2, contentRect.size.height - bottomMargin);
+		editScrollView = [[NSScrollView alloc] initWithFrame:scrollRect];
+		[editScrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+		[editScrollView setBackgroundColor:[NSColor clearColor]];
+		[editScrollView setDrawsBackground:NO];
+		[editScrollView setHasVerticalScroller:YES];
+		[editScrollView setHasHorizontalScroller:NO];
+		[editScrollView setAutohidesScrollers:YES];
+		[editView addSubview:editScrollView];
+		[editScrollView setDocumentView:editContentView];	// Set document view after adding as subview
+		[editContentView scrollRectToVisible:NSMakeRect(0, viewSize.height, 0, 0)];
 	}
+}
+
+- (void)selectLanguage:(NSMenuItem *)sender
+{
+#if kSBLocalizationAvailableSubversionAccess
+	NSMenuItem *item = (NSMenuItem *)sender;
+	NSString *lang = [item representedObject];
+#endif
 }
 
 - (void)open
@@ -289,6 +435,102 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// Select lang
 	if (lang)
 		[[langPopup menu] selectItemWithRepresentedObject:lang];
+}
+
+- (void)showContribute
+{
+	if (!animating)
+	{
+		[self changeView:0];
+		[switchButton setTitle:NSLocalizedString(@"Edit", nil)];
+		[switchButton setAction:@selector(showEdit)];
+	}
+}
+
+- (void)showEdit
+{
+	if (!animating)
+	{
+		[self changeView:1];
+		[switchButton setTitle:NSLocalizedString(@"Contibute", nil)];
+		[switchButton setAction:@selector(showContribute)];
+	}
+}
+
+/* index:
+ * 0 - Show the contribute view
+ * 1 - Show the edit view
+ */
+- (void)changeView:(NSInteger)index
+{
+	NSMutableArray *animations = [NSMutableArray arrayWithCapacity:0];
+	NSMutableDictionary *info = nil;
+	SBViewAnimation *animation = nil;
+	NSRect editRect0 = NSZeroRect;
+	NSRect editRect1 = NSZeroRect;
+	NSRect contributeRect0 = NSZeroRect;
+	NSRect contributeRect1 = NSZeroRect;
+	NSView *aContentView = [[self window] contentView];
+	CGFloat topMargin = [self topMargin];
+	CGFloat duration = 0.4;
+	animating = YES;
+	editRect0 = editRect1 = editView.frame;
+	contributeRect0 = contributeRect1 = contributeView.frame;
+	if (index == 0)
+	{
+		editRect0.origin.x = 0;
+		editRect1.origin.x = -editRect1.size.width;
+		contributeRect0.origin.x = contributeRect0.size.width;
+		contributeRect1.origin.x = 0;
+		editRect0.size.height = editRect1.size.height = contributeRect0.size.height = contributeRect1.size.height = [aContentView bounds].size.height - topMargin;
+		contributeView.frame = contributeRect0;
+		[aContentView addSubview:contributeView];
+	}
+	else {
+		editRect0.origin.x = -editRect1.size.width;
+		editRect1.origin.x = 0;
+		contributeRect0.origin.x = 0;
+		contributeRect1.origin.x = contributeRect0.size.width;
+		editRect0.size.height = editRect1.size.height = contributeRect0.size.height = contributeRect1.size.height = [aContentView bounds].size.height - topMargin;
+		editView.frame = editRect0;
+		[aContentView addSubview:editView];
+	}
+	info = [NSMutableDictionary dictionaryWithCapacity:0];
+	[info setObject:editView forKey:NSViewAnimationTargetKey];
+	[info setObject:[NSValue valueWithRect:editRect0] forKey:NSViewAnimationStartFrameKey];
+	[info setObject:[NSValue valueWithRect:editRect1] forKey:NSViewAnimationEndFrameKey];
+	[animations addObject:[[info copy] autorelease]];
+	info = [NSMutableDictionary dictionaryWithCapacity:0];
+	[info setObject:contributeView forKey:NSViewAnimationTargetKey];
+	[info setObject:[NSValue valueWithRect:contributeRect0] forKey:NSViewAnimationStartFrameKey];
+	[info setObject:[NSValue valueWithRect:contributeRect1] forKey:NSViewAnimationEndFrameKey];
+	[animations addObject:[[info copy] autorelease]];
+	animation = [[[SBViewAnimation alloc] initWithViewAnimations:animations] autorelease];
+	animation.context = [NSNumber numberWithUnsignedInteger:index];
+	[animation setDuration:duration];
+	[animation setDelegate:self];
+	[animation startAnimation];
+	
+	[CATransaction begin];
+	[CATransaction setValue:[NSNumber numberWithFloat:duration] forKey:kCATransactionAnimationDuration];
+	aContentView.layer.backgroundColor = CGColorCreateGenericGray(index == 0 ? 0.5 : 0.8, 1.0);
+	[CATransaction commit];
+}
+
+- (void)animationDidEnd:(NSAnimation *)animation
+{
+	if ([(SBViewAnimation *)animation context])
+	{
+		NSUInteger index = [(NSNumber *)[(SBViewAnimation *)animation context] unsignedIntegerValue];
+		if (index == 0)
+		{
+			[editView removeFromSuperview];
+		}
+		else {
+			[contributeView removeFromSuperview];
+		}
+	}
+	animating = NO;
 }
 
 - (void)cancel
@@ -366,6 +608,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 		}
 	}
+}
+
+#pragma mark Contribute
+
+- (void)openCheckoutDirectory
+{
+	
+}
+
+- (void)openCommitDirectory
+{
+	
+}
+
+@end
+
+@implementation SBViewAnimation
+
+@synthesize context;
+
+- (void)dealloc
+{
+	[context release];
+	[super dealloc];
 }
 
 @end

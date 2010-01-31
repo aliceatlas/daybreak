@@ -45,9 +45,10 @@ extern NSString *SBDownloadsDidFailItemNotification;
 - (void)addItem:(SBDownload *)item;
 - (void)addItemWithURL:(NSURL *)url;
 - (void)removeItem:(SBDownload *)item;
+- (void)removeItems:(NSArray *)inItems;
 // Execute
 - (void)executeDidAddItem:(SBDownload *)anItem;
-- (void)executeWillRemoveItem:(SBDownload *)anItem;
+- (void)executeWillRemoveItem:(NSArray *)inItems;
 - (void)executeDidUpdateItem:(SBDownload *)anItem;
 - (void)executeDidFinishItem:(SBDownload *)anItem;
 // Function

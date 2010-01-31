@@ -90,13 +90,21 @@ static SBDownloads *sharedDownloads;
 
 - (void)removeItem:(SBDownload *)item
 {
-	if (item.downloading)
+	[self removeItems:[NSArray arrayWithObject:item]];
+}
+
+- (void)removeItems:(NSArray *)inItems
+{
+	for (SBDownload *item in inItems)
 	{
-		[item stop];
+		if (item.downloading)
+		{
+			[item stop];
+		}
 	}
 	// Update views
-	[self executeWillRemoveItem:item];
-	[items removeObject:item];
+	[self executeWillRemoveItem:inItems];
+	[items removeObjectsInArray:inItems];
 }
 
 #pragma mark Execute
@@ -107,9 +115,9 @@ static SBDownloads *sharedDownloads;
 	[[NSNotificationCenter defaultCenter] postNotificationName:SBDownloadsDidAddItemNotification object:self userInfo:userInfo];
 }
 
-- (void)executeWillRemoveItem:(SBDownload *)anItem
+- (void)executeWillRemoveItem:(NSArray *)inItems
 {
-	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:anItem forKey:kSBDownloadsItem];
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:inItems forKey:kSBDownloadsItems];
 	[[NSNotificationCenter defaultCenter] postNotificationName:SBDownloadsWillRemoveItemNotification object:self userInfo:userInfo];
 }
 

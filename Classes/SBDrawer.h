@@ -23,10 +23,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBDefinitions.h"
+#import "SBBLKGUI.h"
 #import "SBView.h"
 
 @interface SBDrawer : SBView
 {
+	SBBLKGUIScrollView *scrollView;
 	NSView *view;
 }
 @property (nonatomic, retain) NSView *view;

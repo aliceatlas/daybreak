@@ -36,7 +36,6 @@
 	{
 		downloadViews = [[NSMutableArray alloc] initWithCapacity:0];
 		toolsItemView = nil;
-		[self constructDownloadViews];
 		[self constructControls];
 	}
 	return self;
@@ -60,7 +59,7 @@
 
 - (NSSize)cellSize
 {
-	return NSMakeSize(128.0, 128.0);
+	return NSMakeSize(kSBDownloadItemSize, kSBDownloadItemSize);
 }
 
 - (NSUInteger)blockX
@@ -294,10 +293,30 @@
 	NSPoint block = NSZeroPoint;
 	NSSize cellSize = [self cellSize];
 	NSMutableArray *animations = [NSMutableArray arrayWithCapacity:0];
+	NSEvent *currentEvent = [[NSApplication sharedApplication] currentEvent];
+	NSPoint location = [currentEvent locationInWindow];
+	SBDownloadView *currentDownloadView = nil;
+	NSUInteger count = [downloadViews count];
+	// Calculate the view frame
+	block.x = [self blockX];
+	block.y = (NSUInteger)(count / block.x);
+	if ((count / block.x) - (NSUInteger)(count / block.x) > 0)
+		block.y += 1;
+	r.size.width = enclosingRect.size.width;
+	r.size.height = block.y * cellSize.height;
+	if (r.size.height < enclosingRect.size.height)
+		r.size.height = enclosingRect.size.height;
+	if (!NSEqualRects(self.frame, r))
+	{
+		self.frame = r;
+	}
+	
+	// Set frame of item views
 	for (SBDownloadView *downloadView in downloadViews)
 	{
 		NSRect r0 = downloadView.frame;
 		NSRect r1 = [self cellFrameAtIndex:index];
+		NSPoint point = [self convertPoint:location fromView:nil];
 		if (!NSEqualRects(r0, r1))
 		{
 			NSRect visibleRect = [self visibleRect];
@@ -313,17 +332,11 @@
 				downloadView.frame = r1;
 			}
 		}
+		if (NSPointInRect(point, r1))
+		{
+			currentDownloadView = downloadView;
+		}
 		index++;
-	}
-	block.x = [self blockX];
-	block.y = (NSUInteger)(index / block.x) + 1;
-	r.size.width = enclosingRect.size.width;
-	r.size.height = block.y * cellSize.height;
-	if (r.size.height < enclosingRect.size.height)
-		r.size.height = enclosingRect.size.height;
-	if (!NSEqualRects(self.frame, r))
-	{
-		self.frame = r;
 	}
 	if ([animations count] > 0)
 	{
@@ -332,18 +345,29 @@
 		[animation setDelegate:self];
 		[animation startAnimation];
 	}
+	if (currentDownloadView)
+	{
+		[self layoutToolsForItem:currentDownloadView];
+	}
 }
 
 #pragma mark Menu Actions
 
 - (void)delete:(id)sender
 {
+	NSMutableArray *selectedDownloads = [NSMutableArray arrayWithCapacity:0];
+	SBDownloads *downloads = [SBDownloads sharedDownloads];
+	[self layoutToolsHidden];
 	for (SBDownloadView *downloadView in downloadViews)
 	{
 		if (downloadView.selected)
 		{
-			[downloadView remove];
+			[selectedDownloads addObject:downloadView.download];
 		}
+	}
+	if ([selectedDownloads count] > 0)
+	{
+		[downloads removeItems:selectedDownloads];
 	}
 }
 
@@ -403,6 +427,7 @@
 			{
 				[downloadView open];
 			}
+			index++;
 		}
 	}
 }

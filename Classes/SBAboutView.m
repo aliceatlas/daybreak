@@ -195,7 +195,6 @@ static SBAboutView *_sharedView;
 {
 	NSRect r = [self creditLabelRect];
 	NSString *rtfdPath = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtfd"];
-#if 1
 	NSTextView *creditLabel = nil;
 	creditScrollView = [[SBBLKGUIScrollView alloc] initWithFrame:r];
 	[creditScrollView setBackgroundColor:[NSColor darkGrayColor]];
@@ -211,39 +210,6 @@ static SBAboutView *_sharedView;
 	[creditLabel readRTFDFromFile:rtfdPath];
 	[creditScrollView setDocumentView:creditLabel];
 	[self addSubview:creditScrollView];
-#else
-	NSString *path = rtfdPath ? [rtfdPath stringByAppendingPathComponent:@"TXT.rtf"] : nil;
-	NSData *data = path ? [NSData dataWithContentsOfFile:path] : nil;
-	NSMutableAttributedString *attributedString = nil;
-	if (data)
-	{
-		NSMutableDictionary *mAttributes = nil;
-		NSDictionary *attributes = nil;
-		attributedString = [[[NSMutableAttributedString alloc] initWithRTF:data documentAttributes:&attributes] autorelease];
-		mAttributes = [[attributes mutableCopy] autorelease];
-		[mAttributes setObject:[NSColor colorWithCalibratedWhite:0.8 alpha:1.0] forKey:NSForegroundColorAttributeName];
-		[attributedString setAttributes:[[mAttributes copy] autorelease] range:NSMakeRange(0, [attributedString length])];
-	}
-	if (attributedString)
-	{
-		NSTextView *creditLabel = nil;
-		creditScrollView = [[SBBLKGUIScrollView alloc] initWithFrame:r];
-		[creditScrollView setDrawsBackground:NO];
-		[creditScrollView setAutohidesScrollers:YES];
-		[creditScrollView setHasHorizontalScroller:NO];
-		[creditScrollView setHasVerticalScroller:YES];
-		creditLabel = [[[NSTextView alloc] initWithFrame:r] autorelease];
-		[creditLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-		[creditLabel setEditable:NO];
-		[creditLabel setSelectable:YES];
-		[creditLabel setDrawsBackground:NO];
-		if ([[creditLabel textStorage] length] > 0)
-			[[creditLabel textStorage] deleteCharactersInRange:NSMakeRange(0, ([[creditLabel textStorage] length] - 1))];
-		[[creditLabel textStorage] insertAttributedString:attributedString atIndex:0];
-		[creditScrollView setDocumentView:creditLabel];
-		[self addSubview:creditScrollView];
-	}
-#endif
 }
 
 - (void)constructCopyrightLabel

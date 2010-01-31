@@ -101,7 +101,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (context) context = nil;
 	context = [[[NSMenu alloc] init] autorelease];
 	for (index = 0; index < SBCountOfOpenMethods; index++)
-		[(NSMenu *)context addItemWithTitle:NSLocalizedString(SBOpenMethods[index], nil) representedObject:SBOpenMethods[index]];
+	{
+		[(NSMenu *)context addItemWithTitle:NSLocalizedString(SBOpenMethods[index], nil) representedObject:SBOpenMethods[index] target:nil action:nil];
+	}
 	item = [SBSectionItem itemWithTitle:NSLocalizedString(@"Open URL from applications", nil) keyName:kSBOpenURLFromApplications controlClass:[NSPopUpButton class] context:context];
 	[groupe0 addItem:item];
 	if (context) context = nil;

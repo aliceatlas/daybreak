@@ -718,21 +718,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (SBDownloadsView *)constructDownloadsViewInSidebar
 {
-	SBBLKGUIScrollView *scrollView = nil;
+	NSRect availableRect = [sidebar.drawer availableRect];
 	SBDownloadsView *downloadsView = nil;
-	
-	scrollView = [[SBBLKGUIScrollView alloc] initWithFrame:[sidebar.drawer availableRect]];
-	downloadsView = [[[SBDownloadsView alloc] initWithFrame:[scrollView bounds]] autorelease];
-	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.25 alpha:1.0]];
-	[scrollView setDrawsBackground:YES];
-	[scrollView setAutohidesScrollers:YES];
-	[scrollView setHasHorizontalScroller:NO];
-	[scrollView setHasVerticalScroller:YES];
-	[scrollView setDocumentView:downloadsView];
-	[[scrollView contentView] setCopiesOnScroll:YES];
-	[sidebar.drawer addSubview:scrollView];
+	availableRect.origin = NSZeroPoint;
+	downloadsView = [[[SBDownloadsView alloc] initWithFrame:availableRect] autorelease];
 	sidebar.drawer.view = downloadsView;
+	[downloadsView constructDownloadViews];
 	return downloadsView;
 }
 
@@ -1297,6 +1288,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			maxWidth = splitView.bounds.size.width - kSBSidebarMinimumWidth;
 		}
 	}
+	else if (aSplitView == sidebar)
+	{
+		maxWidth = sidebar.bounds.size.height - kSBDownloadItemSize;
+	}
 	return maxWidth;
 }
 
@@ -1501,11 +1496,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)downloadsWillRemoveItem:(NSNotification *)aNotification
 {
-	SBDownload *item = [[aNotification userInfo] objectForKey:kSBDownloadsItem];
+	NSArray *items = [[aNotification userInfo] objectForKey:kSBDownloadsItems];
 	SBDownloadsView *downloadsView = (SBDownloadsView *)sidebar.drawer.view;
 	if (downloadsView)
 	{
-		if (item)
+		for (SBDownload *item in items)
 		{
 			[downloadsView removeForItem:item];
 		}
@@ -1910,7 +1905,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)about:(id)sender
 {
-	if (!window.backWindow)
+	if (!window.coverWindow && !window.backWindow)
 	{
 		SBAboutView *aboutView = [SBAboutView sharedView];
 		aboutView.target = self;
@@ -2503,7 +2498,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)selectUserAgent:(id)sender
 {
-	if (!window.backWindow)
+	if (!window.coverWindow && !window.backWindow)
 	{
 		[self destructUserAgentView];
 		userAgentView = [[SBUserAgentView alloc] initWithFrame:NSMakeRect(0, 0, 800, 240)];

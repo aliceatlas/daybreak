@@ -222,6 +222,7 @@ typedef enum {
 #define kSBSidebarResizableWidth 24.0
 #define kSBSidebarClosedWidth 1.0
 #define kSBSidebarMinimumWidth 144.0
+#define kSBDownloadItemSize 128.0
 #define kSBDefaultSidebarWidth 550
 #define kSBDefaultDrawerHeight 250
 #define kSBDefaultBookmarkCellWidth 168
@@ -241,6 +242,7 @@ extern NSString *SBUpdaterDidFailCheckingNotification;
 
 // Notification key names
 extern NSString *kSBDownloadsItem;
+extern NSString *kSBDownloadsItems;
 
 // Pasteboard type names
 extern NSString *SBBookmarkPboardType;

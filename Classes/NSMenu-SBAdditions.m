@@ -83,10 +83,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return item;
 }
 
-- (NSMenuItem *)addItemWithTitle:(NSString *)aString representedObject:(id)representedObject
+- (NSMenuItem *)addItemWithTitle:(NSString *)aString representedObject:(id)representedObject target:(id)target action:(SEL)aSelector
 {
 	NSMenuItem *item = [[[NSMenuItem alloc] init] autorelease];
 	[item setTitle:aString];
+	[item setTarget:target];
+	[item setAction:aSelector];
 	[item setRepresentedObject:representedObject];
 	[self addItem:item];
 	return item;

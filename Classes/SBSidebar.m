@@ -481,6 +481,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[resizerButton setAutoresizingMask:(NSViewMaxXMargin)];
 			[drawerButton setAutoresizingMask:(NSViewMaxXMargin)];
 		}
+		[self adjustButtons];
 		[self setNeedsDisplay:YES];
 	}
 }

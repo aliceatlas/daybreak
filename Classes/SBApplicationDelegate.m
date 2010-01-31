@@ -325,6 +325,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (anotherPath)
 			[localizationWindowController mergeFilePath:anotherPath];
 		[localizationWindowController showWindow:nil];
+		
+		if (floor(NSAppKitVersionNumber) < 1038)	// Resize window frame for auto-resizing (Call for 10.5. Strange bugs of Mac)
+		{
+			NSWindow *window = [localizationWindowController window];
+			NSRect r = [window frame];
+			[window setFrame:NSMakeRect(r.origin.x, r.origin.y, r.size.width, r.size.height - 1) display:YES];
+			[window setFrame:r display:YES];
+		}
 	}
 }
 

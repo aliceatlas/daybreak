@@ -1132,6 +1132,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				{
 					[center postNotificationName:NSControlTextDidChangeNotification object:self];
 				}
+				else if (character == '\e')
+				{
+					[self.field disappearSheet];
+				}
 			}
 		}
 	}

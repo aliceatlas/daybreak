@@ -60,15 +60,38 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[super resizeSubviewsWithOldSize:oldBoundsSize];
 }
 
-#pragma mark Drawing
-
-- (void)drawRect:(NSRect)rect
+- (void)setView:(NSView *)aView
 {
-	CGFloat lh = 1.0;
-	[[NSColor colorWithCalibratedWhite:keyView ? 0.35 : 0.75 alpha:1.0] set];
-	NSRectFill(rect);
-	[[NSColor colorWithCalibratedWhite:0.45 alpha:1.0] set];
-	NSRectFill(NSMakeRect(rect.origin.x, NSMaxY(rect) - lh, rect.size.width, lh));
+	if (view != aView)
+	{
+		[aView retain];
+		[view release];
+		view = aView;
+		if (!scrollView)
+		{
+			scrollView = [[SBBLKGUIScrollView alloc] initWithFrame:[self availableRect]];
+			[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+			[scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.25 alpha:1.0]];
+			[scrollView setDrawsBackground:YES];
+			[scrollView setAutohidesScrollers:YES];
+			[scrollView setHasHorizontalScroller:NO];
+			[scrollView setHasVerticalScroller:YES];
+			[self addSubview:scrollView];
+		}
+		[scrollView setDocumentView:view];
+		[[scrollView contentView] setCopiesOnScroll:YES];
+	}
 }
+//
+//#pragma mark Drawing
+//
+//- (void)drawRect:(NSRect)rect
+//{
+//	CGFloat lh = 1.0;
+//	[[NSColor colorWithCalibratedWhite:keyView ? 0.35 : 0.75 alpha:1.0] set];
+//	NSRectFill(rect);
+//	[[NSColor colorWithCalibratedWhite:0.45 alpha:1.0] set];
+//	NSRectFill(NSMakeRect(rect.origin.x, NSMaxY(rect) - lh, rect.size.width, lh));
+//}
 
 @end

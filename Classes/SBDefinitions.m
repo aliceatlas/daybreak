@@ -205,6 +205,7 @@ NSString *SBUpdaterDidFailCheckingNotification = @"SBUpdaterDidFailCheckingNotif
 
 // Notification key names
 NSString *kSBDownloadsItem = @"Item";
+NSString *kSBDownloadsItems = @"Items";
 
 // Pasteboard type names
 NSString *SBBookmarkPboardType = @"SBBookmarkPboardType";

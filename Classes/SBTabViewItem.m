@@ -159,6 +159,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return documentSource;
 }
 
+- (NSMutableArray *)webFramesInFrame:(WebFrame *)frame
+{
+	NSMutableArray *frames = nil;
+	frames = [NSMutableArray arrayWithCapacity:0];
+	for (WebFrame *childFrame in [frame childFrames])
+	{
+		[frames addObject:childFrame];
+		if ([[childFrame childFrames] count] > 0)
+		{
+			[frames addObjectsFromArray:[self webFramesInFrame:childFrame]];
+		}
+	}
+	return frames;
+}
+
 #pragma mark Setter
 
 - (void)setSelected:(BOOL)selected
@@ -1035,23 +1050,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
 {
-	NSArray *childFrames = nil;
 	NSMutableArray *menuItems = nil;
-//	WebDataSource *dataSource = nil;
 	NSString *selectedString =  nil;
 	NSURL *linkURL = nil;
-//	NSURL *imageURL = nil;
-//	NSImage *image = nil;
 	WebFrame *frame = nil;
 	NSURL *frameURL = nil;
 	NSUInteger index = 0;
 	
-	childFrames = [[sender mainFrame] childFrames];
 	menuItems = [NSMutableArray arrayWithCapacity:0];
-//	dataSource = [[sender mainFrame] dataSource];
 	selectedString = [(id <WebDocumentText>)[[[sender mainFrame] frameView] documentView] selectedString];
-	if ([selectedString length] == 0 && [childFrames count] > 0)
+	if ([selectedString length] == 0)
 	{
+		NSMutableArray *childFrames = nil;
+		childFrames = [self webFramesInFrame:[sender mainFrame]];
 		for (WebFrame *frame in childFrames)
 		{
 			selectedString = [(id <WebDocumentText>)[[frame frameView] documentView] selectedString];
@@ -1062,8 +1073,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 	}
 	linkURL = [element objectForKey:WebElementLinkURLKey];
-//	imageURL = [element objectForKey:WebElementImageURLKey];
-//	image = [element objectForKey:WebElementImageKey];
 	frame = [element objectForKey:WebElementFrameKey];
 	frameURL = [[[frame dataSource] request] URL];
 	

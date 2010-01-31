@@ -29,13 +29,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSTextField *langField;
 	NSPopUpButton *langPopup;
-	NSScrollView *scrollView;
-	NSView *contentView;
+	NSButton *switchButton;
+	
+	NSView *editView;
+	NSScrollView *editScrollView;
+	NSView *editContentView;
 	NSMutableArray *textSet;
 	NSArray *fieldSet;
 	NSButton *openButton;
 	NSButton *cancelButton;
-	NSButton *doneButton;
+	NSButton *createButton;
+	
+	NSView *contributeView;
+	NSImageView *iconImageView;
+	NSTextField *textField;
+	NSTextField *checkoutTitleField;
+	NSButton *checkoutButton;
+	NSTextField *commitTitleField;
+	NSButton *commitButton;
+	BOOL animating;
 }
 @property (nonatomic, retain) NSMutableArray *textSet;
 @property (nonatomic, retain) NSArray *fieldSet;
@@ -43,11 +55,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (CGFloat)margin;
 - (CGFloat)topMargin;
 - (CGFloat)bottomMargin;
-- (void)constructButtons;
+- (void)constructCommonViews;
+- (void)constructEditView;
+- (void)constructButtonsInEditView;
+- (void)constructContributeView;
+- (void)constructButtonsInContributeView;
 - (void)open;
 - (void)mergeFilePath:(NSString *)path;
+- (void)showContribute;
+- (void)showEdit;
+- (void)changeView:(NSInteger)index;
 - (void)cancel;
 - (void)done;
 - (void)export;
+// Contribute
+- (void)openCheckoutDirectory;
+
+@end
+
+@interface SBViewAnimation : NSViewAnimation
+{
+	id context;
+}
+@property (nonatomic, retain) id context;
 
 @end

@@ -3,7 +3,7 @@
 //  Sunrise
 //
 //  Created by Atsushi Jike on 09/12/19.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 Atsushi Jike. All rights reserved.
 //
 
 #import "SBFindbar.h"

@@ -75,6 +75,9 @@
 		0893E615104FF4E800AF3283 /* BLKGUI_Radio-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893E611104FF4E800AF3283 /* BLKGUI_Radio-Highlighted.png */; };
 		08941F2A1015E353004CD4EA /* SBSavePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08941F291015E353004CD4EA /* SBSavePanel.m */; };
 		08943D101013566E0034A3E5 /* Finder.png in Resources */ = {isa = PBXBuildFile; fileRef = 08943D0F1013566E0034A3E5 /* Finder.png */; };
+		08946ED31114731F00B09D17 /* Icon_Contribute.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946ED21114731F00B09D17 /* Icon_Contribute.png */; };
+		08946F0E111478F600B09D17 /* Icon_Checkout.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946F0D111478F600B09D17 /* Icon_Checkout.png */; };
+		08946FE51114861D00B09D17 /* Icon_Commit.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946FE41114861D00B09D17 /* Icon_Commit.png */; };
 		0896AC8510149C4A00D8319A /* SBBookmarkItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0896AC8410149C4A00D8319A /* SBBookmarkItemView.m */; };
 		0896C1460FFF16B200B97498 /* SBBLKGUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0896C1450FFF16B200B97498 /* SBBLKGUIButton.m */; };
 		0896C1820FFF171400B97498 /* BLKGUI_CheckBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1700FFF171400B97498 /* BLKGUI_CheckBox.png */; };
@@ -282,6 +285,9 @@
 		08941F281015E353004CD4EA /* SBSavePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSavePanel.h; path = Classes/SBSavePanel.h; sourceTree = "<group>"; };
 		08941F291015E353004CD4EA /* SBSavePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSavePanel.m; path = Classes/SBSavePanel.m; sourceTree = "<group>"; };
 		08943D0F1013566E0034A3E5 /* Finder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Finder.png; path = Resources/Images/Finder.png; sourceTree = "<group>"; };
+		08946ED21114731F00B09D17 /* Icon_Contribute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Contribute.png; path = Resources/Images/Icon_Contribute.png; sourceTree = "<group>"; };
+		08946F0D111478F600B09D17 /* Icon_Checkout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Checkout.png; path = Resources/Images/Icon_Checkout.png; sourceTree = "<group>"; };
+		08946FE41114861D00B09D17 /* Icon_Commit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Commit.png; path = Resources/Images/Icon_Commit.png; sourceTree = "<group>"; };
 		0896AC8310149C4A00D8319A /* SBBookmarkItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarkItemView.h; path = Classes/SBBookmarkItemView.h; sourceTree = "<group>"; };
 		0896AC8410149C4A00D8319A /* SBBookmarkItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBookmarkItemView.m; path = Classes/SBBookmarkItemView.m; sourceTree = "<group>"; };
 		0896C1290FFF136300B97498 /* ViewStructure.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ViewStructure.plist; path = Resources/plists/ViewStructure.plist; sourceTree = "<group>"; };
@@ -451,6 +457,9 @@
 				085A738C1091CDC600FE7556 /* History.png */,
 				084066FB0FE2B53900CC80E3 /* Home.png */,
 				08C8D68D1036DD0C005540AF /* Icon_Camera.png */,
+				08946F0D111478F600B09D17 /* Icon_Checkout.png */,
+				08946FE41114861D00B09D17 /* Icon_Commit.png */,
+				08946ED21114731F00B09D17 /* Icon_Contribute.png */,
 				08C8D69E1036DEF4005540AF /* Icon_Lock.png */,
 				08C8D69F1036DEF4005540AF /* Icon_Unlock.png */,
 				089F948210342E7300C48997 /* LeftButton.png */,
@@ -989,6 +998,9 @@
 				085A738D1091CDC600FE7556 /* History.png in Resources */,
 				08B00EE210AE5A33002277E5 /* UserAgent.png in Resources */,
 				08C3F2E610DDFCFA00340900 /* Credits.rtfd in Resources */,
+				08946ED31114731F00B09D17 /* Icon_Contribute.png in Resources */,
+				08946F0E111478F600B09D17 /* Icon_Checkout.png in Resources */,
+				08946FE51114861D00B09D17 /* Icon_Commit.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

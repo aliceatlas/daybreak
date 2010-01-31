@@ -777,12 +777,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)updateItems
 {
 	NSUInteger index = 0;
-	for (SBBookmarkListItemView *itemView in itemViews)
+	NSArray *bookmarkItems = self.items;
+	BOOL shouldLayout = NO;
+	index = [itemViews count] - 1;
+	for (SBBookmarkListItemView *itemView in [itemViews reverseObjectEnumerator])
 	{
-		NSDictionary *item = [self.items objectAtIndex:index];
-		itemView.item = item;
-		[itemView setNeedsDisplay:YES];
-		index++;
+		NSDictionary *item = nil;
+		item = [bookmarkItems count] > index ? [bookmarkItems objectAtIndex:index] : nil;
+		if (item)
+		{
+			itemView.item = item;
+			[itemView setNeedsDisplay:YES];
+		}
+		else {
+			shouldLayout = YES;
+			[itemView removeFromSuperview];
+		}
+		if (itemView.selected)
+		{
+			itemView.selected = NO;
+			[itemView setNeedsDisplay:YES];
+		}
+		index--;
+	}
+	if (shouldLayout)
+	{
+		[self layoutFrame];
 	}
 }
 
