@@ -24,9 +24,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #import "SBDefinitions.h"
+#import "SBBookmarksView.h"
 #import "SBButton.h"
 #import "SBPopUpButton.h"
 #import "SBDocumentWindow.h"
+#import "SBWebResourcesView.h"
 
 @class SBBookmarkView;
 @class SBDocumentWindow;
@@ -53,7 +55,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBWebView;
 @protocol SBSplitViewDelegate;
 @protocol SBTabbarDelegate;
-@interface SBDocument : NSDocument <SBTabbarDelegate, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate>
+@interface SBDocument : NSDocument <SBTabbarDelegate, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate>
 {
 	SBDocumentWindow *window;
 	NSWindowController *windowController;
@@ -98,6 +100,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, readonly) WebDataSource *selectedWebDataSource;
 @property (nonatomic, readonly) NSImage *selectedWebViewImageForBookmark;
 @property (nonatomic, readonly) NSData *selectedWebViewImageDataForBookmark;
+@property (nonatomic, readonly) SBWebResourcesView *resourcesView;
 
 // Getter
 - (NSNumber *)newIdentifier;
@@ -116,6 +119,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)destructTabbar;
 - (void)destructSplitView;
 - (void)destructSidebar;
+- (SBBookmarksView *)constructBookmarksView;
 - (void)destructBookmarkView;
 - (void)destructEditBookmarkView;
 - (void)destructDownloaderView;
@@ -146,6 +150,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)removeObserverNotifications;
 // // Update
 - (void)updateMenuWithTag:(NSInteger)tag;
+- (void)updateResourcesViewIfNeeded;
 // Actions
 - (void)performCloseFromButton:(id)sender;
 - (void)performClose:(id)sender;
@@ -180,6 +185,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)zoomInText:(id)sender;
 - (void)zoomOutText:(id)sender;
 - (void)source:(id)sender;
+- (void)resources:(id)sender;
 - (void)showWebInspector:(id)sender;
 - (void)showConsole:(id)sender;
 // History menu

@@ -42,6 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic tabView;
 @synthesize URL;
 @synthesize webView;
+@synthesize resourceIdentifiers;
 @synthesize showSource;
 @dynamic selected;
 @dynamic canBackward;
@@ -56,6 +57,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (self = [super initWithIdentifier:identifier])
 	{
+		resourceIdentifiers = nil;
 		[self constructSplitView];
 	}
 	return self;
@@ -722,7 +724,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if ([[sender mainFrame] isEqual:frame])
 	{
-		
+		[self removeAllResourceIdentifiers];
 	}
 }
 
@@ -961,9 +963,82 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark WebResourceLoadDelegate
 
+- (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource
+{
+	id identifier = nil;
+	identifier = (id)[SBWebResourceIdentifier identifierWithURLRequest:request];
+	if ([self addResourceIdentifier:(SBWebResourceIdentifier *)identifier])
+	{
+		if (self.selected)
+		{
+			[self.tabView executeSelectedItemDidAddResourceID:(SBWebResourceIdentifier *)identifier];
+		}
+	}
+	return identifier;
+}
+
 - (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource
 {
 	return request;
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveResponse:(NSURLResponse *)response fromDataSource:(WebDataSource *)dataSource
+{
+	long long length = [response expectedContentLength];
+	if (identifier && length > 0)
+	{
+		SBWebResourceIdentifier *resourceID = (SBWebResourceIdentifier *)identifier;
+		resourceID.length = length;
+		if (self.selected)
+		{
+			[self.tabView executeSelectedItemDidReceiveExpectedContentLengthOfResourceID:resourceID];
+		}
+	}
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didFailLoadingWithError:(NSError *)error fromDataSource:(WebDataSource *)dataSource
+{
+	if (identifier)
+	{
+		SBWebResourceIdentifier *resourceID = (SBWebResourceIdentifier *)identifier;
+		resourceID.flag = NO;
+	}
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveContentLength:(NSInteger)length fromDataSource:(WebDataSource *)dataSource
+{
+	if (identifier && length > 0)
+	{
+		SBWebResourceIdentifier *resourceID = (SBWebResourceIdentifier *)identifier;
+		resourceID.received += length;
+		if (self.selected)
+		{
+			[self.tabView executeSelectedItemDidReceiveContentLengthOfResourceID:resourceID];
+		}
+	}
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didFinishLoadingFromDataSource:(WebDataSource *)dataSource
+{
+	if (identifier)
+	{
+		SBWebResourceIdentifier *resourceID = (SBWebResourceIdentifier *)identifier;
+		NSCachedURLResponse *response = nil;
+		if (response = [[NSURLCache sharedURLCache] cachedResponseForRequest:resourceID.request])
+		{
+			// Loaded from cache
+			long long length = [response data] ? [[response data] length] : 0;
+			if (length > 0)
+			{
+				resourceID.length = length;
+				resourceID.received = length;
+			}
+		}
+		if (self.selected)
+		{
+			[self.tabView executeSelectedItemDidReceiveFinishLoadingOfResourceID:resourceID];
+		}
+	}
 }
 
 #pragma mark WebUIDelegate
@@ -1267,6 +1342,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 
 #pragma mark Actions
+
+- (BOOL)addResourceIdentifier:(SBWebResourceIdentifier *)identifier
+{
+	BOOL r = NO;
+	if (!resourceIdentifiers)
+		resourceIdentifiers = [[NSMutableArray alloc] initWithCapacity:0];
+	if (![resourceIdentifiers containsObject:identifier])
+	{
+		[resourceIdentifiers addObject:identifier];
+		r = YES;
+	}
+	return r;
+}
+
+- (void)removeAllResourceIdentifiers
+{
+	if (resourceIdentifiers)
+	{
+		[resourceIdentifiers removeAllObjects];
+	}
+}
 
 - (void)backward:(id)sender
 {

@@ -25,6 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDefinitions.h"
 #import "SBBLKGUI.h"
 #import "SBSourceTextView.h"
+#import "SBWebResourceIdentifier.h"
 #import "SBWebView.h"
 
 @class SBDrawer;
@@ -46,6 +47,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBFixedSplitView *sourceSplitView;
 	SBBLKGUIButton *sourceSaveButton;
 	SBBLKGUIButton *sourceCloseButton;
+	NSMutableArray *resourceIdentifiers;
 	BOOL showSource;
 }
 @property (nonatomic, assign) NSView *view;
@@ -54,6 +56,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, readonly) SBTabView *tabView;
 @property (nonatomic, retain) NSURL *URL;
 @property (nonatomic, retain) SBWebView *webView;
+@property (nonatomic, retain) NSMutableArray *resourceIdentifiers;
 @property (nonatomic) BOOL showSource;
 @property (nonatomic) BOOL selected;
 @property (nonatomic, readonly) BOOL canBackward;
@@ -85,6 +88,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructWebView;
 - (void)setUserAgent;
 // Actions
+- (BOOL)addResourceIdentifier:(SBWebResourceIdentifier *)identifier;
+- (void)removeAllResourceIdentifiers;
 - (void)backward:(id)sender;
 - (void)forward:(id)sender;
 - (void)openDocumentSource:(id)sender;

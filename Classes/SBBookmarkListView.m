@@ -1318,7 +1318,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSDragOperation)draggingUpdated:(id<NSDraggingInfo>)sender
 {
-	NSPoint point = [self convertPoint:[sender draggingLocation] fromView:nil];
+	NSPoint point = NSZeroPoint;
+	point = [self convertPoint:[sender draggingLocation] fromView:nil];
 	[self layoutDraggingLineView:point];
 	[self autoscroll:[NSApp currentEvent]];
 	return NSDragOperationCopy;

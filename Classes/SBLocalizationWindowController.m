@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBSavePanel.h"
 #import "SBUtil.h"
 
-#define kSBLocalizationAvailableSubversionAccess 0
+#define kSBLocalizationAvailableSubversionAccess 1
 
 
 @implementation SBLocalizationWindowController

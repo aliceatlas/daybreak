@@ -24,6 +24,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "NSString-SBURLAdditions.h"
 
+NSString *SBGigaByteUnitString = @"GB";
+NSString *SBMegaByteUnitString = @"MB";
+NSString *SBKiroByteUnitString = @"KB";
+NSString *SBByteUnitString = @"byte";
+NSString *SBBytesUnitString = @"bytes";
+
 @implementation NSString (SBAdditions)
 
 - (BOOL)containsCharacter:(unichar)character
@@ -93,26 +99,79 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 + (NSString *)bytesStringForLength:(long long)length
 {
+	return [self bytesStringForLength:length unit:YES];
+}
+
++ (NSString *)bytesStringForLength:(long long)length unit:(BOOL)hasUnit
+{
 	NSString *string = nil;
+	NSString *format = nil;
+	NSString *unitString = nil;
 	CGFloat value;
+	unitString = [NSString unitStringForLength:length];
 	if (length > (1024 * 1024 * 1024))	// giga
 	{
 		value = (length > 0 ? ((CGFloat)length / (1024 * 1024 * 1024)) : 0);
-		string = [NSString stringWithFormat:@"%.2f GB", value];
+		if (value == (NSInteger)value)
+		{
+			format = @"%d";
+			if (hasUnit) format = [format stringByAppendingFormat:@" %@", unitString];
+			string = [NSString stringWithFormat:format, (NSInteger)value];
+		}
+		else {
+			format = @"%.2f";
+			if (hasUnit) format = [format stringByAppendingFormat:@" %@", unitString];
+			string = [NSString stringWithFormat:format, value];
+		}
 	}
 	else if (length > (1024 * 1024))	// mega
 	{
 		value = (length > 0 ? ((CGFloat)length / (1024 * 1024)) : 0);
-		string = [NSString stringWithFormat:@"%.1f MB", value];
+		if (value == (NSInteger)value)
+		{
+			format = @"%d";
+			if (hasUnit) format = [format stringByAppendingFormat:@" %@", unitString];
+			string = [NSString stringWithFormat:format, (NSInteger)value];
+		}
+		else {
+			format = @"%.1f";
+			if (hasUnit) format = [format stringByAppendingFormat:@" %@", unitString];
+			string = [NSString stringWithFormat:format, value];
+		}
 	}
 	else if (length > 1024)				// kilo
 	{
 		value = (length > 0 ? ((CGFloat)length / 1024) : 0);
-		string = [NSString stringWithFormat:@"%d KB", (NSInteger)value];
+		format = @"%d";
+		if (hasUnit) format = [format stringByAppendingFormat:@" %@", unitString];
+		string = [NSString stringWithFormat:format, (NSInteger)value];
 	}
 	else{
 		value = length;
-		string = [NSString stringWithFormat:@"%d bytes", (NSInteger)value];
+		format = @"%d";
+		if (hasUnit) format = [format stringByAppendingFormat:@" %@", unitString];
+		string = [NSString stringWithFormat:format, (NSInteger)value];
+	}
+	return string;
+}
+
++ (NSString *)unitStringForLength:(long long)length
+{
+	NSString *string = nil;
+	if (length > (1024 * 1024 * 1024))	// giga
+	{
+		string = SBGigaByteUnitString;
+	}
+	else if (length > (1024 * 1024))	// mega
+	{
+		string = SBMegaByteUnitString;
+	}
+	else if (length > 1024)				// kilo
+	{
+		string = SBKiroByteUnitString;
+	}
+	else{
+		string = length <= 1 ? SBByteUnitString : SBBytesUnitString;
 	}
 	return string;
 }

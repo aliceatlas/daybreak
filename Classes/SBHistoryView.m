@@ -49,6 +49,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	[messageLabel release];
 	[tableView release];
+	[scrollView release];
 	[removeButton release];
 	[removeAllButton release];
 	[backButton release];

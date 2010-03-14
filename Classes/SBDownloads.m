@@ -295,11 +295,20 @@ static SBDownloads *sharedDownloads;
 
 - (NSString *)bytesString:(long long)receivedLegnth expectedLength:(long long)expectedLength
 {
-	NSString *receiveString = nil;
-	NSString *expectedString = nil;
-	receiveString = [NSString bytesStringForLength:receivedLegnth];
-	expectedString = [NSString bytesStringForLength:expectedLength];
-	return [NSString stringWithFormat:@"%@ / %@", receiveString, expectedString];
+	NSString *string = nil;
+	BOOL sameUnit = [[NSString unitStringForLength:receivedLegnth] isEqualToString:[NSString unitStringForLength:expectedLength]];
+	NSString *received = nil;
+	NSString *expected = [NSString bytesStringForLength:expectedLength];
+	if (sameUnit)
+	{
+		received = [NSString bytesStringForLength:receivedLegnth unit:NO];
+		string = [NSString stringWithFormat:@"%@/%@", received, expected];
+	}
+	else {
+		received = [NSString bytesStringForLength:receivedLegnth];
+		string = [NSString stringWithFormat:@"%@/%@", received, expected];
+	}
+	return string;
 }
 
 @end

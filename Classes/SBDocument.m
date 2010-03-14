@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBAboutView.h"
 #import "SBBookmarks.h"
 #import "SBBookmarkListView.h"
-#import "SBBookmarksView.h"
 #import "SBBookmarkView.h"
 #import "SBDownloaderView.h"
 #import "SBDownloads.h"
@@ -237,6 +236,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (image)
 		data = [[image bitmapImageRep] data];
 	return data;
+}
+
+- (SBWebResourcesView *)resourcesView
+{
+	return [sidebar.view isKindOfClass:[SBWebResourcesView class]] ? (SBWebResourcesView *)sidebar.view : nil;
 }
 
 #pragma mark Destruction
@@ -642,7 +646,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructSidebar];
 	if (sidebarVisibility)
 	{
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		SBBookmarksView *bookmarksView = nil;
 		SBDrawer *drawer = nil;
 		
@@ -651,18 +654,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		sidebar.siderbarDelegate = splitView;
 		sidebar.position = splitView.sidebarPosition;
 		splitView.sidebar = sidebar;
-		bookmarksView = [[[SBBookmarksView alloc] initWithFrame:[sidebar viewRect]] autorelease];
-		drawer = [[[SBDrawer alloc] initWithFrame:[sidebar drawerRect]] autorelease];
-		[bookmarksView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-		bookmarksView.delegate = self;
-		bookmarksView.cellWidth = [defaults integerForKey:kSBBookmarkCellWidth];
-		[bookmarksView constructListView:[defaults integerForKey:kSBBookmarkMode]];
-		sidebar.view = bookmarksView;
-		sidebar.drawer = drawer;
+		if (bookmarksView = [self constructBookmarksView])
+		{
+			sidebar.view = bookmarksView;
+		}
+		if (drawer = [[[SBDrawer alloc] initWithFrame:[sidebar drawerRect]] autorelease])
+		{
+			sidebar.drawer = drawer;
+		}
 		[sidebar constructBottombar];
 		[sidebar.bottombar.sizeSlider setFloatValue:bookmarksView.cellWidth];
 		[sidebar closeDrawer];
 	}
+}
+
+- (SBBookmarksView *)constructBookmarksView
+{
+	SBBookmarksView *bookmarksView = nil;
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	bookmarksView = [[[SBBookmarksView alloc] initWithFrame:[sidebar viewRect]] autorelease];
+	[bookmarksView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+	bookmarksView.delegate = self;
+	bookmarksView.cellWidth = [defaults integerForKey:kSBBookmarkCellWidth];
+	[bookmarksView constructListView:[defaults integerForKey:kSBBookmarkMode]];
+	return bookmarksView;
 }
 
 - (void)constructNewTabWithString:(NSString *)string selection:(BOOL)selection
@@ -1049,6 +1064,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	urlField.stringValue = [tabViewItem.mainFrameURLString URLDencodedString];
 	urlField.image = tabViewItem.tabbarItem.image;
 	loadButton.on = [[tabViewItem webView] isLoading];
+	[self updateResourcesViewIfNeeded];
 }
 
 - (void)tabbar:(SBTabbar *)aTabbar didReselection:(SBTabbarItem *)aTabbarItem
@@ -1373,6 +1389,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (![urlField isFirstResponder] || [urlField.stringValue length] == 0)
 		urlField.stringValue = [aTabViewItem.mainFrameURLString URLDencodedString];
 	[self updateMenuWithTag:SBViewMenuTag];
+	[self updateResourcesViewIfNeeded];
 	loadButton.on = YES;
 }
 
@@ -1388,6 +1405,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //		[self.window makeFirstResponder:webView];
 //	}
 	[self updateMenuWithTag:SBViewMenuTag];
+	[self updateResourcesViewIfNeeded];
 	loadButton.on = NO;
 }
 
@@ -1398,6 +1416,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (![urlField isFirstResponder] || [urlField.stringValue length] == 0)
 		urlField.stringValue = [aTabViewItem.mainFrameURLString URLDencodedString];
 	[self updateMenuWithTag:SBViewMenuTag];
+	[self updateResourcesViewIfNeeded];
 	loadButton.on = NO;
 }
 
@@ -1423,6 +1442,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)tabView:(SBTabView *)aTabView shouldAddNewItemForURL:(NSURL *)url selection:(BOOL)selection
 {
 	[self constructNewTabWithURL:url selection:selection];
+	if (selection)
+		[self updateResourcesViewIfNeeded];
 }
 
 - (void)tabView:(SBTabView *)aTabView shouldSearchString:(NSString *)string newTab:(BOOL)newTab
@@ -1445,11 +1466,207 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return [self textInput:prompt];
 }
 
+- (void)tabView:(SBTabView *)aTabView didAddResourceID:(SBWebResourceIdentifier *)resourceID
+{
+	[self updateResourcesViewIfNeeded];
+}
+
+- (void)tabView:(SBTabView *)aTabView didReceiveExpectedContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID
+{
+	[self updateResourcesViewIfNeeded];
+}
+
+- (void)tabView:(SBTabView *)aTabView didReceiveContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID
+{
+	[self updateResourcesViewIfNeeded];
+}
+
+- (void)tabView:(SBTabView *)aTabView didReceiveFinishLoadingOfResourceID:(SBWebResourceIdentifier *)resourceID
+{
+	[self updateResourcesViewIfNeeded];
+}
+
+#pragma mark SBWebResourcesViewDataSource
+
+- (NSInteger)numberOfRowsInWebResourcesView:(SBWebResourcesView *)aWebResourcesView
+{
+	NSUInteger count = 0;
+	SBTabViewItem *tabViewItem = nil;
+	if (tabViewItem = self.selectedTabViewItem)
+	{
+		NSMutableArray *resourceIdentifiers = nil;
+		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		{
+			count = [resourceIdentifiers count];
+		}
+	}
+	return count;
+}
+
+- (id)webResourcesView:(SBWebResourcesView *)aWebResourcesView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+	NSString *object = nil;
+	SBTabViewItem *tabViewItem = nil;
+	if (tabViewItem = self.selectedTabViewItem)
+	{
+		NSMutableArray *resourceIdentifiers = nil;
+		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		{
+			SBWebResourceIdentifier *resourceIdentifier = nil;
+			NSString *identifier = [aTableColumn identifier];
+			resourceIdentifier = rowIndex < [resourceIdentifiers count] ? [resourceIdentifiers objectAtIndex:rowIndex] : nil;
+			if (resourceIdentifier)
+			{
+				if ([identifier isEqual:kSBURL])
+				{
+					object = [resourceIdentifier.URL absoluteString];
+				}
+				else if ([identifier isEqual:@"Length"])
+				{
+					NSString *expected = [NSString bytesStringForLength:resourceIdentifier.length];
+					if (resourceIdentifier.received > 0 && resourceIdentifier.length > 0)
+					{
+						if (resourceIdentifier.received == resourceIdentifier.length)
+						{
+							// Completed
+							object = [NSString stringWithFormat:@"%@", expected];
+						}
+						else {
+							// Processing
+							BOOL sameUnit = [[NSString unitStringForLength:resourceIdentifier.received] isEqualToString:[NSString unitStringForLength:resourceIdentifier.length]];
+							NSString *received = nil;
+							if (sameUnit)
+							{
+								received = [NSString bytesStringForLength:resourceIdentifier.received unit:NO];
+								object = [NSString stringWithFormat:@"%@/%@", received, expected];
+							}
+							else {
+								received = [NSString bytesStringForLength:resourceIdentifier.received];
+								object = [NSString stringWithFormat:@"%@/%@", received, expected];
+							}
+						}
+					}
+					else if (resourceIdentifier.received > 0)
+					{
+						// Completed
+						NSString *received = [NSString bytesStringForLength:resourceIdentifier.received];
+						object = [NSString stringWithFormat:@"%@", received];
+					}
+					else if (resourceIdentifier.length > 0)
+					{
+						// Unloaded
+						object = [NSString stringWithFormat:@"?/%@", expected];
+					}
+					else {
+						object = @"?";
+					}
+				}
+				else if ([identifier isEqual:@"Action"])
+				{
+					
+				}
+			}
+		}
+	}
+	return object;
+}
+
+- (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+	SBTabViewItem *tabViewItem = nil;
+	if (tabViewItem = self.selectedTabViewItem)
+	{
+		NSMutableArray *resourceIdentifiers = nil;
+		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		{
+			SBWebResourceIdentifier *resourceIdentifier = nil;
+			NSString *identifier = [aTableColumn identifier];
+			resourceIdentifier = rowIndex < [resourceIdentifiers count] ? [resourceIdentifiers objectAtIndex:rowIndex] : nil;
+			if (resourceIdentifier)
+			{
+				if ([identifier isEqual:kSBURL])
+				{
+					[aCell setTitle:[resourceIdentifier.URL absoluteString]];
+				}
+				else if ([identifier isEqual:@"Length"])
+				{
+					NSString *title = nil;
+					NSString *expected = [NSString bytesStringForLength:resourceIdentifier.length];
+					if (resourceIdentifier.received > 0 && resourceIdentifier.length > 0)
+					{
+						if (resourceIdentifier.received == resourceIdentifier.length)
+						{
+							// Completed
+							title = [NSString stringWithFormat:@"%@", expected];
+						}
+						else {
+							// Processing
+							BOOL sameUnit = [[NSString unitStringForLength:resourceIdentifier.received] isEqualToString:[NSString unitStringForLength:resourceIdentifier.length]];
+							NSString *received = nil;
+							if (sameUnit)
+							{
+								received = [NSString bytesStringForLength:resourceIdentifier.received unit:NO];
+								title = [NSString stringWithFormat:@"%@/%@", received, expected];
+							}
+							else {
+								received = [NSString bytesStringForLength:resourceIdentifier.received];
+								title = [NSString stringWithFormat:@"%@/%@", received, expected];
+							}
+						}
+					}
+					else if (resourceIdentifier.received > 0)
+					{
+						// Completed
+						NSString *received = [NSString bytesStringForLength:resourceIdentifier.received];
+						title = [NSString stringWithFormat:@"%@", received];
+					}
+					else if (resourceIdentifier.length > 0)
+					{
+						// Unloaded
+						title = [NSString stringWithFormat:@"?/%@", expected];
+					}
+					else {
+						title = @"?";
+					}
+					[aCell setTitle:title];
+				}
+				else if ([identifier isEqual:@"Action"])
+				{
+					[(NSButtonCell *)aCell setImage:[NSImage imageNamed:@"Download.png"]];
+				}
+			}
+		}
+	}
+}
+
+#pragma mark SBWebResourcesViewDelegate
+
+- (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldDownloadAtRow:(NSInteger)rowIndex
+{
+	SBTabViewItem *tabViewItem = nil;
+	if (tabViewItem = self.selectedTabViewItem)
+	{
+		NSMutableArray *resourceIdentifiers = nil;
+		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		{
+			SBWebResourceIdentifier *resourceIdentifier = nil;
+			resourceIdentifier = rowIndex < [resourceIdentifiers count] ? [resourceIdentifiers objectAtIndex:rowIndex] : nil;
+			if (resourceIdentifier)
+			{
+				if (resourceIdentifier.URL)
+				{
+					[self startDownloadingForURL:resourceIdentifier.URL];
+				}
+			}
+		}
+	}
+}
+
 #pragma mark Bookmarks Notifications
 
 - (void)bookmarksDidUpdate:(NSNotification *)aNotification
 {
-	SBBookmarksView *bookmarksView = (SBBookmarksView *)sidebar.view;
+	SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
 	if ([aNotification object] != bookmarksView)
 	{
 		// Update items in other windows
@@ -1665,6 +1882,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		[menuItem setTitle:self.selectedTabViewItem.showSource ? NSLocalizedString(@"Hide Source", nil) : NSLocalizedString(@"Show Source", nil)];
 	}
+	else if (selector == @selector(resources:))
+	{
+		SBWebResourcesView *resourcesView = self.resourcesView;
+		[menuItem setTitle:(splitView.visibleSidebar && resourcesView) ? NSLocalizedString(@"Hide Resources", nil) : NSLocalizedString(@"Show Resources", nil)];
+	}
 	else if (selector == @selector(showWebInspector:))
 	{
 		r = [[NSUserDefaults standardUserDefaults] boolForKey:kWebKitDeveloperExtras] && ![[self selectedWebView] isEmpty];
@@ -1697,7 +1919,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if (selector == @selector(bookmarks:))
 	{
-		[menuItem setTitle:splitView.visibleSidebar ? NSLocalizedString(@"Hide All Bookmarks", nil) : NSLocalizedString(@"Show All Bookmarks", nil)];
+		SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
+		[menuItem setTitle:(splitView.visibleSidebar && bookmarksView) ? NSLocalizedString(@"Hide All Bookmarks", nil) : NSLocalizedString(@"Show All Bookmarks", nil)];
 	}
 	else if (selector == @selector(bookmark:))
 	{
@@ -1705,7 +1928,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if (selector == @selector(searchInBookmarks:))
 	{
-		SBBookmarksView *bookmarksView = (SBBookmarksView *)sidebar.view;
+		SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
 		r = (bookmarksView != nil);
 	}
 	else if (selector == @selector(switchMode:))
@@ -1713,14 +1936,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		BOOL visibleSidebar = splitView.visibleSidebar && sidebar;
 		if (visibleSidebar)
 		{
-			SBBookmarksView *bookmarksView = (SBBookmarksView *)sidebar.view;
-			if (bookmarksView.mode == SBBookmarkIconMode)
+			SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
+			if (bookmarksView)
 			{
-				[menuItem setTitle:NSLocalizedString(@"as List", nil)];
-			}
-			else if (bookmarksView.mode == SBBookmarkListMode)
-			{
-				[menuItem setTitle:NSLocalizedString(@"as Icons", nil)];
+				if (bookmarksView.mode == SBBookmarkIconMode)
+				{
+					[menuItem setTitle:NSLocalizedString(@"as List", nil)];
+				}
+				else if (bookmarksView.mode == SBBookmarkListMode)
+				{
+					[menuItem setTitle:NSLocalizedString(@"as Icons", nil)];
+				}
 			}
 		}
 		else {
@@ -1758,8 +1984,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if ([itemIdentifier isEqualToString:kSBToolbarBookmarksItemIdentifier])
 	{
-		SBBookmarksView *bookmarksView = (SBBookmarksView *)sidebar.view;
-		SBBookmarkMode mode = bookmarksView.mode;
+		SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
+		SBBookmarkMode mode = bookmarksView ? bookmarksView.mode : SBBookmarkIconMode;
 		[item setImage:[NSImage imageNamed:mode == SBBookmarkIconMode ? @"Bookmarks-Icon" : @"Bookmarks-List"]];
 	}
 	else if ([itemIdentifier isEqualToString:kSBToolbarSnapshotItemIdentifier])
@@ -1793,6 +2019,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMenu *menu = SBMenuWithTag(tag);
 	if (menu)
 		[menu update];
+}
+
+- (void)updateResourcesViewIfNeeded
+{
+	SBWebResourcesView *resourcesView = nil;
+	if (resourcesView = self.resourcesView)
+	{
+		[resourcesView reload];
+	}
 }
 
 #pragma mark Actions
@@ -2151,6 +2386,31 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self.selectedTabViewItem toggleShowSource];
 }
 
+- (void)resources:(id)sender
+{
+	SBWebResourcesView *resourcesView = nil;
+	if (splitView.visibleSidebar && sidebar)
+	{
+		if (resourcesView = self.resourcesView)
+		{
+			[self hideSidebar];
+		}
+		else {
+			resourcesView = [[[SBWebResourcesView alloc] initWithFrame:[sidebar viewRect]] autorelease];
+			resourcesView.dataSource = self;
+			resourcesView.delegate = self;
+			sidebar.view = resourcesView;
+		}
+	}
+	else {
+		[self showSidebar];
+		resourcesView = [[[SBWebResourcesView alloc] initWithFrame:[sidebar viewRect]] autorelease];
+		resourcesView.dataSource = self;
+		resourcesView.delegate = self;
+		sidebar.view = resourcesView;
+	}
+}
+
 - (void)showWebInspector:(id)sender
 {
 	SBWebView *webView = nil;
@@ -2239,7 +2499,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (splitView.visibleSidebar && sidebar)
 	{
-		[self hideSidebar];
+		SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
+		if (bookmarksView)
+		{
+			[self hideSidebar];
+		}
+		else {
+			if (bookmarksView = [self constructBookmarksView])
+			{
+				sidebar.view = bookmarksView;
+			}
+		}
 	}
 	else {
 		[self showSidebar];
@@ -2281,9 +2551,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[bookmarks addItem:item];
 	[self destructBookmarkView];
 	[window hideCoverWindow];
-	SBBookmarksView *bookmarksView = (SBBookmarksView *)sidebar.view;
-	[bookmarksView addForBookmarkItem:item];
-	[(SBBookmarksView *)sidebar.view scrollToItem:item];
+	SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
+	if (bookmarksView)
+	{
+		[bookmarksView addForBookmarkItem:item];
+		[(SBBookmarksView *)sidebar.view scrollToItem:item];
+	}
 }
 
 - (void)cancelBookmark
@@ -2347,7 +2620,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)searchInBookmarks:(id)sender
 {
-	SBBookmarksView *bookmarksView = (SBBookmarksView *)sidebar.view;
+	SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
 	if (bookmarksView)
 	{
 		[bookmarksView setShowSearchbar:YES];
@@ -2356,13 +2629,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)switchMode:(id)sender
 {
-	SBBookmarksView *bookmarksView = (SBBookmarksView *)sidebar.view;
-	if (bookmarksView.mode == SBBookmarkIconMode)
+	SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
+	if (bookmarksView)
 	{
-		bookmarksView.mode = SBBookmarkListMode;
-	}
-	else {
-		bookmarksView.mode = SBBookmarkIconMode;
+		if (bookmarksView.mode == SBBookmarkIconMode)
+		{
+			bookmarksView.mode = SBBookmarkListMode;
+		}
+		else {
+			bookmarksView.mode = SBBookmarkIconMode;
+		}
 	}
 }
 

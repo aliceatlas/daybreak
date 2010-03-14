@@ -179,12 +179,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if (view)
 		{
+			if ([view respondsToSelector:@selector(setDataSource:)])
+				[(id)view setDataSource:nil];
 			[view removeFromSuperview];
 			[view release];
 			view = nil;
 		}
 		view = [aView retain];
-		[self addSubview:view];
+		[view setFrame:[self viewRect]];
+		if ([[self subviews] count] > 0)
+			[self addSubview:view positioned:NSWindowBelow relativeTo:[[self subviews] objectAtIndex:0]];
+		else
+			[self addSubview:view];
 	}
 }
 
@@ -381,7 +387,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (CGFloat)sliderWidth
 {
-	CGFloat width = self.bounds.size.width - kSBSidebarResizableWidth * 2 - [self sliderSideMargin];
+	CGFloat width = self.bounds.size.width - kSBSidebarResizableWidth * 2 - [self sliderSideMargin] * 2;
 	return width > 120.0 ? 120.0 : width;
 }
 

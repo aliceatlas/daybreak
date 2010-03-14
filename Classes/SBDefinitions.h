@@ -282,6 +282,7 @@ extern NSString *SBBookmarkPboardType;
 
 @class SBTabView;
 @class SBTabViewItem;
+@class SBWebResourceIdentifier;
 @protocol SBTabViewDelegate <NSObject>
 - (void)tabView:(SBTabView *)aTabView selectedItemDidStartLoading:(SBTabViewItem *)aTabViewItem;
 - (void)tabView:(SBTabView *)aTabView selectedItemDidFinishLoading:(SBTabViewItem *)aTabViewItem;
@@ -294,6 +295,10 @@ extern NSString *SBBookmarkPboardType;
 - (BOOL)tabView:(SBTabView *)aTabView shouldConfirmWithMessage:(NSString *)message;
 - (void)tabView:(SBTabView *)aTabView shouldShowMessage:(NSString *)message;
 - (NSString *)tabView:(SBTabView *)aTabView shouldTextInput:(NSString *)prompt;
+- (void)tabView:(SBTabView *)aTabView didAddResourceID:(SBWebResourceIdentifier *)resourceID;
+- (void)tabView:(SBTabView *)aTabView didReceiveExpectedContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID;
+- (void)tabView:(SBTabView *)aTabView didReceiveContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID;
+- (void)tabView:(SBTabView *)aTabView didReceiveFinishLoadingOfResourceID:(SBWebResourceIdentifier *)resourceID;
 @end
 
 @class SBSplitView;

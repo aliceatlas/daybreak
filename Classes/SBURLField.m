@@ -1291,7 +1291,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else {
 		rowIndex--;
-		[_table selectRow:rowIndex byExtendingSelection:NO];
+		[_table selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
 		[_table scrollRowToVisible:rowIndex];
 	}
 	if ([self selectRow])
@@ -1305,11 +1305,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSInteger rowIndex = [_table selectedRow];
 	if (rowIndex == [_table numberOfRows] - 1)
 	{
-		[_table selectRow:0 byExtendingSelection:NO];
+		[_table selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 	}
 	else {
 		rowIndex++;
-		[_table selectRow:rowIndex byExtendingSelection:NO];
+		[_table selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
 	}
 	if ([self selectRow])
 	{

@@ -29,6 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)containsCharacter:(unichar)character;
 - (NSComparisonResult)compareAsVersionString:(NSString *)string;
 + (NSString *)bytesStringForLength:(long long)length;
++ (NSString *)bytesStringForLength:(long long)length unit:(BOOL)hasUnit;
++ (NSString *)unitStringForLength:(long long)length;
 - (NSString *)stringByDeletingQuotations;
 - (NSString *)stringByDeletingSpaces;
 - (NSString *)stringByDeletingCharacter:(NSString *)character;

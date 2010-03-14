@@ -277,6 +277,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Actions
 
+- (void)zoom:(id)sender
+{
+	if (!coverWindow)
+	{
+		[super zoom:sender];
+	}
+}
+
 - (void)destructCoverWindow
 {
 	if (coverWindow)
@@ -285,6 +293,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[coverWindow close];
 		coverWindow = nil;
 	}
+	[self setShowsToolbarButton:YES];
 }
 
 - (void)showCoverWindow:(SBView *)view
@@ -318,6 +327,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[scrollView setHasVerticalScroller:hasVerticalScroller];
 	[[coverWindow contentView] addSubview:scrollView];
 	[scrollView setDocumentView:view];
+	[self setShowsToolbarButton:NO];
 	
 #if 1
 	[self addChildWindow:coverWindow ordered:NSWindowAbove];

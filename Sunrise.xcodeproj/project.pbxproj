@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0810174D1142B774007F3348 /* SBWebResourceIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 0810174C1142B774007F3348 /* SBWebResourceIdentifier.m */; };
 		0816F59A102D52CD00DFA5F0 /* SBUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 0816F599102D52CD00DFA5F0 /* SBUpdater.m */; };
 		081E0F0110C115BE00C6AD2B /* SBTextInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 081E0F0010C115BE00C6AD2B /* SBTextInputView.m */; };
 		08313CA810B6B9CD004198C3 /* SBMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08313CA710B6B9CD004198C3 /* SBMessageView.m */; };
@@ -149,8 +150,10 @@
 		08B00E4610AE4808002277E5 /* SBUserAgentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B00E4510AE4808002277E5 /* SBUserAgentView.m */; };
 		08B00EE210AE5A33002277E5 /* UserAgent.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B00EE110AE5A33002277E5 /* UserAgent.png */; };
 		08B6E2A2103451DA00BD15D8 /* SBSectionGroupe.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B6E2A1103451DA00BD15D8 /* SBSectionGroupe.m */; };
+		08BE0CF11143E88E00314946 /* SBWebResourcesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE0CF01143E88E00314946 /* SBWebResourcesView.m */; };
 		08C1D4B70FF9092A005709D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C1D4B60FF9092A005709D7 /* QuartzCore.framework */; };
 		08C3F2E610DDFCFA00340900 /* Credits.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 08C3F2E510DDFCFA00340900 /* Credits.rtfd */; };
+		08C6DBCC114B4B610019BCE9 /* Download.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C6DBCB114B4B610019BCE9 /* Download.png */; };
 		08C8D68F1036DD0C005540AF /* Icon_Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C8D68D1036DD0C005540AF /* Icon_Camera.png */; };
 		08C8D6A01036DEF4005540AF /* Icon_Lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C8D69E1036DEF4005540AF /* Icon_Lock.png */; };
 		08C8D6A11036DEF4005540AF /* Icon_Unlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C8D69F1036DEF4005540AF /* Icon_Unlock.png */; };
@@ -170,6 +173,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0810174B1142B774007F3348 /* SBWebResourceIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebResourceIdentifier.h; path = Classes/SBWebResourceIdentifier.h; sourceTree = "<group>"; };
+		0810174C1142B774007F3348 /* SBWebResourceIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWebResourceIdentifier.m; path = Classes/SBWebResourceIdentifier.m; sourceTree = "<group>"; };
 		0816F598102D52CD00DFA5F0 /* SBUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBUpdater.h; path = Classes/SBUpdater.h; sourceTree = "<group>"; };
 		0816F599102D52CD00DFA5F0 /* SBUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBUpdater.m; path = Classes/SBUpdater.m; sourceTree = "<group>"; };
 		0819483910FBE8D400CCBABF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -393,8 +398,11 @@
 		08B6E2A1103451DA00BD15D8 /* SBSectionGroupe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSectionGroupe.m; path = Classes/SBSectionGroupe.m; sourceTree = "<group>"; };
 		08BC84FF107F9158005C9030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08BC851D107F9160005C9030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		08BE0CEF1143E88E00314946 /* SBWebResourcesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebResourcesView.h; path = Classes/SBWebResourcesView.h; sourceTree = "<group>"; };
+		08BE0CF01143E88E00314946 /* SBWebResourcesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWebResourcesView.m; path = Classes/SBWebResourcesView.m; sourceTree = "<group>"; };
 		08C1D4B60FF9092A005709D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		08C3F2E510DDFCFA00340900 /* Credits.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; name = Credits.rtfd; path = Resources/Credits.rtfd; sourceTree = "<group>"; };
+		08C6DBCB114B4B610019BCE9 /* Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Download.png; path = Resources/Images/Download.png; sourceTree = "<group>"; };
 		08C8D68D1036DD0C005540AF /* Icon_Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Camera.png; path = Resources/Images/Icon_Camera.png; sourceTree = "<group>"; };
 		08C8D69E1036DEF4005540AF /* Icon_Lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Lock.png; path = Resources/Images/Icon_Lock.png; sourceTree = "<group>"; };
 		08C8D69F1036DEF4005540AF /* Icon_Unlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Unlock.png; path = Resources/Images/Icon_Unlock.png; sourceTree = "<group>"; };
@@ -452,6 +460,7 @@
 				08AA157B1029C98A000F2568 /* Bookmarks-List.png */,
 				08A9D836102477DA003C87E4 /* Bug.png */,
 				089F948010342E6B00C48997 /* CenterButton.png */,
+				08C6DBCB114B4B610019BCE9 /* Download.png */,
 				088D299D101B5F3B00691CEC /* Edit.png */,
 				08943D0F1013566E0034A3E5 /* Finder.png */,
 				085A738C1091CDC600FE7556 /* History.png */,
@@ -596,6 +605,8 @@
 				0891057B0FE4EC6400DFE290 /* SBTabView.m */,
 				08A0049F0FEC8EBB00AEB6DD /* SBTabViewItem.h */,
 				08A004A00FEC8EBB00AEB6DD /* SBTabViewItem.m */,
+				0810174B1142B774007F3348 /* SBWebResourceIdentifier.h */,
+				0810174C1142B774007F3348 /* SBWebResourceIdentifier.m */,
 				089FE2E70FEBED6C000D2436 /* SBCircleProgressIndicator.h */,
 				089FE2E80FEBED6C000D2436 /* SBCircleProgressIndicator.m */,
 				08916C4E1009AFAF0012D4EA /* SBWebView.h */,
@@ -733,6 +744,8 @@
 				089956C70FE39C2500DED3BA /* SBSidebar.m */,
 				089860640FF3B894005958A0 /* SBBookmarksView.h */,
 				089860650FF3B894005958A0 /* SBBookmarksView.m */,
+				08BE0CEF1143E88E00314946 /* SBWebResourcesView.h */,
+				08BE0CF01143E88E00314946 /* SBWebResourcesView.m */,
 				0896AC8310149C4A00D8319A /* SBBookmarkItemView.h */,
 				0896AC8410149C4A00D8319A /* SBBookmarkItemView.m */,
 				08930ABB0FEE7AC20037D403 /* SBDrawer.h */,
@@ -1001,6 +1014,7 @@
 				08946ED31114731F00B09D17 /* Icon_Contribute.png in Resources */,
 				08946F0E111478F600B09D17 /* Icon_Checkout.png in Resources */,
 				08946FE51114861D00B09D17 /* Icon_Commit.png in Resources */,
+				08C6DBCC114B4B610019BCE9 /* Download.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1084,6 +1098,8 @@
 				08313CA810B6B9CD004198C3 /* SBMessageView.m in Sources */,
 				081E0F0110C115BE00C6AD2B /* SBTextInputView.m in Sources */,
 				089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */,
+				0810174D1142B774007F3348 /* SBWebResourceIdentifier.m in Sources */,
+				08BE0CF11143E88E00314946 /* SBWebResourcesView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

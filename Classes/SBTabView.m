@@ -252,6 +252,50 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return nil;
 }
 
+- (void)executeSelectedItemDidAddResourceID:(SBWebResourceIdentifier *)resourceID
+{
+	if (delegate)
+	{
+		if ([delegate respondsToSelector:@selector(tabView:didAddResourceID:)])
+		{
+			[delegate tabView:self didAddResourceID:resourceID];
+		}
+	}
+}
+
+- (void)executeSelectedItemDidReceiveExpectedContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID
+{
+	if (delegate)
+	{
+		if ([delegate respondsToSelector:@selector(tabView:didReceiveExpectedContentLengthOfResourceID:)])
+		{
+			[delegate tabView:self didReceiveExpectedContentLengthOfResourceID:resourceID];
+		}
+	}
+}
+
+- (void)executeSelectedItemDidReceiveContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID
+{
+	if (delegate)
+	{
+		if ([delegate respondsToSelector:@selector(tabView:didReceiveContentLengthOfResourceID:)])
+		{
+			[delegate tabView:self didReceiveContentLengthOfResourceID:resourceID];
+		}
+	}
+}
+
+- (void)executeSelectedItemDidReceiveFinishLoadingOfResourceID:(SBWebResourceIdentifier *)resourceID
+{
+	if (delegate)
+	{
+		if ([delegate respondsToSelector:@selector(tabView:didReceiveFinishLoadingOfResourceID:)])
+		{
+			[delegate tabView:self didReceiveFinishLoadingOfResourceID:resourceID];
+		}
+	}
+}
+
 #pragma mark Event
 
 - (void)mouseDown:(NSEvent *)theEvent

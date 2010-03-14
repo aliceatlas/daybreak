@@ -52,6 +52,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)executeShouldSearchString:(NSString *)string newTab:(BOOL)newTab;
 - (BOOL)executeShouldConfirmMessage:(NSString *)message;
 - (void)executeShouldShowMessage:(NSString *)message;
+- (void)executeSelectedItemDidAddResourceID:(SBWebResourceIdentifier *)resourceID;
+- (void)executeSelectedItemDidReceiveExpectedContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID;
+- (void)executeSelectedItemDidReceiveContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID;
+- (void)executeSelectedItemDidReceiveFinishLoadingOfResourceID:(SBWebResourceIdentifier *)resourceID;
 - (NSString *)executeShouldTextInput:(NSString *)prompt;
 
 @end
