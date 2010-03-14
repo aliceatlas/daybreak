@@ -398,6 +398,8 @@
 		08B6E2A1103451DA00BD15D8 /* SBSectionGroupe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSectionGroupe.m; path = Classes/SBSectionGroupe.m; sourceTree = "<group>"; };
 		08BC84FF107F9158005C9030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08BC851D107F9160005C9030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		08BD046D114D2AAE00BF9834 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = Resources/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		08BD047B114D2AB500BF9834 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = Resources/fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08BE0CEF1143E88E00314946 /* SBWebResourcesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebResourcesView.h; path = Classes/SBWebResourcesView.h; sourceTree = "<group>"; };
 		08BE0CF01143E88E00314946 /* SBWebResourcesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWebResourcesView.m; path = Classes/SBWebResourcesView.m; sourceTree = "<group>"; };
 		08C1D4B60FF9092A005709D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
@@ -915,6 +917,7 @@
 				"zh-Hans",
 				de,
 				pt_PT,
+				fi,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Sunrise */;
 			projectDirPath = "";
@@ -1118,6 +1121,7 @@
 				081DA8D9110DB6E100CF89D2 /* pt_PT */,
 				086D732C10D7867B006A4F25 /* zh-Hans */,
 				082886D610E11FD90018B591 /* zh-Hant */,
+				08BD047B114D2AB500BF9834 /* fi */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1134,6 +1138,7 @@
 				081DA8C5110DB6D000CF89D2 /* pt_PT */,
 				086D732D10D78682006A4F25 /* zh-Hans */,
 				082886C610E11FAF0018B591 /* zh-Hant */,
+				08BD046D114D2AAE00BF9834 /* fi */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
