@@ -163,6 +163,8 @@
 		08EB0675102EF160003B3A91 /* SBPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EB0674102EF160003B3A91 /* SBPreferencesWindowController.m */; };
 		08EB067B102EF1CA003B3A91 /* SBWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EB067A102EF1CA003B3A91 /* SBWindowController.m */; };
 		08EB069F102F0902003B3A91 /* SBPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 08EB069E102F0902003B3A91 /* SBPreferences.m */; };
+		08F1DEA41156653700712D67 /* SBBLKGUISearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F1DEA31156653700712D67 /* SBBLKGUISearchField.m */; };
+		08F1DEB01156695500712D67 /* Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F1DEAF1156695500712D67 /* Search.png */; };
 		08F5B05A100B63FC0011B603 /* NSURL-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F5B059100B63FC0011B603 /* NSURL-SBAdditions.m */; };
 		08F6A6890FF25A5200ED6E07 /* SBBookmarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F6A6880FF25A5200ED6E07 /* SBBookmarks.m */; };
 		08F914C410352D020026ABD1 /* Source.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F914C310352D020026ABD1 /* Source.png */; };
@@ -421,6 +423,9 @@
 		08EB067A102EF1CA003B3A91 /* SBWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWindowController.m; path = Classes/SBWindowController.m; sourceTree = "<group>"; };
 		08EB069D102F0902003B3A91 /* SBPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBPreferences.h; path = Classes/SBPreferences.h; sourceTree = "<group>"; };
 		08EB069E102F0902003B3A91 /* SBPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBPreferences.m; path = Classes/SBPreferences.m; sourceTree = "<group>"; };
+		08F1DEA21156653700712D67 /* SBBLKGUISearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBLKGUISearchField.h; path = Classes/SBBLKGUISearchField.h; sourceTree = "<group>"; };
+		08F1DEA31156653700712D67 /* SBBLKGUISearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBLKGUISearchField.m; path = Classes/SBBLKGUISearchField.m; sourceTree = "<group>"; };
+		08F1DEAF1156695500712D67 /* Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Search.png; path = Resources/Images/Search.png; sourceTree = "<group>"; };
 		08F5B058100B63FC0011B603 /* NSURL-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL-SBAdditions.h"; path = "Classes/NSURL-SBAdditions.h"; sourceTree = "<group>"; };
 		08F5B059100B63FC0011B603 /* NSURL-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL-SBAdditions.m"; path = "Classes/NSURL-SBAdditions.m"; sourceTree = "<group>"; };
 		08F6A6870FF25A5200ED6E07 /* SBBookmarks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarks.h; path = Classes/SBBookmarks.h; sourceTree = "<group>"; };
@@ -483,6 +488,7 @@
 				0891074E0FE52C5D00DFE290 /* ResizerRight.png */,
 				089C379D0FE7E08200088B34 /* ResizerUp.png */,
 				089F948410342E8000C48997 /* RightButton.png */,
+				08F1DEAF1156695500712D67 /* Search.png */,
 				084066FA0FE2B53900CC80E3 /* Snapshot.png */,
 				08F914C310352D020026ABD1 /* Source.png */,
 				087BB8AE10174D2D00B14EF6 /* Stop.png */,
@@ -648,6 +654,8 @@
 				08AEC6C70FF7A107005A39DA /* SBBLKGUISlider.m */,
 				089960030FFF6EF8001093FA /* SBBLKGUITextField.h */,
 				089960040FFF6EF8001093FA /* SBBLKGUITextField.m */,
+				08F1DEA21156653700712D67 /* SBBLKGUISearchField.h */,
+				08F1DEA31156653700712D67 /* SBBLKGUISearchField.m */,
 			);
 			name = BLKGUI;
 			sourceTree = "<group>";
@@ -1018,6 +1026,7 @@
 				08946F0E111478F600B09D17 /* Icon_Checkout.png in Resources */,
 				08946FE51114861D00B09D17 /* Icon_Commit.png in Resources */,
 				08C6DBCC114B4B610019BCE9 /* Download.png in Resources */,
+				08F1DEB01156695500712D67 /* Search.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,6 +1112,7 @@
 				089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */,
 				0810174D1142B774007F3348 /* SBWebResourceIdentifier.m in Sources */,
 				08BE0CF11143E88E00314946 /* SBWebResourcesView.m in Sources */,
+				08F1DEA41156653700712D67 /* SBBLKGUISearchField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

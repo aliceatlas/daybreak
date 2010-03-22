@@ -26,16 +26,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBHistory.h"
 #import "SBURLField.h"
 
+#define kSBMinFrameSizeWidth 480
+#define kSBMinFrameSizeHeight 320
 
 @implementation SBHistoryView
 
 @dynamic message;
+@synthesize items;
 
 - (id)initWithFrame:(NSRect)frame
 {
-	if (self = [super initWithFrame:frame])
+	NSRect r = frame;
+	if (r.size.width < kSBMinFrameSizeWidth)
+		r.size.width = kSBMinFrameSizeWidth;
+	if (r.size.height < kSBMinFrameSizeHeight)
+		r.size.height = kSBMinFrameSizeHeight;
+	if (self = [super initWithFrame:r])
 	{
+		self.items = [[[[SBHistory sharedHistory] items] mutableCopy] autorelease];
 		[self constructMessageLabel];
+		[self constructSearchField];
 		[self constructTableView];
 		[self constructRemoveButtons];
 		[self constructBackButton];
@@ -48,11 +58,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)dealloc
 {
 	[messageLabel release];
+	[searchField release];
 	[tableView release];
 	[scrollView release];
 	[removeButton release];
 	[removeAllButton release];
 	[backButton release];
+	[items release];
 	[super dealloc];
 }
 
@@ -78,6 +90,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return 15.0;
 }
 
+- (CGFloat)searchFieldWidth
+{
+	return 250.0;
+}
+
 - (NSRect)iconRect
 {
 	NSRect r = NSZeroRect;
@@ -95,8 +112,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect iconRect = [self iconRect];
 	NSPoint margin = [self margin];
 	r.origin.x = NSMaxX(iconRect) + 10.0;
-	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
+	r.size.width = self.bounds.size.width - r.origin.x - [self searchFieldWidth] - margin.x;
 	r.size.height = 20.0;
+	r.origin.y = self.bounds.size.height - margin.y - r.size.height - (iconRect.size.height - r.size.height) / 2;
+	return r;
+}
+
+- (NSRect)searchFieldRect
+{
+	NSRect r = NSZeroRect;
+	NSPoint margin = [self margin];
+	NSRect iconRect = [self iconRect];
+	r.size.width = [self searchFieldWidth];
+	r.size.height = 20.0;
+	r.origin.x = self.bounds.size.width - r.size.width - margin.x;
 	r.origin.y = self.bounds.size.height - margin.y - r.size.height - (iconRect.size.height - r.size.height) / 2;
 	return r;
 }
@@ -147,11 +176,56 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return r;
 }
 
+#pragma mark Getter
+
+- (void)updateItems
+{
+	NSString *searchFieldText = nil;
+	NSArray *searchWords = nil;
+	NSArray *allItems = nil;
+	allItems = [[SBHistory sharedHistory] items];
+	searchFieldText = [searchField stringValue];
+	searchWords = [searchFieldText length] > 0 ? [searchFieldText componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] : nil;
+	[items removeAllObjects];
+	if ([searchWords count] > 0)
+	{
+		for (WebHistoryItem *item in allItems)
+		{
+			NSString *string = [NSString string];
+			string = [item originalURLString] ? [string stringByAppendingFormat:@" %@", [item originalURLString]] : string;
+			string = [item URLString] ? [string stringByAppendingFormat:@" %@", [item URLString]] : string;
+			string = [item title] ? [string stringByAppendingFormat:@" %@", [item title]] : string;
+			if ([string length] > 0)
+			{
+				NSUInteger index = 0;
+				for (NSString *searchWord in searchWords)
+				{
+					if ([searchWord length] == 0 || [string rangeOfString:searchWord options:NSCaseInsensitiveSearch].location != NSNotFound)
+					{
+						if (index == [searchWords count] - 1)
+						{
+							[items addObject:item];
+						}
+					}
+					else {
+						break;
+					}
+					index++;
+				}
+			}
+		}
+	}
+	else {
+		[items addObjectsFromArray:allItems];
+	}
+}
+
 #pragma mark DataSource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
-	NSUInteger count = [[[SBHistory sharedHistory] items] count];
+	NSUInteger count = 0;
+	count = [items count];
 	[removeAllButton setEnabled:(count > 0)];
 	return count;
 }
@@ -160,7 +234,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSString *object = nil;
 	NSString *identifier = [aTableColumn identifier];
-	NSArray *items = [[SBHistory sharedHistory] items];
 	WebHistoryItem *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
 	if ([identifier isEqual:kSBTitle])
 	{
@@ -180,7 +253,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
 	NSString *identifier = [aTableColumn identifier];
-	NSArray *items = [[SBHistory sharedHistory] items];
 	WebHistoryItem *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
 	NSString *string = nil;
 	if ([identifier isEqualToString:kSBImage])
@@ -254,6 +326,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self addSubview:messageLabel];
 }
 
+- (void)constructSearchField
+{
+	NSRect searchFieldRect = [self searchFieldRect];
+	searchField = [[SBBLKGUISearchField alloc] initWithFrame:searchFieldRect];
+	[searchField setDelegate:self];
+	[searchField setTarget:self];
+	[searchField setAction:@selector(search:)];
+	[[searchField cell] setSendsWholeSearchString:YES];
+	[[searchField cell] setSendsSearchStringImmediately:YES];
+	[self addSubview:searchField];
+}
+
 - (void)constructTableView
 {
 	NSRect scrollerRect = [self tableViewRect];
@@ -304,13 +388,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[tableView setFocusRingType:NSFocusRingTypeNone];
 	[tableView setDoubleAction:@selector(open)];
 	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setBackgroundColor:[NSColor blackColor]];
-	[scrollView setDrawsBackground:NO];
 	[scrollView setAutohidesScrollers:YES];
 	[scrollView setHasVerticalScroller:YES];
 	[scrollView setHasHorizontalScroller:NO];
 	[scrollView setAutohidesScrollers:YES];
-	//	[[scrollView verticalScroller] setControlSize:NSSmallControlSize];
+	[scrollView setBackgroundColor:[NSColor blackColor]];
+	[scrollView setDrawsBackground:NO];
 	[scrollView setDocumentView:tableView];
 	[self addSubview:scrollView];
 }
@@ -369,13 +452,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Actions
 
+- (void)search:(id)sender
+{
+	NSString *string = nil;
+	if (string = [searchField stringValue])
+	{
+		[self updateItems];
+		[tableView reloadData];
+	}
+}
+
 - (void)remove
 {
 	NSIndexSet *indexes = [tableView selectedRowIndexes];
-	if ([indexes count] > 0)
+	NSArray *removedItems = [indexes count] > 0 ? [items objectsAtIndexes:indexes] : nil;
+	if ([removedItems count] > 0)
 	{
-		[[SBHistory sharedHistory] removeAtIndexes:indexes];
+		[[SBHistory sharedHistory] removeItems:removedItems];
 		[tableView deselectAll:nil];
+		[self updateItems];
 		[tableView reloadData];
 	}
 }
@@ -399,6 +494,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		[[SBHistory sharedHistory] removeAllItems];
 		[tableView deselectAll:nil];
+		[self updateItems];
 		[tableView reloadData];
 	}
 	[sheet orderOut:nil];
@@ -409,7 +505,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMutableArray *urls = [NSMutableArray arrayWithCapacity:0];
 	NSUInteger index = 0;
 	NSIndexSet *indexes = [tableView selectedRowIndexes];
-	NSArray *items = [[SBHistory sharedHistory] items];
 	for (index = [indexes lastIndex]; index != NSNotFound; index = [indexes indexLessThanIndex:index])
 	{
 		WebHistoryItem *item = (index < [items count]) ? [items objectAtIndex:index] : nil;

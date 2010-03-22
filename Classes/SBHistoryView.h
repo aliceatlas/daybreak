@@ -32,13 +32,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSImageView *iconImageView;
 	NSTextField *messageLabel;
+	SBBLKGUISearchField *searchField;
 	SBBLKGUIScrollView *scrollView;
 	NSTableView *tableView;
 	SBBLKGUIButton *removeButton;
 	SBBLKGUIButton *removeAllButton;
 	SBBLKGUIButton *backButton;
+	NSMutableArray *items;
 }
 @property (nonatomic, assign) NSString *message;
+@property (nonatomic, retain) NSMutableArray *items;
 
 // Rects
 - (NSPoint)margin;
@@ -46,6 +49,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)iconRect;
 - (NSSize)buttonSize;
 - (CGFloat)buttonMargin;
+- (CGFloat)searchFieldWidth;
 - (NSRect)messageLabelRect;
 - (NSRect)tableViewRect;
 - (NSRect)removeButtonRect;
@@ -53,6 +57,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)backButtonRect;
 // Construction
 - (void)constructMessageLabel;
+- (void)constructSearchField;
 - (void)constructTableView;
 - (void)constructRemoveButtons;
 - (void)constructBackButton;

@@ -57,5 +57,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)executeSelectedItemDidReceiveContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID;
 - (void)executeSelectedItemDidReceiveFinishLoadingOfResourceID:(SBWebResourceIdentifier *)resourceID;
 - (NSString *)executeShouldTextInput:(NSString *)prompt;
+- (void)executeDidSelectTabViewItem:(SBTabViewItem *)aTabViewItem;
 
 @end

@@ -49,7 +49,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic canForward;
 @dynamic mainFrameURLString;
 @dynamic pageTitle;
-@dynamic textEncodingName;
 @dynamic requestURLString;
 @dynamic documentSource;
 
@@ -129,15 +128,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return pageTitle ? pageTitle : nil;
 }
 
-- (NSString *)textEncodingName
-{
-	NSString *textEncodingName = nil;
-	WebDataSource *dataSource = nil;
-	dataSource = [[webView mainFrame] dataSource];
-	textEncodingName = [dataSource textEncodingName];
-	return textEncodingName ? textEncodingName : nil;
-}
-
 - (NSString *)requestURLString
 {
 	WebDataSource *dataSource = nil;
@@ -210,10 +200,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (URLString)
 	{
 		NSString *encodedString = [URLString URLEncodedString];
-		if ([URL absoluteString] != encodedString)
-		{
-			[self setURL:[NSURL URLWithString:encodedString]];
-		}
+		[self setURL:[NSURL URLWithString:encodedString]];
 	}
 }
 
@@ -273,11 +260,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			r.size.width = r.size.width - verticalScroller.frame.size.width;
 			sourceTextView = [[SBSourceTextView alloc] initWithFrame:tr];
 			[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-			[scrollView setBackgroundColor:[NSColor whiteColor]];
-			[scrollView setDrawsBackground:NO];
 			[scrollView setAutohidesScrollers:YES];
 			[scrollView setHasHorizontalScroller:NO];
 			[scrollView setHasVerticalScroller:YES];
+			[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]]];
+			[scrollView setDrawsBackground:YES];
 			horizontalScroller.drawsBackground = YES;
 			verticalScroller.drawsBackground = YES;
 			horizontalScroller.backgroundColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
@@ -516,6 +503,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	r = self.tabView.bounds;
 	if (!webView)
 	{
+		NSString *textEncodingName = nil;
 		webView = [[SBWebView alloc] initWithFrame:r frameName:nil groupName:nil];
 		// Set properties
 		[webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
@@ -527,6 +515,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[webView setPolicyDelegate:self];
 		[webView setDownloadDelegate:[SBDownloads sharedDownloads]];
 		[webView setPreferences:SBGetWebPreferences()];
+		textEncodingName = [[webView preferences] defaultTextEncodingName];
+		webView.textEncodingName = textEncodingName;
 		
 		// Set user agent
 		[self setUserAgent];
@@ -603,7 +593,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL r = YES;
 	if (aSplitView == splitView)
 	{
-		
+		if (aSubview == webView)
+		{
+			r = NO;
+		}
 	}
 	return r;
 }
@@ -649,6 +642,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (CGFloat)splitView:(NSSplitView *)aSplitView constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset
 {
 	CGFloat minHeight = proposedMin;
+	if (aSplitView == splitView)
+	{
+		minHeight = 10;
+	}
 	return minHeight;
 }
 
@@ -1389,7 +1386,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSString *name = nil;
 		NSString *filePath = nil;
 		NSString *documentSource = self.documentSource;
-		NSString *encodingName = self.textEncodingName;
+		NSString *encodingName = webView.textEncodingName;
 		NSStringEncoding encoding;
 		NSError *error = nil;
 		name = self.pageTitle;
@@ -1414,7 +1411,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSSavePanel *savePanel = [NSSavePanel savePanel];
 	NSString *name = self.pageTitle;
-	NSString *encodingName = self.textEncodingName;
+	NSString *encodingName = webView.textEncodingName;
 	NSStringEncoding encoding;
 	name = [[name length] > 0 ? name : NSLocalizedString(@"Untitled", nil) stringByAppendingPathExtension:@"html"];
 	encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding((CFStringRef)([encodingName length] > 0 ? encodingName : kSBDefaultEncodingName)));
@@ -1487,7 +1484,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSColor *)dividerColor
 {
-	return [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
+	return [NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]];
 }
 
 @end

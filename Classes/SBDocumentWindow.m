@@ -322,9 +322,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	coverWindow = [[SBCoverWindow alloc] initWithParentWindow:self size:br.size];
 	scrollView = [[[SBBLKGUIScrollView alloc] initWithFrame:NSIntegralRect(r)] autorelease];
 	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setDrawsBackground:NO];
 	[scrollView setHasHorizontalScroller:hasHorizontalScroller];
 	[scrollView setHasVerticalScroller:hasVerticalScroller];
+	[scrollView setDrawsBackground:NO];
 	[[coverWindow contentView] addSubview:scrollView];
 	[scrollView setDocumentView:view];
 	[self setShowsToolbarButton:NO];
@@ -483,7 +483,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		flipWindow = [[NSWindow alloc] initWithContentRect:wr styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
 		contentView = [flipWindow contentView];
 		[contentView setWantsLayer:YES];
-		[backWindow setBackgroundColor:[NSColor darkGrayColor]];
+		[backWindow setBackgroundColor:[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]]];
 		[flipWindow setOpaque:NO];
 		[flipWindow setBackgroundColor:[NSColor clearColor]];
 		[flipWindow setIgnoresMouseEvents:NO];

@@ -1063,7 +1063,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	urlField.enabledForward = tabViewItem.canForward;
 	urlField.stringValue = [tabViewItem.mainFrameURLString URLDencodedString];
 	urlField.image = tabViewItem.tabbarItem.image;
+	// Change state of the load button
 	loadButton.on = [[tabViewItem webView] isLoading];
+	// Change resources
 	[self updateResourcesViewIfNeeded];
 }
 
@@ -1383,6 +1385,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 
 #pragma mark TabView Delegate
+
+- (void)tabView:(SBTabView *)aTabView didSelectTabViewItem:(SBTabViewItem *)aTabViewItem
+{
+	NSString *encodingName = nil;
+	// Change encoding pop-up
+	encodingName = [[aTabViewItem webView] customTextEncodingName];
+	if (!encodingName)
+		encodingName = [(SBWebView *)[aTabViewItem webView] textEncodingName];
+	if (encodingName)
+		[encodingButton selectItemWithRepresentedObject:encodingName];
+}
 
 - (void)tabView:(SBTabView *)aTabView selectedItemDidStartLoading:(SBTabViewItem *)aTabViewItem
 {
@@ -2483,6 +2496,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)openHome:(id)sender
 {
 	NSString *homepage = [[NSUserDefaults standardUserDefaults] objectForKey:kSBHomePage];
+	homepage = [homepage length] > 0 ? [homepage requestURLString] : nil;
 	if (homepage)
 	{
 		if ([urlField isFirstResponder])
@@ -2725,9 +2739,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *ianaName = (NSString *)[item representedObject];
 	if (ianaName)
 	{
-		WebView *webView = [self selectedWebView];
+		SBWebView *webView = [self selectedWebView];
 		[[webView preferences] setDefaultTextEncodingName:ianaName];
 		[webView setCustomTextEncodingName:ianaName];
+		webView.textEncodingName = ianaName;
 	}
 }
 

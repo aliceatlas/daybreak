@@ -63,7 +63,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, readonly) BOOL canForward;
 @property (nonatomic, readonly) NSString *mainFrameURLString;
 @property (nonatomic, readonly) NSString *pageTitle;
-@property (nonatomic, readonly) NSString *textEncodingName;
 @property (nonatomic, readonly) NSString *requestURLString;
 @property (nonatomic, readonly) NSString *documentSource;
 

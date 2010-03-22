@@ -90,14 +90,18 @@ static SBHistory *sharedHistory = nil;
 	[self writeToFile];
 }
 
-- (void)removeAtIndexes:(NSIndexSet *)indexes
+- (void)removeItems:(NSArray *)items
 {
-	NSArray *items = [self itemsAtIndexes:indexes];
 	if ([items count] > 0)
 	{
 		[history removeItems:items];
 		[self writeToFile];
 	}
+}
+
+- (void)removeAtIndexes:(NSIndexSet *)indexes
+{
+	[self removeItems:[self itemsAtIndexes:indexes]];
 }
 
 - (void)removeAllItems

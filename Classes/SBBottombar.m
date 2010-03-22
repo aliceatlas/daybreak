@@ -35,26 +35,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
 	NSUInteger count = 2;
 	CGFloat locations[count];
-	CGFloat colors[count * 4];
 	CGPoint points[count];
 	CGFloat lh = 1.0;
 	
 	// Background
 	locations[0] = 0.0;
 	locations[1] = 1.0;
-	colors[0] = colors[1] = colors[2] = 0.2;
-	colors[3] = 1.0;
-	colors[4] = colors[5] = colors[6] = 0.3;
-	colors[7] = 1.0;
 	points[0] = CGPointZero;
 	points[1] = CGPointMake(0.0, bounds.size.height);
-	SBDrawGradientInContext(ctx, count, locations, colors, points);
+	SBDrawGradientInContext(ctx, count, locations, SBBottombarColors, points);
 	
 	// Lines
-	[[NSColor colorWithCalibratedWhite:0.0 alpha:1.0] set];
+	[[NSColor colorWithCalibratedWhite:1.0 alpha:0.45] set];
 	NSRectFill(NSMakeRect(bounds.origin.x, NSMaxY(bounds) - lh, bounds.size.width, lh));
-	[[NSColor colorWithCalibratedWhite:0.45 alpha:1.0] set];
-	NSRectFill(NSMakeRect(bounds.origin.x, NSMaxY(bounds) - lh * 2, bounds.size.width, lh));
+	[[NSColor colorWithCalibratedWhite:1.0 alpha:0.3] set];
+	NSRectFill(NSMakeRect(bounds.origin.x, 0.0, bounds.size.width, lh));
 }
 
 @end

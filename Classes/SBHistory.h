@@ -36,6 +36,7 @@
 - (NSURL *)URL;
 - (NSArray *)itemsAtIndexes:(NSIndexSet *)indexes;
 - (void)addNewItemWithURLString:(NSString *)URLString title:(NSString *)title;
+- (void)removeItems:(NSArray *)items;
 - (void)removeAtIndexes:(NSIndexSet *)indexes;
 - (void)removeAllItems;
 - (BOOL)readFromFile;

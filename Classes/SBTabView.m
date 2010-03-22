@@ -92,6 +92,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Actions
 
+- (void)selectTabViewItem:(NSTabViewItem *)tabViewItem
+{
+	[super selectTabViewItem:tabViewItem];
+	[self performSelector:@selector(executeDidSelectTabViewItem:) withObject:tabViewItem afterDelay:0.0];
+}
+
 - (SBTabViewItem *)addItemWithIdentifier:(NSNumber *)identifier
 {
 	SBTabViewItem *tabViewItem = nil;
@@ -292,6 +298,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if ([delegate respondsToSelector:@selector(tabView:didReceiveFinishLoadingOfResourceID:)])
 		{
 			[delegate tabView:self didReceiveFinishLoadingOfResourceID:resourceID];
+		}
+	}
+}
+
+- (void)executeDidSelectTabViewItem:(SBTabViewItem *)aTabViewItem
+{
+	if (delegate)
+	{
+		if ([delegate respondsToSelector:@selector(tabView:didSelectTabViewItem:)])
+		{
+			[delegate tabView:self didSelectTabViewItem:aTabViewItem];
 		}
 	}
 }

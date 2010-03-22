@@ -239,12 +239,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	tabViewItem0 = [[[NSTabViewItem alloc] initWithIdentifier:[NSString stringWithFormat:@"%d", NSTIFFFileType]] autorelease];
 	tabViewItem1 = [[[NSTabViewItem alloc] initWithIdentifier:[NSString stringWithFormat:@"%d", NSJPEGFileType]] autorelease];
 	[scrollView setDocumentView:imageView];
-	[scrollView setBackgroundColor:[NSColor blackColor]];
-	[scrollView setDrawsBackground:YES];
+	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[scrollView setHasHorizontalScroller:YES];
 	[scrollView setHasVerticalScroller:YES];
 	[scrollView setAutohidesScrollers:YES];
-	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+	[scrollView setBackgroundColor:[NSColor blackColor]];
+	[scrollView setDrawsBackground:YES];
 	[optionTabView addTabViewItem:tabViewItem0];
 	[optionTabView addTabViewItem:tabViewItem1];
 	
@@ -311,7 +311,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[optionTabView setHidden:YES];
 	}
 	[tiffOptionLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Compression", nil)]];
-	[jpgOptionLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Quarity", nil)]];
+	[jpgOptionLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Quality", nil)]];
 	
 	count = 3;
 	menu = [tiffOptionPopup menu];

@@ -227,7 +227,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)drawDividerInRect:(NSRect)aRect
 {
-	[[NSColor colorWithCalibratedWhite:0.2 alpha:1.0] set];
+	[[NSColor colorWithCalibratedWhite:0.0 alpha:1.0] set];
 	NSRectFill(aRect);
 }
 

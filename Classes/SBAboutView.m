@@ -197,11 +197,11 @@ static SBAboutView *_sharedView;
 	NSString *rtfdPath = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtfd"];
 	NSTextView *creditLabel = nil;
 	creditScrollView = [[SBBLKGUIScrollView alloc] initWithFrame:r];
-	[creditScrollView setBackgroundColor:[NSColor darkGrayColor]];
-	[creditScrollView setDrawsBackground:NO];
 	[creditScrollView setAutohidesScrollers:YES];
 	[creditScrollView setHasHorizontalScroller:NO];
 	[creditScrollView setHasVerticalScroller:YES];
+	[creditScrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]]];
+	[creditScrollView setDrawsBackground:NO];
 	creditLabel = [[[NSTextView alloc] initWithFrame:r] autorelease];
 	[creditLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
 	[creditLabel setEditable:NO];
@@ -264,7 +264,7 @@ static SBAboutView *_sharedView;
 {
 	NSImage *image = [NSImage imageNamed:@"Application.icns"];
 	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
-	[[NSColor darkGrayColor] set];
+	[[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]] set];
 	NSRectFillUsingOperation(rect, NSCompositeSourceOver);
 	
 	if (image)

@@ -60,7 +60,8 @@ SBDocument *SBGetSelectedDocument()
 
 WebPreferences *SBGetWebPreferences()
 {
-	WebPreferences *preferences = [[[WebPreferences alloc] initWithIdentifier:kSBWebPreferencesIdentifier] autorelease];
+	WebPreferences *preferences = nil;
+	preferences = [[[WebPreferences alloc] initWithIdentifier:kSBWebPreferencesIdentifier] autorelease];
 	[preferences setAutosaves:YES];
 	return preferences;
 }
@@ -1719,7 +1720,7 @@ id SBValueForKey(NSString *keyName, NSDictionary *dictionary)
 NSMenu *SBEncodingMenu(id target, SEL selector)
 {
 	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-    const NSStringEncoding*	encoding = [NSString availableStringEncodings];
+    const NSStringEncoding *encoding = [NSString availableStringEncodings];
 	NSMutableArray *mencs = [NSMutableArray arrayWithCapacity:0];
 	NSArray *encs = nil;
 	NSData *hint = nil;

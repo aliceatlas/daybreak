@@ -1244,11 +1244,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[_table setCornerView:nil];
 	[_table setAutoresizingMask:(NSViewWidthSizable)];
 	[_scroller setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[_scroller setBackgroundColor:[NSColor whiteColor]];
-	[_scroller setDrawsBackground:NO];
 	[_scroller setAutohidesScrollers:YES];
 	[_scroller setHasVerticalScroller:YES];
 	[_scroller setAutohidesScrollers:YES];
+	[_scroller setBackgroundColor:[NSColor whiteColor]];
+	[_scroller setDrawsBackground:NO];
 //	[[_scroller verticalScroller] setControlSize:NSSmallControlSize];
 	[_scroller setDocumentView:_table];
 	[self addSubview:_scroller];

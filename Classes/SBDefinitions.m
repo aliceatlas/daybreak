@@ -154,7 +154,11 @@ NSString *kSBUpdaterErrorDescription = @"ErrorDescription";
 // Pasteboard type
 NSString *SBTabbarItemPboardType = @"SBTabbarItemPboardType";
 
+// Window
+CGFloat SBWindowBackColors[4] = {0.2, 0.22, 0.24, 1.0};
+
 // Bookmark color names
+CGFloat SBSidebarBackgroundColors[4] = {0.2, 0.22, 0.24, 1.0};
 NSInteger SBBookmarkCountOfLabelColors = 10;
 NSString *SBBookmarkLabelColorNames[] = {
 @"None",
@@ -180,6 +184,14 @@ CGFloat SBBookmarkLabelColorRGBA[] = {
 148.0 / 255.0, 148.0 / 255.0, 148.0 / 255.0, 1.0, // Gray
 108.0 / 255.0, 108.0 / 255.0, 108.0 / 255.0, 1.0  // Black
 };
+
+// Bottombar
+CGFloat SBBottombarColors[8] = {0.17, 0.19, 0.22, 1.0, 0.27, 0.3, 0.33, 1.0};
+
+// WebResourcesView
+CGFloat SBSidebarCellColors[4] = {0.29, 0.31, 0.33, 1.0};
+CGFloat SBSidebarSelectedCellColors[4] = {0.49, 0.51, 0.53, 1.0};
+CGFloat SBSidebarTextColors[4] = {0.66, 0.67, 0.68, 1.0};
 
 // User agent names
 NSInteger SBCountOfUserAgentNames = 3;

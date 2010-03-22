@@ -162,10 +162,22 @@ extern NSString *kSBUpdaterErrorDescription;// String
 // Pasteboard type
 extern NSString *SBTabbarItemPboardType;
 
+// Window
+extern CGFloat SBWindowBackColors[4];
+
 // Bookmark color names
+extern CGFloat SBSidebarBackgroundColors[4];
 extern NSInteger SBBookmarkCountOfLabelColors;
 extern NSString *SBBookmarkLabelColorNames[];
 extern CGFloat SBBookmarkLabelColorRGBA[];
+
+// Bottombar
+extern CGFloat SBBottombarColors[8];
+
+// WebResourcesView
+extern CGFloat SBSidebarCellColors[4];
+extern CGFloat SBSidebarSelectedCellColors[4];
+extern CGFloat SBSidebarTextColors[4];
 
 // User agent names
 extern NSInteger SBCountOfUserAgentNames;
@@ -299,6 +311,7 @@ extern NSString *SBBookmarkPboardType;
 - (void)tabView:(SBTabView *)aTabView didReceiveExpectedContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID;
 - (void)tabView:(SBTabView *)aTabView didReceiveContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID;
 - (void)tabView:(SBTabView *)aTabView didReceiveFinishLoadingOfResourceID:(SBWebResourceIdentifier *)resourceID;
+- (void)tabView:(SBTabView *)aTabView didSelectTabViewItem:(SBTabViewItem *)aTabViewItem;
 @end
 
 @class SBSplitView;

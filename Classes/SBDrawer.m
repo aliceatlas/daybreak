@@ -24,6 +24,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDrawer.h"
 #import "SBDownloadsView.h"
+#import "SBUtil.h"
 
 
 @implementation SBDrawer
@@ -50,6 +51,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize
 {
+	[super resizeSubviewsWithOldSize:oldBoundsSize];
 	if (view)
 	{
 		if ([view respondsToSelector:@selector(layout:)])
@@ -57,7 +59,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[(id)view layout:NO];
 		}
 	}
-	[super resizeSubviewsWithOldSize:oldBoundsSize];
 }
 
 - (void)setView:(NSView *)aView
@@ -71,27 +72,44 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			scrollView = [[SBBLKGUIScrollView alloc] initWithFrame:[self availableRect]];
 			[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-			[scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.25 alpha:1.0]];
-			[scrollView setDrawsBackground:YES];
 			[scrollView setAutohidesScrollers:YES];
 			[scrollView setHasHorizontalScroller:NO];
 			[scrollView setHasVerticalScroller:YES];
+			[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]]];
+			[scrollView setDrawsBackground:YES];
 			[self addSubview:scrollView];
 		}
 		[scrollView setDocumentView:view];
 		[[scrollView contentView] setCopiesOnScroll:YES];
 	}
 }
-//
-//#pragma mark Drawing
-//
-//- (void)drawRect:(NSRect)rect
-//{
-//	CGFloat lh = 1.0;
-//	[[NSColor colorWithCalibratedWhite:keyView ? 0.35 : 0.75 alpha:1.0] set];
-//	NSRectFill(rect);
-//	[[NSColor colorWithCalibratedWhite:0.45 alpha:1.0] set];
-//	NSRectFill(NSMakeRect(rect.origin.x, NSMaxY(rect) - lh, rect.size.width, lh));
-//}
+
+#pragma mark Drawing
+
+- (void)drawRect:(NSRect)rect
+{
+	NSRect bounds = self.bounds;
+	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	NSUInteger count = 2;
+	CGFloat locations[count];
+	CGPoint points[count];
+	CGFloat lh = 1.0;
+	
+	// Background
+	[[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]] set];
+	NSRectFill(rect);
+	
+	// Bottom
+	locations[0] = 0.0;
+	locations[1] = 1.0;
+	points[0] = CGPointZero;
+	points[1] = CGPointMake(0.0, kSBBottombarHeight);
+	SBDrawGradientInContext(ctx, count, locations, SBBottombarColors, points);
+	
+	// Line
+	[[NSColor colorWithCalibratedWhite:1.0 alpha:0.3] set];
+	NSRectFill(NSMakeRect(bounds.origin.x, 0.0, bounds.size.width, lh));
+	
+}
 
 @end

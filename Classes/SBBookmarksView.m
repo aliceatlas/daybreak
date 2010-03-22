@@ -95,11 +95,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	scrollView = [[SBBLKGUIScrollView alloc] initWithFrame:r];
 	listView = [[SBBookmarkListView alloc] initWithFrame:r];
 	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.25 alpha:1.0]];
-	[scrollView setDrawsBackground:YES];
 	[scrollView setAutohidesScrollers:YES];
 	[scrollView setHasHorizontalScroller:NO];
 	[scrollView setHasVerticalScroller:YES];
+	[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]]];
+	[scrollView setDrawsBackground:YES];
 	listView.wrapperView = self;
 	listView.cellWidth = (CGFloat)[[NSUserDefaults standardUserDefaults] integerForKey:kSBBookmarkCellWidth];
 	[scrollView setDocumentView:listView];

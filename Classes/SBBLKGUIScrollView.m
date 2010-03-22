@@ -36,7 +36,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		[self initialize];
 	}
-	
 	return self;
 }
 
@@ -46,41 +45,50 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		[self initialize];
 	}
-	
 	return self;
+}
+
++ (Class)_horizontalScrollerClass
+{
+	return [SBBLKGUIScroller class];
+}
+
++ (Class)_verticalScrollerClass
+{
+	return [SBBLKGUIScroller class];
 }
 
 - (void)initialize
 {
 	NSClipView *contentView = nil;
 	SBBLKGUIClipView *newContentView = nil;
-	NSScroller *scroller = nil;
-	SBBLKGUIScroller *newScroller = nil;
+//	NSScroller *scroller = nil;
+//	SBBLKGUIScroller *newScroller = nil;
 	
 	contentView = [self contentView];
 	newContentView = [[[SBBLKGUIClipView alloc] initWithFrame:[contentView frame]] autorelease];
 	[self setContentView:newContentView];
-	[self setHasVerticalScroller:YES];
-	[self setHasHorizontalScroller:YES];
-	if ([self hasVerticalScroller])
-	{
-		scroller = [self verticalScroller];
-		newScroller = [[[SBBLKGUIScroller alloc] initWithFrame:[scroller frame]] autorelease];
-		newScroller.backgroundColor = [self backgroundColor];
-		[newScroller setArrowsPosition:NSScrollerArrowsMaxEnd];
-		[newScroller setControlSize:[scroller controlSize]];
-		[self setVerticalScroller:newScroller];
-	}
-	
-	if ([self hasHorizontalScroller])
-	{
-		scroller = [self horizontalScroller];
-		newScroller = [[[SBBLKGUIScroller alloc] initWithFrame:[scroller frame]] autorelease];
-		newScroller.backgroundColor = [self backgroundColor];
-		[newScroller setArrowsPosition:NSScrollerArrowsMaxEnd];
-		[newScroller setControlSize:[scroller controlSize]];
-		[self setHorizontalScroller:newScroller];
-	}
+//	[self setHasVerticalScroller:hasVerticalScroller];
+//	[self setHasHorizontalScroller:hasHorizontalScroller];
+//	if ([self hasVerticalScroller])
+//	{
+//		scroller = [self verticalScroller];
+//		newScroller = [[[SBBLKGUIScroller alloc] initWithFrame:[scroller frame]] autorelease];
+//		newScroller.backgroundColor = [self backgroundColor];
+//		[newScroller setArrowsPosition:NSScrollerArrowsMaxEnd];
+//		[newScroller setControlSize:[scroller controlSize]];
+//		[self setVerticalScroller:newScroller];
+//	}
+//	
+//	if ([self hasHorizontalScroller])
+//	{
+//		scroller = [self horizontalScroller];
+//		newScroller = [[[SBBLKGUIScroller alloc] initWithFrame:[scroller frame]] autorelease];
+//		newScroller.backgroundColor = [self backgroundColor];
+//		[newScroller setArrowsPosition:NSScrollerArrowsMaxEnd];
+//		[newScroller setControlSize:[scroller controlSize]];
+//		[self setHorizontalScroller:newScroller];
+//	}
 }
 
 - (SBBLKGUIScroller *)horizontalScroller
@@ -114,6 +122,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if ([self hasHorizontalScroller])
 	{
 		[[self horizontalScroller] setBackgroundColor:inBackgroundColor];
+	}
+}
+
+- (void)setDrawsBackground:(BOOL)flag
+{
+	[super setDrawsBackground:flag];
+	if ([self hasVerticalScroller])
+	{
+		[[self verticalScroller] setDrawsBackground:flag];
+	}
+	
+	if ([self hasHorizontalScroller])
+	{
+		[[self horizontalScroller] setDrawsBackground:flag];
 	}
 }
 
@@ -159,7 +181,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[backgroundColor release];
 	[super dealloc];
 }
-
 
 - (void)setDrawsBackground:(BOOL)inDrawsBackground
 {

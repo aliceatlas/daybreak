@@ -35,15 +35,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	id delegate;
 	BOOL showFindbar;
 	BOOL _magnified;
+	NSString *textEncodingName;
 }
 @property (nonatomic, assign) id delegate;
 @property (nonatomic) BOOL showFindbar;
+@property (nonatomic, retain) NSString *textEncodingName;
 
 - (id)initWithFrame:(NSRect)frameRect frameName:(NSString *)frameName groupName:(NSString *)groupName;
 
 - (void)executeOpenFindbar;
 - (BOOL)executeCloseFindbar;
-
+- (NSString *)textEncodingName;
 - (void)performFind:(id)sender;	// performFindPanelAction: of WebView is broken
 - (void)performFindNext:(id)sender;
 - (void)performFindPrevious:(id)sender;

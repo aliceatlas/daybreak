@@ -66,7 +66,7 @@
 
 - (NSPoint)padding
 {
-	return NSMakePoint(self.bounds.size.width * 0.2, self.bounds.size.width * 0.2);
+	return NSMakePoint(self.bounds.size.width * 0.1, self.bounds.size.width * 0.1);
 }
 
 - (CGFloat)heights
@@ -89,13 +89,10 @@
 	NSRect r = NSZeroRect;
 	NSRect b = self.bounds;
 	NSPoint padding = [self padding];
-	CGFloat heights = [self heights];
-	NSSize size = NSZeroSize;
-	size.width = b.size.width - padding.x * 2 - heights;
-	size.height = b.size.height - padding.y * 2 - heights;
-	r.size.width = r.size.height = (size.width < size.height ? size.height : size.width);
+	CGFloat bottomHeight = [self heights] + padding.y;
+	r.size.width = r.size.height = 48.0;
 	r.origin.x = (b.size.width - r.size.width) / 2;
-	r.origin.y = heights + padding.y;
+	r.origin.y = bottomHeight + ((b.size.height - bottomHeight) - r.size.height) / 2;
 	return r;
 }
 
@@ -137,8 +134,14 @@
 
 - (void)update
 {
-	progressIndicator.progress = download.progress;
-	[progressIndicator setNeedsDisplay:YES];
+	if (download.status == SBStatusDone)
+	{
+		[self destructProgressIndicator];
+	}
+	else {
+		progressIndicator.progress = download.progress;
+		[progressIndicator setNeedsDisplay:YES];
+	}
 	[self setNeedsDisplay:YES];
 }
 
@@ -196,6 +199,28 @@
 	NSString *description = nil;
 	
 	[super drawRect:rect];
+	
+	// Icon
+	if (download.path)
+	{
+		NSWorkspace *space = [NSWorkspace sharedWorkspace];
+		NSImage *image = nil;
+		if (image = [space iconForFile:download.path])
+		{
+			NSRect r = NSZeroRect;
+			NSRect b = self.bounds;
+			NSPoint padding = [self padding];
+			CGFloat heights = [self heights];
+			NSSize size = [image size];
+			CGFloat fraction = 1.0;
+			r.size.height = (b.size.height - heights - padding.y * 3);
+			r.size.width = size.width * (r.size.height / size.height);
+			r.origin.x = (b.size.width - r.size.width) / 2;
+			r.origin.y = heights + padding.y * 2;
+			fraction = download.status == SBStatusDone ? 1.0 : 0.5;
+			[image drawInRect:r fromRect:NSMakeRect(0, 0, size.width, size.height) operation:NSCompositeSourceOver fraction:fraction];
+		}
+	}
 	
 	// name string
 	if (download.name)

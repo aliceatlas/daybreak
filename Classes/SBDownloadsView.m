@@ -287,67 +287,72 @@
 
 - (void)layout:(BOOL)animated
 {
-	NSUInteger index = 0;
-	NSRect r = self.frame;
-	NSRect enclosingRect = [self superview] ? [[self superview] bounds] : self.bounds;
-	NSPoint block = NSZeroPoint;
-	NSSize cellSize = [self cellSize];
-	NSMutableArray *animations = [NSMutableArray arrayWithCapacity:0];
-	NSEvent *currentEvent = [[NSApplication sharedApplication] currentEvent];
-	NSPoint location = [currentEvent locationInWindow];
-	SBDownloadView *currentDownloadView = nil;
-	NSUInteger count = [downloadViews count];
-	// Calculate the view frame
-	block.x = [self blockX];
-	block.y = (NSUInteger)(count / block.x);
-	if ((count / block.x) - (NSUInteger)(count / block.x) > 0)
-		block.y += 1;
-	r.size.width = enclosingRect.size.width;
-	r.size.height = block.y * cellSize.height;
-	if (r.size.height < enclosingRect.size.height)
-		r.size.height = enclosingRect.size.height;
-	if (!NSEqualRects(self.frame, r))
+	NSSize enclosingSize = [self enclosingScrollView] ? [[self enclosingScrollView] contentSize] : self.bounds.size;
+	if (enclosingSize.width > 0 && enclosingSize.height > 0)
 	{
-		self.frame = r;
-	}
-	
-	// Set frame of item views
-	for (SBDownloadView *downloadView in downloadViews)
-	{
-		NSRect r0 = downloadView.frame;
-		NSRect r1 = [self cellFrameAtIndex:index];
-		NSPoint point = [self convertPoint:location fromView:nil];
-		if (!NSEqualRects(r0, r1))
+		NSUInteger index = 0;
+		NSRect r = self.frame;
+		NSPoint block = NSZeroPoint;
+		NSSize cellSize = [self cellSize];
+		NSMutableArray *animations = [NSMutableArray arrayWithCapacity:0];
+		NSEvent *currentEvent = [[NSApplication sharedApplication] currentEvent];
+		NSPoint location = [currentEvent locationInWindow];
+		SBDownloadView *currentDownloadView = nil;
+		NSUInteger count = [downloadViews count];
+
+		
+		// Calculate the view frame
+		block.x = [self blockX];
+		block.y = (NSUInteger)(count / block.x);
+		if ((count / block.x) - (NSUInteger)(count / block.x) > 0)
+			block.y += 1;
+		r.size.width = enclosingSize.width;
+		r.size.height = block.y * cellSize.height;
+		if (r.size.height < enclosingSize.height)
+			r.size.height = enclosingSize.height;
+		if (!NSEqualRects(self.frame, r))
 		{
-			NSRect visibleRect = [self visibleRect];
-			if (animated && (NSIntersectsRect(visibleRect, downloadView.frame) || NSIntersectsRect(visibleRect, r)))	// Only visible views
+			self.frame = r;
+		}
+		
+		// Set frame of item views
+		for (SBDownloadView *downloadView in downloadViews)
+		{
+			NSRect r0 = downloadView.frame;
+			NSRect r1 = [self cellFrameAtIndex:index];
+			NSPoint point = [self convertPoint:location fromView:nil];
+			if (!NSEqualRects(r0, r1))
 			{
-				NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-				[info setObject:downloadView forKey:NSViewAnimationTargetKey];
-				[info setObject:[NSValue valueWithRect:r0] forKey:NSViewAnimationStartFrameKey];
-				[info setObject:[NSValue valueWithRect:r1] forKey:NSViewAnimationEndFrameKey];
-				[animations addObject:[[info copy] autorelease]];
+				NSRect visibleRect = [self visibleRect];
+				if (animated && (NSIntersectsRect(visibleRect, downloadView.frame) || NSIntersectsRect(visibleRect, r)))	// Only visible views
+				{
+					NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
+					[info setObject:downloadView forKey:NSViewAnimationTargetKey];
+					[info setObject:[NSValue valueWithRect:r0] forKey:NSViewAnimationStartFrameKey];
+					[info setObject:[NSValue valueWithRect:r1] forKey:NSViewAnimationEndFrameKey];
+					[animations addObject:[[info copy] autorelease]];
+				}
+				else {
+					downloadView.frame = r1;
+				}
 			}
-			else {
-				downloadView.frame = r1;
+			if (NSPointInRect(point, r1))
+			{
+				currentDownloadView = downloadView;
 			}
+			index++;
 		}
-		if (NSPointInRect(point, r1))
+		if ([animations count] > 0)
 		{
-			currentDownloadView = downloadView;
+			NSViewAnimation *animation = [[[NSViewAnimation alloc] initWithViewAnimations:animations] autorelease];
+			[animation setDuration:0.25];
+			[animation setDelegate:self];
+			[animation startAnimation];
 		}
-		index++;
-	}
-	if ([animations count] > 0)
-	{
-		NSViewAnimation *animation = [[[NSViewAnimation alloc] initWithViewAnimations:animations] autorelease];
-		[animation setDuration:0.25];
-		[animation setDelegate:self];
-		[animation startAnimation];
-	}
-	if (currentDownloadView)
-	{
-		[self layoutToolsForItem:currentDownloadView];
+		if (currentDownloadView)
+		{
+			[self layoutToolsForItem:currentDownloadView];
+		}
 	}
 }
 

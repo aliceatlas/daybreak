@@ -27,13 +27,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation SBWebView
 
-@synthesize delegate, showFindbar;
+@synthesize delegate, showFindbar, textEncodingName;
 
 - (id)initWithFrame:(NSRect)frameRect frameName:(NSString *)frameName groupName:(NSString *)groupName
 {
 	if (self = [super initWithFrame:frameRect frameName:frameName groupName:groupName])
 	{
 		showFindbar = NO;
+		textEncodingName = nil;
 	}
 	return self;
 }
@@ -42,6 +43,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	delegate = nil;
 	[super dealloc];
+}
+
+- (NSString *)textEncodingName
+{
+	return textEncodingName ? textEncodingName : [[self preferences] defaultTextEncodingName];
 }
 
 #pragma mark Menu Actions

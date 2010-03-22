@@ -94,12 +94,12 @@
 	[tableView setDoubleAction:@selector(open)];
 	[tableView setIntercellSpacing:NSZeroSize];
 	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setBackgroundColor:[NSColor blackColor]];
-	[scrollView setDrawsBackground:YES];
 	[scrollView setAutohidesScrollers:YES];
 	[scrollView setHasVerticalScroller:YES];
 	[scrollView setHasHorizontalScroller:NO];
 	[scrollView setAutohidesScrollers:YES];
+	[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]]];
+	[scrollView setDrawsBackground:YES];
 	[scrollView setDocumentView:tableView];
 	[self addSubview:scrollView];
 }
@@ -179,9 +179,9 @@
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	[[NSColor blackColor] set];
+	[[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]] set];
 	NSRectFill(cellFrame);
-	[[NSColor colorWithCalibratedWhite:0.2 alpha:1.0] set];
+	[[NSColor colorWithCalibratedRed:SBSidebarCellColors[0] green:SBSidebarCellColors[1] blue:SBSidebarCellColors[2] alpha:SBSidebarCellColors[3]] set];
 	NSRectFill(NSInsetRect(cellFrame, 0.0, 0.5));
 	if ([self isHighlighted] && showRoundedPath)
 	{
@@ -192,7 +192,7 @@
 		path = SBRoundedPath(CGRectInset(r, 1.0, 0.5), (cellFrame.size.height - 0.5 * 2) / 2, 0.0, YES, YES);
 		CGContextSaveGState(ctx);
 		CGContextAddPath(ctx, path);
-		CGContextSetRGBFillColor(ctx, 0.45, 0.45, 0.45, 1.0);
+		CGContextSetRGBFillColor(ctx, SBSidebarSelectedCellColors[0], SBSidebarSelectedCellColors[1], SBSidebarSelectedCellColors[2], SBSidebarSelectedCellColors[3]);
 		CGContextFillPath(ctx);
 		CGContextRestoreGState(ctx);
 		CGPathRelease(path);
@@ -218,7 +218,7 @@
 		NSMutableParagraphStyle *style = nil;
 		CGFloat side = [self side] + (cellFrame.size.height - 0.5 * 2) / 2;
 		
-		color = [self isHighlighted] ? [NSColor whiteColor] : [NSColor colorWithCalibratedWhite:0.6 alpha:1.0];
+		color = [self isHighlighted] ? [NSColor whiteColor] : [NSColor colorWithCalibratedRed:SBSidebarTextColors[0] green:SBSidebarTextColors[1] blue:SBSidebarTextColors[2] alpha:SBSidebarTextColors[3]];
 		scolor = [NSColor blackColor];
 		font = [self font];
 		style = [[[NSMutableParagraphStyle alloc] init] autorelease];
@@ -276,9 +276,9 @@
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	[[NSColor blackColor] set];
+	[[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]] set];
 	NSRectFill(cellFrame);
-	[[NSColor colorWithCalibratedWhite:0.2 alpha:1.0] set];
+	[[NSColor colorWithCalibratedRed:SBSidebarCellColors[0] green:SBSidebarCellColors[1] blue:SBSidebarCellColors[2] alpha:SBSidebarCellColors[3]] set];
 	NSRectFill(NSInsetRect(cellFrame, 0.0, 0.5));
 }
 
