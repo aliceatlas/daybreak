@@ -1,6 +1,6 @@
 /*
  
- SBWebResourceIdentifier.m
+ SBTableCell.h
  
  Authoring by Atsushi Jike
  
@@ -22,51 +22,24 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "SBWebResourceIdentifier.h"
+#import "SBDefinitions.h"
 
+typedef enum {
+	SBTableCellGrayStyle = 0, 
+	SBTableCellWhiteStyle = 1
+}SBTableCellStyle;
 
-@implementation SBWebResourceIdentifier
-
-@synthesize request;
-@dynamic URL;
-@synthesize length;
-@synthesize received;
-@synthesize flag;
-
-+ (id)identifierWithURLRequest:(NSURLRequest *)aRequest
+@interface SBTableCell : NSCell
 {
-	id identifier = nil;
-	identifier = [[[self alloc] init] autorelease];
-	[identifier setRequest:aRequest];
-	return identifier;
+	SBTableCellStyle style;
+	BOOL showRoundedPath;
+	BOOL showSelection;
 }
+@property (nonatomic) SBTableCellStyle style;
+@property (nonatomic) BOOL showRoundedPath;
+@property (nonatomic) BOOL showSelection;
 
-- (id)init
-{
-	if (self = [super init])
-	{
-		request = nil;
-		length = 0;
-		received = 0;
-		flag = YES;
-	}
-	return self;
-}
-
-- (void)dealloc
-{
-	[request release];
-	[super dealloc];
-}
-
-- (NSURL *)URL
-{
-	return request ? [request URL] : nil;
-}
-
-- (NSString *)description
-{
-	return flag ? [NSString stringWithFormat:@"%@ URL %@, %d / %d", [self className], self.URL, received, length] : [NSString stringWithFormat:@"%@ URL %@", [self className], self.URL];
-}
+- (CGFloat)side;
+- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 
 @end

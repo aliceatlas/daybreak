@@ -108,6 +108,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setTextColor:(NSColor *)color;
 - (void)setNextKeyView:(id)responder;
 - (void)updateGoTitle:(NSEvent *)theEvent;
+- (void)go;
 
 // Execute Delegate Method
 - (void)executeDidSelectBackward;
@@ -180,6 +181,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @end
 
 @interface SBIconDataCell : NSCell
+
+- (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 
 @end
 

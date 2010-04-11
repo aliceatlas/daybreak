@@ -47,7 +47,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSPoint)margin;
 - (CGFloat)labelWidth;
 - (NSRect)iconRect;
-- (NSSize)buttonSize;
+- (CGFloat)buttonHeight;
 - (CGFloat)buttonMargin;
 - (CGFloat)searchFieldWidth;
 - (NSRect)messageLabelRect;

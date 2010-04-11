@@ -33,7 +33,7 @@ static SBAboutView *_sharedView;
 {
 	if (!_sharedView)
 	{
-		_sharedView = [[self alloc] initWithFrame:NSMakeRect(0, 0, 640, 320)];
+		_sharedView = [[self alloc] initWithFrame:NSMakeRect(0, 0, 640, 360)];
 	}
 	return _sharedView;
 }

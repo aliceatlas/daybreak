@@ -362,6 +362,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (tabView)
 	{
+		tabView.delegate = nil;
 		[tabView removeFromSuperview];
 		[tabView release];
 		tabView = nil;
@@ -1291,6 +1292,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			{
 				pos = sidebar.frame.size.height - kSBBottombarHeight;
 			}
+			if (!sidebar.bottombar.drawerVisibility)
+				sidebar.bottombar.drawerVisibility = YES;
 		}
 	}
 	return pos;
@@ -1308,7 +1311,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if (aSplitView == sidebar)
 	{
-		maxWidth = sidebar.bounds.size.height - kSBDownloadItemSize;
+		maxWidth = sidebar.bounds.size.height - 1 - kSBDownloadItemSize - kSBBottombarHeight;
 	}
 	return maxWidth;
 }
@@ -2047,6 +2050,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)performCloseFromButton:(id)sender
 {
+	tabView.delegate = nil;
 	[tabView closeAllTabViewItem];	// For destructing flash in the webViews
 	[self close];
 }
@@ -2072,6 +2076,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	if (should)
 	{
+		tabView.delegate = nil;
 		[tabView closeAllTabViewItem];	// For destructing flash in the webViews
 	}
 	return should;

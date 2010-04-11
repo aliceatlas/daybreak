@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBBLKGUI.h"
 #import "SBButton.h"
 #import "SBDocument.h"
+#import "SBTableCell.h"
 #import "SBToolbar.h"
 #import "SBUtil.h"
 
@@ -311,7 +312,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	goButton.backImage = [NSImage imageWithCGImage:SBGoIconImage(NSSizeToCGSize(goRect.size), YES, YES)];
 	goButton.backDisableImage = [NSImage imageWithCGImage:SBGoIconImage(NSSizeToCGSize(goRect.size), NO, YES)];
 	goButton.target = self;
-	goButton.action = @selector(executeShouldOpenURL);
+	goButton.action = @selector(go);
 	goButton.enabled = NO;
 	[self addSubview:goButton];
 }
@@ -472,12 +473,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return object;
 }
 
+//<# writing #>
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
 	NSString *identifier = [aTableColumn identifier];
+	NSDictionary *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
+	BOOL selection = [[aTableView selectedRowIndexes] containsIndex:rowIndex];
+	NSColor *backgroundColor = nil; 
+	if (selection)
+		backgroundColor = [NSColor redColor];
+	else
+		backgroundColor = [NSColor grayColor];
 	if ([identifier isEqualToString:kSBImage])
 	{
-		NSDictionary *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
 		NSData *data = item ? [item objectForKey:kSBImage] : nil;
 		NSImage *image = nil;
 		if (data)
@@ -490,6 +498,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[aCell setImage:image];
 		}
 	}
+	else if ([identifier isEqualToString:kSBURL])
+	{
+		NSString *title = item ? [item objectForKey:kSBTitle] : nil;
+		NSString *string = item ? [item objectForKey:kSBURL] : nil;
+		if (title)
+			string = [title stringByAppendingFormat:@" - %@", string];
+		if (string)
+		{
+			[aCell setObjectValue:string];
+		}
+	}
+//	[aCell setBackgroundColor:backgroundColor];
 }
 
 #pragma mark Setter
@@ -721,6 +741,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			goButton.title = title;
 		}
+	}
+}
+
+- (void)go
+{
+	SEL selector = nil;
+	NSEvent *theEvent = [NSApp currentEvent];
+	NSUInteger modifierFlags = theEvent ? [theEvent modifierFlags] : 0;
+	if (modifierFlags & NSCommandKeyMask)
+	{
+		selector = @selector(executeShouldOpenURLInNewTab);
+	}
+	else if (modifierFlags & NSAlternateKeyMask)
+	{
+		selector = @selector(executeShouldDownloadURL);
+	}
+	else {
+		selector = @selector(executeShouldOpenURL);
+	}
+	if ([self respondsToSelector:selector])
+	{
+		[self performSelector:selector];
 	}
 }
 
@@ -1208,11 +1250,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Construction
 
+// <# coding #>
 - (void)constructTable
 {
 	NSTableColumn *iconColumn = nil;
 	NSTableColumn *nameColumn = nil;
 	SBIconDataCell *iconCell = nil;
+	SBTableCell *nameCell = nil;
 	NSRect bounds = [self bounds];
 	NSRect scrollerRect = NSZeroRect;
 	NSRect tableRect = NSZeroRect;
@@ -1226,12 +1270,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	iconColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBImage] autorelease];
 	nameColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBURL] autorelease];
 	iconCell = [[[SBIconDataCell alloc] init] autorelease];
+	nameCell = [[[SBTableCell alloc] init] autorelease];
+	[nameCell setFont:[NSFont systemFontOfSize:12.0]];
+	[nameCell setShowRoundedPath:YES];
+	[nameCell setAlignment:NSLeftTextAlignment];
+	[nameCell setStyle:SBTableCellWhiteStyle];
 	[iconColumn setWidth:22.0];
 	[iconColumn setDataCell:iconCell];
 	[iconColumn setEditable:NO];
 	[nameColumn setWidth:bounds.size.width - 22.0];
+	[nameColumn setDataCell:nameCell];
 	[nameColumn setEditable:NO];
-//	[_table setBackgroundColor:[NSColor clearColor]];
+	[_table setBackgroundColor:[NSColor clearColor]];
 	[_table setRowHeight:SBURLFieldRowHeight - 2];
 	[_table addTableColumn:iconColumn];
 	[_table addTableColumn:nameColumn];
@@ -1243,13 +1293,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[_table setHeaderView:nil];
 	[_table setCornerView:nil];
 	[_table setAutoresizingMask:(NSViewWidthSizable)];
+	[_table setIntercellSpacing:NSZeroSize];
 	[_scroller setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[_scroller setAutohidesScrollers:YES];
 	[_scroller setHasVerticalScroller:YES];
 	[_scroller setAutohidesScrollers:YES];
-	[_scroller setBackgroundColor:[NSColor whiteColor]];
-	[_scroller setDrawsBackground:NO];
-//	[[_scroller verticalScroller] setControlSize:NSSmallControlSize];
+	[_scroller setBackgroundColor:[NSColor colorWithCalibratedRed:SBTableLightGrayCellColors[0] green:SBTableLightGrayCellColors[1] blue:SBTableLightGrayCellColors[2] alpha:SBTableLightGrayCellColors[3]]];
+	[_scroller setDrawsBackground:YES];
 	[_scroller setDocumentView:_table];
 	[self addSubview:_scroller];
 }
@@ -1380,14 +1430,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		CGFloat locations[count];
 		CGFloat colors[count * 4];
 		CGPoint points[2];
-		locations[0] = 0.05;
+		locations[0] = 0.03;
 		locations[1] = 0.0;
-		colors[0] = colors[1] = colors[2] = 1.0;
-		colors[3] = 1.0;
-		colors[4] = colors[5] = colors[6] = 0.75;
+		colors[0] = SBTableLightGrayCellColors[0];
+		colors[1] = SBTableLightGrayCellColors[1];
+		colors[2] = SBTableLightGrayCellColors[2];
+		colors[3] = SBTableLightGrayCellColors[3];
+		colors[4] = 0.7;
+		colors[5] = 0.7;
+		colors[6] = 0.7;
 		colors[7] = 1.0;
-		points[0] = CGPointZero;
-		points[1] = CGPointMake(0.0, rect.size.height);
+		points[0] = CGPointMake(0.0, rect.origin.y);
+		points[1] = CGPointMake(0.0, NSMaxY(rect));
 		
 		CGContextSaveGState(ctx);
 		CGContextAddPath(ctx, path);
@@ -1414,12 +1468,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation SBIconDataCell
 
-- (BOOL)isOpaque
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	return NO;
+	[self drawInteriorWithFrame:cellFrame inView:controlView];
+	[self drawImageWithFrame:cellFrame inView:controlView];
 }
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	[[NSColor colorWithCalibratedRed:SBBackgroundLightGrayColors[0] green:SBBackgroundLightGrayColors[1] blue:SBBackgroundLightGrayColors[2] alpha:SBBackgroundLightGrayColors[3]] set];
+	NSRectFill(cellFrame);
+	[[NSColor colorWithCalibratedRed:SBTableLightGrayCellColors[0] green:SBTableLightGrayCellColors[1] blue:SBTableLightGrayCellColors[2] alpha:SBTableLightGrayCellColors[3]] set];
+	NSRectFill(NSInsetRect(cellFrame, 0.0, 0.5));
+}
+
+- (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	NSImage *image = [self image];
 	if (image)

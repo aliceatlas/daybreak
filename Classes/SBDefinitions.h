@@ -166,7 +166,8 @@ extern NSString *SBTabbarItemPboardType;
 extern CGFloat SBWindowBackColors[4];
 
 // Bookmark color names
-extern CGFloat SBSidebarBackgroundColors[4];
+extern CGFloat SBBackgroundColors[4];
+extern CGFloat SBBackgroundLightGrayColors[4];
 extern NSInteger SBBookmarkCountOfLabelColors;
 extern NSString *SBBookmarkLabelColorNames[];
 extern CGFloat SBBookmarkLabelColorRGBA[];
@@ -175,7 +176,8 @@ extern CGFloat SBBookmarkLabelColorRGBA[];
 extern CGFloat SBBottombarColors[8];
 
 // WebResourcesView
-extern CGFloat SBSidebarCellColors[4];
+extern CGFloat SBTableCellColors[4];
+extern CGFloat SBTableLightGrayCellColors[4];
 extern CGFloat SBSidebarSelectedCellColors[4];
 extern CGFloat SBSidebarTextColors[4];
 
@@ -218,7 +220,7 @@ typedef enum {
 
 // Values
 #define kSBTimeoutInterval 60.0
-#define kSBTabbarItemClosableInterval 0.4
+#define kSBTabbarItemClosableInterval 0.2
 #define kSBBookmarkItemImageCompressionFactor 0.1
 #define kSBBookmarkLayoutInterval 0.7
 #define kSBBookmarkToolsInterval 0.7

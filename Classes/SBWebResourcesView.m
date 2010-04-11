@@ -1,10 +1,26 @@
-//
-//  SBWebResourcesView.m
-//  Sunrise
-//
-//  Created by Atsushi Jike on 10/03/07.
-//  Copyright 2010 Atsushi Jike. All rights reserved.
-//
+/*
+ 
+ SBWebResourcesView.m
+ 
+ Authoring by Atsushi Jike
+ 
+ Copyright 2010 Atsushi Jike. All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without modification, 
+ are permitted provided that the following conditions are met:
+ 
+ Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ 
+ Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+ in the documentation and/or other materials provided with the distribution.
+ 
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, 
+ PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #import "SBWebResourcesView.h"
 #import "SBUtil.h"
@@ -41,8 +57,8 @@
 	NSTableColumn *lengthColumn = nil;
 	NSTableColumn *actionColumn = nil;
 	SBWebResourceButtonCell *buttonCell = nil;
-	SBWebResourceCell *urlTextCell = nil;
-	SBWebResourceCell *lengthTextCell = nil;
+	SBTableCell *urlTextCell = nil;
+	SBTableCell *lengthTextCell = nil;
 	NSRect tableRect = NSZeroRect;
 	CGFloat lengthWidth = 110.0;
 	CGFloat actionWidth = 22.0;
@@ -52,14 +68,15 @@
 	urlColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBURL] autorelease];
 	lengthColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Length"] autorelease];
 	actionColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Action"] autorelease];
-	urlTextCell = [[[SBWebResourceCell alloc] init] autorelease];
-	lengthTextCell = [[[SBWebResourceCell alloc] init] autorelease];
+	urlTextCell = [[[SBTableCell alloc] init] autorelease];
+	lengthTextCell = [[[SBTableCell alloc] init] autorelease];
 	buttonCell = [[[SBWebResourceButtonCell alloc] init] autorelease];
 	[urlTextCell setFont:[NSFont systemFontOfSize:12.0]];
 	[urlTextCell setShowRoundedPath:YES];
 	[urlTextCell setAlignment:NSLeftTextAlignment];
 	[lengthTextCell setFont:[NSFont systemFontOfSize:10.0]];
 	[lengthTextCell setShowRoundedPath:NO];
+	[lengthTextCell setShowSelection:NO];
 	[lengthTextCell setAlignment:NSRightTextAlignment];
 	[buttonCell setTarget:self];
 	[buttonCell setAction:@selector(download:)];
@@ -98,7 +115,7 @@
 	[scrollView setHasVerticalScroller:YES];
 	[scrollView setHasHorizontalScroller:NO];
 	[scrollView setAutohidesScrollers:YES];
-	[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]]];
+	[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBBackgroundColors[0] green:SBBackgroundColors[1] blue:SBBackgroundColors[2] alpha:SBBackgroundColors[3]]];
 	[scrollView setDrawsBackground:YES];
 	[scrollView setDocumentView:tableView];
 	[self addSubview:scrollView];
@@ -162,95 +179,6 @@
 
 @end
 
-@implementation SBWebResourceCell
-
-@synthesize showRoundedPath;
-
-- (CGFloat)side
-{
-	return 5.0;
-}
-
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	[self drawInteriorWithFrame:cellFrame inView:controlView];
-	[self drawTitleWithFrame:cellFrame inView:controlView];
-}
-
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	[[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]] set];
-	NSRectFill(cellFrame);
-	[[NSColor colorWithCalibratedRed:SBSidebarCellColors[0] green:SBSidebarCellColors[1] blue:SBSidebarCellColors[2] alpha:SBSidebarCellColors[3]] set];
-	NSRectFill(NSInsetRect(cellFrame, 0.0, 0.5));
-	if ([self isHighlighted] && showRoundedPath)
-	{
-		CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
-		CGRect r = CGRectZero;
-		CGPathRef path = nil;
-		r = NSRectToCGRect(cellFrame);
-		path = SBRoundedPath(CGRectInset(r, 1.0, 0.5), (cellFrame.size.height - 0.5 * 2) / 2, 0.0, YES, YES);
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetRGBFillColor(ctx, SBSidebarSelectedCellColors[0], SBSidebarSelectedCellColors[1], SBSidebarSelectedCellColors[2], SBSidebarSelectedCellColors[3]);
-		CGContextFillPath(ctx);
-		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
-	}
-}
-
-- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	NSString *title = nil;
-	
-	title = [self title];
-	
-	if ([title length] > 0)
-	{
-		NSSize size = NSZeroSize;
-		NSColor *color = nil;
-		NSColor *scolor = nil;
-		NSFont *font = nil;
-		NSDictionary *attribute = nil;
-		NSDictionary *sattribute = nil;
-		NSRect r = NSZeroRect;
-		NSRect sr = NSZeroRect;
-		NSMutableParagraphStyle *style = nil;
-		CGFloat side = [self side] + (cellFrame.size.height - 0.5 * 2) / 2;
-		
-		color = [self isHighlighted] ? [NSColor whiteColor] : [NSColor colorWithCalibratedRed:SBSidebarTextColors[0] green:SBSidebarTextColors[1] blue:SBSidebarTextColors[2] alpha:SBSidebarTextColors[3]];
-		scolor = [NSColor blackColor];
-		font = [self font];
-		style = [[[NSMutableParagraphStyle alloc] init] autorelease];
-		[style setLineBreakMode:NSLineBreakByTruncatingTail];
-		attribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, style, NSParagraphStyleAttributeName, nil];
-		sattribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, scolor, NSForegroundColorAttributeName, style, NSParagraphStyleAttributeName, nil];
-		size = [title sizeWithAttributes:attribute];
-		if (size.width > (cellFrame.size.width - side * 2))
-			size.width = cellFrame.size.width - side * 2;
-		r.size = size;
-		if ([self alignment] == NSLeftTextAlignment)
-		{
-			r.origin.x = cellFrame.origin.x + side;
-		}
-		else if ([self alignment] == NSRightTextAlignment)
-		{
-			r.origin.x = cellFrame.origin.x + side + ((cellFrame.size.width - side * 2) - size.width);
-		}
-		else if ([self alignment] == NSCenterTextAlignment)
-		{
-			r.origin.x = cellFrame.origin.x + ((cellFrame.size.width - side * 2) - size.width) / 2;
-		}
-		r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
-		sr = r;
-		sr.origin.y -= 1.0;
-		[title drawInRect:sr withAttributes:sattribute];
-		[title drawInRect:r withAttributes:attribute];
-	}
-}
-
-@end
-
 @implementation SBWebResourceButtonCell
 
 @synthesize highlightedImage;
@@ -276,9 +204,9 @@
 
 - (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	[[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]] set];
+	[[NSColor colorWithCalibratedRed:SBBackgroundColors[0] green:SBBackgroundColors[1] blue:SBBackgroundColors[2] alpha:SBBackgroundColors[3]] set];
 	NSRectFill(cellFrame);
-	[[NSColor colorWithCalibratedRed:SBSidebarCellColors[0] green:SBSidebarCellColors[1] blue:SBSidebarCellColors[2] alpha:SBSidebarCellColors[3]] set];
+	[[NSColor colorWithCalibratedRed:SBTableCellColors[0] green:SBTableCellColors[1] blue:SBTableCellColors[2] alpha:SBTableCellColors[3]] set];
 	NSRectFill(NSInsetRect(cellFrame, 0.0, 0.5));
 }
 

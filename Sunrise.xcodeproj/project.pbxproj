@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0810174D1142B774007F3348 /* SBWebResourceIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 0810174C1142B774007F3348 /* SBWebResourceIdentifier.m */; };
+		081412BD1168671B002FDF25 /* SBTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 081412BC1168671B002FDF25 /* SBTableCell.m */; };
 		0816F59A102D52CD00DFA5F0 /* SBUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 0816F599102D52CD00DFA5F0 /* SBUpdater.m */; };
 		081E0F0110C115BE00C6AD2B /* SBTextInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 081E0F0010C115BE00C6AD2B /* SBTextInputView.m */; };
 		08313CA810B6B9CD004198C3 /* SBMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08313CA710B6B9CD004198C3 /* SBMessageView.m */; };
@@ -177,6 +178,8 @@
 /* Begin PBXFileReference section */
 		0810174B1142B774007F3348 /* SBWebResourceIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebResourceIdentifier.h; path = Classes/SBWebResourceIdentifier.h; sourceTree = "<group>"; };
 		0810174C1142B774007F3348 /* SBWebResourceIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWebResourceIdentifier.m; path = Classes/SBWebResourceIdentifier.m; sourceTree = "<group>"; };
+		081412BB1168671B002FDF25 /* SBTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTableCell.h; path = Classes/SBTableCell.h; sourceTree = "<group>"; };
+		081412BC1168671B002FDF25 /* SBTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTableCell.m; path = Classes/SBTableCell.m; sourceTree = "<group>"; };
 		0816F598102D52CD00DFA5F0 /* SBUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBUpdater.h; path = Classes/SBUpdater.h; sourceTree = "<group>"; };
 		0816F599102D52CD00DFA5F0 /* SBUpdater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBUpdater.m; path = Classes/SBUpdater.m; sourceTree = "<group>"; };
 		0819483910FBE8D400CCBABF /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -191,6 +194,8 @@
 		082886D610E11FD90018B591 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "Resources/zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		08313CA610B6B9CD004198C3 /* SBMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBMessageView.h; path = Classes/SBMessageView.h; sourceTree = "<group>"; };
 		08313CA710B6B9CD004198C3 /* SBMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBMessageView.m; path = Classes/SBMessageView.m; sourceTree = "<group>"; };
+		083E1DA2116A2E0500BD3954 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = Resources/nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		083E1DB0116A2E0B00BD3954 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = Resources/nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		083F27411053F4EE00346934 /* Update.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Update.png; path = Resources/Images/Update.png; sourceTree = "<group>"; };
 		084066E70FE2B05700CC80E3 /* SBDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDefinitions.h; path = Classes/SBDefinitions.h; sourceTree = "<group>"; };
 		084066E80FE2B05700CC80E3 /* SBDefinitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDefinitions.m; path = Classes/SBDefinitions.m; sourceTree = "<group>"; };
@@ -532,6 +537,8 @@
 				08B6E2A1103451DA00BD15D8 /* SBSectionGroupe.m */,
 				084067890FE2C11700CC80E3 /* SBURLField.h */,
 				0840678A0FE2C11700CC80E3 /* SBURLField.m */,
+				081412BB1168671B002FDF25 /* SBTableCell.h */,
+				081412BC1168671B002FDF25 /* SBTableCell.m */,
 				08E310380FFE58B800760CEC /* ModalViews */,
 				08A0048E0FEC8D4600AEB6DD /* Tab */,
 				08F6A68B0FF25A7700ED6E07 /* Sidebar */,
@@ -926,6 +933,7 @@
 				de,
 				pt_PT,
 				fi,
+				nl,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Sunrise */;
 			projectDirPath = "";
@@ -1113,6 +1121,7 @@
 				0810174D1142B774007F3348 /* SBWebResourceIdentifier.m in Sources */,
 				08BE0CF11143E88E00314946 /* SBWebResourcesView.m in Sources */,
 				08F1DEA41156653700712D67 /* SBBLKGUISearchField.m in Sources */,
+				081412BD1168671B002FDF25 /* SBTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1132,6 +1141,7 @@
 				086D732C10D7867B006A4F25 /* zh-Hans */,
 				082886D610E11FD90018B591 /* zh-Hant */,
 				08BD047B114D2AB500BF9834 /* fi */,
+				083E1DB0116A2E0B00BD3954 /* nl */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1149,6 +1159,7 @@
 				086D732D10D78682006A4F25 /* zh-Hans */,
 				082886C610E11FAF0018B591 /* zh-Hant */,
 				08BD046D114D2AAE00BF9834 /* fi */,
+				083E1DA2116A2E0500BD3954 /* nl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

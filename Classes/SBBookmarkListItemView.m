@@ -359,6 +359,7 @@
 			{
 				NSImage *image = [[NSImage alloc] initWithData:imageData];
 				CGPathRef path = nil;
+				CGColorRef shadowColor = nil;
 				r = [self imageRect];
 				
 				// frame
@@ -382,8 +383,16 @@
 					CGContextRestoreGState(ctx);
 					CGPathRelease(path);
 				}
-				
 				path = SBRoundedPath(NSRectToCGRect(r), 6.0, 0.0, YES, YES);
+				shadowColor = CGColorCreateGenericGray(0.0, 0.6);
+				CGContextSaveGState(ctx);
+				CGContextAddPath(ctx, path);
+				CGContextSetShadowWithColor(ctx, CGSizeMake(0, -2.0), 5.0, shadowColor);
+				CGContextSetRGBFillColor(ctx, 0.0, 0.0, 0.0, 1.0);
+				CGContextFillPath(ctx);
+				CGContextRestoreGState(ctx);
+				CGColorRelease(shadowColor);
+				
 				CGContextSaveGState(ctx);
 				CGContextAddPath(ctx, path);
 				CGContextClip(ctx);

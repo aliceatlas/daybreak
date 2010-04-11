@@ -263,7 +263,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[scrollView setAutohidesScrollers:YES];
 			[scrollView setHasHorizontalScroller:NO];
 			[scrollView setHasVerticalScroller:YES];
-			[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBSidebarBackgroundColors[0] green:SBSidebarBackgroundColors[1] blue:SBSidebarBackgroundColors[2] alpha:SBSidebarBackgroundColors[3]]];
+			[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBBackgroundColors[0] green:SBBackgroundColors[1] blue:SBBackgroundColors[2] alpha:SBBackgroundColors[3]]];
 			[scrollView setDrawsBackground:YES];
 			horizontalScroller.drawsBackground = YES;
 			verticalScroller.drawsBackground = YES;

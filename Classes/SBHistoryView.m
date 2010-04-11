@@ -80,9 +80,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return 85.0;
 }
 
-- (NSSize)buttonSize
+- (CGFloat)buttonHeight
 {
-	return NSMakeSize(124.0, 24.0);
+	return 24.0;
 }
 
 - (CGFloat)buttonMargin
@@ -137,8 +137,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect iconRect = [self iconRect];
 	r.origin.x = margin.x;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
-	r.size.height = self.bounds.size.height - iconRect.size.height - 10.0 - margin.y * 3 - [self buttonSize].height;
-	r.origin.y = margin.y * 2 + [self buttonSize].height;
+	r.size.height = self.bounds.size.height - iconRect.size.height - 10.0 - margin.y * 3 - [self buttonHeight];
+	r.origin.y = margin.y * 2 + [self buttonHeight];
 	return r;
 }
 
@@ -147,7 +147,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect r = NSZeroRect;
 	NSPoint margin = [self margin];
 	r.size.width = 105.0;
-	r.size.height = 24.0;
+	r.size.height = [self buttonHeight];
 	r.origin.y = margin.y;
 	r.origin.x = margin.x;
 	return r;
@@ -170,7 +170,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect r = NSZeroRect;
 	NSPoint margin = [self margin];
 	r.size.width = 105.0;
-	r.size.height = 24.0;
+	r.size.height = [self buttonHeight];
 	r.origin.y = margin.y;
 	r.origin.x = (self.bounds.size.width - r.size.width - margin.x);
 	return r;
