@@ -34,6 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize backDisableImage;
 @synthesize action;
 @synthesize enabled;
+@synthesize pressed;
 @synthesize keyEquivalent;
 @synthesize keyEquivalentModifierMask;
 
@@ -42,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (self = [super initWithFrame:frame])
 	{
 		title = nil;
-		_pressed = NO;
+		pressed = NO;
 		enabled = YES;
 		keyEquivalent = nil;
 		keyEquivalentModifierMask = 0;
@@ -144,6 +145,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
+- (void)setPressed:(BOOL)isPressed
+{
+	if (pressed != isPressed)
+	{
+		pressed = isPressed;
+		[self setNeedsDisplay:YES];
+	}
+}
+
 - (void)setTitle:(NSString *)inTitle
 {
 	if (![title isEqualToString:inTitle])
@@ -174,8 +184,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (enabled)
 	{
-		_pressed = YES;
-		[self setNeedsDisplay:YES];
+		self.pressed = YES;
 	}
 }
 
@@ -185,8 +194,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		NSPoint location = [theEvent locationInWindow];
 		NSPoint point = [self convertPoint:location fromView:nil];
-		_pressed = NSPointInRect(point, self.bounds);
-		[self setNeedsDisplay:YES];
+		self.pressed = NSPointInRect(point, self.bounds);
 	}
 }
 
@@ -198,9 +206,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSPoint point = [self convertPoint:location fromView:nil];
 		if (NSPointInRect(point, self.bounds))
 		{
-			_pressed = NO;
+			self.pressed = NO;
 			[self executeAction];
-			[self setNeedsDisplay:YES];
 		}
 	}
 }
@@ -233,7 +240,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (anImage)
 	{
 		[anImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-		if (_pressed)
+		if (pressed)
 		{
 			[anImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeXOR fraction:0.3];
 		}

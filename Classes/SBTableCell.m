@@ -28,16 +28,20 @@
 
 @implementation SBTableCell
 
+@synthesize enabled;
 @synthesize style;
 @synthesize showRoundedPath;
 @synthesize showSelection;
+@synthesize lineBreakMode;
 
 - (id)init
 {
 	if (self = [super init])
 	{
+		enabled = YES;
 		style = SBTableCellGrayStyle;
 		showSelection = YES;
+		lineBreakMode = NSLineBreakByTruncatingTail;
 	}
 	return self;
 }
@@ -115,7 +119,7 @@
 	}
 	else if (style == SBTableCellWhiteStyle)
 	{
-		NSColor *textColor = [[NSColor blackColor] colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+		NSColor *textColor = [(enabled ? [NSColor blackColor] : [NSColor grayColor]) colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
 		[textColor getComponents:textColors];
 		sTextColor = [self isHighlighted] ? [NSColor clearColor] : [NSColor whiteColor];
 	}
@@ -124,7 +128,6 @@
 	{
 		NSSize size = NSZeroSize;
 		NSColor *color = nil;
-		NSColor *scolor = nil;
 		NSFont *font = nil;
 		NSDictionary *attribute = nil;
 		NSDictionary *sattribute = nil;
@@ -134,10 +137,9 @@
 		CGFloat side = [self side] + (cellFrame.size.height - 0.5 * 2) / 2;
 		
 		color = [self isHighlighted] ? [NSColor whiteColor] : [NSColor colorWithCalibratedRed:textColors[0] green:textColors[1] blue:textColors[2] alpha:textColors[3]];
-		scolor = [NSColor blackColor];
 		font = [self font];
 		paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-		[paragraphStyle setLineBreakMode:NSLineBreakByTruncatingTail];
+		[paragraphStyle setLineBreakMode:lineBreakMode];
 		attribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
 		sattribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, sTextColor, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
 		size = [title sizeWithAttributes:attribute];
@@ -168,6 +170,52 @@
 		}
 		[title drawInRect:sr withAttributes:sattribute];
 		[title drawInRect:r withAttributes:attribute];
+	}
+}
+
+@end
+
+@implementation SBIconDataCell
+
+@synthesize drawsBackground;
+
+- (id)init
+{
+	if (self = [super init])
+	{
+		drawsBackground = YES;
+	}
+	return self;
+}
+
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	[self drawInteriorWithFrame:cellFrame inView:controlView];
+	[self drawImageWithFrame:cellFrame inView:controlView];
+}
+
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	if (drawsBackground)
+	{
+		[[NSColor colorWithCalibratedRed:SBBackgroundLightGrayColors[0] green:SBBackgroundLightGrayColors[1] blue:SBBackgroundLightGrayColors[2] alpha:SBBackgroundLightGrayColors[3]] set];
+		NSRectFill(cellFrame);
+		[[NSColor colorWithCalibratedRed:SBTableLightGrayCellColors[0] green:SBTableLightGrayCellColors[1] blue:SBTableLightGrayCellColors[2] alpha:SBTableLightGrayCellColors[3]] set];
+		NSRectFill(NSInsetRect(cellFrame, 0.0, 0.5));
+	}
+}
+
+- (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	NSImage *image = [self image];
+	if (image)
+	{
+		NSRect r = NSZeroRect;
+		[image setFlipped:YES];
+		r.size = [image size];
+		r.origin.x = cellFrame.origin.x + (cellFrame.size.width - r.size.width) / 2;
+		r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
+		[image drawInRect:r fromRect:NSMakeRect(0, 0, r.size.width, r.size.height) operation:NSCompositeSourceOver fraction:1.0];
 	}
 }
 

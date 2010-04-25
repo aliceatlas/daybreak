@@ -56,4 +56,19 @@
 	return [[indexes copy] autorelease];
 }
 
++ (NSArray *)arrayWithArrays:(NSArray *)arrays
+{
+	return [[[self mutableArrayWithArrays:arrays] copy] autorelease];
+}
+
++ (NSMutableArray *)mutableArrayWithArrays:(NSArray *)arrays
+{
+	NSMutableArray *array = [NSMutableArray arrayWithCapacity:0];
+	for (NSArray *a in arrays)
+	{
+		[array addObjectsFromArray:a];
+	}
+	return array;
+}
+
 @end

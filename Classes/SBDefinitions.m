@@ -51,6 +51,7 @@ NSString *kSBStringsDocumentTypeName = @"Strings Document Type";
 
 // URLs
 NSString *kSBUpdaterNewVersionURL = @"http://www.sunrisebrowser.com/Sunrise%@.dmg";
+NSString *kSBGoogleSuggestURL = @"http://google.com/complete/search?output=toolbar&q=%@";
 
 // Mail Addresses
 NSString *kSBFeedbackMailAddress = @"feedback@sunrisebrowser.com";
@@ -135,6 +136,7 @@ NSString *kSBTitle = @"title";
 NSString *kSBURL = @"url";
 NSString *kSBDate = @"date";
 NSString *kSBImage = @"image";
+NSString *kSBType = @"type";
 
 // Bookmark Key names
 NSString *kSBBookmarkVersion = @"Version";
@@ -191,7 +193,9 @@ CGFloat SBBottombarColors[8] = {0.17, 0.19, 0.22, 1.0, 0.27, 0.3, 0.33, 1.0};
 
 // WebResourcesView
 CGFloat SBTableCellColors[4] = {0.29, 0.31, 0.33, 1.0};
+CGFloat SBTableGrayCellColors[4] = {0.64, 0.67, 0.7, 1.0};
 CGFloat SBTableLightGrayCellColors[4] = {0.86, 0.87, 0.88, 1.0};
+CGFloat SBTableDarkGrayCellColors[4] = {0.48, 0.5, 0.52, 1.0};
 CGFloat SBSidebarSelectedCellColors[4] = {0.49, 0.51, 0.53, 1.0};
 CGFloat SBSidebarTextColors[4] = {0.66, 0.67, 0.68, 1.0};
 

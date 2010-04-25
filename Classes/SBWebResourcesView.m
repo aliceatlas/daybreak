@@ -74,6 +74,7 @@
 	[urlTextCell setFont:[NSFont systemFontOfSize:12.0]];
 	[urlTextCell setShowRoundedPath:YES];
 	[urlTextCell setAlignment:NSLeftTextAlignment];
+	[urlTextCell setLineBreakMode:NSLineBreakByTruncatingMiddle];
 	[lengthTextCell setFont:[NSFont systemFontOfSize:10.0]];
 	[lengthTextCell setShowRoundedPath:NO];
 	[lengthTextCell setShowSelection:NO];

@@ -44,6 +44,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBURLFieldContentView *contentView;
 	id <SBURLFieldDatasource> dataSource;
 	id delegate;
+	NSMutableArray *gsItems;
+	NSMutableArray *bmItems;
+	NSMutableArray *hItems;
 	NSMutableArray *items;
 	BOOL _isOpenSheet;
 }
@@ -58,6 +61,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) NSImage *image;
 @property (nonatomic, assign) NSString *stringValue;
+@property (nonatomic, retain) NSMutableArray *gsItems;
+@property (nonatomic, retain) NSMutableArray *bmItems;
+@property (nonatomic, retain) NSMutableArray *hItems;
 @property (nonatomic, retain) NSMutableArray *items;
 @property (nonatomic) BOOL enabledBackward;
 @property (nonatomic) BOOL enabledForward;
@@ -89,6 +95,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructGoButton;
 - (void)constructSheet;
 
+- (BOOL)canSelectIndex:(NSInteger)index;
+
 // Setter
 - (void)setPlaceholderString:(NSString *)string;
 - (void)setDataSource:(id)inDataSource;
@@ -98,11 +106,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Action
 - (void)endEditing;
 - (void)adjustSheet;
+- (void)appearSheetIfNeeded:(BOOL)closable;
 - (void)appearSheet;
 - (void)disappearSheet;
 - (void)selectRowAbove;
 - (void)selectRowBelow;
-- (BOOL)selectRow;
 - (void)reloadData;
 - (void)selectText:(id)sender;
 - (void)setTextColor:(NSColor *)color;
@@ -160,6 +168,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	id delegate;
 }
 @property (nonatomic, readonly) SBURLField *field;
+@property (nonatomic, readonly) NSUInteger selectedRowIndex;
 
 // Construction
 - (void)constructTable;
@@ -170,28 +179,34 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Action
 - (void)adjustTable;
-- (void)selectRowAbove;
-- (void)selectRowBelow;
-- (BOOL)selectRow;
+- (BOOL)selectRow:(NSUInteger)rowIndex;
 - (void)deselectRow;
 - (void)reloadData;
 - (void)pushSelectedItem;
-- (void)pushItemAtIndex:(NSInteger)index;
+- (BOOL)pushItemAtIndex:(NSInteger)index;
 
 @end
 
-@interface SBIconDataCell : NSCell
+@interface SBURLFieldDataCell : NSCell
+{
+	BOOL separator;
+	BOOL sectionHeader;
+	BOOL drawsImage;
+}
+@property (nonatomic) BOOL separator;
+@property (nonatomic) BOOL sectionHeader;
+@property (nonatomic) BOOL drawsImage;
 
+- (CGFloat)side;
+- (CGFloat)leftMargin;
+- (CGFloat)imageWidth;
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
+- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 
 @end
 
 @interface SBURLFieldUtil : NSObject
 
 + (NSString *)schemeForURLString:(NSString *)urlString;
-
-@end
-
-@interface SBURLTableView : NSTableView
 
 @end

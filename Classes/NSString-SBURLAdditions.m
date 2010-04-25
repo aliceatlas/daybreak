@@ -220,8 +220,8 @@ NSString *SBBytesUnitString = @"bytes";
 - (BOOL)isURLString:(BOOL *)hasScheme 
 {
 	BOOL r = NO;
-	if ([self rangeOfString:@" "].location == NSNotFound && 
-		[self rangeOfString:@"."].location != NSNotFound)
+	if (([self rangeOfString:@" "].location == NSNotFound && [self rangeOfString:@"."].location != NSNotFound) || 
+		[self hasPrefix:@"http://localhost"])
 	{
 		NSString *string = [self URLEncodedString];
 		NSAttributedString *attributedString = [[[NSAttributedString alloc] initWithString:string] autorelease];

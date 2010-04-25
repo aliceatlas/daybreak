@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSImage *backDisableImage;
 	SEL action;
 	BOOL enabled;
-	BOOL _pressed;
+	BOOL pressed;
 	NSString *keyEquivalent;
 	NSUInteger keyEquivalentModifierMask;
 }
@@ -45,12 +45,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, retain) NSImage *backDisableImage;
 @property (nonatomic) SEL action;
 @property (nonatomic) BOOL enabled;
+@property (nonatomic) BOOL pressed;
 @property (nonatomic, retain) NSString *keyEquivalent;
 @property (nonatomic) NSUInteger keyEquivalentModifierMask;
 
 // Setter
 - (void)setToolbarVisible:(BOOL)isToolbarVisible;
 - (void)setEnabled:(BOOL)inEnabled;
+- (void)setPressed:(BOOL)isPressed;
 - (void)setTitle:(NSString *)inTitle;
 // Exec
 - (void)executeAction;

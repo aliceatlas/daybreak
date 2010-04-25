@@ -39,6 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define kSBFlagCreateTabItemWhenLaunched 1
 #define kSBFlagShowRenderWindow 0
 #define kSBCountOfDebugBookmarks 0	/* If more than 0, the bookmarks creates bookmark items for the count. */
+#define kSBURLFieldShowsGoogleSuggest 1
 
 // Versions
 extern NSString *SBBookmarkVersion;
@@ -66,6 +67,7 @@ extern NSString *kSBStringsDocumentTypeName;
 
 // URLs
 extern NSString *kSBUpdaterNewVersionURL;
+extern NSString *kSBGoogleSuggestURL;
 
 // Mail Addresses
 extern NSString *kSBFeedbackMailAddress;
@@ -143,6 +145,7 @@ extern NSString *kSBTitle;
 extern NSString *kSBURL;
 extern NSString *kSBDate;
 extern NSString *kSBImage;
+extern NSString *kSBType;
 
 // Bookmark Key names
 extern NSString *kSBBookmarkVersion;
@@ -177,7 +180,9 @@ extern CGFloat SBBottombarColors[8];
 
 // WebResourcesView
 extern CGFloat SBTableCellColors[4];
+extern CGFloat SBTableGrayCellColors[4];
 extern CGFloat SBTableLightGrayCellColors[4];
+extern CGFloat SBTableDarkGrayCellColors[4];
 extern CGFloat SBSidebarSelectedCellColors[4];
 extern CGFloat SBSidebarTextColors[4];
 
@@ -188,6 +193,14 @@ extern NSString *SBUserAgentNames[];
 // Web schemes
 extern NSInteger SBCountOfSchemes;
 extern NSString *SBSchemes[];
+
+// Type definitions for an URL field completion list item
+enum {
+	kSBURLFieldItemNoneType = 0, 
+	kSBURLFieldItemBookmarkType = 1, 
+	kSBURLFieldItemHistoryType = 2, 
+	kSBURLFieldItemGoogleSuggestType = 3
+};
 
 // Sidebar positions
 typedef enum {

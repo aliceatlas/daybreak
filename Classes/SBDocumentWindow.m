@@ -445,106 +445,134 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)flip:(SBView *)view
 {
-	if (!flipping)
+	if (kSBFlagIsSnowLepard)
 	{
+		if (!flipping)
+		{
+			NSRect r = self.frame;
+			NSRect wr = r;
+			NSRect br = r;
+			CALayer *layer0 = nil;
+			CALayer *layer1 = nil;
+			NSView *contentView = nil;
+			NSPoint margin = NSMakePoint(kSBFlipAnimationRectMargin, kSBFlipAnimationRectMargin);
+			NSPoint d = NSZeroPoint;
+			
+			[CATransaction begin];
+			[CATransaction setValue:[NSNumber numberWithFloat:0.0] forKey:kCATransactionAnimationDuration];
+			[CATransaction setValue:[NSNumber numberWithBool:YES] forKey:kCATransactionDisableActions];
+			
+			flipping = YES;
+			d.x = r.size.width < kSBBackWindowFrameWidth ? (kSBBackWindowFrameWidth - r.size.width) : 0.0;
+			d.y = r.size.height < kSBBackWindowFrameHeight ? (kSBBackWindowFrameHeight - r.size.height) : 0.0;
+			margin.x += d.x;
+			margin.y += d.y;
+			wr.origin.x -= margin.x;
+			wr.origin.y -= margin.y;
+			wr.size.width += margin.x * 2;
+			wr.size.height += margin.y * 2;
+			br.size.width = kSBBackWindowFrameWidth;
+			br.size.height = kSBBackWindowFrameHeight;
+			br.origin.x = self.frame.origin.x + (self.frame.size.width - br.size.width) / 2;
+			br.origin.y = self.frame.origin.y + (self.frame.size.height - br.size.height) / 2;
+			br.size.height -= 23.0;
+			if (flipWindow)
+			{
+				[flipWindow close];
+				flipWindow = nil;
+			}
+			backWindow = [[NSWindow alloc] initWithContentRect:br styleMask:(NSTitledWindowMask | NSClosableWindowMask) backing:NSBackingStoreBuffered defer:YES];
+			flipWindow = [[NSWindow alloc] initWithContentRect:wr styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
+			contentView = [flipWindow contentView];
+			[contentView setWantsLayer:YES];
+			[backWindow setBackgroundColor:[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]]];
+			[flipWindow setOpaque:NO];
+			[flipWindow setBackgroundColor:[NSColor clearColor]];
+			[flipWindow setIgnoresMouseEvents:NO];
+			[flipWindow setHasShadow:YES];
+			[view setFrame:NSMakeRect((br.size.width - view.frame.size.width) / 2, (br.size.height - view.frame.size.height) / 2, view.frame.size.width, view.frame.size.height)];
+			[[backWindow contentView] addSubview:view];
+			layer0 = [CALayer layer];
+			layer1 = [CALayer layer];
+			layer0.frame = CGRectMake(margin.x, margin.y, r.size.width, r.size.height);
+			layer1.frame = CGRectMake(margin.x, margin.y, r.size.width, r.size.height);
+			layer0.shadowOpacity = 0.5;
+			layer0.shadowRadius = 17.5;
+			layer0.shadowOffset = CGSizeMake(0.0, -15.0);
+			layer1.shadowOpacity = 0.5;
+			layer1.shadowRadius = 17.5;
+			layer1.shadowOffset = CGSizeMake(0.0, -15.0);
+			layer0.edgeAntialiasingMask = (kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge);
+			layer1.edgeAntialiasingMask = (kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge);
+			
+			[backWindow setAlphaValue:0.0];
+			[backWindow makeKeyAndOrderFront:nil];
+			
+			[[contentView layer] addSublayer:layer0];
+			[[contentView layer] addSublayer:layer1];
+			[self setFlipContents:0];
+			[self setFlipContents:1];
+			[self flipContents:0 back:NO];
+			[CATransaction commit];
+			
+			[backWindow orderOut:nil];
+			[backWindow setAlphaValue:1.0];
+			
+			[flipWindow orderWindow:NSWindowAbove relativeTo:[self windowNumber]];
+			[self setAlphaValue:0];
+			
+			[self performSelector:@selector(flipToZero) withObject:nil afterDelay:0.0];
+		}
+	}
+	else {
 		NSRect r = self.frame;
-		NSRect wr = r;
 		NSRect br = r;
-		CALayer *layer0 = nil;
-		CALayer *layer1 = nil;
-		NSView *contentView = nil;
-		NSPoint margin = NSMakePoint(kSBFlipAnimationRectMargin, kSBFlipAnimationRectMargin);
-		NSPoint d = NSZeroPoint;
-		
-		[CATransaction begin];
-		[CATransaction setValue:[NSNumber numberWithFloat:0.0] forKey:kCATransactionAnimationDuration];
-		[CATransaction setValue:[NSNumber numberWithBool:YES] forKey:kCATransactionDisableActions];
-		
-		flipping = YES;
-		d.x = r.size.width < kSBBackWindowFrameWidth ? (kSBBackWindowFrameWidth - r.size.width) : 0.0;
-		d.y = r.size.height < kSBBackWindowFrameHeight ? (kSBBackWindowFrameHeight - r.size.height) : 0.0;
-		margin.x += d.x;
-		margin.y += d.y;
-		wr.origin.x -= margin.x;
-		wr.origin.y -= margin.y;
-		wr.size.width += margin.x * 2;
-		wr.size.height += margin.y * 2;
 		br.size.width = kSBBackWindowFrameWidth;
 		br.size.height = kSBBackWindowFrameHeight;
 		br.origin.x = self.frame.origin.x + (self.frame.size.width - br.size.width) / 2;
 		br.origin.y = self.frame.origin.y + (self.frame.size.height - br.size.height) / 2;
 		br.size.height -= 23.0;
-		if (flipWindow)
-		{
-			[flipWindow close];
-			flipWindow = nil;
-		}
 		backWindow = [[NSWindow alloc] initWithContentRect:br styleMask:(NSTitledWindowMask | NSClosableWindowMask) backing:NSBackingStoreBuffered defer:YES];
-		flipWindow = [[NSWindow alloc] initWithContentRect:wr styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES];
-		contentView = [flipWindow contentView];
-		[contentView setWantsLayer:YES];
 		[backWindow setBackgroundColor:[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]]];
-		[flipWindow setOpaque:NO];
-		[flipWindow setBackgroundColor:[NSColor clearColor]];
-		[flipWindow setIgnoresMouseEvents:NO];
-		[flipWindow setHasShadow:YES];
 		[view setFrame:NSMakeRect((br.size.width - view.frame.size.width) / 2, (br.size.height - view.frame.size.height) / 2, view.frame.size.width, view.frame.size.height)];
 		[[backWindow contentView] addSubview:view];
-		layer0 = [CALayer layer];
-		layer1 = [CALayer layer];
-		layer0.frame = CGRectMake(margin.x, margin.y, r.size.width, r.size.height);
-		layer1.frame = CGRectMake(margin.x, margin.y, r.size.width, r.size.height);
-		layer0.shadowOpacity = 0.5;
-		layer0.shadowRadius = 17.5;
-		layer0.shadowOffset = CGSizeMake(0.0, -15.0);
-		layer1.shadowOpacity = 0.5;
-		layer1.shadowRadius = 17.5;
-		layer1.shadowOffset = CGSizeMake(0.0, -15.0);
-		layer0.edgeAntialiasingMask = (kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge);
-		layer1.edgeAntialiasingMask = (kCALayerLeftEdge | kCALayerRightEdge | kCALayerBottomEdge | kCALayerTopEdge);
-		
-		[backWindow setAlphaValue:0.0];
 		[backWindow makeKeyAndOrderFront:nil];
-		
-		[[contentView layer] addSublayer:layer0];
-		[[contentView layer] addSublayer:layer1];
-		[self setFlipContents:0];
-		[self setFlipContents:1];
-		[self flipContents:0 back:NO];
-		[CATransaction commit];
-		
-		[backWindow orderOut:nil];
-		[backWindow setAlphaValue:1.0];
-		
-		[flipWindow orderWindow:NSWindowAbove relativeTo:[self windowNumber]];
 		[self setAlphaValue:0];
-		
-		[self performSelector:@selector(flipToZero) withObject:nil afterDelay:0.0];
-		
 	}
 }
 
 - (void)doneFlip
 {
-	NSPoint cp = NSZeroPoint;
-	NSRect fr = flipWindow.frame;
-	NSRect r = self.frame;
-	cp.x = NSMidX(backWindow.frame);
-	cp.y = NSMidY(backWindow.frame);
-	fr.origin.x = cp.x - fr.size.width / 2;
-	fr.origin.y = cp.y - fr.size.height / 2;
-	r.origin.x = cp.x - r.size.width / 2;
-	r.origin.y = cp.y - r.size.height / 2;
-	[self setFlipContents:1];
-	[flipWindow setFrame:fr display:NO];
-	[self setFrame:r display:NO];
-	[flipWindow orderFront:nil];
-	if (backWindow)
+	if (kSBFlagIsSnowLepard)
 	{
-		[backWindow close];
-		backWindow = nil;
+		NSPoint cp = NSZeroPoint;
+		NSRect fr = flipWindow.frame;
+		NSRect r = self.frame;
+		cp.x = NSMidX(backWindow.frame);
+		cp.y = NSMidY(backWindow.frame);
+		fr.origin.x = cp.x - fr.size.width / 2;
+		fr.origin.y = cp.y - fr.size.height / 2;
+		r.origin.x = cp.x - r.size.width / 2;
+		r.origin.y = cp.y - r.size.height / 2;
+		[self setFlipContents:1];
+		[flipWindow setFrame:fr display:NO];
+		[self setFrame:r display:NO];
+		[flipWindow orderFront:nil];
+		if (backWindow)
+		{
+			[backWindow close];
+			backWindow = nil;
+		}
+		[self performSelector:@selector(doneFlipToZero) withObject:nil afterDelay:0.0];
 	}
-	[self performSelector:@selector(doneFlipToZero) withObject:nil afterDelay:0.0];
+	else {
+		if (backWindow)
+		{
+			[backWindow close];
+			backWindow = nil;
+		}
+		[self setAlphaValue:1];
+	}
 }
 
 - (void)flipToZero

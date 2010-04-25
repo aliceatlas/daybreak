@@ -349,8 +349,17 @@
 		NSDictionary *attributes = nil;
 		NSSize size = NSZeroSize;
 		NSMutableParagraphStyle *paragraph = nil;
+		BOOL iconed = NO;
+		NSPoint transformScale = NSZeroPoint;
 		
-		if (mode == SBBookmarkIconMode)
+		if ([self.superview respondsToSelector:@selector(transformScale)])
+			transformScale = [(SBBookmarkListView *)self.superview transformScale];
+		if (NSEqualPoints(transformScale, NSZeroPoint))
+			iconed = mode == SBBookmarkIconMode;
+		else
+			iconed = (transformScale.x / transformScale.y) > (bounds.size.width / bounds.size.height);
+		
+		if (iconed)
 		{
 			CGFloat titleHeight = [self titleHeight];
 			
@@ -496,7 +505,7 @@
 				[urlString drawInRect:r withAttributes:attributes];
 			}
 		}
-		else if (mode == SBBookmarkListMode)
+		else
 		{
 			NSRect imageRect = NSZeroRect;
 			NSRect titleRect = NSZeroRect;

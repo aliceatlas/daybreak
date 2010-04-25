@@ -24,6 +24,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBHistoryView.h"
 #import "SBHistory.h"
+#import "SBTableCell.h"
 #import "SBURLField.h"
 
 #define kSBMinFrameSizeWidth 480
@@ -357,6 +358,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	dateColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBDate] autorelease];
 	iconCell = [[[SBIconDataCell alloc] init] autorelease];
 	textCell = [[[NSCell alloc] init] autorelease];
+	iconCell.drawsBackground = NO;
 	[iconColumn setWidth:22.0];
 	[iconColumn setDataCell:iconCell];
 	[iconColumn setEditable:NO];
@@ -454,8 +456,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)search:(id)sender
 {
-	NSString *string = nil;
-	if (string = [searchField stringValue])
+	NSString *string = [searchField stringValue];
+	if ([string length] > 0)
 	{
 		[self updateItems];
 		[tableView reloadData];

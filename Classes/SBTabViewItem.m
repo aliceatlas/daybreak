@@ -1343,9 +1343,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)addResourceIdentifier:(SBWebResourceIdentifier *)identifier
 {
 	BOOL r = NO;
+	BOOL contains = NO;
 	if (!resourceIdentifiers)
 		resourceIdentifiers = [[NSMutableArray alloc] initWithCapacity:0];
-	if (![resourceIdentifiers containsObject:identifier])
+	for (SBWebResourceIdentifier *anIdentifier in resourceIdentifiers)
+	{
+		if ([anIdentifier.request isEqualTo:identifier.request])
+		{
+			DebugLog(@"%s conatins request %@", __func__, anIdentifier.request);
+			contains = YES;
+			break;
+		}
+	}
+	if (!contains)
 	{
 		[resourceIdentifiers addObject:identifier];
 		r = YES;

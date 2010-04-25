@@ -31,9 +31,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBUtil.h"
 
 #define SBURLFieldRowCount 3
+#define SBURLFieldMaxRowCount 20
 #define SBURLFieldRowHeight 20
 #define SBURLFieldRoundedCurve SBFieldRoundedCurve
-#define SBURLFieldSheetPaddingBottom 10
+#define SBURLFieldSheetPadding 10
+#define kSBURLFieldSectionHeight 18.0
 
 @implementation SBURLField
 
@@ -48,6 +50,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize delegate;
 @dynamic image;
 @dynamic stringValue;
+@synthesize gsItems;
+@synthesize bmItems;
+@synthesize hItems;
 @synthesize items;
 @dynamic enabledBackward;
 @dynamic enabledForward;
@@ -81,6 +86,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[contentView release];
 	dataSource = nil;
 	delegate = nil;
+	[gsItems release];
+	[bmItems release];
+	[hItems release];
 	[items release];
 	[super dealloc];
 }
@@ -97,8 +105,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (CGFloat)sheetHeight
 {
-	NSInteger rowCount = (([items count] < 10) ? [items count] : 10);
-	return SBURLFieldRowHeight * rowCount + SBURLFieldSheetPaddingBottom;
+	NSInteger rowCount = (([items count] < SBURLFieldMaxRowCount) ? [items count] : SBURLFieldMaxRowCount);
+	return SBURLFieldRowHeight * rowCount + SBURLFieldSheetPadding * 2;
 }
 
 - (NSRect)appearedSheetRect
@@ -107,12 +115,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect bounds = [self bounds];
 	NSRect frame = [self frame];
 	NSPoint position = NSZeroPoint;
+	CGFloat buttonWidth = [self buttonWidth];
+	CGFloat goButtonWidth = [self goButtonWidth];
 	
-	r.size.width = bounds.size.width;
+	r.size.width = bounds.size.width - buttonWidth * 2 - goButtonWidth;
 	r.size.height = [self sheetHeight];
 	position = [(SBToolbar *)[[self window] toolbar] itemRectInScreenForIdentifier:kSBToolbarURLFieldItemIdentifier].origin;
 	r.origin.x = frame.origin.x + position.x;
 	r.origin.y = frame.origin.y + position.y;
+	r.origin.x = r.origin.x + buttonWidth * 2;
 	r.origin.y = r.origin.y - r.size.height + 1;
 	return r;
 }
@@ -189,7 +200,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (CGFloat)imageWidth
 {
-	return 22.0;
+	return 18.0;
 }
 
 - (NSRect)backwardRect
@@ -324,6 +335,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	contentRect.size = sheetRect.size;
 	items = [[NSMutableArray alloc] initWithCapacity:0];
+	gsItems = [[NSMutableArray alloc] initWithCapacity:0];
+	bmItems = [[NSMutableArray alloc] initWithCapacity:0];
+	hItems = [[NSMutableArray alloc] initWithCapacity:0];
 	sheet = [[SBURLFieldSheet alloc] initWithContentRect:sheetRect styleMask:(NSBorderlessWindowMask | NSNonactivatingPanelMask) backing:NSBackingStoreBuffered defer:YES];
 	contentView = [[SBURLFieldContentView alloc] initWithFrame:contentRect];
 	[sheet setAlphaValue:[[self window] alphaValue]];
@@ -333,9 +347,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[sheet setContentView:contentView];
 }
 
-- (void)tableViewDidDoubleAction:(NSTableView *)tableView
+- (void)tableViewDidSingleAction:(NSTableView *)tableView
 {
-	if ([tableView selectedRow] != -1)
+	NSInteger rowIndex = [tableView selectedRow];
+	if (rowIndex > -1 && [self canSelectIndex:rowIndex])
 	{
 		[contentView pushSelectedItem];
 		[self disappearSheet];
@@ -343,11 +358,45 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
+- (BOOL)canSelectIndex:(NSInteger)index
+{
+	BOOL can = NO;
+	BOOL matchIndex = NO;
+	NSUInteger gscount = [gsItems count];
+	NSUInteger bmcount = [bmItems count];
+	NSUInteger hcount = [hItems count];
+	if (gscount == 0 && bmcount == 0 && hcount == 0)
+	{
+		
+	}
+	else if ((gscount > 0 && bmcount == 0 && hcount == 0) || 
+			 (gscount == 0 && bmcount > 0 && hcount == 0) || 
+			 (gscount == 0 && bmcount == 0 && hcount > 0))
+	{
+		matchIndex = index == 0;
+	}
+	else if (gscount > 0 && bmcount > 0 && hcount == 0)
+	{
+		matchIndex = (index == 0) || (index == gscount);
+	}
+	else if (gscount == 0 && bmcount > 0 && hcount > 0)
+	{
+		matchIndex = (index == 0) || (index == hcount);
+	}
+	else if (gscount > 0 && bmcount > 0 && hcount > 0)
+	{
+		matchIndex = (index == 0) || (index == gscount) || (index == gscount + bmcount);
+	}
+	can = !matchIndex;
+	return can;
+}
+
 #pragma mark Delegate
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
-	if ([[aNotification object] selectedRow] != -1)
+	NSInteger rowIndex = [[aNotification object] selectedRow];
+	if (rowIndex > -1 && [self canSelectIndex:rowIndex])
 	{
 		[contentView pushSelectedItem];
 	}
@@ -356,6 +405,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)tableViewSelectionIsChanging:(NSNotification *)aNotification
 {
 	[contentView setNeedsDisplay:YES];	// Keep drawing background
+}
+
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
+{
+	return [self canSelectIndex:rowIndex];
+}
+
+- (NSIndexSet *)tableView:(NSTableView *)tableView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes
+{
+	NSIndexSet *indexes = nil;
+	NSInteger index = [proposedSelectionIndexes firstIndex];	// because single selection
+	BOOL canSelect = [self canSelectIndex:index];
+	if (canSelect)
+		indexes = proposedSelectionIndexes;
+	return indexes;
+}
+
+- (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row
+{
+	return kSBURLFieldSectionHeight;
 }
 
 - (void)controlTextDidBeginEditing:(NSNotification *)aNotification
@@ -392,19 +461,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	else {
 		// Get items from Bookmarks and History items
 		[self executeTextDidChange];
-		if ([items count] > 0)
-		{
-			if (!_isOpenSheet)
-			{
-				[self appearSheet];
-			}
-			[self reloadData];
-			[self adjustSheet];
-			[contentView deselectRow];
-		}
-		else {
-			[self disappearSheet];
-		}
+		[self appearSheetIfNeeded:NO];
 	}
 }
 
@@ -453,6 +510,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark DataSource
 
+// <# coding #>
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
 	return [items count];
@@ -465,51 +523,86 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSDictionary *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
 	if ([identifier isEqual:kSBURL])
 	{
+		NSInteger type = [[item objectForKey:kSBType] integerValue];
 		NSString *title = item ? [item objectForKey:kSBTitle] : nil;
-		object = item ? [item objectForKey:kSBURL] : nil;
-		if (title)
-			object = [title stringByAppendingFormat:@" - %@", object];
+		if (type == kSBURLFieldItemNoneType)
+		{
+			object = title;
+		}
+		else if (type == kSBURLFieldItemGoogleSuggestType)
+		{
+			object = title;
+		}
+		else if (type == kSBURLFieldItemBookmarkType || 
+				 type == kSBURLFieldItemHistoryType)
+		{
+			object = item ? [item objectForKey:kSBURL] : nil;
+			if (title)
+				object = title;
+		}
 	}
 	return object;
 }
 
-//<# writing #>
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
 	NSString *identifier = [aTableColumn identifier];
 	NSDictionary *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
-	BOOL selection = [[aTableView selectedRowIndexes] containsIndex:rowIndex];
-	NSColor *backgroundColor = nil; 
-	if (selection)
-		backgroundColor = [NSColor redColor];
-	else
-		backgroundColor = [NSColor grayColor];
-	if ([identifier isEqualToString:kSBImage])
+	NSInteger type = [[item objectForKey:kSBType] integerValue];
+	if ([identifier isEqualToString:kSBURL])
 	{
-		NSData *data = item ? [item objectForKey:kSBImage] : nil;
+		NSString *string = nil;
+		NSString *title = item ? [item objectForKey:kSBTitle] : nil;
+		NSData *data = nil;
 		NSImage *image = nil;
-		if (data)
+		BOOL separator = NO;
+		BOOL sectionHeader = NO;
+		BOOL drawsImage = YES;
+		if (type == kSBURLFieldItemNoneType)
 		{
-			image = [[[NSImage alloc] initWithData:data] autorelease];
-			[image setSize:NSMakeSize(16.0, 16.0)];
+			data = item ? [item objectForKey:kSBImage] : nil;
+			if (data)
+			{
+				image = [[[NSImage alloc] initWithData:data] autorelease];
+				[image setSize:NSMakeSize(16.0, 16.0)];
+			}
+			string = title;
+			separator = rowIndex > 0;
+			sectionHeader = YES;
 		}
+		else if (type == kSBURLFieldItemGoogleSuggestType)
+		{
+			string = title;
+			drawsImage = NO;
+		}
+		else if (type == kSBURLFieldItemBookmarkType || 
+				 type == kSBURLFieldItemHistoryType)
+		{
+			data = item ? [item objectForKey:kSBImage] : nil;
+			if (data)
+			{
+				image = [[[NSImage alloc] initWithData:data] autorelease];
+				[image setSize:NSMakeSize(16.0, 16.0)];
+			}
+			string = item ? [item objectForKey:kSBURL] : nil;
+			if (title)
+				string = title;
+		}
+		[aCell setSeparator:separator];
+		[aCell setSectionHeader:sectionHeader];
+		[aCell setDrawsImage:drawsImage];
 		if (image)
 		{
 			[aCell setImage:image];
 		}
-	}
-	else if ([identifier isEqualToString:kSBURL])
-	{
-		NSString *title = item ? [item objectForKey:kSBTitle] : nil;
-		NSString *string = item ? [item objectForKey:kSBURL] : nil;
-		if (title)
-			string = [title stringByAppendingFormat:@" - %@", string];
+		else {
+			[aCell setImage:nil];
+		}
 		if (string)
 		{
 			[aCell setObjectValue:string];
 		}
 	}
-//	[aCell setBackgroundColor:backgroundColor];
 }
 
 #pragma mark Setter
@@ -654,6 +747,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[contentView adjustTable];
 }
 
+- (void)appearSheetIfNeeded:(BOOL)closable
+{
+	if ([items count] > 0)
+	{
+		if (!_isOpenSheet)
+		{
+			[self appearSheet];
+		}
+		[self reloadData];
+		[self adjustSheet];
+		[contentView deselectRow];
+	}
+	else {
+		if (closable)
+		{
+			[self disappearSheet];
+		}
+	}
+}
+
 - (void)appearSheet
 {
 	if (![sheet isVisible])
@@ -682,21 +795,31 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)selectRowAbove
 {
-	[contentView selectRowAbove];
+	NSInteger rowIndex = [contentView selectedRowIndex];
+	do {
+		rowIndex--;
+	}
+	while (![self canSelectIndex:rowIndex]);
+	if (rowIndex < 1)
+		rowIndex = [items count] - 1;
+	[contentView selectRow:rowIndex];
 }
 
 - (void)selectRowBelow
 {
-	[contentView selectRowBelow];
-}
-
-- (BOOL)selectRow
-{
-	return [contentView selectRow];
+	NSInteger rowIndex = [contentView selectedRowIndex];
+	do {
+		rowIndex++;
+	}
+	while (![self canSelectIndex:rowIndex]);
+	if (rowIndex >= [items count])
+		rowIndex = 1;
+	[contentView selectRow:rowIndex];
 }
 
 - (void)reloadData
 {
+	[self adjustSheet];
 	[contentView reloadData];
 }
 
@@ -849,91 +972,46 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)drawRect:(NSRect)rect
 {
-	if (_isOpenSheet)
-	{
-		CGRect r = CGRectZero;
-		CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
-		CGPathRef path = nil;
-		
-		r = NSRectToCGRect(self.bounds);
-		path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, NO);
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetRGBFillColor(ctx, 1.0, 1.0, 1.0, 1.0);
-		CGContextFillPath(ctx);
-		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
-		
-		r = NSRectToCGRect(self.bounds);
-		r.origin.x += 0.5;
-		r.origin.y += 3.0;
-		r.size.width -= 1.0;
-		r.size.height -= 4.5;
-		path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, NO);
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetLineWidth(ctx, 1.0);
-		CGContextSetRGBStrokeColor(ctx, 0.75, 0.75, 0.75, 1.0);
-		CGContextStrokePath(ctx);
-		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
-		
-		r = NSRectToCGRect(self.bounds);
-		r.origin.x += 0.5;
-		r.origin.y += 0.5;
-		r.size.width -= 1.0;
-		r.size.height -= 1.0;
-		path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, NO);
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetLineWidth(ctx, 0.5);
-		CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 1.0);
-		CGContextStrokePath(ctx);
-		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
-	}
-	else {
-		CGRect r = CGRectZero;
-		CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
-		CGPathRef path = nil;
-		
-		r = NSRectToCGRect(self.bounds);
-		path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, YES);
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetRGBFillColor(ctx, 1.0, 1.0, 1.0, 1.0);
-		CGContextFillPath(ctx);
-		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
-		
-		r = NSRectToCGRect(self.bounds);
-		r.origin.x += 0.5;
-		r.origin.y += 3.0;
-		r.size.width -= 1.0;
-		r.size.height -= 4.5;
-		path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, NO);
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetLineWidth(ctx, 1.0);
-		CGContextSetRGBStrokeColor(ctx, 0.75, 0.75, 0.75, 1.0);
-		CGContextStrokePath(ctx);
-		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
-		
-		r = NSRectToCGRect(self.bounds);
-		r.origin.x += 0.5;
-		r.origin.y += 0.5;
-		r.size.width -= 1.0;
-		r.size.height -= 1.0;
-		path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, YES);
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetLineWidth(ctx, 0.5);
-		CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 1.0);
-		CGContextStrokePath(ctx);
-		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
-	}
+	CGRect r = CGRectZero;
+	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGPathRef path = nil;
+	
+	r = NSRectToCGRect(self.bounds);
+	path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, YES);
+	CGContextSaveGState(ctx);
+	CGContextAddPath(ctx, path);
+	CGContextSetRGBFillColor(ctx, 1.0, 1.0, 1.0, 1.0);
+	CGContextFillPath(ctx);
+	CGContextRestoreGState(ctx);
+	CGPathRelease(path);
+	
+	r = NSRectToCGRect(self.bounds);
+	r.origin.x += 0.5;
+	r.origin.y += 3.0;
+	r.size.width -= 1.0;
+	r.size.height -= 4.5;
+	path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, NO);
+	CGContextSaveGState(ctx);
+	CGContextAddPath(ctx, path);
+	CGContextSetLineWidth(ctx, 1.0);
+	CGContextSetRGBStrokeColor(ctx, 0.75, 0.75, 0.75, 1.0);
+	CGContextStrokePath(ctx);
+	CGContextRestoreGState(ctx);
+	CGPathRelease(path);
+	
+	r = NSRectToCGRect(self.bounds);
+	r.origin.x += 0.5;
+	r.origin.y += 0.5;
+	r.size.width -= 1.0;
+	r.size.height -= 1.0;
+	path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, YES);
+	CGContextSaveGState(ctx);
+	CGContextAddPath(ctx, path);
+	CGContextSetLineWidth(ctx, 0.5);
+	CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 1.0);
+	CGContextStrokePath(ctx);
+	CGContextRestoreGState(ctx);
+	CGPathRelease(path);
 }
 
 - (void)resizeWithOldSuperviewSize:(NSSize)oldBoundsSize
@@ -1110,13 +1188,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (BOOL)becomeFirstResponder
 {
-	// self through NSControlTextDidBeginEditingNotification
-	[[NSNotificationCenter defaultCenter] postNotificationName:NSControlTextDidBeginEditingNotification object:self];
+	[self selectText:nil];
 	return YES;
 }
 
 - (BOOL)resignFirstResponder
 {
+	[self.field disappearSheet];
 	[self.field executeWillResignFirstResponder];
 	return YES;
 }
@@ -1218,6 +1296,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @implementation SBURLFieldContentView
 
 @dynamic field;
+@dynamic selectedRowIndex;
 
 - (id)initWithFrame:(NSRect)rect
 {
@@ -1248,15 +1327,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return aField;
 }
 
+- (NSUInteger)selectedRowIndex
+{
+	return [_table selectedRow];
+}
+
 #pragma mark Construction
 
-// <# coding #>
 - (void)constructTable
 {
-	NSTableColumn *iconColumn = nil;
-	NSTableColumn *nameColumn = nil;
-	SBIconDataCell *iconCell = nil;
-	SBTableCell *nameCell = nil;
+	NSTableColumn *column = nil;
+	SBURLFieldDataCell *cell = nil;
 	NSRect bounds = [self bounds];
 	NSRect scrollerRect = NSZeroRect;
 	NSRect tableRect = NSZeroRect;
@@ -1266,29 +1347,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	scrollerRect.origin.y = bounds.size.height - scrollerRect.size.height;
 	tableRect.size = scrollerRect.size;
 	_scroller = [[SBBLKGUIScrollView alloc] initWithFrame:scrollerRect];
-	_table = [[SBURLTableView alloc] initWithFrame:tableRect];
-	iconColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBImage] autorelease];
-	nameColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBURL] autorelease];
-	iconCell = [[[SBIconDataCell alloc] init] autorelease];
-	nameCell = [[[SBTableCell alloc] init] autorelease];
-	[nameCell setFont:[NSFont systemFontOfSize:12.0]];
-	[nameCell setShowRoundedPath:YES];
-	[nameCell setAlignment:NSLeftTextAlignment];
-	[nameCell setStyle:SBTableCellWhiteStyle];
-	[iconColumn setWidth:22.0];
-	[iconColumn setDataCell:iconCell];
-	[iconColumn setEditable:NO];
-	[nameColumn setWidth:bounds.size.width - 22.0];
-	[nameColumn setDataCell:nameCell];
-	[nameColumn setEditable:NO];
+	_table = [[NSTableView alloc] initWithFrame:tableRect];
+	column = [[[NSTableColumn alloc] initWithIdentifier:kSBURL] autorelease];
+	cell = [[[SBURLFieldDataCell alloc] init] autorelease];
+	[cell setFont:[NSFont systemFontOfSize:12.0]];
+	[cell setAlignment:NSLeftTextAlignment];
+	[column setDataCell:cell];
+	[column setEditable:NO];
+	[column setWidth:bounds.size.width];
 	[_table setBackgroundColor:[NSColor clearColor]];
 	[_table setRowHeight:SBURLFieldRowHeight - 2];
-	[_table addTableColumn:iconColumn];
-	[_table addTableColumn:nameColumn];
+	[_table addTableColumn:column];
 	[_table setAllowsMultipleSelection:NO];
 	[_table setAllowsColumnSelection:NO];
 	[_table setAllowsEmptySelection:YES];
-	[_table setDoubleAction:@selector(tableViewDidDoubleAction:)];
+	[_table setAction:@selector(tableViewDidSingleAction:)];
 	[_table setColumnAutoresizingStyle:NSTableViewLastColumnOnlyAutoresizingStyle];
 	[_table setHeaderView:nil];
 	[_table setCornerView:nil];
@@ -1323,62 +1396,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect bounds = [self bounds];
 	NSRect scrollerRect = [_scroller frame];
 	NSRect tableRect = [_table frame];
-	NSInteger rowCount = (([_table numberOfRows] < 10) ? [_table numberOfRows] : 10);
+	NSInteger numberOfRows = [[_table dataSource] numberOfRowsInTableView:_table];
+	NSInteger rowCount = ((numberOfRows < SBURLFieldMaxRowCount) ? numberOfRows : SBURLFieldMaxRowCount);
 	scrollerRect.size.width = bounds.size.width - 2;
 	scrollerRect.size.height = SBURLFieldRowHeight * rowCount;
-	scrollerRect.origin.y = SBURLFieldSheetPaddingBottom;
+	scrollerRect.origin.y = SBURLFieldSheetPadding;
 	tableRect.size.width = scrollerRect.size.width;
 	[_scroller setFrame:scrollerRect];
 	[_table setFrame:tableRect];
 }
 
-- (void)selectRowAbove
+- (BOOL)selectRow:(NSUInteger)rowIndex
 {
-	NSInteger rowIndex = [_table selectedRow];
-	if (rowIndex == 0)
-	{
-		[self.field disappearSheet];
-	}
-	else {
-		rowIndex--;
-		[_table selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
-		[_table scrollRowToVisible:rowIndex];
-	}
-	if ([self selectRow])
-	{
-		[_table scrollRowToVisible:rowIndex];
-	}
-}
-
-- (void)selectRowBelow
-{
-	NSInteger rowIndex = [_table selectedRow];
-	if (rowIndex == [_table numberOfRows] - 1)
-	{
-		[_table selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-	}
-	else {
-		rowIndex++;
-		[_table selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
-	}
-	if ([self selectRow])
-	{
-		[_table scrollRowToVisible:rowIndex];
-	}
-}
-
-- (BOOL)selectRow
-{
-	BOOL r = YES;
-	NSInteger rowIndex = [_table selectedRow];
-	if (rowIndex != -1)
-	{
-		[self pushItemAtIndex:rowIndex];
-	}
-	else {
-		r = NO;
-	}
-	return r;
+	[_table selectRowIndexes:[NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:NO];
+	[_table scrollRowToVisible:rowIndex];
+	return [self pushItemAtIndex:rowIndex];
 }
 
 - (void)deselectRow
@@ -1400,86 +1432,187 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self pushItemAtIndex:rowIndex];
 }
 
-- (void)pushItemAtIndex:(NSInteger)index
+- (BOOL)pushItemAtIndex:(NSInteger)index
 {
+	BOOL r = NO;
 	SBURLField *field = self.field;
 	if (index < [[field items] count])
 	{
 		NSDictionary *selectedItem = [[field items] objectAtIndex:index];
-		NSString *URLString = [selectedItem objectForKey:kSBURL];
-		if (![URLString isEqualToString:[field stringValue]])
+		NSInteger type = [[selectedItem objectForKey:kSBType] integerValue];
+		if (type == kSBURLFieldItemGoogleSuggestType)
 		{
-			NSData *data = [selectedItem objectForKey:kSBImage];
-			NSImage *icon = [[[NSImage alloc] initWithData:data] autorelease];
-			[field setURLString:URLString];
-			[field setImage:icon];
+			NSString *title = [selectedItem objectForKey:kSBTitle];
+			[field setURLString:title];
+			r = YES;
+		}
+		else
+		{
+			NSString *URLString = [selectedItem objectForKey:kSBURL];
+			if (![URLString isEqualToString:[field stringValue]])
+			{
+				NSData *data = [selectedItem objectForKey:kSBImage];
+				NSImage *icon = [[[NSImage alloc] initWithData:data] autorelease];
+				[field setURLString:URLString];
+				[field setImage:icon];
+				r = YES;
+			}
 		}
 	}
+	return r;
 }
 
 #pragma mark Drawing
 
 - (void)drawRect:(NSRect)rect
 {
-	if (rect.size.width == [self bounds].size.width)
+	NSRect b = [self bounds];
+	CGRect r = NSRectToCGRect(b);
+	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGPathRef path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, NO, YES);
+	NSUInteger count = 4;
+	CGFloat locations[count];
+	CGFloat colors[count * 4];
+	CGPoint points[2];
+	locations[0] = 0.0;
+	locations[1] = SBURLFieldSheetPadding / b.size.height;
+	locations[2] = (b.size.height - SBURLFieldSheetPadding) / b.size.height;
+	locations[3] = 1.0;
+	colors[0] = SBTableGrayCellColors[0];
+	colors[1] = SBTableGrayCellColors[1];
+	colors[2] = SBTableGrayCellColors[2];
+	colors[3] = SBTableGrayCellColors[3];
+	colors[4] = SBTableLightGrayCellColors[0];
+	colors[5] = SBTableLightGrayCellColors[1];
+	colors[6] = SBTableLightGrayCellColors[2];
+	colors[7] = SBTableLightGrayCellColors[3];
+	colors[8] = SBTableLightGrayCellColors[0];
+	colors[9] = SBTableLightGrayCellColors[1];
+	colors[10] = SBTableLightGrayCellColors[2];
+	colors[11] = SBTableLightGrayCellColors[3];
+	colors[12] = 1.0;
+	colors[13] = 1.0;
+	colors[14] = 1.0;
+	colors[15] = 1.0;
+	points[0] = CGPointMake(0.0, b.origin.y);
+	points[1] = CGPointMake(0.0, NSMaxY(b));
+	
+	CGContextSaveGState(ctx);
+	CGContextAddPath(ctx, path);
+	CGContextClip(ctx);
+	SBDrawGradientInContext(ctx, count, locations, colors, points);
+	CGContextRestoreGState(ctx);
+	CGPathRelease(path);
+	
+	r.origin.x += 0.5;
+	r.origin.y += 0.5;
+	r.size.width -= 1.0;
+	path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, NO, YES);
+	CGContextSaveGState(ctx);
+	CGContextAddPath(ctx, path);
+	CGContextSetLineWidth(ctx, 0.5);
+	CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 1.0);
+	CGContextStrokePath(ctx);
+	CGContextRestoreGState(ctx);
+	CGPathRelease(path);
+}
+
+@end
+
+@implementation SBURLFieldDataCell
+
+@synthesize separator;
+@synthesize sectionHeader;
+@synthesize drawsImage;
+
+- (id)init
+{
+	if (self = [super init])
 	{
-		CGRect r = NSRectToCGRect(rect);
+		separator = NO;
+		sectionHeader = NO;
+		drawsImage = YES;
+		[self setAlignment:NSLeftTextAlignment];
+	}
+	return self;
+}
+
+- (CGFloat)side
+{
+	return 5.0;
+}
+
+- (CGFloat)leftMargin
+{
+	return sectionHeader ? 0.0 : 15.0;
+}
+
+- (CGFloat)imageWidth
+{
+	return drawsImage ? 20.0 : 0.0;
+}
+
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	[self drawInteriorWithFrame:cellFrame inView:controlView];
+	[self drawImageWithFrame:cellFrame inView:controlView];
+	[self drawTitleWithFrame:cellFrame inView:controlView];
+}
+
+- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	CGFloat backgroundColors[4];
+	CGFloat cellColors[4];
+	CGFloat selectedCellColors[4];
+	NSColor *selectedColor = [[NSColor alternateSelectedControlColor] colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+	CGFloat leftMargin = [self side] + [self leftMargin];
+	NSRect r = NSZeroRect;
+	
+	r = cellFrame;
+	r.origin.x += leftMargin;
+	r.size.width -= leftMargin;
+	memcpy(backgroundColors, SBBackgroundLightGrayColors, sizeof(SBBackgroundLightGrayColors));
+	memcpy(cellColors, SBTableLightGrayCellColors, sizeof(SBTableLightGrayCellColors));
+	[selectedColor getComponents:selectedCellColors];
+	[[NSColor colorWithCalibratedRed:backgroundColors[0] green:backgroundColors[1] blue:backgroundColors[2] alpha:backgroundColors[3]] set];
+	NSRectFill(r);
+	[[NSColor colorWithCalibratedRed:cellColors[0] green:cellColors[1] blue:cellColors[2] alpha:cellColors[3]] set];
+	NSRectFill(cellFrame);
+	if ([self isHighlighted])
+	{
 		CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
-		CGPathRef path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, NO, YES);
+		CGRect r = CGRectZero;
+		CGPathRef path = nil;
+		CGFloat components1[4];
+		CGFloat components2[4];
 		NSUInteger count = 2;
 		CGFloat locations[count];
 		CGFloat colors[count * 4];
 		CGPoint points[2];
-		locations[0] = 0.03;
-		locations[1] = 0.0;
-		colors[0] = SBTableLightGrayCellColors[0];
-		colors[1] = SBTableLightGrayCellColors[1];
-		colors[2] = SBTableLightGrayCellColors[2];
-		colors[3] = SBTableLightGrayCellColors[3];
-		colors[4] = 0.7;
-		colors[5] = 0.7;
-		colors[6] = 0.7;
-		colors[7] = 1.0;
-		points[0] = CGPointMake(0.0, rect.origin.y);
-		points[1] = CGPointMake(0.0, NSMaxY(rect));
-		
+		r = NSRectToCGRect(cellFrame);
+		path = SBRoundedPath(CGRectInset(r, 1.0, 1.0), (r.size.height - 1.0 * 2) / 2, 0.0, YES, YES);
+		SBGetAlternateSelectedLightControlColorComponents(components1);
+		SBGetAlternateSelectedControlColorComponents(components2);
+		locations[0] = 0.0;
+		locations[1] = 1.0;
+		colors[0] = components1[0];
+		colors[1] = components1[1];
+		colors[2] = components1[2];
+		colors[3] = components1[3];
+		colors[4] = components2[0];
+		colors[5] = components2[1];
+		colors[6] = components2[2];
+		colors[7] = components2[3];
+		colors[8] = components2[0];
+		points[0] = CGPointMake(0.0, r.origin.y);
+		points[1] = CGPointMake(0.0, CGRectGetMaxY(r));
 		CGContextSaveGState(ctx);
 		CGContextAddPath(ctx, path);
 		CGContextClip(ctx);
 		SBDrawGradientInContext(ctx, count, locations, colors, points);
 		CGContextRestoreGState(ctx);
 		CGPathRelease(path);
-		
-		r.origin.x += 0.5;
-		r.origin.y += 0.5;
-		r.size.width -= 1.0;
-		path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, NO, YES);
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetLineWidth(ctx, 0.5);
-		CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 1.0);
-		CGContextStrokePath(ctx);
-		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
 	}
-}
-
-@end
-
-@implementation SBIconDataCell
-
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	[self drawInteriorWithFrame:cellFrame inView:controlView];
-	[self drawImageWithFrame:cellFrame inView:controlView];
-}
-
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	[[NSColor colorWithCalibratedRed:SBBackgroundLightGrayColors[0] green:SBBackgroundLightGrayColors[1] blue:SBBackgroundLightGrayColors[2] alpha:SBBackgroundLightGrayColors[3]] set];
-	NSRectFill(cellFrame);
-	[[NSColor colorWithCalibratedRed:SBTableLightGrayCellColors[0] green:SBTableLightGrayCellColors[1] blue:SBTableLightGrayCellColors[2] alpha:SBTableLightGrayCellColors[3]] set];
-	NSRectFill(NSInsetRect(cellFrame, 0.0, 0.5));
 }
 
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
@@ -1490,9 +1623,78 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSRect r = NSZeroRect;
 		[image setFlipped:YES];
 		r.size = [image size];
-		r.origin.x = cellFrame.origin.x + (cellFrame.size.width - r.size.width) / 2;
+		r.origin.x = cellFrame.origin.x + [self side] + [self leftMargin] + ([self imageWidth] - r.size.width) / 2;
 		r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
 		[image drawInRect:r fromRect:NSMakeRect(0, 0, r.size.width, r.size.height) operation:NSCompositeSourceOver fraction:1.0];
+	}
+}
+
+- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	NSString *title = nil;
+	CGFloat textColors[4];
+	NSColor *sTextColor = nil;
+	
+	title = [self title];
+	
+	if ([title length] > 0)
+	{
+		NSSize size = NSZeroSize;
+		NSColor *color = nil;
+		NSFont *font = nil;
+		NSDictionary *attribute = nil;
+		NSDictionary *sattribute = nil;
+		NSRect r = NSZeroRect;
+		NSRect sr = NSZeroRect;
+		NSMutableParagraphStyle *paragraphStyle = nil;
+		CGFloat imageWidth = [self imageWidth] + [self side] + [self leftMargin];
+		NSRect titleRect = NSMakeRect(cellFrame.origin.x + imageWidth, cellFrame.origin.y, cellFrame.size.width - imageWidth, cellFrame.size.height);
+		CGFloat side = [self side];
+		NSColor *textColor = [(sectionHeader ? [NSColor colorWithCalibratedRed:SBTableDarkGrayCellColors[0] green:SBTableDarkGrayCellColors[1] blue:SBTableDarkGrayCellColors[2] alpha:SBTableDarkGrayCellColors[3]] : [NSColor blackColor]) colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+		
+		[textColor getComponents:textColors];
+		sTextColor = [self isHighlighted] ? [NSColor clearColor] : [NSColor whiteColor];
+		color = [self isHighlighted] ? [NSColor whiteColor] : [NSColor colorWithCalibratedRed:textColors[0] green:textColors[1] blue:textColors[2] alpha:textColors[3]];
+		font = [NSFont systemFontOfSize:sectionHeader ? 11.0 : 12.0];
+		paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+		[paragraphStyle setLineBreakMode:NSLineBreakByTruncatingTail];
+		attribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
+		sattribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, sTextColor, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
+		size = [title sizeWithAttributes:attribute];
+		if (size.width > (titleRect.size.width - side * 2))
+			size.width = titleRect.size.width - side * 2;
+		r.size = size;
+		if ([self alignment] == NSLeftTextAlignment)
+		{
+			r.origin.x = titleRect.origin.x + side;
+		}
+		else if ([self alignment] == NSRightTextAlignment)
+		{
+			r.origin.x = titleRect.origin.x + side + ((titleRect.size.width - side * 2) - size.width);
+		}
+		else if ([self alignment] == NSCenterTextAlignment)
+		{
+			r.origin.x = titleRect.origin.x + ((titleRect.size.width - side * 2) - size.width) / 2;
+		}
+		r.origin.y = titleRect.origin.y + (titleRect.size.height - r.size.height) / 2;
+		sr = r;
+		sr.origin.y += 1.0;
+		[title drawInRect:sr withAttributes:sattribute];
+		[title drawInRect:r withAttributes:attribute];
+		if (separator)
+		{
+			NSRect separatorRect = NSZeroRect;
+			CGFloat leftMargin = (NSMaxX(r) + 10.0);
+			separatorRect.origin.x = cellFrame.origin.x + leftMargin;
+			separatorRect.origin.y = NSMidY(r);
+			separatorRect.size.width = cellFrame.size.width - leftMargin;
+			separatorRect.size.height = 1.0;
+			[[NSColor colorWithCalibratedWhite:1.0 alpha:1.0] set];
+			NSRectFill(separatorRect);
+			separatorRect.origin.y -= 1.0;
+			[[NSColor colorWithCalibratedRed:SBTableGrayCellColors[0] green:SBTableGrayCellColors[1] blue:SBTableGrayCellColors[2] alpha:SBTableGrayCellColors[3]] set];
+			NSRectFill(separatorRect);
+		}
 	}
 }
 
@@ -1515,21 +1717,5 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	return scheme;
 }
-
-@end
-
-@implementation SBURLTableView
-
-//- (BOOL)isOpaque
-//{
-//    return NO;
-//}
-
-//- (void)drawBackgroundInClipRect:(NSRect)clipRect
-//{
-//	NSScrollView *scrollView = [self enclosingScrollView];
-//	NSView *superview = [scrollView superview];
-//	[superview display];
-//}
 
 @end

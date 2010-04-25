@@ -24,6 +24,7 @@
 		0840678B0FE2C11700CC80E3 /* SBURLField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840678A0FE2C11700CC80E3 /* SBURLField.m */; };
 		084A01A8102C6A46009BA913 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 084A01A7102C6A46009BA913 /* style.css */; };
 		084A01AA102C6B3A009BA913 /* Error.html in Resources */ = {isa = PBXBuildFile; fileRef = 084A01A9102C6B3A009BA913 /* Error.html */; };
+		084C3449117DDA290000E110 /* SBGoogleSuggestParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 084C3448117DDA290000E110 /* SBGoogleSuggestParser.m */; };
 		085278E810189DDC00544C80 /* SBDownloaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 085278E710189DDC00544C80 /* SBDownloaderView.m */; };
 		0853D13A10671FB600DB577C /* SBDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0853D13910671FB600DB577C /* SBDownloader.m */; };
 		0853D16B106724E200DB577C /* Releasenotes.html in Resources */ = {isa = PBXBuildFile; fileRef = 0853D16A106724E200DB577C /* Releasenotes.html */; };
@@ -100,6 +101,9 @@
 		0896C1930FFF171400B97498 /* BLKGUI_Button-Active-Center.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1810FFF171400B97498 /* BLKGUI_Button-Active-Center.png */; };
 		0896C25D0FFF354800B97498 /* SBBookmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0896C25C0FFF354800B97498 /* SBBookmarkView.m */; };
 		089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089771BD10DD0B62004AF73B /* SBSearchbar.m */; };
+		08982EDB1182CF53002122F6 /* Icon_Bookmarks.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDA1182CF53002122F6 /* Icon_Bookmarks.png */; };
+		08982EDE1182CF5A002122F6 /* Icon_G.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDC1182CF5A002122F6 /* Icon_G.png */; };
+		08982EDF1182CF5A002122F6 /* Icon_History.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDD1182CF5A002122F6 /* Icon_History.png */; };
 		089860660FF3B894005958A0 /* SBBookmarksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089860650FF3B894005958A0 /* SBBookmarksView.m */; };
 		089953890FE36E5100DED3BA /* SBTabbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089953880FE36E5100DED3BA /* SBTabbar.m */; };
 		089955260FE37C1800DED3BA /* SBToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089955250FE37C1800DED3BA /* SBToolbar.m */; };
@@ -211,6 +215,8 @@
 		0840678A0FE2C11700CC80E3 /* SBURLField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBURLField.m; path = Classes/SBURLField.m; sourceTree = "<group>"; };
 		084A01A7102C6A46009BA913 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = Resources/htmls/style.css; sourceTree = "<group>"; };
 		084A01A9102C6B3A009BA913 /* Error.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Error.html; path = Resources/htmls/Error.html; sourceTree = "<group>"; };
+		084C3447117DDA290000E110 /* SBGoogleSuggestParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBGoogleSuggestParser.h; path = Classes/SBGoogleSuggestParser.h; sourceTree = "<group>"; };
+		084C3448117DDA290000E110 /* SBGoogleSuggestParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBGoogleSuggestParser.m; path = Classes/SBGoogleSuggestParser.m; sourceTree = "<group>"; };
 		085278E610189DDC00544C80 /* SBDownloaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDownloaderView.h; path = Classes/SBDownloaderView.h; sourceTree = "<group>"; };
 		085278E710189DDC00544C80 /* SBDownloaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDownloaderView.m; path = Classes/SBDownloaderView.m; sourceTree = "<group>"; };
 		0853D13810671FB600DB577C /* SBDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDownloader.h; path = Classes/SBDownloader.h; sourceTree = "<group>"; };
@@ -326,6 +332,9 @@
 		0896C25C0FFF354800B97498 /* SBBookmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBookmarkView.m; path = Classes/SBBookmarkView.m; sourceTree = "<group>"; };
 		089771BC10DD0B62004AF73B /* SBSearchbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSearchbar.h; path = Classes/SBSearchbar.h; sourceTree = "<group>"; };
 		089771BD10DD0B62004AF73B /* SBSearchbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSearchbar.m; path = Classes/SBSearchbar.m; sourceTree = "<group>"; };
+		08982EDA1182CF53002122F6 /* Icon_Bookmarks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Bookmarks.png; path = Resources/Images/Icon_Bookmarks.png; sourceTree = "<group>"; };
+		08982EDC1182CF5A002122F6 /* Icon_G.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_G.png; path = Resources/Images/Icon_G.png; sourceTree = "<group>"; };
+		08982EDD1182CF5A002122F6 /* Icon_History.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_History.png; path = Resources/Images/Icon_History.png; sourceTree = "<group>"; };
 		089860640FF3B894005958A0 /* SBBookmarksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarksView.h; path = Classes/SBBookmarksView.h; sourceTree = "<group>"; };
 		089860650FF3B894005958A0 /* SBBookmarksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBookmarksView.m; path = Classes/SBBookmarksView.m; sourceTree = "<group>"; };
 		089953870FE36E5100DED3BA /* SBTabbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTabbar.h; path = Classes/SBTabbar.h; sourceTree = "<group>"; };
@@ -477,10 +486,13 @@
 				08943D0F1013566E0034A3E5 /* Finder.png */,
 				085A738C1091CDC600FE7556 /* History.png */,
 				084066FB0FE2B53900CC80E3 /* Home.png */,
+				08982EDA1182CF53002122F6 /* Icon_Bookmarks.png */,
 				08C8D68D1036DD0C005540AF /* Icon_Camera.png */,
 				08946F0D111478F600B09D17 /* Icon_Checkout.png */,
 				08946FE41114861D00B09D17 /* Icon_Commit.png */,
 				08946ED21114731F00B09D17 /* Icon_Contribute.png */,
+				08982EDC1182CF5A002122F6 /* Icon_G.png */,
+				08982EDD1182CF5A002122F6 /* Icon_History.png */,
 				08C8D69E1036DEF4005540AF /* Icon_Lock.png */,
 				08C8D69F1036DEF4005540AF /* Icon_Unlock.png */,
 				089F948210342E7300C48997 /* LeftButton.png */,
@@ -546,6 +558,15 @@
 				08AEC4AA0FF73BF8005A39DA /* BLKGUI */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		084C344A117DDA2D0000E110 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				084C3447117DDA290000E110 /* SBGoogleSuggestParser.h */,
+				084C3448117DDA290000E110 /* SBGoogleSuggestParser.m */,
+			);
+			name = Parsers;
 			sourceTree = "<group>";
 		};
 		085C2A530FE2A4250099A0F6 /* Documents */ = {
@@ -850,6 +871,7 @@
 				085C2A8D0FE2A7540099A0F6 /* WindowControllers */,
 				085C2AB90FE2ABBB0099A0F6 /* Windows */,
 				0840678C0FE2C12500CC80E3 /* Views */,
+				084C344A117DDA2D0000E110 /* Parsers */,
 				08916E731009D52A0012D4EA /* Additions */,
 			);
 			name = Classes;
@@ -1035,6 +1057,9 @@
 				08946FE51114861D00B09D17 /* Icon_Commit.png in Resources */,
 				08C6DBCC114B4B610019BCE9 /* Download.png in Resources */,
 				08F1DEB01156695500712D67 /* Search.png in Resources */,
+				08982EDB1182CF53002122F6 /* Icon_Bookmarks.png in Resources */,
+				08982EDE1182CF5A002122F6 /* Icon_G.png in Resources */,
+				08982EDF1182CF5A002122F6 /* Icon_History.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1122,6 +1147,7 @@
 				08BE0CF11143E88E00314946 /* SBWebResourcesView.m in Sources */,
 				08F1DEA41156653700712D67 /* SBBLKGUISearchField.m in Sources */,
 				081412BD1168671B002FDF25 /* SBTableCell.m in Sources */,
+				084C3449117DDA290000E110 /* SBGoogleSuggestParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

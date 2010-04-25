@@ -29,5 +29,7 @@
 
 - (BOOL)containsIndexes:(NSIndexSet *)indexes;
 - (NSIndexSet *)indexesOfObjects:(NSArray *)objects;
++ (NSArray *)arrayWithArrays:(NSArray *)arrays;
++ (NSMutableArray *)mutableArrayWithArrays:(NSArray *)arrays;
 
 @end

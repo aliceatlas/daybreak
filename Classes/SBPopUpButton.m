@@ -259,9 +259,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSPoint point = [self convertPoint:location fromView:nil];
 		if (NSPointInRect(point, self.bounds))
 		{
-			_pressed = NO;
+			self.pressed = NO;
 			[self showMenu:theEvent];
-			[self setNeedsDisplay:YES];
 		}
 	}
 }

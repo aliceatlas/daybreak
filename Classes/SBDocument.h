@@ -151,6 +151,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // // Update
 - (void)updateMenuWithTag:(NSInteger)tag;
 - (void)updateResourcesViewIfNeeded;
+- (void)updateURLFieldGoogleSuggest;
+- (void)updateURLFieldGoogleSuggestDidEnd:(NSData *)data;
+- (void)updateURLFieldCompletionList;
 // Actions
 - (void)performCloseFromButton:(id)sender;
 - (void)performClose:(id)sender;

@@ -778,6 +778,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		index++;
 	}
 	addButton.frame = [self addButtonRect];
+	addButton.pressed = NO;
 	[self layout];
 }
 

@@ -27,10 +27,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBBookmarks.h"
 #import "SBBookmarkListView.h"
 #import "SBBookmarkView.h"
+#import "SBDownloader.h"
 #import "SBDownloaderView.h"
 #import "SBDownloads.h"
 #import "SBDownloadsView.h"
 #import "SBDrawer.h"
+#import "SBGoogleSuggestParser.h"
 #import "SBHistory.h"
 #import "SBHistoryView.h"
 #import "SBInnerView.h"
@@ -1122,85 +1124,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)urlFieldTextDidChange:(SBURLField *)aUrlField
 {
-	NSMutableArray *items = [NSMutableArray arrayWithCapacity:0];
-	NSMutableArray *urlStrings = [NSMutableArray arrayWithCapacity:0];
-	NSString *string = [urlField stringValue];
-	SBBookmarks *bookmarks = [SBBookmarks sharedBookmarks];
-	SBHistory *history = [SBHistory sharedHistory];
-	
-	// Search in bookmarks
-	for (NSDictionary *bookmarkItem in bookmarks.items)
-	{
-		NSString *urlString = nil;
-		if (urlString = [bookmarkItem objectForKey:kSBBookmarkURL])
-		{
-			NSString *title = [bookmarkItem objectForKey:kSBBookmarkTitle];
-			NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
-			NSRange range = [title rangeOfString:string options:NSCaseInsensitiveSearch];
-			BOOL matchWithTitle = NO;
-			if (range.location == NSNotFound)
-			{
-				range = [urlString rangeOfString:string];
-			}
-			else {
-				// Match with title
-				matchWithTitle = title != nil;
-			}
-			if (range.location == NSNotFound)
-			{
-				range = [SchemelessUrlString rangeOfString:string];
-			}
-			if (range.location != NSNotFound)
-			{
-				NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
-				if (matchWithTitle)
-					[item setObject:title forKey:kSBTitle];
-				[item setObject:urlString forKey:kSBURL];
-				if ([bookmarkItem objectForKey:kSBBookmarkImage])
-				{
-					[item setObject:[bookmarkItem objectForKey:kSBBookmarkImage] forKey:kSBImage];
-				}
-				[items addObject:[[item copy] autorelease]];
-				[urlStrings addObject:urlString];
-			}
-		}
-	}
-	
-	// Search in history
-	for (WebHistoryItem *historyItem in history.items)
-	{
-		NSString *urlString = nil;
-		if (urlString = [historyItem URLString])
-		{
-			if (![urlStrings containsObject:urlString])
-			{
-				NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
-				NSRange range = [urlString rangeOfString:string];
-				if (range.location == NSNotFound)
-				{
-					range = [SchemelessUrlString rangeOfString:string];
-				}
-				if (range.location != NSNotFound)
-				{
-					NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
-					NSData *iconData = [historyItem icon] ? [[historyItem icon] TIFFRepresentation] : nil;
-					[item setObject:urlString forKey:kSBURL];
-					if (iconData)
-					{
-						[item setObject:iconData forKey:kSBImage];
-					}
-					[items addObject:[[item copy] autorelease]];
-				}
-			}
-		}
-	}
-	
-	urlField.items = items;
+	[self updateURLFieldCompletionList];
+#if kSBURLFieldShowsGoogleSuggest
+	[self updateURLFieldGoogleSuggest];
+#endif
 }
 
 - (void)urlFieldWillResignFirstResponder:(SBURLField *)aUrlField
 {
-	
+	urlField.hiddenGo = YES;
+}
+
+#pragma mark SBDownloaderDelegate
+
+- (void)downloader:(SBDownloader *)downloader didFinish:(NSData *)data
+{
+	[self updateURLFieldGoogleSuggestDidEnd:data];
+}
+
+- (void)downloader:(SBDownloader *)downloader didFail:(NSError *)error
+{
+	[self updateURLFieldGoogleSuggestDidEnd:nil];
 }
 
 #pragma mark SplitView Delegate
@@ -1803,14 +1747,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		BOOL tabbarVisibility = window.tabbarVisivility;
 		BOOL shouldShow = !(toolbarVisibility && tabbarVisibility);
 		[menuItem setTitle:shouldShow ? NSLocalizedString(@"Show All Bars", nil) : NSLocalizedString(@"Hide All Bars", nil)];
+		r = !window.coverWindow;
 	}
 	else if (selector == @selector(toggleToolbarShown:))
 	{
 		[menuItem setTitle:[window.toolbar isVisible] ? NSLocalizedString(@"Hide Toolbar", nil) : NSLocalizedString(@"Show Toolbar", nil)];
+		r = !window.coverWindow;
 	}
 	else if (selector == @selector(toggleTabbar:))
 	{
 		[menuItem setTitle:window.tabbarVisivility ? NSLocalizedString(@"Hide Tabbar", nil) : NSLocalizedString(@"Show Tabbar", nil)];
+		r = !window.coverWindow;
 	}
 	else if (selector == @selector(sidebarPositionToLeft:))
 	{
@@ -1937,10 +1884,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:[SBBookmarksView class]] ? (SBBookmarksView *)sidebar.view : nil;
 		[menuItem setTitle:(splitView.visibleSidebar && bookmarksView) ? NSLocalizedString(@"Hide All Bookmarks", nil) : NSLocalizedString(@"Show All Bookmarks", nil)];
+		r = !window.coverWindow;
 	}
 	else if (selector == @selector(bookmark:))
 	{
-		r = ![[self selectedWebView] isEmpty];
+		r = ![[self selectedWebView] isEmpty] && !window.coverWindow;
 	}
 	else if (selector == @selector(searchInBookmarks:))
 	{
@@ -2044,6 +1992,138 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		[resourcesView reload];
 	}
+}
+
+- (void)updateURLFieldGoogleSuggest
+{
+	NSString *string = [urlField stringValue];
+	NSString *URLString = [string length] > 0 ? [[NSString stringWithFormat:kSBGoogleSuggestURL, string] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] : nil;
+	NSURL *url = URLString ? [NSURL URLWithString:URLString] : nil;
+	SBDownloader *downloader = [SBDownloader downloadWithURL:url];
+	downloader.delegate = self;
+	[downloader start];
+}
+
+- (void)updateURLFieldGoogleSuggestDidEnd:(NSData *)data
+{
+	if (data && [urlField isFirstResponder])
+	{
+		SBGoogleSuggestParser *parser = [SBGoogleSuggestParser parser];
+		NSError *error = [parser parseData:data];
+		NSMutableArray *items = !error ? [[parser.items mutableCopy] autorelease] : nil;
+		// Parse XML
+		if ([items count] > 0)
+		{
+			urlField.gsItems = items;
+			if ([urlField.gsItems count] > 0)
+			{
+				[urlField.gsItems insertObject:[NSDictionary dictionaryWithObjectsAndKeys:
+												[[NSImage imageNamed:@"Icon_G.png"] TIFFRepresentation], kSBImage, 
+												NSLocalizedString(@"Suggestions", nil), kSBTitle, 
+												[NSNumber numberWithInteger:kSBURLFieldItemNoneType], kSBType, nil] atIndex:0];
+			}
+			urlField.items = [NSMutableArray mutableArrayWithArrays:[NSArray arrayWithObjects:urlField.gsItems, urlField.bmItems, urlField.hItems, nil]];
+		}
+		
+		[urlField appearSheetIfNeeded:YES];
+	}
+}
+
+- (void)updateURLFieldCompletionList
+{
+	NSMutableArray *bmItems = [NSMutableArray arrayWithCapacity:0];
+	NSMutableArray *hItems = [NSMutableArray arrayWithCapacity:0];
+	NSMutableArray *urlStrings = [NSMutableArray arrayWithCapacity:0];
+	NSString *string = [urlField stringValue];
+	SBBookmarks *bookmarks = [SBBookmarks sharedBookmarks];
+	SBHistory *history = [SBHistory sharedHistory];
+	
+	// Search in bookmarks
+	for (NSDictionary *bookmarkItem in bookmarks.items)
+	{
+		NSString *urlString = nil;
+		if (urlString = [bookmarkItem objectForKey:kSBBookmarkURL])
+		{
+			NSString *title = [bookmarkItem objectForKey:kSBBookmarkTitle];
+			NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
+			NSRange range = [title rangeOfString:string options:NSCaseInsensitiveSearch];
+			BOOL matchWithTitle = NO;
+			if (range.location == NSNotFound)
+			{
+				range = [urlString rangeOfString:string];
+			}
+			else {
+				// Match with title
+				matchWithTitle = title != nil;
+			}
+			if (range.location == NSNotFound)
+			{
+				range = [SchemelessUrlString rangeOfString:string];
+			}
+			if (range.location != NSNotFound)
+			{
+				NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
+				if (matchWithTitle)
+					[item setObject:title forKey:kSBTitle];
+				[item setObject:urlString forKey:kSBURL];
+				if ([bookmarkItem objectForKey:kSBBookmarkImage])
+				{
+					[item setObject:[bookmarkItem objectForKey:kSBBookmarkImage] forKey:kSBImage];
+				}
+				[item setObject:[NSNumber numberWithInteger:kSBURLFieldItemBookmarkType] forKey:kSBType];
+				[bmItems addObject:[[item copy] autorelease]];
+				[urlStrings addObject:urlString];
+			}
+		}
+	}
+	
+	// Search in history
+	for (WebHistoryItem *historyItem in history.items)
+	{
+		NSString *urlString = nil;
+		if (urlString = [historyItem URLString])
+		{
+			if (![urlStrings containsObject:urlString])
+			{
+				NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
+				NSRange range = [urlString rangeOfString:string];
+				if (range.location == NSNotFound)
+				{
+					range = [SchemelessUrlString rangeOfString:string];
+				}
+				if (range.location != NSNotFound)
+				{
+					NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
+					NSData *iconData = [historyItem icon] ? [[historyItem icon] TIFFRepresentation] : nil;
+					[item setObject:urlString forKey:kSBURL];
+					if (iconData)
+					{
+						[item setObject:iconData forKey:kSBImage];
+					}
+					[item setObject:[NSNumber numberWithInteger:kSBURLFieldItemHistoryType] forKey:kSBType];
+					[hItems addObject:[[item copy] autorelease]];
+				}
+			}
+		}
+	}
+	
+	urlField.bmItems = bmItems;
+	urlField.hItems = hItems;
+	if ([urlField.bmItems count] > 0)
+	{
+		[urlField.bmItems insertObject:[NSDictionary dictionaryWithObjectsAndKeys:
+										[[NSImage imageNamed:@"Icon_Bookmarks.png"] TIFFRepresentation], kSBImage, 
+										NSLocalizedString(@"Bookmarks", nil), kSBTitle, 
+										[NSNumber numberWithInteger:kSBURLFieldItemNoneType], kSBType, nil] atIndex:0];
+	}
+	if ([urlField.hItems count] > 0)
+	{
+		[urlField.hItems insertObject:[NSDictionary dictionaryWithObjectsAndKeys:
+									   [[NSImage imageNamed:@"Icon_History.png"] TIFFRepresentation], kSBImage, 
+										NSLocalizedString(@"History", nil), kSBTitle, 
+										[NSNumber numberWithInteger:kSBURLFieldItemNoneType], kSBType, nil] atIndex:0];
+	}
+	urlField.items = [NSMutableArray mutableArrayWithArrays:[NSArray arrayWithObjects:urlField.bmItems, urlField.hItems, nil]];
 }
 
 #pragma mark Actions
@@ -2406,10 +2486,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)resources:(id)sender
 {
-	SBWebResourcesView *resourcesView = nil;
+	SBWebResourcesView *resourcesView = self.resourcesView;
 	if (splitView.visibleSidebar && sidebar)
 	{
-		if (resourcesView = self.resourcesView)
+		if (resourcesView)
 		{
 			[self hideSidebar];
 		}

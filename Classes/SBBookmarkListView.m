@@ -32,6 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @synthesize wrapperView;
 @synthesize mode;
+@synthesize transformScale;
 @synthesize cellWidth;
 @dynamic items;
 @synthesize draggedItems;
@@ -456,6 +457,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setCellSizeForMode:(SBBookmarkMode)inMode
 {
 	mode = inMode;
+	transformScale = NSMakePoint(([self width] + cellWidth) / 2.0, (22.0 + cellWidth) / 2.0);
 	if (mode == SBBookmarkListMode)
 	{
 		cellSize = NSMakeSize([self width], 22.0);

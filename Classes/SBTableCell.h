@@ -31,15 +31,29 @@ typedef enum {
 
 @interface SBTableCell : NSCell
 {
+	BOOL enabled;
 	SBTableCellStyle style;
 	BOOL showRoundedPath;
 	BOOL showSelection;
+	NSLineBreakMode lineBreakMode;
 }
+@property (nonatomic) BOOL enabled;
 @property (nonatomic) SBTableCellStyle style;
 @property (nonatomic) BOOL showRoundedPath;
 @property (nonatomic) BOOL showSelection;
+@property (nonatomic) NSLineBreakMode lineBreakMode;
 
 - (CGFloat)side;
 - (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
+
+@end
+
+@interface SBIconDataCell : NSCell
+{
+	BOOL drawsBackground;
+}
+@property (nonatomic) BOOL drawsBackground;
+
+- (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 
 @end
