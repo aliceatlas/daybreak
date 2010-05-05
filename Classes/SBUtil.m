@@ -139,11 +139,25 @@ NSString *SBDefaultSaveDownloadedFilesToPath()
 NSDictionary *SBDefaultBookmarks()
 {
 	NSArray *items = nil;
-	items = [NSArray arrayWithObject:SBCreateBookmarkItem(@"Apple Inc", @"http://www.apple.com/", SBDefaultBookmarkImageData(), [NSDate date], nil, NSStringFromPoint(NSZeroPoint))];
-	return SBBookmarksWithItems(items);
+	NSDictionary *defaultItem = nil;
+	NSString *path = [[NSBundle mainBundle] pathForResource:@"DefaultBookmark" ofType:@"plist"];
+	if (defaultItem = [NSDictionary dictionaryWithContentsOfFile:path])
+	{
+		NSString *title = nil;
+		NSData *imageData = nil;
+		NSString *URLString = nil;
+		title = [defaultItem objectForKey:kSBBookmarkTitle];
+		imageData = [defaultItem objectForKey:kSBBookmarkImage];
+		URLString = [defaultItem objectForKey:kSBBookmarkURL];
+		if (!title) title = NSLocalizedString(@"Untitled", nil);
+		if (!URLString) URLString = @"http://www.example.com/";
+		if (!imageData) imageData = SBEmptyBookmarkImageData();
+		items = [NSArray arrayWithObject:SBCreateBookmarkItem(title, URLString, imageData, [NSDate date], nil, NSStringFromPoint(NSZeroPoint))];
+	}
+	return [items count] > 0 ? SBBookmarksWithItems(items) : nil;
 }
 
-NSData *SBDefaultBookmarkImageData()
+NSData *SBEmptyBookmarkImageData()
 {
 	NSData *data = nil;
 	NSBitmapImageRep *bitmapImageRep = nil;
@@ -270,6 +284,39 @@ NSMenu *SBBookmarkLabelColorMenu(BOOL pullsDown, id target, SEL action, id repre
 		[menu addItem:item];
 	}
 	return menu;
+}
+
+NSArray *SBBookmarkItemsFromBookmarkDictionaryList(NSArray *bookmarkDictionaryList)
+{
+	NSMutableArray *items = nil;
+	if ([bookmarkDictionaryList count] > 0)
+	{
+		NSData *emptyImageData = SBEmptyBookmarkImageData();
+		items = [[NSMutableArray alloc] initWithCapacity:0];
+		for (NSDictionary *dictionary in bookmarkDictionaryList)
+		{
+			NSString *type = [dictionary objectForKey:@"WebBookmarkType"];
+			NSString *URLString = [dictionary objectForKey:@"URLString"];
+			NSDictionary *uriDictionary = [dictionary objectForKey:@"URIDictionary"];
+			NSString *title = uriDictionary ? [uriDictionary objectForKey:@"title"] : nil;
+			BOOL hasScheme = NO;
+			if ([type isEqualToString:@"WebBookmarkTypeLeaf"] && [URLString isURLString:&hasScheme])
+			{
+				NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
+				if (!hasScheme)
+				{
+					URLString = [@"http://" stringByAppendingString:[URLString stringByDeletingScheme]];
+				}
+				if (title)
+					[item setObject:title forKey:kSBBookmarkTitle];
+				if (emptyImageData)
+					[item setObject:emptyImageData forKey:kSBBookmarkImage];
+				[item setObject:URLString forKey:kSBBookmarkURL];
+				[items addObject:[[item copy] autorelease]];
+			}
+		}
+	}
+	return [items count] > 0 ? [[items copy] autorelease] : nil;
 }
 
 #pragma mark Rects
@@ -1717,12 +1764,13 @@ id SBValueForKey(NSString *keyName, NSDictionary *dictionary)
 	return value;
 }
 
-NSMenu *SBEncodingMenu(id target, SEL selector)
+NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
 {
 	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-    const NSStringEncoding *encoding = [NSString availableStringEncodings];
-	NSMutableArray *mencs = [NSMutableArray arrayWithCapacity:0];
 	NSArray *encs = nil;
+	NSMutableArray *mencs = [NSMutableArray arrayWithCapacity:0];
+#if kSBFlagShowAllStringEncodings
+    const NSStringEncoding *encoding = [NSString availableStringEncodings];
 	NSData *hint = nil;
 	
 	// Get available encodings
@@ -1735,24 +1783,51 @@ NSMenu *SBEncodingMenu(id target, SEL selector)
 	// Sort
 	hint = [mencs sortedArrayHint];
 	encs = [mencs sortedArrayUsingFunction:SBStringEncodingSortFunction context:nil hint:hint];
+#else
+	const NSStringEncoding *encoding = SBAvailableStringEncodings;
+	// Get available encodings
+    while (*encoding)	// Continue while encoding is NULL
+	{
+		[mencs addObject:[NSNumber numberWithUnsignedInteger:*encoding]];
+		encoding++;
+	}
+	encs = [[mencs copy] autorelease];
+#endif
 	
 	// Create menu items
 	for (NSNumber *enc in encs)
 	{
-		NSString *encodingName = nil;
 		NSStringEncoding stringEncoding = [enc unsignedIntegerValue];
-		NSString *ianaName = nil;
-		encodingName = [NSString localizedNameOfStringEncoding:stringEncoding];
-		ianaName = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding([enc unsignedIntegerValue]));
-		if (encodingName)
+		if (stringEncoding == NSNotFound)
 		{
-			NSMenuItem *item = nil;
-			item = [[[NSMenuItem alloc] initWithTitle:encodingName action:selector keyEquivalent:@""] autorelease];
-			if (target)
-				[item setTarget:target];
-			[item setRepresentedObject:ianaName];
-			[menu addItem:item];
+			[menu addItem:[NSMenuItem separatorItem]];
 		}
+		else {
+			NSString *encodingName = nil;
+			NSString *ianaName = nil;
+			encodingName = [NSString localizedNameOfStringEncoding:stringEncoding];
+			ianaName = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding([enc unsignedIntegerValue]));
+			DebugLog(@"%d\t%d\t%@\t%@\t%@", CFStringIsEncodingAvailable(CFStringConvertNSStringEncodingToEncoding([enc unsignedIntegerValue])), stringEncoding, encodingName, (NSString *)CFStringGetNameOfEncoding(CFStringConvertNSStringEncodingToEncoding([enc unsignedIntegerValue])), ianaName);
+			if (encodingName)
+			{
+				NSMenuItem *item = nil;
+				item = [[[NSMenuItem alloc] initWithTitle:encodingName action:selector keyEquivalent:@""] autorelease];
+				if (target)
+					[item setTarget:target];
+				[item setRepresentedObject:ianaName];
+				[menu addItem:item];
+			}
+		}
+	}
+	if (showDefault)
+	{
+		NSMenuItem *defaultItem = nil;
+		defaultItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Default", nil) action:selector keyEquivalent:@""] autorelease];
+		if (target)
+			[defaultItem setTarget:target];
+		[defaultItem setRepresentedObject:nil];
+		[menu insertItem:[NSMenuItem separatorItem] atIndex:0];
+		[menu insertItem:defaultItem atIndex:0];
 	}
 	return menu;
 }

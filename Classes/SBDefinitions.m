@@ -65,7 +65,60 @@ NSString *kSBHistoryFileName = @"History.plist";
 NSString *kSBLocalizationsDirectoryName = @"Localizations";
 
 // Default values
-NSString *kSBDefaultEncodingName = @"utf-16";
+NSString *kSBDefaultEncodingName = @"utf-8";
+const NSStringEncoding SBAvailableStringEncodings[] = {
+	-2147481087,	// Japanese (Shift JIS)
+	21,				// Japanese (ISO 2022-JP)
+	3,				// Japanese (EUC)
+	-2147482072,	// Japanese (Shift JIS X0213)
+	NSNotFound,	
+	4,				// Unicode (UTF-8)
+	NSNotFound,	
+	5,				// Western (ISO Latin 1)
+	30,				// Western (Mac OS Roman)
+	NSNotFound,	
+	-2147481085,	// Traditional Chinese (Big 5)
+	-2147481082,	// Traditional Chinese (Big 5 HKSCS)
+	-2147482589,	// Traditional Chinese (Windows, DOS)
+	NSNotFound,	
+	-2147481536,	// Korean (ISO 2022-KR)
+	-2147483645,	// Korean (Mac OS)
+	-2147482590,	// Korean (Windows, DOS)
+	NSNotFound,	
+	-2147483130,	// Arabic (ISO 8859-6)
+	-2147482362,	// Arabic (Windows)
+	NSNotFound,	
+	-2147483128,	// Hebrew (ISO 8859-8)
+	-2147482363,	// Hebrew (Windows)
+	NSNotFound, 
+	-2147483129,	// Greek (ISO 8859-7)
+	13,				// Greek (Windows)
+	NSNotFound, 
+	-2147483131,	// Cyrillic (ISO 8859-5)
+	-2147483641,	// Cyrillic (Mac OS)
+	-2147481086,	// Cyrillic (KOI8-R)
+	11,				// Cyrillic (Windows)
+	-2147481080,	// Ukrainian (KOI8-U)
+	NSNotFound,	
+	-2147482595,	// Thai (Windows, DOS)
+	NSNotFound,	
+	-2147481296,	// Simplified Chinese (GB 2312)
+	-2147481083,	// Simplified Chinese (HZ GB 2312)
+	-2147482062,	// Chinese (GB 18030)
+	NSNotFound, 
+	9,				// Central European (ISO Latin 2)
+	-2147483619,	// Central European (Mac OS)
+	15,				// Central European (Windows Latin 2)
+	NSNotFound, 
+	-2147482360,	// Vietnamese (Windows)
+	NSNotFound, 
+	-2147483127,	// Turkish (ISO Latin 5)
+	14,				// Turkish (Windows Latin 5)
+	NSNotFound, 
+	-2147483132,	// Central European (ISO Latin 4)
+	-2147482361,	// Baltic (Windows)
+	0
+};
 
 // UserDefault keys
 NSString *kSBDocumentWindowAutosaveName = @"Document";
@@ -155,6 +208,7 @@ NSString *kSBUpdaterErrorDescription = @"ErrorDescription";
 
 // Pasteboard type
 NSString *SBTabbarItemPboardType = @"SBTabbarItemPboardType";
+NSString *SBSafariBookmarkDictionaryListPboardType = @"BookmarkDictionaryListPboardType";
 
 // Window
 CGFloat SBWindowBackColors[4] = {0.2, 0.22, 0.24, 1.0};
@@ -212,7 +266,8 @@ NSInteger SBCountOfSchemes = 3;
 NSString *SBSchemes[] = {
 @"http://", 
 @"https://", 
-@"file://"
+@"file://", 
+@"feed://"
 };
 
 // Notification names

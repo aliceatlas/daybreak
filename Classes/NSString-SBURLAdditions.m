@@ -171,7 +171,26 @@ NSString *SBBytesUnitString = @"bytes";
 		string = SBKiroByteUnitString;
 	}
 	else{
-		string = length <= 1 ? SBByteUnitString : SBBytesUnitString;
+		string = (length <= 1 ? SBByteUnitString : SBBytesUnitString);
+		string = NSLocalizedString(string, nil);
+	}
+	return string;
+}
+
++ (NSString *)bytesString:(long long)receivedLegnth expectedLength:(long long)expectedLength
+{
+	NSString *string = nil;
+	BOOL sameUnit = [[NSString unitStringForLength:receivedLegnth] isEqualToString:[NSString unitStringForLength:expectedLength]];
+	NSString *received = nil;
+	NSString *expected = [NSString bytesStringForLength:expectedLength];
+	if (sameUnit)
+	{
+		received = [NSString bytesStringForLength:receivedLegnth unit:NO];
+		string = [NSString stringWithFormat:@"%@/%@", received, expected];
+	}
+	else {
+		received = [NSString bytesStringForLength:receivedLegnth];
+		string = [NSString stringWithFormat:@"%@/%@", received, expected];
 	}
 	return string;
 }
@@ -230,7 +249,11 @@ NSString *SBBytesUnitString = @"bytes";
 		r = range.location == 0;
 		if (r)
 		{
+#if 1
+			*hasScheme = [[URL scheme] length] > 0 ? [string hasPrefix:[URL scheme]] : NO;
+#else
 			*hasScheme = [[URL absoluteString] isEqualToString:string];
+#endif
 		}
 	}
 	return r;

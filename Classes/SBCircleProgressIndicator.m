@@ -28,6 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation SBCircleProgressIndicator
 
+@synthesize style;
 @synthesize progress;
 @synthesize selected;
 @synthesize highlighted;
@@ -40,6 +41,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
     if (self = [super initWithFrame:frame])
 	{
+		style = SBCircleProgressIndicatorRegulerStyle;
 		progress = 0.0;
 		selected = NO;
 		alwaysDrawing = NO;
@@ -152,6 +154,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			startAngle = (sa - 270) * (M_PI / 180);
 			endAngle = (-ea - 270) * (M_PI / 180);
 			
+			superview = [self superview];
+			isFirstResponder = [superview respondsToSelector:@selector(isFirstResponder)] ? [superview isFirstResponder] : NO;
+			
 			if (selected && keyView)
 			{
 				locations[0] = 0.0;
@@ -172,16 +177,38 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				CGContextRestoreGState(ctx);
 			}
 			
-			CGContextSaveGState(ctx);
-			path = CGPathCreateMutable();
-			color = CGColorCreateCopyWithAlpha(backgroundColor, selected && keyView ? 1.0 : 0.5);
-			CGPathAddArc(path, nil, cp.x, cp.y, radius - 1.0, 0 * M_PI / 180, 360 * M_PI / 180, FALSE);
-			CGContextAddPath(ctx, path);
-			CGContextSetFillColorWithColor(ctx, color);
-			CGContextFillPath(ctx);
-			CGPathRelease(path);
-			CGColorRelease(color);
-			CGContextRestoreGState(ctx);
+			if (style == SBCircleProgressIndicatorWhiteStyle)
+			{
+				if (highlighted && isFirstResponder)
+				{
+					SBGetAlternateSelectedDarkControlColorComponents(components1);
+				}
+				else {
+					components1[0] = components1[1] = components1[2] = 1.0;
+					components1[3] = 0.75;
+				}
+				CGContextSaveGState(ctx);
+				path = CGPathCreateMutable();
+				CGContextSetLineWidth(ctx, 1.0);
+				CGPathAddArc(path, nil, cp.x, cp.y, radius - 1.0, 0 * M_PI / 180, 360 * M_PI / 180, FALSE);
+				CGContextAddPath(ctx, path);
+				CGContextSetRGBStrokeColor(ctx, components1[0], components1[1], components1[2], components1[3]);
+				CGContextStrokePath(ctx);
+				CGPathRelease(path);
+				CGContextRestoreGState(ctx);
+			}
+			else {
+				CGContextSaveGState(ctx);
+				path = CGPathCreateMutable();
+				color = CGColorCreateCopyWithAlpha(backgroundColor, selected && keyView ? 1.0 : 0.5);
+				CGPathAddArc(path, nil, cp.x, cp.y, radius - 1.0, 0 * M_PI / 180, 360 * M_PI / 180, FALSE);
+				CGContextAddPath(ctx, path);
+				CGContextSetFillColorWithColor(ctx, color);
+				CGContextFillPath(ctx);
+				CGPathRelease(path);
+				CGColorRelease(color);
+				CGContextRestoreGState(ctx);
+			}
 			
 			// Percentage(Arc)
 			CGContextSaveGState(ctx);
@@ -191,27 +218,34 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			CGPathCloseSubpath(path);
 			CGContextAddPath(ctx, path);
 			CGContextSetLineWidth(ctx, 0);
-			superview = [self superview];
-			isFirstResponder = [superview respondsToSelector:@selector(isFirstResponder)] ? [superview isFirstResponder] : NO;
 			if (highlighted && isFirstResponder)
 			{
 				SBGetAlternateSelectedControlColorComponents(components1);
 				SBGetAlternateSelectedDarkControlColorComponents(components2);
 			}
 			else {
-				components1[0] = components1[1] = components1[2] = selected && keyView ? 1.0 : 0.75;
-				components2[0] = components2[1] = components2[2] = selected && keyView ? 0.75 : 0.5;
+				if (style == SBCircleProgressIndicatorWhiteStyle)
+				{
+					components1[0] = components1[1] = components1[2] = 1.0;
+					components2[0] = components2[1] = components2[2] = 1.0;
+					components1[3] = components2[3] = 0.75;
+				}
+				else {
+					components1[0] = components1[1] = components1[2] = selected && keyView ? 1.0 : 0.75;
+					components2[0] = components2[1] = components2[2] = selected && keyView ? 0.75 : 0.5;
+					components1[3] = components2[3] = 1.0;
+				}
 			}
 			locations[0] = 0.0;
 			locations[1] = 1.0;
 			colors[0] = components2[0];
 			colors[1] = components2[1];
 			colors[2] = components2[2];
-			colors[3] = 1.0;
+			colors[3] = components2[3];
 			colors[4] = components1[0];
 			colors[5] = components1[1];
 			colors[6] = components1[2];
-			colors[7] = 1.0;
+			colors[7] = components1[3];
 			points[0] = CGPointZero;
 			points[1] = CGPointMake(0.0, r.size.height);
 			CGContextClip(ctx);
@@ -224,14 +258,45 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				// Percentage(String)
 				NSString *percentage = [NSString stringWithFormat:@"%.1f%%", progress * 100];
 				NSDictionary *attributes = nil;
+				NSDictionary *sattributes = nil;
 				NSRect tr = NSZeroRect;
+				NSRect sr = NSZeroRect;
 				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 							  [NSFont boldSystemFontOfSize:10.0], NSFontAttributeName, 
-							  highlighted ? [NSColor whiteColor] : [NSColor blackColor], NSForegroundColorAttributeName, nil];
+							  [NSColor whiteColor], NSForegroundColorAttributeName, 
+							  nil];
+				sattributes = [NSDictionary dictionaryWithObjectsAndKeys:
+							   [NSFont boldSystemFontOfSize:10.0], NSFontAttributeName, 
+							   [NSColor colorWithCalibratedWhite:0.0 alpha:0.75], NSForegroundColorAttributeName, 
+							   nil];
 				tr.size = [percentage sizeWithAttributes:attributes];
 				tr.origin.x = (r.size.width - tr.size.width) / 2;
 				tr.origin.y = (r.size.height - tr.size.height) / 2;
+				
+				// Draw edge
+				CGContextSaveGState(ctx);
+				sr = tr;
+				sr.origin.y -= 1.0;
+				// bottom
+				[percentage drawInRect:sr withAttributes:sattributes];
+				sr = tr;
+				sr.origin.y += 1.0;
+				// top
+				[percentage drawInRect:sr withAttributes:sattributes];
+				sr = tr;
+				sr.origin.x -= 1.0;
+				// left
+				[percentage drawInRect:sr withAttributes:sattributes];
+				sr = tr;
+				sr.origin.x += 1.0;
+				// right
+				[percentage drawInRect:sr withAttributes:sattributes];
+				CGContextRestoreGState(ctx);
+				
+				// Draw text
+				CGContextSaveGState(ctx);
 				[percentage drawInRect:tr withAttributes:attributes];
+				CGContextRestoreGState(ctx);
 			}
 		}
 	}

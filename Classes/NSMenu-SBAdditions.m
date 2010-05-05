@@ -54,15 +54,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMenuItem *selectedItem = nil;
 	for (NSMenuItem *item in [self itemArray])
 	{
-		if ([[item representedObject] length] > 0 && [representedObject length] > 0)
+		id repObject = [item representedObject];
+		BOOL equal = (!repObject && !representedObject) || [repObject isEqualTo:representedObject];
+		[item setState:(equal ? (selectedItem ? NSOffState : NSOnState) : NSOffState)];
+		if (equal)
 		{
-			BOOL equal = [[item representedObject] compare:representedObject options:NSCaseInsensitiveSearch] == NSOrderedSame;
-			[item setState:(equal ? (selectedItem ? NSOffState : NSOnState) : NSOffState)];
-			if (equal)
-			{
-				if (!selectedItem)
-					selectedItem = item;
-			}
+			if (!selectedItem)
+				selectedItem = item;
 		}
 	}
 	return selectedItem;

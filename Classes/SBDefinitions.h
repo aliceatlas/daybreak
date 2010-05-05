@@ -40,6 +40,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define kSBFlagShowRenderWindow 0
 #define kSBCountOfDebugBookmarks 0	/* If more than 0, the bookmarks creates bookmark items for the count. */
 #define kSBURLFieldShowsGoogleSuggest 1
+#define kSBFlagShowAllStringEncodings 0
 
 // Versions
 extern NSString *SBBookmarkVersion;
@@ -83,6 +84,7 @@ extern NSString *kSBLocalizationsDirectoryName;
 // Default values
 extern NSString *kSBDefaultEncodingName;
 #define SBDefaultHistorySaveSeconds 604800
+extern const NSStringEncoding SBAvailableStringEncodings[];
 
 // UserDefault keys
 extern NSString *kSBDocumentWindowAutosaveName;			// String
@@ -164,6 +166,7 @@ extern NSString *kSBUpdaterErrorDescription;// String
 
 // Pasteboard type
 extern NSString *SBTabbarItemPboardType;
+extern NSString *SBSafariBookmarkDictionaryListPboardType;
 
 // Window
 extern CGFloat SBWindowBackColors[4];
@@ -213,6 +216,12 @@ typedef enum {
 	SBBookmarkIconMode, 
 	SBBookmarkListMode
 }SBBookmarkMode;
+
+// Circle progress styles
+typedef enum {
+	SBCircleProgressIndicatorRegulerStyle, 
+	SBCircleProgressIndicatorWhiteStyle
+}SBCircleProgressIndicatorStyle;
 
 // Status code
 typedef enum {

@@ -378,8 +378,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *message = nil;
 	NSString *defaultTitle = nil;
 	NSString *alternateTitle = nil;
+	NSURLCache *cache = nil;
+	cache = [NSURLCache sharedURLCache];
 	title = NSLocalizedString(@"Are you sure you want to empty the cache?", nil);
 	message = NSLocalizedString(@"Sunrise saves the contents of webpages you open, and stores them in a cache, so the pages load faster when you visit them again.", nil);
+	if ([cache diskCapacity] > 0 && [cache memoryCapacity] > 0)
+	{
+		NSString *diskCapacityDescription = nil;
+		NSString *memoryCapacityDescription = nil;
+		diskCapacityDescription = [NSString bytesString:[cache currentDiskUsage] expectedLength:[cache diskCapacity]];
+		memoryCapacityDescription = [NSString bytesString:[cache currentMemoryUsage] expectedLength:[cache memoryCapacity]];
+		message = [message stringByAppendingFormat:@"\n\n%@: %@\n%@: %@\n", NSLocalizedString(@"On disk", nil), diskCapacityDescription, NSLocalizedString(@"In memory", nil), memoryCapacityDescription];
+	}
 	defaultTitle = NSLocalizedString(@"Empty", nil);
 	alternateTitle = NSLocalizedString(@"Cancel", nil);
 	NSBeginAlertSheet(title, defaultTitle, alternateTitle, nil, nil, self, @selector(emptyAllCachesDidEnd:returnCode:contextInfo:), nil, nil, message);
@@ -490,15 +500,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMenuItem *writeViewStructure = nil;
 	NSMenuItem *writeMainMenu = nil;
 	NSMenuItem *validateStrings = nil;
+	NSMenuItem *debugUI = nil;
 	mainMenu = [NSApp mainMenu];
 	debugMenuItem = [[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""] autorelease];
 	debugMenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
 	writeViewStructure = [[[NSMenuItem alloc] initWithTitle:@"Export View Structure..." action:@selector(writeViewStructure:) keyEquivalent:@""] autorelease];
 	writeMainMenu = [[[NSMenuItem alloc] initWithTitle:@"Export Menu as plist..." action:@selector(writeMainMenu:) keyEquivalent:@""] autorelease];
 	validateStrings = [[[NSMenuItem alloc] initWithTitle:@"Validate strings file..." action:@selector(validateStrings:) keyEquivalent:@""] autorelease];
+	debugUI = [[[NSMenuItem alloc] initWithTitle:@"Debug UI..." action:@selector(debugAddDummyDownloads:) keyEquivalent:@""] autorelease];
 	[debugMenu addItem:writeViewStructure];
 	[debugMenu addItem:writeMainMenu];
 	[debugMenu addItem:validateStrings];
+	[debugMenu addItem:debugUI];
 	[debugMenuItem setSubmenu:debugMenu];
 	[mainMenu addItem:debugMenuItem];
 }

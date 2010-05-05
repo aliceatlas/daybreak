@@ -176,7 +176,7 @@ static SBDownloads *sharedDownloads;
 		if (item.download == aDownload)
 		{
 			item.expectedLength = [response expectedContentLength] > 0 ? [response expectedContentLength] : 0;
-			item.bytes = [self bytesString:item.receivedLength expectedLength:item.expectedLength];
+			item.bytes = [NSString bytesString:item.receivedLength expectedLength:item.expectedLength];
 			// Update views
 			[self executeDidUpdateItem:item];
 			break;
@@ -220,7 +220,7 @@ static SBDownloads *sharedDownloads;
 			{
 				item.receivedLength += length;
 			}
-			item.bytes = [self bytesString:item.receivedLength expectedLength:item.expectedLength];
+			item.bytes = [NSString bytesString:item.receivedLength expectedLength:item.expectedLength];
 			// Update views
 			[self executeDidUpdateItem:item];
 			break;
@@ -291,24 +291,6 @@ static SBDownloads *sharedDownloads;
 {
 	_identifier++;
 	return [NSNumber numberWithUnsignedInteger:_identifier];
-}
-
-- (NSString *)bytesString:(long long)receivedLegnth expectedLength:(long long)expectedLength
-{
-	NSString *string = nil;
-	BOOL sameUnit = [[NSString unitStringForLength:receivedLegnth] isEqualToString:[NSString unitStringForLength:expectedLength]];
-	NSString *received = nil;
-	NSString *expected = [NSString bytesStringForLength:expectedLength];
-	if (sameUnit)
-	{
-		received = [NSString bytesStringForLength:receivedLegnth unit:NO];
-		string = [NSString stringWithFormat:@"%@/%@", received, expected];
-	}
-	else {
-		received = [NSString bytesStringForLength:receivedLegnth];
-		string = [NSString stringWithFormat:@"%@/%@", received, expected];
-	}
-	return string;
 }
 
 @end

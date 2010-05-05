@@ -53,6 +53,5 @@ extern NSString *SBDownloadsDidFailItemNotification;
 - (void)executeDidFinishItem:(SBDownload *)anItem;
 // Function
 - (NSNumber *)newIdentifier;
-- (NSString *)bytesString:(long long)receivedLegnth expectedLength:(long long)expectedLength;
 
 @end

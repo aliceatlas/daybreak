@@ -411,7 +411,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		field = [[[NSTextField alloc] initWithFrame:fr] autorelease];
 		[button setTarget:self];
 		[button setAction:@selector(open:)];
-		[button setTitle:NSLocalizedString(@"Open", nil)];
+		[button setTitle:NSLocalizedString(@"Open…", nil)];
 		[button setButtonType:NSMomentaryLightButton];
 		[button setBezelStyle:NSRoundedBezelStyle];
 		if (image)

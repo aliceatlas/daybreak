@@ -1334,28 +1334,53 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSPoint point = [self convertPoint:[sender draggingLocation] fromView:nil];
 	SBBookmarks *bookmarks = nil;
 	NSArray *types = [pasteboard types];
-	NSArray *pbItems = [pasteboard propertyListForType:SBBookmarkPboardType];
+	NSArray *pbItems = nil;
 	
-	if ([types containsObject:SBBookmarkPboardType] && [pbItems count] > 0)
+	if ([types containsObject:SBBookmarkPboardType])
 	{
-		bookmarks = [SBBookmarks sharedBookmarks];
-		NSIndexSet *indexes = [bookmarks indexesOfItems:pbItems];
-		NSUInteger toIndex = [self indexAtPoint:point];
-		if ([indexes count] > 0)
+		// Sunrise bookmarks
+		pbItems = [pasteboard propertyListForType:SBBookmarkPboardType];
+		if ([pbItems count] > 0)
 		{
-			// Move item
-			[bookmarks moveItemsAtIndexes:indexes toIndex:toIndex];
-			[self moveItemViewsAtIndexes:indexes toIndex:toIndex];
+			NSIndexSet *indexes = nil;
+			NSUInteger toIndex;
+			bookmarks = [SBBookmarks sharedBookmarks];
+			indexes = [bookmarks indexesOfItems:pbItems];
+			toIndex = [self indexAtPoint:point];
+			if ([indexes count] > 0)
+			{
+				// Move item
+				[bookmarks moveItemsAtIndexes:indexes toIndex:toIndex];
+				[self moveItemViewsAtIndexes:indexes toIndex:toIndex];
+			}
+			else {
+				// Add as new item
+				[bookmarks addItems:pbItems toIndex:toIndex];
+				[self addForItems:pbItems toIndex:toIndex];
+			}
+			[self layoutItemViewsWithAnimationFromIndex:0];
 		}
-		else {
-			// Add as new item
-			[bookmarks addItems:pbItems toIndex:toIndex];
-			[self addForItems:pbItems toIndex:toIndex];
+	}
+	else if ([types containsObject:SBSafariBookmarkDictionaryListPboardType])
+	{
+		// Safari bookmarks
+		NSArray *bookmarkItems = nil;
+		pbItems = [pasteboard propertyListForType:SBSafariBookmarkDictionaryListPboardType];
+		bookmarkItems = SBBookmarkItemsFromBookmarkDictionaryList(pbItems);
+		if ([bookmarkItems count] > 0)
+		{
+			NSUInteger toIndex;
+			bookmarks = [SBBookmarks sharedBookmarks];
+			toIndex = [self indexAtPoint:point];
+			[bookmarks addItems:bookmarkItems toIndex:toIndex];
+			[self addForItems:bookmarkItems toIndex:toIndex];
+			[self layoutItemViewsWithAnimationFromIndex:0];
 		}
-		[self layoutItemViewsWithAnimationFromIndex:0];
 	}
 	else if ([types containsObject:NSURLPboardType])
 	{
+		// General URL
+		pbItems = [pasteboard propertyListForType:NSURLPboardType];
 		NSString *url = [[NSURL URLFromPasteboard:pasteboard] absoluteString];
 		NSString *title = nil;
 		NSData *data = nil;
@@ -1387,7 +1412,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 		}
 		else {
-			data = SBDefaultBookmarkImageData();
+			data = SBEmptyBookmarkImageData();
 		}
 		
 		if (url)

@@ -254,5 +254,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)toggleFlip;
 // Debug
 - (void)debug:(NSNumber *)value;
+- (void)debugAddDummyDownloads:(id)sender;
 
 @end

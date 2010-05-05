@@ -35,6 +35,7 @@
 @end
 @protocol SBWebResourcesViewDelegate <NSObject>
 @optional
+- (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldSaveAtRow:(NSInteger)rowIndex;
 - (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldDownloadAtRow:(NSInteger)rowIndex;
 @end
 

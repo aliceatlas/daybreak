@@ -125,6 +125,7 @@
 	NSRect r = [self progressRect];
 	[self destructProgressIndicator];
 	progressIndicator = [[SBCircleProgressIndicator alloc] initWithFrame:r];
+	progressIndicator.style = SBCircleProgressIndicatorWhiteStyle;
 	[progressIndicator setAutoresizingMask:(NSViewMinXMargin)];
 	progressIndicator.selected = selected;
 	progressIndicator.alwaysDrawing = YES;
@@ -201,7 +202,7 @@
 	[super drawRect:rect];
 	
 	// Icon
-	if (download.path)
+	if ([download.path length] > 0)
 	{
 		NSWorkspace *space = [NSWorkspace sharedWorkspace];
 		NSImage *image = nil;

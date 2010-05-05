@@ -55,22 +55,27 @@
 	NSRect scrollerRect = [self bounds];
 	NSTableColumn *urlColumn = nil;
 	NSTableColumn *lengthColumn = nil;
+	NSTableColumn *cachedColumn = nil;
 	NSTableColumn *actionColumn = nil;
-	SBWebResourceButtonCell *buttonCell = nil;
+	SBWebResourceButtonCell *cachedCell = nil;
+	SBWebResourceButtonCell *actionCell = nil;
 	SBTableCell *urlTextCell = nil;
 	SBTableCell *lengthTextCell = nil;
 	NSRect tableRect = NSZeroRect;
 	CGFloat lengthWidth = 110.0;
+	CGFloat cachedWidth = 22.0;
 	CGFloat actionWidth = 22.0;
 	tableRect.size = scrollerRect.size;
 	scrollView = [[SBBLKGUIScrollView alloc] initWithFrame:scrollerRect];
 	tableView = [[NSTableView alloc] initWithFrame:tableRect];
 	urlColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBURL] autorelease];
 	lengthColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Length"] autorelease];
+	cachedColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Cached"] autorelease];
 	actionColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Action"] autorelease];
 	urlTextCell = [[[SBTableCell alloc] init] autorelease];
 	lengthTextCell = [[[SBTableCell alloc] init] autorelease];
-	buttonCell = [[[SBWebResourceButtonCell alloc] init] autorelease];
+	cachedCell = [[[SBWebResourceButtonCell alloc] init] autorelease];
+	actionCell = [[[SBWebResourceButtonCell alloc] init] autorelease];
 	[urlTextCell setFont:[NSFont systemFontOfSize:12.0]];
 	[urlTextCell setShowRoundedPath:YES];
 	[urlTextCell setAlignment:NSLeftTextAlignment];
@@ -79,17 +84,23 @@
 	[lengthTextCell setShowRoundedPath:NO];
 	[lengthTextCell setShowSelection:NO];
 	[lengthTextCell setAlignment:NSRightTextAlignment];
-	[buttonCell setTarget:self];
-	[buttonCell setAction:@selector(download:)];
+	[cachedCell setTarget:self];
+	[cachedCell setAction:@selector(save:)];
+	[actionCell setTarget:self];
+	[actionCell setAction:@selector(download:)];
 	[urlColumn setDataCell:urlTextCell];
-	[urlColumn setWidth:(tableRect.size.width - lengthWidth - actionWidth)];
+	[urlColumn setWidth:(tableRect.size.width - lengthWidth - cachedWidth - actionWidth)];
 	[urlColumn setEditable:NO];
 	[urlColumn setResizingMask:NSTableColumnAutoresizingMask];
 	[lengthColumn setDataCell:lengthTextCell];
 	[lengthColumn setWidth:lengthWidth];
 	[lengthColumn setEditable:NO];
 	[lengthColumn setResizingMask:NSTableColumnNoResizing];
-	[actionColumn setDataCell:buttonCell];
+	[cachedColumn setDataCell:cachedCell];
+	[cachedColumn setWidth:cachedWidth];
+	[cachedColumn setEditable:NO];
+	[cachedColumn setResizingMask:NSTableColumnNoResizing];
+	[actionColumn setDataCell:actionCell];
 	[actionColumn setWidth:actionWidth];
 	[actionColumn setEditable:NO];
 	[actionColumn setResizingMask:NSTableColumnNoResizing];
@@ -97,6 +108,7 @@
 	[tableView setRowHeight:20];
 	[tableView addTableColumn:urlColumn];
 	[tableView addTableColumn:lengthColumn];
+	[tableView addTableColumn:cachedColumn];
 	[tableView addTableColumn:actionColumn];
 	[tableView setAllowsMultipleSelection:YES];
 	[tableView setAllowsColumnSelection:NO];
@@ -157,6 +169,18 @@
 - (void)reload
 {
 	[tableView reloadData];
+}
+
+- (void)save:(NSTableView  *)aTableView
+{
+	NSInteger rowIndex = [aTableView clickedRow];
+	if (rowIndex != NSNotFound)
+	{
+		if ([delegate respondsToSelector:@selector(webResourcesView:shouldSaveAtRow:)])
+		{
+			[delegate webResourcesView:self shouldSaveAtRow:rowIndex];
+		}
+	}
 }
 
 - (void)download:(NSTableView  *)aTableView

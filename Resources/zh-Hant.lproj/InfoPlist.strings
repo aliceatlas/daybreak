@@ -2,5 +2,5 @@ CFBundleName = "Sunrise";
 CFBundleDisplayName = "Sunrise";
 NSHumanReadableCopyright = "Copyright © 2010 Atsushi Jike. All rights reserved.";
 SBHomePageURL = "http://www.sunrisebrowser.com/";
-SBGSearchFormat = "http://www.google.com/search?hl=en&q=%@";
+SBGSearchFormat = "http://www.google.com/search?hl=zh-TW&q=%@";
 SBReleaseNotesURL = "http://www.sunrisebrowser.com/releasenotes.txt";

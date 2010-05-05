@@ -28,6 +28,7 @@
 		085278E810189DDC00544C80 /* SBDownloaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 085278E710189DDC00544C80 /* SBDownloaderView.m */; };
 		0853D13A10671FB600DB577C /* SBDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0853D13910671FB600DB577C /* SBDownloader.m */; };
 		0853D16B106724E200DB577C /* Releasenotes.html in Resources */ = {isa = PBXBuildFile; fileRef = 0853D16A106724E200DB577C /* Releasenotes.html */; };
+		0859812B11910E47004AE779 /* DefaultBookmark.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0859812A11910E47004AE779 /* DefaultBookmark.plist */; };
 		085A73791091C75500FE7556 /* SBHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 085A73781091C75500FE7556 /* SBHistoryView.m */; };
 		085A738D1091CDC600FE7556 /* History.png in Resources */ = {isa = PBXBuildFile; fileRef = 085A738C1091CDC600FE7556 /* History.png */; };
 		085A747E1091F5CA00FE7556 /* SBHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 085A747D1091F5CA00FE7556 /* SBHistory.m */; };
@@ -155,6 +156,7 @@
 		08B00E4610AE4808002277E5 /* SBUserAgentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B00E4510AE4808002277E5 /* SBUserAgentView.m */; };
 		08B00EE210AE5A33002277E5 /* UserAgent.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B00EE110AE5A33002277E5 /* UserAgent.png */; };
 		08B6E2A2103451DA00BD15D8 /* SBSectionGroupe.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B6E2A1103451DA00BD15D8 /* SBSectionGroupe.m */; };
+		08BD344E118DC08400E17E69 /* Cached.png in Resources */ = {isa = PBXBuildFile; fileRef = 08BD344D118DC08400E17E69 /* Cached.png */; };
 		08BE0CF11143E88E00314946 /* SBWebResourcesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE0CF01143E88E00314946 /* SBWebResourcesView.m */; };
 		08C1D4B70FF9092A005709D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C1D4B60FF9092A005709D7 /* QuartzCore.framework */; };
 		08C3F2E610DDFCFA00340900 /* Credits.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 08C3F2E510DDFCFA00340900 /* Credits.rtfd */; };
@@ -222,6 +224,15 @@
 		0853D13810671FB600DB577C /* SBDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDownloader.h; path = Classes/SBDownloader.h; sourceTree = "<group>"; };
 		0853D13910671FB600DB577C /* SBDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDownloader.m; path = Classes/SBDownloader.m; sourceTree = "<group>"; };
 		0853D16A106724E200DB577C /* Releasenotes.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Releasenotes.html; path = Resources/htmls/Releasenotes.html; sourceTree = "<group>"; };
+		0859812C11910E6B004AE779 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = en; path = Resources/en.lproj/DefaultBookmark.plist; sourceTree = "<group>"; };
+		0859812D11910E76004AE779 /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = de; path = Resources/de.lproj/DefaultBookmark.plist; sourceTree = "<group>"; };
+		0859812E11910E78004AE779 /* es */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = es; path = Resources/es.lproj/DefaultBookmark.plist; sourceTree = "<group>"; };
+		0859812F11910E7C004AE779 /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fr; path = Resources/fr.lproj/DefaultBookmark.plist; sourceTree = "<group>"; };
+		0859813011910E80004AE779 /* it */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = it; path = Resources/it.lproj/DefaultBookmark.plist; sourceTree = "<group>"; };
+		0859813111910E83004AE779 /* ja */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ja; path = Resources/ja.lproj/DefaultBookmark.plist; sourceTree = "<group>"; };
+		0859813211910E87004AE779 /* pt_PT */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = pt_PT; path = Resources/pt_PT.lproj/DefaultBookmark.plist; sourceTree = "<group>"; };
+		0859813511910E99004AE779 /* fi */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = fi; path = Resources/fi.lproj/DefaultBookmark.plist; sourceTree = "<group>"; };
+		0859813611910E9D004AE779 /* nl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = nl; path = Resources/nl.lproj/DefaultBookmark.plist; sourceTree = "<group>"; };
 		085A73771091C75500FE7556 /* SBHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBHistoryView.h; path = Classes/SBHistoryView.h; sourceTree = "<group>"; };
 		085A73781091C75500FE7556 /* SBHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBHistoryView.m; path = Classes/SBHistoryView.m; sourceTree = "<group>"; };
 		085A738C1091CDC600FE7556 /* History.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = History.png; path = Resources/Images/History.png; sourceTree = "<group>"; };
@@ -231,6 +242,8 @@
 		085C2A570FE2A46A0099A0F6 /* SBApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBApplicationDelegate.m; path = Classes/SBApplicationDelegate.m; sourceTree = "<group>"; };
 		085C2AB60FE2ABB60099A0F6 /* SBDocumentWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDocumentWindow.h; path = Classes/SBDocumentWindow.h; sourceTree = "<group>"; };
 		085C2AB70FE2ABB60099A0F6 /* SBDocumentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDocumentWindow.m; path = Classes/SBDocumentWindow.m; sourceTree = "<group>"; };
+		0860E2EC11918E9D00EB2768 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "Resources/zh-Hans.lproj/DefaultBookmark.plist"; sourceTree = "<group>"; };
+		0860E2FF11918EA600EB2768 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hant"; path = "Resources/zh-Hant.lproj/DefaultBookmark.plist"; sourceTree = "<group>"; };
 		086D732C10D7867B006A4F25 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "Resources/zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		086D732D10D78682006A4F25 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "Resources/zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		08742F3E10233A60001F7EAF /* NSImage-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSImage-SBAdditions.h"; path = "Classes/NSImage-SBAdditions.h"; sourceTree = "<group>"; };
@@ -416,6 +429,7 @@
 		08BC851D107F9160005C9030 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08BD046D114D2AAE00BF9834 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = Resources/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08BD047B114D2AB500BF9834 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = Resources/fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		08BD344D118DC08400E17E69 /* Cached.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cached.png; path = Resources/Images/Cached.png; sourceTree = "<group>"; };
 		08BE0CEF1143E88E00314946 /* SBWebResourcesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebResourcesView.h; path = Classes/SBWebResourcesView.h; sourceTree = "<group>"; };
 		08BE0CF01143E88E00314946 /* SBWebResourcesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWebResourcesView.m; path = Classes/SBWebResourcesView.m; sourceTree = "<group>"; };
 		08C1D4B60FF9092A005709D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
@@ -481,6 +495,7 @@
 				08AA157B1029C98A000F2568 /* Bookmarks-List.png */,
 				08A9D836102477DA003C87E4 /* Bug.png */,
 				089F948010342E6B00C48997 /* CenterButton.png */,
+				08BD344D118DC08400E17E69 /* Cached.png */,
 				08C6DBCB114B4B610019BCE9 /* Download.png */,
 				088D299D101B5F3B00691CEC /* Edit.png */,
 				08943D0F1013566E0034A3E5 /* Finder.png */,
@@ -892,6 +907,7 @@
 				0896C12A0FFF136300B97498 /* Info.plist */,
 				0840673D0FE2B57300CC80E3 /* InfoPlist.strings */,
 				0891D41E1000436C000CE426 /* Localizable.strings */,
+				0859812A11910E47004AE779 /* DefaultBookmark.plist */,
 				0896C1290FFF136300B97498 /* ViewStructure.plist */,
 				084067440FE2B5B400CC80E3 /* MainMenu.xib */,
 				08C3F2E510DDFCFA00340900 /* Credits.rtfd */,
@@ -956,6 +972,8 @@
 				pt_PT,
 				fi,
 				nl,
+				zh_Hans,
+				zh_Hant,
 			);
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Sunrise */;
 			projectDirPath = "";
@@ -1060,6 +1078,8 @@
 				08982EDB1182CF53002122F6 /* Icon_Bookmarks.png in Resources */,
 				08982EDE1182CF5A002122F6 /* Icon_G.png in Resources */,
 				08982EDF1182CF5A002122F6 /* Icon_History.png in Resources */,
+				08BD344E118DC08400E17E69 /* Cached.png in Resources */,
+				0859812B11910E47004AE779 /* DefaultBookmark.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1170,6 +1190,24 @@
 				083E1DB0116A2E0B00BD3954 /* nl */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0859812A11910E47004AE779 /* DefaultBookmark.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0859812C11910E6B004AE779 /* en */,
+				0859812D11910E76004AE779 /* de */,
+				0859812E11910E78004AE779 /* es */,
+				0859812F11910E7C004AE779 /* fr */,
+				0859813011910E80004AE779 /* it */,
+				0859813111910E83004AE779 /* ja */,
+				0859813211910E87004AE779 /* pt_PT */,
+				0860E2EC11918E9D00EB2768 /* zh-Hans */,
+				0860E2FF11918EA600EB2768 /* zh-Hant */,
+				0859813511910E99004AE779 /* fi */,
+				0859813611910E9D004AE779 /* nl */,
+			);
+			name = DefaultBookmark.plist;
 			sourceTree = "<group>";
 		};
 		0891D41E1000436C000CE426 /* Localizable.strings */ = {

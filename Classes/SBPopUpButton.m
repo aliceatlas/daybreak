@@ -125,10 +125,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			NSShadow *shadow = nil;
 			NSMutableParagraphStyle *style = nil;
 			CGFloat padding = 10.0;
-			shadow = [[NSShadow alloc] init];
+			shadow = [[[NSShadow alloc] init] autorelease];
 			[shadow setShadowOffset:NSMakeSize(0.0, -1.0)];
 			[shadow setShadowColor:[NSColor whiteColor]];
-			style = [[NSMutableParagraphStyle alloc] init];
+			style = [[[NSMutableParagraphStyle alloc] init] autorelease];
 			[style setLineBreakMode:NSLineBreakByTruncatingTail];
 			attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 						  [NSFont boldSystemFontOfSize:11.0], NSFontAttributeName, 
@@ -141,8 +141,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			r.origin.x = padding;
 			r.origin.y = (controlView.bounds.size.height - r.size.height) / 2;
 			[itemTitle drawInRect:r withAttributes:attributes];
-			[shadow release];
-			[style release];
 		}
 	}
 }

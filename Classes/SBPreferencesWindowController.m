@@ -131,7 +131,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	item = [SBSectionItem itemWithTitle:NSLocalizedString(@"Loads images automatically", nil) keyName:kSBLoadsImagesAutomatically controlClass:[NSButton class] context:context];
 	[groupe1 addItem:item];
 	if (context) context = nil;
-	context = SBEncodingMenu(nil, nil);
+	context = SBEncodingMenu(nil, nil, NO);
 	item = [SBSectionItem itemWithTitle:NSLocalizedString(@"Default encoding", nil) keyName:kSBDefaultEncoding controlClass:[NSPopUpButton class] context:context];
 	[groupe1 addItem:item];
 	if (context) context = nil;

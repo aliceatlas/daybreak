@@ -27,6 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface SBCircleProgressIndicator : SBView
 {
+	SBCircleProgressIndicatorStyle style;
 	CGFloat progress;
 	BOOL selected;
 	BOOL highlighted;
@@ -35,6 +36,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL alwaysDrawing;
 	BOOL showPercentage;
 }
+@property (nonatomic) SBCircleProgressIndicatorStyle style;
 @property (nonatomic) CGFloat progress;
 @property (nonatomic) BOOL selected;
 @property (nonatomic) BOOL highlighted;

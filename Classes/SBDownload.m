@@ -59,6 +59,7 @@
 	if (self = [super init])
 	{
 		status = SBStatusProcessing;
+		path = nil;
 	}
 	return self;
 }

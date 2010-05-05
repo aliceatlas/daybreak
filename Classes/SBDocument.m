@@ -2,7 +2,7 @@
 
 SBDocument.m
  
-Authoring by Atsushi Jike
+	Authoring by Atsushi Jike
 
 Copyright 2010 Atsushi Jike. All rights reserved.
 
@@ -554,7 +554,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	encodingButton = [[SBPopUpButton alloc] initWithFrame:encodingView.bounds];
 	image = [[NSImage imageNamed:@"Plain.png"] stretchableImageWithSize:r.size sideCapWidth:7.0];
 	encodingButton.backgroundImage = image;
-	[encodingButton setMenu:SBEncodingMenu(nil, nil)];
+	[encodingButton setMenu:SBEncodingMenu(nil, nil, YES)];
 	encodingButton.target = self;
 	encodingButton.action = @selector(changeEncodingFromMenuItem:);
 	[encodingView addSubview:encodingButton];
@@ -715,7 +715,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[self.window makeFirstResponder:[tabViewItem webView]];
 		}
 		else {
-			[self selectURLField];
+			if ([self.window.toolbar isVisible])
+			{
+				[self selectURLField];
+			}
 		}
 	}
 }
@@ -806,7 +809,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				   kSBToolbarBugsItemIdentifier, 
 				   kSBToolbarUserAgentItemIdentifier, 
 				   kSBToolbarSourceItemIdentifier, 
-				   kSBToolbarZoomItemIdentifier, nil];
+				   kSBToolbarZoomItemIdentifier, 
+				   nil];
 	return identifiers;
 }
 
@@ -1338,10 +1342,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *encodingName = nil;
 	// Change encoding pop-up
 	encodingName = [[aTabViewItem webView] customTextEncodingName];
-	if (!encodingName)
-		encodingName = [(SBWebView *)[aTabViewItem webView] textEncodingName];
-	if (encodingName)
-		[encodingButton selectItemWithRepresentedObject:encodingName];
+	[encodingButton selectItemWithRepresentedObject:encodingName];
 }
 
 - (void)tabView:(SBTabView *)aTabView selectedItemDidStartLoading:(SBTabViewItem *)aTabViewItem
@@ -1590,6 +1591,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					}
 					[aCell setTitle:title];
 				}
+				else if ([identifier isEqual:@"Cached"])
+				{
+					NSData *data = nil;
+					NSCachedURLResponse *response = nil;
+					response = [[NSURLCache sharedURLCache] cachedResponseForRequest:resourceIdentifier.request];
+					data = response ? [response data] : nil;
+					BOOL enable = data != nil;
+					[(NSButtonCell *)aCell setEnabled:enable];
+					[(NSButtonCell *)aCell setImage:enable ? [NSImage imageNamed:@"Cached.png"] : nil];
+				}
 				else if ([identifier isEqual:@"Action"])
 				{
 					[(NSButtonCell *)aCell setImage:[NSImage imageNamed:@"Download.png"]];
@@ -1600,6 +1611,53 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 
 #pragma mark SBWebResourcesViewDelegate
+
+- (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldSaveAtRow:(NSInteger)rowIndex
+{
+	SBTabViewItem *tabViewItem = nil;
+	if (tabViewItem = self.selectedTabViewItem)
+	{
+		NSMutableArray *resourceIdentifiers = nil;
+		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		{
+			SBWebResourceIdentifier *resourceIdentifier = nil;
+			resourceIdentifier = rowIndex < [resourceIdentifiers count] ? [resourceIdentifiers objectAtIndex:rowIndex] : nil;
+			if (resourceIdentifier)
+			{
+				if (resourceIdentifier.request)
+				{
+					NSData *data = nil;
+					NSCachedURLResponse *response = nil;
+					response = [[NSURLCache sharedURLCache] cachedResponseForRequest:resourceIdentifier.request];
+					data = response ? [response data] : nil;
+					if (data)
+					{
+						NSString *filename = resourceIdentifier.URL ? [[resourceIdentifier.URL absoluteString] lastPathComponent] : @"UntitledData";
+						SBSavePanel *panel = [SBSavePanel savePanel];
+						[data retain];
+						[panel beginSheetForDirectory:nil file:filename modalForWindow:self.window modalDelegate:self didEndSelector:@selector(webResourceCachedDataSaveDidEnd:returnCode:contextInfo:) contextInfo:data];
+					}
+				}
+			}
+		}
+	}
+}
+
+- (void)webResourceCachedDataSaveDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	if (contextInfo != nil)
+	{
+		if (returnCode == NSOKButton)
+		{
+			NSData *data = (NSData *)contextInfo;
+			if ([data writeToFile:[sheet filename] atomically:YES])
+			{
+				
+			}
+		}
+		[(id)contextInfo release];
+	}
+}
 
 - (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldDownloadAtRow:(NSInteger)rowIndex
 {
@@ -1725,13 +1783,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Menu Validation
 
+// <# Coding #>
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	BOOL r = YES;
 	SEL selector = [menuItem action];
 	if (selector == @selector(about:))
 	{
-		
+		r = !window.coverWindow;
+	}
+	else if (selector == @selector(bugReport:))
+	{
+		r = !window.coverWindow;
 	}
 	else if (selector == @selector(createNewTab:))
 	{
@@ -1741,17 +1804,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		r = self.selectedWebDataSource != nil;
 	}
+	else if (selector == @selector(downloadFromURL:))
+	{
+		r = !window.coverWindow;
+	}
 	else if (selector == @selector(toggleAllbars:))
 	{
 		BOOL toolbarVisibility = [window.toolbar isVisible];
 		BOOL tabbarVisibility = window.tabbarVisivility;
 		BOOL shouldShow = !(toolbarVisibility && tabbarVisibility);
 		[menuItem setTitle:shouldShow ? NSLocalizedString(@"Show All Bars", nil) : NSLocalizedString(@"Hide All Bars", nil)];
-		r = !window.coverWindow;
-	}
-	else if (selector == @selector(toggleToolbarShown:))
-	{
-		[menuItem setTitle:[window.toolbar isVisible] ? NSLocalizedString(@"Hide Toolbar", nil) : NSLocalizedString(@"Show Toolbar", nil)];
 		r = !window.coverWindow;
 	}
 	else if (selector == @selector(toggleTabbar:))
@@ -1775,6 +1837,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		r = [[self selectedWebView] isLoading];
 	}
+	else if (selector == @selector(selectUserAgent:))
+	{
+		r = !window.coverWindow;
+	}
 	else if (selector == @selector(scaleToActualSizeForView:))
 	{
 		WebView *webView = [self selectedWebView];
@@ -1785,6 +1851,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		else {
 			r = NO;
 		}
+	}
+	else if (selector == @selector(showHistory:))
+	{
+		r = !window.coverWindow;
 	}
 	else if (selector == @selector(zoomInView:))
 	{
@@ -2023,6 +2093,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 												[NSNumber numberWithInteger:kSBURLFieldItemNoneType], kSBType, nil] atIndex:0];
 			}
 			urlField.items = [NSMutableArray mutableArrayWithArrays:[NSArray arrayWithObjects:urlField.gsItems, urlField.bmItems, urlField.hItems, nil]];
+		}
+		else {
+			urlField.gsItems = nil;
 		}
 		
 		[urlField appearSheetIfNeeded:YES];
@@ -2822,13 +2895,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSMenuItem *item = (NSMenuItem *)sender;
 	NSString *ianaName = (NSString *)[item representedObject];
-	if (ianaName)
-	{
-		SBWebView *webView = [self selectedWebView];
-		[[webView preferences] setDefaultTextEncodingName:ianaName];
-		[webView setCustomTextEncodingName:ianaName];
-		webView.textEncodingName = ianaName;
-	}
+	SBWebView *webView = [self selectedWebView];
+	[webView setCustomTextEncodingName:ianaName];
 }
 
 - (void)load:(id)sender
@@ -3175,6 +3243,46 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //	tanimation.fillMode = kCAFillModeForwards;
 	[innerView.layer removeAllAnimations];
 	[innerView.layer addAnimation:tanimation forKey:@"transform"];
+}
+
+- (void)debugAddDummyDownloads:(id)sender
+{
+	SBDownloads *downloads = [SBDownloads sharedDownloads];
+	for (NSUInteger index = 0; index < 3; index++)
+	{
+		SBDownload *item = [SBDownload itemWithURL:[NSURL URLWithString:@"http://localhost/dummy"]];
+		item.name = [NSString stringWithFormat:@"Dummy %d", index];
+		item.path = @"/unknown";
+		[downloads addItem:item];
+	}
+	[self performSelector:@selector(debugAddDummyDownloadsDidEnd) withObject:nil afterDelay:0.5];
+}
+
+- (void)debugAddDummyDownloadsDidEnd
+{
+	SBDownloads *downloads = [SBDownloads sharedDownloads];
+	SBDownloadsView *downloadsView = (SBDownloadsView *)sidebar.drawer.view;
+	for (NSUInteger index = 0; index < 3; index++)
+	{
+		SBDownload *item = [[downloads items] objectAtIndex:index];
+		if (index == 0)
+		{
+			item.status = SBStatusUndone;
+		}
+		else if (index > 0)
+		{
+			item.expectedLength = 10000000;
+			item.receivedLength = (item.expectedLength * ((CGFloat)index / (CGFloat)3));
+			item.status = SBStatusProcessing;
+		}
+		else if (index >= 1)
+		{
+			item.receivedLength = item.expectedLength = 10000000;
+			item.status = SBStatusDone;
+		}
+		item.bytes = [NSString bytesString:item.receivedLength expectedLength:item.expectedLength];
+		[downloadsView updateForItem:item];
+	}
 }
 
 @end

@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 + (NSString *)bytesStringForLength:(long long)length;
 + (NSString *)bytesStringForLength:(long long)length unit:(BOOL)hasUnit;
 + (NSString *)unitStringForLength:(long long)length;
++ (NSString *)bytesString:(long long)receivedLegnth expectedLength:(long long)expectedLength;
 - (NSString *)stringByDeletingQuotations;
 - (NSString *)stringByDeletingSpaces;
 - (NSString *)stringByDeletingCharacter:(NSString *)character;

@@ -41,11 +41,12 @@ NSRect SBDefaultDocumentWindowRect();
 NSString *SBDefaultHomePage();
 NSString *SBDefaultSaveDownloadedFilesToPath();
 NSDictionary *SBDefaultBookmarks();
-NSData *SBDefaultBookmarkImageData();
+NSData *SBEmptyBookmarkImageData();
 // Bookmarks
 NSDictionary *SBBookmarksWithItems(NSArray *items);
 NSDictionary *SBCreateBookmarkItem(NSString *title, NSString *url, NSData *imageData, NSDate *date, NSString *labelName, NSString *offsetString);
 NSMenu *SBBookmarkLabelColorMenu(BOOL pullsDown, id target, SEL action, id representedObject);
+NSArray *SBBookmarkItemsFromBookmarkDictionaryList(NSArray *bookmarkDictionaryList);
 // Rects
 NSSize SBBookmarkImageMaxSize();
 // File paths
@@ -88,7 +89,7 @@ CGImageRef SBBookmarkReflectionMaskImage(CGSize size);
 NSInteger SBRemainder(NSInteger value1, NSInteger value2);
 BOOL SBRemainderIsZero(NSInteger value1, NSInteger value2);
 // Others
-NSMenu *SBEncodingMenu(id target, SEL selector);
+NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault);
 NSComparisonResult SBStringEncodingSortFunction(id num1, id num2, void *context);
 NSInteger SBUnsignedIntegerSortFunction(id num1, id num2, void *context);
 void SBRunAlertWithMessage(NSString *message);

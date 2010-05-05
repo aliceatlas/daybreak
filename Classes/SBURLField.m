@@ -381,7 +381,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if (gscount == 0 && bmcount > 0 && hcount > 0)
 	{
-		matchIndex = (index == 0) || (index == hcount);
+		matchIndex = (index == 0) || (index == bmcount);
+	}
+	else if (gscount > 0 && bmcount == 0 && hcount > 0)
+	{
+		matchIndex = (index == 0) || (index == gscount);
 	}
 	else if (gscount > 0 && bmcount > 0 && hcount > 0)
 	{
@@ -1082,7 +1086,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	textRect.origin.x = (margin + NSMaxX(imageRect));
 	image = [[[NSImage alloc] initWithSize:size] autorelease];
 	
-	[image lockFocus];
+	[image lockFocus];	
 	[[self image] drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 	[urlString drawInRect:textRect withAttributes:attribute];
 	[image unlockFocus];

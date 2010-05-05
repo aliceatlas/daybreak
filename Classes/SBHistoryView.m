@@ -179,6 +179,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Getter
 
+- (void)showAllItems
+{
+	self.items = [[[[SBHistory sharedHistory] items] mutableCopy] autorelease];
+	[tableView reloadData];
+}
+
 - (void)updateItems
 {
 	NSString *searchFieldText = nil;
@@ -296,6 +302,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 
 #pragma mark Delegate
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+	if ([aNotification object] == searchField)
+	{
+		if ([[searchField stringValue] length] == 0)
+		{
+			[self showAllItems];
+		}
+	}
+}
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {

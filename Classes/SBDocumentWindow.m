@@ -209,6 +209,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self.contentView addSubview:innerView];
 }
 
+#pragma mark Menu validation
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	BOOL r = YES;
+	SEL selector = [menuItem action];
+	if (selector == @selector(toggleToolbarShown:))
+	{
+		[menuItem setTitle:[self.toolbar isVisible] ? NSLocalizedString(@"Hide Toolbar", nil) : NSLocalizedString(@"Show Toolbar", nil)];
+		r = !self.coverWindow;
+	}
+	else {
+		r = [super validateMenuItem:menuItem];
+	}
+	return r;
+}
+
 #pragma mark Setter
 
 - (void)setTitle:(NSString *)title

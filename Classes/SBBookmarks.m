@@ -176,7 +176,7 @@ static SBBookmarks *sharedBookmarks;
 	{
 		NSString *title = [NSString stringWithFormat:@"Title %d", index];
 		NSString *url = [NSString stringWithFormat:@"http://%d.com/", index];
-		NSDictionary *item = SBCreateBookmarkItem(title, url, SBDefaultBookmarkImageData(), [NSDate date], nil, NSStringFromPoint(NSZeroPoint));
+		NSDictionary *item = SBCreateBookmarkItem(title, url, SBEmptyBookmarkImageData(), [NSDate date], nil, NSStringFromPoint(NSZeroPoint));
 		[items addObject:item];
 	}
 #else
