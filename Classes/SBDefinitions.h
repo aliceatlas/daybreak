@@ -350,6 +350,12 @@ extern NSString *SBBookmarkPboardType;
 - (void)bookmarksView:(SBBookmarksView *)aBookmarksView shouldEditItemAtIndex:(NSUInteger)index;
 @end
 
+@class SBDownloadsView;
+@protocol SBDownloadsViewDelegate <NSObject>
+@optional
+- (void)downloadsViewDidRemoveAllItems:(SBDownloadsView *)aDownloadsView;
+@end
+
 @class SBRenderWindow;
 @protocol SBRenderWindowDelegate <NSObject>
 @optional

@@ -34,6 +34,8 @@
 @synthesize download;
 @synthesize progressIndicator;
 @synthesize selected;
+@dynamic nameFont;
+@dynamic paragraphStyle;
 
 - (id)initWithFrame:(NSRect)frame
 {
@@ -84,6 +86,19 @@
 	return 12.0;
 }
 
+- (NSFont *)nameFont
+{
+	return [NSFont boldSystemFontOfSize:10.0];
+}
+
+- (NSParagraphStyle *)paragraphStyle
+{
+	NSMutableParagraphStyle *paragraph = nil;
+	paragraph = [[[NSMutableParagraphStyle alloc] init] autorelease];
+	[paragraph setAlignment:NSCenterTextAlignment];
+	return [[paragraph copy] autorelease];
+}
+
 - (NSRect)progressRect
 {
 	NSRect r = NSZeroRect;
@@ -93,6 +108,40 @@
 	r.size.width = r.size.height = 48.0;
 	r.origin.x = (b.size.width - r.size.width) / 2;
 	r.origin.y = bottomHeight + ((b.size.height - bottomHeight) - r.size.height) / 2;
+	return r;
+}
+
+- (NSRect)nameRect:(NSString *)title
+{
+	NSRect r = NSZeroRect;
+	NSRect drawRect = self.bounds;
+	NSPoint padding = [self padding];
+	CGFloat titleHeight = [self titleHeight];
+	CGFloat bytesHeight = [self bytesHeight];
+	CGFloat margin = 8.0;
+	CGFloat availableWidth = self.bounds.size.width - titleHeight;
+	if ([title length] > 0)
+	{
+		NSSize size = [title sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+												 self.nameFont, NSFontAttributeName, 
+												 self.paragraphStyle, NSParagraphStyleAttributeName, nil]];
+		if (size.width <= availableWidth)
+		{
+			drawRect.origin.x = (availableWidth - size.width) / 2;
+			drawRect.size.width = size.width;
+		}
+		else {
+			drawRect.size.width = availableWidth;
+		}
+	}
+	else {
+		drawRect.size.width = availableWidth;
+	}
+	r = NSZeroRect;
+	r.size.width = drawRect.size.width;
+	r.size.height = titleHeight;
+	r.origin.x = margin + drawRect.origin.x;
+	r.origin.y = padding.y + bytesHeight;
 	return r;
 }
 
@@ -226,25 +275,24 @@
 	// name string
 	if (download.name)
 	{
-		CGRect r = CGRectZero;
+		NSRect r = NSZeroRect;
 		NSDictionary *attributes = nil;
 		NSSize size = NSZeroSize;
 		CGFloat margin = 8.0;
-		NSPoint padding = [self padding];
-		NSMutableParagraphStyle *paragraph = nil;
 		
-		r.size.width = rect.size.width - margin * 2;
-		r.size.height = [self titleHeight];
-		r.origin.x = margin;
-		r.origin.y = padding.y + bytesHeight;
+		r = [self nameRect:download.name];
 		
 		if (selected)
 		{
 			// Background
-			CGRect sr = r;
+			CGRect sr = NSRectToCGRect(r);
 			CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
 			CGFloat components[4];
 			CGPathRef path = nil;
+			NSUInteger count = 2;
+			CGFloat locations[count];
+			CGFloat colors[count * 4];
+			CGPoint points[count];
 			if ([self isFirstResponder])
 			{
 				SBGetAlternateSelectedControlColorComponents(components);
@@ -255,25 +303,55 @@
 			}
 			sr.origin.x -= margin;
 			sr.size.width += margin * 2;
-			path = SBRoundedPath(sr, sr.size.height / 2, 0.0, YES, YES);
+			locations[0] = 0.0;
+			locations[1] = 1.0;
+			colors[0] = components[0] - 0.2;
+			colors[1] = components[1] - 0.2;
+			colors[2] = components[2] - 0.2;
+			colors[3] = components[3];
+			colors[4] = components[0];
+			colors[5] = components[1];
+			colors[6] = components[2];
+			colors[7] = components[3];
+			points[0] = CGPointMake(0.0, sr.origin.y);
+			points[1] = CGPointMake(0.0, CGRectGetMaxY(sr));
 			CGContextSaveGState(ctx);
+			path = SBRoundedPath(sr, sr.size.height / 2, 0.0, YES, YES);
 			CGContextAddPath(ctx, path);
-			CGContextSetRGBFillColor(ctx, components[0], components[1], components[2], components[3]);
-			CGContextFillPath(ctx);
+			CGContextClip(ctx);
+			SBDrawGradientInContext(ctx, count, locations, colors, points);
 			CGContextRestoreGState(ctx);
 			CGPathRelease(path);
+//			CGRect sr = NSRectToCGRect(r);
+//			CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+//			CGFloat components[4];
+//			CGPathRef path = nil;
+//			if ([self isFirstResponder])
+//			{
+//				SBGetAlternateSelectedControlColorComponents(components);
+//			}
+//			else {
+//				components[0] = components[1] = components[2] = 0.8;
+//				components[3] = 1.0;
+//			}
+//			sr.origin.x -= margin;
+//			sr.size.width += margin * 2;
+//			path = SBRoundedPath(sr, sr.size.height / 2, 0.0, YES, YES);
+//			CGContextSaveGState(ctx);
+//			CGContextAddPath(ctx, path);
+//			CGContextSetRGBFillColor(ctx, components[0], components[1], components[2], components[3]);
+//			CGContextFillPath(ctx);
+//			CGContextRestoreGState(ctx);
+//			CGPathRelease(path);
 		}
-		paragraph = [[NSMutableParagraphStyle alloc] init];
-		[paragraph setAlignment:NSCenterTextAlignment];
 		attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-					  [NSFont boldSystemFontOfSize:10.0], NSFontAttributeName, 
+					  self.nameFont, NSFontAttributeName, 
 					  [NSColor whiteColor], NSForegroundColorAttributeName, 
-					  paragraph, NSParagraphStyleAttributeName, nil];
-		[paragraph release];
+					  self.paragraphStyle, NSParagraphStyleAttributeName, nil];
 		size = [download.name sizeWithAttributes:attributes];
 		r.origin.y += (r.size.height - size.height) / 2;
 		r.size.height = size.height;
-		[download.name drawInRect:NSRectFromCGRect(r) withAttributes:attributes];
+		[download.name drawInRect:r withAttributes:attributes];
 	}
 	// bytes string
 	switch (download.status)
@@ -294,17 +372,13 @@
 		NSDictionary *attributes = nil;
 		NSSize size = NSZeroSize;
 		NSPoint padding = [self padding];
-		NSMutableParagraphStyle *paragraph = nil;
 		r.size.width = rect.size.width;
 		r.size.height = bytesHeight;
 		r.origin.y = padding.y;
-		paragraph = [[NSMutableParagraphStyle alloc] init];
-		[paragraph setAlignment:NSCenterTextAlignment];
 		attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 					  [NSFont systemFontOfSize:9.0], NSFontAttributeName, 
 					  [NSColor lightGrayColor], NSForegroundColorAttributeName, 
-					  paragraph, NSParagraphStyleAttributeName, nil];
-		[paragraph release];
+					  self.paragraphStyle, NSParagraphStyleAttributeName, nil];
 		size = [description sizeWithAttributes:attributes];
 		r.origin.y += (r.size.height - size.height) / 2;
 		r.size.height = size.height;

@@ -36,6 +36,8 @@
 @property (nonatomic, assign) SBDownload *download;
 @property (nonatomic, retain) SBCircleProgressIndicator *progressIndicator;
 @property (nonatomic) BOOL selected;
+@property (nonatomic, readonly) NSFont *nameFont;
+@property (nonatomic, readonly) NSParagraphStyle *paragraphStyle;
 
 // Getter
 - (BOOL)isFirstResponder;
@@ -44,6 +46,7 @@
 - (CGFloat)titleHeight;
 - (CGFloat)bytesHeight;
 - (NSRect)progressRect;
+- (NSRect)nameRect:(NSString *)title;
 // Setter
 - (void)setSelected:(BOOL)isSelected;
 // Actions

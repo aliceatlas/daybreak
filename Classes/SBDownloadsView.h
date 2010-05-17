@@ -29,12 +29,14 @@
 @class SBDownloadView;
 @interface SBDownloadsView : SBView
 {
+	id<SBDownloadsViewDelegate> delegate;
 	NSMutableArray *downloadViews;
 	SBButton *removeButton;
 	SBButton *finderButton;
 	SBDownloadView *toolsItemView;
 	NSTimer *toolsTimer;
 }
+@property (nonatomic, assign) id<SBDownloadsViewDelegate> delegate;
 
 - (NSSize)cellSize;
 - (NSUInteger)blockX;
@@ -49,6 +51,9 @@
 - (void)layoutToolsForItem:(SBDownloadView *)itemView;
 - (void)layoutTools;
 - (void)layoutToolsHidden;
+// Actions (Private)
+- (void)needsDisplaySelectedItemViews;
+- (void)executeDidRemoveAllItems;
 - (void)destructControls;
 - (void)destructToolsTimer;
 - (void)constructDownloadViews;

@@ -66,30 +66,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		centerImage = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_PopUp-Highlighted-Center.png" : @"BLKGUI_PopUp-Center.png")];
 		rightImage = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_PopUp-Highlighted-Right.png" : @"BLKGUI_PopUp-Right.png")];
 		
-		if ([controlView isFlipped])
-		{
-			[leftImage setFlipped:YES];
-			[centerImage setFlipped:YES];
-			[rightImage setFlipped:YES];
-		}
-		
 		// Left
 		drawRect.origin = cellFrame.origin;
 		drawRect.size = [leftImage size];
 		drawRect.origin.y = (cellFrame.size.height - drawRect.size.height) / 2;
-		[leftImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fraction];
+		[leftImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:fraction respectFlipped:[controlView isFlipped]];
 		
 		// Center
 		drawRect.origin.x = [leftImage size].width;
 		drawRect.size.width = cellFrame.size.width - ([leftImage size].width + [rightImage size].width);
 		drawRect.origin.y = (cellFrame.size.height - drawRect.size.height) / 2;
-		[centerImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fraction];
+		[centerImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:fraction respectFlipped:[controlView isFlipped]];
 		
 		// Right
 		drawRect.size = [rightImage size];
 		drawRect.origin.x = cellFrame.size.width - drawRect.size.width;
 		drawRect.origin.y = (cellFrame.size.height - drawRect.size.height) / 2;
-		[rightImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fraction];
+		[rightImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:fraction respectFlipped:[controlView isFlipped]];
 	}
 	
 	if (image)

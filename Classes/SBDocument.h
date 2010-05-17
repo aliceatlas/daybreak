@@ -118,6 +118,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)destructZoomButton;
 - (void)destructTabbar;
 - (void)destructSplitView;
+- (void)destructTabView;
 - (void)destructSidebar;
 - (SBBookmarksView *)constructBookmarksView;
 - (void)destructBookmarkView;

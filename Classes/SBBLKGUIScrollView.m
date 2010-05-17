@@ -244,7 +244,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		else
 			image = [NSImage imageNamed:@"BLKGUI_ScrollerArrow-Vertical-Up.png"];
 		downImage = [NSImage imageNamed:@"BLKGUI_ScrollerArrow-Vertical-Down.png"];
-		[image setFlipped:isFlipped];
 		drawRect.size = [image size];
 		drawRect.origin.y = arrowRect.origin.y + (arrowRect.size.height - ([image size].height + [downImage size].height));
 	}
@@ -254,7 +253,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			image = [NSImage imageNamed:@"BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png"];
 		else
 			image = [NSImage imageNamed:@"BLKGUI_ScrollerArrow-Horizontal-Right.png"];
-		[image setFlipped:isFlipped];
 		drawRect.size = [image size];
 		drawRect.origin.x = (arrowRect.origin.x + arrowRect.size.width) - drawRect.size.width;
 	}
@@ -263,7 +261,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[backgroundColor ? backgroundColor : color set];
 		NSRectFill(drawRect);
 	}
-	[image drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	[image drawInRect:drawRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:isFlipped];
 	
 	// Down
 	if (isVertical)
@@ -272,7 +270,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			image = [NSImage imageNamed:@"BLKGUI_ScrollerArrow-Highlighted-Vertical-Down.png"];
 		else
 			image = [NSImage imageNamed:@"BLKGUI_ScrollerArrow-Vertical-Down.png"];
-		[image setFlipped:isFlipped];
 		drawRect.size = [image size];
 		drawRect.origin.y = (arrowRect.origin.y + arrowRect.size.height) - drawRect.size.height;
 	}
@@ -285,7 +282,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		else
 			image = [NSImage imageNamed:@"BLKGUI_ScrollerArrow-Horizontal-Left.png"];
 		rightImage = [NSImage imageNamed:@"BLKGUI_ScrollerArrow-Horizontal-Right.png"];
-		[image setFlipped:isFlipped];
 		drawRect.size = [image size];
 		drawRect.origin.x = (arrowRect.origin.x + arrowRect.size.width) - (drawRect.size.width + [rightImage size].width);
 	}
@@ -294,7 +290,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[backgroundColor ? backgroundColor : color set];
 		NSRectFill(drawRect);
 	}
-	[image drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+	[image drawInRect:drawRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:isFlipped];
 	
 	// Stroke bounds
 	[[NSColor lightGrayColor] set];
@@ -340,8 +336,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (image)
 	{
 		drawRect.size = [image size];
-		[image setFlipped:isFlipped];
-		[image drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[image drawInRect:drawRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:isFlipped];
 	}
 }
 
@@ -366,28 +361,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		// Bottom
 		bottomImage = [NSImage imageNamed:@"BLKGUI_ScrollerKnob-Vertical-Bottom.png"];
-		[bottomImage setFlipped:isFlipped];
 		drawRect.size = [bottomImage size];
 		drawRect.origin.x = knobRect.origin.x + (knobRect.size.width - drawRect.size.width) / 2;
 		drawRect.origin.y = (knobRect.origin.y + knobRect.size.height) - [bottomImage size].height - m;
-		[bottomImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[bottomImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:isFlipped];
 		
 		// Top
 		topImage = [NSImage imageNamed:@"BLKGUI_ScrollerKnob-Vertical-Top.png"];
-		[topImage setFlipped:isFlipped];
 		drawRect.size = [topImage size];
 		drawRect.origin.x = knobRect.origin.x + (knobRect.size.width - drawRect.size.width) / 2;
 		drawRect.origin.y = knobRect.origin.y + m;
-		[topImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[topImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:isFlipped];
 		
 		// Middle
 		middleImage = [NSImage imageNamed:@"BLKGUI_ScrollerKnob-Vertical-Middle.png"];
-		[middleImage setFlipped:isFlipped];
 		drawRect.size.width = [middleImage size].width;
 		drawRect.origin.x = knobRect.origin.x + (knobRect.size.width - drawRect.size.width) / 2;
 		drawRect.origin.y = knobRect.origin.y + [bottomImage size].height + m;
 		drawRect.size.height = knobRect.size.height - ([bottomImage size].height + [topImage size].height) - (m * 2);
-		[middleImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[middleImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:isFlipped];
 	}
 	else {
 		NSImage *leftImage = nil;
@@ -396,28 +388,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		// Left
 		leftImage = [NSImage imageNamed:@"BLKGUI_ScrollerKnob-Horizontal-Left.png"];
-		[leftImage setFlipped:isFlipped];
 		drawRect.size = [leftImage size];
 		drawRect.origin.x = knobRect.origin.x + m;
 		drawRect.origin.y = knobRect.origin.y + (knobRect.size.height - drawRect.size.height) / 2;
-		[leftImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[leftImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:isFlipped];
 		
 		// Right
 		rightImage = [NSImage imageNamed:@"BLKGUI_ScrollerKnob-Horizontal-Right.png"];
-		[rightImage setFlipped:isFlipped];
 		drawRect.size = [rightImage size];
 		drawRect.origin.y = knobRect.origin.y + (knobRect.size.height - drawRect.size.height) / 2;
 		drawRect.origin.x = knobRect.origin.x + knobRect.size.width - ([leftImage size].width + m);
-		[rightImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[rightImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:isFlipped];
 		
 		// Center
 		centerImage = [NSImage imageNamed:@"BLKGUI_ScrollerKnob-Horizontal-Center.png"];
-		[centerImage setFlipped:isFlipped];
 		drawRect.size.height = [centerImage size].height;
 		drawRect.origin.y = knobRect.origin.y + (knobRect.size.height - drawRect.size.height) / 2;
 		drawRect.origin.x = knobRect.origin.x + [leftImage size].width + m;
 		drawRect.size.width = knobRect.size.width - ([leftImage size].width + [rightImage size].width + m * 2);
-		[centerImage drawInRect:drawRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+		[centerImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:1.0 respectFlipped:isFlipped];
 	}
 }
 

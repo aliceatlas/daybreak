@@ -106,15 +106,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				image = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_CheckBox-Highlighted.png" : @"BLKGUI_CheckBox.png")];
 			}
 			
-			if ([controlView isFlipped])
-			{
-				[image setFlipped:YES];
-			}
-			
 			imageRect.size = [image size];
 			r.size = imageRect.size;
 			r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
-			[image drawInRect:r fromRect:imageRect operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5)];
+			[image drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
 		}
 		else if (_buttonType == NSRadioButton)
 		{
@@ -128,16 +123,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				image = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_Radio-Highlighted.png" : @"BLKGUI_Radio.png")];
 			}
 			
-			if ([controlView isFlipped])
-			{
-				[image setFlipped:YES];
-			}
-			
 			imageRect.size = [image size];
 			r.size = imageRect.size;
 			r.origin.x = cellFrame.origin.x;
 			r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
-			[image drawInRect:r fromRect:imageRect operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5)];
+			[image drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
 		}
 		else {
 			if (isDone)
@@ -168,18 +158,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				}
 			}
 			
-			if ([controlView isFlipped])
-			{
-				[leftImage setFlipped:YES];
-				[centerImage setFlipped:YES];
-				[rightImage setFlipped:YES];
-			}
-			
 			if (leftImage)
 			{
 				r.size = [leftImage size];
 				r.origin.y = (cellFrame.size.height - r.size.height) / 2;
-				[leftImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5)];
+				[leftImage drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
 				offset = NSMaxX(r);
 			}
 			if (centerImage)
@@ -188,7 +171,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				r.size.width = cellFrame.size.width - (leftImage ? [leftImage size].width : 0 + rightImage ? [rightImage size].width : 0);
 				r.size.height = [centerImage size].height;
 				r.origin.y = (cellFrame.size.height - r.size.height) / 2;
-				[centerImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5)];
+				[centerImage drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
 				offset = NSMaxX(r);
 			}
 			if (rightImage)
@@ -196,7 +179,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				r.origin.x = offset;
 				r.size = [rightImage size];
 				r.origin.y = (cellFrame.size.height - r.size.height) / 2;
-				[rightImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5)];
+				[rightImage drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
 			}
 		}
 	}
@@ -270,9 +253,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					size.width = frame.size.width - r.origin.x;
 				}
 				imageRect.origin.y = (frame.size.height - imageRect.size.height) / 2 - 1;
-				if ([controlView isFlipped])
-					[image setFlipped:YES];
-				[image drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:([self isEnabled] ? [self isHighlighted] ? 0.5 : 1.0 : 0.5)];
+				[image drawInRect:imageRect operation:NSCompositeSourceOver fraction:([self isEnabled] ? [self isHighlighted] ? 0.5 : 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
 			}
 		}
 		[title drawInRect:r withAttributes:attributes];

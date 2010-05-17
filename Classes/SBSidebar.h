@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)bottombar:(SBSideBottombar *)inBottombar didChangeSize:(CGFloat)size;
 //- (CGFloat)bottombar:(SBSideBottombar *)inBottombar didDraggedResizer:(CGFloat)deltaX;
 @end
-@interface SBSidebar : NSSplitView <SBSideBottombarDelegate>
+@interface SBSidebar : NSSplitView <SBDownloadsViewDelegate, SBSideBottombarDelegate>
 {
 	NSView *view;
 	SBDrawer *drawer;
@@ -78,7 +78,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setDividerPosition:(CGFloat)pos animate:(BOOL)animate;
 - (void)openDrawer:(id)sender;
 - (void)closeDrawer:(id)sender;
-- (void)closeDrawer;
+- (void)closeDrawerWithAnimatedFlag:(BOOL)animated;
 - (void)showBookmarkItemIndexes:(NSIndexSet *)indexes;
 
 @end

@@ -30,6 +30,8 @@
 
 @implementation SBDownloadsView
 
+@synthesize delegate;
+
 - (id)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
@@ -43,6 +45,7 @@
 
 - (void)dealloc
 {
+	delegate = nil;
 	[downloadViews release];
 	[self destructControls];
 	[self destructToolsTimer];
@@ -54,6 +57,18 @@
 
 - (BOOL)acceptsFirstResponder
 {
+	return YES;
+}
+
+- (BOOL)becomeFirstResponder
+{
+	[self needsDisplaySelectedItemViews];
+	return YES;
+}
+
+- (BOOL)resignFirstResponder
+{
+	[self needsDisplaySelectedItemViews];
 	return YES;
 }
 
@@ -157,7 +172,13 @@
 	}
 	if (find)
 	{
-		[self layout:YES];
+		if ([downloadViews count] > 0)
+		{
+			[self layout:YES];
+		}
+		else {
+			[self executeDidRemoveAllItems];
+		}
 	}
 	return find;
 }
@@ -233,6 +254,26 @@
 }
 
 #pragma mark Actions (Private)
+
+- (void)needsDisplaySelectedItemViews
+{
+	for (SBDownloadView *downloadView in downloadViews)
+	{
+		if (downloadView.selected)
+			[downloadView setNeedsDisplay:YES];
+	}
+}
+
+- (void)executeDidRemoveAllItems
+{
+	if (delegate)
+	{
+		if ([delegate respondsToSelector:@selector(downloadsViewDidRemoveAllItems:)])
+		{
+			[delegate performSelector:@selector(downloadsViewDidRemoveAllItems:) withObject:self];
+		}
+	}
+}
 
 - (void)destructControls
 {

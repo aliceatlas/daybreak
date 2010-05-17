@@ -34,5 +34,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 + (NSImage *)imageWithCGImage:(CGImageRef)srcImage;
 - (CGImageRef)CGImage;
 - (NSBitmapImageRep *)bitmapImageRep;
+- (void)drawInRect:(NSRect)rect operation:(NSCompositingOperation)op fraction:(CGFloat)requestedAlpha respectFlipped:(BOOL)respectContextIsFlipped;
 
 @end

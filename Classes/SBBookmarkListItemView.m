@@ -32,6 +32,7 @@
 @implementation SBBookmarkListItemView
 
 @synthesize mode, item, selected, dragged;
+@dynamic titleFont, urlFont, paragraphStyle;
 
 + (id)viewWithFrame:(NSRect)frame item:(NSDictionary *)item
 {
@@ -77,6 +78,11 @@
 
 #pragma mark Getter
 
+- (BOOL)isFirstResponder
+{
+	return [[self window] firstResponder] == [self superview];
+}
+
 - (NSPoint)padding
 {
 	CGFloat padding = self.bounds.size.width * kSBBookmarkCellPaddingPercentage;
@@ -101,6 +107,32 @@
 - (BOOL)visible
 {
 	return NSIntersectsRect([self.superview visibleRect], self.frame);
+}
+
+- (NSFont *)titleFont
+{
+	return [NSFont boldSystemFontOfSize:(mode == SBBookmarkIconMode ? 10.0 : 11.0)];
+}
+
+- (NSFont *)urlFont
+{
+	return [NSFont systemFontOfSize:(mode == SBBookmarkIconMode ? 9.0 : 11.0)];
+}
+
+- (NSParagraphStyle *)paragraphStyle
+{
+	NSMutableParagraphStyle *paragraph = nil;
+	paragraph = [[[NSMutableParagraphStyle alloc] init] autorelease];
+	[paragraph setLineBreakMode:NSLineBreakByTruncatingTail];
+	if (mode == SBBookmarkIconMode)
+	{
+		[paragraph setAlignment:NSCenterTextAlignment];
+	}
+	if (mode == SBBookmarkListMode)
+	{
+		[paragraph setAlignment:NSLeftTextAlignment];
+	}
+	return [[paragraph copy] autorelease];
 }
 
 #pragma mark Rects
@@ -139,16 +171,39 @@
 
 - (NSRect)titleRect
 {
+	return [self titleRect:(item ? [item objectForKey:kSBBookmarkTitle] : nil)];
+}
+
+- (NSRect)titleRect:(NSString *)title
+{
 	NSRect r = NSZeroRect;
-	NSRect bounds = self.bounds;
+	NSRect drawRect = self.bounds;
 	NSPoint padding = [self padding];
 	CGFloat titleHeight = [self titleHeight];
 	CGFloat bytesHeight = [self bytesHeight];
 	CGFloat margin = titleHeight / 2;
+	CGFloat availableWidth = self.bounds.size.width - titleHeight;
+	if ([title length] > 0)
+	{
+		NSSize size = [title sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+												 self.titleFont, NSFontAttributeName, 
+												 self.paragraphStyle, NSParagraphStyleAttributeName, nil]];
+		if (size.width <= availableWidth)
+		{
+			drawRect.origin.x = (availableWidth - size.width) / 2;
+			drawRect.size.width = size.width;
+		}
+		else {
+			drawRect.size.width = availableWidth;
+		}
+	}
+	else {
+		drawRect.size.width = availableWidth;
+	}
 	r = NSZeroRect;
-	r.size.width = bounds.size.width - margin * 2;
+	r.size.width = drawRect.size.width;
 	r.size.height = titleHeight;
-	r.origin.x = margin;
+	r.origin.x = margin + drawRect.origin.x;
 	r.origin.y = padding.y + bytesHeight;
 	return r;
 }
@@ -348,7 +403,6 @@
 		NSPoint padding = [self padding];
 		NSDictionary *attributes = nil;
 		NSSize size = NSZeroSize;
-		NSMutableParagraphStyle *paragraph = nil;
 		BOOL iconed = NO;
 		NSPoint transformScale = NSZeroPoint;
 		
@@ -372,7 +426,7 @@
 				r = [self imageRect];
 				
 				// frame
-				if ([[self window] firstResponder] == [self superview] && selected)
+				if ([self isFirstResponder] && selected)
 				{
 					CGFloat components[4];
 					CGRect fr = CGRectInset(NSRectToCGRect(r), -padding.x / 1.5, -padding.y / 1.5);
@@ -416,7 +470,7 @@
 				NSShadow *shadow = nil;
 				CGFloat margin = titleHeight / 2;
 				
-				r = [self titleRect];
+				r = [self titleRect:title];
 				
 				if (labelColor)
 				{
@@ -445,7 +499,7 @@
 					CGFloat components[4];
 					CGPathRef path = nil;
 					CGFloat tmargin = margin - 1.0;
-					if ([[self window] firstResponder] == [self superview])
+					if ([self isFirstResponder])
 					{
 						SBGetAlternateSelectedControlColorComponents(components);
 					}
@@ -474,14 +528,11 @@
 					[shadow setShadowBlurRadius:2.0];
 					[shadow setShadowColor:[NSColor blackColor]];
 				}
-				paragraph = [[NSMutableParagraphStyle alloc] init];
-				[paragraph setAlignment:NSCenterTextAlignment];
 				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							  [NSFont boldSystemFontOfSize:10.0], NSFontAttributeName, 
+							  self.titleFont, NSFontAttributeName, 
 							  [NSColor whiteColor], NSForegroundColorAttributeName, 
-							  paragraph, NSParagraphStyleAttributeName, 
+							  self.paragraphStyle, NSParagraphStyleAttributeName, 
 							  shadow, NSShadowAttributeName, nil];
-				[paragraph release];
 				[shadow release];
 				size = [title sizeWithAttributes:attributes];
 				r.origin.y += (r.size.height - size.height) / 2;
@@ -492,13 +543,10 @@
 			if (urlString)
 			{
 				r = [self bytesRect];
-				paragraph = [[NSMutableParagraphStyle alloc] init];
-				[paragraph setAlignment:NSCenterTextAlignment];
 				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							  [NSFont systemFontOfSize:9.0], NSFontAttributeName, 
+							  self.urlFont, NSFontAttributeName, 
 							  [NSColor lightGrayColor], NSForegroundColorAttributeName, 
-							  paragraph, NSParagraphStyleAttributeName, nil];
-				[paragraph release];
+							  self.paragraphStyle, NSParagraphStyleAttributeName, nil];
 				size = [urlString sizeWithAttributes:attributes];
 				r.origin.y += (r.size.height - size.height) / 2;
 				r.size.height = size.height;
@@ -561,7 +609,7 @@
 					CGFloat locations[count];
 					CGFloat colors[count * 4];
 					CGPoint points[count];
-					if ([[self window] firstResponder] == [self superview])
+					if ([self isFirstResponder])
 					{
 						SBGetAlternateSelectedControlColorComponents(components);
 					}
@@ -603,15 +651,11 @@
 					[shadow setShadowBlurRadius:2.0];
 					[shadow setShadowColor:[NSColor blackColor]];
 				}
-				paragraph = [[NSMutableParagraphStyle alloc] init];
-				[paragraph setLineBreakMode:NSLineBreakByTruncatingTail];
-				[paragraph setAlignment:NSLeftTextAlignment];
 				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							  [NSFont boldSystemFontOfSize:11.0], NSFontAttributeName, 
+							  self.titleFont, NSFontAttributeName, 
 							  [NSColor whiteColor], NSForegroundColorAttributeName, 
-							  paragraph, NSParagraphStyleAttributeName, 
+							  self.paragraphStyle, NSParagraphStyleAttributeName, 
 							  shadow, NSShadowAttributeName, nil];
-				[paragraph release];
 				[shadow release];
 				size = [title sizeWithAttributes:attributes];
 				titleRect.origin.y += (titleRect.size.height - size.height) / 2;
@@ -623,14 +667,10 @@
 			{
 				NSColor *color = nil;
 				color = selected ? [NSColor whiteColor] : (labelColor ? [NSColor blackColor] : [NSColor lightGrayColor]);
-				paragraph = [[NSMutableParagraphStyle alloc] init];
-				[paragraph setLineBreakMode:NSLineBreakByTruncatingTail];
-				[paragraph setAlignment:NSLeftTextAlignment];
 				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							  [NSFont systemFontOfSize:11.0], NSFontAttributeName, 
+							  self.urlFont, NSFontAttributeName, 
 							  color, NSForegroundColorAttributeName, 
-							  paragraph, NSParagraphStyleAttributeName, nil];
-				[paragraph release];
+							  self.paragraphStyle, NSParagraphStyleAttributeName, nil];
 				size = [urlString sizeWithAttributes:attributes];
 				urlRect.origin.y += (urlRect.size.height - size.height) / 2;
 				urlRect.size.height = size.height;

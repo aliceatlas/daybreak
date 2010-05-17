@@ -258,11 +258,7 @@
 		r.origin.x = cellFrame.origin.x + side + ((cellFrame.size.width - side * 2) - r.size.width) / 2;
 		r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
 		r = NSIntegralRect(r);
-		if (![image isFlipped])
-		{
-			[image setFlipped:YES];
-		}
-		[image drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fraction];
+		[image drawInRect:r operation:NSCompositeSourceOver fraction:fraction respectFlipped:![image isFlipped]];
 	}
 }
 

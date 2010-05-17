@@ -170,4 +170,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return (NSBitmapImageRep *)imageRep;
 }
 
+- (void)drawInRect:(NSRect)rect operation:(NSCompositingOperation)op fraction:(CGFloat)requestedAlpha respectFlipped:(BOOL)respectContextIsFlipped
+{
+	BOOL isFlipped = [self isFlipped];
+	if (isFlipped != respectContextIsFlipped)
+	{
+		// Set flipped peroperty
+		[self setFlipped:respectContextIsFlipped];
+	}
+	[self drawInRect:rect fromRect:NSZeroRect operation:op fraction:requestedAlpha];
+	if (isFlipped != respectContextIsFlipped)
+	{
+		// Restore flipped peroperty
+		[self setFlipped:isFlipped];
+	}
+}
+
 @end

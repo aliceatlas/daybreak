@@ -39,17 +39,24 @@
 @property (nonatomic, retain) NSDictionary *item;
 @property (nonatomic) BOOL selected;
 @property (nonatomic) BOOL dragged;
+@property (nonatomic, readonly) NSFont *titleFont;
+@property (nonatomic, readonly) NSFont *urlFont;
+@property (nonatomic, readonly) NSParagraphStyle *paragraphStyle;
 
 + (id)viewWithFrame:(NSRect)frame item:(NSDictionary *)item;
 - (BOOL)hitToPoint:(NSPoint)point;
 - (BOOL)hitToRect:(NSRect)rect;
+- (BOOL)isFirstResponder;
+- (NSPoint)padding;
 - (CGFloat)heights;
 - (CGFloat)titleHeight;
 - (CGFloat)bytesHeight;
 - (BOOL)visible;
+- (NSFont *)titleFont;
 // Rects
 - (NSRect)imageRect;
 - (NSRect)titleRect;
+- (NSRect)titleRect:(NSString *)title;
 - (NSRect)bytesRect;
 // Setter
 - (void)setSelected:(BOOL)isSelected;

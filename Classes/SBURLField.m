@@ -200,7 +200,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (CGFloat)imageWidth
 {
-	return 18.0;
+	return 20.0;
 }
 
 - (NSRect)backwardRect
@@ -1625,11 +1625,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (image)
 	{
 		NSRect r = NSZeroRect;
-		[image setFlipped:YES];
 		r.size = [image size];
 		r.origin.x = cellFrame.origin.x + [self side] + [self leftMargin] + ([self imageWidth] - r.size.width) / 2;
 		r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
-		[image drawInRect:r fromRect:NSMakeRect(0, 0, r.size.width, r.size.height) operation:NSCompositeSourceOver fraction:1.0];
+		[image drawInRect:r operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES];
 	}
 }
 

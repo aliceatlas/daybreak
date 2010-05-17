@@ -92,6 +92,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructToolbar];
 	[self destructTabbar];
 	[self destructSplitView];
+	[self destructTabView];
 	[self destructSidebar];
 	[self destructBookmarkView];
 	[self destructEditBookmarkView];
@@ -667,7 +668,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 		[sidebar constructBottombar];
 		[sidebar.bottombar.sizeSlider setFloatValue:bookmarksView.cellWidth];
-		[sidebar closeDrawer];
+		[sidebar closeDrawerWithAnimatedFlag:NO];
 	}
 }
 
@@ -743,6 +744,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBDownloadsView *downloadsView = nil;
 	availableRect.origin = NSZeroPoint;
 	downloadsView = [[[SBDownloadsView alloc] initWithFrame:availableRect] autorelease];
+	downloadsView.delegate = sidebar;
 	sidebar.drawer.view = downloadsView;
 	[downloadsView constructDownloadViews];
 	return downloadsView;
@@ -3248,21 +3250,29 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)debugAddDummyDownloads:(id)sender
 {
 	SBDownloads *downloads = [SBDownloads sharedDownloads];
-	for (NSUInteger index = 0; index < 3; index++)
+	NSArray *names = [NSArray arrayWithObjects:
+					  @"Long Long File Name", 
+					  @"Long File Name", 
+					  @"Longfilename", 
+					  @"File Name", 
+					  @"Filename",  
+					  @"File", 
+					  @"F", nil];
+	for (NSUInteger index = 0; index < [names count]; index++)
 	{
 		SBDownload *item = [SBDownload itemWithURL:[NSURL URLWithString:@"http://localhost/dummy"]];
-		item.name = [NSString stringWithFormat:@"Dummy %d", index];
+		item.name = [names objectAtIndex:index];
 		item.path = @"/unknown";
 		[downloads addItem:item];
 	}
-	[self performSelector:@selector(debugAddDummyDownloadsDidEnd) withObject:nil afterDelay:0.5];
+	[self performSelector:@selector(debugAddDummyDownloadsDidEnd:) withObject:names afterDelay:0.5];
 }
 
-- (void)debugAddDummyDownloadsDidEnd
+- (void)debugAddDummyDownloadsDidEnd:(NSArray *)names
 {
 	SBDownloads *downloads = [SBDownloads sharedDownloads];
 	SBDownloadsView *downloadsView = (SBDownloadsView *)sidebar.drawer.view;
-	for (NSUInteger index = 0; index < 3; index++)
+	for (NSUInteger index = 0; index < [names count]; index++)
 	{
 		SBDownload *item = [[downloads items] objectAtIndex:index];
 		if (index == 0)
@@ -3272,7 +3282,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		else if (index > 0)
 		{
 			item.expectedLength = 10000000;
-			item.receivedLength = (item.expectedLength * ((CGFloat)index / (CGFloat)3));
+			item.receivedLength = (item.expectedLength * ((CGFloat)index / (CGFloat)[names count]));
 			item.status = SBStatusProcessing;
 		}
 		else if (index >= 1)

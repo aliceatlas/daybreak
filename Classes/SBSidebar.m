@@ -113,6 +113,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Delegate
 
+- (void)downloadsViewDidRemoveAllItems:(SBDownloadsView *)aDownloadsView
+{
+	[self closeDrawer:nil];
+}
+
 - (void)bottombarDidSelectedOpen:(SBSideBottombar *)inBottombar
 {
 	if (siderbarDelegate)
@@ -329,15 +334,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)closeDrawer:(id)sender
 {
-	CGFloat pos = self.bounds.size.height - kSBBottombarHeight;
-	[self setDividerPosition:pos animate:YES];
-	bottombar.drawerVisibility = NO;
+	[self closeDrawerWithAnimatedFlag:YES];
 }
 
-- (void)closeDrawer
+- (void)closeDrawerWithAnimatedFlag:(BOOL)animated
 {
 	CGFloat pos = self.bounds.size.height - kSBBottombarHeight;
-	[self setDividerPosition:pos animate:NO];
+	[self setDividerPosition:pos animate:animated];
 	bottombar.drawerVisibility = NO;
 }
 
