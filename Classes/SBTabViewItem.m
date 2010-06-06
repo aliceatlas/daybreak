@@ -806,67 +806,67 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				NSString *title = nil;
 				switch (errorCode)
 				{
-					case -999:
+					case NSURLErrorCancelled:
 						title = NSLocalizedString(@"Cancelled", nil);
 						break;
-					case -1000:
+					case NSURLErrorBadURL:
 						title = NSLocalizedString(@"Bad URL", nil);
 						break;
-					case -1001:
+					case NSURLErrorTimedOut:
 						title = NSLocalizedString(@"Timed Out", nil);
 						break;
-					case -1002:
+					case NSURLErrorUnsupportedURL:
 						title = NSLocalizedString(@"Unsupported URL", nil);
 						break;
-					case -1003:
+					case NSURLErrorCannotFindHost:
 						title = NSLocalizedString(@"Cannot Find Host", nil);
 						break;
-					case -1004:
+					case NSURLErrorCannotConnectToHost:
 						title = NSLocalizedString(@"Cannot Connect to Host", nil);
 						break;
-					case -1005:
+					case NSURLErrorNetworkConnectionLost:
 						title = NSLocalizedString(@"Network Connection Lost", nil);
 						break;
-					case -1006:
+					case NSURLErrorDNSLookupFailed:
 						title = NSLocalizedString(@"DNS Lookup Failed", nil);
 						break;
-					case -1007:
+					case NSURLErrorHTTPTooManyRedirects:
 						title = NSLocalizedString(@"Too Many Redirects", nil);
 						break;
-					case -1008:
+					case NSURLErrorResourceUnavailable:
 						title = NSLocalizedString(@"Resource Unavailable", nil);
 						break;
-					case -1009:
+					case NSURLErrorNotConnectedToInternet:
 						title = NSLocalizedString(@"Not Connected to Internet", nil);
 						break;
-					case -1010:
+					case NSURLErrorRedirectToNonExistentLocation:
 						title = NSLocalizedString(@"Redirect to Non Existent Location", nil);
 						break;
-					case -1011:
+					case NSURLErrorBadServerResponse:
 						title = NSLocalizedString(@"Bad Server Response", nil);
 						break;
-					case -1012:
+					case NSURLErrorUserCancelledAuthentication:
 						title = NSLocalizedString(@"User Cancelled Authentication", nil);
 						break;
-					case -1013:
+					case NSURLErrorUserAuthenticationRequired:
 						title = NSLocalizedString(@"User Authentication Required", nil);
 						break;
-					case -1014:
+					case NSURLErrorZeroByteResource:
 						title = NSLocalizedString(@"Zero Byte Resource", nil);
 						break;
-					case -1015:
+					case NSURLErrorCannotDecodeRawData:
 						title = NSLocalizedString(@"Cannot Decode Raw Data", nil);
 						break;
-					case -1016:
+					case NSURLErrorCannotDecodeContentData:
 						title = NSLocalizedString(@"Cannot Decode Content Data", nil);
 						break;
-					case -1017:
+					case NSURLErrorCannotParseResponse:
 						title = NSLocalizedString(@"Cannot Parse Response", nil);
 						break;
-					case -1100:
+					case NSURLErrorFileDoesNotExist:
 						title = NSLocalizedString(@"File Does Not Exist", nil);
 						break;
-					case -1101:
+					case NSURLErrorFileIsDirectory:
 					{
 						NSURL *url = [NSURL URLWithString:urlString];
 						if (url)
@@ -879,31 +879,46 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 						}
 						break;
 					}
-					case -1102:
+					case NSURLErrorNoPermissionsToReadFile:
 						title = NSLocalizedString(@"No Permissions to ReadFile", nil);
 						break;
-					case -1103:
+					case NSURLErrorDataLengthExceedsMaximum:
 						title = NSLocalizedString(@"Data Length Exceeds Maximum", nil);
 						break;
-					case -1200:
+					case NSURLErrorSecureConnectionFailed:
 						title = NSLocalizedString(@"Secure Connection Failed", nil);
 						break;
-					case -1201:
+					case NSURLErrorServerCertificateHasBadDate:
 						title = NSLocalizedString(@"Server Certificate Has BadDate", nil);
 						break;
-					case -1202:
+					case NSURLErrorServerCertificateUntrusted:
+					{
+//						title = NSLocalizedString(@"Server Certificate Untrusted", nil);
+						NSURL *url = nil;
+						NSString *title = nil;
+						NSString *message = nil;
+						NSDictionary *info = nil;
+						url = [NSURL URLWithString:urlString];
 						title = NSLocalizedString(@"Server Certificate Untrusted", nil);
+						message = [NSString stringWithFormat:NSLocalizedString(@"The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", nil), [url host]];
+						info = [NSDictionary dictionaryWithObjectsAndKeys:
+								frame, WebElementFrameKey, 
+								url, WebElementLinkURLKey, 
+								title, WebElementLinkTitleKey, nil];
+						[info retain];
+						NSBeginAlertSheet(title, NSLocalizedString(@"Continue", nil), NSLocalizedString(@"Cancel", nil), nil, [sender window], self, @selector(serverCertificateUntrustedSheetDidEnd:returnCode:contextInfo:), nil, info, message);
 						break;
-					case -1203:
+					}
+					case NSURLErrorServerCertificateHasUnknownRoot:
 						title = NSLocalizedString(@"Server Certificate Has UnknownRoot", nil);
 						break;
-					case -1204:
+					case NSURLErrorServerCertificateNotYetValid:
 						title = NSLocalizedString(@"Server Certificate Not Yet Valid", nil);
 						break;
-					case -1205:
+					case NSURLErrorClientCertificateRejected:
 						title = NSLocalizedString(@"Client Certificate Rejected", nil);
 						break;
-					case -2000:
+					case NSURLErrorCannotLoadFromNetwork:
 						title = NSLocalizedString(@"Cannot Load from Network", nil);
 						break;
 					default:
@@ -911,24 +926,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				}
 				if (title)
 				{
-					NSBundle *bundle = [NSBundle mainBundle];
-					NSString *message = nil;
-					NSString *searchURLString = nil;
-					NSString *path = nil;
-					title = [@"<img src=\"Application.icns\" style=\"width:76px;height:76px;margin-right:10px;vertical-align:middle;\" alt=\"\">" stringByAppendingString:title];
-					searchURLString = [NSString stringWithFormat:@"http://www.google.com/search?hl=ja&q=%@", urlString];
-					message = [NSString stringWithFormat:NSLocalizedString(@"Sunrise can’t open the page “%@”", nil), urlString];
-					message = [message stringByAppendingFormat:@"<br /><br />%@<br /><a href=\"%@\">%@</a>", 
-														NSLocalizedString(@"You can search the web for this URL.", nil), 
-														searchURLString, urlString];
-					path = [bundle pathForResource:@"Error" ofType:@"html"];
-					if ([[NSFileManager defaultManager] fileExistsAtPath:path])
-					{
-						NSString *htmlString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-						htmlString = [NSString stringWithFormat:htmlString, title, message];
-						// Load
-						[frame loadHTMLString:htmlString baseURL:[NSURL fileURLWithPath:path]];
-					}
+					[self showErrorPageWithTitle:title urlString:urlString frame:frame];
 				}
 			}
 		}
@@ -1441,6 +1439,57 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	[self destructWebView];
 	[self.tabView removeTabViewItem:self];
+}
+
+- (void)serverCertificateUntrustedSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+	NSDictionary *info = (NSDictionary *)contextInfo;
+	WebFrame *frame = nil;
+	NSURL *url = nil;
+	NSString *title = nil;
+	
+	frame = [info objectForKey:WebElementFrameKey];
+	url = [info objectForKey:WebElementLinkURLKey];
+	title = [info objectForKey:WebElementLinkTitleKey];
+	
+	if (frame && url)
+	{
+		if (returnCode == NSOKButton)
+		{
+			[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
+			[frame loadRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:kSBTimeoutInterval]];
+			[self webView:self.webView didStartProvisionalLoadForFrame:frame];
+		}
+		else {
+			[self showErrorPageWithTitle:title urlString:[url absoluteString] frame:frame];
+		}
+	}
+	if (contextInfo)
+	{
+		[(id)contextInfo release];
+	}
+}
+
+- (void)showErrorPageWithTitle:(NSString *)title urlString:(NSString *)urlString frame:(WebFrame *)frame
+{
+	NSBundle *bundle = [NSBundle mainBundle];
+	NSString *message = nil;
+	NSString *searchURLString = nil;
+	NSString *path = nil;
+	title = [@"<img src=\"Application.icns\" style=\"width:76px;height:76px;margin-right:10px;vertical-align:middle;\" alt=\"\">" stringByAppendingString:title];
+	searchURLString = [NSString stringWithFormat:@"http://www.google.com/search?hl=ja&q=%@", urlString];
+	message = [NSString stringWithFormat:NSLocalizedString(@"Sunrise can’t open the page “%@”", nil), urlString];
+	message = [message stringByAppendingFormat:@"<br /><br />%@<br /><a href=\"%@\">%@</a>", 
+			   NSLocalizedString(@"You can search the web for this URL.", nil), 
+			   searchURLString, urlString];
+	path = [bundle pathForResource:@"Error" ofType:@"html"];
+	if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+	{
+		NSString *htmlString = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+		htmlString = [NSString stringWithFormat:htmlString, title, message];
+		// Load
+		[frame loadHTMLString:htmlString baseURL:[NSURL fileURLWithPath:path]];
+	}
 }
 
 #pragma mark Menu Actions

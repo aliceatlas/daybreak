@@ -246,6 +246,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return [sidebar.view isKindOfClass:[SBWebResourcesView class]] ? (SBWebResourcesView *)sidebar.view : nil;
 }
 
+- (CGFloat)minimumDownloadsDrawerHeight
+{
+	return 1 + kSBDownloadItemSize + kSBBottombarHeight;
+}
+
 #pragma mark Destruction
 
 - (void)destructWindow
@@ -1261,7 +1266,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if (aSplitView == sidebar)
 	{
-		maxWidth = sidebar.bounds.size.height - 1 - kSBDownloadItemSize - kSBBottombarHeight;
+		maxWidth = sidebar.bounds.size.height - [self minimumDownloadsDrawerHeight];
 	}
 	return maxWidth;
 }
@@ -1718,6 +1723,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	if (!sidebar.visibleDrawer)
 	{
+		if (sidebar.drawerHeight == 0)
+		{
+			sidebar.drawerHeight = [self minimumDownloadsDrawerHeight];	// Set to default height
+		}
 		[self showDrawer];
 	}
 	downloadsView = (SBDownloadsView *)sidebar.drawer.view;

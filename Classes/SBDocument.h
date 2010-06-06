@@ -108,6 +108,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)visibleRectOfSelectedWebDocumentView;
 - (NSImage *)selectedWebViewImage:(NSSize)size;
 - (NSImage *)selectedWebViewImage;
+- (CGFloat)minimumDownloadsDrawerHeight;
 // Destruction
 - (void)destructWindow;
 - (void)destructWindowController;

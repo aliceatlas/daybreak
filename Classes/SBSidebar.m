@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (self = [super initWithFrame:frame])
 	{
-		drawerHeight = kSBDefaultDrawerHeight;
+		drawerHeight = 0;
 		[self setVertical:NO];
 		[self setDividerStyle:NSSplitViewDividerStyleThin];
 	}

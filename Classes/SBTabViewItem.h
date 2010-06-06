@@ -94,6 +94,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)openDocumentSource:(id)sender;
 - (void)saveDocumentSource:(id)sender;
 - (void)removeFromTabView;
+- (void)serverCertificateUntrustedSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo;
+- (void)showErrorPageWithTitle:(NSString *)title urlString:(NSString *)urlString frame:(WebFrame *)frame;
 // Menu Actions
 - (void)searchStringFromMenu:(NSMenuItem *)menuItem;
 - (void)searchStringInNewTabFromMenu:(NSMenuItem *)menuItem;

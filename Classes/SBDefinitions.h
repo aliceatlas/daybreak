@@ -260,7 +260,6 @@ typedef enum {
 #define kSBSidebarMinimumWidth 144.0
 #define kSBDownloadItemSize 128.0
 #define kSBDefaultSidebarWidth 550
-#define kSBDefaultDrawerHeight 250
 #define kSBDefaultBookmarkCellWidth 168
 #define kSBBookmarkCellPaddingPercentage 0.1
 #define kSBBookmarkCellMinWidth 60
