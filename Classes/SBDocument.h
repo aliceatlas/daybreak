@@ -109,6 +109,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSImage *)selectedWebViewImage:(NSSize)size;
 - (NSImage *)selectedWebViewImage;
 - (CGFloat)minimumDownloadsDrawerHeight;
+- (CGFloat)adjustedSplitPositon:(CGFloat)proposedPosition;
 // Destruction
 - (void)destructWindow;
 - (void)destructWindowController;
@@ -162,6 +163,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)shouldCloseDocument;
 - (void)openAndConstructTabWithURLs:(NSArray *)urls startInTabbarItem:(SBTabbarItem *)aTabbarItem;
 - (void)openAndConstructTabWithBookmarkItems:(NSArray *)items;
+- (void)adjustSplitViewIfNeeded;
 // Menu Actions
 // Application menu
 - (void)about:(id)sender;
@@ -209,7 +211,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)doneEditBookmark;
 - (void)cancelEditBookmark;
 - (void)searchInBookmarks:(id)sender;
-- (void)switchMode:(id)sender;
+- (void)switchToIconMode:(id)sender;
+- (void)switchToListMode:(id)sender;
+- (void)switchToTileMode:(id)sender;
 // Window menu
 - (void)selectPreviousTab:(id)sender;
 - (void)selectNextTab:(id)sender;

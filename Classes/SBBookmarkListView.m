@@ -32,8 +32,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @synthesize wrapperView;
 @synthesize mode;
-@synthesize transformScale;
+@synthesize cellSize;
+@dynamic width;
 @synthesize cellWidth;
+@synthesize block = _block;
 @dynamic items;
 @synthesize draggedItems;
 @synthesize delegate;
@@ -96,6 +98,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Getter
 
+- (CGFloat)splitWidth:(CGFloat)proposedWidth
+{
+	CGFloat width = proposedWidth;
+	if (mode == SBBookmarkTileMode)
+	{
+		CGFloat scrollerWidth = [[self enclosingScrollView] bounds].size.width - [[self enclosingScrollView] contentSize].width;
+		NSInteger x = (NSInteger)((proposedWidth - scrollerWidth) / cellSize.width);
+		width = cellSize.width * x + scrollerWidth;
+		width += 2;// plus 1 for fitting
+	}
+	return width;
+}
+
 - (CGFloat)width
 {
 	return [[self enclosingScrollView] contentSize].width;
@@ -129,9 +144,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)itemRectAtIndex:(NSInteger)index
 {
 	NSRect r = NSZeroRect;
-	NSPoint spacing = [self spacing];
+	NSPoint spacing = NSZeroPoint;
 	NSPoint pos = NSZeroPoint;
 	r.size = cellSize;
+	spacing = mode == SBBookmarkIconMode ? [self spacing] : spacing;
 	pos.y = (NSInteger)(index / (NSInteger)_block.x);
 	pos.x = SBRemainder(index, (NSInteger)_block.x);
 	r.origin.x = pos.x * cellSize.width + spacing.x * pos.x;
@@ -147,7 +163,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger count = [self.items count];
 	NSPoint loc = NSZeroPoint;
 	CGFloat location = 0;
-	if (mode == SBBookmarkIconMode)
+	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
 	{
 		NSPoint spacing = [self spacing];
 		loc.y = (NSInteger)(point.y / cellSize.height);
@@ -192,7 +208,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger count = [self.items count];
 	NSPoint loc = NSZeroPoint;
 	CGFloat location = 0;
-	if (mode == SBBookmarkIconMode)
+	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
 	{
 		NSPoint spacing = [self spacing];
 		loc.y = (NSInteger)(point.y / cellSize.height);
@@ -249,7 +265,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger count = [self.items count];
 	NSPoint loc = NSZeroPoint;
 	CGFloat location = 0;
-	if (mode == SBBookmarkIconMode)
+	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
 	{
 		NSPoint spacing = [self spacing];
 		CGFloat spacingX = 0;
@@ -457,14 +473,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setCellSizeForMode:(SBBookmarkMode)inMode
 {
 	mode = inMode;
-	transformScale = NSMakePoint(([self width] + cellWidth) / 2.0, (22.0 + cellWidth) / 2.0);
-	if (mode == SBBookmarkListMode)
+	if (mode == SBBookmarkIconMode)
+	{
+		cellSize = NSMakeSize(cellWidth, cellWidth);
+	}
+	else if (mode == SBBookmarkListMode)
 	{
 		cellSize = NSMakeSize([self width], 22.0);
 	}
-	else if (mode == SBBookmarkIconMode)
+	else if (mode == SBBookmarkTileMode)
 	{
-		cellSize = NSMakeSize(cellWidth, cellWidth);
+		cellSize = NSMakeSize(cellWidth / kSBBookmarkFactorForImageHeight * kSBBookmarkFactorForImageWidth, cellWidth);
 	}
 }
 
@@ -473,7 +492,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (mode != inMode)
 	{
 		[self setCellSizeForMode:inMode];
-		[self layout:kSBBookmarkLayoutInterval];
+		[self layout:0.0];
 	}
 }
 
@@ -482,7 +501,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (cellWidth != inCellWidth)
 	{
 		cellWidth = inCellWidth;
-		cellSize = NSMakeSize(cellWidth, cellWidth);
+		if (mode == SBBookmarkIconMode)
+		{
+			cellSize = NSMakeSize(cellWidth, cellWidth);
+		}
+		else if (mode == SBBookmarkListMode)
+		{
+			cellSize = NSMakeSize([self width], 22.0);
+		}
+		else if (mode == SBBookmarkTileMode)
+		{
+			cellSize = NSMakeSize(cellWidth / kSBBookmarkFactorForImageHeight * kSBBookmarkFactorForImageWidth, cellWidth);
+		}
 		[self layout:0.0];
 	}
 }
@@ -661,11 +691,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	for (SBBookmarkListItemView *itemView in itemViews)
 	{
 		NSRect r = [self itemRectAtIndex:index];
-		if (!NSEqualRects(itemView.frame, r))
-		{
-			itemView.mode = mode;
-			itemView.frame = r;
-		}
+		itemView.mode = mode;
+		itemView.frame = r;
+		[itemView setNeedsDisplay:YES];
 		index++;
 	}
 }
@@ -682,23 +710,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSInteger count = [itemViews count];
 	for (index = fromIndex; index < count; index++)
 	{
-		SBBookmarkListItemView *itemView = [itemViews objectAtIndex:index];
-		NSRect r = [self itemRectAtIndex:index];
+		SBBookmarkListItemView *itemView = nil;
+		NSRect r = NSZeroRect;
+		NSRect visibleRect = [self visibleRect];
+		itemView = [itemViews objectAtIndex:index];
 		itemView.mode = mode;
-		if (!NSEqualRects(itemView.frame, r))
+		r = [self itemRectAtIndex:index];
+		if (NSIntersectsRect(visibleRect, itemView.frame) || NSIntersectsRect(visibleRect, r))	// Only visible views
 		{
-			NSRect visibleRect = [self visibleRect];
-			if (NSIntersectsRect(visibleRect, itemView.frame) || NSIntersectsRect(visibleRect, r))	// Only visible views
-			{
-				NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-				[info setObject:itemView forKey:NSViewAnimationTargetKey];
-				[info setObject:[NSValue valueWithRect:itemView.frame] forKey:NSViewAnimationStartFrameKey];
-				[info setObject:[NSValue valueWithRect:r] forKey:NSViewAnimationEndFrameKey];
-				[animations addObject:[[info copy] autorelease]];
-			}
-			else {
-				itemView.frame = r;
-			}
+			NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
+			[info setObject:itemView forKey:NSViewAnimationTargetKey];
+			[info setObject:[NSValue valueWithRect:itemView.frame] forKey:NSViewAnimationStartFrameKey];
+			[info setObject:[NSValue valueWithRect:r] forKey:NSViewAnimationEndFrameKey];
+			[animations addObject:[[info copy] autorelease]];
+		}
+		else {
+			itemView.frame = r;
 		}
 	}
 	if ([animations count] > 0)
@@ -907,20 +934,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		else {
 			NSBeep();
 		}
-//		if ([indexes count] > 0)
-//			firstIndex = [indexes firstIndex];
-//		if (firstIndex != NSNotFound && [itemViews count] > firstIndex)
-//		{
-//			[self scrollRectToVisible:[self itemRectAtIndex:firstIndex]];
-//		}
-		
-//		if ([indexes count] > 0)
-//		{
-//			[self showIndexes:[[indexes copy] autorelease]];
-//		}
-//		else {
-//			[self showAll];
-//		}
 	}
 }
 
@@ -946,7 +959,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			NSRect endRect = NSZeroRect;
 			endRect = [self itemRectAtIndex:firstIndex];
 			startRect = endRect;
-			if (mode == SBBookmarkIconMode)
+			if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
 			{
 				startRect.size.width = startRect.size.width * 1.5;
 				startRect.size.height = startRect.size.height * 1.5;
@@ -998,48 +1011,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 	}
 }
-
-//- (void)showAll
-//{
-//	for (SBBookmarkListItemView *itemView in itemViews)
-//	{
-//		if ([itemView alphaValue] < 1.0)
-//		{
-//			[itemView setAlphaValue:1.0];
-//		}
-//	}
-//}
-//
-//- (void)showIndexes:(NSIndexSet *)indexes
-//{
-//	NSUInteger index = 0;
-//	NSUInteger firstIndex = NSNotFound;
-//	for (SBBookmarkListItemView *itemView in itemViews)
-//	{
-//		if ([indexes containsIndex:index])
-//		{
-//			if ([itemView alphaValue] < 1.0)
-//			{
-//				[itemView setAlphaValue:1.0];
-//			}
-//			if (firstIndex == NSNotFound)
-//			{
-//				firstIndex = index;
-//			}
-//		}
-//		else {
-//			if ([itemView alphaValue] != 0.25)
-//			{
-//				[itemView setAlphaValue:0.25];
-//			}
-//		}
-//		index++;
-//	}
-//	if (firstIndex != NSNotFound && [itemViews count] > firstIndex)
-//	{
-//		[self scrollRectToVisible:[self itemRectAtIndex:firstIndex]];
-//	}
-//}
 
 #pragma mark Menu Actions
 

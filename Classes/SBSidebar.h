@@ -88,8 +88,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBSidebarPosition position;
 	NSMutableArray *buttons;
-	SBButton *resizerButton;
 	SBButton *drawerButton;
+	SBButton *newFolderButton;
 	SBBLKGUISlider *sizeSlider;
 	id<SBSideBottombarDelegate> delegate;
 	BOOL drawerVisibility;
@@ -105,24 +105,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (CGFloat)sliderWidth;
 - (CGFloat)sliderSideMargin;
 - (NSRect)resizableRect;
-- (NSRect)resizerButtonRect;
 - (NSRect)drawerButtonRect;
+- (NSRect)newFolderButtonRect;
 - (NSRect)sizeSliderRect;
 - (void)setFrame:(NSRect)frame;
 - (void)setPosition:(SBSidebarPosition)inPosition;
 - (void)setDrawerVisibility:(BOOL)inDrawerVisibility;
-- (void)destructResizerButton;
 - (void)destructDrawerButton;
+- (void)destructNewFolderButton;
 - (void)destructSizeSlider;
-- (void)constructResizerButton;
 - (void)constructDrawerButton;
+- (void)constructNewFolderButton;
 - (void)constructSizeSlider;
 // Actions
 - (void)adjustButtons;
 // Execute
 - (void)open;
 - (void)close;
-- (void)drawOut;
+- (void)toggleDrawer;
+- (void)newFolder;
 - (void)slide;
 
 @end

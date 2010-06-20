@@ -69,3 +69,8 @@
 - (BOOL)hitToPoint:(NSPoint)point;
 
 @end
+
+@interface SBBookmarkListDirectoryItemView : SBBookmarkListItemView
+
+
+@end

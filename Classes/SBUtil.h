@@ -69,6 +69,7 @@ CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform);
 void SBCGPointApplyTransform3D(CGPoint *p, const CATransform3D *t);
 // Drawing
 void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint points[]);
+void SBDrawRadialGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint centers[], CGFloat radiuses[]);
 void SBGetAlternateSelectedLightControlColorComponents(CGFloat colors[4]);
 void SBGetAlternateSelectedControlColorComponents(CGFloat colors[4]);
 void SBGetAlternateSelectedDarkControlColorComponents(CGFloat colors[4]);
@@ -88,6 +89,7 @@ CGImageRef SBBookmarkReflectionMaskImage(CGSize size);
 // Math
 NSInteger SBRemainder(NSInteger value1, NSInteger value2);
 BOOL SBRemainderIsZero(NSInteger value1, NSInteger value2);
+NSInteger SBGreatestCommonDivisor(NSInteger a, NSInteger b);
 // Others
 NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault);
 NSComparisonResult SBStringEncodingSortFunction(id num1, id num2, void *context);

@@ -42,6 +42,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[super dealloc];
 }
 
+- (CGFloat)splitWidth:(CGFloat)proposedWidth
+{
+	return listView ? [listView splitWidth:proposedWidth] : 0;
+}
+
 - (void)setFrame:(NSRect)frame
 {
 	[super setFrame:frame];
@@ -131,6 +136,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		listView.cellWidth = cellWidth;
 		[[NSUserDefaults standardUserDefaults] setInteger:(NSInteger)cellWidth forKey:kSBBookmarkCellWidth];
 	}
+	[self executeDidCellWidth];
 }
 
 - (void)setMode:(SBBookmarkMode)mode
@@ -204,6 +210,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if ([delegate respondsToSelector:@selector(bookmarksView:shouldEditItemAtIndex:)])
 		{
 			[delegate bookmarksView:self shouldEditItemAtIndex:index];
+		}
+	}
+}
+
+- (void)executeDidCellWidth
+{
+	if (delegate)
+	{
+		if ([delegate respondsToSelector:@selector(bookmarksView:didChangeCellWidth:)])
+		{
+			[delegate bookmarksView:self didChangeCellWidth:listView.cellWidth];
 		}
 	}
 }

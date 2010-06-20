@@ -58,8 +58,6 @@
 		0890E1750FE91DF4002DF339 /* SBTabbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0890E1740FE91DF4002DF339 /* SBTabbarItem.m */; };
 		0891057C0FE4EC6400DFE290 /* SBTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0891057B0FE4EC6400DFE290 /* SBTabView.m */; };
 		089106870FE520E100DFE290 /* Resizer.png in Resources */ = {isa = PBXBuildFile; fileRef = 089106860FE520E100DFE290 /* Resizer.png */; };
-		0891074F0FE52C5D00DFE290 /* ResizerLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 0891074D0FE52C5D00DFE290 /* ResizerLeft.png */; };
-		089107500FE52C5D00DFE290 /* ResizerRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0891074E0FE52C5D00DFE290 /* ResizerRight.png */; };
 		08916C3110099ECC0012D4EA /* PaledApplicationIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 08916C3010099ECC0012D4EA /* PaledApplicationIcon.png */; };
 		08916C501009AFAF0012D4EA /* SBWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08916C4F1009AFAF0012D4EA /* SBWebView.m */; };
 		08916E721009D5220012D4EA /* NSString-SBURLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08916E711009D5220012D4EA /* NSString-SBURLAdditions.m */; };
@@ -82,7 +80,6 @@
 		08946ED31114731F00B09D17 /* Icon_Contribute.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946ED21114731F00B09D17 /* Icon_Contribute.png */; };
 		08946F0E111478F600B09D17 /* Icon_Checkout.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946F0D111478F600B09D17 /* Icon_Checkout.png */; };
 		08946FE51114861D00B09D17 /* Icon_Commit.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946FE41114861D00B09D17 /* Icon_Commit.png */; };
-		0896AC8510149C4A00D8319A /* SBBookmarkItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0896AC8410149C4A00D8319A /* SBBookmarkItemView.m */; };
 		0896C1460FFF16B200B97498 /* SBBLKGUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0896C1450FFF16B200B97498 /* SBBLKGUIButton.m */; };
 		0896C1820FFF171400B97498 /* BLKGUI_CheckBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1700FFF171400B97498 /* BLKGUI_CheckBox.png */; };
 		0896C1830FFF171400B97498 /* BLKGUI_CheckBox-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1710FFF171400B97498 /* BLKGUI_CheckBox-Selected.png */; };
@@ -289,8 +286,6 @@
 		0891057A0FE4EC6400DFE290 /* SBTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTabView.h; path = Classes/SBTabView.h; sourceTree = "<group>"; };
 		0891057B0FE4EC6400DFE290 /* SBTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTabView.m; path = Classes/SBTabView.m; sourceTree = "<group>"; };
 		089106860FE520E100DFE290 /* Resizer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Resizer.png; path = Resources/Images/Resizer.png; sourceTree = "<group>"; };
-		0891074D0FE52C5D00DFE290 /* ResizerLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ResizerLeft.png; path = Resources/Images/ResizerLeft.png; sourceTree = "<group>"; };
-		0891074E0FE52C5D00DFE290 /* ResizerRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ResizerRight.png; path = Resources/Images/ResizerRight.png; sourceTree = "<group>"; };
 		08916C3010099ECC0012D4EA /* PaledApplicationIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaledApplicationIcon.png; path = Resources/Images/PaledApplicationIcon.png; sourceTree = "<group>"; };
 		08916C4E1009AFAF0012D4EA /* SBWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebView.h; path = Classes/SBWebView.h; sourceTree = "<group>"; };
 		08916C4F1009AFAF0012D4EA /* SBWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWebView.m; path = Classes/SBWebView.m; sourceTree = "<group>"; };
@@ -319,8 +314,6 @@
 		08946ED21114731F00B09D17 /* Icon_Contribute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Contribute.png; path = Resources/Images/Icon_Contribute.png; sourceTree = "<group>"; };
 		08946F0D111478F600B09D17 /* Icon_Checkout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Checkout.png; path = Resources/Images/Icon_Checkout.png; sourceTree = "<group>"; };
 		08946FE41114861D00B09D17 /* Icon_Commit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Commit.png; path = Resources/Images/Icon_Commit.png; sourceTree = "<group>"; };
-		0896AC8310149C4A00D8319A /* SBBookmarkItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarkItemView.h; path = Classes/SBBookmarkItemView.h; sourceTree = "<group>"; };
-		0896AC8410149C4A00D8319A /* SBBookmarkItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBookmarkItemView.m; path = Classes/SBBookmarkItemView.m; sourceTree = "<group>"; };
 		0896C1290FFF136300B97498 /* ViewStructure.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ViewStructure.plist; path = Resources/plists/ViewStructure.plist; sourceTree = "<group>"; };
 		0896C12A0FFF136300B97498 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/plists/Info.plist; sourceTree = "<group>"; };
 		0896C1440FFF16B200B97498 /* SBBLKGUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBLKGUIButton.h; path = Classes/SBBLKGUIButton.h; sourceTree = "<group>"; };
@@ -516,8 +509,6 @@
 				087BB8AC10174D2300B14EF6 /* Reload.png */,
 				089106860FE520E100DFE290 /* Resizer.png */,
 				089C379B0FE7E07A00088B34 /* ResizerDown.png */,
-				0891074D0FE52C5D00DFE290 /* ResizerLeft.png */,
-				0891074E0FE52C5D00DFE290 /* ResizerRight.png */,
 				089C379D0FE7E08200088B34 /* ResizerUp.png */,
 				089F948410342E8000C48997 /* RightButton.png */,
 				08F1DEAF1156695500712D67 /* Search.png */,
@@ -799,8 +790,6 @@
 				089860650FF3B894005958A0 /* SBBookmarksView.m */,
 				08BE0CEF1143E88E00314946 /* SBWebResourcesView.h */,
 				08BE0CF01143E88E00314946 /* SBWebResourcesView.m */,
-				0896AC8310149C4A00D8319A /* SBBookmarkItemView.h */,
-				0896AC8410149C4A00D8319A /* SBBookmarkItemView.m */,
 				08930ABB0FEE7AC20037D403 /* SBDrawer.h */,
 				08930ABC0FEE7AC20037D403 /* SBDrawer.m */,
 				088D26DE101B3EC400691CEC /* SBBookmarkListView.h */,
@@ -997,8 +986,6 @@
 				0892E59B100375AE001FBECC /* MainMenu.xib in Resources */,
 				0840677D0FE2BF8D00CC80E3 /* Application.icns in Resources */,
 				089106870FE520E100DFE290 /* Resizer.png in Resources */,
-				0891074F0FE52C5D00DFE290 /* ResizerLeft.png in Resources */,
-				089107500FE52C5D00DFE290 /* ResizerRight.png in Resources */,
 				089C379C0FE7E07A00088B34 /* ResizerDown.png in Resources */,
 				089C379E0FE7E08200088B34 /* ResizerUp.png in Resources */,
 				08AEC4C30FF73C49005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png in Resources */,
@@ -1128,7 +1115,6 @@
 				08916E721009D5220012D4EA /* NSString-SBURLAdditions.m in Sources */,
 				08F5B05A100B63FC0011B603 /* NSURL-SBAdditions.m in Sources */,
 				089DE278100F4FD100714BC8 /* SBDocumentController.m in Sources */,
-				0896AC8510149C4A00D8319A /* SBBookmarkItemView.m in Sources */,
 				08941F2A1015E353004CD4EA /* SBSavePanel.m in Sources */,
 				087BB8B510174DB900B14EF6 /* SBLoadButton.m in Sources */,
 				085278E810189DDC00544C80 /* SBDownloaderView.m in Sources */,

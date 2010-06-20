@@ -364,8 +364,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		position = -1;
 		buttons = [[NSMutableArray alloc] initWithCapacity:0];
-		[self constructResizerButton];
 		[self constructDrawerButton];
+//		[self constructNewFolderButton];
 		[self constructSizeSlider];
 	}
 	return self;
@@ -373,8 +373,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[self destructResizerButton];
 	[self destructDrawerButton];
+	[self destructNewFolderButton];
 	[self destructSizeSlider];
 	[buttons release];
 	delegate = nil;
@@ -411,7 +411,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return r;
 }
 
-- (NSRect)resizerButtonRect
+- (NSRect)drawerButtonRect
 {
 	NSRect r = NSZeroRect;
 	r.size.width = r.size.height = [self buttonWidth];
@@ -426,18 +426,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return r;
 }
 
-- (NSRect)drawerButtonRect
+- (NSRect)newFolderButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSRect resizerButtonRect = [self resizerButtonRect];
-	r.size.width = r.size.height = [self buttonWidth];
+	NSRect drawerButtonRect = [self drawerButtonRect];
+	r.size.width = kSBSidebarNewFolderButtonWidth;
+	r.size.height = [self buttonWidth];
 	if (position == SBSidebarLeftPosition)
 	{
-		r.origin.x = self.bounds.size.width - (r.size.width + kSBSidebarResizableWidth + resizerButtonRect.size.width);
+		r.origin.x = NSMaxX(drawerButtonRect) - kSBSidebarNewFolderButtonWidth;
 	}
 	else if (position == SBSidebarRightPosition)
 	{
-		r.origin.x = kSBSidebarResizableWidth + resizerButtonRect.size.width;
+		r.origin.x = NSMaxX(drawerButtonRect);
 	}
 	return r;
 }
@@ -475,20 +476,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (position != inPosition)
 	{
 		position = inPosition;
-		[resizerButton setFrame:[self resizerButtonRect]];
 		[drawerButton setFrame:[self drawerButtonRect]];
+		[newFolderButton setFrame:[self newFolderButtonRect]];
 		[sizeSlider setFrame:[self sizeSliderRect]];
 		if (position == SBSidebarLeftPosition)
 		{
-			resizerButton.image = [NSImage imageNamed:@"ResizerLeft.png"];
-			[resizerButton setAutoresizingMask:(NSViewMinXMargin)];
 			[drawerButton setAutoresizingMask:(NSViewMinXMargin)];
+			[newFolderButton setAutoresizingMask:(NSViewMinXMargin)];
 		}
 		else if (position == SBSidebarRightPosition)
 		{
-			resizerButton.image = [NSImage imageNamed:@"ResizerRight.png"];
-			[resizerButton setAutoresizingMask:(NSViewMaxXMargin)];
 			[drawerButton setAutoresizingMask:(NSViewMaxXMargin)];
+			[newFolderButton setAutoresizingMask:(NSViewMaxXMargin)];
 		}
 		[self adjustButtons];
 		[self setNeedsDisplay:YES];
@@ -510,16 +509,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
-- (void)destructResizerButton
-{
-	if (resizerButton)
-	{
-		[resizerButton removeFromSuperview];
-		[resizerButton release];
-		resizerButton = nil;
-	}
-}
-
 - (void)destructDrawerButton
 {
 	if (drawerButton)
@@ -527,6 +516,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[drawerButton removeFromSuperview];
 		[drawerButton release];
 		drawerButton = nil;
+	}
+}
+
+- (void)destructNewFolderButton
+{
+	if (newFolderButton)
+	{
+		[newFolderButton removeFromSuperview];
+		[newFolderButton release];
+		newFolderButton = nil;
 	}
 }
 
@@ -540,20 +539,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
-- (void)constructResizerButton
-{
-	[self destructResizerButton];
-	resizerButton = [[SBButton alloc] initWithFrame:[self resizerButtonRect]];
-	if (position == SBSidebarLeftPosition)
-	{
-		[resizerButton setAutoresizingMask:(NSViewMinXMargin)];
-	}
-	resizerButton.target = self;
-	resizerButton.action = @selector(close);
-	[self addSubview:resizerButton];
-	[buttons addObject:resizerButton];
-}
-
 - (void)constructDrawerButton
 {
 	[self destructDrawerButton];
@@ -563,9 +548,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[drawerButton setAutoresizingMask:(NSViewMinXMargin)];
 	}
 	drawerButton.target = self;
-	drawerButton.action = @selector(drawOut);
+	drawerButton.action = @selector(toggleDrawer);
 	[self addSubview:drawerButton];
 	[buttons addObject:drawerButton];
+}
+
+- (void)constructNewFolderButton
+{
+	[self destructNewFolderButton];
+	newFolderButton = [[SBButton alloc] initWithFrame:[self newFolderButtonRect]];
+	if (position == SBSidebarLeftPosition)
+	{
+		[newFolderButton setAutoresizingMask:(NSViewMinXMargin)];
+	}
+	newFolderButton.title = NSLocalizedString(@"New Folder", nil);
+	newFolderButton.target = self;
+	newFolderButton.action = @selector(newFolder);
+	[self addSubview:newFolderButton];
+	[buttons addObject:newFolderButton];
 }
 
 - (void)constructSizeSlider
@@ -631,7 +631,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
-- (void)drawOut
+- (void)toggleDrawer
 {
 	self.drawerVisibility = !drawerVisibility;
 	if (delegate)
@@ -650,6 +650,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 		}
 	}
+}
+
+- (void)newFolder
+{
+	
 }
 
 - (void)slide

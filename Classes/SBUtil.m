@@ -323,7 +323,7 @@ NSArray *SBBookmarkItemsFromBookmarkDictionaryList(NSArray *bookmarkDictionaryLi
 
 NSSize SBBookmarkImageMaxSize()
 {
-	return NSMakeSize(kSBBookmarkCellMaxWidth, kSBBookmarkCellMaxWidth / 4 * 3);
+	return NSMakeSize(kSBBookmarkCellMaxWidth, kSBBookmarkCellMaxWidth / kSBBookmarkFactorForImageWidth * kSBBookmarkFactorForImageHeight);
 }
 
 #pragma mark File paths
@@ -935,6 +935,15 @@ void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locatio
 	CGColorSpaceRelease(colorSpace);
 //	if (CFGetRetainCount(gradientFunction) > 0)
 //		CGFunctionRelease(gradientFunction);
+}
+
+void SBDrawRadialGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint centers[], CGFloat radiuses[])
+{
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, colors, locations, count);
+	CGContextDrawRadialGradient(ctx, gradient, centers[0], radiuses[0], centers[1], radiuses[1], kCGGradientDrawsAfterEndLocation);
+	CGGradientRelease(gradient);
+	CGColorSpaceRelease(colorSpace);
 }
 
 void SBGetAlternateSelectedLightControlColorComponents(CGFloat colors[4])
@@ -1737,6 +1746,29 @@ NSInteger SBRemainder(NSInteger value1, NSInteger value2)
 BOOL SBRemainderIsZero(NSInteger value1, NSInteger value2)
 {
 	return SBRemainder(value1, value2) == 0;
+}
+
+NSInteger SBGreatestCommonDivisor(NSInteger a, NSInteger b)
+{
+	NSInteger v = 0;
+	if (a == 0 || b == 0)
+	{
+		v = 0;
+	}
+	else {
+		// Euclidean
+		while(a != b)
+		{
+			if (a > b)
+			{
+				a = a - b;
+			}
+			else {
+				b = b - a;
+			}
+		}
+	}
+	return v;
 }
 
 #pragma mark Others

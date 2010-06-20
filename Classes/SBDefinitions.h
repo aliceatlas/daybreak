@@ -158,6 +158,7 @@ extern NSString *kSBBookmarkImage;		// Data
 extern NSString *kSBBookmarkDate;		// Date
 extern NSString *kSBBookmarkLabelName;	// String
 extern NSString *kSBBookmarkOffset;		// Point
+extern NSString *kSBBookmarkIsDirectory;// BOOL
 
 // Updater key names
 extern NSString *kSBUpdaterResult;			// Integer (NSComparisonResult)
@@ -214,7 +215,8 @@ typedef enum {
 // Bookmark display modes
 typedef enum {
 	SBBookmarkIconMode, 
-	SBBookmarkListMode
+	SBBookmarkListMode, 
+	SBBookmarkTileMode
 }SBBookmarkMode;
 
 // Circle progress styles
@@ -256,11 +258,14 @@ typedef enum {
 #define kSBTabbarItemMinimumWidth 100.0
 #define kSBBottombarHeight 24.0
 #define kSBSidebarResizableWidth 24.0
+#define kSBSidebarNewFolderButtonWidth 100.0
 #define kSBSidebarClosedWidth 1.0
 #define kSBSidebarMinimumWidth 144.0
 #define kSBDownloadItemSize 128.0
 #define kSBDefaultSidebarWidth 550
 #define kSBDefaultBookmarkCellWidth 168
+#define kSBBookmarkFactorForImageWidth 4.0
+#define kSBBookmarkFactorForImageHeight 3.0
 #define kSBBookmarkCellPaddingPercentage 0.1
 #define kSBBookmarkCellMinWidth 60
 #define kSBBookmarkCellMaxWidth 256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2))
@@ -347,6 +352,7 @@ extern NSString *SBBookmarkPboardType;
 @optional
 - (void)bookmarksView:(SBBookmarksView *)aBookmarksView didChangeMode:(SBBookmarkMode)mode;
 - (void)bookmarksView:(SBBookmarksView *)aBookmarksView shouldEditItemAtIndex:(NSUInteger)index;
+- (void)bookmarksView:(SBBookmarksView *)aBookmarksView didChangeCellWidth:(CGFloat)cellWidth;
 @end
 
 @class SBDownloadsView;

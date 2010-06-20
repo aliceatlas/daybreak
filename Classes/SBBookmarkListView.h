@@ -39,7 +39,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBBookmarksView *wrapperView;
 	SBBookmarkMode mode;
-	NSPoint transformScale;
 	NSSize cellSize;
 	CGFloat cellWidth;
 	NSMutableArray *itemViews;
@@ -61,14 +60,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 @property (nonatomic, assign) SBBookmarksView *wrapperView;
 @property (nonatomic) SBBookmarkMode mode;
-@property (nonatomic) NSPoint transformScale;
+@property (nonatomic) NSSize cellSize;
+@property (nonatomic, readonly) CGFloat width;
 @property (nonatomic) CGFloat cellWidth;
+@property (nonatomic, readonly) NSPoint block;
 @property (nonatomic, readonly) NSMutableArray *items;
 @property (nonatomic, retain) NSArray *draggedItems;
 @property (nonatomic, assign) id<SBBookmarkListViewDelegate> delegate;
 
 // Getter
-- (CGFloat)width;
+- (CGFloat)splitWidth:(CGFloat)proposedWidth;
 - (CGFloat)minimumHeight;
 - (NSPoint)spacing;
 - (NSPoint)block;

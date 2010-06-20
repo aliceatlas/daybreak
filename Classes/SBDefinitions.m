@@ -200,6 +200,7 @@ NSString *kSBBookmarkImage = @"image";
 NSString *kSBBookmarkDate = @"date";
 NSString *kSBBookmarkLabelName = @"label";
 NSString *kSBBookmarkOffset = @"offset";
+NSString *kSBBookmarkIsDirectory = @"isDirectory";
 
 // Updater key names
 NSString *kSBUpdaterResult = @"Result";
@@ -239,7 +240,7 @@ CGFloat SBBookmarkLabelColorRGBA[] = {
 208.0 / 255.0, 166.0 / 255.0, 225.0 / 255.0, 1.0, // Purple
 246.0 / 255.0, 173.0 / 255.0, 228.0 / 255.0, 1.0, // Magenta
 148.0 / 255.0, 148.0 / 255.0, 148.0 / 255.0, 1.0, // Gray
-108.0 / 255.0, 108.0 / 255.0, 108.0 / 255.0, 1.0  // Black
+50.0 / 255.0, 50.0 / 255.0, 50.0 / 255.0, 1.0  // Black
 };
 
 // Bottombar

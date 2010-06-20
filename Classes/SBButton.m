@@ -251,14 +251,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSShadow *shadow = nil;
 		NSMutableParagraphStyle *style = nil;
 		CGFloat padding = 10.0;
+		NSColor *color = nil;
 		shadow = [[NSShadow alloc] init];
 		[shadow setShadowOffset:NSMakeSize(0.0, -1.0)];
 		[shadow setShadowColor:keyView ? [NSColor blackColor] : [NSColor whiteColor]];
 		style = [[NSMutableParagraphStyle alloc] init];
 		[style setLineBreakMode:NSLineBreakByTruncatingTail];
+		color = [NSColor colorWithCalibratedWhite:1.0 alpha:keyView ? (pressed ? 0.5 : 1.0) : (pressed ? 0.25 : 0.5)];
 		attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 					  [NSFont boldSystemFontOfSize:11.0], NSFontAttributeName, 
-					  keyView ? [NSColor whiteColor] : [NSColor grayColor], NSForegroundColorAttributeName, 
+					  color, NSForegroundColorAttributeName, 
 					  shadow, NSShadowAttributeName, 
 					  style, NSParagraphStyleAttributeName, nil];
 		r.size = [title sizeWithAttributes:attributes];

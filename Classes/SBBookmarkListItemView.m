@@ -111,12 +111,12 @@
 
 - (NSFont *)titleFont
 {
-	return [NSFont boldSystemFontOfSize:(mode == SBBookmarkIconMode ? 10.0 : 11.0)];
+	return [NSFont boldSystemFontOfSize:((mode == SBBookmarkIconMode || mode == SBBookmarkListMode) ? 10.0 : 11.0)];
 }
 
 - (NSFont *)urlFont
 {
-	return [NSFont systemFontOfSize:(mode == SBBookmarkIconMode ? 9.0 : 11.0)];
+	return [NSFont systemFontOfSize:((mode == SBBookmarkIconMode || mode == SBBookmarkListMode) ? 9.0 : 11.0)];
 }
 
 - (NSParagraphStyle *)paragraphStyle
@@ -124,7 +124,7 @@
 	NSMutableParagraphStyle *paragraph = nil;
 	paragraph = [[[NSMutableParagraphStyle alloc] init] autorelease];
 	[paragraph setLineBreakMode:NSLineBreakByTruncatingTail];
-	if (mode == SBBookmarkIconMode)
+	if (mode == SBBookmarkIconMode || mode == SBBookmarkListMode)
 	{
 		[paragraph setAlignment:NSCenterTextAlignment];
 	}
@@ -140,9 +140,9 @@
 - (NSRect)imageRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint padding = [self padding];
-	CGFloat titleHeight = [self titleHeight];
-	CGFloat bytesHeight = [self bytesHeight];
+	NSPoint padding = mode == SBBookmarkIconMode ? [self padding] : NSZeroPoint;
+	CGFloat titleHeight = mode == SBBookmarkIconMode ? [self titleHeight] : 0.0;
+	CGFloat bytesHeight = mode == SBBookmarkIconMode ? [self bytesHeight] : 0.0;
 	NSData *imageData = [item objectForKey:kSBBookmarkImage];
 	NSImage *image = [[[NSImage alloc] initWithData:imageData] autorelease];
 	NSSize imageSize = image ? [image size] : NSZeroSize;
@@ -155,7 +155,7 @@
 	r.size.height = self.bounds.size.height - r.origin.y - padding.y;
 	p.x = r.size.width / imageSize.width;
 	p.y = r.size.height / imageSize.height;
-	if (p.x > p.y)
+	if (mode == SBBookmarkIconMode ? p.x > p.y : p.x < p.y)
 	{
 		s = imageSize.width * p.y;
 		r.origin.x += (r.size.width - s) / 2;
@@ -304,7 +304,7 @@
 - (BOOL)hitToPoint:(NSPoint)point
 {
 	BOOL r = NO;
-	if (mode == SBBookmarkIconMode)
+	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
 	{
 		r = NSPointInRect(point, [self imageRect]);
 		if (!r) r = NSPointInRect(point, [self titleRect]);
@@ -320,7 +320,7 @@
 - (BOOL)hitToRect:(NSRect)rect
 {
 	BOOL r = NO;
-	if (mode == SBBookmarkIconMode)
+	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
 	{
 		r = NSIntersectsRect(rect, [self imageRect]);
 		if (!r) r = NSIntersectsRect(rect, [self titleRect]);
@@ -403,17 +403,8 @@
 		NSPoint padding = [self padding];
 		NSDictionary *attributes = nil;
 		NSSize size = NSZeroSize;
-		BOOL iconed = NO;
-		NSPoint transformScale = NSZeroPoint;
 		
-		if ([self.superview respondsToSelector:@selector(transformScale)])
-			transformScale = [(SBBookmarkListView *)self.superview transformScale];
-		if (NSEqualPoints(transformScale, NSZeroPoint))
-			iconed = mode == SBBookmarkIconMode;
-		else
-			iconed = (transformScale.x / transformScale.y) > (bounds.size.width / bounds.size.height);
-		
-		if (iconed)
+		if (mode == SBBookmarkIconMode)
 		{
 			CGFloat titleHeight = [self titleHeight];
 			
@@ -553,6 +544,110 @@
 				[urlString drawInRect:r withAttributes:attributes];
 			}
 		}
+		else if (mode == SBBookmarkTileMode)
+		{
+			NSUInteger count = 2;
+			CGFloat locations[count];
+			CGFloat colors[count * 4];
+			CGFloat radiuses[count];
+			CGPoint centers[count];
+			CGPathRef path = nil;
+			CGColorRef shadowColor = nil;
+			
+			
+			// image
+			if (imageData)
+			{
+				NSImage *image = [[NSImage alloc] initWithData:imageData];
+				r = [self imageRect];
+				path = SBRoundedPath(NSRectToCGRect(r), 0.0, 0.0, NO, NO);
+				CGContextSaveGState(ctx);
+				CGContextAddPath(ctx, path);
+				CGContextClip(ctx);
+				[image drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+				[image release];
+				CGContextRestoreGState(ctx);
+				CGPathRelease(path);
+			}
+			
+			// Gradient
+			path = SBRoundedPath(NSRectToCGRect(self.bounds), 0.0, 0.0, NO, NO);
+			locations[0] = 0.0;
+			locations[1] = 1.0;
+			colors[0] = 0.0;
+			colors[1] = 0.0;
+			colors[2] = 0.0;
+			colors[3] = 0.0;
+			colors[4] = 0.0;
+			colors[5] = 0.0;
+			colors[6] = 0.0;
+			colors[7] = 0.65;
+			centers[0] = CGPointMake(NSMidX(r), r.origin.y + r.size.height * 0.8);
+			centers[1] = centers[0];
+			radiuses[0] = r.size.width * 0.25;
+			radiuses[1] = r.size.width * 1.5;
+			CGContextSaveGState(ctx);
+			CGContextAddPath(ctx, path);
+			CGContextClip(ctx);
+			SBDrawRadialGradientInContext(ctx, count, locations, colors, centers, radiuses);
+			CGContextRestoreGState(ctx);
+			CGPathRelease(path);
+			
+			// Label color
+			if (labelColor)
+			{
+				shadowColor = CGColorCreateGenericGray(0.0, 0.6);
+				[labelColor set];
+				CGContextSaveGState(ctx);
+				CGContextSetShadowWithColor(ctx, CGSizeMake(0, -1.0), 1.0, shadowColor);
+				NSFrameRectWithWidth(self.bounds, self.bounds.size.width * 0.04);
+				CGContextRestoreGState(ctx);
+				CGColorRelease(shadowColor);
+			}
+			
+			// Selected
+			if (selected)
+			{
+				CGFloat components[4];
+				if ([self isFirstResponder])
+				{
+					SBGetAlternateSelectedControlColorComponents(components);
+				}
+				else {
+					components[0] = components[1] = components[2] = 0.8;
+					components[3] = 1.0;
+				}
+				shadowColor = CGColorCreateGenericGray(0.0, 0.6);
+				CGContextSaveGState(ctx);
+				CGContextSetShadowWithColor(ctx, CGSizeMake(0, -1.5), 3.0, shadowColor);
+				CGContextSetLineWidth(ctx, self.bounds.size.width * 0.04);
+				CGContextSetRGBStrokeColor(ctx, components[0], components[1], components[2], components[3]);
+				CGContextStrokeRect(ctx, NSRectToCGRect(self.bounds));
+				CGContextRestoreGState(ctx);
+				CGColorRelease(shadowColor);
+			}
+			
+			// Frame
+			path = SBRoundedPath(NSRectToCGRect(self.bounds), 1.0, 0.0, NO, NO);
+			CGContextSaveGState(ctx);
+			CGContextAddPath(ctx, path);
+			CGContextSetLineWidth(ctx, 1.0);
+			CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 0.4);
+			CGContextStrokePath(ctx);
+			CGContextRestoreGState(ctx);
+			
+			// Shadow
+			CGContextSaveGState(ctx);
+			CGContextSetRGBFillColor(ctx, 0.0, 0.0, 0.0, 0.55);
+			CGContextFillRect(ctx, CGRectMake(self.bounds.origin.x + 1.0, self.bounds.origin.y, self.bounds.size.width - 1.0 * 2, 1.0));
+			CGContextRestoreGState(ctx);
+			
+			// Highlight
+			CGContextSaveGState(ctx);
+			CGContextSetRGBFillColor(ctx, 1.0, 1.0, 1.0, 0.45);
+			CGContextFillRect(ctx, CGRectMake(self.bounds.origin.x + 1.0, NSMaxY(self.bounds) - 1.0, self.bounds.size.width - 1.0 * 2, 1.0));
+			CGContextRestoreGState(ctx);
+		}
 		else
 		{
 			NSRect imageRect = NSZeroRect;
@@ -681,5 +776,11 @@
 		}
 	}
 }
+
+@end
+
+@implementation SBBookmarkListDirectoryItemView
+
+
 
 @end

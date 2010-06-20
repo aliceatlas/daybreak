@@ -42,6 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) SBBookmarkMode mode;
 @property (nonatomic, assign) id delegate;
 
+- (CGFloat)splitWidth:(CGFloat)proposedWidth;
 // Destruction
 - (void)destructListView;
 // Construction
@@ -54,6 +55,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Execute
 - (void)executeDidChangeMode;
 - (void)executeShouldEditItemAtIndex:(NSUInteger)index;
+- (void)executeDidCellWidth;
 // Actions
 - (void)addForBookmarkItem:(NSDictionary *)item;
 - (void)scrollToItem:(NSDictionary *)bookmarkItem;
