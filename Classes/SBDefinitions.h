@@ -206,6 +206,14 @@ enum {
 	kSBURLFieldItemGoogleSuggestType = 3
 };
 
+// Button shapes
+typedef enum {
+	SBButtonExclusiveShape, 
+	SBButtonLeftShape, 
+	SBButtonCenterShape, 
+	SBButtonRightShape
+}SBButtonShape;
+
 // Sidebar positions
 typedef enum {
 	SBSidebarLeftPosition, 

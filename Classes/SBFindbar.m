@@ -228,7 +228,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructCloseButton];
 	closeButton = [[SBButton alloc] initWithFrame:r];
 	[closeButton setAutoresizingMask:(NSViewMaxXMargin)];
-	closeButton.image = [NSImage imageWithCGImage:SBCloseIconImage(NSSizeToCGSize(r.size))];
+	closeButton.image = [NSImage imageWithCGImage:SBIconImage(SBCloseIconImage(), SBButtonExclusiveShape, NSSizeToCGSize(r.size))];
 	closeButton.target = self;
 	closeButton.action = @selector(executeClose);
 	[contentView addSubview:closeButton];

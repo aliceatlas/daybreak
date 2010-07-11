@@ -54,9 +54,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[super resizeSubviewsWithOldSize:oldBoundsSize];
 	if (view)
 	{
-		if ([view respondsToSelector:@selector(layout:)])
+		if ([view respondsToSelector:@selector(layoutItems:)])
 		{
-			[(id)view layout:NO];
+			[(id)view layoutItems:NO];
 		}
 	}
 }

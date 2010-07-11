@@ -292,7 +292,7 @@ NSArray *SBBookmarkItemsFromBookmarkDictionaryList(NSArray *bookmarkDictionaryLi
 	if ([bookmarkDictionaryList count] > 0)
 	{
 		NSData *emptyImageData = SBEmptyBookmarkImageData();
-		items = [[NSMutableArray alloc] initWithCapacity:0];
+		items = [NSMutableArray arrayWithCapacity:0];
 		for (NSDictionary *dictionary in bookmarkDictionaryList)
 		{
 			NSString *type = [dictionary objectForKey:@"WebBookmarkType"];
@@ -1424,10 +1424,11 @@ CGImageRef SBAddIconImage(CGSize size, BOOL backing)
 	return (CGImageRef)[(id)image autorelease];
 }
 
-CGImageRef SBCloseIconImage(CGSize size)
+CGImageRef SBCloseIconImage()
 {
 	CGImageRef image = nil;
 	CGContextRef ctx = nil;
+	CGSize size = CGSizeMake(17.0, 17.0);
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	
 	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
@@ -1436,17 +1437,16 @@ CGImageRef SBCloseIconImage(CGSize size)
 	CGContextTranslateCTM(ctx, 0.0, size.height);
 	CGContextScaleCTM(ctx, 1.0, -1.0);
 	
-	CGFloat side = 16.0;//size.width * 0.6;
+	CGFloat side = size.width;
 	CGRect r = CGRectMake((size.width - side) / 2, (size.height - side) / 2, side, side);
 	CGMutablePathRef xPath = CGPathCreateMutable();
 	CGPoint p = CGPointZero;
 	CGFloat across = r.size.width;
-	CGFloat length = 10.0;
+	CGFloat length = 11.0;
 	CGFloat margin = r.origin.x;
 	CGFloat lineWidth = 2;
 	CGFloat center = margin + across / 2;
-	CGFloat closeGrayScale = 0.15;
-	CGFloat grayScaleUp = 0.75;
+	CGFloat grayScaleUp = 1.0;
 	CGAffineTransform t = CGAffineTransformIdentity;
 	t = CGAffineTransformTranslate(t, center, center);
 	t = CGAffineTransformRotate(t, -45 * M_PI / 180);
@@ -1459,20 +1459,6 @@ CGImageRef SBCloseIconImage(CGSize size)
 	CGPathMoveToPoint(xPath, &t, p.x, p.y);
 	p.y = length / 2;
 	CGPathAddLineToPoint(xPath, &t, p.x, p.y);
-	
-	// Ellipse
-	CGContextSaveGState(ctx);
-	CGContextAddEllipseInRect(ctx, r);
-	CGContextSetLineWidth(ctx, lineWidth);
-	CGContextSetRGBStrokeColor(ctx, 1.0 - closeGrayScale, 1.0 - closeGrayScale, 1.0 - closeGrayScale, 0.5);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGContextSaveGState(ctx);
-	CGContextAddEllipseInRect(ctx, r);
-	CGContextSetLineWidth(ctx, lineWidth);
-	CGContextSetRGBFillColor(ctx, closeGrayScale, closeGrayScale, closeGrayScale, 1.0);
-	CGContextFillPath(ctx);
-	CGContextRestoreGState(ctx);
 	
 	// Close
 	CGContextSaveGState(ctx);
@@ -1488,16 +1474,18 @@ CGImageRef SBCloseIconImage(CGSize size)
 	return (CGImageRef)[(id)image autorelease];
 }
 
-CGImageRef SBIconImage(NSString *imageName, CGSize size)
+CGImageRef SBIconImageWithName(NSString *imageName, SBButtonShape shape, CGSize size)
+{
+	return SBIconImage([[NSImage imageNamed:imageName] CGImage], shape, size);
+}
+
+CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size)
 {
 	CGImageRef image = nil;
 	CGContextRef ctx = nil;
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGFloat side = size.width * 0.6;
-	CGRect r = CGRectMake((size.width - side) / 2, (size.height - side) / 2, side, side);
-	CGFloat lineWidth = 2;
-	CGFloat closeGrayScale = 0.15;
-	CGImageRef iconImage = nil;
+	CGSize imageSize = CGSizeMake(CGImageGetWidth(iconImage), CGImageGetHeight(iconImage));
+	CGRect imageRect = CGRectMake((size.width - imageSize.width) / 2, (size.height - imageSize.height) / 2, imageSize.width, imageSize.height);
 	
 	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
 	CGColorSpaceRelease(colorSpace);
@@ -1505,27 +1493,143 @@ CGImageRef SBIconImage(NSString *imageName, CGSize size)
 	CGContextTranslateCTM(ctx, 0.0, size.height);
 	CGContextScaleCTM(ctx, 1.0, -1.0);
 	
-	// Ellipse
-	CGContextSaveGState(ctx);
-	CGContextAddEllipseInRect(ctx, r);
-	CGContextSetLineWidth(ctx, lineWidth);
-	CGContextSetRGBStrokeColor(ctx, 1.0 - closeGrayScale, 1.0 - closeGrayScale, 1.0 - closeGrayScale, 0.5);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGContextSaveGState(ctx);
-	CGContextAddEllipseInRect(ctx, r);
-	CGContextSetLineWidth(ctx, lineWidth);
-	CGContextSetRGBFillColor(ctx, closeGrayScale, closeGrayScale, closeGrayScale, 1.0);
-	CGContextFillPath(ctx);
-	CGContextRestoreGState(ctx);
+	// Frame
+	{
+		CGMutablePathRef path = nil;
+		CGRect insetRect = CGRectZero;
+		CGColorRef shadowColor = nil;
+		CGFloat insetMargin = 3.0;
+		CGFloat lineWidth = 2.0;
+		path = CGPathCreateMutable();
+		insetRect = CGRectMake(0.0, 0.0, size.width, size.height);
+		switch (shape)
+		{
+			case SBButtonExclusiveShape:
+				insetMargin = 4.0;
+				insetRect = CGRectInset(insetRect, insetMargin, insetMargin);
+				CGPathAddEllipseInRect(path, nil, insetRect);
+				break;
+			case SBButtonLeftShape:
+			{
+				CGPoint p = CGPointZero;
+				CGPoint cp1 = CGPointZero;
+				CGPoint cp2 = CGPointZero;
+				CGFloat rad = 0;
+				
+				insetRect.origin.x += insetMargin;
+				insetRect.origin.y += insetMargin;
+				insetRect.size.width -= insetMargin;
+				insetRect.size.height -= insetMargin * 2;
+				rad = insetRect.size.height / 2;
+				
+				p.x = CGRectGetMaxX(insetRect) + lineWidth / 4;
+				p.y = insetRect.origin.y;
+				CGPathMoveToPoint(path, nil, p.x, p.y);
+				p.x = insetRect.origin.x + rad;
+				CGPathAddLineToPoint(path, nil, p.x, p.y);
+				
+				p.x = insetRect.origin.x;
+				cp1.x = insetRect.origin.x;
+				cp1.y = insetRect.origin.y + rad / 2;
+				cp2.x = insetRect.origin.x + rad / 2;
+				cp2.y = insetRect.origin.y;
+				p.y = insetRect.origin.y + rad;
+				CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
+				
+				p.x = insetRect.origin.x + rad;
+				cp2.x = insetRect.origin.x;
+				cp2.y = CGRectGetMaxY(insetRect) - rad / 2;
+				cp1.x = insetRect.origin.x + rad / 2;
+				cp1.y = CGRectGetMaxY(insetRect);
+				p.y = CGRectGetMaxY(insetRect);
+				CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
+				
+				p.x = CGRectGetMaxX(insetRect) + lineWidth / 4;
+				CGPathAddLineToPoint(path, nil, p.x, p.y);
+				
+				CGPathCloseSubpath(path);
+				
+				imageRect.origin.x += insetMargin;
+				break;
+			}
+			case SBButtonCenterShape:
+			{
+				insetRect.origin.y += insetMargin;
+				insetRect.size.height -= insetMargin * 2;
+				CGPathAddRect(path, nil, insetRect);
+				break;
+			}
+			case SBButtonRightShape:
+			{
+				CGPoint p = CGPointZero;
+				CGPoint cp1 = CGPointZero;
+				CGPoint cp2 = CGPointZero;
+				CGFloat rad = 0;
+				
+				insetRect.origin.y += insetMargin;
+				insetRect.size.width -= insetMargin;
+				insetRect.size.height -= insetMargin * 2;
+				rad = insetRect.size.height / 2;
+				
+				p.x = insetRect.origin.x - lineWidth / 4;
+				p.y = insetRect.origin.y;
+				CGPathMoveToPoint(path, nil, p.x, p.y);
+				p.x = CGRectGetMaxX(insetRect) - rad;
+				CGPathAddLineToPoint(path, nil, p.x, p.y);
+				
+				p.x = CGRectGetMaxX(insetRect);
+				cp1.x = CGRectGetMaxX(insetRect);
+				cp1.y = CGRectGetMinY(insetRect) + rad / 2;
+				cp2.x = CGRectGetMaxX(insetRect) - rad / 2;
+				cp2.y = CGRectGetMinY(insetRect);
+				p.y = CGRectGetMinY(insetRect) + rad;
+				CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
+				
+				p.x = CGRectGetMaxX(insetRect) - rad;
+				cp2.x = CGRectGetMaxX(insetRect);
+				cp2.y = CGRectGetMaxY(insetRect) - rad / 2;
+				cp1.x = CGRectGetMaxX(insetRect) - rad / 2;
+				cp1.y = CGRectGetMaxY(insetRect);
+				p.y = CGRectGetMaxY(insetRect);
+				CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
+				
+				p.x = insetRect.origin.x - lineWidth / 4;
+				CGPathAddLineToPoint(path, nil, p.x, p.y);
+				
+				CGPathCloseSubpath(path);
+				
+				imageRect.origin.x -= insetMargin / 2;
+				break;
+			}
+		}
+		shadowColor = CGColorCreateGenericGray(0.0, 1.0);
+		
+		// Fill
+		CGContextSaveGState(ctx);
+		CGContextAddPath(ctx, path);
+		CGContextSetShadowWithColor(ctx, CGSizeZero, insetMargin, shadowColor);
+		CGContextSetRGBFillColor(ctx, 0.0, 0.0, 0.0, 1.0);
+		CGContextFillPath(ctx);
+		CGContextRestoreGState(ctx);
+		CGColorRelease(shadowColor);
+		
+		// Stroke
+		CGContextSaveGState(ctx);
+		CGContextAddPath(ctx, path);
+		CGContextSetLineWidth(ctx, lineWidth);
+		CGContextSetRGBStrokeColor(ctx, 0.9, 0.9, 0.9, 1.0);
+		CGContextStrokePath(ctx);
+		CGContextRestoreGState(ctx);
+		CGPathRelease(path);
+	}
 	
-	iconImage = [[NSImage imageNamed:imageName] CGImage];
+	// Icon
 	if (iconImage)
 	{
 		CGContextSaveGState(ctx);
 		CGContextTranslateCTM(ctx, 0.0, size.height);
 		CGContextScaleCTM(ctx, 1.0, -1.0);
-		CGContextDrawImage(ctx, r, iconImage);
+		CGContextDrawImage(ctx, imageRect, iconImage);
 		CGContextRestoreGState(ctx);
 	}
 	

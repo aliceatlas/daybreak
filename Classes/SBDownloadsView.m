@@ -154,7 +154,7 @@
 		[self addSubview:downloadView];
 	}
 	downloadView.download = item;
-	[self layout:YES];
+	[self layoutItems:YES];
 }
 
 - (BOOL)removeForItem:(SBDownload *)item
@@ -174,7 +174,7 @@
 	{
 		if ([downloadViews count] > 0)
 		{
-			[self layout:YES];
+			[self layoutItems:YES];
 		}
 		else {
 			[self executeDidRemoveAllItems];
@@ -308,7 +308,7 @@
 	{
 		[self addForItem:item];
 	}
-	[self layout:YES];
+	[self layoutItems:YES];
 }
 
 - (void)constructControls
@@ -319,14 +319,14 @@
 	removeButton = [[SBButton alloc] initWithFrame:removeRect];
 	finderButton = [[SBButton alloc] initWithFrame:finderRect];
 	[removeButton setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
-	removeButton.image = [NSImage imageWithCGImage:SBCloseIconImage(NSSizeToCGSize(removeRect.size))];
+	removeButton.image = [NSImage imageWithCGImage:SBIconImage(SBCloseIconImage(), SBButtonLeftShape, NSSizeToCGSize(removeRect.size))];
 	removeButton.action = @selector(remove);
 	[finderButton setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
-	finderButton.image = [NSImage imageWithCGImage:SBIconImage(@"Finder", NSSizeToCGSize(finderRect.size))];
+	finderButton.image = [NSImage imageWithCGImage:SBIconImageWithName(@"Finder", SBButtonRightShape, NSSizeToCGSize(finderRect.size))];
 	finderButton.action = @selector(finder);
 }
 
-- (void)layout:(BOOL)animated
+- (void)layoutItems:(BOOL)animated
 {
 	NSSize enclosingSize = [self enclosingScrollView] ? [[self enclosingScrollView] contentSize] : self.bounds.size;
 	if (enclosingSize.width > 0 && enclosingSize.height > 0)

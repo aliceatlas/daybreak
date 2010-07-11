@@ -55,7 +55,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Actions
 - (void)openSidebar:(id)sender;
 - (void)closeSidebar:(id)sender;
-- (void)switchView;
+- (void)switchView:(SBSidebarPosition)position;
 - (void)takeSidebarIfNeeded;
 - (void)takeSidebar;
 - (void)returnSidebarIfNeeded;

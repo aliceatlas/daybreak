@@ -278,7 +278,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSInteger selectedIndex = 0;
 	userAgentLabel = [[NSTextField alloc] initWithFrame:[self userAgentLabelRect]];
 	userAgentPopup = [[SBBLKGUIPopUpButton alloc] initWithFrame:[self userAgentPopupRect]];
-	[userAgentLabel setStringValue:NSLocalizedString(@"Summary", nil)];
+	[userAgentLabel setStringValue:NSLocalizedString(@"User Agent", nil)];
 	[userAgentLabel setAlignment:NSRightTextAlignment];
 	[userAgentLabel setBordered:NO];
 	[userAgentLabel setEditable:NO];

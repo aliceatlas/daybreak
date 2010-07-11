@@ -128,6 +128,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 		sidebar = [aSidebar retain];
 		[self addSubview:sidebar];
+		[self switchView:sidebarPosition];
 	}
 }
 
@@ -138,7 +139,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		sidebarPosition = inSidebarPosition;
 		if (sidebar && view)
 		{
-			[self switchView];
+			[self switchView:inSidebarPosition];
 			sidebar.position = sidebarPosition;
 			if ([self visibleSidebar])
 			{
@@ -219,14 +220,33 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[[NSUserDefaults standardUserDefaults] setBool:NO forKey:kSBSidebarVisibilityFlag];
 }
 
-- (void)switchView
+- (void)switchView:(SBSidebarPosition)position
 {
-	NSArray *subviews = [self subviews];
-	NSView *subview0 = [subviews objectAtIndex:0];
-	[subview0 retain];
-	[subview0 removeFromSuperview];
-	[self addSubview:subview0];
-	[subview0 release];
+	if (view && sidebar)
+	{
+		BOOL switching = NO;
+		NSArray *subviews = [self subviews];
+		NSView *subview0 = [subviews count] > 0 ? [subviews objectAtIndex:0] : nil;
+		NSView *subview1 = [subviews count] > 1 ? [subviews objectAtIndex:1] : nil;
+		if (position == SBSidebarLeftPosition && subview0 == view && subview1 == sidebar)
+		{
+			switching = YES;
+		}
+		else if (position == SBSidebarRightPosition && subview0 == sidebar && subview1 == view)
+		{
+			switching = YES;
+		}
+		if (switching)
+		{
+			if (subview0)
+			{
+				[subview0 retain];
+				[subview0 removeFromSuperview];
+				[self addSubview:subview0];
+				[subview0 release];
+			}
+		}
+	}
 }
 
 - (void)takeSidebarIfNeeded

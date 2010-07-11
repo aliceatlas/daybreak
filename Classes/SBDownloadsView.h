@@ -58,7 +58,7 @@
 - (void)destructToolsTimer;
 - (void)constructDownloadViews;
 - (void)constructControls;
-- (void)layout:(BOOL)animated;
+- (void)layoutItems:(BOOL)animated;
 // Menu Actions
 - (void)delete:(id)sender;
 - (void)selectAll:(id)sender;

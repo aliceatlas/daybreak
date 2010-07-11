@@ -103,7 +103,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat width = proposedWidth;
 	if (mode == SBBookmarkTileMode)
 	{
-		CGFloat scrollerWidth = [[self enclosingScrollView] bounds].size.width - [[self enclosingScrollView] contentSize].width;
+		CGFloat scrollerWidth = [[self enclosingScrollView] bounds].size.width - [self width];
 		NSInteger x = (NSInteger)((proposedWidth - scrollerWidth) / cellSize.width);
 		width = cellSize.width * x + scrollerWidth;
 		width += 2;// plus 1 for fitting
@@ -113,7 +113,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (CGFloat)width
 {
-	return [[self enclosingScrollView] contentSize].width;
+	CGFloat w = 0;
+	NSScrollView *scrollView = nil;
+	NSSize contentSize = NSZeroSize;
+	NSRect documentRect = NSZeroRect;
+	NSRect documentVisibleRect = NSZeroRect;
+	NSRect scrollFrame = NSZeroRect;
+	scrollView = [self enclosingScrollView];
+	documentRect = [[scrollView documentView] frame];
+	documentVisibleRect = [scrollView documentVisibleRect];
+	contentSize = [scrollView contentSize];
+	scrollFrame = [scrollView frame];
+	w = documentRect.size.height > documentVisibleRect.size.height ? contentSize.width : scrollFrame.size.width;
+	return w;
 }
 
 - (CGFloat)minimumHeight
@@ -321,24 +333,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)editButtonRect:(SBBookmarkListItemView *)itemView
 {
 	NSRect r = NSZeroRect;
-	r.size.width = r.size.height = 24.0;
+	NSRect removeButtonRect = [self removeButtonRect:itemView];
+	r.size.width = 20.0;
+	r.size.height = 24.0;
 	if (itemView)
 	{
 		r.origin = itemView.frame.origin;
 	}
-	r.origin.x += r.size.width;
+	r.origin.x = NSMaxX(removeButtonRect);
 	return r;
 }
 
 - (NSRect)updateButtonRect:(SBBookmarkListItemView *)itemView
 {
 	NSRect r = NSZeroRect;
+	NSRect editButtonRect = [self editButtonRect:itemView];
 	r.size.width = r.size.height = 24.0;
 	if (itemView)
 	{
 		r.origin = itemView.frame.origin;
 	}
-	r.origin.x += r.size.width * 2;
+	r.origin.x = NSMaxX(editButtonRect);
 	return r;
 }
 
@@ -458,12 +473,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	editButton = [[SBButton alloc] initWithFrame:editRect];
 	updateButton = [[SBButton alloc] initWithFrame:updateRect];
 	[removeButton setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
-	removeButton.image = [NSImage imageWithCGImage:SBCloseIconImage(NSSizeToCGSize(removeRect.size))];
+	removeButton.image = [NSImage imageWithCGImage:SBIconImage(SBCloseIconImage(), SBButtonLeftShape, NSSizeToCGSize(removeRect.size))];
 	removeButton.action = @selector(remove);
 	[editButton setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
 	[updateButton setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
-	editButton.image = [NSImage imageWithCGImage:SBIconImage(@"Edit", NSSizeToCGSize(editRect.size))];
-	updateButton.image = [NSImage imageWithCGImage:SBIconImage(@"Update", NSSizeToCGSize(editRect.size))];
+	editButton.image = [NSImage imageWithCGImage:SBIconImageWithName(@"Edit", SBButtonCenterShape, NSSizeToCGSize(editRect.size))];
+	updateButton.image = [NSImage imageWithCGImage:SBIconImageWithName(@"Update", SBButtonRightShape, NSSizeToCGSize(editRect.size))];
 	editButton.action = @selector(edit);
 	updateButton.action = @selector(update);
 }
@@ -1351,7 +1366,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	else if ([types containsObject:NSURLPboardType])
 	{
 		// General URL
-		pbItems = [pasteboard propertyListForType:NSURLPboardType];
 		NSString *url = [[NSURL URLFromPasteboard:pasteboard] absoluteString];
 		NSString *title = nil;
 		NSData *data = nil;

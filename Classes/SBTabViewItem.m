@@ -1348,7 +1348,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if ([anIdentifier.request isEqualTo:identifier.request])
 		{
-			DebugLog(@"%s conatins request %@", __func__, anIdentifier.request);
+			DebugLog(@"%s contains request %@", __func__, anIdentifier.request);
 			contains = YES;
 			break;
 		}
