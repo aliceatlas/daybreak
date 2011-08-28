@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBView.h"
 
 @class SBFindSearchField;
-@interface SBFindbar : SBView
+@interface SBFindbar : SBView// <NSTextFieldDelegate>
 {
 	NSView *contentView;
 	SBButton *closeButton;

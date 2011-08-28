@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)bottombar:(SBSideBottombar *)inBottombar didChangeSize:(CGFloat)size;
 //- (CGFloat)bottombar:(SBSideBottombar *)inBottombar didDraggedResizer:(CGFloat)deltaX;
 @end
-@interface SBSidebar : NSSplitView <SBDownloadsViewDelegate, SBSideBottombarDelegate>
+@interface SBSidebar : NSSplitView <SBDownloadsViewDelegate, SBSideBottombarDelegate>//, NSAnimationDelegate>
 {
 	NSView *view;
 	SBDrawer *drawer;

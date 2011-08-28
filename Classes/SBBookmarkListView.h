@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @end
 
 @class SBBookmarkListItemView;
-@interface SBBookmarkListView : SBView
+@interface SBBookmarkListView : SBView//// <NSAnimationDelegate>
 {
 	SBBookmarksView *wrapperView;
 	SBBookmarkMode mode;

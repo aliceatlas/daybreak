@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBTabView;
 @class SBWebView;
 @class SBSourceTextView;
-@interface SBTabViewItem : NSTabViewItem
+@interface SBTabViewItem : NSTabViewItem// <NSSplitViewDelegate>
 {
 	SBTabbarItem *tabbarItem;
 	NSURL *URL;
@@ -99,6 +99,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Menu Actions
 - (void)searchStringFromMenu:(NSMenuItem *)menuItem;
 - (void)searchStringInNewTabFromMenu:(NSMenuItem *)menuItem;
+- (void)openURLInApplicationFromMenu:(NSMenuItem *)menuItem;
+- (void)openURLInSelectedApplicationFromMenu:(NSMenuItem *)menuItem;
+- (BOOL)openURL:(NSURL *)url inBundleIdentifier:(NSString *)bundleIdentifier;
 - (void)openFrameInCurrentFrameFromMenu:(NSMenuItem *)menuItem;
 - (void)openURLInNewTabFromMenu:(NSMenuItem *)menuItem;
 

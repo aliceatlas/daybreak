@@ -39,7 +39,7 @@
 - (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldDownloadAtRow:(NSInteger)rowIndex;
 @end
 
-@interface SBWebResourcesView : SBView
+@interface SBWebResourcesView : SBView// <NSTableViewDataSource, NSTableViewDelegate>
 {
 	NSScrollView *scrollView;
 	NSTableView *tableView;

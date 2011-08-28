@@ -136,6 +136,7 @@ NSString *kSBSnapshotFileType = @"SnapshotFileType";
 NSString *kSBSnapshotTIFFCompression = @"SnapshotTIFFCompression";
 NSString *kSBSnapshotJPGFactor = @"SnapshotJPGFactor";
 NSString *kSBUserAgentName = @"UserAgent";
+NSString *kSBOpenApplicationBundleIdentifier = @"OpenApplicationBundleIdentifier";
 // General
 NSString *kSBOpenNewWindowsWithHomePage = @"OpenNewWindowsWithHomePage";
 NSString *kSBOpenNewTabsWithHomePage = @"OpenNewTabsWithHomePage";

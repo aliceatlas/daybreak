@@ -141,7 +141,7 @@ NSDictionary *SBDefaultBookmarks()
 	NSArray *items = nil;
 	NSDictionary *defaultItem = nil;
 	NSString *path = [[NSBundle mainBundle] pathForResource:@"DefaultBookmark" ofType:@"plist"];
-	if (defaultItem = [NSDictionary dictionaryWithContentsOfFile:path])
+	if ((defaultItem = [NSDictionary dictionaryWithContentsOfFile:path]))
 	{
 		NSString *title = nil;
 		NSData *imageData = nil;
@@ -358,7 +358,7 @@ NSString *SBSearchFileInDirectory(NSString *filename, NSString *directoryPath)
 	{
 		NSString *findFileName = nil;
 		NSFileManager *manager = [NSFileManager defaultManager];
-		NSArray *contents = [manager directoryContentsAtPath:directoryPath];
+		NSArray *contents = [manager contentsOfDirectoryAtPath:directoryPath error:nil];
 		for (NSString *file in contents)
 		{
 			if ([file hasPrefix:filename])
@@ -393,7 +393,7 @@ NSString *SBSearchPath(NSSearchPathDirectory searchPathDirectory, NSString *subd
 				
 			}
 			else {
-				if ([manager createDirectoryAtPath:path attributes:nil])
+				if ([manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil])
 				{
 					
 				}

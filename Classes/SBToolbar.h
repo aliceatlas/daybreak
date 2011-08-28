@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDefinitions.h"
 
 @class SBToolbar;
-@protocol SBToolbarDelegate <NSObject>
+@protocol SBToolbarDelegate// <NSToolbarDelegate>
 
 - (void)toolbarDidVisible:(SBToolbar *)aToolbar;
 - (void)toolbarDidInvisible:(SBToolbar *)aToolbar;

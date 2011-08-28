@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @protocol SBURLFieldDelegate;
 @protocol SBURLFieldDatasource;
 
-@interface SBURLField : SBView
+@interface SBURLField : SBView// <NSTextFieldDelegate>
 {
 	SBButton *backwardButton;
 	SBButton *forwardButton;

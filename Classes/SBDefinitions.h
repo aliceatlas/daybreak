@@ -102,6 +102,7 @@ extern NSString *kSBSnapshotFileType;					// Integer
 extern NSString *kSBSnapshotTIFFCompression;			// Integer
 extern NSString *kSBSnapshotJPGFactor;					// Float
 extern NSString *kSBUserAgentName;						// String
+extern NSString *kSBOpenApplicationBundleIdentifier;	// String
 // General
 extern NSString *kSBOpenNewWindowsWithHomePage;			// BOOL
 extern NSString *kSBOpenNewTabsWithHomePage;			// BOOL
@@ -351,7 +352,7 @@ extern NSString *SBBookmarkPboardType;
 @end
 
 @class SBSplitView;
-@protocol SBSplitViewDelegate <NSObject>
+@protocol SBSplitViewDelegate// <NSSplitViewDelegate>
 - (void)splitViewDidOpenDrawer:(SBSplitView *)aSplitView;
 @end
 
@@ -405,7 +406,6 @@ extern NSString *SBBookmarkPboardType;
 - (void)show:(id)arg1;
 - (void)showConsole:(id)arg1;
 @end
-
 
 // Methods for Snow Leopard 10.6
 @interface NSEvent (SBSnowLeopardAddition)

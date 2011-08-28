@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBBLKGUI.h"
 #import "SBDownloads.h"
 #import "SBDrawer.h"
-#import "SBFindbar.h";
+#import "SBFindbar.h"
 #import "SBFixedSplitView.h"
 #import "SBSavePanel.h"
 #import "SBTabbarItem.h"
@@ -506,6 +506,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSString *textEncodingName = nil;
 		webView = [[SBWebView alloc] initWithFrame:r frameName:nil groupName:nil];
 		// Set properties
+		[webView setDrawsBackground:YES];
 		[webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 		webView.delegate = self;
 		[webView setHostWindow:[self.tabView window]];
@@ -1019,7 +1020,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		SBWebResourceIdentifier *resourceID = (SBWebResourceIdentifier *)identifier;
 		NSCachedURLResponse *response = nil;
-		if (response = [[NSURLCache sharedURLCache] cachedResponseForRequest:resourceID.request])
+		if ((response = [[NSURLCache sharedURLCache] cachedResponseForRequest:resourceID.request]))
 		{
 			// Loaded from cache
 			long long length = [response data] ? [[response data] length] : 0;
@@ -1122,6 +1123,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSMutableArray *menuItems = nil;
 	NSString *selectedString =  nil;
+	NSString *applicationPath = nil;
+	NSString *applicationBundleIdentifier = nil;
+	NSString *appName = nil;
 	NSURL *linkURL = nil;
 	WebFrame *frame = nil;
 	NSURL *frameURL = nil;
@@ -1145,11 +1149,42 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	linkURL = [element objectForKey:WebElementLinkURLKey];
 	frame = [element objectForKey:WebElementFrameKey];
 	frameURL = [[[frame dataSource] request] URL];
+	applicationBundleIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:kSBOpenApplicationBundleIdentifier];
+	applicationPath = applicationBundleIdentifier ? [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:applicationBundleIdentifier] : nil;
+	if (applicationPath)
+	{
+		NSBundle *bundle = nil;
+		bundle = [NSBundle bundleWithPath:applicationPath];
+		appName = [[bundle localizedInfoDictionary] objectForKey:@"CFBundleDisplayName"];
+		if (!appName)
+			appName = [[bundle infoDictionary] objectForKey:@"CFBundleName"];
+	}
 	
 	[menuItems addObjectsFromArray:defaultMenuItems];
 	
 	if (linkURL == nil && [selectedString length] == 0)
 	{
+		if (frameURL)
+		{
+			/* Add Open in items */
+			NSMenuItem *newItem1 = nil;
+			NSMenuItem *newItem2 = nil;
+			newItem1 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open in Application...", nil) action:@selector(openURLInSelectedApplicationFromMenu:) keyEquivalent:@""] autorelease];
+			[newItem1 setTarget:self];
+			[newItem1 setRepresentedObject:frameURL];
+			if (appName)
+			{
+				newItem2 = [[[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Open in %@", nil), appName] action:@selector(openURLInApplicationFromMenu:) keyEquivalent:@""] autorelease];
+				[newItem2 setTarget:self];
+				[newItem2 setRepresentedObject:frameURL];
+			}
+			[menuItems insertObject:[NSMenuItem separatorItem] atIndex:index];
+			if (newItem2)
+			{
+				[menuItems insertObject:newItem2 atIndex:index];
+			}
+			[menuItems insertObject:newItem1 atIndex:index];
+		}
 	}
 	if (linkURL)
 	{
@@ -1159,10 +1194,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			NSInteger tag = [item tag];
 			if (tag == 1)
 			{
-				NSMenuItem *newItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Link in New Tab", nil) action:@selector(openURLInNewTabFromMenu:) keyEquivalent:@""] autorelease];
-				[newItem setTarget:self];
-				[newItem setRepresentedObject:linkURL];
-				[menuItems insertObject:newItem atIndex:index];
+				/* Add Open link in items */
+				NSMenuItem *newItem0 = nil;
+				NSMenuItem *newItem1 = nil;
+				NSMenuItem *newItem2 = nil;
+				newItem0 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Link in New Tab", nil) action:@selector(openURLInNewTabFromMenu:) keyEquivalent:@""] autorelease];
+				[newItem0 setTarget:self];
+				[newItem0 setRepresentedObject:linkURL];
+				newItem1 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Link in Application...", nil) action:@selector(openURLInSelectedApplicationFromMenu:) keyEquivalent:@""] autorelease];
+				[newItem1 setTarget:self];
+				[newItem1 setRepresentedObject:linkURL];
+				if (appName)
+				{
+					newItem2 = [[[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Open Link in %@", nil), appName] action:@selector(openURLInApplicationFromMenu:) keyEquivalent:@""] autorelease];
+					[newItem2 setTarget:self];
+					[newItem2 setRepresentedObject:linkURL];
+				}
+				if (newItem2)
+				{
+					[menuItems insertObject:newItem2 atIndex:index];
+				}
+				[menuItems insertObject:newItem1 atIndex:index];
+				[menuItems insertObject:newItem0 atIndex:index];
 				break;
 			}
 			index--;
@@ -1510,6 +1563,61 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		[self.tabView executeShouldSearchString:searchString newTab:YES];
 	}
+}
+
+- (void)openURLInApplicationFromMenu:(NSMenuItem *)menuItem
+{
+	NSURL *url = [menuItem representedObject];
+    if (url)
+    {
+		NSString *savedBundleIdentifier = nil;
+		savedBundleIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:kSBOpenApplicationBundleIdentifier];
+		if (savedBundleIdentifier)
+		{
+        	[self openURL:url inBundleIdentifier:savedBundleIdentifier];
+		}
+	}
+}
+
+- (void)openURLInSelectedApplicationFromMenu:(NSMenuItem *)menuItem
+{
+	NSURL *url = [menuItem representedObject];
+    if (url)
+    {
+		NSString *bundleIdentifier = nil;
+		NSOpenPanel *panel = nil;
+		panel = [NSOpenPanel openPanel];
+		[panel setCanChooseFiles:YES];
+		[panel setCanChooseDirectories:NO];
+		[panel setAllowedFileTypes:[NSArray arrayWithObject:@"app"]];
+		[panel setAllowsMultipleSelection:NO];
+		[panel setDirectory:@"/Applications"];
+		if ([panel runModal] == NSOKButton)
+		{
+			NSString *filename = nil;
+			NSBundle *bundle = nil;
+			filename = [panel filename];
+			bundle  = [NSBundle bundleWithPath:filename];
+			bundleIdentifier = [bundle bundleIdentifier];
+		}
+		if (bundleIdentifier)
+		{
+        	if ([self openURL:url inBundleIdentifier:bundleIdentifier])
+			{
+				[[NSUserDefaults standardUserDefaults] setObject:bundleIdentifier forKey:kSBOpenApplicationBundleIdentifier];
+			}
+		}
+    }
+}
+
+- (BOOL)openURL:(NSURL *)url inBundleIdentifier:(NSString *)bundleIdentifier
+{
+	BOOL r = NO;
+    if (url && bundleIdentifier)
+    {
+        r = [[NSWorkspace sharedWorkspace] openURLs:[NSArray arrayWithObject:url] withAppBundleIdentifier:bundleIdentifier options:NSWorkspaceLaunchDefault additionalEventParamDescriptor:nil launchIdentifiers:nil];
+    }
+	return r;
 }
 
 - (void)openFrameInCurrentFrameFromMenu:(NSMenuItem *)menuItem

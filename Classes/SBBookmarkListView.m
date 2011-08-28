@@ -591,7 +591,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)moveItemViewsAtIndexes:(NSIndexSet *)indexes toIndex:(NSUInteger)toIndex
 {
 	NSArray *views = [itemViews objectsAtIndexes:indexes];
-	if ([views count] > 0 && toIndex <= [itemViews count] && toIndex >= 0)
+	if ([views count] > 0 && toIndex <= [itemViews count])
 	{
 		if ([itemViews containsIndexes:indexes])
 		{
@@ -603,8 +603,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				if (i < to)
 					offset++;
 			}
-			if ((to - offset) >= 0)
-				to -= offset;
+			to -= offset;
 			[views retain];
 			[itemViews removeObjectsAtIndexes:indexes];
 			[itemViews insertObjects:views atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(to, [indexes count])]];
@@ -1381,7 +1380,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			BOOL shouldInset = YES;
 			NSImage *image = nil;
 			data = [pasteboard dataForType:NSTIFFPboardType];
-			if (image = [[[NSImage alloc] initWithData:data] autorelease])
+			if ((image = [[[NSImage alloc] initWithData:data] autorelease]))
 			{
 				shouldInset = !NSEqualSizes([image size], SBBookmarkImageMaxSize());
 			}

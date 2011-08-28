@@ -171,7 +171,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if ([[self delegate] respondsToSelector:@selector(window:shouldHandleKeyEvent:)])
 		{
-			r = [[self delegate] window:self shouldHandleKeyEvent:theEvent];
+			r = [(id<SBDocumentWindowDelegate>)[self delegate] window:self shouldHandleKeyEvent:theEvent];
 		}
 	}
 	if (!r)
@@ -845,7 +845,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if ([[self delegate] respondsToSelector:@selector(windowDidFinishFlipping:)])
 		{
-			[[self delegate] windowDidFinishFlipping:self];
+			[(id<SBDocumentWindowDelegate>)[self delegate] windowDidFinishFlipping:self];
 		}
 	}
 	flipping = NO;

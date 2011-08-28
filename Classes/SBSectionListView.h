@@ -60,7 +60,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @end
 
-@interface SBSectionItemView : SBView
+@interface SBSectionItemView : SBView// <NSTextFieldDelegate>
 {
 	SBSectionItem *item;
 	NSImageView *currentImageView;

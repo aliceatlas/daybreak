@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBTabbar;
 @class SBTabbarItem;
 @protocol SBTabbarDelegate;
-@interface SBTabbar : SBView
+@interface SBTabbar : SBView// <NSAnimationDelegate>
 {
 	NSMutableArray *items;
 	SBView *contentView;

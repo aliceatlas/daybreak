@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @class SBBLKGUIButton;
 @class SBBLKGUITextField;
-@interface SBDownloaderView : SBView
+@interface SBDownloaderView : SBView// <NSTextFieldDelegate>
 {
 	NSTextField *messageLabel;
 	NSTextField *urlLabel;

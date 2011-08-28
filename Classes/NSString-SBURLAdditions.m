@@ -302,10 +302,10 @@ NSString *SBBytesUnitString = @"bytes";
 		{
 			if ([stringValue hasPrefix:@"/"])
 			{
-				stringValue = [@"file://" stringByAppendingFormat:stringValue];
+				stringValue = [@"file://" stringByAppendingString:stringValue];
 			}
 			else {
-				stringValue = [@"http://" stringByAppendingFormat:stringValue];
+				stringValue = [@"http://" stringByAppendingString:stringValue];
 			}
 		}
 		stringValue = [stringValue URLEncodedString];

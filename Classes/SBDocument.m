@@ -44,13 +44,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBSegmentedButton.h"
 #import "SBSidebar.h"
 #import "SBSnapshotView.h"
-#import "SBSplitView.h"
 #import "SBTabbar.h"
 #import "SBTabbarItem.h"
 #import "SBTabView.h"
 #import "SBTabViewItem.h"
 #import "SBTextInputView.h"
-#import "SBToolbar.h"
 #import "SBUserAgentView.h"
 #import "SBURLField.h"
 #import "SBUtil.h"
@@ -690,11 +688,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		sidebar.position = splitView.sidebarPosition;
 		sidebar.drawerHeight = [self minimumDownloadsDrawerHeight];	// Set to default height
 		splitView.sidebar = sidebar;
-		if (bookmarksView = [self constructBookmarksView])
+		if ((bookmarksView = [self constructBookmarksView]))
 		{
 			sidebar.view = bookmarksView;
 		}
-		if (drawer = [[[SBDrawer alloc] initWithFrame:[sidebar drawerRect]] autorelease])
+		if ((drawer = [[[SBDrawer alloc] initWithFrame:[sidebar drawerRect]] autorelease]))
 		{
 			sidebar.drawer = drawer;
 		}
@@ -1486,10 +1484,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSUInteger count = 0;
 	SBTabViewItem *tabViewItem = nil;
-	if (tabViewItem = self.selectedTabViewItem)
+	if ((tabViewItem = self.selectedTabViewItem))
 	{
 		NSMutableArray *resourceIdentifiers = nil;
-		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			count = [resourceIdentifiers count];
 		}
@@ -1501,10 +1499,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSString *object = nil;
 	SBTabViewItem *tabViewItem = nil;
-	if (tabViewItem = self.selectedTabViewItem)
+	if ((tabViewItem = self.selectedTabViewItem))
 	{
 		NSMutableArray *resourceIdentifiers = nil;
-		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			SBWebResourceIdentifier *resourceIdentifier = nil;
 			NSString *identifier = [aTableColumn identifier];
@@ -1568,10 +1566,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
 	SBTabViewItem *tabViewItem = nil;
-	if (tabViewItem = self.selectedTabViewItem)
+	if ((tabViewItem = self.selectedTabViewItem))
 	{
 		NSMutableArray *resourceIdentifiers = nil;
-		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			SBWebResourceIdentifier *resourceIdentifier = nil;
 			NSString *identifier = [aTableColumn identifier];
@@ -1648,10 +1646,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldSaveAtRow:(NSInteger)rowIndex
 {
 	SBTabViewItem *tabViewItem = nil;
-	if (tabViewItem = self.selectedTabViewItem)
+	if ((tabViewItem = self.selectedTabViewItem))
 	{
 		NSMutableArray *resourceIdentifiers = nil;
-		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			SBWebResourceIdentifier *resourceIdentifier = nil;
 			resourceIdentifier = rowIndex < [resourceIdentifiers count] ? [resourceIdentifiers objectAtIndex:rowIndex] : nil;
@@ -1695,10 +1693,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldDownloadAtRow:(NSInteger)rowIndex
 {
 	SBTabViewItem *tabViewItem = nil;
-	if (tabViewItem = self.selectedTabViewItem)
+	if ((tabViewItem = self.selectedTabViewItem))
 	{
 		NSMutableArray *resourceIdentifiers = nil;
-		if (resourceIdentifiers = tabViewItem.resourceIdentifiers)
+		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			SBWebResourceIdentifier *resourceIdentifier = nil;
 			resourceIdentifier = rowIndex < [resourceIdentifiers count] ? [resourceIdentifiers objectAtIndex:rowIndex] : nil;
@@ -2092,7 +2090,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)updateResourcesViewIfNeeded
 {
 	SBWebResourcesView *resourcesView = nil;
-	if (resourcesView = self.resourcesView)
+	if ((resourcesView = self.resourcesView))
 	{
 		[resourcesView reload];
 	}
@@ -2149,7 +2147,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	for (NSDictionary *bookmarkItem in bookmarks.items)
 	{
 		NSString *urlString = nil;
-		if (urlString = [bookmarkItem objectForKey:kSBBookmarkURL])
+		if ((urlString = [bookmarkItem objectForKey:kSBBookmarkURL]))
 		{
 			NSString *title = [bookmarkItem objectForKey:kSBBookmarkTitle];
 			NSString *SchemelessUrlString = [urlString stringByDeletingScheme];
@@ -2188,7 +2186,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	for (WebHistoryItem *historyItem in history.items)
 	{
 		NSString *urlString = nil;
-		if (urlString = [historyItem URLString])
+		if ((urlString = [historyItem URLString]))
 		{
 			if (![urlStrings containsObject:urlString])
 			{
@@ -2347,7 +2345,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSPrintOperation *printOperation;
 		NSView *view = [[[webView mainFrame] frameView] documentView];
 		printOperation = [NSPrintOperation printOperationWithView:view];
-		[printOperation setShowPanels:YES];
+		[printOperation setShowsPrintPanel:YES];
 		[printOperation runOperation];
 	}
 }
@@ -2534,7 +2532,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)reload:(id)sender
 {
 	SBWebView *webView = nil;
-	if (webView = [self selectedWebView])
+	if ((webView = [self selectedWebView]))
 	{
 		if ([webView isLoading])
 			[webView stopLoading:nil];
@@ -2545,7 +2543,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)stopLoading:(id)sender
 {
 	SBWebView *webView = nil;
-	if (webView = [self selectedWebView])
+	if ((webView = [self selectedWebView]))
 		[webView stopLoading:nil];
 }
 
@@ -2579,21 +2577,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)scaleToActualSizeForText:(id)sender
 {
 	SBWebView *webView = nil;
-	if (webView = [self selectedWebView])
+	if ((webView = [self selectedWebView]))
 		[webView makeTextStandardSize:nil];
 }
 
 - (void)zoomInText:(id)sender
 {
 	SBWebView *webView = nil;
-	if (webView = [self selectedWebView])
+	if ((webView = [self selectedWebView]))
 		[webView makeTextLarger:nil];
 }
 
 - (void)zoomOutText:(id)sender
 {
 	SBWebView *webView = nil;
-	if (webView = [self selectedWebView])
+	if ((webView = [self selectedWebView]))
 		[webView makeTextSmaller:nil];
 }
 
@@ -2630,14 +2628,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)showWebInspector:(id)sender
 {
 	SBWebView *webView = nil;
-	if (webView = [self selectedWebView])
+	if ((webView = [self selectedWebView]))
 		[webView showWebInspector:nil];
 }
 
 - (void)showConsole:(id)sender
 {
 	SBWebView *webView = nil;
-	if (webView = [self selectedWebView])
+	if ((webView = [self selectedWebView]))
 	{
 		[webView showConsole:nil];
 	}
@@ -2648,7 +2646,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)backward:(id)sender
 {
 	SBTabViewItem *tabViewItem = nil;
-	if (tabViewItem = [tabView selectedTabViewItem])
+	if ((tabViewItem = [tabView selectedTabViewItem]))
 	{
 		[tabViewItem backward:nil];
 	}
@@ -2657,7 +2655,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)forward:(id)sender
 {
 	SBTabViewItem *tabViewItem = nil;
-	if (tabViewItem = [tabView selectedTabViewItem])
+	if ((tabViewItem = [tabView selectedTabViewItem]))
 	{
 		[tabViewItem forward:nil];
 	}
@@ -2722,7 +2720,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[self hideSidebar];
 		}
 		else {
-			if (bookmarksView = [self constructBookmarksView])
+			if ((bookmarksView = [self constructBookmarksView]))
 			{
 				sidebar.view = bookmarksView;
 			}

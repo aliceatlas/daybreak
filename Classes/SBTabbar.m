@@ -867,7 +867,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if ([urls count] == 1)
 			{
 				SBTabbarItem *item = nil;
-				if (item = [self itemAtPoint:point])
+				if ((item = [self itemAtPoint:point]))
 				{
 					[self executeShouldOpenURLs:[NSArray arrayWithObject:[urls objectAtIndex:0]] startInItem:item];
 				}
@@ -884,7 +884,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		NSURL *url = [NSURL URLFromPasteboard:pasteboard];
 		SBTabbarItem *item = nil;
-		if (item = [self itemAtPoint:point])
+		if ((item = [self itemAtPoint:point]))
 		{
 			[self executeShouldOpenURLs:[NSArray arrayWithObject:url] startInItem:item];
 		}
@@ -920,7 +920,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if (!_draggedItem)
 			{
 				// Get dragging item
-				if (_draggedItem = [self itemAtPoint:_downPoint])
+				if ((_draggedItem = [self itemAtPoint:_downPoint]))
 				{
 					_shouldReselectItem = nil;
 					_draggedItemRect = _draggedItem.frame;

@@ -28,6 +28,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBButton.h"
 #import "SBPopUpButton.h"
 #import "SBDocumentWindow.h"
+#import "SBSplitView.h"
+#import "SBToolbar.h"
 #import "SBWebResourcesView.h"
 
 @class SBBookmarkView;
@@ -44,18 +46,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBSegmentedButton;
 @class SBSidebar;
 @class SBSnapshotView;
-@class SBSplitView;
 @class SBTabbar;
 @class SBTabView;
 @class SBTabbarItem;
 @class SBTabViewItem;
-@class SBToolbar;
 @class SBUserAgentView;
 @class SBURLField;
 @class SBWebView;
 @protocol SBSplitViewDelegate;
 @protocol SBTabbarDelegate;
-@interface SBDocument : NSDocument <SBTabbarDelegate, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate>
+@interface SBDocument : NSDocument <SBTabbarDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate>
 {
 	SBDocumentWindow *window;
 	NSWindowController *windowController;

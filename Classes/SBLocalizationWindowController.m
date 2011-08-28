@@ -558,7 +558,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				NSFileManager *manager = [NSFileManager defaultManager];
 				NSString *directoryPath = [[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:langCode] stringByAppendingPathExtension:@"lproj"];
 				if (![manager fileExistsAtPath:directoryPath])
-					[manager createDirectoryAtPath:directoryPath attributes:nil];
+					[manager createDirectoryAtPath:directoryPath withIntermediateDirectories:YES attributes:nil error:nil];
 				NSString *dstPath = [[directoryPath stringByAppendingPathComponent:@"Localizable"] stringByAppendingPathExtension:@"strings"];
 				NSError *error = nil;
 				if ([manager fileExistsAtPath:dstPath])

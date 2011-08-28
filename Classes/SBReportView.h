@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBView.h"
 
 
-@interface SBReportView : SBView
+@interface SBReportView : SBView// <NSTextFieldDelegate>
 {
 	NSImageView *iconImageView;
 	NSTextField *titleLabel;
