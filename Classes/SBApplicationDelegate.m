@@ -98,7 +98,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			NSString *type = nil;
 			NSError *error = nil;
 			NSURL *url = [NSURL fileURLWithPath:filename];
-			if (type = [documentController typeForContentsOfURL:url error:&error])
+			if ((type = [documentController typeForContentsOfURL:url error:&error]))
 			{
 				if ([type isEqualToString:kSBStringsDocumentTypeName])
 				{

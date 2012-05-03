@@ -27,7 +27,7 @@
 
 @class SBButton;
 @class SBDownloadView;
-@interface SBDownloadsView : SBView// <NSAnimationDelegate>
+@interface SBDownloadsView : SBView <NSAnimationDelegate>
 {
 	id<SBDownloadsViewDelegate> delegate;
 	NSMutableArray *downloadViews;

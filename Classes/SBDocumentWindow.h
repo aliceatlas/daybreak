@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBSplitView;
 @interface SBDocumentWindow : NSWindow
 {
-	NSWindow *flipWindow;
 	NSWindow *backWindow;
 	BOOL keyView;
 	SBInnerView *innerView;
@@ -40,8 +39,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBTabbar *tabbar;
 	SBSplitView *splitView;
 	BOOL tabbarVisivility;
-	BOOL flipped;
-	BOOL flipping;
 }
 @property (nonatomic, readonly) NSRect innerRect;
 @property (nonatomic) BOOL keyView;
@@ -54,7 +51,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, retain) SBCoverWindow *coverWindow;
 @property (nonatomic, retain) NSWindow *backWindow;
 @property (nonatomic) BOOL tabbarVisivility;
-@property (nonatomic) BOOL flipped;
 
 - (id)initWithFrame:(NSRect)frame delegate:(id)delegate tabbarVisivility:(BOOL)inTabbarVisivility;
 
@@ -82,20 +78,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)showTabbar;
 - (void)flip;
 - (void)flip:(SBView *)view;
-- (void)flipToZero;
-- (void)flipToOne;
-- (void)doneFlipToZero;
-- (void)doneFlipToOne;
-- (void)flipAnimate:(NSInteger)scene back:(BOOL)back;
-- (void)setFlipContents:(NSInteger)scene;
-- (void)flipContents:(NSInteger)scene back:(BOOL)back;
-- (void)showBackWindow;
-- (void)hideBackWindow;
-- (void)flipDidEnd;
 - (void)doneFlip;
-- (CGImageRef)imageOfWindow:(NSWindow *)window size:(CGSize)size flipped:(BOOL)isFlipped;
-- (CGImageRef)faceImage:(CGSize)size;
-- (CGImageRef)backImage:(CGSize)size;
-- (CGImageRef)backgroundImage:(CGSize)size;
 
 @end

@@ -75,8 +75,15 @@
 		memcpy(cellColors, SBTableLightGrayCellColors, sizeof(SBTableLightGrayCellColors));
 		[selectedColor getComponents:selectedCellColors];
 	}
-	[[NSColor colorWithCalibratedRed:backgroundColors[0] green:backgroundColors[1] blue:backgroundColors[2] alpha:backgroundColors[3]] set];
-	NSRectFill(cellFrame);
+	else
+	{
+		return;
+	}
+	if (style == SBTableCellGrayStyle || style == SBTableCellWhiteStyle)
+	{
+		[[NSColor colorWithCalibratedRed:backgroundColors[0] green:backgroundColors[1] blue:backgroundColors[2] alpha:backgroundColors[3]] set];
+		NSRectFill(cellFrame);
+	}
 	if (showRoundedPath)
 	{
 		[[NSColor colorWithCalibratedRed:cellColors[0] green:cellColors[1] blue:cellColors[2] alpha:cellColors[3]] set];
@@ -93,7 +100,6 @@
 			CGContextSetRGBFillColor(ctx, selectedCellColors[0], selectedCellColors[1], selectedCellColors[2], selectedCellColors[3]);
 			CGContextFillPath(ctx);
 			CGContextRestoreGState(ctx);
-			CGPathRelease(path);
 		}
 	}
 	else {
@@ -124,7 +130,7 @@
 		sTextColor = [self isHighlighted] ? [NSColor clearColor] : [NSColor whiteColor];
 	}
 	
-	if ([title length] > 0)
+	if ([title length] > 0 && (style == SBTableCellGrayStyle || style == SBTableCellWhiteStyle))
 	{
 		NSSize size = NSZeroSize;
 		NSColor *color = nil;

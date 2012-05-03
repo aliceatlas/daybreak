@@ -261,7 +261,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextClip(ctx);
 	SBDrawGradientInContext(ctx, count, locations, colors, points);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	CGColorRelease(shadowColor);
 	
 	// Stroke
@@ -271,7 +270,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSetRGBStrokeColor(ctx, storkeColor[0], storkeColor[1], storkeColor[2], storkeColor[3]);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(strokePath);
 	
 	tr = NSRectFromCGRect(r);
 	tr.origin.x += kSBSectionInnerMarginX;
@@ -350,7 +348,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructControl
 {
 	NSRect r = [self valueRect];
-	if (item.controlClass == [NSPopUpButton class])
+	if ([item controlClass] == [NSPopUpButton class])
 	{
 		NSString *string = [SBPreferences objectForKey:item.keyName];
 		NSPopUpButton *popUp = nil;
@@ -369,7 +367,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[popUp selectItem:selectedItem];
 		[self addSubview:popUp];
 	}
-	else if (item.controlClass == [NSTextField class])
+	else if ([item controlClass] == [NSTextField class])
 	{
 		NSString *string = [SBPreferences objectForKey:item.keyName];
 		NSTextField *field = nil;
@@ -383,7 +381,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[field setStringValue:string];
 		[self addSubview:field];
 	}
-	else if (item.controlClass == [NSOpenPanel class])
+	else if ([item controlClass] == [NSOpenPanel class])
 	{
 		NSWorkspace *space = [NSWorkspace sharedWorkspace];
 		NSString *path = [SBPreferences objectForKey:item.keyName];
@@ -434,7 +432,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		self.currentImageView = imageView;
 		self.currentField = field;
 	}
-	else if (item.controlClass == [NSButton class])
+	else if ([item controlClass] == [NSButton class])
 	{
 		BOOL enabled = [SBPreferences boolForKey:item.keyName];
 		NSButton *button = nil;

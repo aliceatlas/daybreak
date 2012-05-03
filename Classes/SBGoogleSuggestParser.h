@@ -9,7 +9,7 @@
 #import "SBDefinitions.h"
 
 
-@interface SBGoogleSuggestParser : NSObject// <NSXMLParserDelegate>
+@interface SBGoogleSuggestParser : NSObject <NSXMLParserDelegate>
 {
 	NSMutableArray *items;
 	BOOL _inToplevel;

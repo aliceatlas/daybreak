@@ -212,7 +212,6 @@
 	if (icon0) [icon0 setSize:NSMakeSize(24.0, 24.0)];
 	if (icon1) [icon1 setSize:NSMakeSize(24.0, 24.0)];
 	NSImage *images[2] = {icon0, icon1};
-	NSUInteger tags[3] = {0, 1, 2};
 	[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
 	for (i = 0; i < count; i++)
 	{
@@ -220,7 +219,7 @@
 		[item setTarget:self];
 		if (i < 2)
 			[item setImage:images[i]];
-		[item setTag:tags[i]];
+		[item setTag:i];
 		[menu addItem:item];
 	}
 	[popup setPullsDown:YES];

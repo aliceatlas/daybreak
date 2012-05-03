@@ -28,7 +28,7 @@
 
 @class SBBLKGUIButton;
 @class SBBLKGUITextField;
-@interface SBTextInputView : SBView// <NSTextFieldDelegate>
+@interface SBTextInputView : SBView <NSTextFieldDelegate>
 {
 	NSTextField *messageLabel;
 	SBBLKGUITextField *textLabel;

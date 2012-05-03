@@ -27,7 +27,7 @@
 #import "SBView.h"
 
 
-@interface SBUserAgentView : SBView// <NSTextFieldDelegate>
+@interface SBUserAgentView : SBView <NSTextFieldDelegate>
 {
 	NSImageView *iconImageView;
 	NSTextField *titleLabel;

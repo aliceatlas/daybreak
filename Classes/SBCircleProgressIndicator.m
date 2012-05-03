@@ -41,14 +41,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
     if (self = [super initWithFrame:frame])
 	{
+		CGColorRef aBackgroundColor = nil;
+		CGColorRef aFillColor = nil;
 		style = SBCircleProgressIndicatorRegulerStyle;
 		progress = 0.0;
 		selected = NO;
 		alwaysDrawing = NO;
 		showPercentage = NO;
 		highlighted = NO;
-		self.backgroundColor = CGColorCreateGenericGray(0.5, 1.0);
-		self.fillColor = CGColorCreateGenericGray(0.85, 1.0);
+		aBackgroundColor = CGColorCreateGenericGray(0.5, 1.0);
+		aFillColor = CGColorCreateGenericGray(0.85, 1.0);
+		self.backgroundColor = aBackgroundColor;
+		self.fillColor = aFillColor;
+		CGColorRelease(aBackgroundColor);
+		CGColorRelease(aFillColor);
 	}
     return self;
 }
@@ -107,6 +113,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		highlighted = inHighlighted;
 		[self setNeedsDisplay:YES];
+	}
+}
+
+- (void)setBackgroundColor:(CGColorRef)aBackgroundColor
+{
+	if (backgroundColor != aBackgroundColor)
+	{
+		CGColorRetain(aBackgroundColor);
+		CGColorRelease(backgroundColor);
+		backgroundColor = aBackgroundColor;
+	}
+}
+
+- (void)setFillColor:(CGColorRef)aFillColor
+{
+	if (fillColor != aFillColor)
+	{
+		CGColorRetain(aFillColor);
+		CGColorRelease(fillColor);
+		fillColor = aFillColor;
 	}
 }
 

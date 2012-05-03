@@ -106,7 +106,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSetRGBFillColor(ctx, 0.0, 0.0, 0.0, alpha * 0.1);
 	CGContextFillPath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	r = NSRectToCGRect(cellFrame);
 	r.origin.x += 0.5;
@@ -120,7 +119,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSetRGBStrokeColor(ctx, 1.0, 1.0, 1.0, alpha);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	[self drawInteriorWithFrame:cellFrame inView:controlView];
 }

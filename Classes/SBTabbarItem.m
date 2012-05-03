@@ -253,7 +253,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSPoint location = [theEvent locationInWindow];
 		NSPoint point = [self convertPoint:location fromView:nil];
 		[[self superview] mouseMoved:theEvent];
-		if (CGRectContainsPoint([self closableRect], NSPointToCGPoint(point)))
+		if (CGRectContainsPoint(NSRectToCGRect(self.bounds), NSPointToCGPoint(point)))
 		{
 			[tabbar constructClosableTimerForItem:self];
 		}
@@ -333,7 +333,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		path = SBRoundedPath(CGRectInset(b, 0.0, 0.0), 4.0, 0.0, NO, YES);
 		strokePath = SBRoundedPath(CGRectInset(b, 0.5, 0.5), 4.0, 0.0, NO, YES);
 		grayScaleDown = (keyView ? 140 : 207) / 255.0;
-		grayScaleUp = (keyView ? (kSBFlagIsSnowLepard ? 165 : 150) : (kSBFlagIsSnowLepard ? 222 : 207)) / 255.0;
+		grayScaleUp = (keyView ? (kSBFlagIsSnowLepard ? 175 : 150) : (kSBFlagIsSnowLepard ? 222 : 207)) / 255.0;
 		strokeGrayScale = 0.2;
 	}
 	else {
@@ -358,7 +358,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextClip(ctx);
 	SBDrawGradientInContext(ctx, count, locations, colors, points);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	// Stroke
 	CGContextSaveGState(ctx);
@@ -367,7 +366,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSetRGBStrokeColor(ctx, storkeColor[0], storkeColor[1], storkeColor[2], storkeColor[3]);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(strokePath);
 	
 	if (closable)
 	{

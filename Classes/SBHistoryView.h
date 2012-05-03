@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @class SBBLKGUIButton;
 @class SBBLKGUITextField;
-@interface SBHistoryView : SBView// <NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource>
+@interface SBHistoryView : SBView <NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource>
 {
 	NSImageView *iconImageView;
 	NSTextField *messageLabel;

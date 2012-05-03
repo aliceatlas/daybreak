@@ -435,7 +435,6 @@
 					CGContextSetRGBStrokeColor(ctx, components[0], components[1], components[2], components[3]);
 					CGContextStrokePath(ctx);
 					CGContextRestoreGState(ctx);
-					CGPathRelease(path);
 				}
 				path = SBRoundedPath(NSRectToCGRect(r), 6.0, 0.0, YES, YES);
 				shadowColor = CGColorCreateGenericGray(0.0, 0.6);
@@ -453,7 +452,6 @@
 				[image drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 				[image release];
 				CGContextRestoreGState(ctx);
-				CGPathRelease(path);
 			}
 			// title string
 			if (title)
@@ -480,7 +478,6 @@
 					CGContextSetRGBFillColor(ctx, components[0], components[1], components[2], components[3]);
 					CGContextFillPath(ctx);
 					CGContextRestoreGState(ctx);
-					CGPathRelease(path);
 				}
 				
 				if (selected)
@@ -510,7 +507,6 @@
 					CGContextSetRGBFillColor(ctx, components[0], components[1], components[2], components[3]);
 					CGContextFillPath(ctx);
 					CGContextRestoreGState(ctx);
-					CGPathRelease(path);
 				}
 				if (labelColor && ! selected)
 				{
@@ -567,7 +563,6 @@
 				[image drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 				[image release];
 				CGContextRestoreGState(ctx);
-				CGPathRelease(path);
 			}
 			
 			// Gradient
@@ -591,7 +586,6 @@
 			CGContextClip(ctx);
 			SBDrawRadialGradientInContext(ctx, count, locations, colors, centers, radiuses);
 			CGContextRestoreGState(ctx);
-			CGPathRelease(path);
 			
 			// Label color
 			if (labelColor)
@@ -691,7 +685,6 @@
 					CGContextSetRGBFillColor(ctx, components[0], components[1], components[2], components[3]);
 					CGContextFillPath(ctx);
 					CGContextRestoreGState(ctx);
-					CGPathRelease(path);
 				}
 				if (selected)
 				{

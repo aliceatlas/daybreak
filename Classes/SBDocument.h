@@ -103,7 +103,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, readonly) SBWebResourcesView *resourcesView;
 
 // Getter
-- (NSNumber *)newIdentifier;
+- (NSNumber *)createdIdentifier;
 - (NSInteger)tabCount;
 - (NSRect)visibleRectOfSelectedWebDocumentView;
 - (NSImage *)selectedWebViewImage:(NSSize)size;

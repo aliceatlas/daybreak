@@ -164,7 +164,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Getter
 
-- (NSNumber *)newIdentifier
+- (NSNumber *)createdIdentifier
 {
 	_identifier++;
 	return [NSNumber numberWithUnsignedInteger:_identifier];
@@ -725,7 +725,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBTabbarItem *tabbarItem = nil;
 	SBTabViewItem *tabViewItem = nil;
 	NSNumber *identifier = nil;
-	identifier = [self newIdentifier];
+	identifier = [self createdIdentifier];
 	tabbarItem = [self constructTabbarItemWithIdentifier:identifier];
 	tabbarItem.title = [self displayName];
 	tabbarItem.progress = -1;
@@ -1092,7 +1092,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBTabViewItem *tabViewItem = nil;
 	// Select tab
-	tabViewItem = [tabView selectTabViewItemWithIdentifier:aTabbarItem.identifier];
+	tabViewItem = [tabView selectTabViewItemWithItemIdentifier:aTabbarItem.identifier];
 	
 	// Change window values
 	self.window.title = tabViewItem.tabbarItem.title;

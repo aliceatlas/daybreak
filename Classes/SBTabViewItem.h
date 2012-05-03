@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBTabView;
 @class SBWebView;
 @class SBSourceTextView;
-@interface SBTabViewItem : NSTabViewItem// <NSSplitViewDelegate>
+@interface SBTabViewItem : NSTabViewItem <NSSplitViewDelegate>
 {
 	SBTabbarItem *tabbarItem;
 	NSURL *URL;

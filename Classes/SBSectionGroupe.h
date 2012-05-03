@@ -47,9 +47,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSString *keyName;
-@property (nonatomic) Class controlClass;
 @property (nonatomic, retain) id context;
 
 + (id)itemWithTitle:(NSString *)title keyName:(NSString *)keyName controlClass:(Class)controlClass context:(id)context;
-
+- (Class)controlClass;
+- (void)setControlClass:(Class)aControlClass;
 @end

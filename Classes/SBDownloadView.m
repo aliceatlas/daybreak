@@ -255,7 +255,7 @@
 	{
 		NSWorkspace *space = [NSWorkspace sharedWorkspace];
 		NSImage *image = nil;
-		if (image = [space iconForFile:download.path])
+		if ((image = [space iconForFile:download.path]))
 		{
 			NSRect r = NSZeroRect;
 			NSRect b = self.bounds;
@@ -321,7 +321,6 @@
 			CGContextClip(ctx);
 			SBDrawGradientInContext(ctx, count, locations, colors, points);
 			CGContextRestoreGState(ctx);
-			CGPathRelease(path);
 //			CGRect sr = NSRectToCGRect(r);
 //			CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
 //			CGFloat components[4];

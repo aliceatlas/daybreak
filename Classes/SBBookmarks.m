@@ -254,7 +254,7 @@ static SBBookmarks *sharedBookmarks;
 
 - (void)addItems:(NSArray *)inItems toIndex:(NSUInteger)toIndex
 {
-	if ([inItems count] > 0 && toIndex <= [items count] && toIndex >= 0)
+	if ([inItems count] > 0 && toIndex <= [items count])
 	{
 //		[items insertObjects:inItems atIndexes:[NSIndexSet indexSetWithIndex:toIndex]];
 		[items insertObjects:inItems atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(toIndex, [inItems count])]];
@@ -266,7 +266,7 @@ static SBBookmarks *sharedBookmarks;
 - (void)moveItemsAtIndexes:(NSIndexSet *)indexes toIndex:(NSUInteger)toIndex
 {
 	NSArray *bookmarkItems = [items objectsAtIndexes:indexes];
-	if ([bookmarkItems count] > 0 && toIndex <= [items count] && toIndex >= 0)
+	if ([bookmarkItems count] > 0 && toIndex <= [items count])
 	{
 		NSUInteger to = toIndex;
 		NSUInteger offset = 0;
@@ -276,8 +276,10 @@ static SBBookmarks *sharedBookmarks;
 			if (i < to)
 				offset++;
 		}
-		if ((to - offset) >= 0)
+		if (to >= offset)
+		{
 			to -= offset;
+		}
 		[bookmarkItems retain];
 		[items removeObjectsAtIndexes:indexes];
 		[items insertObjects:bookmarkItems atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(to, [indexes count])]];

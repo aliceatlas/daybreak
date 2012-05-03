@@ -222,8 +222,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (showSource)
 		{
 			SBBLKGUIScrollView *scrollView = nil;
+#if 1
 			SBBLKGUIScroller *horizontalScroller = nil;
 			SBBLKGUIScroller *verticalScroller = nil;
+#endif
 			SBBLKGUIButton *openButton = nil;
 			NSRect r = [self.view bounds];
 			NSRect tr = [self.view bounds];
@@ -255,9 +257,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			openButton = [[SBBLKGUIButton alloc] initWithFrame:openRect];
 			sourceSaveButton = [[SBBLKGUIButton alloc] initWithFrame:saveRect];
 			sourceCloseButton = [[SBBLKGUIButton alloc] initWithFrame:closeRect];
+#if 1
 			horizontalScroller = [scrollView horizontalScroller];
 			verticalScroller = [scrollView verticalScroller];
 			r.size.width = r.size.width - verticalScroller.frame.size.width;
+#endif
 			sourceTextView = [[SBSourceTextView alloc] initWithFrame:tr];
 			[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 			[scrollView setAutohidesScrollers:YES];
@@ -265,10 +269,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[scrollView setHasVerticalScroller:YES];
 			[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBBackgroundColors[0] green:SBBackgroundColors[1] blue:SBBackgroundColors[2] alpha:SBBackgroundColors[3]]];
 			[scrollView setDrawsBackground:YES];
+#if 1
 			horizontalScroller.drawsBackground = YES;
 			verticalScroller.drawsBackground = YES;
 			horizontalScroller.backgroundColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
 			verticalScroller.backgroundColor = [NSColor colorWithCalibratedWhite:0.35 alpha:1.0];
+#endif
 			sourceTextView.delegate = self;
 			[sourceTextView setMinSize:NSMakeSize(0.0, r.size.height)];
 			[sourceTextView setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
@@ -896,18 +902,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					{
 //						title = NSLocalizedString(@"Server Certificate Untrusted", nil);
 						NSURL *url = nil;
-						NSString *title = nil;
+						NSString *aTitle = nil;
 						NSString *message = nil;
 						NSDictionary *info = nil;
 						url = [NSURL URLWithString:urlString];
-						title = NSLocalizedString(@"Server Certificate Untrusted", nil);
+						aTitle = NSLocalizedString(@"Server Certificate Untrusted", nil);
 						message = [NSString stringWithFormat:NSLocalizedString(@"The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", nil), [url host]];
 						info = [NSDictionary dictionaryWithObjectsAndKeys:
 								frame, WebElementFrameKey, 
 								url, WebElementLinkURLKey, 
-								title, WebElementLinkTitleKey, nil];
+								aTitle, WebElementLinkTitleKey, nil];
 						[info retain];
-						NSBeginAlertSheet(title, NSLocalizedString(@"Continue", nil), NSLocalizedString(@"Cancel", nil), nil, [sender window], self, @selector(serverCertificateUntrustedSheetDidEnd:returnCode:contextInfo:), nil, info, message);
+						NSBeginAlertSheet(aTitle, NSLocalizedString(@"Continue", nil), NSLocalizedString(@"Cancel", nil), nil, [sender window], self, @selector(serverCertificateUntrustedSheetDidEnd:returnCode:contextInfo:), nil, info, message);
 						break;
 					}
 					case NSURLErrorServerCertificateHasUnknownRoot:

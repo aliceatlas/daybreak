@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @protocol SBURLFieldDelegate;
 @protocol SBURLFieldDatasource;
 
-@interface SBURLField : SBView// <NSTextFieldDelegate>
+@interface SBURLField : SBView <NSTextFieldDelegate>
 {
 	SBButton *backwardButton;
 	SBButton *forwardButton;
@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBButton *goButton;
 	SBURLFieldSheet *sheet;
 	SBURLFieldContentView *contentView;
-	id <SBURLFieldDatasource> dataSource;
+	id<SBURLFieldDatasource> dataSource;
 	id delegate;
 	NSMutableArray *gsItems;
 	NSMutableArray *bmItems;
@@ -57,7 +57,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, retain) SBButton *goButton;
 @property (nonatomic, retain) SBURLFieldSheet *sheet;
 @property (nonatomic, retain) SBURLFieldContentView *contentView;
-@property (nonatomic, assign) id <SBURLFieldDatasource> dataSource;
+@property (nonatomic, assign) id<SBURLFieldDatasource> dataSource;
 @property (nonatomic, assign) id delegate;
 @property (nonatomic, assign) NSImage *image;
 @property (nonatomic, assign) NSString *stringValue;
@@ -99,7 +99,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Setter
 - (void)setPlaceholderString:(NSString *)string;
-- (void)setDataSource:(id)inDataSource;
+- (void)setDataSource:(id<SBURLFieldDatasource>)inDataSource;
 - (void)setDelegate:(id)inDelegate;
 - (void)setURLItems:(NSArray *)URLItems;
 

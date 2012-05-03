@@ -48,6 +48,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return self;
 }
 
+/*
 + (Class)_horizontalScrollerClass
 {
 	return [SBBLKGUIScroller class];
@@ -57,6 +58,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	return [SBBLKGUIScroller class];
 }
+*/
 
 - (void)initialize
 {
@@ -91,6 +93,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //	}
 }
 
+#if 1
+#else
 - (SBBLKGUIScroller *)horizontalScroller
 {
 	return (SBBLKGUIScroller *)[super horizontalScroller];
@@ -110,10 +114,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	[super setVerticalScroller:(NSScroller *)verticalScroller];
 }
+#endif
 
 - (void)setBackgroundColor:(NSColor *)inBackgroundColor
 {
 	[super setBackgroundColor:inBackgroundColor];
+#if 1
+#else
 	if ([self hasVerticalScroller])
 	{
 		[[self verticalScroller] setBackgroundColor:inBackgroundColor];
@@ -123,11 +130,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		[[self horizontalScroller] setBackgroundColor:inBackgroundColor];
 	}
+#endif
 }
 
 - (void)setDrawsBackground:(BOOL)flag
 {
 	[super setDrawsBackground:flag];
+#if 1
+#else
 	if ([self hasVerticalScroller])
 	{
 		[[self verticalScroller] setDrawsBackground:flag];
@@ -137,6 +147,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		[[self horizontalScroller] setDrawsBackground:flag];
 	}
+#endif
 }
 
 - (void)drawRect:(NSRect)rect

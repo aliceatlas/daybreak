@@ -123,7 +123,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				image = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_Radio-Highlighted.png" : @"BLKGUI_Radio.png")];
 			}
 			
-			imageRect.size = [image size];
+			imageRect.size = (image ? [image size] : NSZeroSize);
 			r.size = imageRect.size;
 			r.origin.x = cellFrame.origin.x;
 			r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
@@ -208,7 +208,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (_buttonType == NSSwitchButton || _buttonType == NSRadioButton)
 		{
 			int i = 0, l = 0, h = 1;
-			size.width = frame.size.width - ([image size].width + 2);
+			size.width = frame.size.width - (image ? ([image size].width + 2) : 2);
 			size.height = [font pointSize] + 2.0;
 			for (i = 1; i <= [title length]; i++)
 			{
@@ -229,7 +229,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (_buttonType == NSSwitchButton || _buttonType == NSRadioButton)
 		{
 			r.origin.y = frame.origin.y + (cellFrame.size.height - r.size.height) / 2;
-			r.origin.x = frame.origin.x + [image size].width + 3;
+			r.origin.x = frame.origin.x + (image ? ([image size].width + 3) : 3);
 		}
 		else {
 			r.origin.x = (frame.size.width - r.size.width) / 2;
@@ -240,7 +240,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				NSImage *image = [self image];
 				NSRect imageRect = NSZeroRect;
 				float margin = 3.0;
-				imageRect.size = [image size];
+				imageRect.size = (image ? [image size] : NSZeroSize);
 				if (r.origin.x > (imageRect.size.width + margin))
 				{
 					float width = imageRect.size.width + r.size.width + margin;

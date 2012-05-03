@@ -103,7 +103,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat width = proposedWidth;
 	if (mode == SBBookmarkTileMode)
 	{
+#if 1
+		CGFloat scrollerWidth = 0;
+#else
 		CGFloat scrollerWidth = [[self enclosingScrollView] bounds].size.width - [self width];
+#endif
 		NSInteger x = (NSInteger)((proposedWidth - scrollerWidth) / cellSize.width);
 		width = cellSize.width * x + scrollerWidth;
 		width += 2;// plus 1 for fitting

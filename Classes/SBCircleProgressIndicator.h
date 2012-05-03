@@ -40,8 +40,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) CGFloat progress;
 @property (nonatomic) BOOL selected;
 @property (nonatomic) BOOL highlighted;
-@property CGColorRef backgroundColor;
-@property CGColorRef fillColor;
+@property (nonatomic) CGColorRef backgroundColor;
+@property (nonatomic) CGColorRef fillColor;
 @property (nonatomic) BOOL alwaysDrawing;
 @property (nonatomic) BOOL showPercentage;
 

@@ -68,24 +68,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-	[super initWithCoder:decoder];
-	if ([decoder allowsKeyedCoding])
+	if ((self = [super initWithCoder:decoder]))
 	{
-		if ([decoder containsValueForKey:@"frameColor"])
+		if ([decoder allowsKeyedCoding])
 		{
-			self.frameColor = [decoder decodeObjectForKey:@"frameColor"];
-		}
-		if ([decoder containsValueForKey:@"animationDuration"])
-		{
-			self.animationDuration = [decoder decodeFloatForKey:@"animationDuration"];
-		}
-		if ([decoder containsValueForKey:@"keyView"])
-		{
-			self.keyView = [decoder decodeBoolForKey:@"keyView"];
-		}
-		if ([decoder containsValueForKey:@"toolbarVisible"])
-		{
-			self.toolbarVisible = [decoder decodeBoolForKey:@"toolbarVisible"];
+			if ([decoder containsValueForKey:@"frameColor"])
+			{
+				self.frameColor = [decoder decodeObjectForKey:@"frameColor"];
+			}
+			if ([decoder containsValueForKey:@"animationDuration"])
+			{
+				self.animationDuration = [decoder decodeFloatForKey:@"animationDuration"];
+			}
+			if ([decoder containsValueForKey:@"keyView"])
+			{
+				self.keyView = [decoder decodeBoolForKey:@"keyView"];
+			}
+			if ([decoder containsValueForKey:@"toolbarVisible"])
+			{
+				self.toolbarVisible = [decoder decodeBoolForKey:@"toolbarVisible"];
+			}
 		}
 	}
     return self;

@@ -52,6 +52,6 @@ extern NSString *SBDownloadsDidFailItemNotification;
 - (void)executeDidUpdateItem:(SBDownload *)anItem;
 - (void)executeDidFinishItem:(SBDownload *)anItem;
 // Function
-- (NSNumber *)newIdentifier;
+- (NSNumber *)createdIdentifier;
 
 @end

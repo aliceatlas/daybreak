@@ -76,7 +76,7 @@ static SBDownloads *sharedDownloads;
 - (void)addItem:(SBDownload *)item
 {
 	[items addObject:item];
-	item.identifier = [self newIdentifier];
+	item.identifier = [self createdIdentifier];
 	// Update views
 	[self executeDidAddItem:item];
 }
@@ -287,7 +287,7 @@ static SBDownloads *sharedDownloads;
 
 #pragma mark Function
 
-- (NSNumber *)newIdentifier
+- (NSNumber *)createdIdentifier
 {
 	_identifier++;
 	return [NSNumber numberWithUnsignedInteger:_identifier];

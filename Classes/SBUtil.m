@@ -606,7 +606,7 @@ CGPathRef SBRoundedPath(CGRect rect, CGFloat curve, CGFloat inner, BOOL top, BOO
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
 	
-	return copiedPath;
+	return (CGPathRef)[(id)copiedPath autorelease];
 }
 
 CGPathRef SBLeftButtonPath(CGSize size)
@@ -647,7 +647,7 @@ CGPathRef SBLeftButtonPath(CGSize size)
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
 	
-	return copiedPath;
+	return (CGPathRef)[(id)copiedPath autorelease];
 }
 
 CGPathRef SBCenterButtonPath(CGSize size)
@@ -659,7 +659,7 @@ CGPathRef SBCenterButtonPath(CGSize size)
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
 	
-	return copiedPath;
+	return (CGPathRef)[(id)copiedPath autorelease];
 }
 
 CGPathRef SBRightButtonPath(CGSize size)
@@ -700,7 +700,7 @@ CGPathRef SBRightButtonPath(CGSize size)
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
 	
-	return copiedPath;
+	return (CGPathRef)[(id)copiedPath autorelease];
 }
 
 // direction: 0 = left, 1 = top, 2 = right, 3 = bottom
@@ -770,7 +770,7 @@ CGPathRef SBTrianglePath(CGRect rect, NSInteger direction)
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
 	
-	return copiedPath;
+	return (CGPathRef)[(id)copiedPath autorelease];
 }
 
 CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
@@ -830,7 +830,7 @@ CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
 	
-	return copiedPath;
+	return (CGPathRef)[(id)copiedPath autorelease];
 }
 
 CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
@@ -911,7 +911,7 @@ CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
 	
-	return copiedPath;
+	return (CGPathRef)[(id)copiedPath autorelease];
 }
 
 void SBCGPointApplyTransform3D(CGPoint *p, const CATransform3D *t)
@@ -1009,7 +1009,6 @@ CGImageRef SBBackwardIconImage(CGSize size, BOOL enabled, BOOL backing)
 	CGContextSetLineWidth(ctx, 0.5);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	// Triangle
 	CGContextSaveGState(ctx);
@@ -1018,7 +1017,6 @@ CGImageRef SBBackwardIconImage(CGSize size, BOOL enabled, BOOL backing)
 	CGContextSetLineWidth(ctx, 0.5);
 	CGContextFillPath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(tpath);
 	
 	image = CGBitmapContextCreateImage(ctx);
 	CGContextRelease(ctx);
@@ -1068,7 +1066,6 @@ CGImageRef SBForwardIconImage(CGSize size, BOOL enabled, BOOL backing)
 	CGContextSetLineWidth(ctx, 0.5);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	// Triangle
 	CGContextSaveGState(ctx);
@@ -1077,7 +1074,6 @@ CGImageRef SBForwardIconImage(CGSize size, BOOL enabled, BOOL backing)
 	CGContextSetLineWidth(ctx, 0.5);
 	CGContextFillPath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(tpath);
 	
 	image = CGBitmapContextCreateImage(ctx);
 	CGContextRelease(ctx);
@@ -1140,7 +1136,6 @@ CGImageRef SBGoIconImage(CGSize size, BOOL enabled, BOOL backing)
 	CGContextSetLineWidth(ctx, 0.5);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	image = CGBitmapContextCreateImage(ctx);
 	CGContextRelease(ctx);
@@ -1718,7 +1713,6 @@ CGImageRef SBFindBackwardIconImage(CGSize size, BOOL enabled)
 	CGContextSetLineWidth(ctx, 0.5);
 	CGContextFillPath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(tpath);
 	
 	image = CGBitmapContextCreateImage(ctx);
 	CGContextRelease(ctx);
@@ -1804,7 +1798,6 @@ CGImageRef SBFindForwardIconImage(CGSize size, BOOL enabled)
 	CGContextSetLineWidth(ctx, 0.5);
 	CGContextFillPath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(tpath);
 	
 	image = CGBitmapContextCreateImage(ctx);
 	CGContextRelease(ctx);
@@ -1837,7 +1830,7 @@ CGImageRef SBBookmarkReflectionMaskImage(CGSize size)
 	CGContextRestoreGState(ctx);
 	maskImage = CGBitmapContextCreateImage(ctx);
 	CGContextRelease(ctx);
-	return maskImage;
+	return (CGImageRef)[(id)maskImage autorelease];
 }
 
 #pragma mark Math

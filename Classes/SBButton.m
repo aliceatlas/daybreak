@@ -67,40 +67,42 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-	[super initWithCoder:decoder];
-	if ([decoder allowsKeyedCoding])
+	if ((self = [super initWithCoder:decoder]))
 	{
-		if ([decoder containsValueForKey:@"image"])
+		if ([decoder allowsKeyedCoding])
 		{
-			self.image = [decoder decodeObjectForKey:@"image"];
-		}
-		if ([decoder containsValueForKey:@"disableImage"])
-		{
-			self.disableImage = [decoder decodeObjectForKey:@"disableImage"];
-		}
-		if ([decoder containsValueForKey:@"backImage"])
-		{
-			self.backImage = [decoder decodeObjectForKey:@"backImage"];
-		}
-		if ([decoder containsValueForKey:@"backDisableImage"])
-		{
-			self.backDisableImage = [decoder decodeObjectForKey:@"backDisableImage"];
-		}
-		if ([decoder containsValueForKey:@"action"])
-		{
-			self.action = NSSelectorFromString([decoder decodeObjectForKey:@"action"]);
-		}
-		if ([decoder containsValueForKey:@"keyEquivalent"])
-		{
-			self.keyEquivalent = [decoder decodeObjectForKey:@"keyEquivalent"];
-		}
-		if ([decoder containsValueForKey:@"enabled"])
-		{
-			self.enabled = [decoder decodeBoolForKey:@"enabled"];
-		}
-		if ([decoder containsValueForKey:@"keyEquivalentModifierMask"])
-		{
-			self.keyEquivalentModifierMask = [decoder decodeIntegerForKey:@"keyEquivalentModifierMask"];
+			if ([decoder containsValueForKey:@"image"])
+			{
+				self.image = [decoder decodeObjectForKey:@"image"];
+			}
+			if ([decoder containsValueForKey:@"disableImage"])
+			{
+				self.disableImage = [decoder decodeObjectForKey:@"disableImage"];
+			}
+			if ([decoder containsValueForKey:@"backImage"])
+			{
+				self.backImage = [decoder decodeObjectForKey:@"backImage"];
+			}
+			if ([decoder containsValueForKey:@"backDisableImage"])
+			{
+				self.backDisableImage = [decoder decodeObjectForKey:@"backDisableImage"];
+			}
+			if ([decoder containsValueForKey:@"action"])
+			{
+				self.action = NSSelectorFromString([decoder decodeObjectForKey:@"action"]);
+			}
+			if ([decoder containsValueForKey:@"keyEquivalent"])
+			{
+				self.keyEquivalent = [decoder decodeObjectForKey:@"keyEquivalent"];
+			}
+			if ([decoder containsValueForKey:@"enabled"])
+			{
+				self.enabled = [decoder decodeBoolForKey:@"enabled"];
+			}
+			if ([decoder containsValueForKey:@"keyEquivalentModifierMask"])
+			{
+				self.keyEquivalentModifierMask = [decoder decodeIntegerForKey:@"keyEquivalentModifierMask"];
+			}
 		}
 	}
     return self;

@@ -158,6 +158,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect contentRect = NSZeroRect;
 	CGFloat topMargin = [self topMargin];
 	NSView *aContentView = nil;
+	CGColorRef aBackgroundColor = nil;
 	aContentView = [[self window] contentView];
 	contentRect = [aContentView bounds];
 	editRect = contentRect;
@@ -166,7 +167,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[editView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[self constructButtonsInEditView];
 	[aContentView addSubview:editView];
-	aContentView.layer.backgroundColor = CGColorCreateGenericGray(0.8, 1.0);
+	aBackgroundColor = CGColorCreateGenericGray(0.8, 1.0);
+	aContentView.layer.backgroundColor = aBackgroundColor;
+	CGColorRelease(aBackgroundColor);
 }
 
 - (void)constructButtonsInEditView
@@ -473,6 +476,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSView *aContentView = [[self window] contentView];
 	CGFloat topMargin = [self topMargin];
 	CGFloat duration = 0.4;
+	CGColorRef aBackgroundColor = nil;
 	animating = YES;
 	editRect0 = editRect1 = editView.frame;
 	contributeRect0 = contributeRect1 = contributeView.frame;
@@ -511,10 +515,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[animation setDelegate:self];
 	[animation startAnimation];
 	
+	aBackgroundColor = CGColorCreateGenericGray(index == 0 ? 0.5 : 0.8, 1.0);
 	[CATransaction begin];
 	[CATransaction setValue:[NSNumber numberWithFloat:duration] forKey:kCATransactionAnimationDuration];
-	aContentView.layer.backgroundColor = CGColorCreateGenericGray(index == 0 ? 0.5 : 0.8, 1.0);
+	aContentView.layer.backgroundColor = aBackgroundColor;
 	[CATransaction commit];
+	CGColorRelease(aBackgroundColor);
 }
 
 - (void)animationDidEnd:(NSAnimation *)animation

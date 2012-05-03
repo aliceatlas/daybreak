@@ -659,13 +659,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		selectedRange.location -= currentSchemeLength;
 		selectedRange.length -= currentSchemeLength;
-		if (selectedRange.length == 0)
-		{
-			range.location = selectedRange.location + selectedRange.length + schemeLength;
-		}
-		else {
-			range.location = selectedRange.location + schemeLength;
-		}
+		range.location = selectedRange.location + schemeLength;
 		range.length = [URLString length] - range.location;
 	}
 	[self setStringValue:URLString];
@@ -987,13 +981,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSetRGBFillColor(ctx, 1.0, 1.0, 1.0, 1.0);
 	CGContextFillPath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	r = NSRectToCGRect(self.bounds);
 	r.origin.x += 0.5;
 	r.origin.y += 3.0;
-	r.size.width -= 1.0;
-	r.size.height -= 4.5;
+	if (r.size.width >= 1.0)
+	{
+		r.size.width -= 1.0;
+	}
+	if (r.size.height >= 4.5)
+	{
+		r.size.height -= 4.5;
+	}
 	path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, YES, NO);
 	CGContextSaveGState(ctx);
 	CGContextAddPath(ctx, path);
@@ -1001,7 +1000,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSetRGBStrokeColor(ctx, 0.75, 0.75, 0.75, 1.0);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	r = NSRectToCGRect(self.bounds);
 	r.origin.x += 0.5;
@@ -1015,7 +1013,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 1.0);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 }
 
 - (void)resizeWithOldSuperviewSize:(NSSize)oldBoundsSize
@@ -1506,11 +1503,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextClip(ctx);
 	SBDrawGradientInContext(ctx, count, locations, colors, points);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	r.origin.x += 0.5;
 	r.origin.y += 0.5;
-	r.size.width -= 1.0;
+	if (r.size.width >= 1.0)
+	{
+		r.size.width -= 1.0;
+	}
 	path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, NO, YES);
 	CGContextSaveGState(ctx);
 	CGContextAddPath(ctx, path);
@@ -1518,7 +1517,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 1.0);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 }
 
 @end
@@ -1615,7 +1613,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		CGContextClip(ctx);
 		SBDrawGradientInContext(ctx, count, locations, colors, points);
 		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
 	}
 }
 

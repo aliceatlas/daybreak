@@ -48,12 +48,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-	[super initWithCoder:decoder];
-	if ([decoder allowsKeyedCoding])
+	if ((self = [super initWithCoder:decoder]))
 	{
-		if ([decoder containsValueForKey:@"buttons"])
+		if ([decoder allowsKeyedCoding])
 		{
-			self.buttons = [decoder decodeObjectForKey:@"buttons"];
+			if ([decoder containsValueForKey:@"buttons"])
+			{
+				self.buttons = [decoder decodeObjectForKey:@"buttons"];
+			}
 		}
 	}
     return self;

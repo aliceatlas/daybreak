@@ -467,7 +467,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		CGPathAddLineToPoint(mpath, nil, p.x, p.y);
 		p = CGPointZero;
 		CGPathAddLineToPoint(mpath, nil, p.x, p.y);
-		path = CGPathCreateCopy(mpath);
+		path = (CGPathRef)[(id)CGPathCreateCopy(mpath) autorelease];
 		CGPathRelease(mpath);
 	}
 	CGContextSaveGState(ctx);
@@ -475,7 +475,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextClip(ctx);
 	SBDrawGradientInContext(ctx, count, locations, colors, points);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	if (image)
 	{
@@ -491,7 +490,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		CGContextScaleCTM(ctx, 1.0, -1.0);
 		CGContextClipToMask(ctx, imageRect, maskImage);
 		[image drawInRect:NSRectFromCGRect(imageRect) fromRect:NSMakeRect(0, 0, [image size].width, [image size].height * 0.5) operation:NSCompositeSourceOver fraction:1.0];
-		CGImageRelease(maskImage);
 	}
 }
 

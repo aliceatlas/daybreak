@@ -65,7 +65,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @synthesize title;
 @synthesize keyName;
-@synthesize controlClass;
 @synthesize context;
 
 + (id)itemWithTitle:(NSString *)title keyName:(NSString *)keyName controlClass:(Class)controlClass context:(id)context
@@ -95,6 +94,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[keyName release];
 	[context release];
 	[super dealloc];
+}
+
+- (Class)controlClass
+{
+	return controlClass;
+}
+
+- (void)setControlClass:(Class)aControlClass
+{
+	if (controlClass != aControlClass)
+	{
+		controlClass = aControlClass;
+	}
 }
 
 @end

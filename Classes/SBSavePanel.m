@@ -155,6 +155,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGPoint points[count];
 	BOOL extended = r.size.height < 350.0;
 	
+	CGContextRetain(ctx);
 	[super drawRect:rect];
 	
 	locations[0] = 0.0;
@@ -182,7 +183,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextClip(ctx);
 	SBDrawGradientInContext(ctx, count, locations, colors, points);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
 	
 	// Stroke
 	CGContextSaveGState(ctx);
@@ -191,7 +191,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSetRGBStrokeColor(ctx, storkeColor[0], storkeColor[1], storkeColor[2], storkeColor[3]);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
-	CGPathRelease(strokePath);
+	CGContextRelease(ctx);
 }
 
 @end

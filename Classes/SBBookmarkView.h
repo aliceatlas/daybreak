@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @class SBBLKGUIButton;
 @class SBBLKGUIPopUpButton;
-@interface SBBookmarkView : SBView// <NSTextFieldDelegate>
+@interface SBBookmarkView : SBView <NSTextFieldDelegate>
 {
 	NSImage *image;
 	NSTextField *messageLabel;

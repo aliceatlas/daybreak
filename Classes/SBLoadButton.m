@@ -50,16 +50,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-	[super initWithCoder:decoder];
-	if ([decoder allowsKeyedCoding])
+	if ((self = [super initWithCoder:decoder]))
 	{
-		if ([decoder containsValueForKey:@"images"])
+		if ([decoder allowsKeyedCoding])
 		{
-			self.images = [decoder decodeObjectForKey:@"images"];
-		}
-		if ([decoder containsValueForKey:@"on"])
-		{
-			self.on = [decoder decodeBoolForKey:@"on"];
+			if ([decoder containsValueForKey:@"images"])
+			{
+				self.images = [decoder decodeObjectForKey:@"images"];
+			}
+			if ([decoder containsValueForKey:@"on"])
+			{
+				self.on = [decoder decodeBoolForKey:@"on"];
+			}
 		}
 	}
     return self;

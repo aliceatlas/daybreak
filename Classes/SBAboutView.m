@@ -282,7 +282,6 @@ static SBAboutView *_sharedView;
 		CGContextScaleCTM(ctx, 1.0, -1.0);
 		CGContextClipToMask(ctx, imageRect, maskImage);
 		[image drawInRect:NSRectFromCGRect(imageRect) fromRect:NSMakeRect(0, 0, imageRect.size.width, imageRect.size.height) operation:NSCompositeSourceOver fraction:1.0];
-		CGImageRelease(maskImage);
 	}
 }
 

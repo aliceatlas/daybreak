@@ -38,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (SBTabViewItem *)tabViewItemWithIdentifier:(NSNumber *)identifier;
 // Actions
 - (SBTabViewItem *)addItemWithIdentifier:(NSNumber *)identifier;
-- (SBTabViewItem *)selectTabViewItemWithIdentifier:(NSNumber *)identifier;
+- (SBTabViewItem *)selectTabViewItemWithItemIdentifier:(NSNumber *)identifier;
 - (void)openURLInSelectedTabViewItem:(NSString *)URLString;
 - (void)closeAllTabViewItem;
 // Exec

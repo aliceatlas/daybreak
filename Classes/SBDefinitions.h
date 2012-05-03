@@ -352,7 +352,7 @@ extern NSString *SBBookmarkPboardType;
 @end
 
 @class SBSplitView;
-@protocol SBSplitViewDelegate// <NSSplitViewDelegate>
+@protocol SBSplitViewDelegate <NSSplitViewDelegate>
 - (void)splitViewDidOpenDrawer:(SBSplitView *)aSplitView;
 @end
 

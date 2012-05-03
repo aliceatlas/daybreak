@@ -106,7 +106,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return tabViewItem;
 }
 
-- (SBTabViewItem *)selectTabViewItemWithIdentifier:(NSNumber *)identifier
+- (SBTabViewItem *)selectTabViewItemWithItemIdentifier:(NSNumber *)identifier
 {
 	SBTabViewItem *tabViewItem = nil;
 	[super selectTabViewItemWithIdentifier:identifier];
