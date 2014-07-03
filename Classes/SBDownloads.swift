@@ -6,8 +6,6 @@
 //
 //
 
-//import "NSString-SBURLAdditions.h"
-
 import Foundation
 
 var _sharedDownloads = SBDownloads()
