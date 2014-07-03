@@ -24,9 +24,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBSidebar.h"
 #import "SBButton.h"
-#import "SBBookmarks.h"
 #import "SBBookmarksView.h"
 #import "SBUtil.h"
+
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 @implementation SBSidebar
 

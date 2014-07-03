@@ -308,7 +308,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSFrameRect([self bounds]);
 }
 
-- (void)drawKnobSlotInRect:(struct _NSRect)rect highlight:(BOOL)highlight
+- (void)drawKnobSlotInRect:(NSRect)rect highlight:(BOOL)highlight
 {
 	NSRect r = [self rectForPart:NSScrollerKnobSlot];
 	NSColor *color = [NSColor colorWithCalibratedWhite:0.0 alpha:0.85];

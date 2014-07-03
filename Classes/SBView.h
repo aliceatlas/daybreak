@@ -38,11 +38,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) CGFloat animationDuration;
 @property (nonatomic) BOOL keyView;
 @property (nonatomic) BOOL toolbarVisible;
-@property (nonatomic) NSRect frame;
-@property (nonatomic, assign) CALayer *layer;
-@property (nonatomic) BOOL wantsLayer;
-@property (nonatomic) BOOL hidden;
-@property (nonatomic) CGFloat alphaValue;
+@property NSRect frame;
+@property CALayer *layer;
+@property BOOL wantsLayer;
+@property BOOL hidden;
+@property CGFloat alphaValue;
 @property (nonatomic, readonly) NSView *subview;
 @property (nonatomic, assign) id target;
 @property (nonatomic, assign) SEL doneSelector;

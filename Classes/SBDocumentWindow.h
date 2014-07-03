@@ -42,9 +42,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 @property (nonatomic, readonly) NSRect innerRect;
 @property (nonatomic) BOOL keyView;
-@property (nonatomic, assign) NSString *title;
+@property (copy) NSString *title;
 @property (nonatomic, assign) SBToolbar *toolbar;
-@property (nonatomic, assign) NSView *contentView;
+@property (strong) NSView *contentView;
 @property (nonatomic, retain) SBInnerView *innerView;
 @property (nonatomic, retain) SBTabbar *tabbar;
 @property (nonatomic, retain) SBSplitView *splitView;

@@ -24,6 +24,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDefinitions.h"
 
+/*NSString *SBDownloadsDidAddItemNotification = @"SBDownloadsDidAddItemNotification";
+NSString *SBDownloadsWillRemoveItemNotification = @"SBDownloadsWillRemoveItemNotification";
+NSString *SBDownloadsDidUpdateItemNotification = @"SBDownloadsDidUpdateItemNotification";
+NSString *SBDownloadsDidFinishItemNotification = @"SBDownloadsDidFinishItemNotification";
+NSString *SBDownloadsDidFailItemNotification = @"SBDownloadsDidFailItemNotification";*/
+
 // Versions
 NSString *SBBookmarkVersion = @"1.0";
 NSString *SBVersionFileURL = @"http://www.sunrisebrowser.com/script.js";
@@ -58,7 +64,7 @@ NSString *kSBFeedbackMailAddress = @"feedback@sunrisebrowser.com";
 NSString *kSBBugReportMailAddress = @"bugreport@sunrisebrowser.com";
 
 // Path components
-NSString *kSBApplicationSupportDirectoryName = @"Sunrise2";
+NSString *kSBApplicationSupportDirectoryName = @"Sunrise3";
 NSString *kSBApplicationSupportDirectoryName_Version1 = @"Sunrise";
 NSString *kSBBookmarksFileName = @"Bookmarks.plist";
 NSString *kSBHistoryFileName = @"History.plist";

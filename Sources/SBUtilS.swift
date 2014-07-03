@@ -1,0 +1,114 @@
+//
+//  SBUtil.swift
+//  Sunrise
+//
+//  Created by Alice Atlas on 6/29/14.
+//
+//
+
+import Foundation
+
+func SBGetLocalizableTextSetS(path: String) -> (NSMutableArray?, NSArray?, NSSize?) {
+    let localizableString = NSString.stringWithContentsOfFile(path, encoding: NSUTF16StringEncoding, error: nil)
+    if localizableString.length > 0 {
+        let fieldSize = NSSize(width: 300, height: 22)
+        let offset = NSPoint(x: 45, y: 12)
+        let margin = CGFloat(20)
+        let lines = localizableString.componentsSeparatedByString("\n") as String[]
+        let count = CGFloat(lines.count)
+        var size = NSSize(
+            width: offset.x + (fieldSize.width * 2) + margin * 2,
+            height: (fieldSize.height + offset.y) * count + offset.y + margin * 2)
+        
+        if count > 1 {
+            var textSet = String[][]()
+            var fieldSet = NSTextField[][]()
+            for (i, line) in enumerate(lines) {
+                var fieldRect = NSRect()
+                var texts = String[]()
+                var fields = NSTextField[]()
+                let components = line.componentsSeparatedByString(" = ")
+                
+                fieldRect.size = fieldSize
+                fieldRect.origin.y = size.height - margin - (fieldSize.height * CGFloat(i + 1)) - (offset.y * CGFloat(i))
+                
+                for (j, component) in enumerate(components) {
+                    if component.utf16count > 0 {
+                        let isMenuItem = !component.hasPrefix("//")
+                        let editable = isMenuItem && j == 1
+                        var string = component
+                        fieldRect.origin.x = CGFloat(j) * (fieldSize.width + offset.x)
+                        let field = NSTextField(frame: fieldRect)
+                        field.editable = editable
+                        field.selectable = isMenuItem
+                        field.bordered = isMenuItem
+                        field.drawsBackground = isMenuItem
+                        field.bezeled = editable
+                        (field.cell() as NSCell).scrollable = isMenuItem
+                        if isMenuItem {
+                            string = (component as NSString).stringByDeletingQuotations()
+                        }
+                        texts.append(string)
+                        fields.append(field)
+                    }
+                }
+                if texts.count >= 1 {
+                    textSet.append(texts)
+                }
+                if fields.count >= 1 {
+                    fieldSet.append(fields)
+                }
+            }
+            return (NSMutableArray(array: textSet), fieldSet, size)
+        }
+    }
+    return (nil, nil, nil)
+}
+
+// Return value for key in "com.apple.internetconfig.plist"
+func SBDefaultHomePageS() -> String? {
+    let path = SBSearchFileInDirectory("com.apple.internetconfig", SBLibraryDirectory("Preferences"))
+    if path? {
+        if NSFileManager.defaultManager().fileExistsAtPath(path) {
+            let internetConfig = NSDictionary(contentsOfFile: path)
+            if internetConfig.count > 0 {
+                return SBValueForKey("WWWHomePage", internetConfig)! as String
+            }
+        }
+    }
+    return nil
+}
+
+func SBDefaultSaveDownloadedFilesToPathS() -> String? {
+    let path = SBSearchPath(.DownloadsDirectory, nil)
+    if path? {
+        return path.stringByExpandingTildeInPath
+    }
+    return nil
+}
+
+
+/*
+func SBCreateBookmarkItemS(title: String?, url: String?, imageData: NSData?, date: NSDate?, labelName: String?, offsetString: String?) -> BookmarkItem {
+    var item = BookmarkItem()
+    if title? {
+        item[kSBBookmarkTitle] = title!
+    }
+    if url? {
+        item[kSBBookmarkURL] = url!
+    }
+    if imageData? {
+        item[kSBBookmarkImage] = imageData!
+    }
+    if date? {
+        item[kSBBookmarkDate] = date!
+    }
+    if labelName? {
+        item[kSBBookmarkLabelName] = labelName!
+    }
+    if offsetString? {
+        item[kSBBookmarkOffset] = offsetString!
+    }
+    return item
+}
+*/

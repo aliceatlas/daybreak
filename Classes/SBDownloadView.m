@@ -23,11 +23,12 @@
  */
 
 #import "SBDownloadView.h"
-#import "SBDownload.h"
-#import "SBDownloads.h"
 #import "SBDownloadsView.h"
 #import "SBCircleProgressIndicator.h"
 #import "SBUtil.h"
+
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 @implementation SBDownloadView
 

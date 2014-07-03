@@ -24,10 +24,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDefinitions.h"
 #import <WebKit/WebKit.h>
-#import "SBApplicationDelegate.h"
 #import "SBDocument.h"
-#import "SBDocumentController.h"
 #import "SBFixedSplitView.h"
+
+@class SBApplicationDelegate;
+@class SBDocumentController;
 
 // Get objects
 SBApplicationDelegate *SBGetApplicationDelegate();

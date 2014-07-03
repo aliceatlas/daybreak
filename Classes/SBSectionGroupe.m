@@ -30,14 +30,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize title;
 @synthesize items;
 
-+ (id)groupeWithTitle:(NSString *)title
++ (instancetype)groupeWithTitle:(NSString *)title
 {
 	SBSectionGroupe *groupe = [[[SBSectionGroupe alloc] init] autorelease];
 	[groupe setTitle:title];
 	return groupe;
 }
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{
@@ -67,7 +67,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize keyName;
 @synthesize context;
 
-+ (id)itemWithTitle:(NSString *)title keyName:(NSString *)keyName controlClass:(Class)controlClass context:(id)context
++ (instancetype)itemWithTitle:(NSString *)title keyName:(NSString *)keyName controlClass:(Class)controlClass context:(id)context
 {
 	SBSectionItem *item = [[[SBSectionItem alloc] init] autorelease];
 	[item setTitle:title];
@@ -77,7 +77,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return item;
 }
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{

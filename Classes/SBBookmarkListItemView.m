@@ -24,10 +24,10 @@
 
 #import "SBBookmarkListItemView.h"
 #import "SBBookmarkListView.h"
-#import "SBBookmarks.h"
-#import "SBRenderWindow.h"
 #import "SBUtil.h"
 
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 @implementation SBBookmarkListItemView
 

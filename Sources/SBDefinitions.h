@@ -42,6 +42,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define kSBURLFieldShowsGoogleSuggest 1
 #define kSBFlagShowAllStringEncodings 0
 
+#define SBDownloadsDidAddItemNotification @"SBDownloadsDidAddItemNotification"
+#define SBDownloadsWillRemoveItemNotification @"SBDownloadsWillRemoveItemNotification"
+#define SBDownloadsDidUpdateItemNotification @"SBDownloadsDidUpdateItemNotification"
+#define SBDownloadsDidFinishItemNotification @"SBDownloadsDidFinishItemNotification"
+#define SBDownloadsDidFailItemNotification @"SBDownloadsDidFailItemNotification"
+
 // Versions
 extern NSString *SBBookmarkVersion;
 extern NSString *SBVersionFileURL;
@@ -138,8 +144,6 @@ extern NSString *kWebKitDeveloperExtras;			// BOOL
 extern NSString *kSBWhenNewTabOpensMakeActiveFlag;	// BOOL
 
 // Method values
-extern NSInteger SBCountOfOpenMethods;
-extern NSString *SBOpenMethods[];
 extern NSInteger SBCountOfCookieMethods;
 extern NSString *SBCookieMethods[];
 
@@ -208,38 +212,38 @@ enum {
 };
 
 // Button shapes
-typedef enum {
-	SBButtonExclusiveShape, 
-	SBButtonLeftShape, 
-	SBButtonCenterShape, 
+typedef NS_ENUM(NSInteger, SBButtonShape) {
+	SBButtonExclusiveShape,
+	SBButtonLeftShape,
+	SBButtonCenterShape,
 	SBButtonRightShape
-}SBButtonShape;
+};
 
 // Sidebar positions
-typedef enum {
-	SBSidebarLeftPosition, 
+typedef NS_ENUM(NSInteger, SBSidebarPosition) {
+	SBSidebarLeftPosition,
 	SBSidebarRightPosition
-}SBSidebarPosition;
+};
 
 // Bookmark display modes
-typedef enum {
+typedef NS_ENUM(NSInteger, SBBookmarkMode) {
 	SBBookmarkIconMode, 
 	SBBookmarkListMode, 
 	SBBookmarkTileMode
-}SBBookmarkMode;
+};
 
 // Circle progress styles
-typedef enum {
+typedef NS_ENUM(NSInteger, SBCircleProgressIndicatorStyle) {
 	SBCircleProgressIndicatorRegulerStyle, 
 	SBCircleProgressIndicatorWhiteStyle
-}SBCircleProgressIndicatorStyle;
+};
 
 // Status code
-typedef enum {
-	SBStatusUndone, 
-	SBStatusProcessing, 
+typedef NS_ENUM(NSInteger, SBStatus) {
+	SBStatusUndone,
+	SBStatusProcessing,
 	SBStatusDone
-}SBStatus;
+};
 
 // Tags
 #define SBApplicationMenuTag 0
@@ -370,14 +374,6 @@ extern NSString *SBBookmarkPboardType;
 - (void)downloadsViewDidRemoveAllItems:(SBDownloadsView *)aDownloadsView;
 @end
 
-@class SBRenderWindow;
-@protocol SBRenderWindowDelegate <NSObject>
-@optional
-- (void)renderWindowDidStartRendering:(SBRenderWindow *)renderWindow;
-- (void)renderWindow:(SBRenderWindow *)renderWindow didFinishRenderingImage:(NSImage *)image;
-- (void)renderWindow:(SBRenderWindow *)renderWindow didFailWithError:(NSError *)error;
-@end
-
 @class SBDownloader;
 @protocol SBDownloaderDelegate
 - (void)downloader:(SBDownloader *)downloader didFinish:(NSData *)data;
@@ -388,20 +384,24 @@ extern NSString *SBBookmarkPboardType;
 
 // Un-documented methods
 @interface NSURL (WebNSURLExtras)
-+ (id)_web_URLWithUserTypedString:(id)sender;
-- (id)_web_userVisibleString;
++ (NSURL *)_web_URLWithUserTypedString:(NSString *)string;
+- (NSString *)_web_userVisibleString;
 @end
 
+@class WebInspector, DOMRange;
+typedef NSUInteger WebFindOptions;
 @interface WebView (WebPendingPublic)
-- (NSUInteger)markAllMatchesForText:(id)text caseSensitive:(BOOL)caseFlag highlight:(BOOL)highlightFlag limit:(NSUInteger)limit;
+- (NSUInteger)markAllMatchesForText:(NSString *)string caseSensitive:(BOOL)caseFlag highlight:(BOOL)highlight limit:(NSUInteger)limit;
+- (NSUInteger)countMatchesForText:(NSString *)string options:(WebFindOptions)options highlight:(BOOL)highlight limit:(NSUInteger)limit markMatches:(BOOL)markMatches;
+- (NSUInteger)countMatchesForText:(NSString *)string inDOMRange:(DOMRange *)range options:(WebFindOptions)options highlight:(BOOL)highlight limit:(NSUInteger)limit markMatches:(BOOL)markMatches;
 - (void)unmarkAllTextMatches;
 - (BOOL)canZoomPageIn;
-- (void)zoomPageIn:(id)sender;
+- (IBAction)zoomPageIn:(id)sender;
 - (BOOL)canZoomPageOut;
-- (void)zoomPageOut:(id)sender;
+- (IBAction)zoomPageOut:(id)sender;
 - (BOOL)canResetPageZoom;
-- (void)resetPageZoom:(id)sender;
-- (id)inspector;
+- (IBAction)resetPageZoom:(id)sender;
+- (WebInspector *)inspector;
 // WebInspector
 - (void)show:(id)arg1;
 - (void)showConsole:(id)arg1;

@@ -24,21 +24,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDocument.h"
 #import "SBAboutView.h"
-#import "SBBookmarks.h"
 #import "SBBookmarkListView.h"
 #import "SBBookmarkView.h"
-#import "SBDownloader.h"
 #import "SBDownloaderView.h"
-#import "SBDownloads.h"
 #import "SBDownloadsView.h"
 #import "SBDrawer.h"
-#import "SBGoogleSuggestParser.h"
-#import "SBHistory.h"
 #import "SBHistoryView.h"
 #import "SBInnerView.h"
 #import "SBLoadButton.h"
 #import "SBMessageView.h"
-#import "SBPreferences.h"
 #import "SBReportView.h"
 #import "SBSavePanel.h"
 #import "SBSegmentedButton.h"
@@ -48,11 +42,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBTabbarItem.h"
 #import "SBTabView.h"
 #import "SBTabViewItem.h"
-#import "SBTextInputView.h"
 #import "SBUserAgentView.h"
 #import "SBURLField.h"
 #import "SBUtil.h"
 #import "SBWebView.h"
+
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 @implementation SBDocument
 

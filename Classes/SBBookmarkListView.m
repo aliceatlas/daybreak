@@ -24,9 +24,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBBookmarkListView.h"
 #import "SBBookmarkListItemView.h"
-#import "SBBookmarks.h"
 #import "SBBookmarksView.h"
 #import "SBUtil.h"
+
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 @implementation SBBookmarkListView
 

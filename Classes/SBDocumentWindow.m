@@ -23,14 +23,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBDocumentWindow.h"
-#import "SBAboutView.h"
 #import "SBBLKGUI.h"
-#import "SBCoverWindow.h"
 #import "SBDefinitions.h"
 #import "SBInnerView.h"
 #import "SBSplitView.h"
 #import "SBTabbar.h"
 #import "SBUtil.h"
+
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 #define kSBFlipAnimationDuration 0.8
 #define kSBFlipAnimationRectMargin 100

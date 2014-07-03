@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBTabViewItem.h"
 #import "SBBLKGUI.h"
-#import "SBDownloads.h"
 #import "SBDrawer.h"
 #import "SBFindbar.h"
 #import "SBFixedSplitView.h"
@@ -33,6 +32,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBTabView.h"
 #import "SBUtil.h"
 #import "SBWebView.h"
+
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 @implementation SBTabViewItem
 

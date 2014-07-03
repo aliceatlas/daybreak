@@ -30,8 +30,3 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "NSScrollView-SBAdditions.h"
 #import "NSString-SBURLAdditions.h"
 #import "NSURL-SBAdditions.h"
-
-NS_INLINE NSRect NSMakeRectFromPointAndSize(NSPoint point, NSSize size)
-{
-	return NSMakeRect(point.x, point.y, size.width, size.height);
-}

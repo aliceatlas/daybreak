@@ -24,9 +24,11 @@
 
 #import "SBDownloadsView.h"
 #import "SBButton.h"
-#import "SBDownloads.h"
 #import "SBDownloadView.h"
 #import "SBUtil.h"
+
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 @implementation SBDownloadsView
 

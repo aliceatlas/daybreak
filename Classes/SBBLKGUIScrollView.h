@@ -26,8 +26,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @class SBBLKGUIScroller;
 @interface SBBLKGUIScrollView : NSScrollView
-@property (nonatomic, assign) SBBLKGUIScroller *horizontalScroller;
-@property (nonatomic, assign) SBBLKGUIScroller *verticalScroller;
+@property (strong) SBBLKGUIScroller *horizontalScroller;
+@property (strong) SBBLKGUIScroller *verticalScroller;
 
 - (void)initialize;
 - (void)setBackgroundColor:(NSColor *)inBackgroundColor;

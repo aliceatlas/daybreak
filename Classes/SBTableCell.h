@@ -37,11 +37,11 @@ typedef enum {
 	BOOL showSelection;
 	NSLineBreakMode lineBreakMode;
 }
-@property (nonatomic) BOOL enabled;
+@property BOOL enabled;
 @property (nonatomic) SBTableCellStyle style;
 @property (nonatomic) BOOL showRoundedPath;
 @property (nonatomic) BOOL showSelection;
-@property (nonatomic) NSLineBreakMode lineBreakMode;
+@property NSLineBreakMode lineBreakMode;
 
 - (CGFloat)side;
 - (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;

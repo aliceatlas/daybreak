@@ -23,10 +23,10 @@
  */
 
 #import "SBView.h"
-#import "SBDownload.h"
 
 @class SBButton;
 @class SBDownloadView;
+@class SBDownload;
 @interface SBDownloadsView : SBView <NSAnimationDelegate>
 {
 	id<SBDownloadsViewDelegate> delegate;

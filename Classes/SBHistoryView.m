@@ -23,9 +23,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBHistoryView.h"
-#import "SBHistory.h"
 #import "SBTableCell.h"
 #import "SBURLField.h"
+
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 #define kSBMinFrameSizeWidth 480
 #define kSBMinFrameSizeHeight 320
