@@ -24,12 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDefinitions.h"
 
-/*NSString *SBDownloadsDidAddItemNotification = @"SBDownloadsDidAddItemNotification";
-NSString *SBDownloadsWillRemoveItemNotification = @"SBDownloadsWillRemoveItemNotification";
-NSString *SBDownloadsDidUpdateItemNotification = @"SBDownloadsDidUpdateItemNotification";
-NSString *SBDownloadsDidFinishItemNotification = @"SBDownloadsDidFinishItemNotification";
-NSString *SBDownloadsDidFailItemNotification = @"SBDownloadsDidFailItemNotification";*/
-
 // Versions
 NSString *SBBookmarkVersion = @"1.0";
 NSString *SBVersionFileURL = @"http://www.sunrisebrowser.com/script.js";
