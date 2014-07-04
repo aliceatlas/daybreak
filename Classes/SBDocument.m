@@ -31,7 +31,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDrawer.h"
 #import "SBHistoryView.h"
 #import "SBInnerView.h"
-#import "SBLoadButton.h"
 #import "SBMessageView.h"
 #import "SBReportView.h"
 #import "SBSavePanel.h"
