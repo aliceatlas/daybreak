@@ -34,7 +34,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBMessageView.h"
 #import "SBReportView.h"
 #import "SBSavePanel.h"
-#import "SBSegmentedButton.h"
 #import "SBSidebar.h"
 #import "SBSnapshotView.h"
 #import "SBTabbar.h"

@@ -112,7 +112,6 @@
 		08A004A10FEC8EBB00AEB6DD /* SBTabViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A004A00FEC8EBB00AEB6DD /* SBTabViewItem.m */; };
 		08A004CC0FEC955E00AEB6DD /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A004CB0FEC955E00AEB6DD /* WebKit.framework */; };
 		08A006DB0FECB15C00AEB6DD /* SBButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A006DA0FECB15C00AEB6DD /* SBButton.m */; };
-		08A5937D103323BA008C1EC7 /* SBSegmentedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A5937C103323BA008C1EC7 /* SBSegmentedButton.m */; };
 		08A73C331052C6CE00EBD683 /* NSScrollView-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A73C321052C6CE00EBD683 /* NSScrollView-SBAdditions.m */; };
 		08A73C391052C88800EBD683 /* NSColor-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A73C381052C88800EBD683 /* NSColor-SBAdditions.m */; };
 		08A73C5D1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A73C5C1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m */; };
@@ -180,6 +179,7 @@
 		50DF8A2E19639CDB005DAF26 /* SBPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 50DF8A2D19639CDB005DAF26 /* SBPreferences.m */; };
 		50DF8A3019639D03005DAF26 /* SBDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF8A2F19639D03005DAF26 /* SBDownloader.swift */; };
 		50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF8A331963A5A5005DAF26 /* SBDownloads.swift */; };
+		50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F850621967FD4D00C28795 /* SBSegmentedButton.swift */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -358,8 +358,6 @@
 		08A004CB0FEC955E00AEB6DD /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		08A006D90FECB15C00AEB6DD /* SBButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBButton.h; path = Classes/SBButton.h; sourceTree = "<group>"; };
 		08A006DA0FECB15C00AEB6DD /* SBButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBButton.m; path = Classes/SBButton.m; sourceTree = "<group>"; };
-		08A5937B103323BA008C1EC7 /* SBSegmentedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSegmentedButton.h; path = Classes/SBSegmentedButton.h; sourceTree = "<group>"; };
-		08A5937C103323BA008C1EC7 /* SBSegmentedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSegmentedButton.m; path = Classes/SBSegmentedButton.m; sourceTree = "<group>"; };
 		08A73C311052C6CE00EBD683 /* NSScrollView-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSScrollView-SBAdditions.h"; path = "Classes/NSScrollView-SBAdditions.h"; sourceTree = "<group>"; };
 		08A73C321052C6CE00EBD683 /* NSScrollView-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSScrollView-SBAdditions.m"; path = "Classes/NSScrollView-SBAdditions.m"; sourceTree = "<group>"; };
 		08A73C371052C88800EBD683 /* NSColor-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor-SBAdditions.h"; path = "Classes/NSColor-SBAdditions.h"; sourceTree = "<group>"; };
@@ -460,6 +458,7 @@
 		50DF8A2D19639CDB005DAF26 /* SBPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBPreferences.m; path = Classes/SBPreferences.m; sourceTree = "<group>"; };
 		50DF8A2F19639D03005DAF26 /* SBDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownloader.swift; path = Classes/SBDownloader.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50DF8A331963A5A5005DAF26 /* SBDownloads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownloads.swift; path = Classes/SBDownloads.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		50F850621967FD4D00C28795 /* SBSegmentedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSegmentedButton.swift; path = Classes/SBSegmentedButton.swift; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -664,8 +663,7 @@
 				5044E66819655AF00053CBF1 /* SBLoadButton.swift */,
 				08742F6E10234177001F7EAF /* SBPopUpButton.h */,
 				08742F6F10234177001F7EAF /* SBPopUpButton.m */,
-				08A5937B103323BA008C1EC7 /* SBSegmentedButton.h */,
-				08A5937C103323BA008C1EC7 /* SBSegmentedButton.m */,
+				50F850621967FD4D00C28795 /* SBSegmentedButton.swift */,
 			);
 			name = Buttons;
 			sourceTree = "<group>";
@@ -1083,6 +1081,7 @@
 				089956CD0FE39C8200DED3BA /* SBView.m in Sources */,
 				0891057C0FE4EC6400DFE290 /* SBTabView.m in Sources */,
 				508FAC5319653AC400F4380F /* main.swift in Sources */,
+				50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */,
 				0890E1750FE91DF4002DF339 /* SBTabbarItem.m in Sources */,
 				089FE2E90FEBED6C000D2436 /* SBCircleProgressIndicator.m in Sources */,
 				08A004A10FEC8EBB00AEB6DD /* SBTabViewItem.m in Sources */,
@@ -1122,7 +1121,6 @@
 				50B2A99F196028B700DA1B4A /* SBDocumentController.swift in Sources */,
 				08EB067B102EF1CA003B3A91 /* SBWindowController.m in Sources */,
 				088440661032950200AF4E2D /* SBSectionListView.m in Sources */,
-				08A5937D103323BA008C1EC7 /* SBSegmentedButton.m in Sources */,
 				08B6E2A2103451DA00BD15D8 /* SBSectionGroupe.m in Sources */,
 				08F914D1103531C50026ABD1 /* SBSnapshotView.m in Sources */,
 				50B2A99D1960221D00DA1B4A /* SBApplicationDelegate.swift in Sources */,
