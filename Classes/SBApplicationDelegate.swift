@@ -215,7 +215,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func update(versionString: String) {
         let window = SBGetSelectedDocument().window
         let info = NSBundle.mainBundle().localizedInfoDictionary
-        let urlString = info?["SBReleaseNotesURL"] as String
+        let urlString = info.objectForKey("SBReleaseNotesURL") as String
         self.destructUpdateView()
         updateView = SBUpdateView(frame: window.splitViewRect())
         updateView!.title = NSString(format: NSLocalizedString("A new version of Sunrise %@ is available.", comment: ""), versionString)
@@ -373,7 +373,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func sunrisepage(sender: AnyObject) {
         let info = NSBundle.mainBundle().localizedInfoDictionary
-        if let string = info?["SBHomePageURL"] as? String {
+        if let string = info.objectForKey("SBHomePageURL") as? String {
             if let document = SBGetSelectedDocument() {
                 if document.selectedWebDataSource? {
                     document.constructNewTabWithURL(NSURL(string: string), selection: true)
