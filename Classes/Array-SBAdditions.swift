@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Foundation
 
 extension Array {
-    func objectsAtIndexes(indexes: NSIndexSet) -> Element[] {
-        var objs = Element[]()
+    func objectsAtIndexes(indexes: NSIndexSet) -> [Element] {
+        var objs: [Element] = []
         indexes.enumerateIndexesUsingBlock {
             (Int i, _) in
             objs.append(self[i])
@@ -69,13 +69,13 @@ extension Array {
     }
 }
 
-func removeObject<T: Equatable>(inout array: T[], toRemove: T) {
+func removeObject<T: Equatable>(inout array: [T], toRemove: T) {
     if let index = array.firstIndex({ $0 == toRemove }) {
         array.removeAtIndex(index)
     }
 }
 
-func removeObjects<T: Equatable>(inout array: T[], toRemove: T[]) {
+func removeObjects<T: Equatable>(inout array: [T], toRemove: [T]) {
     for item in array {
         removeObject(&array, item)
     }

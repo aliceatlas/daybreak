@@ -45,16 +45,16 @@ class SBHistory: NSObject {
         return NSURL.fileURLWithPath(SBHistoryFilePath())
     }
     
-    var items: WebHistoryItem[] {
-        var _items = WebHistoryItem[]()
+    var items: [WebHistoryItem] {
+        var _items: [WebHistoryItem] = []
         for date in history.orderedLastVisitedDays {
-            let orderedItems = history.orderedItemsLastVisitedOnDay(date as NSCalendarDate) as WebHistoryItem[]
+            let orderedItems = history.orderedItemsLastVisitedOnDay(date as NSCalendarDate) as [WebHistoryItem]
             _items += orderedItems
         }
         return _items
     }
     
-    func itemsAtIndexes(indexes: NSIndexSet) -> WebHistoryItem[] {
+    func itemsAtIndexes(indexes: NSIndexSet) -> [WebHistoryItem] {
         return items.objectsAtIndexes(indexes)
     }
     
@@ -64,7 +64,7 @@ class SBHistory: NSObject {
         self.writeToFile()
     }
     
-    func removeItems(inItems: WebHistoryItem[]) {
+    func removeItems(inItems: [WebHistoryItem]) {
         if inItems.count > 0 {
             history.removeItems(inItems)
             self.writeToFile()

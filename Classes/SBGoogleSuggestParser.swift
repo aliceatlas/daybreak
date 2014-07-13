@@ -35,7 +35,7 @@ let kSBGSNum_queriesTagName = "num_queries"
 let kSBGSSuggestionAttributeDataArgumentName = "data"
 
 class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
-    var items: NSMutableDictionary[] = []
+    var items: [NSMutableDictionary] = []
     var _inToplevel = false
     var _inCompleteSuggestion = false
     

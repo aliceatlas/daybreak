@@ -85,7 +85,7 @@ class SBBookmarks: NSObject {
         return NSNotFound
     }
 
-    func indexesOfItems(bookmarkItems: BookmarkItem[]) -> NSIndexSet {
+    func indexesOfItems(bookmarkItems: [BookmarkItem]) -> NSIndexSet {
         let indexes = NSMutableIndexSet()
         for bookmarkItem in bookmarkItems {
             let index = self.indexOfItem(bookmarkItem)
@@ -115,7 +115,7 @@ class SBBookmarks: NSObject {
         } else {
             let info = NSDictionary(contentsOfFile: SBBookmarksFilePath())
             if info.count > 0 {
-                if let bookmarkItems = info[kSBBookmarkItems] as? BookmarkItem[] {
+                if let bookmarkItems = info[kSBBookmarkItems] as? [BookmarkItem] {
                     if bookmarkItems.count > 0 {
                         items.removeAll()
                         items += bookmarkItems.map { NSMutableDictionary(dictionary: $0) }
@@ -173,7 +173,7 @@ class SBBookmarks: NSObject {
         }
     }
     
-    func addItems(inItems: BookmarkItem[], toIndex: UInt) {
+    func addItems(inItems: [BookmarkItem], toIndex: UInt) {
         if inItems.count > 0 && Int(toIndex) <= items.count {
     		//[items insertObjects:inItems atIndexes:[NSIndexSet indexSetWithIndex:toIndex]];
             for (i, item) in enumerate(inItems) {
@@ -236,13 +236,13 @@ class SBBookmarks: NSObject {
     // Exec
     
     func openItemsFromMenuItem(menuItem: NSMenuItem) {
-        let representedItems = menuItem.representedObject as BookmarkItem[]
+        let representedItems = menuItem.representedObject as [BookmarkItem]
         if representedItems.count > 0 {
             self.openItemsInSelectedDocument(representedItems)
         }
     }
     
-    func openItemsInSelectedDocument(inItems: BookmarkItem[]) {
+    func openItemsInSelectedDocument(inItems: [BookmarkItem]) {
         if let selectedDocument = SBGetSelectedDocument() {
             if selectedDocument.respondsToSelector("openAndConstructTabWithBookmarkItems:") {
                 selectedDocument.openAndConstructTabWithBookmarkItems(inItems)

@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Cocoa
 
 class SBPreferencesWindowController: SBWindowController {
-    var sections: SBSectionGroupe[] = []
+    var sections: [SBSectionGroupe] = []
     var sectionListView: SBSectionListView?
     
     init(viewSize: NSSize) {

@@ -36,7 +36,7 @@ var _sharedDownloads = SBDownloads()
 extension SBDownload: Equatable {}
 
 class SBDownloads: NSObject, NSURLDownloadDelegate {
-    var items = SBDownload[]()
+    var items: [SBDownload] = []
 	var _identifier = 0
     
     class func sharedDownloads() -> SBDownloads {
@@ -64,7 +64,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         self.removeItems([item])
     }
     
-    func removeItems(inItems: SBDownload[]) {
+    func removeItems(inItems: [SBDownload]) {
         if let item = inItems.first({ $0.downloading }) {
             item.stop()
         }
@@ -85,7 +85,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName(SBDownloadsDidAddItemNotification, object: self, userInfo: userInfo)
     }
     
-    func executeWillRemoveItem(items: SBDownload[]) {
+    func executeWillRemoveItem(items: [SBDownload]) {
         let userInfo = [kSBDownloadsItems: items]
         NSNotificationCenter.defaultCenter().postNotificationName(SBDownloadsWillRemoveItemNotification, object: self, userInfo: userInfo)
     }

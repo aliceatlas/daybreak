@@ -34,19 +34,19 @@ func SBGetLocalizableTextSetS(path: String) -> (NSMutableArray?, NSArray?, NSSiz
         let fieldSize = NSSize(width: 300, height: 22)
         let offset = NSPoint(x: 45, y: 12)
         let margin = CGFloat(20)
-        let lines = localizableString.componentsSeparatedByString("\n") as String[]
+        let lines = localizableString.componentsSeparatedByString("\n") as [String]
         let count = CGFloat(lines.count)
         var size = NSSize(
             width: offset.x + (fieldSize.width * 2) + margin * 2,
             height: (fieldSize.height + offset.y) * count + offset.y + margin * 2)
         
         if count > 1 {
-            var textSet = String[][]()
-            var fieldSet = NSTextField[][]()
+            var textSet: [[String]] = []
+            var fieldSet: [[NSTextField]] = []
             for (i, line) in enumerate(lines) {
                 var fieldRect = NSRect()
-                var texts = String[]()
-                var fields = NSTextField[]()
+                var texts: [String] = []
+                var fields: [NSTextField] = []
                 let components = line.componentsSeparatedByString(" = ")
                 
                 fieldRect.size = fieldSize

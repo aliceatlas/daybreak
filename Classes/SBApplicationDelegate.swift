@@ -80,7 +80,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    func application(sender: NSApplication, openFiles filenames: String[]) {
+    func application(sender: NSApplication, openFiles filenames: [String]) {
         var index = 0
         let documentController = SBDocumentController.sharedDocumentController()! as SBDocumentController
         
@@ -344,7 +344,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let result = panel.runModalForDirectory(nil, file: nil, types: nil)
         if result == NSOKButton {
             if let document = SBGetSelectedDocument() {
-                let urls = panel.URLs as NSURL[]
+                let urls = panel.URLs as [NSURL]
                 for (index, file) in enumerate(urls) {
                     document.constructNewTabWithURL(file, selection:(index == urls.count - 1))
                 }
@@ -424,7 +424,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let panel = SBOpenPanel.openPanel()
         let path = NSBundle.mainBundle().resourcePath
         if panel.runModalForDirectory(path, file:nil, types:["strings"]) {
-            let (tset: String[][], _, _) = SBGetLocalizableTextSetS(panel.filename)
+            let (tset: [[String]], _, _) = SBGetLocalizableTextSetS(panel.filename)
             for (index, texts) in enumerate(tset) {
                 let text0 = texts[0]
                 for (i, ts) in enumerate(tset) {
