@@ -26,23 +26,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation SBFixedSplitView
 
-+ (SBFixedSplitView *)splitViewWithEmbedViews:(NSArray *)views frameRect:(NSRect)frameRect
++ (instancetype)splitViewWithEmbedViews:(NSArray *)views frameRect:(NSRect)frameRect
 {
-	SBFixedSplitView *splitView = nil;
-	NSView *view1 = [views count] > 0 ? [views objectAtIndex:0] : nil;
-	NSView *view2 = [views count] > 1 ? [views objectAtIndex:1] : nil;
-	NSView *superview = [view1 superview] ? [view1 superview] : ([view2 superview] ? [view2 superview] : nil);
-	if (superview)
-	{
-		splitView = [[[SBFixedSplitView alloc] initWithFrame:frameRect] autorelease];
-		[superview addSubview:splitView];
-		[view1 removeFromSuperview];
-		[view2 removeFromSuperview];
-		[splitView addSubview:view1];
-		[splitView addSubview:view2];
-	}
-	return splitView;
+    return [[self alloc] initWithEmbedViews:views frameRect:frameRect];
 }
+
+- (instancetype)initWithEmbedViews:(NSArray *)views frameRect:(NSRect)frameRect
+{
+    NSView *view1 = [views count] > 0 ? [views objectAtIndex:0] : nil;
+    NSView *view2 = [views count] > 1 ? [views objectAtIndex:1] : nil;
+    NSView *superview = [view1 superview] ? [view1 superview] : ([view2 superview] ? [view2 superview] : nil);
+    if (superview && (self = [super initWithFrame:frameRect]))
+    {
+        [superview addSubview:self];
+        [view1 removeFromSuperview];
+        [view2 removeFromSuperview];
+        [self addSubview:view1];
+        [self addSubview:view2];
+        return self;
+    }
+    return nil;
+}
+
 
 - (CGFloat)dividerThickness
 {

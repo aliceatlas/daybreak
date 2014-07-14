@@ -27,6 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface SBFixedSplitView : NSSplitView
 
-+ (SBFixedSplitView *)splitViewWithEmbedViews:(NSArray *)views frameRect:(NSRect)frameRect;
++ (instancetype)splitViewWithEmbedViews:(NSArray *)views frameRect:(NSRect)frameRect;
+- (instancetype)initWithEmbedViews:(NSArray *)views frameRect:(NSRect)frameRect;
 
 @end

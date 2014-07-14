@@ -15,3 +15,8 @@
 
 #import "SBSectionGroupe.h"
 #import "SBSectionListView.h"
+#import "SBBookmarkListView.h"
+#import "SBSearchbar.h"
+
+#import "NSColor-SBAdditions.h"
+#import "SBFixedSplitView.h"

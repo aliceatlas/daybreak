@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #import "SBDefinitions.h"
-#import "SBBookmarksView.h"
 #import "SBButton.h"
 #import "SBPopUpButton.h"
 #import "SBDocumentWindow.h"
@@ -33,6 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBWebResourcesView.h"
 
 @class SBBookmarkView;
+@class SBBookmarksView;
 @class SBDocumentWindow;
 @class SBDownloaderView;
 @class SBDownloadsView;
