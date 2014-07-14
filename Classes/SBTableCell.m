@@ -28,7 +28,6 @@
 
 @implementation SBTableCell
 
-@synthesize enabled;
 @synthesize style;
 @synthesize showRoundedPath;
 @synthesize showSelection;
@@ -38,7 +37,7 @@
 {
 	if (self = [super init])
 	{
-		enabled = YES;
+		self.enabled = YES;
 		style = SBTableCellGrayStyle;
 		showSelection = YES;
 		lineBreakMode = NSLineBreakByTruncatingTail;
@@ -125,7 +124,7 @@
 	}
 	else if (style == SBTableCellWhiteStyle)
 	{
-		NSColor *textColor = [(enabled ? [NSColor blackColor] : [NSColor grayColor]) colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+		NSColor *textColor = [(self.enabled ? [NSColor blackColor] : [NSColor grayColor]) colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
 		[textColor getComponents:textColors];
 		sTextColor = [self isHighlighted] ? [NSColor clearColor] : [NSColor whiteColor];
 	}

@@ -33,7 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize toolbarVisible;
 @dynamic frame;
 @dynamic wantsLayer;
-@dynamic hidden;
 @dynamic alphaValue;
 @dynamic subview;
 @synthesize target;
@@ -132,11 +131,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return [super wantsLayer];
 }
 
-- (BOOL)hidden
-{
-	return [super isHidden];
-}
-
 - (CGFloat)alphaValue
 {
 	return [super alphaValue];
@@ -165,11 +159,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setWantsLayer:(BOOL)wantsLayer
 {
 	[super setWantsLayer:wantsLayer];
-}
-
-- (void)setHidden:(BOOL)hidden
-{
-	[super setHidden:hidden];
 }
 
 - (void)setAlphaValue:(CGFloat)alphaValue

@@ -24,10 +24,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDefinitions.h"
 
-@class SBBLKGUIScroller;
 @interface SBBLKGUIScrollView : NSScrollView
-@property (strong) SBBLKGUIScroller *horizontalScroller;
-@property (strong) SBBLKGUIScroller *verticalScroller;
 
 - (void)initialize;
 - (void)setBackgroundColor:(NSColor *)inBackgroundColor;

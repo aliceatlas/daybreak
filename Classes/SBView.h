@@ -41,7 +41,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property NSRect frame;
 @property CALayer *layer;
 @property BOOL wantsLayer;
-@property BOOL hidden;
 @property CGFloat alphaValue;
 @property (nonatomic, readonly) NSView *subview;
 @property (nonatomic, assign) id target;
@@ -54,7 +53,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setFrame:(NSRect)frame;
 - (void)setLayer:(CALayer *)layer;
 - (void)setWantsLayer:(BOOL)wantsLayer;
-- (void)setHidden:(BOOL)hidden;
 - (void)setAlphaValue:(CGFloat)alphaValue;
 - (void)setFrame:(NSRect)frame animate:(BOOL)animate;
 - (void)setKeyView:(BOOL)isKeyView;

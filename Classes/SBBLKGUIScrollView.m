@@ -27,9 +27,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation SBBLKGUIScrollView
 
-@dynamic horizontalScroller;
-@dynamic verticalScroller;
-
 - (id)initWithFrame:(NSRect)frameRect
 {
     if (self = [super initWithFrame:frameRect])
@@ -123,12 +120,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #else
 	if ([self hasVerticalScroller])
 	{
-		[[self verticalScroller] setBackgroundColor:inBackgroundColor];
+		[(SBBLKGUIScroller *)[self verticalScroller] setBackgroundColor:inBackgroundColor];
 	}
 	
 	if ([self hasHorizontalScroller])
 	{
-		[[self horizontalScroller] setBackgroundColor:inBackgroundColor];
+		[(SBBLKGUIScroller *)[self horizontalScroller] setBackgroundColor:inBackgroundColor];
 	}
 #endif
 }
@@ -140,12 +137,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #else
 	if ([self hasVerticalScroller])
 	{
-		[[self verticalScroller] setDrawsBackground:flag];
+		[(SBBLKGUIScroller *)[self verticalScroller] setDrawsBackground:flag];
 	}
 	
 	if ([self hasHorizontalScroller])
 	{
-		[[self horizontalScroller] setDrawsBackground:flag];
+		[(SBBLKGUIScroller *)[self horizontalScroller] setDrawsBackground:flag];
 	}
 #endif
 }
