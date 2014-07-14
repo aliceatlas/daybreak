@@ -64,8 +64,11 @@ extension Array {
         return nil
     }
     
-    func any(condition: (T) -> Bool) -> Bool {
-        return self.first(condition) != nil
+    func any(condition: (Element) -> Bool) -> Bool {
+        if let x = self.first(condition) {
+            return true
+        }
+        return false
     }
 }
 

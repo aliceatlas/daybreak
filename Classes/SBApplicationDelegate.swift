@@ -169,11 +169,11 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // Notifications
     
     func updaterShouldUpdate(aNotification: NSNotification) {
-        self.update(aNotification.userInfo[kSBUpdaterVersionString] as String)
+        self.update(aNotification.userInfo[kSBUpdaterVersionString as NSString] as NSString)
     }
     
     func updaterNotNeedUpdate(aNotification: NSNotification) {
-        let versionString = aNotification.userInfo[kSBUpdaterVersionString] as String
+        let versionString = aNotification.userInfo[kSBUpdaterVersionString as NSString] as NSString
         let title = NSString(format: NSLocalizedString("Sunrise %@ is currently the newest version available.", comment: ""), versionString)
         let alert = NSAlert()
         alert.messageText = title
@@ -182,7 +182,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updaterDidFailChecking(aNotification: NSNotification) {
-        let errorDescription = aNotification.userInfo[kSBUpdaterErrorDescription] as String
+        let errorDescription = aNotification.userInfo[kSBUpdaterErrorDescription as NSString] as NSString
         let alert = NSAlert()
         alert.messageText = errorDescription
         alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
@@ -215,7 +215,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func update(versionString: String) {
         let window = SBGetSelectedDocument().window
         let info = NSBundle.mainBundle().localizedInfoDictionary
-        let urlString = info.objectForKey("SBReleaseNotesURL") as String
+        let urlString: String = info["SBReleaseNotesURL"] as NSString
         self.destructUpdateView()
         updateView = SBUpdateView(frame: window.splitViewRect())
         updateView!.title = NSString(format: NSLocalizedString("A new version of Sunrise %@ is available.", comment: ""), versionString)

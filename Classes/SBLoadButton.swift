@@ -27,13 +27,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBLoadButton: SBButton {
-    var _images: NSArray?
-    var images: NSArray? {
+    var _images: [NSImage]?
+    var images: [NSImage]? {
         get { return _images }
         set(inImages) {
-            if _images != inImages {
+            if !_images || (_images! != inImages) {
                 _images = inImages
-                if _images != nil && _images!.count > 0 {
+                if _images && !(_images!.isEmpty) {
                     self.image = _images![0] as NSImage
                     self.needsDisplay = true
                 }
@@ -87,7 +87,7 @@ class SBLoadButton: SBButton {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             if decoder.containsValueForKey("images") {
-                self.images = decoder.decodeObjectForKey("images") as? NSArray
+                self.images = decoder.decodeObjectOfClass(NSArray.self, forKey: "images") as? [NSImage]
             }
             if decoder.containsValueForKey("on") {
                 self.on = decoder.decodeBoolForKey("on")
@@ -97,7 +97,7 @@ class SBLoadButton: SBButton {
     
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
-        if images != nil {
+        if let images = self.images {
             coder.encodeObject(images, forKey: "images")
         }
         coder.encodeBool(on, forKey: "on")

@@ -78,7 +78,7 @@ extension String {
         var stringValue = self
         
         let info = NSBundle.mainBundle().localizedInfoDictionary
-        if let gSearchFormat = info?.objectForKey("SBGSearchFormat") as? NSString {
+        if let gSearchFormat = info["SBGSearchFormat"] as? NSString {
             let str = NSString(format: gSearchFormat, stringValue)
             stringValue = str.URLEncodedString()
         }

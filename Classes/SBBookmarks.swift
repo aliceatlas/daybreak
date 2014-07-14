@@ -28,12 +28,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-//typealias BookmarkItem = Dictionary<String, Any>
+//typealias BookmarkItem = [String: Any]
 typealias BookmarkItem = NSDictionary
 var _sharedBookmarks = SBBookmarks()
 
 class SBBookmarks: NSObject {
-    var items = NSMutableDictionary[]()
+    var items: [NSMutableDictionary] = []
     class var sharedBookmarks: SBBookmarks {
         return _sharedBookmarks
     }
@@ -106,7 +106,7 @@ class SBBookmarks: NSObject {
     
     func readFromFile() -> Bool {
         if kSBCountOfDebugBookmarks > 0 {
-            for index in 0..kSBCountOfDebugBookmarks {
+            for index in 0..<kSBCountOfDebugBookmarks {
                 let title = "Title \(index)"
                 let url = "http://\(index).com/"
                 let item = SBCreateBookmarkItem(title, url, SBEmptyBookmarkImageData(), NSDate.date(), nil, NSStringFromPoint(NSZeroPoint))
@@ -174,7 +174,7 @@ class SBBookmarks: NSObject {
     }
     
     func addItems(inItems: [BookmarkItem], toIndex: UInt) {
-        if inItems.count > 0 && Int(toIndex) <= items.count {
+        if !inItems.isEmpty && Int(toIndex) <= items.count {
     		//[items insertObjects:inItems atIndexes:[NSIndexSet indexSetWithIndex:toIndex]];
             for (i, item) in enumerate(inItems) {
                 items.insert(NSMutableDictionary(dictionary: item), atIndex: i + Int(toIndex))

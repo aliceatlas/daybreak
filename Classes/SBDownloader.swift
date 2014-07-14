@@ -61,7 +61,7 @@ class SBDownloader: NSObject {
     
     func connection(connection: NSURLConnection, didReceiveData data: NSData) {
         if receivedData == nil {
-            receivedData = data.mutableCopy() as NSMutableData
+            receivedData = data.mutableCopy() as? NSMutableData
         } else {
             receivedData!.appendData(data)
         }
