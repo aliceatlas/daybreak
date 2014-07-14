@@ -64,7 +64,7 @@ class SBSegmentedButton: SBView {
     
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
-        if buttons.count > 0 {
+        if !buttons.isEmpty {
             coder.encodeObject(buttons as NSArray, forKey: "buttons")
         }
     }
@@ -72,6 +72,6 @@ class SBSegmentedButton: SBView {
     // Actions
     
     func adjustFrame() {
-        self.frame = reduce(map(buttons, { $0.frame }), NSZeroRect, NSUnionRect)
+        self.frame = buttons.map({ $0.frame }).reduce(NSZeroRect, NSUnionRect)
     }
 }

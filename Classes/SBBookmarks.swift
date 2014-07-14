@@ -116,9 +116,8 @@ class SBBookmarks: NSObject {
             let info = NSDictionary(contentsOfFile: SBBookmarksFilePath())
             if info.count > 0 {
                 if let bookmarkItems = info[kSBBookmarkItems] as? [BookmarkItem] {
-                    if bookmarkItems.count > 0 {
-                        items.removeAll()
-                        items += bookmarkItems.map { NSMutableDictionary(dictionary: $0) }
+                    if !bookmarkItems.isEmpty {
+                        items = bookmarkItems.map { NSMutableDictionary(dictionary: $0) }
                         return true
                     }
                 }
@@ -129,7 +128,7 @@ class SBBookmarks: NSObject {
     
     func writeToFile() -> Bool {
         var r = false
-        if items.count > 0 {
+        if !items.isEmpty {
             let path = SBBookmarksFilePath()
             var error: NSError?
             let data = NSPropertyListSerialization.dataWithPropertyList(
@@ -237,7 +236,7 @@ class SBBookmarks: NSObject {
     
     func openItemsFromMenuItem(menuItem: NSMenuItem) {
         let representedItems = menuItem.representedObject as [BookmarkItem]
-        if representedItems.count > 0 {
+        if !representedItems.isEmpty {
             self.openItemsInSelectedDocument(representedItems)
         }
     }

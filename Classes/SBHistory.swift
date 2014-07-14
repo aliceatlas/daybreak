@@ -65,7 +65,7 @@ class SBHistory: NSObject {
     }
     
     func removeItems(inItems: [WebHistoryItem]) {
-        if inItems.count > 0 {
+        if !inItems.isEmpty {
             history.removeItems(inItems)
             self.writeToFile()
         }
