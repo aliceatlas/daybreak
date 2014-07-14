@@ -39,7 +39,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     var items: [SBDownload] = []
 	var _identifier = 0
     
-    class func sharedDownloads() -> SBDownloads {
+    class var sharedDownloads: SBDownloads {
         return _sharedDownloads
     }
     

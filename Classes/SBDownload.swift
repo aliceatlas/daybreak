@@ -49,7 +49,7 @@ class SBDownload: NSObject {
     var status: SBStatus = .Processing
     
     convenience init(URL url: NSURL) {
-        let download = NSURLDownload(request: NSURLRequest(URL: url), delegate: SBDownloads.sharedDownloads())
+        let download = NSURLDownload(request: NSURLRequest(URL: url), delegate: SBDownloads.sharedDownloads)
         self.init(download: download)
     }
     

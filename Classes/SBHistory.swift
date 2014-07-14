@@ -31,7 +31,7 @@ var _sharedHistory = SBHistory()
 class SBHistory: NSObject {
 	var history = WebHistory()
     
-    class func sharedHistory() -> SBHistory {
+    class var sharedHistory: SBHistory {
         return _sharedHistory
     }
     

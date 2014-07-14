@@ -61,22 +61,22 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         let center = NSNotificationCenter.defaultCenter()
-        let updater = SBUpdater.sharedUpdater() as SBUpdater
+        let updater = SBUpdater.sharedUpdater
         // Add observe notifications
         center.addObserver(self, selector: "updaterShouldUpdate:", name: SBUpdaterShouldUpdateNotification, object: updater)
         center.addObserver(self, selector: "updaterNotNeedUpdate:", name: SBUpdaterNotNeedUpdateNotification, object: updater)
         center.addObserver(self, selector: "updaterDidFailChecking:", name: SBUpdaterDidFailCheckingNotification, object: updater)
         // Read bookmarks
-        SBBookmarks.sharedBookmarks()
+        SBBookmarks.sharedBookmarks
         // Create History instance
-        SBHistory.sharedHistory()
+        SBHistory.sharedHistory
         NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "applicationHasFinishLaunching:", userInfo: nil, repeats: false)
     }
     
     func applicationHasFinishLaunching(application: NSApplication) {
         if NSUserDefaults.standardUserDefaults().boolForKey(kSBCheckTheNewVersionAfterLaunching) {
             // Check new version
-            SBUpdater.sharedUpdater().check()
+            SBUpdater.sharedUpdater.check()
         }
     }
 
@@ -115,7 +115,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func applicationShouldTerminate(sender: NSApplication) -> NSApplicationTerminateReply {
         // Is downloading
-        if !SBDownloads.sharedDownloads().downloading {
+        if !SBDownloads.sharedDownloads.downloading {
             return .TerminateNow
         }
         
@@ -289,7 +289,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func checkForUpdates(AnyObject) {
-        let updater = SBUpdater.sharedUpdater() as SBUpdater
+        let updater = SBUpdater.sharedUpdater
         updater.raiseResult = true
         updater.checkSkipVersion = false
         // Check new version
@@ -341,7 +341,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let panel = SBOpenPanel.openPanel() as SBOpenPanel
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
-        let result = panel.runModalForDirectory(nil, file: nil, types: nil)
+        let result = panel.runModal()
         if result == NSOKButton {
             if let document = SBGetSelectedDocument() {
                 let urls = panel.URLs as [NSURL]
@@ -373,7 +373,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func sunrisepage(sender: AnyObject) {
         let info = NSBundle.mainBundle().localizedInfoDictionary
-        if let string = info.objectForKey("SBHomePageURL") as? String {
+        if let string: String = info["SBHomePageURL"] as? NSString {
             if let document = SBGetSelectedDocument() {
                 if document.selectedWebDataSource? {
                     document.constructNewTabWithURL(NSURL(string: string), selection: true)

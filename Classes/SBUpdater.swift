@@ -34,7 +34,7 @@ class SBUpdater: NSObject {
     var raiseResult = false
     var checkSkipVersion = true
     
-    class func sharedUpdater() -> SBUpdater {
+    class var sharedUpdater: SBUpdater {
         return _sharedUpdater
     }
     

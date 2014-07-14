@@ -34,7 +34,7 @@ var _sharedBookmarks = SBBookmarks()
 
 class SBBookmarks: NSObject {
     var items = NSMutableDictionary[]()
-    class func sharedBookmarks() -> SBBookmarks {
+    class var sharedBookmarks: SBBookmarks {
         return _sharedBookmarks
     }
 
