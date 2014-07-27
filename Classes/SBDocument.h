@@ -171,7 +171,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)createNewTab:(id)sender;
 - (void)openLocation:(id)sender;
 - (void)saveDocumentAs:(id)sender;
-- (void)saveDocumentAsDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)downloadFromURL:(id)sender;
 - (void)doneDownloader;
 - (void)cancelDownloader;

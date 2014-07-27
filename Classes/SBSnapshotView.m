@@ -222,7 +222,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// Controls
 	[onlyVisibleButton setButtonType:NSSwitchButton];
 	[onlyVisibleButton setState:[defaults boolForKey:kSBSnapshotOnlyVisiblePortion] ? NSOnState : NSOffState];
-	[updateButton setButtonType:NSMomentaryLight];
+	[updateButton setButtonType:NSMomentaryPushInButton];
 	[onlyVisibleButton setTarget:self];
 	[updateButton setTarget:self];
 	[onlyVisibleButton setAction:@selector(checkOnlyVisible:)];
@@ -925,12 +925,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (data)
 	{
 		SBSavePanel *panel = [SBSavePanel savePanel];
-		NSString *filename = self.filename;
-		[panel setCanCreateDirectories:YES];
-		if ([panel runModalForDirectory:nil file:filename] == NSOKButton)
+        panel.canCreateDirectories = YES;
+        panel.nameFieldStringValue = self.filename;
+		if ([panel runModal] == NSFileHandlingPanelOKButton)
 		{
-			NSString *path = [panel filename];
-			if ([data writeToFile:path atomically:YES])
+			if ([data writeToURL:panel.URL atomically:YES])
 			{
 				[self done];
 			}

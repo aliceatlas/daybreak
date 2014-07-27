@@ -393,15 +393,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBOpenPanel *panel = [SBOpenPanel openPanel];
 	NSString *directoryPath = SBApplicationSupportDirectory([kSBApplicationSupportDirectoryName stringByAppendingPathComponent:kSBLocalizationsDirectoryName]);
 	[panel setAllowedFileTypes:[NSArray arrayWithObject:@"strings"]];
-	[panel beginSheetForDirectory:directoryPath file:nil modalForWindow:self.window modalDelegate:self didEndSelector:@selector(openDidEnd:returnCode:contextInfo:) contextInfo:nil];
-}
-
-- (void)openDidEnd:(SBOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	if (returnCode == NSOKButton)
-	{
-		[self mergeFilePath:[panel filename]];
-	}
+    panel.directoryURL = [NSURL fileURLWithPath:directoryPath];
+    [panel beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSFileHandlingPanelOKButton)
+        {
+            [self mergeFilePath:panel.filename];
+        }
+    }];
 }
 
 - (void)mergeFilePath:(NSString *)path
@@ -596,24 +594,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBSavePanel *panel = [SBSavePanel savePanel];
 	NSString *langCode = [[langPopup selectedItem] representedObject];
 	NSString *name = langCode ? [langCode stringByAppendingPathExtension:@"strings"] : nil;
-	[panel beginSheetForDirectory:nil file:name modalForWindow:self.window modalDelegate:self didEndSelector:@selector(exportDidEnd:returnCode:contextInfo:) contextInfo:nil];
-}
-
-- (void)exportDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	if (returnCode == NSOKButton)
-	{
-		NSData *data = SBLocalizableStringsData(fieldSet);
-		if (data)
-		{
-			NSString *path = [sheet filename];
-			NSURL *url = [NSURL fileURLWithPath:path];
-			if ([data writeToURL:url atomically:YES])	
-			{
-				[self performSelector:@selector(copyResourceInBundle:) withObject:url afterDelay:0];
-			}
-		}
-	}
+    panel.nameFieldStringValue = name;
+    [panel beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSFileHandlingPanelOKButton) {
+            NSData *data = SBLocalizableStringsData(fieldSet);
+            if (data) {
+                NSURL *url = panel.URL;
+                if ([data writeToURL:url atomically:YES])
+                {
+                    [self performSelector:@selector(copyResourceInBundle:) withObject:url afterDelay:0];
+                }
+            }
+        }
+    }];
 }
 
 #pragma mark Contribute

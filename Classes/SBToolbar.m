@@ -129,11 +129,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSRect)itemRectInScreenForIdentifier:(NSString *)identifier
 {
-	NSRect r = NSZeroRect;
 	NSWindow *window = [self window];
-	r = [self itemRectInWindowForIdentifier:identifier];
-	r.origin = [window convertBaseToScreen:r.origin];
-	return r;
+	return [window convertRectToScreen:[self itemRectInWindowForIdentifier:identifier]];
 }
 
 - (NSWindow *)window

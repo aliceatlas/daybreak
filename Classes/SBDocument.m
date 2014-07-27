@@ -1660,27 +1660,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 						NSString *filename = resourceIdentifier.URL ? [[resourceIdentifier.URL absoluteString] lastPathComponent] : @"UntitledData";
 						SBSavePanel *panel = [SBSavePanel savePanel];
 						[data retain];
-						[panel beginSheetForDirectory:nil file:filename modalForWindow:self.window modalDelegate:self didEndSelector:@selector(webResourceCachedDataSaveDidEnd:returnCode:contextInfo:) contextInfo:data];
+                        panel.nameFieldStringValue = filename;
+                        [panel beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+                            if (returnCode == NSFileHandlingPanelOKButton)
+                            {
+                                if ([data writeToURL:panel.URL atomically:YES])
+                                {
+                                }
+                            }
+                            [data release];
+                        }];
 					}
 				}
 			}
 		}
-	}
-}
-
-- (void)webResourceCachedDataSaveDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	if (contextInfo != nil)
-	{
-		if (returnCode == NSOKButton)
-		{
-			NSData *data = (NSData *)contextInfo;
-			if ([data writeToFile:[sheet filename] atomically:YES])
-			{
-				
-			}
-		}
-		[(id)contextInfo release];
 	}
 }
 
@@ -2385,24 +2378,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBSavePanel *panel = [SBSavePanel savePanel];
 	NSString *title = self.selectedWebDataSource.pageTitle;
 	NSString *name = [title ? title : NSLocalizedString(@"Untitled", nil) stringByAppendingPathExtension:@"webarchive"];
-	[panel beginSheetForDirectory:nil file:name modalForWindow:self.window modalDelegate:self didEndSelector:@selector(saveDocumentAsDidEnd:returnCode:contextInfo:) contextInfo:nil];
-}
-
-- (void)saveDocumentAsDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	if (returnCode == NSOKButton)
-	{
-		WebDataSource *dataSource = self.selectedWebDataSource;
-		WebArchive *archive = dataSource ? dataSource.webArchive : nil;
-		NSData *data = archive ? [archive data] : nil;
-		if (data)
-		{
-			if ([data writeToFile:[sheet filename] atomically:YES])
-			{
-				
-			}
-		}
-	}
+    panel.nameFieldStringValue = name;
+    [panel beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSFileHandlingPanelOKButton)
+        {
+            WebDataSource *dataSource = self.selectedWebDataSource;
+            WebArchive *archive = dataSource ? dataSource.webArchive : nil;
+            NSData *data = archive ? [archive data] : nil;
+            if (data)
+            {
+                if ([data writeToURL:panel.URL atomically:YES])
+                {
+                }
+            }
+        }
+    }];
 }
 
 - (void)downloadFromURL:(id)sender
@@ -3308,7 +3298,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					  @"F", nil];
 	for (NSUInteger index = 0; index < [names count]; index++)
 	{
-		SBDownload *item = [SBDownload itemWithURL:[NSURL URLWithString:@"http://localhost/dummy"]];
+        SBDownload *item = [[[SBDownload alloc] initWithURL:[NSURL URLWithString:@"http://localhost/dummy"]] autorelease];
 		item.name = [names objectAtIndex:index];
 		item.path = @"/unknown";
 		[downloads addItem:item];

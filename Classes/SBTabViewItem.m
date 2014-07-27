@@ -811,7 +811,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if (userInfo != nil)
 			{
 				NSInteger errorCode = [error code];
-				NSString *urlString = [userInfo objectForKey:NSErrorFailingURLStringKey];
+				NSString *urlString = [userInfo objectForKey:NSURLErrorFailingURLStringErrorKey];
 				NSString *title = nil;
 				switch (errorCode)
 				{
@@ -1108,23 +1108,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBOpenPanel *panel = [SBOpenPanel openPanel];
 	NSWindow *window = [self.tabView window];
 	[resultListener retain];
-	[panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(webOpenPanelDidEnd:returnCode:contextInfo:) contextInfo:resultListener];
+    [panel beginSheetModalForWindow:window completionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelOKButton)
+        {
+            [resultListener chooseFilename:[[panel filenames] objectAtIndex:0]];
+        }
+        [resultListener release];
+        [panel orderOut:nil];
+    }];
 }
 
 - (NSString *)webView:(WebView *)sender runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WebFrame *)frame
 {
 	return [self.tabView executeShouldTextInput:prompt];
-}
-
-- (void)webOpenPanelDidEnd:(SBOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	id <WebOpenPanelResultListener> resultListener = (id <WebOpenPanelResultListener>)contextInfo;
-	if (returnCode == NSOKButton)
-	{
-		[resultListener chooseFilename:[[panel filenames] objectAtIndex:0]];
-	}
-	[resultListener release];
-	[panel orderOut:nil];
 }
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
@@ -1449,8 +1445,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)openDocumentSource:(id)sender
 {
 	SBOpenPanel *openPanel = [SBOpenPanel openPanel];
-	[openPanel setCanChooseDirectories:NO];
-	if ([openPanel runModalForTypes:[NSArray arrayWithObject:@"app"]] == NSOKButton)
+    openPanel.canChooseDirectories = NO;
+    openPanel.allowedFileTypes = @[@"app"];
+	if ([openPanel runModal] == NSFileHandlingPanelOKButton)
 	{
 		NSString *name = nil;
 		NSString *filePath = nil;
@@ -1484,8 +1481,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSStringEncoding encoding;
 	name = [[name length] > 0 ? name : NSLocalizedString(@"Untitled", nil) stringByAppendingPathExtension:@"html"];
 	encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding((CFStringRef)([encodingName length] > 0 ? encodingName : kSBDefaultEncodingName)));
-	[savePanel setCanCreateDirectories:YES];
-	if ([savePanel runModalForDirectory:nil file:name] == NSOKButton)
+    savePanel.canCreateDirectories = YES;
+    savePanel.nameFieldStringValue = name;
+	if ([savePanel runModal] == NSFileHandlingPanelOKButton)
 	{
 		NSString *documentSource = self.documentSource;
 		NSError *error = nil;
@@ -1595,17 +1593,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSString *bundleIdentifier = nil;
 		NSOpenPanel *panel = nil;
 		panel = [NSOpenPanel openPanel];
-		[panel setCanChooseFiles:YES];
-		[panel setCanChooseDirectories:NO];
-		[panel setAllowedFileTypes:[NSArray arrayWithObject:@"app"]];
-		[panel setAllowsMultipleSelection:NO];
-		[panel setDirectory:@"/Applications"];
-		if ([panel runModal] == NSOKButton)
+        panel.canChooseFiles = YES;
+        panel.canChooseDirectories = NO;
+        panel.allowedFileTypes = @[@"app"];
+        panel.allowsMultipleSelection = NO;
+        panel.directoryURL = [NSURL fileURLWithPath:@"/Applications"];
+		if ([panel runModal] == NSFileHandlingPanelOKButton)
 		{
-			NSString *filename = nil;
 			NSBundle *bundle = nil;
-			filename = [panel filename];
-			bundle  = [NSBundle bundleWithPath:filename];
+            bundle = [NSBundle bundleWithURL:panel.URL];
 			bundleIdentifier = [bundle bundleIdentifier];
 		}
 		if (bundleIdentifier)
