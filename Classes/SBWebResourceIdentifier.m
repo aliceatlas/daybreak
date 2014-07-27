@@ -66,7 +66,7 @@
 
 - (NSString *)description
 {
-	return flag ? [NSString stringWithFormat:@"%@ URL %@, %d / %d", [self className], self.URL, received, length] : [NSString stringWithFormat:@"%@ URL %@", [self className], self.URL];
+	return flag ? [NSString stringWithFormat:@"%@ URL %@, %lld / %lld", [self className], self.URL, received, length] : [NSString stringWithFormat:@"%@ URL %@", [self className], self.URL];
 }
 
 @end
