@@ -25,6 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBAboutView.h"
 #import "SBUtil.h"
 
+#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
+
 static SBAboutView *_sharedView;
 
 @implementation SBAboutView

@@ -28,6 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @class SBBLKGUIButton;
 @class SBBLKGUITextField;
+@class SBBLKGUIScrollView;
 @interface SBHistoryView : SBView <NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource>
 {
 	NSImageView *iconImageView;

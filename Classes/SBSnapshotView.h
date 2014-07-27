@@ -27,6 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBView.h"
 
 @class SBBLKGUIButton;
+@class SBBLKGUIScrollView;
 @interface SBSnapshotView : SBView <NSTextFieldDelegate>
 {
 	SBBLKGUIScrollView *scrollView;
