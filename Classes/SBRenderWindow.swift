@@ -27,9 +27,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 @objc protocol SBRenderWindowDelegate: NSWindowDelegate {
-    @optional func renderWindowDidStartRendering(renderWindow: SBRenderWindow)
-    @optional func renderWindow(renderWindow: SBRenderWindow, didFinishRenderingImage: NSImage)
-    @optional func renderWindow(renderWindow: SBRenderWindow, didFailWithError: NSError)
+    optional func renderWindowDidStartRendering(renderWindow: SBRenderWindow)
+    optional func renderWindow(renderWindow: SBRenderWindow, didFinishRenderingImage: NSImage)
+    optional func renderWindow(renderWindow: SBRenderWindow, didFailWithError: NSError)
 }
 
 class SBRenderWindow: NSWindow {

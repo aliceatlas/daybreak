@@ -69,7 +69,7 @@ class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
             if _inToplevel && _inCompleteSuggestion {
                 if elementName == kSBGSSuggestionTagName {
                     let dataText = attributes[kSBGSSuggestionAttributeDataArgumentName] as String
-                    if dataText.utf16count > 0 {
+                    if dataText.utf16Count > 0 {
                         let item = items[items.count - 1]
                         item[kSBTitle] = dataText
                         item[kSBURL] = dataText.searchURLString

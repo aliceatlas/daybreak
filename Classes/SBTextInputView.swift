@@ -62,7 +62,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     let margin = NSMakePoint(36.0, 32.0)
     let labelWidth = 85.0
     let buttonSize = NSMakeSize(105.0, 24.0)
-    let buttonMargin = 15.0
+    let buttonMargin: CGFloat = 15.0
     let textFont = NSFont.systemFontOfSize(16)
     
     var messageLabelRect: NSRect {
@@ -81,14 +81,16 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     
     var doneButtonRect: NSRect {
         let size = buttonSize
-        let origin = NSPoint(x: (self.bounds.size.width - (size.width * 2 + buttonMargin)) / 2 + size.width + buttonMargin,
+        let origin = NSPoint(
+            x: ((self.bounds.size.width - (size.width * 2 + buttonMargin)) / 2) + size.width + buttonMargin,
             y: margin.y)
         return NSRect(origin: origin, size: size)
     }
     
     var cancelButtonRect: NSRect {
         let size = buttonSize
-        let origin = NSPoint(x: (self.bounds.size.width - (size.width * 2 + buttonMargin)) / 2,
+        let origin = NSPoint(
+            x: (self.bounds.size.width - (size.width * 2 + buttonMargin)) / 2,
             y: margin.y)
         return NSRect(origin: origin, size: size)
     }
@@ -141,7 +143,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         cancelButton!.title = NSLocalizedString("Cancel", comment: "")
         cancelButton!.target = self
         cancelButton!.action = "cancel"
-        cancelButton!.keyEquivalent = "\x1B" // busy if button is added into a view
+        cancelButton!.keyEquivalent = "\u{1B}"
         self.addSubview(cancelButton!)
     }
     
@@ -149,7 +151,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     
     override func controlTextDidChange(_: NSNotification) {
         if doneButton != nil {
-            doneButton!.enabled = textLabel.stringValue.utf16count > 0
+            doneButton!.enabled = textLabel.stringValue.utf16Count > 0
         }
     }
     

@@ -31,7 +31,7 @@ class SBLoadButton: SBButton {
     var images: [NSImage]? {
         get { return _images }
         set(inImages) {
-            if !_images || (_images! != inImages) {
+            if !_images || (_images! != inImages!) {
                 _images = inImages
                 if _images && !(_images!.isEmpty) {
                     self.image = _images![0] as NSImage

@@ -186,7 +186,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     
     func download(download: NSURLDownload, didCreateDestination path: String!) {
         if let item = items.first({ $0.download === download }) {
-            if path.lastPathComponent.utf16count > 0 {
+            if path.lastPathComponent.utf16Count > 0 {
                 item.name = path.lastPathComponent
             }
             item.path = path

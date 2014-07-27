@@ -144,7 +144,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     }
     
     func searchWithText(text: String) {
-        if text.utf16count > 0 {
+        if text.utf16Count > 0 {
             listView?.searchWithText(text)
         }
     }
@@ -160,7 +160,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     }
     
     func executeShouldEditItemAtIndex(index: UInt) {
-        delegate?.bookmarksView?(self, shouldEditItemAtIndex: Int(index))
+        delegate?.bookmarksView?(self, shouldEditItemAtIndex: index)
     }
     
     func executeDidCellWidth() {
@@ -189,10 +189,10 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     // Drawing
     
    override func drawRect(rect: NSRect) {
-        let ctxPtr = COpaquePointer(NSGraphicsContext.currentContext().graphicsPort())
+        let ctxPtr = COpaquePointer(NSGraphicsContext.currentContext().graphicsPort)
         let ctx = Unmanaged<CGContext>.fromOpaque(ctxPtr).takeUnretainedValue()
         let r = NSRectToCGRect(self.bounds)
-        let count = 2
+        let count: UInt = 2
         let locations: [CGFloat] = [0.0, 1.0]
         var colors: [CGFloat]
         if keyView {
