@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDefinitions.h"
 #import "SBBLKGUI.h"
 #import "SBSourceTextView.h"
-#import "SBWebResourceIdentifier.h"
 #import "SBWebView.h"
 
 @class SBDrawer;
@@ -35,6 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBTabView;
 @class SBWebView;
 @class SBSourceTextView;
+@class SBWebResourceIdentifier;
 @interface SBTabViewItem : NSTabViewItem <NSSplitViewDelegate>
 {
 	SBTabbarItem *tabbarItem;
