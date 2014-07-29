@@ -3158,11 +3158,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		while (confirmed == -1)
 		{
 			// Wait event...
-			NSAutoreleasePool *pool= [[NSAutoreleasePool alloc] init];
-			NSEvent *event = nil;
-			event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantFuture] inMode:NSDefaultRunLoopMode dequeue:YES];
-			[NSApp sendEvent:event];
-			[pool release];
+            @autoreleasepool {
+                NSEvent *event = nil;
+                event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantFuture] inMode:NSDefaultRunLoopMode dequeue:YES];
+                [NSApp sendEvent:event];
+            }
 		}
 		r = confirmed == 1;
 	}
@@ -3201,11 +3201,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		while (confirmed == -1)
 		{
 			// Wait event...
-			NSAutoreleasePool *pool= [[NSAutoreleasePool alloc] init];
-			NSEvent *event = nil;
-			event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantFuture] inMode:NSDefaultRunLoopMode dequeue:YES];
-			[NSApp sendEvent:event];
-			[pool release];
+            @autoreleasepool {
+                NSEvent *event = nil;
+                event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantFuture] inMode:NSDefaultRunLoopMode dequeue:YES];
+                [NSApp sendEvent:event];
+            }
 		}
 		if (confirmed == 1)
 		{
