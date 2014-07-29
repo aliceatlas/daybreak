@@ -25,7 +25,7 @@
 #import "SBWebResourcesView.h"
 #import "SBUtil.h"
 
-#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Bridging-Header.h"
 #import "Sunrise3-Swift.h"
 
 @implementation SBWebResourcesView

@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBUtil.h"
 #import "SBWebView.h"
 
-#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Bridging-Header.h"
 #import "Sunrise3-Swift.h"
 
 @implementation SBDocument

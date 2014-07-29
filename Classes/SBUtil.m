@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBUtil.h"
 #import "SBView.h"
 
-#import "Sunrise2-Bridging-Header.h"
+#import "Sunrise3-Bridging-Header.h"
 #import "Sunrise3-Swift.h"
 
 #pragma mark Get objects

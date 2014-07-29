@@ -157,6 +157,7 @@
 		501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */; };
 		5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */; };
 		5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66819655AF00053CBF1 /* SBLoadButton.swift */; };
+		505E49EE1987AC0A001F5254 /* Sunrise3-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */; };
 		507A8E23195FFF6700BF56AD /* SBDefinitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 507A8E22195FFF6700BF56AD /* SBDefinitions.m */; };
 		508FAC5319653AC400F4380F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FAC5219653AC400F4380F /* main.swift */; };
 		50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66A19666D550053CBF1 /* SBBookmarksView.swift */; };
@@ -227,7 +228,7 @@
 		085A73781091C75500FE7556 /* SBHistoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBHistoryView.m; path = Classes/SBHistoryView.m; sourceTree = "<group>"; };
 		085A738C1091CDC600FE7556 /* History.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = History.png; path = Resources/Images/History.png; sourceTree = "<group>"; };
 		085C2AB60FE2ABB60099A0F6 /* SBDocumentWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDocumentWindow.h; path = Classes/SBDocumentWindow.h; sourceTree = "<group>"; };
-		085C2AB70FE2ABB60099A0F6 /* SBDocumentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDocumentWindow.m; path = Classes/SBDocumentWindow.m; sourceTree = "<group>"; };
+		085C2AB70FE2ABB60099A0F6 /* SBDocumentWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBDocumentWindow.m; path = Classes/SBDocumentWindow.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0860E2EC11918E9D00EB2768 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hans"; path = "Resources/zh-Hans.lproj/DefaultBookmark.plist"; sourceTree = "<group>"; };
 		0860E2FF11918EA600EB2768 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "zh-Hant"; path = "Resources/zh-Hant.lproj/DefaultBookmark.plist"; sourceTree = "<group>"; };
 		086D732C10D7867B006A4F25 /* zh-Hans */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "Resources/zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -246,7 +247,7 @@
 		088BF5801023DD6100133BE0 /* NSMenu-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMenu-SBAdditions.h"; path = "Classes/NSMenu-SBAdditions.h"; sourceTree = "<group>"; };
 		088BF5811023DD6100133BE0 /* NSMenu-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMenu-SBAdditions.m"; path = "Classes/NSMenu-SBAdditions.m"; sourceTree = "<group>"; };
 		088D26DE101B3EC400691CEC /* SBBookmarkListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarkListView.h; path = Classes/SBBookmarkListView.h; sourceTree = "<group>"; };
-		088D26DF101B3EC400691CEC /* SBBookmarkListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBookmarkListView.m; path = Classes/SBBookmarkListView.m; sourceTree = "<group>"; };
+		088D26DF101B3EC400691CEC /* SBBookmarkListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBBookmarkListView.m; path = Classes/SBBookmarkListView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		088D299D101B5F3B00691CEC /* Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Edit.png; path = Resources/Images/Edit.png; sourceTree = "<group>"; };
 		088DF2F91008A3F100113786 /* SBFindbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBFindbar.h; path = Classes/SBFindbar.h; sourceTree = "<group>"; };
 		088DF2FA1008A3F100113786 /* SBFindbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFindbar.m; path = Classes/SBFindbar.m; sourceTree = "<group>"; };
@@ -257,9 +258,9 @@
 		088E99B410086FD1005FC4C0 /* SBFixedSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBFixedSplitView.h; path = Classes/SBFixedSplitView.h; sourceTree = "<group>"; };
 		088E99B510086FD1005FC4C0 /* SBFixedSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFixedSplitView.m; path = Classes/SBFixedSplitView.m; sourceTree = "<group>"; };
 		088EC9DF1081FEE600F8BFCB /* SBDownloadsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDownloadsView.h; path = Classes/SBDownloadsView.h; sourceTree = "<group>"; };
-		088EC9E01081FEE600F8BFCB /* SBDownloadsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDownloadsView.m; path = Classes/SBDownloadsView.m; sourceTree = "<group>"; };
+		088EC9E01081FEE600F8BFCB /* SBDownloadsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBDownloadsView.m; path = Classes/SBDownloadsView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		088EC9E11081FEE600F8BFCB /* SBDownloadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDownloadView.h; path = Classes/SBDownloadView.h; sourceTree = "<group>"; };
-		088EC9E21081FEE600F8BFCB /* SBDownloadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDownloadView.m; path = Classes/SBDownloadView.m; sourceTree = "<group>"; };
+		088EC9E21081FEE600F8BFCB /* SBDownloadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBDownloadView.m; path = Classes/SBDownloadView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0890708C0FFE3F4E00B2B505 /* SBInnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBInnerView.h; path = Classes/SBInnerView.h; sourceTree = "<group>"; };
 		0890708D0FFE3F4E00B2B505 /* SBInnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBInnerView.m; path = Classes/SBInnerView.m; sourceTree = "<group>"; };
 		0890BAB11004C7C200BD0049 /* SBLocalizationWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBLocalizationWindowController.h; path = Classes/SBLocalizationWindowController.h; sourceTree = "<group>"; };
@@ -285,7 +286,7 @@
 		0892A727106F9D0900AC57D1 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = Resources/ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0892A72B106F9D2100AC57D1 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = Resources/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08930ABB0FEE7AC20037D403 /* SBDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDrawer.h; path = Classes/SBDrawer.h; sourceTree = "<group>"; };
-		08930ABC0FEE7AC20037D403 /* SBDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDrawer.m; path = Classes/SBDrawer.m; sourceTree = "<group>"; };
+		08930ABC0FEE7AC20037D403 /* SBDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBDrawer.m; path = Classes/SBDrawer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0893E60E104FF4E800AF3283 /* BLKGUI_Radio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BLKGUI_Radio.png; path = Resources/Images/BLKGUI_Radio.png; sourceTree = "<group>"; };
 		0893E60F104FF4E800AF3283 /* BLKGUI_Radio-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Radio-Selected.png"; path = "Resources/Images/BLKGUI_Radio-Selected.png"; sourceTree = "<group>"; };
 		0893E610104FF4E800AF3283 /* BLKGUI_Radio-Selected-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Radio-Selected-Highlighted.png"; path = "Resources/Images/BLKGUI_Radio-Selected-Highlighted.png"; sourceTree = "<group>"; };
@@ -404,7 +405,7 @@
 		08C8D69F1036DEF4005540AF /* Icon_Unlock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Unlock.png; path = Resources/Images/Icon_Unlock.png; sourceTree = "<group>"; };
 		08C902C9100CC74600A46719 /* Plug-ins.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "Plug-ins.html"; path = "Resources/htmls/Plug-ins.html"; sourceTree = "<group>"; };
 		08DA3D231057D9BE00DD4D3E /* SBBookmarkListItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarkListItemView.h; path = Classes/SBBookmarkListItemView.h; sourceTree = "<group>"; };
-		08DA3D241057D9BE00DD4D3E /* SBBookmarkListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBookmarkListItemView.m; path = Classes/SBBookmarkListItemView.m; sourceTree = "<group>"; };
+		08DA3D241057D9BE00DD4D3E /* SBBookmarkListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBBookmarkListItemView.m; path = Classes/SBBookmarkListItemView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		08DE5E81107D8104006A1B94 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08DE5E93107D8112006A1B94 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08E310350FFE58B300760CEC /* SBAboutView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBAboutView.h; path = Classes/SBAboutView.h; sourceTree = "<group>"; };
@@ -421,7 +422,7 @@
 		08F914D0103531C50026ABD1 /* SBSnapshotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSnapshotView.m; path = Classes/SBSnapshotView.m; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		2A37F4ACFDCFA73011CA2CEA /* SBDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDocument.m; path = Classes/SBDocument.m; sourceTree = "<group>"; };
+		2A37F4ACFDCFA73011CA2CEA /* SBDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBDocument.m; path = Classes/SBDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		2A37F4AEFDCFA73011CA2CEA /* SBDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDocument.h; path = Classes/SBDocument.h; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -432,10 +433,10 @@
 		5044E66719654CB20053CBF1 /* SBAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SBAdditions.h; path = Classes/SBAdditions.h; sourceTree = "<group>"; };
 		5044E66819655AF00053CBF1 /* SBLoadButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLoadButton.swift; path = Classes/SBLoadButton.swift; sourceTree = "<group>"; };
 		5044E66A19666D550053CBF1 /* SBBookmarksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBookmarksView.swift; path = Classes/SBBookmarksView.swift; sourceTree = "<group>"; };
+		505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Sunrise3-Bridging-Header.h"; path = "Sources/Sunrise3-Bridging-Header.h"; sourceTree = "<group>"; };
 		507A8E21195FFF6700BF56AD /* SBDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDefinitions.h; path = Sources/SBDefinitions.h; sourceTree = "<group>"; };
 		507A8E22195FFF6700BF56AD /* SBDefinitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDefinitions.m; path = Sources/SBDefinitions.m; sourceTree = "<group>"; };
 		507A8E24195FFF8800BF56AD /* SBDefinitionsS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDefinitionsS.swift; path = Sources/SBDefinitionsS.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5083AFD3195FCBDB00537E8B /* Sunrise2-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sunrise2-Bridging-Header.h"; sourceTree = "<group>"; };
 		5083AFD4195FCBDE00537E8B /* SBApplicationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBApplicationDelegate.swift; path = Classes/SBApplicationDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		508FAC5219653AC400F4380F /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = main.swift; path = Sources/main.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50ACCDF61963E76700CE593E /* SBCoverWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBCoverWindow.swift; path = Classes/SBCoverWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -857,7 +858,7 @@
 		2A37F4AFFDCFA73011CA2CEA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				5083AFD3195FCBDB00537E8B /* Sunrise2-Bridging-Header.h */,
+				505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */,
 				507A8E21195FFF6700BF56AD /* SBDefinitions.h */,
 				507A8E22195FFF6700BF56AD /* SBDefinitions.m */,
 				507A8E24195FFF8800BF56AD /* SBDefinitionsS.swift */,
@@ -1230,7 +1231,7 @@
 				PRODUCT_MODULE_NAME = Sunrise3;
 				PRODUCT_NAME = Sunrise2;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Sunrise2-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Sunrise3-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1253,7 +1254,7 @@
 				PRODUCT_MODULE_NAME = Sunrise3;
 				PRODUCT_NAME = Sunrise2;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Sunrise2-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Sunrise3-Bridging-Header.h";
 			};
 			name = Release;
 		};
