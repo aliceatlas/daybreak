@@ -456,7 +456,7 @@
 		50DF8A2F19639D03005DAF26 /* SBDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownloader.swift; path = Classes/SBDownloader.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50DF8A331963A5A5005DAF26 /* SBDownloads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownloads.swift; path = Classes/SBDownloads.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50F850621967FD4D00C28795 /* SBSegmentedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSegmentedButton.swift; path = Classes/SBSegmentedButton.swift; sourceTree = "<group>"; };
-		8D15AC370486D014006FF6A4 /* Sunrise2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -814,7 +814,7 @@
 		19C28FB0FE9D524F11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D15AC370486D014006FF6A4 /* Sunrise2.app */,
+				8D15AC370486D014006FF6A4 /* Sunrise3.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -915,7 +915,7 @@
 			name = Sunrise;
 			productInstallPath = "$(HOME)/Applications";
 			productName = Sunrise;
-			productReference = 8D15AC370486D014006FF6A4 /* Sunrise2.app */;
+			productReference = 8D15AC370486D014006FF6A4 /* Sunrise3.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1229,7 +1229,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_MODULE_NAME = Sunrise3;
-				PRODUCT_NAME = Sunrise2;
+				PRODUCT_NAME = Sunrise3;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Sunrise3-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1252,7 +1252,7 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_MODULE_NAME = Sunrise3;
-				PRODUCT_NAME = Sunrise2;
+				PRODUCT_NAME = Sunrise3;
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Sunrise3-Bridging-Header.h";
 			};
