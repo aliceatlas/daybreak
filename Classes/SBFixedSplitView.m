@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 + (instancetype)splitViewWithEmbedViews:(NSArray *)views frameRect:(NSRect)frameRect
 {
-    return [[self alloc] initWithEmbedViews:views frameRect:frameRect];
+    return [[[self alloc] initWithEmbedViews:views frameRect:frameRect] autorelease];
 }
 
 - (instancetype)initWithEmbedViews:(NSArray *)views frameRect:(NSRect)frameRect
