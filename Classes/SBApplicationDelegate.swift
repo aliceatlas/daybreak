@@ -56,7 +56,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         // Localize menu
         SBLocalizeTitlesInMenu(NSApp.mainMenu)
         // Register defaults
-        SBPreferences.sharedPreferences().registerDefaults()
+        SBPreferences.sharedPreferences.registerDefaults()
     }
     
     func applicationDidFinishLaunching(aNotification: NSNotification) {

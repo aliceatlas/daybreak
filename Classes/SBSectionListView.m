@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBSectionListView.h"
 #import "SBBLKGUI.h"
-#import "SBPreferences.h"
 #import "SBSavePanel.h"
 #import "SBSectionGroupe.h"
 #import "SBUtil.h"

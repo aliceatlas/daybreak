@@ -6,7 +6,6 @@
 #import "SBDocument.h"
 #import "SBDocumentWindow.h"
 #import "SBLocalizationWindowController.h"
-#import "SBPreferences.h"
 #import "SBSavePanel.h"
 #import "SBUpdateView.h"
 #import "SBUtil.h"
