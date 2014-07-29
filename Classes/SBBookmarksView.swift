@@ -189,8 +189,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     // Drawing
     
    override func drawRect(rect: NSRect) {
-        let ctxPtr = COpaquePointer(NSGraphicsContext.currentContext().graphicsPort)
-        let ctx = Unmanaged<CGContext>.fromOpaque(ctxPtr).takeUnretainedValue()
+        let ctx = SBCurrentGraphicsPort
         let r = NSRectToCGRect(self.bounds)
         let count: UInt = 2
         let locations: [CGFloat] = [0.0, 1.0]

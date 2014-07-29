@@ -107,6 +107,14 @@ func SBDefaultSaveDownloadedFilesToPathS() -> String? {
     return nil
 }
 
+func SBGraphicsPortFromContext(context: NSGraphicsContext) -> CGContext {
+    let ctxPtr = COpaquePointer(context.graphicsPort)
+    return Unmanaged<CGContext>.fromOpaque(ctxPtr).takeUnretainedValue()
+}
+
+var SBCurrentGraphicsPort: CGContext {
+    return SBGraphicsPortFromContext(NSGraphicsContext.currentContext())
+}
 
 /*
 func SBCreateBookmarkItemS(title: String?, url: String?, imageData: NSData?, date: NSDate?, labelName: String?, offsetString: String?) -> BookmarkItem {
