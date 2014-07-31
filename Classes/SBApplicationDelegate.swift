@@ -52,7 +52,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         self.constructDebugMenu()
         #endif
         // Handle AppleScript (Open URL from other application)
-        //!!! NSAppleEventManager.sharedAppleEventManager().setEventHandler(self, andSelector: "openURL:withReplyEvent:", forEventClass: "GURL", andEventID: "GURL")
+        NSAppleEventManager.sharedAppleEventManager().setEventHandler(self, andSelector: "openURL:withReplyEvent:", forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         // Localize menu
         SBLocalizeTitlesInMenu(NSApp.mainMenu)
         // Register defaults
@@ -145,27 +145,30 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // Apple Events
     
     func openURL(event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
-        //!!!
-        /*if let URLString = event.paramDescriptorForKeyword(keyDirectObject).stringValue() {
-            let method = NSUserDefaults.standardUserDefaults().objectForKey(kSBOpenURLFromApplications)
-            switch method {
-                case "in a new window":
-                var error: NSError?
-                if let document = SBGetDocumentController().openUntitledDocumentAndDisplay(true, error: &error) {
-                    document.openURLStringInSelectedTabViewItem(URLString)
-                }
+        if let URLString = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject)).stringValue {
+            if let method = NSUserDefaults.standardUserDefaults().objectForKey(kSBOpenURLFromApplications) as? NSString {
+                switch method {
+                    case "in a new window":
+                    var error: NSError?
+                    if let document = SBGetDocumentController().openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument {
+                        document.openURLStringInSelectedTabViewItem(URLString)
+                    }
 
-                case "in a new tab":
-                if let document = SBGetSelectedDocument() {
-                    document.constructNewTabWithURL(NSURL(string: URLString), selection: true)
-                }
+                    case "in a new tab":
+                    if let document = SBGetSelectedDocument() {
+                        document.constructNewTabWithURL(NSURL(string: URLString), selection: true)
+                    }
 
-                case "in the current tab":
-                if let document = SBGetSelectedDocument() {
-                    document.openURLStringInSelectedTabViewItem(URLString)
+                    case "in the current tab":
+                    if let document = SBGetSelectedDocument() {
+                        document.openURLStringInSelectedTabViewItem(URLString)
+                    }
+                    
+                    default:
+                    assert(false)
                 }
             }
-        }*/
+        }
     }
     
     // Notifications
