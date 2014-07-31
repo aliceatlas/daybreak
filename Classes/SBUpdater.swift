@@ -96,22 +96,22 @@ class SBUpdater: NSObject {
                         shouldSkip = versionString == skipVersion
                     }
                     if !shouldSkip {
-                        NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "postShouldUpdateNotification:", userInfo: userInfo, repeats: false)
+                        SBDispatch { self.postShouldUpdateNotification(userInfo) }
                     }
                 case .OrderedSame:
                     if raiseResult {
-                        NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "postNotNeedUpdateNotification:", userInfo: userInfo, repeats: false)
+                        SBDispatch { self.postNotNeedUpdateNotification(userInfo) }
                     }
                 case .OrderedDescending:
                     if raiseResult {
                         // Error
                         threadDictionary[kSBUpdaterErrorDescription] = NSLocalizedString("Invalid version number.", comment: "")
-                        NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "postDidFailCheckingNotification:", userInfo: threadDictionary.copy(), repeats: false)
+                        SBDispatch { self.postDidFailCheckingNotification(userInfo) }
                     }
                 }
             }
         } else if raiseResult {
-            NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "postDidFailCheckingNotification:", userInfo: userInfo, repeats: false)
+            SBDispatch { self.postDidFailCheckingNotification(userInfo) }
         }
     }
     

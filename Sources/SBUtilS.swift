@@ -116,6 +116,10 @@ var SBCurrentGraphicsPort: CGContext {
     return SBGraphicsPortFromContext(NSGraphicsContext.currentContext())
 }
 
+func SBDispatch(block: dispatch_block_t) {
+    dispatch_async(dispatch_get_main_queue(), block)
+}
+
 /*
 func SBCreateBookmarkItemS(title: String?, url: String?, imageData: NSData?, date: NSDate?, labelName: String?, offsetString: String?) -> BookmarkItem {
     var item = BookmarkItem()

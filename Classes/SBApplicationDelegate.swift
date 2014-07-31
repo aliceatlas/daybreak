@@ -70,11 +70,13 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         SBBookmarks.sharedBookmarks
         // Create History instance
         SBHistory.sharedHistory
-        NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "applicationHasFinishLaunching:", userInfo: nil, repeats: false)
+        SBDispatch {
+            self.applicationHasFinishLaunching(aNotification.object as NSApplication)
+        }
     }
     
     func applicationHasFinishLaunching(application: NSApplication) {
-        if NSUserDefaults.standardUserDefaults().boolForKey(kSBCheckTheNewVersionAfterLaunching) {
+        if SBPreferences.boolForKey(kSBCheckTheNewVersionAfterLaunching) {
             // Check new version
             SBUpdater.sharedUpdater.check()
         }

@@ -153,14 +153,14 @@ class SBBookmarks: NSObject {
                 items[Int(index)] = dict
             }
             self.writeToFile()
-            NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "notifyDidUpdate", userInfo: nil, repeats: false)
+            SBDispatch(self.notifyDidUpdate)
         }
     }
     
     func replaceItem(item: BookmarkItem, atIndex index: UInt) {
         items[Int(index)] = NSMutableDictionary(dictionary: item)
         self.writeToFile()
-        NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "notifyDidUpdate", userInfo: nil, repeats: false)
+        SBDispatch(self.notifyDidUpdate)
     }
     
     func replaceItem(oldItem: BookmarkItem, withItem newItem: BookmarkItem) {
@@ -168,7 +168,7 @@ class SBBookmarks: NSObject {
         if index != NSNotFound {
             items[Int(index)] = NSMutableDictionary(dictionary: newItem)
             self.writeToFile()
-            NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "notifyDidUpdate", userInfo: nil, repeats: false)
+            SBDispatch(self.notifyDidUpdate)
         }
     }
     
@@ -179,7 +179,7 @@ class SBBookmarks: NSObject {
                 items.insert(NSMutableDictionary(dictionary: item), atIndex: i + Int(toIndex))
             }
             self.writeToFile()
-            NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "notifyDidUpdate", userInfo: nil, repeats: false)
+            SBDispatch(self.notifyDidUpdate)
         }
     }
     
@@ -213,7 +213,7 @@ class SBBookmarks: NSObject {
     func removeItemsAtIndexes(indexes: NSIndexSet) {
         self.items.removeObjectsAtIndexes(indexes)
         self.writeToFile()
-        NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "notifyDidUpdate", userInfo: nil, repeats: false)
+        SBDispatch(self.notifyDidUpdate)
     }
     
     func doubleClickItemsAtIndexes(indexes: NSIndexSet) {
@@ -229,7 +229,7 @@ class SBBookmarks: NSObject {
         }
         
         self.writeToFile()
-        NSTimer.scheduledTimerWithTimeInterval(0, target: self, selector: "notifyDidUpdate", userInfo: nil, repeats: false)
+        SBDispatch(self.notifyDidUpdate)
     }
     
     // Exec
