@@ -579,8 +579,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	image = [[NSImage imageNamed:@"Plain.png"] stretchableImageWithSize:r.size sideCapWidth:7.0];
 	encodingButton.backgroundImage = image;
 	[encodingButton setMenu:SBEncodingMenu(nil, nil, YES)];
-	encodingButton.target = self;
-	encodingButton.action = @selector(changeEncodingFromMenuItem:);
+    encodingButton.operation = ^(NSMenuItem *item) {
+        [self changeEncodingFromMenuItem:item];
+    };
 	[encodingView addSubview:encodingButton];
 	[encodingButton selectItemWithRepresentedObject:encodingName];
 }

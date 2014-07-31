@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDefinitions.h"
 #import "SBButton.h"
-#import "SBPopUpButton.h"
 #import "SBDocumentWindow.h"
 #import "SBSplitView.h"
 #import "SBToolbar.h"
@@ -53,6 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBUserAgentView;
 @class SBURLField;
 @class SBWebView;
+@class SBPopUpButton;
 @protocol SBSplitViewDelegate;
 @protocol SBTabbarDelegate;
 @interface SBDocument : NSDocument <SBTabbarDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate>

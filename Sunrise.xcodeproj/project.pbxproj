@@ -28,7 +28,6 @@
 		085C2AB80FE2ABB60099A0F6 /* SBDocumentWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C2AB70FE2ABB60099A0F6 /* SBDocumentWindow.m */; };
 		08742F4010233A60001F7EAF /* NSImage-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08742F3F10233A60001F7EAF /* NSImage-SBAdditions.m */; };
 		08742F5510234024001F7EAF /* Plain.png in Resources */ = {isa = PBXBuildFile; fileRef = 08742F5410234024001F7EAF /* Plain.png */; };
-		08742F7010234177001F7EAF /* SBPopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 08742F6F10234177001F7EAF /* SBPopUpButton.m */; };
 		087BB8AD10174D2300B14EF6 /* Reload.png in Resources */ = {isa = PBXBuildFile; fileRef = 087BB8AC10174D2300B14EF6 /* Reload.png */; };
 		087BB8AF10174D2D00B14EF6 /* Stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 087BB8AE10174D2D00B14EF6 /* Stop.png */; };
 		088440661032950200AF4E2D /* SBSectionListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088440651032950200AF4E2D /* SBSectionListView.m */; };
@@ -158,6 +157,7 @@
 		5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */; };
 		5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66819655AF00053CBF1 /* SBLoadButton.swift */; };
 		505E49EE1987AC0A001F5254 /* Sunrise3-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */; };
+		505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B6196916EF009219AF /* SBPopUpButton.swift */; };
 		507A8E23195FFF6700BF56AD /* SBDefinitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 507A8E22195FFF6700BF56AD /* SBDefinitions.m */; };
 		508FAC5319653AC400F4380F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FAC5219653AC400F4380F /* main.swift */; };
 		50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66A19666D550053CBF1 /* SBBookmarksView.swift */; };
@@ -236,8 +236,6 @@
 		08742F3E10233A60001F7EAF /* NSImage-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSImage-SBAdditions.h"; path = "Classes/NSImage-SBAdditions.h"; sourceTree = "<group>"; };
 		08742F3F10233A60001F7EAF /* NSImage-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSImage-SBAdditions.m"; path = "Classes/NSImage-SBAdditions.m"; sourceTree = "<group>"; };
 		08742F5410234024001F7EAF /* Plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Plain.png; path = Resources/Images/Plain.png; sourceTree = "<group>"; };
-		08742F6E10234177001F7EAF /* SBPopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBPopUpButton.h; path = Classes/SBPopUpButton.h; sourceTree = "<group>"; };
-		08742F6F10234177001F7EAF /* SBPopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBPopUpButton.m; path = Classes/SBPopUpButton.m; sourceTree = "<group>"; };
 		087BB8AC10174D2300B14EF6 /* Reload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Reload.png; path = Resources/Images/Reload.png; sourceTree = "<group>"; };
 		087BB8AE10174D2D00B14EF6 /* Stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Stop.png; path = Resources/Images/Stop.png; sourceTree = "<group>"; };
 		088440641032950200AF4E2D /* SBSectionListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSectionListView.h; path = Classes/SBSectionListView.h; sourceTree = "<group>"; };
@@ -439,8 +437,9 @@
 		507A8E24195FFF8800BF56AD /* SBDefinitionsS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDefinitionsS.swift; path = Sources/SBDefinitionsS.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5083AFD4195FCBDE00537E8B /* SBApplicationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBApplicationDelegate.swift; path = Classes/SBApplicationDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		508FAC5219653AC400F4380F /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = main.swift; path = Sources/main.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		50ACCDF61963E76700CE593E /* SBCoverWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBCoverWindow.swift; path = Classes/SBCoverWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		50AC47B6196916EF009219AF /* SBPopUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPopUpButton.swift; path = Classes/SBPopUpButton.swift; sourceTree = "<group>"; };
 		50AC47B8196923B4009219AF /* SBBLKGUIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUIScrollView.swift; path = Classes/SBBLKGUIScrollView.swift; sourceTree = "<group>"; };
+		50ACCDF61963E76700CE593E /* SBCoverWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBCoverWindow.swift; path = Classes/SBCoverWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50ACCDF81963E9EC00CE593E /* SBTextInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBTextInputView.swift; path = Classes/SBTextInputView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50ACCDFA196404FE00CE593E /* SBGoogleSuggestParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBGoogleSuggestParser.swift; path = Classes/SBGoogleSuggestParser.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50ACCDFC1964F14C00CE593E /* SBUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBUpdater.swift; path = Classes/SBUpdater.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -657,8 +656,7 @@
 				08A006D90FECB15C00AEB6DD /* SBButton.h */,
 				08A006DA0FECB15C00AEB6DD /* SBButton.m */,
 				5044E66819655AF00053CBF1 /* SBLoadButton.swift */,
-				08742F6E10234177001F7EAF /* SBPopUpButton.h */,
-				08742F6F10234177001F7EAF /* SBPopUpButton.m */,
+				50AC47B6196916EF009219AF /* SBPopUpButton.swift */,
 				50F850621967FD4D00C28795 /* SBSegmentedButton.swift */,
 			);
 			name = Buttons;
@@ -1066,6 +1064,7 @@
 				085C2AB80FE2ABB60099A0F6 /* SBDocumentWindow.m in Sources */,
 				0840676C0FE2B95200CC80E3 /* SBUtil.m in Sources */,
 				0840678B0FE2C11700CC80E3 /* SBURLField.m in Sources */,
+				505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */,
 				50ACCDFB196404FE00CE593E /* SBGoogleSuggestParser.swift in Sources */,
 				089953890FE36E5100DED3BA /* SBTabbar.m in Sources */,
 				089955260FE37C1800DED3BA /* SBToolbar.m in Sources */,
@@ -1108,7 +1107,6 @@
 				088D26E0101B3EC400691CEC /* SBBookmarkListView.m in Sources */,
 				08742F4010233A60001F7EAF /* NSImage-SBAdditions.m in Sources */,
 				50CDD1D21984879B00C756F5 /* SBBLKGUIScrollView.swift in Sources */,
-				08742F7010234177001F7EAF /* SBPopUpButton.m in Sources */,
 				088BF5821023DD6100133BE0 /* NSMenu-SBAdditions.m in Sources */,
 				50ACCDF71963E76700CE593E /* SBCoverWindow.swift in Sources */,
 				50B2A99F196028B700DA1B4A /* SBDocumentController.swift in Sources */,
