@@ -1096,44 +1096,44 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)mouseDown:(NSEvent *)event
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-	
-	for (;;)
-	{
-		NSEvent *newEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-		NSPoint newPoint = [self convertPoint:[newEvent locationInWindow] fromView:nil];
-		BOOL isDragging = NO;
-		if (NSPointInRect(newPoint,[self bounds]))
-		{
-			if ([newEvent type] == NSLeftMouseUp)
-			{
-				[self mouseUpActionWithEvent:event];
-				break;
-			}
-			else if ([newEvent type] == NSLeftMouseDragged)
-			{
-				isDragging = YES;
-			}
-		}
-		else {
-			if ([newEvent type] == NSLeftMouseDragged)
-			{
-				isDragging = YES;
-			}
-		}
-		
-		if (isDragging)
-		{
-			NSPoint delta = NSMakePoint(point.x - newPoint.x,point.y - newPoint.y);
-			if (delta.x >= 5 || delta.x <= -5 || delta.y >= 5 || delta.y <= -5)
-			{
-				[self mouseDraggedActionWithEvent:event];
-				break;
-			}
-		}
-	}
-	[pool release];
+    @autoreleasepool {
+        NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
+        
+        for (;;)
+        {
+            NSEvent *newEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+            NSPoint newPoint = [self convertPoint:[newEvent locationInWindow] fromView:nil];
+            BOOL isDragging = NO;
+            if (NSPointInRect(newPoint,[self bounds]))
+            {
+                if ([newEvent type] == NSLeftMouseUp)
+                {
+                    [self mouseUpActionWithEvent:event];
+                    break;
+                }
+                else if ([newEvent type] == NSLeftMouseDragged)
+                {
+                    isDragging = YES;
+                }
+            }
+            else {
+                if ([newEvent type] == NSLeftMouseDragged)
+                {
+                    isDragging = YES;
+                }
+            }
+            
+            if (isDragging)
+            {
+                NSPoint delta = NSMakePoint(point.x - newPoint.x,point.y - newPoint.y);
+                if (delta.x >= 5 || delta.x <= -5 || delta.y >= 5 || delta.y <= -5)
+                {
+                    [self mouseDraggedActionWithEvent:event];
+                    break;
+                }
+            }
+        }
+    }
 }
 
 - (void)mouseDraggedActionWithEvent:(NSEvent *)theEvent
