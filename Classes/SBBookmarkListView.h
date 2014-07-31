@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDefinitions.h"
 #import "SBBLKGUI.h"
-#import "SBButton.h"
 #import "SBCircleProgressIndicator.h"
 #import "SBView.h"
 
@@ -36,6 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @class SBBookmarkListItemView;
 @class SBBookmarksView;
+@class SBButton;
 @interface SBBookmarkListView : SBView <NSAnimationDelegate>
 {
 	SBBookmarksView *wrapperView;

@@ -112,3 +112,5 @@ NSArray *SBDebugDumpMenu(NSMenu *menu);
 BOOL SBDebugWriteViewStructure(NSView *view, NSString *path);
 BOOL SBDebugWriteLayerStructure(CALayer *layer, NSString *path);
 BOOL SBDebugWriteMainMenu(NSString *path);
+
+void SBPerform(id target, SEL action, id object);

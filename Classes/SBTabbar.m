@@ -23,10 +23,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBTabbar.h"
-#import "SBButton.h"
 #import "SBDefinitions.h"
 #import "SBTabbarItem.h"
 #import "SBUtil.h"
+
+#import "Sunrise3-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 @implementation SBTabbar
 

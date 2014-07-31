@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #import "SBDefinitions.h"
-#import "SBButton.h"
 #import "SBDocumentWindow.h"
 #import "SBSplitView.h"
 #import "SBToolbar.h"

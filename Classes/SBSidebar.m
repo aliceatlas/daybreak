@@ -23,7 +23,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBSidebar.h"
-#import "SBButton.h"
 #import "SBUtil.h"
 
 #import "Sunrise3-Bridging-Header.h"

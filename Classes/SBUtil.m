@@ -2277,3 +2277,7 @@ BOOL SBDebugWriteMainMenu(NSString *path)
 	r = [info writeToFile:path atomically:YES];
 	return r;
 }
+
+void SBPerform(id target, SEL action, id object) {
+    [target performSelector:action withObject: object];
+}

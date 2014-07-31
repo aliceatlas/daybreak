@@ -23,7 +23,6 @@
  */
 
 #import "SBDownloadsView.h"
-#import "SBButton.h"
 #import "SBDownloadView.h"
 #import "SBUtil.h"
 
