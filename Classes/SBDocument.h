@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDefinitions.h"
 #import "SBDocumentWindow.h"
 #import "SBSplitView.h"
-#import "SBToolbar.h"
 #import "SBWebResourcesView.h"
 
 @class SBBookmarkView;
@@ -51,9 +50,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBUserAgentView;
 @class SBURLField;
 @class SBWebView;
+@class SBToolbar;
 @class SBPopUpButton;
 @protocol SBSplitViewDelegate;
 @protocol SBTabbarDelegate;
+@protocol SBToolbarDelegate;
 @interface SBDocument : NSDocument <SBTabbarDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate>
 {
 	SBDocumentWindow *window;
@@ -87,7 +88,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 @property (nonatomic, assign) SBDocumentWindow *window;
 @property (nonatomic, assign) NSWindowController *windowController;
-@property (nonatomic, retain) NSToolbar *toolbar;
+@property (nonatomic, retain) SBToolbar *toolbar;
 @property (nonatomic, retain) SBURLField *urlField;
 @property (nonatomic, retain) SBTabbar *tabbar;
 @property (nonatomic, retain) SBSplitView *splitView;

@@ -19,3 +19,7 @@
 
 #import "NSColor-SBAdditions.h"
 #import "SBFixedSplitView.h"
+
+@interface NSToolbar (Private)
+- (NSView *)_toolbarView;
+@end

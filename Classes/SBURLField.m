@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBBLKGUI.h"
 #import "SBDocument.h"
 #import "SBTableCell.h"
-#import "SBToolbar.h"
 #import "SBUtil.h"
 
 #import "Sunrise3-Bridging-Header.h"
