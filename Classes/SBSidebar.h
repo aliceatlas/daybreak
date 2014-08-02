@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDefinitions.h"
 #import "SBBLKGUI.h"
 #import "SBBottombar.h"
-#import "SBDrawer.h"
 
 @class SBSidebar;
 @class SBSideBottombar;
@@ -43,6 +42,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)bottombar:(SBSideBottombar *)inBottombar didChangeSize:(CGFloat)size;
 //- (CGFloat)bottombar:(SBSideBottombar *)inBottombar didDraggedResizer:(CGFloat)deltaX;
 @end
+
+@class SBDrawer;
 @interface SBSidebar : NSSplitView <SBDownloadsViewDelegate, SBSideBottombarDelegate, NSAnimationDelegate>
 {
 	NSView *view;

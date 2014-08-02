@@ -28,7 +28,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBBookmarkView.h"
 #import "SBDownloaderView.h"
 #import "SBDownloadsView.h"
-#import "SBDrawer.h"
 #import "SBHistoryView.h"
 #import "SBInnerView.h"
 #import "SBMessageView.h"

@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBTabViewItem.h"
 #import "SBBLKGUI.h"
-#import "SBDrawer.h"
 #import "SBFindbar.h"
 #import "SBFixedSplitView.h"
 #import "SBSavePanel.h"

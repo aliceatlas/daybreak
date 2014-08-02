@@ -20,6 +20,8 @@
 #import "NSColor-SBAdditions.h"
 #import "SBFixedSplitView.h"
 
+#import "SBDownloadsView.h"
+
 @interface NSToolbar (Private)
 - (NSView *)_toolbarView;
 @end

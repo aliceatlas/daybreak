@@ -58,7 +58,6 @@
 		0891D522100065B9000CE426 /* BLKGUI_PopUp-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 0891D51C100065B9000CE426 /* BLKGUI_PopUp-Left.png */; };
 		0891D523100065B9000CE426 /* BLKGUI_PopUp-Right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0891D51D100065B9000CE426 /* BLKGUI_PopUp-Right.png */; };
 		0892E59B100375AE001FBECC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 084067440FE2B5B400CC80E3 /* MainMenu.xib */; };
-		08930ABD0FEE7AC20037D403 /* SBDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 08930ABC0FEE7AC20037D403 /* SBDrawer.m */; };
 		0893E612104FF4E800AF3283 /* BLKGUI_Radio.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893E60E104FF4E800AF3283 /* BLKGUI_Radio.png */; };
 		0893E613104FF4E800AF3283 /* BLKGUI_Radio-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893E60F104FF4E800AF3283 /* BLKGUI_Radio-Selected.png */; };
 		0893E614104FF4E800AF3283 /* BLKGUI_Radio-Selected-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893E610104FF4E800AF3283 /* BLKGUI_Radio-Selected-Highlighted.png */; };
@@ -158,6 +157,7 @@
 		505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B6196916EF009219AF /* SBPopUpButton.swift */; };
 		505E49F4198A2645001F5254 /* SBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49F3198A2645001F5254 /* SBButton.swift */; };
 		505E49F6198B7639001F5254 /* SBToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49F5198B7638001F5254 /* SBToolbar.swift */; };
+		505E49F9198C91A4001F5254 /* SBDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49F8198C91A3001F5254 /* SBDrawer.swift */; };
 		507A8E23195FFF6700BF56AD /* SBDefinitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 507A8E22195FFF6700BF56AD /* SBDefinitions.m */; };
 		508FAC5319653AC400F4380F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FAC5219653AC400F4380F /* main.swift */; };
 		50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66A19666D550053CBF1 /* SBBookmarksView.swift */; };
@@ -283,8 +283,6 @@
 		0891D51D100065B9000CE426 /* BLKGUI_PopUp-Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_PopUp-Right.png"; path = "Resources/Images/BLKGUI_PopUp-Right.png"; sourceTree = "<group>"; };
 		0892A727106F9D0900AC57D1 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = Resources/ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0892A72B106F9D2100AC57D1 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ja; path = Resources/ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		08930ABB0FEE7AC20037D403 /* SBDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDrawer.h; path = Classes/SBDrawer.h; sourceTree = "<group>"; };
-		08930ABC0FEE7AC20037D403 /* SBDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBDrawer.m; path = Classes/SBDrawer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0893E60E104FF4E800AF3283 /* BLKGUI_Radio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BLKGUI_Radio.png; path = Resources/Images/BLKGUI_Radio.png; sourceTree = "<group>"; };
 		0893E60F104FF4E800AF3283 /* BLKGUI_Radio-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Radio-Selected.png"; path = "Resources/Images/BLKGUI_Radio-Selected.png"; sourceTree = "<group>"; };
 		0893E610104FF4E800AF3283 /* BLKGUI_Radio-Selected-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Radio-Selected-Highlighted.png"; path = "Resources/Images/BLKGUI_Radio-Selected-Highlighted.png"; sourceTree = "<group>"; };
@@ -430,6 +428,7 @@
 		505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Sunrise3-Bridging-Header.h"; path = "Sources/Sunrise3-Bridging-Header.h"; sourceTree = "<group>"; };
 		505E49F3198A2645001F5254 /* SBButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBButton.swift; path = Classes/SBButton.swift; sourceTree = "<group>"; };
 		505E49F5198B7638001F5254 /* SBToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBToolbar.swift; path = Classes/SBToolbar.swift; sourceTree = "<group>"; };
+		505E49F8198C91A3001F5254 /* SBDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDrawer.swift; path = Classes/SBDrawer.swift; sourceTree = "<group>"; };
 		507A8E21195FFF6700BF56AD /* SBDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDefinitions.h; path = Sources/SBDefinitions.h; sourceTree = "<group>"; };
 		507A8E22195FFF6700BF56AD /* SBDefinitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDefinitions.m; path = Sources/SBDefinitions.m; sourceTree = "<group>"; };
 		507A8E24195FFF8800BF56AD /* SBDefinitionsS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDefinitionsS.swift; path = Sources/SBDefinitionsS.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -772,8 +771,7 @@
 				5044E66A19666D550053CBF1 /* SBBookmarksView.swift */,
 				08BE0CEF1143E88E00314946 /* SBWebResourcesView.h */,
 				08BE0CF01143E88E00314946 /* SBWebResourcesView.m */,
-				08930ABB0FEE7AC20037D403 /* SBDrawer.h */,
-				08930ABC0FEE7AC20037D403 /* SBDrawer.m */,
+				505E49F8198C91A3001F5254 /* SBDrawer.swift */,
 				088D26DE101B3EC400691CEC /* SBBookmarkListView.h */,
 				088D26DF101B3EC400691CEC /* SBBookmarkListView.m */,
 				08DA3D231057D9BE00DD4D3E /* SBBookmarkListItemView.h */,
@@ -1072,7 +1070,6 @@
 				0890E1750FE91DF4002DF339 /* SBTabbarItem.m in Sources */,
 				089FE2E90FEBED6C000D2436 /* SBCircleProgressIndicator.m in Sources */,
 				08A004A10FEC8EBB00AEB6DD /* SBTabViewItem.m in Sources */,
-				08930ABD0FEE7AC20037D403 /* SBDrawer.m in Sources */,
 				08AEC6C80FF7A107005A39DA /* SBBLKGUISlider.m in Sources */,
 				50B2A9A91960E19A00DA1B4A /* Array-SBAdditions.swift in Sources */,
 				0890708E0FFE3F4E00B2B505 /* SBInnerView.m in Sources */,
@@ -1090,6 +1087,7 @@
 				088E997F1008532C005FC4C0 /* SBSourceTextView.m in Sources */,
 				088E99B610086FD1005FC4C0 /* SBFixedSplitView.m in Sources */,
 				088DF2FB1008A3F100113786 /* SBFindbar.m in Sources */,
+				505E49F9198C91A4001F5254 /* SBDrawer.swift in Sources */,
 				08916C501009AFAF0012D4EA /* SBWebView.m in Sources */,
 				08916E721009D5220012D4EA /* NSString-SBURLAdditions.m in Sources */,
 				50CE69E019863F4C00C17D44 /* SBWebResourceIdentifier.swift in Sources */,

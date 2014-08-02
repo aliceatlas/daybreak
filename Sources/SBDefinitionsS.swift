@@ -265,10 +265,12 @@ CGFloat SBBookmarkLabelColorRGBA[] = {
 148.0 / 255.0, 148.0 / 255.0, 148.0 / 255.0, 1.0, // Gray
 50.0 / 255.0, 50.0 / 255.0, 50.0 / 255.0, 1.0  // Black
 };
+*/
 
 // Bottombar
-CGFloat SBBottombarColors[8] = {0.17, 0.19, 0.22, 1.0, 0.27, 0.3, 0.33, 1.0};
+var SBBottombarColors: [CGFloat] = [0.17, 0.19, 0.22, 1.0, 0.27, 0.3, 0.33, 1.0]
 
+/*
 // WebResourcesView
 CGFloat SBTableCellColors[4] = {0.29, 0.31, 0.33, 1.0};
 CGFloat SBTableGrayCellColors[4] = {0.64, 0.67, 0.7, 1.0};
