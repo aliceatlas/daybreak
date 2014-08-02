@@ -12,7 +12,6 @@
 
 #import "SBAdditions.h"
 
-#import "SBSectionGroupe.h"
 #import "SBSectionListView.h"
 #import "SBBookmarkListView.h"
 #import "SBSearchbar.h"
