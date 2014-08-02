@@ -1,6 +1,6 @@
 import Foundation
 
-var _sharedPreferences = SBPreferences()
+private var _sharedPreferences = SBPreferences()
 
 class SBPreferences: NSObject {
     class var sharedPreferences: SBPreferences {

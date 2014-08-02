@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-var _sharedDownloads = SBDownloads()
+private var _sharedDownloads = SBDownloads()
 
 @infix func ==(first: SBDownload, second: SBDownload) -> Bool {
     return first === second

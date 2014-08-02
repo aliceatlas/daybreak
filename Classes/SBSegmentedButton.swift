@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Cocoa
 
 class SBSegmentedButton: SBView {
-    var _buttons: [SBButton] = []
+    private var _buttons: [SBButton] = []
     var buttons: [SBButton] {
         get { return _buttons }
         set(buttons) {

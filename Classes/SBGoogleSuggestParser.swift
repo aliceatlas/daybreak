@@ -36,16 +36,16 @@ let kSBGSSuggestionAttributeDataArgumentName = "data"
 
 class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
     var items: [NSMutableDictionary] = []
-    var _inToplevel = false
-    var _inCompleteSuggestion = false
+    private var inToplevel = false
+    private var inCompleteSuggestion = false
     
     class func parser() -> SBGoogleSuggestParser {
         return SBGoogleSuggestParser()
     }
     
     func parseData(data: NSData) -> NSError? {
-        _inToplevel = false
-        _inCompleteSuggestion = false
+        inToplevel = false
+        inCompleteSuggestion = false
         let parser = NSXMLParser(data: data)
         parser.delegate = self
         parser.shouldProcessNamespaces = false
@@ -59,14 +59,14 @@ class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
     
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName: String?, attributes: NSDictionary) {
         if elementName == kSBGSToplevelTagName {
-            _inToplevel = true
+            inToplevel = true
         } else if elementName == kSBGSCompleteSuggestionTagName {
             let item = NSMutableDictionary()
-            _inCompleteSuggestion = true
+            inCompleteSuggestion = true
             item[kSBType] = kSBURLFieldItemGoogleSuggestType
             items.append(item)
         } else {
-            if _inToplevel && _inCompleteSuggestion {
+            if inToplevel && inCompleteSuggestion {
                 if elementName == kSBGSSuggestionTagName {
                     let dataText = attributes[kSBGSSuggestionAttributeDataArgumentName] as String
                     if dataText.utf16Count > 0 {
@@ -84,9 +84,9 @@ class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
     
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName: String?) {
         if elementName == kSBGSToplevelTagName {
-            _inToplevel = false
+            inToplevel = false
         } else if elementName == kSBGSCompleteSuggestionTagName {
-            _inCompleteSuggestion = false
+            inCompleteSuggestion = false
         }
     }
     

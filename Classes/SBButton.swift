@@ -27,14 +27,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBButton: SBView, NSCoding {
-    var _title: NSString?
+    private var _title: NSString?
     var image: NSImage?
     var disableImage: NSImage?
     var backImage: NSImage?
     var backDisableImage: NSImage?
     var action = Selector() //!!! should be Selector? (= nil) but the swift compiler doesn't generate the objc property declaration in that case for now
-    var _enabled = true
-    var _pressed = false
+    private var _enabled = true
+    private var _pressed = false
     var keyEquivalent: String?
     var keyEquivalentModifierMask: Int = 0
     

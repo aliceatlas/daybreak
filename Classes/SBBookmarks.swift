@@ -30,7 +30,7 @@ import Foundation
 
 //typealias BookmarkItem = [String: Any]
 typealias BookmarkItem = NSDictionary
-var _sharedBookmarks = SBBookmarks()
+private var _sharedBookmarks = SBBookmarks()
 
 class SBBookmarks: NSObject {
     var items: [NSMutableDictionary] = []

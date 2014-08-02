@@ -30,14 +30,12 @@ import Foundation
 
 class SBDownload: NSObject {
     var identifier: Int = -1
-    var _name: String?
+    private var _name: String?
     var name: String? {
-    get {
-        return (_name == nil) ? URL?.absoluteString : _name
-    }
-    set(name) {
-        _name = name
-    }
+        get {
+            return (_name == nil) ? URL?.absoluteString : _name
+        }
+        set(name) { _name = name }
     }
     var URL: NSURL?
     var download: NSURLDownload?

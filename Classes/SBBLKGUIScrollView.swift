@@ -138,7 +138,7 @@ class SBBLKGUIScrollView: NSScrollView {
 }
 
 class SBBLKGUIScroller: NSScroller {
-    var _drawsBackground: Bool = false
+    private var _drawsBackground: Bool = false
     var drawsBackground: Bool {
         get { return _drawsBackground }
         set(inDrawsBackground) {
@@ -149,7 +149,7 @@ class SBBLKGUIScroller: NSScroller {
         }
     }
     
-    var _backgroundColor: NSColor?
+    private var _backgroundColor: NSColor?
     var backgroundColor: NSColor? {
         get { return _backgroundColor }
         set(inBackgroundColor) {

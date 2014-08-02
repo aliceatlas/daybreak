@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-var _sharedUpdater = SBUpdater()
+private var _sharedUpdater = SBUpdater()
 
 class SBUpdater: NSObject {
     var raiseResult = false

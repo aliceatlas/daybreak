@@ -26,7 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-var _sharedHistory = SBHistory()
+private var _sharedHistory = SBHistory()
 
 class SBHistory: NSObject {
 	var history = WebHistory()
