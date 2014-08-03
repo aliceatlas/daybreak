@@ -41,28 +41,22 @@ class SBToolbar: NSToolbar {
     func itemRectInWindowForIdentifier(identifier: String) -> NSRect {
         var r = NSZeroRect
         var delta = NSZeroPoint
-        var theItem: NSToolbarItem?
-        for item in visibleItems as [NSToolbarItem] {
-            if item.itemIdentifier == identifier {
-                var view: NSView? = item.view
-                while true {
-                    view = view!.superview
-                    if !view {
-                        break
-                    }
-                    delta.x += view!.frame.origin.x
-                    delta.y += view!.frame.origin.y
-                    if view! === self._toolbarView() {
-                        break
-                    }
+        if let item = (visibleItems as [NSToolbarItem]).first({ $0.itemIdentifier == identifier })
+        {
+            var view: NSView? = item.view
+            while true {
+                view = view!.superview
+                if !view {
+                    break
                 }
-                theItem = item
-                break
+                delta.x += view!.frame.origin.x
+                delta.y += view!.frame.origin.y
+                if view! === self._toolbarView() {
+                    break
+                }
             }
-        }
-        if theItem {
-            if theItem!.view {
-                r = theItem!.view.frame
+            if item.view {
+                r = item.view.frame
                 r.origin.x += delta.x
                 r.origin.y += delta.y
             }
