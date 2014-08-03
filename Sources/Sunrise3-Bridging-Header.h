@@ -21,6 +21,15 @@
 
 #import "SBDownloadsView.h"
 
+#import "SBWebView.h"
+#import "SBTabbarItem.h"
+#import "SBSourceTextView.h"
+#import "SBTabView.h"
+
 @interface NSToolbar (Private)
 - (NSView *)_toolbarView;
+@end
+
+@interface NSURLRequest (Private)
++ (void)setAllowsAnyHTTPSCertificate:(BOOL)allow forHost:(NSString*)host;
 @end

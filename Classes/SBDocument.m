@@ -38,7 +38,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBTabbar.h"
 #import "SBTabbarItem.h"
 #import "SBTabView.h"
-#import "SBTabViewItem.h"
 #import "SBUserAgentView.h"
 #import "SBURLField.h"
 #import "SBUtil.h"

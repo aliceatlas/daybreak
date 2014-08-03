@@ -23,8 +23,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBDefinitions.h"
-#import "SBTabViewItem.h"
 
+@class SBTabViewItem;
 @interface SBTabView : NSTabView
 {
 	id<SBTabViewDelegate> delegate;
