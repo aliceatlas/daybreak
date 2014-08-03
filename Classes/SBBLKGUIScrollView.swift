@@ -29,13 +29,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Cocoa
 
 class SBBLKGUIScrollView: NSScrollView {
-    override var horizontalScroller: NSScroller! {
+    override var horizontalScroller: NSScroller? {
         get { return super.horizontalScroller }
         set(scroller) {
             super.horizontalScroller = scroller
         }
     }
-    override var verticalScroller: NSScroller! {
+    override var verticalScroller: NSScroller? {
         get { return super.verticalScroller }
         set(scroller) {
             super.verticalScroller = scroller
@@ -52,22 +52,19 @@ class SBBLKGUIScrollView: NSScrollView {
         self.initialize()
     }
     
-    /*
-    class func _horizontalScrollerClass() {
+    class func _horizontalScrollerClass() -> AnyClass {
         return SBBLKGUIScroller.self
     }
     
-    class func _verticalScrollerClass() {
+    class func _verticalScrollerClass() -> AnyClass {
         return SBBLKGUIScroller.self
     }
-    */
 
     func initialize() {
         contentView = self.contentView
         self.contentView = SBBLKGUIClipView(frame: contentView.frame)
         
-        
-        ////////
+        /*
       	self.hasVerticalScroller = hasVerticalScroller
       	self.hasHorizontalScroller = hasHorizontalScroller
         if self.hasVerticalScroller {
@@ -87,6 +84,7 @@ class SBBLKGUIScrollView: NSScrollView {
             newScroller.controlSize = scroller.controlSize
             self.horizontalScroller = newScroller
       	}
+        */
     }
     
     /*
