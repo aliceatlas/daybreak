@@ -36,7 +36,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     var delegate: SBBookmarksViewDelegate?
     
     func splitWidth(proposedWidth: CGFloat) -> CGFloat {
-        return listView != nil ? listView!.splitWidth(proposedWidth) : 0
+        return listView ? listView!.splitWidth(proposedWidth) : 0
     }
     
     override var frame: NSRect {
@@ -70,7 +70,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     // Destruction
     
     func destructListView() {
-        if listView != nil {
+        if listView {
             listView!.removeFromSuperview()
             listView = nil
         }
@@ -133,10 +133,10 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
             }
             searchbar!.selectText(nil)
         } else {
-            if splitView != nil {
-                SBDisembedViewInSplitView(scrollView, splitView)
+            if splitView {
+                SBDisembedViewInSplitView(scrollView!, splitView!)
                 splitView = nil
-                scrollView!.window.makeFirstResponder(scrollView)
+                scrollView!.window.makeFirstResponder(scrollView!)
                 r = true
             }
         }

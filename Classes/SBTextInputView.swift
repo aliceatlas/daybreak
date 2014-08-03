@@ -150,7 +150,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     // Delegate
     
     override func controlTextDidChange(_: NSNotification) {
-        if doneButton != nil {
+        if doneButton {
             doneButton!.enabled = textLabel.stringValue.utf16Count > 0
         }
     }

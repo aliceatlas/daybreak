@@ -162,7 +162,7 @@ class SBBLKGUIScroller: NSScroller {
         let r = self.bounds
         if drawsBackground {
             let color = NSColor(calibratedWhite: 0.0, alpha:0.85)
-            (((backgroundColor != nil) ? backgroundColor : color) as NSColor).set()
+            (backgroundColor ? backgroundColor! : color).set()
             NSRectFill(r)
         }
         super.drawRect(r)
@@ -194,7 +194,7 @@ class SBBLKGUIScroller: NSScroller {
             drawRect.origin.x = (arrowRect.origin.x + arrowRect.size.width) - drawRect.size.width
         }
         if drawsBackground {
-            ((backgroundColor != nil) ? backgroundColor! : color).set()
+            (backgroundColor ? backgroundColor! : color).set()
             NSRectFill(drawRect)
         }
         image.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: flipped)
@@ -213,7 +213,7 @@ class SBBLKGUIScroller: NSScroller {
             drawRect.origin.x = (arrowRect.origin.x + arrowRect.size.width) - (drawRect.size.width + rightImage.size.width)
         }
         if drawsBackground {
-            ((backgroundColor != nil) ? backgroundColor! : color).set()
+            (backgroundColor ? backgroundColor! : color).set()
             NSRectFill(drawRect)
         }
         image.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: flipped)
@@ -231,7 +231,7 @@ class SBBLKGUIScroller: NSScroller {
         let isVertical = self.bounds.size.width < self.bounds.size.height
         
         if drawsBackground {
-            ((backgroundColor != nil) ? backgroundColor! : color).set()
+            (backgroundColor ? backgroundColor! : color).set()
         } else {
             NSColor.blackColor().set()
         }

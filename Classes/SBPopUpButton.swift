@@ -35,7 +35,7 @@ class SBPopUpButton: NSPopUpButton {
         get { return super.menu }
         set(inMenu) {
             super.menu = inMenu
-            if inMenu != nil {
+            if inMenu {
                 for item in inMenu!.itemArray as [NSMenuItem] {
                     item.target = self
                     item.action = "executeAction:"

@@ -103,8 +103,8 @@ class SBDownloader: NSObject {
     
     func start() {
         self.destructReceivedData()
-        if url != nil {
-            let request = NSURLRequest(URL: url, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
+        if url {
+            let request = NSURLRequest(URL: url!, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
             self.destructConnection()
             connection = NSURLConnection(request: request, delegate: self)
         }

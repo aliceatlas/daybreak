@@ -56,7 +56,7 @@ class SBUpdater: NSObject {
         threadDictionary[kSBUpdaterResult] = result.toRaw()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "threadWillExit:", name: NSThreadWillExitNotification, object: currentThread)
         
-        if data != nil && appVersionString != nil {
+        if data && appVersionString {
             // Success for networking
             // Parse data
             let string = NSString(data: data, encoding: NSUTF8StringEncoding)

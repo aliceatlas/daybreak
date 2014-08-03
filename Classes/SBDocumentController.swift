@@ -57,7 +57,7 @@ class SBDocumentController: NSDocumentController {
         if type == kSBStringsDocumentTypeName {
         } else {
             if let document = self.makeUntitledDocumentOfType(kSBDocumentTypeName, error: outError) as? SBDocument {
-                if url? {
+                if url {
                     document.initialURL = url
                 }
                 document.sidebarVisibility = sidebarVisibility
