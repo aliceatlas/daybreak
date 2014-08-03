@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBSnapshotView.h"
 #import "SBDocument.h"
-#import "SBSavePanel.h"
 
 #import "Sunrise3-Bridging-Header.h"
 #import "Sunrise3-Swift.h"
@@ -924,7 +923,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (data)
 	{
-		SBSavePanel *panel = [SBSavePanel savePanel];
+        SBSavePanel *panel = [[SBSavePanel sbSavePanel] autorelease];
         panel.canCreateDirectories = YES;
         panel.nameFieldStringValue = self.filename;
 		if ([panel runModal] == NSFileHandlingPanelOKButton)

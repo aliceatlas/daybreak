@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBSectionListView.h"
 #import "SBBLKGUI.h"
-#import "SBSavePanel.h"
 #import "SBUtil.h"
 
 #import "Sunrise3-Bridging-Header.h"
@@ -476,7 +475,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)open:(id)sender
 {
-	SBOpenPanel *panel = [SBOpenPanel openPanel];
+	SBOpenPanel *panel = [[SBOpenPanel sbOpenPanel] autorelease];
 	NSWindow *window = [self window];
 	[panel setAllowsMultipleSelection:NO];
 	[panel setCanChooseFiles:NO];

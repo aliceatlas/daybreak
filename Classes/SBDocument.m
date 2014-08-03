@@ -32,7 +32,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBInnerView.h"
 #import "SBMessageView.h"
 #import "SBReportView.h"
-#import "SBSavePanel.h"
 #import "SBSidebar.h"
 #import "SBSnapshotView.h"
 #import "SBTabbar.h"
@@ -1657,10 +1656,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					if (data)
 					{
 						NSString *filename = resourceIdentifier.URL ? [[resourceIdentifier.URL absoluteString] lastPathComponent] : @"UntitledData";
-						SBSavePanel *panel = [SBSavePanel savePanel];
+						SBSavePanel *panel = [[SBSavePanel sbSavePanel] autorelease];
 						[data retain];
                         panel.nameFieldStringValue = filename;
-                        [panel beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+                        [self.window beginSheet:panel completionHandler:^(NSModalResponse returnCode) {
                             if (returnCode == NSFileHandlingPanelOKButton)
                             {
                                 if ([data writeToURL:panel.URL atomically:YES])
@@ -2374,11 +2373,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)saveDocumentAs:(id)sender
 {
-	SBSavePanel *panel = [SBSavePanel savePanel];
+	SBSavePanel *panel = [[SBSavePanel sbSavePanel] autorelease];
 	NSString *title = self.selectedWebDataSource.pageTitle;
 	NSString *name = [title ? title : NSLocalizedString(@"Untitled", nil) stringByAppendingPathExtension:@"webarchive"];
     panel.nameFieldStringValue = name;
-    [panel beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+    [self.window beginSheet:panel completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSFileHandlingPanelOKButton)
         {
             WebDataSource *dataSource = self.selectedWebDataSource;

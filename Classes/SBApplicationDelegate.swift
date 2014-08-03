@@ -343,7 +343,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func openDocument(AnyObject) {
-        let panel = SBOpenPanel.openPanel() as SBOpenPanel
+        let panel = SBOpenPanel.sbOpenPanel()
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         let result = panel.runModal()
@@ -426,7 +426,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func validateStrings(AnyObject) {
-        let panel = SBOpenPanel.openPanel()
+        let panel = SBOpenPanel.sbOpenPanel()
         let path = NSBundle.mainBundle().resourcePath
         if panel.runModalForDirectory(path, file:nil, types:["strings"]) {
             let (tset: [[String]], _, _) = SBGetLocalizableTextSetS(panel.filename)

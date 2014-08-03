@@ -23,8 +23,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBLocalizationWindowController.h"
-#import "SBSavePanel.h"
 #import "SBUtil.h"
+
+#import "Sunrise3-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 #define kSBLocalizationAvailableSubversionAccess 0
 
@@ -390,7 +392,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)open
 {
-	SBOpenPanel *panel = [SBOpenPanel openPanel];
+	SBOpenPanel *panel = [SBOpenPanel sbOpenPanel];
 	NSString *directoryPath = SBApplicationSupportDirectory([kSBApplicationSupportDirectoryName stringByAppendingPathComponent:kSBLocalizationsDirectoryName]);
 	[panel setAllowedFileTypes:[NSArray arrayWithObject:@"strings"]];
     panel.directoryURL = [NSURL fileURLWithPath:directoryPath];
@@ -591,11 +593,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)export
 {
-	SBSavePanel *panel = [SBSavePanel savePanel];
+	SBSavePanel *panel = [[SBSavePanel sbSavePanel] autorelease];
 	NSString *langCode = [[langPopup selectedItem] representedObject];
 	NSString *name = langCode ? [langCode stringByAppendingPathExtension:@"strings"] : nil;
     panel.nameFieldStringValue = name;
-    [panel beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
+    [self.window beginSheet:panel completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSFileHandlingPanelOKButton) {
             NSData *data = SBLocalizableStringsData(fieldSet);
             if (data) {

@@ -6,7 +6,6 @@
 #import "SBDocument.h"
 #import "SBDocumentWindow.h"
 #import "SBLocalizationWindowController.h"
-#import "SBSavePanel.h"
 #import "SBUpdateView.h"
 #import "SBUtil.h"
 
@@ -25,6 +24,8 @@
 #import "SBTabbarItem.h"
 #import "SBSourceTextView.h"
 #import "SBTabView.h"
+
+#import "NSSavePanel-SBAdditions.h"
 
 @interface NSToolbar (Private)
 - (NSView *)_toolbarView;

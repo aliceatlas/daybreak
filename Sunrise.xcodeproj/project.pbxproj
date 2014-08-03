@@ -62,7 +62,6 @@
 		0893E613104FF4E800AF3283 /* BLKGUI_Radio-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893E60F104FF4E800AF3283 /* BLKGUI_Radio-Selected.png */; };
 		0893E614104FF4E800AF3283 /* BLKGUI_Radio-Selected-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893E610104FF4E800AF3283 /* BLKGUI_Radio-Selected-Highlighted.png */; };
 		0893E615104FF4E800AF3283 /* BLKGUI_Radio-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0893E611104FF4E800AF3283 /* BLKGUI_Radio-Highlighted.png */; };
-		08941F2A1015E353004CD4EA /* SBSavePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 08941F291015E353004CD4EA /* SBSavePanel.m */; };
 		08943D101013566E0034A3E5 /* Finder.png in Resources */ = {isa = PBXBuildFile; fileRef = 08943D0F1013566E0034A3E5 /* Finder.png */; };
 		08946ED31114731F00B09D17 /* Icon_Contribute.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946ED21114731F00B09D17 /* Icon_Contribute.png */; };
 		08946F0E111478F600B09D17 /* Icon_Checkout.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946F0D111478F600B09D17 /* Icon_Checkout.png */; };
@@ -158,6 +157,9 @@
 		505E49F9198C91A4001F5254 /* SBDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49F8198C91A3001F5254 /* SBDrawer.swift */; };
 		505E49FB198CA096001F5254 /* SBSectionGroupe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49FA198CA095001F5254 /* SBSectionGroupe.swift */; };
 		505E49FD198CA577001F5254 /* SBTabViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49FC198CA577001F5254 /* SBTabViewItem.swift */; };
+		506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49EF19882F3B001F5254 /* SBSavePanel.swift */; };
+		506E44B4198E654800178D36 /* NSSavePanel-SBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 506E44B2198E654800178D36 /* NSSavePanel-SBAdditions.h */; };
+		506E44B5198E654800178D36 /* NSSavePanel-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */; };
 		507A8E23195FFF6700BF56AD /* SBDefinitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 507A8E22195FFF6700BF56AD /* SBDefinitions.m */; };
 		508FAC5319653AC400F4380F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FAC5219653AC400F4380F /* main.swift */; };
 		50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66A19666D550053CBF1 /* SBBookmarksView.swift */; };
@@ -422,11 +424,14 @@
 		5044E66819655AF00053CBF1 /* SBLoadButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLoadButton.swift; path = Classes/SBLoadButton.swift; sourceTree = "<group>"; };
 		5044E66A19666D550053CBF1 /* SBBookmarksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBookmarksView.swift; path = Classes/SBBookmarksView.swift; sourceTree = "<group>"; };
 		505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Sunrise3-Bridging-Header.h"; path = "Sources/Sunrise3-Bridging-Header.h"; sourceTree = "<group>"; };
+		505E49EF19882F3B001F5254 /* SBSavePanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSavePanel.swift; path = Classes/SBSavePanel.swift; sourceTree = "<group>"; };
 		505E49F3198A2645001F5254 /* SBButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBButton.swift; path = Classes/SBButton.swift; sourceTree = "<group>"; };
 		505E49F5198B7638001F5254 /* SBToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBToolbar.swift; path = Classes/SBToolbar.swift; sourceTree = "<group>"; };
 		505E49F8198C91A3001F5254 /* SBDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDrawer.swift; path = Classes/SBDrawer.swift; sourceTree = "<group>"; };
 		505E49FA198CA095001F5254 /* SBSectionGroupe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSectionGroupe.swift; path = Classes/SBSectionGroupe.swift; sourceTree = "<group>"; };
 		505E49FC198CA577001F5254 /* SBTabViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabViewItem.swift; path = Classes/SBTabViewItem.swift; sourceTree = "<group>"; };
+		506E44B2198E654800178D36 /* NSSavePanel-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSavePanel-SBAdditions.h"; path = "Classes/NSSavePanel-SBAdditions.h"; sourceTree = "<group>"; };
+		506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSavePanel-SBAdditions.m"; path = "Classes/NSSavePanel-SBAdditions.m"; sourceTree = "<group>"; };
 		507A8E21195FFF6700BF56AD /* SBDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDefinitions.h; path = Sources/SBDefinitions.h; sourceTree = "<group>"; };
 		507A8E22195FFF6700BF56AD /* SBDefinitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDefinitions.m; path = Sources/SBDefinitions.m; sourceTree = "<group>"; };
 		507A8E24195FFF8800BF56AD /* SBDefinitionsS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDefinitionsS.swift; path = Sources/SBDefinitionsS.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -590,6 +595,7 @@
 				50ACCDF61963E76700CE593E /* SBCoverWindow.swift */,
 				08941F281015E353004CD4EA /* SBSavePanel.h */,
 				08941F291015E353004CD4EA /* SBSavePanel.m */,
+				505E49EF19882F3B001F5254 /* SBSavePanel.swift */,
 				5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */,
 			);
 			name = Windows;
@@ -609,6 +615,8 @@
 				08742F3F10233A60001F7EAF /* NSImage-SBAdditions.m */,
 				088BF5801023DD6100133BE0 /* NSMenu-SBAdditions.h */,
 				088BF5811023DD6100133BE0 /* NSMenu-SBAdditions.m */,
+				506E44B2198E654800178D36 /* NSSavePanel-SBAdditions.h */,
+				506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */,
 				08A73C311052C6CE00EBD683 /* NSScrollView-SBAdditions.h */,
 				08A73C321052C6CE00EBD683 /* NSScrollView-SBAdditions.m */,
 				08916E701009D5220012D4EA /* NSString-SBURLAdditions.h */,
@@ -1087,9 +1095,9 @@
 				08916C501009AFAF0012D4EA /* SBWebView.m in Sources */,
 				08916E721009D5220012D4EA /* NSString-SBURLAdditions.m in Sources */,
 				50CE69E019863F4C00C17D44 /* SBWebResourceIdentifier.swift in Sources */,
+				506E44B5198E654800178D36 /* NSSavePanel-SBAdditions.m in Sources */,
 				50B2A9A71960D74400DA1B4A /* SBHistory.swift in Sources */,
 				08F5B05A100B63FC0011B603 /* NSURL-SBAdditions.m in Sources */,
-				08941F2A1015E353004CD4EA /* SBSavePanel.m in Sources */,
 				5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */,
 				085278E810189DDC00544C80 /* SBDownloaderView.m in Sources */,
 				088D26E0101B3EC400691CEC /* SBBookmarkListView.m in Sources */,
@@ -1127,6 +1135,7 @@
 				088EC9E31081FEE600F8BFCB /* SBDownloadsView.m in Sources */,
 				088EC9E41081FEE600F8BFCB /* SBDownloadView.m in Sources */,
 				085A73791091C75500FE7556 /* SBHistoryView.m in Sources */,
+				506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */,
 				08B00E4610AE4808002277E5 /* SBUserAgentView.m in Sources */,
 				08313CA810B6B9CD004198C3 /* SBMessageView.m in Sources */,
 				089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */,
