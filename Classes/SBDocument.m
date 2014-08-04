@@ -1462,7 +1462,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBTabViewItem *tabViewItem = nil;
 	if ((tabViewItem = self.selectedTabViewItem))
 	{
-		NSMutableArray *resourceIdentifiers = nil;
+		NSArray *resourceIdentifiers = nil;
 		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			count = [resourceIdentifiers count];
@@ -1477,7 +1477,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBTabViewItem *tabViewItem = nil;
 	if ((tabViewItem = self.selectedTabViewItem))
 	{
-		NSMutableArray *resourceIdentifiers = nil;
+		NSArray *resourceIdentifiers = nil;
 		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			SBWebResourceIdentifier *resourceIdentifier = nil;
@@ -1544,7 +1544,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBTabViewItem *tabViewItem = nil;
 	if ((tabViewItem = self.selectedTabViewItem))
 	{
-		NSMutableArray *resourceIdentifiers = nil;
+		NSArray *resourceIdentifiers = nil;
 		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			SBWebResourceIdentifier *resourceIdentifier = nil;
@@ -1624,7 +1624,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBTabViewItem *tabViewItem = nil;
 	if ((tabViewItem = self.selectedTabViewItem))
 	{
-		NSMutableArray *resourceIdentifiers = nil;
+		NSArray *resourceIdentifiers = nil;
 		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			SBWebResourceIdentifier *resourceIdentifier = nil;
@@ -1662,7 +1662,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBTabViewItem *tabViewItem = nil;
 	if ((tabViewItem = self.selectedTabViewItem))
 	{
-		NSMutableArray *resourceIdentifiers = nil;
+		NSArray *resourceIdentifiers = nil;
 		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
 		{
 			SBWebResourceIdentifier *resourceIdentifier = nil;
