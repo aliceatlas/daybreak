@@ -52,10 +52,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBWebView;
 @class SBToolbar;
 @class SBPopUpButton;
+@protocol SBBookmarksViewDelegate;
 @protocol SBSplitViewDelegate;
 @protocol SBTabbarDelegate;
 @protocol SBToolbarDelegate;
-@interface SBDocument : NSDocument <SBTabbarDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate, NSWindowDelegate>
+@interface SBDocument : NSDocument <SBTabbarDelegate, SBDownloaderDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBBookmarksViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate, NSWindowDelegate>
 {
 	SBDocumentWindow *__weak window;
 	NSWindowController *__weak windowController;
