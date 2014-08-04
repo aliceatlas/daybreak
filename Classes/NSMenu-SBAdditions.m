@@ -76,7 +76,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSMenuItem *)addItemWithTitle:(NSString *)aString target:(id)target action:(SEL)aSelector tag:(NSInteger)tag
 {
-	NSMenuItem *item = [[[NSMenuItem alloc] init] autorelease];
+	NSMenuItem *item = [[NSMenuItem alloc] init];
 	[item setTitle:aString];
 	[item setTarget:target];
 	[item setAction:aSelector];
@@ -87,7 +87,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSMenuItem *)addItemWithTitle:(NSString *)aString representedObject:(id)representedObject target:(id)target action:(SEL)aSelector
 {
-	NSMenuItem *item = [[[NSMenuItem alloc] init] autorelease];
+	NSMenuItem *item = [[NSMenuItem alloc] init];
 	[item setTitle:aString];
 	[item setTarget:target];
 	[item setAction:aSelector];

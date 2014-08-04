@@ -39,7 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *wrapCheck;
 	NSString *searchedString;
 }
-@property (nonatomic, retain) NSString *searchedString;
+@property (nonatomic, strong) NSString *searchedString;
 
 + (CGFloat)minimumWidth;
 + (CGFloat)availableWidth;

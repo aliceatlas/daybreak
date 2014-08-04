@@ -30,20 +30,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSColor *frameColor;
 	BOOL keyView;
 	BOOL toolbarVisible;
-	id target;
+	id __unsafe_unretained target;
 	SEL doneSelector;
 	SEL cancelSelector;
 }
-@property (nonatomic, retain) NSColor *frameColor;
+@property (nonatomic, strong) NSColor *frameColor;
 @property (nonatomic) CGFloat animationDuration;
 @property (nonatomic) BOOL keyView;
 @property (nonatomic) BOOL toolbarVisible;
-@property NSRect frame;
-@property CALayer *layer;
-@property BOOL wantsLayer;
-@property CGFloat alphaValue;
+@property (nonatomic) CGFloat alphaValue;
 @property (nonatomic, readonly) NSView *subview;
-@property (nonatomic, assign) id target;
+@property (nonatomic, unsafe_unretained) id target;
 @property (nonatomic, assign) SEL doneSelector;
 @property (nonatomic, assign) SEL cancelSelector;
 

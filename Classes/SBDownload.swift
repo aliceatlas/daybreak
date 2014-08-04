@@ -37,7 +37,9 @@ class SBDownload: NSObject {
         }
         set(name) { _name = name }
     }
-    var URL: NSURL?
+    var URL: NSURL? {
+        return download?.request.URL
+    }
     var download: NSURLDownload?
     var path: String?
     var bytes: String?

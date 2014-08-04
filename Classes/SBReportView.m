@@ -56,21 +56,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return self;
 }
 
-- (void)dealloc
-{
-	[iconImageView release];
-	[titleLabel release];
-	[summeryLabel release];
-	[summeryField release];
-	[switchLabel release];
-	[switchMatrix release];
-	[wayLabel release];
-	[wayField release];
-	[cancelButton release];
-	[doneButton release];
-	[super dealloc];
-}
-
 #pragma mark Rects
 
 - (NSPoint)margin
@@ -289,7 +274,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	menu = [userAgentPopup menu];
 	names = [NSMutableArray arrayWithCapacity:0];
 	NSImage *icon0 = [SBUserAgentNames[0] isEqualToString:@"Sunrise"] ? [NSImage imageNamed:@"Application.icns"] : nil;
-	NSImage *icon1 = [SBUserAgentNames[1] isEqualToString:@"Safari"] ? [[[NSImage alloc] initWithContentsOfFile:@"/Applications/Safari.app/Contents/Resources/compass.icns"] autorelease] : nil;
+	NSImage *icon1 = [SBUserAgentNames[1] isEqualToString:@"Safari"] ? [[NSImage alloc] initWithContentsOfFile:@"/Applications/Safari.app/Contents/Resources/compass.icns"] : nil;
 	if (icon0) [icon0 setSize:NSMakeSize(24.0, 24.0)];
 	if (icon1) [icon1 setSize:NSMakeSize(24.0, 24.0)];
 	userAgentName = [[NSUserDefaults standardUserDefaults] objectForKey:kSBUserAgentName];
@@ -303,7 +288,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
 	for (NSUInteger i = 0; i < [names count]; i++)
 	{
-		NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:[names objectAtIndex:i] action:@selector(selectApp:) keyEquivalent:@""] autorelease];
+		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[names objectAtIndex:i] action:@selector(selectApp:) keyEquivalent:@""];
 		[item setTarget:self];
 		if (i < 2)
 			[item setImage:images[i]];
@@ -320,7 +305,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBBLKGUIButtonCell *cell = nil;
 	switchLabel = [[NSTextField alloc] initWithFrame:[self switchLabelRect]];
-	cell = [[[SBBLKGUIButtonCell alloc] init] autorelease];
+	cell = [[SBBLKGUIButtonCell alloc] init];
 	[cell setButtonType:NSRadioButton];
 	switchMatrix = [[NSMatrix alloc] initWithFrame:[self switchRect] mode:NSRadioModeMatrix prototype:cell numberOfRows:1 numberOfColumns:2];
 	[switchLabel setStringValue:NSLocalizedString(@"Reproducibility", nil)];
@@ -512,7 +497,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	
 	// Send message
-	errorDescription = [self sendMailWithMessage:[[message copy] autorelease] subject:NSLocalizedString(@"Sunrise Bug Report", nil) to:[NSArray arrayWithObject:kSBBugReportMailAddress]];
+	errorDescription = [self sendMailWithMessage:[message copy] subject:NSLocalizedString(@"Sunrise Bug Report", nil) to:[NSArray arrayWithObject:kSBBugReportMailAddress]];
 	if (!errorDescription)
 	{
 		[self done];

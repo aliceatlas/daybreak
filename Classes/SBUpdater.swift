@@ -49,7 +49,7 @@ class SBUpdater: NSObject {
         let request = NSURLRequest(URL: url, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
         var response: NSURLResponse?
         var error: NSError?
-        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        let data: NSData? = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
         let currentThread = NSThread.currentThread()
         let threadDictionary = currentThread.threadDictionary
         

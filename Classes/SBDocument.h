@@ -57,8 +57,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @protocol SBToolbarDelegate;
 @interface SBDocument : NSDocument <SBTabbarDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate, NSWindowDelegate>
 {
-	SBDocumentWindow *window;
-	NSWindowController *windowController;
+	SBDocumentWindow *__weak window;
+	NSWindowController *__weak windowController;
 	SBToolbar *toolbar;
 	NSView *urlView;
 	SBURLField *urlField;
@@ -86,13 +86,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger _identifier;
 	NSInteger confirmed;
 }
-@property (nonatomic, assign) SBDocumentWindow *window;
-@property (nonatomic, assign) NSWindowController *windowController;
-@property (nonatomic, retain) SBToolbar *toolbar;
-@property (nonatomic, retain) SBURLField *urlField;
-@property (nonatomic, retain) SBTabbar *tabbar;
-@property (nonatomic, retain) SBSplitView *splitView;
-@property (nonatomic, retain) NSURL *initialURL;
+@property (nonatomic, weak) SBDocumentWindow *window;
+@property (nonatomic, weak) NSWindowController *windowController;
+@property (nonatomic, strong) NSToolbar *toolbar;
+@property (nonatomic, strong) SBURLField *urlField;
+@property (nonatomic, strong) SBTabbar *tabbar;
+@property (nonatomic, strong) SBSplitView *splitView;
+@property (nonatomic, strong) NSURL *initialURL;
 @property (nonatomic) BOOL sidebarVisibility;
 @property (nonatomic, readonly) SBTabViewItem *selectedTabViewItem;
 @property (nonatomic, readonly) SBWebView *selectedWebView;
@@ -133,8 +133,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)destructMessageView;
 - (void)destructTextInputView;
 // Construction
-- (void)constructWindow;
-- (void)constructWindowController;
+- (SBDocumentWindow *)constructWindow;
+- (NSWindowController *)constructWindowController:(SBDocumentWindow *)newWindow;
 - (void)constructToolbar;
 - (void)constructURLField;
 - (void)constructLoadButton;

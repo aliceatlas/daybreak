@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBCircleProgressIndicator;
 @interface SBTabbarItem : SBView
 {
-	SBTabbar *tabbar;
+	SBTabbar *__weak tabbar;
 	SBCircleProgressIndicator *progressIndicator;
 	NSNumber *identifier;
 	NSImage *image;
@@ -42,11 +42,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL _dragInClose;
 	NSTrackingArea *area;
 }
-@property (nonatomic, assign) SBTabbar *tabbar;
-@property (nonatomic, retain) SBCircleProgressIndicator *progressIndicator;
-@property (nonatomic, retain) NSNumber *identifier;
-@property (nonatomic, retain) NSImage *image;
-@property (nonatomic, retain) NSString *title;
+@property (nonatomic, weak) SBTabbar *tabbar;
+@property (nonatomic, strong) SBCircleProgressIndicator *progressIndicator;
+@property (nonatomic, strong) NSNumber *identifier;
+@property (nonatomic, strong) NSImage *image;
+@property (nonatomic, strong) NSString *title;
 @property (nonatomic) BOOL selected;
 @property (nonatomic) BOOL closable;
 @property (nonatomic, assign) SEL closeSelector;

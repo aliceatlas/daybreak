@@ -36,7 +36,7 @@
 	NSTrackingArea *area;
 }
 @property (nonatomic) SBBookmarkMode mode;
-@property (nonatomic, retain) NSDictionary *item;
+@property (nonatomic, strong) NSDictionary *item;
 @property (nonatomic) BOOL selected;
 @property (nonatomic) BOOL dragged;
 @property (nonatomic, readonly) NSFont *titleFont;

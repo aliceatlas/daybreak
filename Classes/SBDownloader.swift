@@ -29,16 +29,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Foundation
 
 class SBDownloader: NSObject {
-    var url: NSURL
-    var delegate: SBDownloaderDelegate?
+    var url: NSURL?
+    weak var delegate: SBDownloaderDelegate?
     var connection: NSURLConnection?
     var receivedData: NSMutableData?
     
-    init(URL url: NSURL) {
+    init(URL url: NSURL?) {
         self.url = url
     }
     
-    class func downloadWithURL(url: NSURL) -> SBDownloader {
+    class func downloadWithURL(url: NSURL?) -> SBDownloader {
         return SBDownloader(URL: url)
     }
     

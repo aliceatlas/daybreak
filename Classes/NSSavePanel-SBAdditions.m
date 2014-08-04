@@ -26,12 +26,12 @@
 
 @implementation NSSavePanel (SBAdditions)
 + (instancetype)sbSavePanel {
-    return [[self savePanel] retain];
+    return [self savePanel];
 }
 @end
 
 @implementation NSOpenPanel (SBAdditions)
 + (instancetype)sbOpenPanel {
-    return [[self openPanel] retain];
+    return [self openPanel];
 }
 @end

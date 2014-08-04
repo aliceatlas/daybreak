@@ -53,30 +53,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return self;
 }
 
-- (void)dealloc
-{
-	[langField release];
-	[langPopup release];
-	[switchButton release];
-	[textSet release];
-	[fieldSet release];
-	[openButton release];
-	[cancelButton release];
-	[createButton release];
-	[editContentView release];
-	[editScrollView release];
-	[editView release];
-	
-	[iconImageView release];
-	[textField release];
-	[checkoutTitleField release];
-	[checkoutButton release];
-	[commitTitleField release];
-	[commitButton release];
-	[contributeView release];
-	[super dealloc];
-}
-
 - (CGFloat)margin
 {
 	return 20.0;
@@ -106,7 +82,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSView *aContentView = nil;
 	defaults = [NSUserDefaults standardUserDefaults];
 	languages = [defaults objectForKey:@"AppleLanguages"];
-	menu = [[[NSMenu alloc] init] autorelease];
+	menu = [[NSMenu alloc] init];
 	aContentView = [[self window] contentView];
 	contentRect = [aContentView bounds];
 	langFRect.size.width = 100.0;
@@ -308,12 +284,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (textSet != inTextSet)
 	{
-		[inTextSet retain];
-		if (textSet)
-		{
-			[textSet release];
-			textSet = nil;
-		}
 		textSet = inTextSet;
 		// Apply to fields
 		NSInteger i = 0;
@@ -340,23 +310,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSRect scrollRect = NSZeroRect;
 		CGFloat margin = [self margin];
 		CGFloat bottomMargin = [self bottomMargin];
-		[inFieldSet retain];
-		if (fieldSet)
-		{
-			[fieldSet release];
-			fieldSet = nil;
-		}
 		fieldSet = inFieldSet;
 		if (editContentView)
 		{
 			[editContentView removeFromSuperview];
-			[editContentView release];
 			editContentView = nil;
 		}
 		if (editScrollView)
 		{
 			[editScrollView removeFromSuperview];
-			[editScrollView release];
 			editScrollView = nil;
 		}
 		editContentView = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, viewSize.width, viewSize.height)];
@@ -503,13 +465,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[info setObject:editView forKey:NSViewAnimationTargetKey];
 	[info setObject:[NSValue valueWithRect:editRect0] forKey:NSViewAnimationStartFrameKey];
 	[info setObject:[NSValue valueWithRect:editRect1] forKey:NSViewAnimationEndFrameKey];
-	[animations addObject:[[info copy] autorelease]];
+	[animations addObject:[info copy]];
 	info = [NSMutableDictionary dictionaryWithCapacity:0];
 	[info setObject:contributeView forKey:NSViewAnimationTargetKey];
 	[info setObject:[NSValue valueWithRect:contributeRect0] forKey:NSViewAnimationStartFrameKey];
 	[info setObject:[NSValue valueWithRect:contributeRect1] forKey:NSViewAnimationEndFrameKey];
-	[animations addObject:[[info copy] autorelease]];
-	animation = [[[SBViewAnimation alloc] initWithViewAnimations:animations] autorelease];
+	[animations addObject:[info copy]];
+	animation = [[SBViewAnimation alloc] initWithViewAnimations:animations];
 	animation.context = [NSNumber numberWithUnsignedInteger:index];
 	[animation setDuration:duration];
 	[animation setDelegate:self];
@@ -593,7 +555,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)export
 {
-	SBSavePanel *panel = [[SBSavePanel sbSavePanel] autorelease];
+	SBSavePanel *panel = [SBSavePanel sbSavePanel];
 	NSString *langCode = [[langPopup selectedItem] representedObject];
 	NSString *name = langCode ? [langCode stringByAppendingPathExtension:@"strings"] : nil;
     panel.nameFieldStringValue = name;
@@ -628,11 +590,5 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @implementation SBViewAnimation
 
 @synthesize context;
-
-- (void)dealloc
-{
-	[context release];
-	[super dealloc];
-}
 
 @end

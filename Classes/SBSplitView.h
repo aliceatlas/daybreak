@@ -35,8 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat dividerThickness;
 	BOOL animating;
 }
-@property (nonatomic, retain) NSView *view;
-@property (nonatomic, retain) SBSidebar *sidebar;
+@property (nonatomic, strong) NSView *view;
+@property (nonatomic, strong) SBSidebar *sidebar;
 @property (nonatomic) SBSidebarPosition sidebarPosition;
 @property (nonatomic) NSRect frame;
 @property (nonatomic, readonly) BOOL visibleSidebar;

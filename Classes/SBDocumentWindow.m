@@ -81,11 +81,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)dealloc
 {
 	[self setDelegate:nil];
-	[innerView release];
 	[self destructCoverWindow];
-	[tabbar release];
-	[splitView release];
-	[super dealloc];
 }
 
 - (BOOL)isCovering
@@ -255,8 +251,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (tabbar != inTabbar)
 	{
-		[inTabbar retain];
-		[tabbar release];
 		tabbar = inTabbar;
 		NSRect r = [self tabbarRect];
 		if (!NSEqualRects(tabbar.frame, r))
@@ -272,8 +266,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (splitView != inSplitView)
 	{
-		[inSplitView retain];
-		[splitView release];
 		splitView = inSplitView;
 		NSRect r = [self splitViewRect];
 		if (!NSEqualRects(splitView.frame, r))
@@ -338,7 +330,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	r.size.height = hasVerticalScroller ? br.size.height : vr.size.height;
 	[self destructCoverWindow];
 	coverWindow = [[SBCoverWindow alloc] initWithParentWindow:self size:br.size];
-	scrollView = [[[SBBLKGUIScrollView alloc] initWithFrame:NSIntegralRect(r)] autorelease];
+	scrollView = [[SBBLKGUIScrollView alloc] initWithFrame:NSIntegralRect(r)];
 	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[scrollView setHasHorizontalScroller:hasHorizontalScroller];
 	[scrollView setHasVerticalScroller:hasVerticalScroller];
@@ -452,7 +444,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect doneRect = NSZeroRect;
 	doneRect.size.width = 105.0;
 	doneRect.size.height = 24.0;
-	doneButton = [[[SBBLKGUIButton alloc] initWithFrame:doneRect] autorelease];
+	doneButton = [[SBBLKGUIButton alloc] initWithFrame:doneRect];
 	[doneButton setTitle:NSLocalizedString(@"Done", nil)];
 	[doneButton setTarget:self];
 	[doneButton setAction:@selector(doneFlip)];

@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSScrollView *scroller = nil;
 	NSRect r = view.frame;
 	NSView *superview = [view superview];
-	scroller = [[[NSScrollView alloc] initWithFrame:r] autorelease];
+	scroller = [[NSScrollView alloc] initWithFrame:r];
 	[scroller setAutoresizingMask:[view autoresizingMask]];
 	[view removeFromSuperview];
 	[superview addSubview:scroller];

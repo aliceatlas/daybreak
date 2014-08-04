@@ -52,12 +52,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[view release];
 	[self destructDrawer];
 	[self destructBottombar];
 	[self destructDividerAnimation];
 	siderbarDelegate = nil;
-	[super dealloc];
 }
 
 #pragma mark Getter
@@ -187,10 +185,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if ([view respondsToSelector:@selector(setDataSource:)])
 				[(id)view setDataSource:nil];
 			[view removeFromSuperview];
-			[view release];
-			view = nil;
 		}
-		view = [aView retain];
+		view = aView;
 		[view setFrame:[self viewRect]];
 		if ([[self subviews] count] > 0)
 			[self addSubview:view positioned:NSWindowBelow relativeTo:[[self subviews] objectAtIndex:0]];
@@ -206,10 +202,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (drawer)
 		{
 			[drawer removeFromSuperview];
-			[drawer release];
-			drawer = nil;
 		}
-		drawer = [inDrawer retain];
+		drawer = inDrawer;
 		[self addSubview:drawer];
 	}
 }
@@ -243,7 +237,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (drawer)
 	{
 		[drawer removeFromSuperview];
-		[drawer release];
 		drawer = nil;
 	}
 }
@@ -253,7 +246,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (bottombar)
 	{
 		[bottombar removeFromSuperview];
-		[bottombar release];
 		bottombar = nil;
 	}
 }
@@ -262,7 +254,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (_divideAnimation)
 	{
-		[_divideAnimation release];
 		_divideAnimation = nil;
 	}
 }
@@ -307,11 +298,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
 		[info setObject:subview0 forKey:NSViewAnimationTargetKey];
 		[info setObject:[NSValue valueWithRect:r0] forKey:NSViewAnimationEndFrameKey];
-		[animations addObject:[[info copy] autorelease]];
+		[animations addObject:[info copy]];
 		[info removeAllObjects];
 		[info setObject:subview1 forKey:NSViewAnimationTargetKey];
 		[info setObject:[NSValue valueWithRect:r1] forKey:NSViewAnimationEndFrameKey];
-		[animations addObject:[[info copy] autorelease]];
+		[animations addObject:[info copy]];
 		[self destructDividerAnimation];
 		_divideAnimation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
 		[_divideAnimation setDuration:duration];
@@ -376,9 +367,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructDrawerButton];
 	[self destructNewFolderButton];
 	[self destructSizeSlider];
-	[buttons release];
 	delegate = nil;
-	[super dealloc];
 }
 
 #pragma mark Rects
@@ -514,7 +503,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (drawerButton)
 	{
 		[drawerButton removeFromSuperview];
-		[drawerButton release];
 		drawerButton = nil;
 	}
 }
@@ -524,7 +512,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (newFolderButton)
 	{
 		[newFolderButton removeFromSuperview];
-		[newFolderButton release];
 		newFolderButton = nil;
 	}
 }
@@ -534,7 +521,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (sizeSlider)
 	{
 		[sizeSlider removeFromSuperview];
-		[sizeSlider release];
 		sizeSlider = nil;
 	}
 }

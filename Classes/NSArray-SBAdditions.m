@@ -53,12 +53,12 @@
 			[indexes addIndex:index];
 		}
 	}
-	return [[indexes copy] autorelease];
+	return [indexes copy];
 }
 
 + (NSArray *)arrayWithArrays:(NSArray *)arrays
 {
-	return [[[self mutableArrayWithArrays:arrays] copy] autorelease];
+	return [[self mutableArrayWithArrays:arrays] copy];
 }
 
 + (NSMutableArray *)mutableArrayWithArrays:(NSArray *)arrays

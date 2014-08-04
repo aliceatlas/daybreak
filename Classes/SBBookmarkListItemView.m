@@ -36,8 +36,8 @@
 
 + (id)viewWithFrame:(NSRect)frame item:(NSDictionary *)item
 {
-	id view = [[[self alloc] initWithFrame:frame] autorelease];
-	[(SBBookmarkListItemView *)view setItem:item];
+	id view = [[self alloc] initWithFrame:frame];
+    ((SBBookmarkListItemView *)view).item = item;
 	return view;
 }
 
@@ -52,14 +52,6 @@
 		[self addTrackingArea:area];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[progressIndicator release];
-	[item release];
-	[area release];
-	[super dealloc];
 }
 
 #pragma mark View
@@ -122,7 +114,7 @@
 - (NSParagraphStyle *)paragraphStyle
 {
 	NSMutableParagraphStyle *paragraph = nil;
-	paragraph = [[[NSMutableParagraphStyle alloc] init] autorelease];
+	paragraph = [[NSMutableParagraphStyle alloc] init];
 	[paragraph setLineBreakMode:NSLineBreakByTruncatingTail];
 	if (mode == SBBookmarkIconMode || mode == SBBookmarkListMode)
 	{
@@ -132,7 +124,7 @@
 	{
 		[paragraph setAlignment:NSLeftTextAlignment];
 	}
-	return [[paragraph copy] autorelease];
+	return [paragraph copy];
 }
 
 #pragma mark Rects
@@ -144,7 +136,7 @@
 	CGFloat titleHeight = mode == SBBookmarkIconMode ? [self titleHeight] : 0.0;
 	CGFloat bytesHeight = mode == SBBookmarkIconMode ? [self bytesHeight] : 0.0;
 	NSData *imageData = [item objectForKey:kSBBookmarkImage];
-	NSImage *image = [[[NSImage alloc] initWithData:imageData] autorelease];
+	NSImage *image = [[NSImage alloc] initWithData:imageData];
 	NSSize imageSize = image ? [image size] : NSZeroSize;
 	NSPoint p = NSZeroPoint;
 	CGFloat s = 0;
@@ -297,7 +289,6 @@
 	{
 		SBRenderWindow *window = nil;
 		window = [SBRenderWindow startRenderingWithSize:NSMakeSize(800, 600) delegate:self url:url];
-		[window retain];
 	}
 }
 
@@ -350,9 +341,9 @@
 	if (data)
 	{
 		SBBookmarks *bookmarks = [SBBookmarks sharedBookmarks];
-		NSMutableDictionary *mItem = [[item mutableCopy] autorelease];
+		NSMutableDictionary *mItem = [item mutableCopy];
 		[mItem setObject:data forKey:kSBBookmarkImage];
-		[bookmarks replaceItem:item withItem:[[mItem copy] autorelease]];
+		[bookmarks replaceItem:item withItem:[mItem copy]];
 	}
 	[self hideProgress];
 	[renderWindow close];
@@ -450,7 +441,6 @@
 				CGContextAddPath(ctx, path);
 				CGContextClip(ctx);
 				[image drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-				[image release];
 				CGContextRestoreGState(ctx);
 			}
 			// title string
@@ -520,7 +510,6 @@
 							  [NSColor whiteColor], NSForegroundColorAttributeName, 
 							  self.paragraphStyle, NSParagraphStyleAttributeName, 
 							  shadow, NSShadowAttributeName, nil];
-				[shadow release];
 				size = [title sizeWithAttributes:attributes];
 				r.origin.y += (r.size.height - size.height) / 2;
 				r.size.height = size.height;
@@ -561,7 +550,6 @@
 				CGContextAddPath(ctx, path);
 				CGContextClip(ctx);
 				[image drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-				[image release];
 				CGContextRestoreGState(ctx);
 			}
 			
@@ -744,7 +732,6 @@
 							  [NSColor whiteColor], NSForegroundColorAttributeName, 
 							  self.paragraphStyle, NSParagraphStyleAttributeName, 
 							  shadow, NSShadowAttributeName, nil];
-				[shadow release];
 				size = [title sizeWithAttributes:attributes];
 				titleRect.origin.y += (titleRect.size.height - size.height) / 2;
 				titleRect.size.height = size.height;

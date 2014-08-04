@@ -35,8 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMutableArray *sectionGroupeViews;
 	NSMutableArray *sections;
 }
-@property (nonatomic, retain) NSMutableArray *sectionGroupeViews;
-@property (nonatomic, retain) NSMutableArray *sections;
+@property (nonatomic, strong) NSMutableArray *sectionGroupeViews;
+@property (nonatomic, strong) NSMutableArray *sections;
 
 - (id)initWithFrame:(NSRect)frame;
 - (NSRect)contentViewRect;
@@ -52,8 +52,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMutableArray *itemViews;
 	SBSectionGroupe *groupe;
 }
-@property (nonatomic, retain) NSMutableArray *itemViews;
-@property (nonatomic, retain) SBSectionGroupe *groupe;
+@property (nonatomic, strong) NSMutableArray *itemViews;
+@property (nonatomic, strong) SBSectionGroupe *groupe;
 
 - (NSRect)itemViewRectAtIndex:(NSInteger)index;
 - (void)addItemView:(SBSectionItemView *)itemView;
@@ -63,12 +63,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @interface SBSectionItemView : SBView <NSTextFieldDelegate>
 {
 	SBSectionItem *item;
-	NSImageView *currentImageView;
-	NSTextField *currentField;
+	NSImageView *__weak currentImageView;
+	NSTextField *__weak currentField;
 }
-@property (nonatomic, retain) SBSectionItem *item;
-@property (nonatomic, assign) NSImageView *currentImageView;
-@property (nonatomic, assign) NSTextField *currentField;
+@property (nonatomic, strong) SBSectionItem *item;
+@property (nonatomic, weak) NSImageView *currentImageView;
+@property (nonatomic, weak) NSTextField *currentField;
 
 - (id)initWithItem:(SBSectionItem *)inItem;
 - (NSRect)titleRect;

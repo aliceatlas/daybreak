@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Foundation
 
 class SBWebResourceIdentifier: NSObject /*, NSCoding */ {
-    var request: NSURLRequest? = nil
+    var request: NSURLRequest?
     var length: CLongLong = 0
     var received: CLongLong = 0
     var flag: Bool = true

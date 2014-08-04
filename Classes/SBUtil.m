@@ -64,7 +64,7 @@ SBDocument *SBGetSelectedDocument()
 WebPreferences *SBGetWebPreferences()
 {
 	WebPreferences *preferences = nil;
-	preferences = [[[WebPreferences alloc] initWithIdentifier:kSBWebPreferencesIdentifier] autorelease];
+	preferences = [[WebPreferences alloc] initWithIdentifier:kSBWebPreferencesIdentifier];
 	[preferences setAutosaves:YES];
 	return preferences;
 }
@@ -231,7 +231,7 @@ NSData *SBEmptyBookmarkImageData()
 	CGContextRelease(ctx);
 	if (image)
 	{
-		bitmapImageRep = [[[NSBitmapImageRep alloc] initWithCGImage:image] autorelease];
+		bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:image];
 		CGImageRelease(image);
 		data = [bitmapImageRep data];
 	}
@@ -265,12 +265,12 @@ NSDictionary *SBCreateBookmarkItem(NSString *title, NSString *url, NSData *image
 		[item setObject:labelName forKey:kSBBookmarkLabelName];
 	if (offsetString)
 		[item setObject:offsetString forKey:kSBBookmarkOffset];
-	return [[item copy] autorelease];
+	return [item copy];
 }
 
 NSMenu *SBBookmarkLabelColorMenu(BOOL pullsDown, id target, SEL action, id representedObject)
 {
-	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
+	NSMenu *menu = [[NSMenu alloc] init];
 	NSInteger i = 0;
 	if (pullsDown)
 		[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
@@ -278,7 +278,7 @@ NSMenu *SBBookmarkLabelColorMenu(BOOL pullsDown, id target, SEL action, id repre
 	{
 		NSString *labelName = SBBookmarkLabelColorNames[i];
 		NSImage *image = [NSImage colorImage:NSMakeSize(24.0, 16.0) colorName:labelName];
-		NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(labelName, nil) action:action keyEquivalent:@""] autorelease];
+		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(labelName, nil) action:action keyEquivalent:@""];
 		if (target)
 			[item setTarget:target];
 		if (representedObject)
@@ -315,11 +315,11 @@ NSArray *SBBookmarkItemsFromBookmarkDictionaryList(NSArray *bookmarkDictionaryLi
 				if (emptyImageData)
 					[item setObject:emptyImageData forKey:kSBBookmarkImage];
 				[item setObject:URLString forKey:kSBBookmarkURL];
-				[items addObject:[[item copy] autorelease]];
+				[items addObject:[item copy]];
 			}
 		}
 	}
-	return [items count] > 0 ? [[items copy] autorelease] : nil;
+	return [items count] > 0 ? [items copy] : nil;
 }
 
 #pragma mark Rects
@@ -431,7 +431,7 @@ NSString *SBBookmarksFilePath()
 		{
 			NSArray *items = nil;
 			// Exist version1 bookmarks
-			plistData = [[[NSData alloc] initWithContentsOfFile:version1Path] autorelease];
+			plistData = [[NSData alloc] initWithContentsOfFile:version1Path];
 			items = [NSPropertyListSerialization propertyListFromData:plistData mutabilityOption:NSPropertyListImmutable format:nil errorDescription:&errorString];
 			if (items)
 			{
@@ -609,7 +609,7 @@ CGPathRef SBRoundedPath(CGRect rect, CGFloat curve, CGFloat inner, BOOL top, BOO
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
 	
-	return (CGPathRef)[(id)copiedPath autorelease];
+    return CFAutorelease(copiedPath);
 }
 
 CGPathRef SBLeftButtonPath(CGSize size)
@@ -649,8 +649,8 @@ CGPathRef SBLeftButtonPath(CGSize size)
 	
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
-	
-	return (CGPathRef)[(id)copiedPath autorelease];
+    
+    return CFAutorelease(copiedPath);
 }
 
 CGPathRef SBCenterButtonPath(CGSize size)
@@ -661,8 +661,8 @@ CGPathRef SBCenterButtonPath(CGSize size)
 	
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
-	
-	return (CGPathRef)[(id)copiedPath autorelease];
+    
+    return CFAutorelease(copiedPath);
 }
 
 CGPathRef SBRightButtonPath(CGSize size)
@@ -702,8 +702,8 @@ CGPathRef SBRightButtonPath(CGSize size)
 	
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
-	
-	return (CGPathRef)[(id)copiedPath autorelease];
+    
+    return CFAutorelease(copiedPath);
 }
 
 // direction: 0 = left, 1 = top, 2 = right, 3 = bottom
@@ -772,8 +772,8 @@ CGPathRef SBTrianglePath(CGRect rect, NSInteger direction)
 	
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
-	
-	return (CGPathRef)[(id)copiedPath autorelease];
+    
+    return CFAutorelease(copiedPath);
 }
 
 CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
@@ -832,8 +832,8 @@ CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
 	
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
-	
-	return (CGPathRef)[(id)copiedPath autorelease];
+    
+    return CFAutorelease(copiedPath);
 }
 
 CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
@@ -913,8 +913,8 @@ CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
 	CGPathCloseSubpath(path);
 	copiedPath = CGPathCreateCopy(path);
 	CGPathRelease(path);
-	
-	return (CGPathRef)[(id)copiedPath autorelease];
+    
+    return CFAutorelease(copiedPath);
 }
 
 void SBCGPointApplyTransform3D(CGPoint *p, const CATransform3D *t)
@@ -1022,8 +1022,8 @@ CGImageRef SBBackwardIconImage(CGSize size, BOOL enabled, BOOL backing)
 	CGContextRestoreGState(ctx);
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBForwardIconImage(CGSize size, BOOL enabled, BOOL backing)
@@ -1079,8 +1079,8 @@ CGImageRef SBForwardIconImage(CGSize size, BOOL enabled, BOOL backing)
 	CGContextRestoreGState(ctx);
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBGoIconImage(CGSize size, BOOL enabled, BOOL backing)
@@ -1141,8 +1141,8 @@ CGImageRef SBGoIconImage(CGSize size, BOOL enabled, BOOL backing)
 	CGContextRestoreGState(ctx);
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBZoomOutIconImage(CGSize size)
@@ -1182,8 +1182,8 @@ CGImageRef SBZoomOutIconImage(CGSize size)
 	[NSGraphicsContext restoreGraphicsState];
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBActualSizeIconImage(CGSize size)
@@ -1225,8 +1225,8 @@ CGImageRef SBActualSizeIconImage(CGSize size)
 	[NSGraphicsContext restoreGraphicsState];
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBZoomInIconImage(CGSize size)
@@ -1268,8 +1268,8 @@ CGImageRef SBZoomInIconImage(CGSize size)
 	[NSGraphicsContext restoreGraphicsState];
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBAddIconImage(CGSize size, BOOL backing)
@@ -1418,8 +1418,8 @@ CGImageRef SBAddIconImage(CGSize size, BOOL backing)
 	CGPathRelease(path);
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBCloseIconImage()
@@ -1468,8 +1468,8 @@ CGImageRef SBCloseIconImage()
 	CGPathRelease(xPath);
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBIconImageWithName(NSString *imageName, SBButtonShape shape, CGSize size)
@@ -1633,8 +1633,8 @@ CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size)
 	
 	CGContextRestoreGState(ctx);
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBFindBackwardIconImage(CGSize size, BOOL enabled)
@@ -1718,8 +1718,8 @@ CGImageRef SBFindBackwardIconImage(CGSize size, BOOL enabled)
 	CGContextRestoreGState(ctx);
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBFindForwardIconImage(CGSize size, BOOL enabled)
@@ -1803,8 +1803,8 @@ CGImageRef SBFindForwardIconImage(CGSize size, BOOL enabled)
 	CGContextRestoreGState(ctx);
 	
 	image = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)image autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(image);
 }
 
 CGImageRef SBBookmarkReflectionMaskImage(CGSize size)
@@ -1832,8 +1832,8 @@ CGImageRef SBBookmarkReflectionMaskImage(CGSize size)
 	SBDrawGradientInContext(ctx, count, locations, colors, points);
 	CGContextRestoreGState(ctx);
 	maskImage = CGBitmapContextCreateImage(ctx);
-	CGContextRelease(ctx);
-	return (CGImageRef)[(id)maskImage autorelease];
+    CGContextRelease(ctx);
+    return CFAutorelease(maskImage);
 }
 
 #pragma mark Math
@@ -1898,7 +1898,7 @@ id SBValueForKey(NSString *keyName, NSDictionary *dictionary)
 
 NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
 {
-	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
+	NSMenu *menu = [[NSMenu alloc] init];
 	NSArray *encs = nil;
 	NSMutableArray *mencs = [NSMutableArray arrayWithCapacity:0];
 #if kSBFlagShowAllStringEncodings
@@ -1923,7 +1923,7 @@ NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
 		[mencs addObject:[NSNumber numberWithUnsignedInteger:*encoding]];
 		encoding++;
 	}
-	encs = [[mencs copy] autorelease];
+	encs = [mencs copy];
 #endif
 	
 	// Create menu items
@@ -1943,7 +1943,7 @@ NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
 			if (encodingName)
 			{
 				NSMenuItem *item = nil;
-				item = [[[NSMenuItem alloc] initWithTitle:encodingName action:selector keyEquivalent:@""] autorelease];
+				item = [[NSMenuItem alloc] initWithTitle:encodingName action:selector keyEquivalent:@""];
 				if (target)
 					[item setTarget:target];
 				[item setRepresentedObject:ianaName];
@@ -1954,7 +1954,7 @@ NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
 	if (showDefault)
 	{
 		NSMenuItem *defaultItem = nil;
-		defaultItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Default", nil) action:selector keyEquivalent:@""] autorelease];
+		defaultItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Default", nil) action:selector keyEquivalent:@""];
 		if (target)
 			[defaultItem setTarget:target];
 		[defaultItem setRepresentedObject:nil];
@@ -2087,7 +2087,7 @@ void SBGetLocalizableTextSet(NSString *path, NSMutableArray **tSet, NSArray **fS
 						BOOL editable = isMenuitem && j == 1;
 						NSString *string = component;
 						fieldRect.origin.x = j * (fieldSize.width + offset.x);
-						field = [[[NSTextField alloc] initWithFrame:fieldRect] autorelease];
+						field = [[NSTextField alloc] initWithFrame:fieldRect];
 						[field setEditable:editable];
 						[field setSelectable:isMenuitem];
 						[field setBordered:isMenuitem];
@@ -2115,7 +2115,7 @@ void SBGetLocalizableTextSet(NSString *path, NSMutableArray **tSet, NSArray **fS
 			}
 			*viewSize = size;
 			*tSet = textSet;
-			*fSet = [[fieldSet copy] autorelease];
+			*fSet = [fieldSet copy];
 		}
 	}
 }
@@ -2154,7 +2154,7 @@ NSData *SBLocalizableStringsData(NSArray *fieldSet)
 	}
 	if ([string length] > 0)
 	{
-		data = [[[string copy] autorelease] dataUsingEncoding:NSUTF16StringEncoding];
+		data = [string dataUsingEncoding:NSUTF16StringEncoding];
 	}
 	return data;
 }
@@ -2180,9 +2180,9 @@ NSDictionary *SBDebugViewStructure(NSView *view)
 			id subview = [subviews objectAtIndex:i];
 			[childs addObject:SBDebugViewStructure(subview)];
 		}
-		[info setObject:[[childs copy] autorelease] forKey:@"Children"];
+		[info setObject:[childs copy] forKey:@"Children"];
 	}
-	return [[info copy] autorelease];
+	return [info copy];
 }
 
 NSDictionary *SBDebugLayerStructure(CALayer *layer)
@@ -2201,9 +2201,9 @@ NSDictionary *SBDebugLayerStructure(CALayer *layer)
 			id sublayer = [sublayers objectAtIndex:i];
 			[childs addObject:SBDebugLayerStructure(sublayer)];
 		}
-		[info setObject:[[childs copy] autorelease] forKey:@"Children"];
+		[info setObject:[childs copy] forKey:@"Children"];
 	}
-	return [[info copy] autorelease];
+	return [info copy];
 }
 
 NSDictionary *SBDebugDumpMainMenu()
@@ -2211,7 +2211,7 @@ NSDictionary *SBDebugDumpMainMenu()
 	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
 	NSArray *items = SBDebugDumpMenu([[NSApplication sharedApplication] mainMenu]);
 	[info setObject:items forKey:@"MenuItems"];
-	return [[info copy] autorelease];
+	return [info copy];
 }
 
 NSArray *SBDebugDumpMenu(NSMenu *menu)
@@ -2249,9 +2249,9 @@ NSArray *SBDebugDumpMenu(NSMenu *menu)
 		{
 			[info setObject:SBDebugDumpMenu(submenu) forKey:@"MenuItems"];
 		}
-		[items addObject:[[info copy] autorelease]];
+		[items addObject:[info copy]];
 	}
-	return [[items copy] autorelease];
+	return [items copy];
 }
 
 BOOL SBDebugWriteViewStructure(NSView *view, NSString *path)

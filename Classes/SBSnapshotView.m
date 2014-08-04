@@ -67,35 +67,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidResizeNotification object:[self window]];
-	[image release];
 	[self destructUpdateTimer];
-	[scrollView release];
-	[imageView release];
-	[toolsView release];
-	[onlyVisibleButton release];
-	[updateButton release];
-	[sizeLabel release];
-	[widthField release];
-	[heightField release];
-	[scaleLabel release];
-	[scaleField release];
-	[lockButton release];
-	[filetypeLabel release];
-	[filetypePopup release];
-	[optionTabView release];
-	[tiffOptionLabel release];
-	[tiffOptionPopup release];
-	[jpgOptionLabel release];
-	[jpgOptionSlider release];
-	[jpgOptionField release];
-	[filesizeLabel release];
-	[filesizeField release];
 	target = nil;
-	[doneButton release];
-	[cancelButton release];
-	[title release];
-	[data release];
-	[super dealloc];
 }
 
 #pragma mark Rects
@@ -238,8 +211,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[scaleField setDelegate:self];
 	
 	// Views
-	tabViewItem0 = [[[NSTabViewItem alloc] initWithIdentifier:[NSString stringWithFormat:@"%d", NSTIFFFileType]] autorelease];
-	tabViewItem1 = [[[NSTabViewItem alloc] initWithIdentifier:[NSString stringWithFormat:@"%d", NSJPEGFileType]] autorelease];
+	tabViewItem0 = [[NSTabViewItem alloc] initWithIdentifier:[NSString stringWithFormat:@"%d", NSTIFFFileType]];
+	tabViewItem1 = [[NSTabViewItem alloc] initWithIdentifier:[NSString stringWithFormat:@"%d", NSJPEGFileType]];
 	[scrollView setDocumentView:imageView];
 	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[scrollView setHasHorizontalScroller:YES];
@@ -287,7 +260,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
 	for (i = 0; i < count; i++)
 	{
-		NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:fileTypeNames[i] action:@selector(selectFiletype:) keyEquivalent:@""] autorelease];
+		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:fileTypeNames[i] action:@selector(selectFiletype:) keyEquivalent:@""];
 		[item setTarget:self];
 		[item setTag:filetypes[i]];
 		[item setState:(filetype == filetypes[i] ? NSOnState : NSOffState)];
@@ -322,7 +295,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
 	for (i = 0; i < count; i++)
 	{
-		NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:compressionNames[i] action:@selector(selectTiffOption:) keyEquivalent:@""] autorelease];
+		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:compressionNames[i] action:@selector(selectTiffOption:) keyEquivalent:@""];
 		[item setTag:compressions[i]];
 		[item setState:(tiffCompression == compressions[i] ? NSOnState : NSOffState)];
 		if (tiffCompression == compressions[i])
@@ -437,7 +410,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (r == NSOKButton)
 		{
 			userInfo = [NSDictionary dictionaryWithObject:field forKey:@"Object"];
-			updateTimer = [[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateWithTimer:) userInfo:userInfo repeats:NO] retain];
+			updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateWithTimer:) userInfo:userInfo repeats:NO];
 		}
 		else {
 			if (field == widthField)
@@ -456,7 +429,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else {
 		userInfo = [NSDictionary dictionaryWithObject:field forKey:@"Object"];
-		updateTimer = [[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateWithTimer:) userInfo:userInfo repeats:NO] retain];
+		updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateWithTimer:) userInfo:userInfo repeats:NO];
 	}
 }
 
@@ -554,12 +527,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			NSRect r = NSZeroRect;
 			BOOL enableVisiblity = NO;
-			if (image != inImage)
-			{
-				[inImage retain];
-				[image release];
-				image = inImage;
-			}
+			image = inImage;
 			if ([onlyVisibleButton state] == NSOnState)
 			{
 				r.size = visibleRect.size;
@@ -593,7 +561,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (updateTimer)
 	{
 		[updateTimer invalidate];
-		[updateTimer release];
 		updateTimer = nil;
 	}
 }
@@ -647,16 +614,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat height = (CGFloat)[heightField intValue];
 	unsigned int length = 0;
 	NSImage *compressedImage = nil;
-	if (data)
-	{
-		[data release];
-		data = nil;
-	}
 	data = [self imageData:filetype size:NSMakeSize(width, height)];
-	[data retain];
 	if (data)
 	{
-		compressedImage = [[[NSImage alloc] initWithData:data] autorelease];
+		compressedImage = [[NSImage alloc] initWithData:data];
 	}
 	if (compressedImage)
 	{
@@ -916,14 +877,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[[NSUserDefaults standardUserDefaults] setFloat:jpgFactor forKey:kSBSnapshotJPGFactor];
 	// Update image
 	[self destructUpdateTimer];
-	updateTimer = [[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateWithTimer:) userInfo:nil repeats:NO] retain];
+	updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateWithTimer:) userInfo:nil repeats:NO];
 }
 
 - (void)save:(id)sender
 {
 	if (data)
 	{
-        SBSavePanel *panel = [[SBSavePanel sbSavePanel] autorelease];
+        SBSavePanel *panel = [SBSavePanel sbSavePanel];
         panel.canCreateDirectories = YES;
         panel.nameFieldStringValue = self.filename;
 		if ([panel runModal] == NSFileHandlingPanelOKButton)
@@ -941,7 +902,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (image)
 	{
 		[imageView setImage:nil];
-		[image release];
 		image = nil;
 	}
 	[self destructUpdateTimer];
@@ -999,7 +959,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	// Change filetype
 	aData = [anImage TIFFRepresentation];
-	[anImage release];
 	if (inFiletype == NSTIFFFileType)
 	{
 		bitmapImageRep = [NSBitmapImageRep imageRepWithData:aData];

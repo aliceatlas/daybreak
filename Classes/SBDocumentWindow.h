@@ -43,13 +43,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, readonly) NSRect innerRect;
 @property (nonatomic) BOOL keyView;
 @property (copy) NSString *title;
-@property (nonatomic, assign) SBToolbar *toolbar;
+@property (strong) SBToolbar *toolbar;
 @property (strong) NSView *contentView;
-@property (nonatomic, retain) SBInnerView *innerView;
-@property (nonatomic, retain) SBTabbar *tabbar;
-@property (nonatomic, retain) SBSplitView *splitView;
-@property (nonatomic, retain) SBCoverWindow *coverWindow;
-@property (nonatomic, retain) NSWindow *backWindow;
+@property (nonatomic, strong) SBInnerView *innerView;
+@property (nonatomic, strong) SBTabbar *tabbar;
+@property (nonatomic, strong) SBSplitView *splitView;
+@property (nonatomic, strong) SBCoverWindow *coverWindow;
+@property (nonatomic, strong) NSWindow *backWindow;
 @property (nonatomic) BOOL tabbarVisivility;
 
 - (id)initWithFrame:(NSRect)frame delegate:(id)delegate tabbarVisivility:(BOOL)inTabbarVisivility;

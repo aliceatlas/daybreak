@@ -41,8 +41,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *backButton;
 	NSMutableArray *items;
 }
-@property (nonatomic, assign) NSString *message;
-@property (nonatomic, retain) NSMutableArray *items;
+@property (nonatomic, weak) NSString *message;
+@property (nonatomic, strong) NSMutableArray *items;
 
 // Rects
 - (NSPoint)margin;

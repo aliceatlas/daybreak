@@ -41,17 +41,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[iconImageView release];
-	[titleLabel release];
-	[popup release];
-	[field release];
-	[cancelButton release];
-	[doneButton release];
-	[super dealloc];
-}
-
 #pragma mark Rects
 
 - (NSPoint)margin
@@ -208,14 +197,14 @@
 		[field setHidden:NO];
 	}
 	NSImage *icon0 = [SBUserAgentNames[0] isEqualToString:@"Sunrise"] ? [NSImage imageNamed:@"Application.icns"] : nil;
-	NSImage *icon1 = [SBUserAgentNames[1] isEqualToString:@"Safari"] ? [[[NSImage alloc] initWithContentsOfFile:@"/Applications/Safari.app/Contents/Resources/compass.icns"] autorelease] : nil;
+	NSImage *icon1 = [SBUserAgentNames[1] isEqualToString:@"Safari"] ? [[NSImage alloc] initWithContentsOfFile:@"/Applications/Safari.app/Contents/Resources/compass.icns"] : nil;
 	if (icon0) [icon0 setSize:NSMakeSize(24.0, 24.0)];
 	if (icon1) [icon1 setSize:NSMakeSize(24.0, 24.0)];
 	NSImage *images[2] = {icon0, icon1};
 	[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
 	for (i = 0; i < count; i++)
 	{
-		NSMenuItem *item = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(SBUserAgentNames[i], nil) action:@selector(selectApp:) keyEquivalent:@""] autorelease];
+		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(SBUserAgentNames[i], nil) action:@selector(selectApp:) keyEquivalent:@""];
 		[item setTarget:self];
 		if (i < 2)
 			[item setImage:images[i]];

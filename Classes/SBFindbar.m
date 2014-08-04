@@ -58,8 +58,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructForwardButton];
 	[self destructCaseSensitiveCheck];
 	[self destructWrapCheck];
-	[searchedString release];
-	[super dealloc];
 }
 
 + (CGFloat)minimumWidth
@@ -150,7 +148,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (contentView)
 	{
 		[contentView removeFromSuperview];
-		[contentView release];
 		contentView = nil;
 	}
 }
@@ -160,7 +157,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (closeButton)
 	{
 		[closeButton removeFromSuperview];
-		[closeButton release];
 		closeButton = nil;
 	}
 }
@@ -170,7 +166,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (searchField)
 	{
 		[searchField removeFromSuperview];
-		[searchField release];
 		searchField = nil;
 	}
 }
@@ -180,7 +175,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (backwardButton)
 	{
 		[backwardButton removeFromSuperview];
-		[backwardButton release];
 		backwardButton = nil;
 	}
 }
@@ -190,7 +184,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (forwardButton)
 	{
 		[forwardButton removeFromSuperview];
-		[forwardButton release];
 		forwardButton = nil;
 	}
 }
@@ -200,7 +193,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (caseSensitiveCheck)
 	{
 		[caseSensitiveCheck removeFromSuperview];
-		[caseSensitiveCheck release];
 		caseSensitiveCheck = nil;
 	}
 }
@@ -210,7 +202,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (wrapCheck)
 	{
 		[wrapCheck removeFromSuperview];
-		[wrapCheck release];
 		wrapCheck = nil;
 	}
 }

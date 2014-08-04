@@ -47,11 +47,9 @@
 - (void)dealloc
 {
 	delegate = nil;
-	[downloadViews release];
 	[self destructControls];
 	[self destructToolsTimer];
 	toolsItemView = nil;
-	[super dealloc];
 }
 
 #pragma mark Responder
@@ -137,7 +135,7 @@
 	BOOL find = NO;
 	for (SBDownloadView *downloadView in downloadViews)
 	{
-		if ([downloadView.download.identifier isEqualToNumber:item.identifier])
+		if (downloadView.download.identifier == item.identifier)
 		{
 			find = YES;
 			break;
@@ -147,7 +145,7 @@
 	{
 		NSUInteger count = [downloadViews count];
 		NSRect r = [self cellFrameAtIndex:count];
-		downloadView = [[[SBDownloadView alloc] initWithFrame:r] autorelease];
+		downloadView = [[SBDownloadView alloc] initWithFrame:r];
 		[downloadView setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
 		downloadView.download = item;
 		[downloadView update];
@@ -163,7 +161,7 @@
 	BOOL find = NO;
 	for (SBDownloadView *downloadView in downloadViews)
 	{
-		if ([downloadView.download.identifier isEqualToNumber:item.identifier])
+		if (downloadView.download.identifier == item.identifier)
 		{
 			[downloadView removeFromSuperview];
 			[downloadViews removeObject:downloadView];
@@ -227,7 +225,6 @@
 		toolsItemView = itemView;
 		[self destructToolsTimer];
 		toolsTimer = [NSTimer scheduledTimerWithTimeInterval:kSBDownloadsToolsInterval target:self selector:@selector(layoutTools) userInfo:nil repeats:NO];
-		[toolsTimer retain];
 	}
 }
 
@@ -281,13 +278,11 @@
 	if (removeButton)
 	{
 		[removeButton removeFromSuperview];
-		[removeButton release];
 		removeButton = nil;
 	}
 	if (finderButton)
 	{
 		[finderButton removeFromSuperview];
-		[finderButton release];
 		finderButton = nil;
 	}
 }
@@ -297,7 +292,6 @@
 	if (toolsTimer)
 	{
 		[toolsTimer invalidate];
-		[toolsTimer release];
 		toolsTimer = nil;
 	}
 }
@@ -372,7 +366,7 @@
 					[info setObject:downloadView forKey:NSViewAnimationTargetKey];
 					[info setObject:[NSValue valueWithRect:r0] forKey:NSViewAnimationStartFrameKey];
 					[info setObject:[NSValue valueWithRect:r1] forKey:NSViewAnimationEndFrameKey];
-					[animations addObject:[[info copy] autorelease]];
+					[animations addObject:[info copy]];
 				}
 				else {
 					downloadView.frame = r1;
@@ -386,7 +380,7 @@
 		}
 		if ([animations count] > 0)
 		{
-			NSViewAnimation *animation = [[[NSViewAnimation alloc] initWithViewAnimations:animations] autorelease];
+			NSViewAnimation *animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
 			[animation setDuration:0.25];
 			[animation setDelegate:self];
 			[animation startAnimation];

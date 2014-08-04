@@ -32,14 +32,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface SBWebView : WebView
 {
-	id delegate;
+	id __unsafe_unretained delegate;
 	BOOL showFindbar;
 	BOOL _magnified;
 	NSString *textEncodingName;
 }
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic) BOOL showFindbar;
-@property (nonatomic, retain) NSString *textEncodingName;
+@property (nonatomic, strong) NSString *textEncodingName;
 
 - (id)initWithFrame:(NSRect)frameRect frameName:(NSString *)frameName groupName:(NSString *)groupName;
 

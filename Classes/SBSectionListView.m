@@ -54,10 +54,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[sectionGroupeViews release];
-	[sections release];
 	[self destructScrollView];
-	[super dealloc];
 }
 
 - (NSRect)contentViewRect
@@ -101,13 +98,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (contentView)
 	{
 		[contentView removeFromSuperview];
-		[contentView release];
 		contentView = nil;
 	}
 	if (scrollView)
 	{
 		[scrollView removeFromSuperview];
-		[scrollView release];
 		scrollView = nil;
 	}
 }
@@ -117,7 +112,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIClipView *clipView = nil;
 	[self destructScrollView];
 	scrollView = [[NSScrollView alloc] initWithFrame:self.bounds];
-	clipView = [[[SBBLKGUIClipView alloc] initWithFrame:self.bounds] autorelease];
+	clipView = [[SBBLKGUIClipView alloc] initWithFrame:self.bounds];
 	contentView = [[NSView alloc] initWithFrame:self.bounds];
 	[scrollView setContentView:clipView];
 	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
@@ -139,13 +134,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		SBSectionGroupeView *groupeView = nil;
 		NSRect gr = [self groupeViewRectAtIndex:index];
-		groupeView = [[[SBSectionGroupeView alloc] initWithFrame:gr] autorelease];
+		groupeView = [[SBSectionGroupeView alloc] initWithFrame:gr];
 		groupeView.groupe = groupe;
 		[groupeView setAutoresizingMask:(NSViewWidthSizable)];
 		for (SBSectionItem *item in groupe.items)
 		{
 			SBSectionItemView *itemView = nil;
-			itemView = [[[SBSectionItemView alloc] initWithItem:item] autorelease];
+			itemView = [[SBSectionItemView alloc] initWithItem:item];
 			[itemView setAutoresizingMask:(NSViewWidthSizable)];
 			[groupeView addItemView:itemView];
 		}
@@ -158,8 +153,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (sections != inSections)
 	{
-		[inSections retain];
-		[sections release];
 		sections = inSections;
 		contentView.frame = [self contentViewRect];
 		[contentView scrollRectToVisible:NSMakeRect(0, NSMaxY(contentView.frame), 0, 0)];
@@ -181,13 +174,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		itemViews = [[NSMutableArray alloc] initWithCapacity:0];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[itemViews release];
-	[groupe release];
-	[super dealloc];
 }
 
 - (NSRect)itemViewRectAtIndex:(NSInteger)index
@@ -323,10 +309,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[item release];
 	currentImageView = nil;
 	currentField = nil;
-	[super dealloc];
 }
 
 - (NSRect)titleRect
@@ -355,7 +339,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSMenuItem *selectedItem = nil;
 		r.origin.y = (r.size.height - 26.0) / 2;
 		r.size.height = 26.0;
-		popUp = [[[NSPopUpButton alloc] initWithFrame:r pullsDown:NO] autorelease];
+		popUp = [[NSPopUpButton alloc] initWithFrame:r pullsDown:NO];
 		if ([item.context isKindOfClass:[NSMenu class]])
 		{
 			[popUp setTarget:self];
@@ -373,7 +357,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSTextField *field = nil;
 		r.origin.y = (r.size.height - 22.0) / 2;
 		r.size.height = 22.0;
-		field = [[[NSTextField alloc] initWithFrame:r] autorelease];
+		field = [[NSTextField alloc] initWithFrame:r];
 		[field setDelegate:self];
 		[[field cell] setFocusRingType:NSFocusRingTypeNone];
 		[[field cell] setPlaceholderString:[item.context isKindOfClass:[NSString class]] ? item.context : nil];
@@ -404,9 +388,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		fr.size.height = 22.0;
 		br.origin.y = (br.size.height - 32.0) / 2;
 		br.size.height = 32.0;
-		button = [[[NSButton alloc] initWithFrame:br] autorelease];
-		imageView = [[[NSImageView alloc] initWithFrame:ir] autorelease];
-		field = [[[NSTextField alloc] initWithFrame:fr] autorelease];
+		button = [[NSButton alloc] initWithFrame:br];
+		imageView = [[NSImageView alloc] initWithFrame:ir];
+		field = [[NSTextField alloc] initWithFrame:fr];
 		[button setTarget:self];
 		[button setAction:@selector(open:)];
 		[button setTitle:NSLocalizedString(@"Open…", nil)];
@@ -438,7 +422,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSButton *button = nil;
 		r.origin.y = (r.size.height - 18.0) / 2;
 		r.size.height = 18.0;
-		button = [[[NSButton alloc] initWithFrame:r] autorelease];
+		button = [[NSButton alloc] initWithFrame:r];
 		[button setTarget:self];
 		[button setAction:@selector(check:)];
 		[button setButtonType:NSSwitchButton];
@@ -475,32 +459,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)open:(id)sender
 {
-	SBOpenPanel *panel = [[SBOpenPanel sbOpenPanel] autorelease];
-	NSWindow *window = [self window];
-	[panel setAllowsMultipleSelection:NO];
-	[panel setCanChooseFiles:NO];
-	[panel setCanChooseDirectories:YES];
-	[panel beginSheetForDirectory:nil file:nil types:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(openDidEnd:returnCode:contextInfo:) contextInfo:sender];
-}
-
-- (void)openDidEnd:(NSOpenPanel *)panel returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	[panel orderOut:nil];
-	if (returnCode == NSOKButton)
-	{
-		if (self.currentImageView && self.currentField && item.keyName)
+	SBOpenPanel *panel = [SBOpenPanel sbOpenPanel];
+	NSWindow *window = self.window;
+	panel.allowsMultipleSelection = NO;
+	panel.canChooseFiles = NO;
+	panel.canChooseDirectories = YES;
+	[panel beginSheetModalForWindow:window completionHandler:^(NSInteger returnCode) {
+		[panel orderOut:nil];
+		if (returnCode == NSOKButton)
 		{
-			NSWorkspace *space = [NSWorkspace sharedWorkspace];
-			NSString *path = [panel filename];
-			NSString *tpath = [path stringByAbbreviatingWithTildeInPath];
-			NSImage *image = [space iconForFile:path];
-			if (image)
-				[image setSize:NSMakeSize(16.0, 16.0)];
-			[self.currentImageView setImage:image];
-			[self.currentField setStringValue:tpath];
-			[SBPreferences setObject:path forKey:item.keyName];
+			if (self.currentImageView && self.currentField && item.keyName)
+			{
+				NSWorkspace *space = [NSWorkspace sharedWorkspace];
+				NSString *path = panel.URL.path;
+				NSString *tpath = [path stringByAbbreviatingWithTildeInPath];
+				NSImage *image = [space iconForFile:path];
+				if (image)
+					image.size = NSMakeSize(16.0, 16.0);
+				self.currentImageView.image = image;
+				self.currentField.stringValue = tpath;
+				[SBPreferences setObject:path forKey:item.keyName];
+			}
 		}
-	}
+		
+	}];
 }
 
 - (void)check:(id)sender
@@ -546,7 +528,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	titleRect.size.height = [titleString sizeWithAttributes:attributes].height;
 	titleRect.origin.y = (self.bounds.size.height - titleRect.size.height) / 2;
 	[titleString drawInRect:titleRect withAttributes:attributes];
-	[paragraph release];
 }
 
 @end

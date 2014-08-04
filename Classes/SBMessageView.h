@@ -35,8 +35,8 @@
 	SBBLKGUIButton *cancelButton;
 	SBBLKGUIButton *doneButton;
 }
-@property (nonatomic, assign) NSString *message;
-@property (nonatomic, assign) NSString *text;
+@property (nonatomic, weak) NSString *message;
+@property (nonatomic, weak) NSString *text;
 
 - (id)initWithFrame:(NSRect)frame text:(NSString *)inText;
 // Rects

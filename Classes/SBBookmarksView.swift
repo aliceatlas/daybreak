@@ -33,7 +33,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     var searchbar: SBSearchbar?
     var scrollView: SBBLKGUIScrollView?
     var listView: SBBookmarkListView?
-    var delegate: SBBookmarksViewDelegate?
+    weak var delegate: SBBookmarksViewDelegate?
     
     func splitWidth(proposedWidth: CGFloat) -> CGFloat {
         return listView ? listView!.splitWidth(proposedWidth) : 0

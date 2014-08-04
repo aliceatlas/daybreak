@@ -45,16 +45,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return self;
 }
 
-- (void)dealloc
-{
-	[messageLabel release];
-	[urlLabel release];
-	[urlField release];
-	[doneButton release];
-	[cancelButton release];
-	[super dealloc];
-}
-
 #pragma mark Rects
 
 - (NSPoint)margin
