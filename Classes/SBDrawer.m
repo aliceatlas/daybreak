@@ -43,12 +43,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return r;
 }
 
-- (void)dealloc
-{
-	[view release];
-	[super dealloc];
-}
-
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize
 {
 	[super resizeSubviewsWithOldSize:oldBoundsSize];
@@ -65,8 +59,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (view != aView)
 	{
-		[aView retain];
-		[view release];
 		view = aView;
 		if (!scrollView)
 		{

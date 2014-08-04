@@ -53,10 +53,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[view release];
-	[sidebar release];
 	[self destructDividerAnimation];
-	[super dealloc];
 }
 
 #pragma mark Rects
@@ -108,10 +105,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (view)
 		{
 			[view removeFromSuperview];
-			[view release];
-			view = nil;
 		}
-		view = [aView retain];
+		view = aView;
 		[self addSubview:view];
 	}
 }
@@ -123,10 +118,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (sidebar)
 		{
 			[sidebar removeFromSuperview];
-			[sidebar release];
-			sidebar = nil;
 		}
-		sidebar = [aSidebar retain];
+		sidebar = aSidebar;
 		[self addSubview:sidebar];
 		[self switchView:sidebarPosition];
 	}
@@ -153,11 +146,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)destructDividerAnimation
 {
-	if (_divideAnimation)
-	{
-		[_divideAnimation release];
-		_divideAnimation = nil;
-	}
+    _divideAnimation = nil;
 }
 
 #pragma mark SplitView
@@ -240,10 +229,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			if (subview0)
 			{
-				[subview0 retain];
 				[subview0 removeFromSuperview];
 				[self addSubview:subview0];
-				[subview0 release];
 			}
 		}
 	}
@@ -263,7 +250,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)takeSidebar
 {
-	[sidebar retain];
 	[sidebar removeFromSuperview];
 }
 
@@ -286,7 +272,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[view removeFromSuperview];
 		[self addSubview:sidebar];
 		[self addSubview:view];
-		[sidebar release];
 	}
 	else if (sidebarPosition == SBSidebarRightPosition)
 	{

@@ -30,10 +30,10 @@
 	NSURL *url;
 	NSURLConnection *connection;
 	NSMutableData *receivedData;
-	id delegate;
+	id __unsafe_unretained delegate;
 }
-@property (nonatomic, retain) NSURL *url;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, strong) NSURL *url;
+@property (nonatomic, unsafe_unretained) id delegate;
 
 + (id)downloadWithURL:(NSURL *)url;
 // Execute

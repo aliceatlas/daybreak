@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSProgressIndicator *indicator;
 	BOOL on;
 }
-@property (nonatomic, retain) NSArray *images;
+@property (nonatomic, strong) NSArray *images;
 @property (nonatomic) BOOL on;
 
 - (void)constructIndicator;

@@ -58,7 +58,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	_draggedItem = nil;
 	_shouldReselectItem = nil;
 	closableItem = nil;
-	[super dealloc];
 }
 
 #pragma mark Rects
@@ -247,7 +246,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (contentView)
 	{
 		[contentView removeFromSuperview];
-		[contentView release];
 		contentView = nil;
 	}
 }
@@ -257,7 +255,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (items)
 	{
 		[items removeAllObjects];
-		[items release];
 		items = nil;
 	}
 }
@@ -272,7 +269,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (addButton)
 	{
 		[addButton removeFromSuperview];
-		[addButton release];
 		addButton = nil;
 	}
 }
@@ -282,7 +278,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (autoScrollTimer)
 	{
 		[autoScrollTimer invalidate];
-		[autoScrollTimer release];
 		autoScrollTimer = nil;
 	}
 }
@@ -292,7 +287,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (closableTimer)
 	{
 		[closableTimer invalidate];
-		[closableTimer release];
 		closableTimer = nil;
 	}
 }
@@ -403,7 +397,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBTabbarItem *newItem = nil;
 	NSRect r = [self newItemRect];
-	newItem = [[[SBTabbarItem alloc] initWithFrame:r] autorelease];
+	newItem = [[SBTabbarItem alloc] initWithFrame:r];
 	newItem.tabbar = self;
 	newItem.identifier = identifier;
 	newItem.target = self;
@@ -552,7 +546,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if ([items count] > 0)
 	{
 		BOOL shouldSelect = (item.selected);
-		NSString *itemIdentifier = [[item.identifier copy] autorelease];
+		NSString *itemIdentifier = [item.identifier copy];
 		NSUInteger index = [items indexOfObject:item];
 		if ([self removeItem:item])
 		{
@@ -695,7 +689,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if ([self autoScrollWithPoint:point])
 		{
 			autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(mouseDraggedWithTimer:) userInfo:userInfo repeats:YES];
-			[autoScrollTimer retain];
 		}
 	}
 }
@@ -718,7 +711,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		closableItem = item;
 		[self destructClosableTimer];
 		closableTimer = [NSTimer scheduledTimerWithTimeInterval:kSBTabbarItemClosableInterval target:self selector:@selector(applyClosableItem) userInfo:nil repeats:NO];
-		[closableTimer retain];
 	}
 }
 
@@ -803,7 +795,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[info setObject:item forKey:NSViewAnimationTargetKey];
 			[info setObject:[NSValue valueWithRect:item.frame] forKey:NSViewAnimationStartFrameKey];
 			[info setObject:[NSValue valueWithRect:r] forKey:NSViewAnimationEndFrameKey];
-			[animations addObject:[[info copy] autorelease]];
+			[animations addObject:[info copy]];
 		}
 		else {
 			[item setNeedsDisplay:YES];
@@ -817,12 +809,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[info setObject:addButton forKey:NSViewAnimationTargetKey];
 		[info setObject:[NSValue valueWithRect:addButton.frame] forKey:NSViewAnimationStartFrameKey];
 		[info setObject:[NSValue valueWithRect:r] forKey:NSViewAnimationEndFrameKey];
-		[animations addObject:[[info copy] autorelease]];
+		[animations addObject:[info copy]];
 	}
 	
 	if ([animations count] > 0 && !_animating)
 	{
-		NSViewAnimation *animation = [[[NSViewAnimation alloc] initWithViewAnimations:animations] autorelease];
+		NSViewAnimation *animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
 		[animation setDuration:0.25];
 		[animation setDelegate:self];
 		[animation startAnimation];
@@ -872,11 +864,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					[self executeShouldOpenURLs:[NSArray arrayWithObject:[urls objectAtIndex:0]] startInItem:item];
 				}
 				else {
-					[self executeShouldAddNewItemForURLs:[[urls copy] autorelease]];
+					[self executeShouldAddNewItemForURLs:[urls copy]];
 				}
 			}
 			else {
-				[self executeShouldAddNewItemForURLs:[[urls copy] autorelease]];
+				[self executeShouldAddNewItemForURLs:[urls copy]];
 			}
 		}
 	}
@@ -1008,7 +1000,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		BOOL single = [items count] == 1;
 		NSInteger index = [items indexOfObject:item];
-		menu = [[[NSMenu alloc] init] autorelease];
+		menu = [[NSMenu alloc] init];
 		[menu addItemWithTitle:NSLocalizedString(@"New Tab", nil) action:@selector(addNewItem:) keyEquivalent:[NSString string]];
 		if (single)
 		{
@@ -1026,7 +1018,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
-	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
+	NSMenu *menu = [[NSMenu alloc] init];
 	[menu addItemWithTitle:NSLocalizedString(@"New Tab", nil) action:@selector(addNewItem:) keyEquivalent:[NSString string]];
 	return menu;
 }

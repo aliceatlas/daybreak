@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSMutableArray *items;
 }
-@property (nonatomic, retain) NSMutableArray *items;
+@property (nonatomic, strong) NSMutableArray *items;
 
 + (id)sharedBookmarks;
 - (id)init;

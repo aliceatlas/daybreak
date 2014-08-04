@@ -41,7 +41,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)dealloc
 {
 	delegate = nil;
-	[super dealloc];
 }
 
 - (void)performFind:(id)sender

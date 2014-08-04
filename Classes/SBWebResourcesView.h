@@ -43,11 +43,11 @@
 {
 	NSScrollView *scrollView;
 	NSTableView *tableView;
-	id<SBWebResourcesViewDataSource> dataSource;
-	id<SBWebResourcesViewDelegate> delegate;
+	id<SBWebResourcesViewDataSource> __unsafe_unretained dataSource;
+	id<SBWebResourcesViewDelegate> __unsafe_unretained delegate;
 }
-@property (nonatomic, assign) id<SBWebResourcesViewDataSource> dataSource;
-@property (nonatomic, assign) id<SBWebResourcesViewDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<SBWebResourcesViewDataSource> dataSource;
+@property (nonatomic, unsafe_unretained) id<SBWebResourcesViewDelegate> delegate;
 
 // Constructions
 - (void)constructTableView;
@@ -60,7 +60,7 @@
 {
 	NSImage *highlightedImage;
 }
-@property (nonatomic, retain) NSImage *highlightedImage;
+@property (nonatomic, strong) NSImage *highlightedImage;
 
 - (CGFloat)side;
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;

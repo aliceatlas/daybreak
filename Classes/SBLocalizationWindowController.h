@@ -49,8 +49,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSButton *commitButton;
 	BOOL animating;
 }
-@property (nonatomic, retain) NSMutableArray *textSet;
-@property (nonatomic, retain) NSArray *fieldSet;
+@property (nonatomic, strong) NSMutableArray *textSet;
+@property (nonatomic, strong) NSArray *fieldSet;
 
 - (CGFloat)margin;
 - (CGFloat)topMargin;
@@ -77,6 +77,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	id context;
 }
-@property (nonatomic, retain) id context;
+@property (nonatomic, strong) id context;
 
 @end

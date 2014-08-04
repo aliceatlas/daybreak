@@ -66,9 +66,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *title;
 	NSData *data;
 }
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, readonly) NSString *filename;
-@property (nonatomic, retain) NSData *data;
+@property (nonatomic, strong) NSString *title;
+@property (weak, nonatomic, readonly) NSString *filename;
+@property (nonatomic, strong) NSData *data;
 
 // Rects
 - (NSPoint)margin;

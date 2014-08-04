@@ -77,20 +77,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[backwardButton release];
-	[forwardButton release];
-	[imageView release];
-	[field release];
-	[goButton release];
-	[sheet release];
-	[contentView release];
 	dataSource = nil;
 	delegate = nil;
-	[gsItems release];
-	[bmItems release];
-	[hItems release];
-	[items release];
-	[super dealloc];
 }
 
 - (NSSize)minimumSize
@@ -567,7 +555,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			data = item ? [item objectForKey:kSBImage] : nil;
 			if (data)
 			{
-				image = [[[NSImage alloc] initWithData:data] autorelease];
+				image = [[NSImage alloc] initWithData:data];
 				[image setSize:NSMakeSize(16.0, 16.0)];
 			}
 			string = title;
@@ -585,7 +573,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			data = item ? [item objectForKey:kSBImage] : nil;
 			if (data)
 			{
-				image = [[[NSImage alloc] initWithData:data] autorelease];
+				image = [[NSImage alloc] initWithData:data];
 				[image setSize:NSMakeSize(16.0, 16.0)];
 			}
 			string = item ? [item objectForKey:kSBURL] : nil;
@@ -1081,7 +1069,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	textRect.size.height = size.height;
 	textRect.size.width = textSize.width;
 	textRect.origin.x = (margin + NSMaxX(imageRect));
-	image = [[[NSImage alloc] initWithSize:size] autorelease];
+	image = [[NSImage alloc] initWithSize:size];
 	
 	[image lockFocus];	
 	[[self image] drawInRect:imageRect fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
@@ -1093,44 +1081,44 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)mouseDown:(NSEvent *)event
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
-	
-	for (;;)
-	{
-		NSEvent *newEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-		NSPoint newPoint = [self convertPoint:[newEvent locationInWindow] fromView:nil];
-		BOOL isDragging = NO;
-		if (NSPointInRect(newPoint,[self bounds]))
-		{
-			if ([newEvent type] == NSLeftMouseUp)
-			{
-				[self mouseUpActionWithEvent:event];
-				break;
-			}
-			else if ([newEvent type] == NSLeftMouseDragged)
-			{
-				isDragging = YES;
-			}
-		}
-		else {
-			if ([newEvent type] == NSLeftMouseDragged)
-			{
-				isDragging = YES;
-			}
-		}
+	@autoreleasepool {
+		NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
 		
-		if (isDragging)
+		for (;;)
 		{
-			NSPoint delta = NSMakePoint(point.x - newPoint.x,point.y - newPoint.y);
-			if (delta.x >= 5 || delta.x <= -5 || delta.y >= 5 || delta.y <= -5)
+			NSEvent *newEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+			NSPoint newPoint = [self convertPoint:[newEvent locationInWindow] fromView:nil];
+			BOOL isDragging = NO;
+			if (NSPointInRect(newPoint,[self bounds]))
 			{
-				[self mouseDraggedActionWithEvent:event];
-				break;
+				if ([newEvent type] == NSLeftMouseUp)
+				{
+					[self mouseUpActionWithEvent:event];
+					break;
+				}
+				else if ([newEvent type] == NSLeftMouseDragged)
+				{
+					isDragging = YES;
+				}
+			}
+			else {
+				if ([newEvent type] == NSLeftMouseDragged)
+				{
+					isDragging = YES;
+				}
+			}
+			
+			if (isDragging)
+			{
+				NSPoint delta = NSMakePoint(point.x - newPoint.x,point.y - newPoint.y);
+				if (delta.x >= 5 || delta.x <= -5 || delta.y >= 5 || delta.y <= -5)
+				{
+					[self mouseDraggedActionWithEvent:event];
+					break;
+				}
 			}
 		}
 	}
-	[pool release];
 }
 
 - (void)mouseDraggedActionWithEvent:(NSEvent *)theEvent
@@ -1310,12 +1298,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[_scroller release];
-	[_text release];
-	[_table release];
 	dataSource = nil;
 	delegate = nil;
-	[super dealloc];
 }
 
 - (SBURLField *)field
@@ -1349,8 +1333,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	tableRect.size = scrollerRect.size;
 	_scroller = [[SBBLKGUIScrollView alloc] initWithFrame:scrollerRect];
 	_table = [[NSTableView alloc] initWithFrame:tableRect];
-	column = [[[NSTableColumn alloc] initWithIdentifier:kSBURL] autorelease];
-	cell = [[[SBURLFieldDataCell alloc] init] autorelease];
+	column = [[NSTableColumn alloc] initWithIdentifier:kSBURL];
+	cell = [[SBURLFieldDataCell alloc] init];
 	[cell setFont:[NSFont systemFontOfSize:12.0]];
 	[cell setAlignment:NSLeftTextAlignment];
 	[column setDataCell:cell];
@@ -1453,7 +1437,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if (![URLString isEqualToString:[field stringValue]])
 			{
 				NSData *data = [selectedItem objectForKey:kSBImage];
-				NSImage *icon = [[[NSImage alloc] initWithData:data] autorelease];
+				NSImage *icon = [[NSImage alloc] initWithData:data];
 				[field setURLString:URLString];
 				[field setImage:icon];
 				r = YES;
@@ -1656,7 +1640,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		sTextColor = [self isHighlighted] ? [NSColor clearColor] : [NSColor whiteColor];
 		color = [self isHighlighted] ? [NSColor whiteColor] : [NSColor colorWithCalibratedRed:textColors[0] green:textColors[1] blue:textColors[2] alpha:textColors[3]];
 		font = [NSFont systemFontOfSize:sectionHeader ? 11.0 : 12.0];
-		paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+		paragraphStyle = [[NSMutableParagraphStyle alloc] init];
 		[paragraphStyle setLineBreakMode:NSLineBreakByTruncatingTail];
 		attribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
 		sattribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, sTextColor, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];

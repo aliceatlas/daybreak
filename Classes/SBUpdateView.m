@@ -60,20 +60,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return self;
 }
 
-- (void)dealloc
-{
-	[imageView release];
-	[titleLabel release];
-	[textLabel release];
-	[webView release];
-	[indicator release];
-	[skipButton release];
-	[cancelButton release];
-	[doneButton release];
-	[versionString release];
-	[super dealloc];
-}
-
 #pragma mark Rect
 
 - (NSPoint)margin
@@ -355,7 +341,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSString *baseHTML = nil;
 		NSString *releasenotes = nil;
 		baseHTML = [NSString stringWithContentsOfURL:baseURL encoding:NSUTF8StringEncoding error:nil];
-		releasenotes = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+		releasenotes = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 		if (baseHTML && releasenotes)
 		{
 			htmlString = [NSString stringWithFormat:baseHTML, releasenotes];

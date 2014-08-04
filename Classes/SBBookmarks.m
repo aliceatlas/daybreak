@@ -51,12 +51,6 @@ static SBBookmarks *sharedBookmarks;
 	return self;
 }
 
-- (void)dealloc
-{
-	[items release];
-	[super dealloc];
-}
-
 #pragma mark Getter
 
 - (BOOL)containsURL:(NSString *)urlString
@@ -153,7 +147,7 @@ static SBBookmarks *sharedBookmarks;
 			[indexes addIndex:index];
 		}
 	}
-	return [[indexes copy] autorelease];
+	return [indexes copy];
 }
 
 #pragma mark Notify
@@ -280,10 +274,8 @@ static SBBookmarks *sharedBookmarks;
 		{
 			to -= offset;
 		}
-		[bookmarkItems retain];
 		[items removeObjectsAtIndexes:indexes];
 		[items insertObjects:bookmarkItems atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(to, [indexes count])]];
-		[bookmarkItems release];
 		[self writeToFile];
 		[self performSelector:@selector(notifyDidUpdate) withObject:nil afterDelay:0];
 	}
@@ -310,8 +302,7 @@ static SBBookmarks *sharedBookmarks;
 		NSMutableDictionary *item = [[items objectAtIndex:i] mutableCopy];
 		[item setObject:labelName forKey:kSBBookmarkLabelName];
 		[items removeObjectAtIndex:i];
-		[items insertObject:[[item copy] autorelease] atIndex:i];
-		[item release];
+		[items insertObject:[item copy] atIndex:i];
 	}
 	[self writeToFile];
 	[self performSelector:@selector(notifyDidUpdate) withObject:nil afterDelay:0];

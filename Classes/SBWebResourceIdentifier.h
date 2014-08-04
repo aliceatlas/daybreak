@@ -32,8 +32,8 @@
 	long long received;
 	BOOL flag;
 }
-@property (nonatomic, retain) NSURLRequest *request;
-@property (nonatomic, readonly) NSURL *URL;
+@property (nonatomic, strong) NSURLRequest *request;
+@property (weak, nonatomic, readonly) NSURL *URL;
 @property (nonatomic) long long length;
 @property (nonatomic) long long received;
 @property (nonatomic) BOOL flag;

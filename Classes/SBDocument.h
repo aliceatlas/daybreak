@@ -57,8 +57,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @protocol SBTabbarDelegate;
 @interface SBDocument : NSDocument <SBTabbarDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate>
 {
-	SBDocumentWindow *window;
-	NSWindowController *windowController;
+	SBDocumentWindow *__weak window;
+	NSWindowController *__weak windowController;
 	SBToolbar *toolbar;
 	NSView *urlView;
 	SBURLField *urlField;
@@ -86,21 +86,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger _identifier;
 	NSInteger confirmed;
 }
-@property (nonatomic, assign) SBDocumentWindow *window;
-@property (nonatomic, assign) NSWindowController *windowController;
-@property (nonatomic, retain) NSToolbar *toolbar;
-@property (nonatomic, retain) SBURLField *urlField;
-@property (nonatomic, retain) SBTabbar *tabbar;
-@property (nonatomic, retain) SBSplitView *splitView;
-@property (nonatomic, retain) NSURL *initialURL;
+@property (nonatomic, weak) SBDocumentWindow *window;
+@property (nonatomic, weak) NSWindowController *windowController;
+@property (nonatomic, strong) NSToolbar *toolbar;
+@property (nonatomic, strong) SBURLField *urlField;
+@property (nonatomic, strong) SBTabbar *tabbar;
+@property (nonatomic, strong) SBSplitView *splitView;
+@property (nonatomic, strong) NSURL *initialURL;
 @property (nonatomic) BOOL sidebarVisibility;
-@property (nonatomic, readonly) SBTabViewItem *selectedTabViewItem;
-@property (nonatomic, readonly) SBWebView *selectedWebView;
-@property (nonatomic, readonly) id selectedWebDocumentView;
-@property (nonatomic, readonly) WebDataSource *selectedWebDataSource;
-@property (nonatomic, readonly) NSImage *selectedWebViewImageForBookmark;
-@property (nonatomic, readonly) NSData *selectedWebViewImageDataForBookmark;
-@property (nonatomic, readonly) SBWebResourcesView *resourcesView;
+@property (weak, nonatomic, readonly) SBTabViewItem *selectedTabViewItem;
+@property (weak, nonatomic, readonly) SBWebView *selectedWebView;
+@property (unsafe_unretained, nonatomic, readonly) id selectedWebDocumentView;
+@property (weak, nonatomic, readonly) WebDataSource *selectedWebDataSource;
+@property (weak, nonatomic, readonly) NSImage *selectedWebViewImageForBookmark;
+@property (weak, nonatomic, readonly) NSData *selectedWebViewImageDataForBookmark;
+@property (weak, nonatomic, readonly) SBWebResourcesView *resourcesView;
 
 // Getter
 - (NSNumber *)createdIdentifier;
@@ -171,7 +171,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)createNewTab:(id)sender;
 - (void)openLocation:(id)sender;
 - (void)saveDocumentAs:(id)sender;
-- (void)saveDocumentAsDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void)downloadFromURL:(id)sender;
 - (void)doneDownloader;
 - (void)cancelDownloader;

@@ -43,9 +43,6 @@
 {
 	dataSource = nil;
 	delegate = nil;
-	[tableView release];
-	[scrollView release];
-	[super dealloc];
 }
 
 #pragma mark Constructions
@@ -68,14 +65,14 @@
 	tableRect.size = scrollerRect.size;
 	scrollView = [[SBBLKGUIScrollView alloc] initWithFrame:scrollerRect];
 	tableView = [[NSTableView alloc] initWithFrame:tableRect];
-	urlColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBURL] autorelease];
-	lengthColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Length"] autorelease];
-	cachedColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Cached"] autorelease];
-	actionColumn = [[[NSTableColumn alloc] initWithIdentifier:@"Action"] autorelease];
-	urlTextCell = [[[SBTableCell alloc] init] autorelease];
-	lengthTextCell = [[[SBTableCell alloc] init] autorelease];
-	cachedCell = [[[SBWebResourceButtonCell alloc] init] autorelease];
-	actionCell = [[[SBWebResourceButtonCell alloc] init] autorelease];
+	urlColumn = [[NSTableColumn alloc] initWithIdentifier:kSBURL];
+	lengthColumn = [[NSTableColumn alloc] initWithIdentifier:@"Length"];
+	cachedColumn = [[NSTableColumn alloc] initWithIdentifier:@"Cached"];
+	actionColumn = [[NSTableColumn alloc] initWithIdentifier:@"Action"];
+	urlTextCell = [[SBTableCell alloc] init];
+	lengthTextCell = [[SBTableCell alloc] init];
+	cachedCell = [[SBWebResourceButtonCell alloc] init];
+	actionCell = [[SBWebResourceButtonCell alloc] init];
 	[urlTextCell setFont:[NSFont systemFontOfSize:12.0]];
 	[urlTextCell setShowRoundedPath:YES];
 	[urlTextCell setAlignment:NSLeftTextAlignment];
@@ -207,12 +204,6 @@
 @implementation SBWebResourceButtonCell
 
 @synthesize highlightedImage;
-
-- (void)dealloc
-{
-	[highlightedImage release];
-	[super dealloc];
-}
 
 - (CGFloat)side
 {

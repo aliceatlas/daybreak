@@ -23,6 +23,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBDocument.h"
+#import "SBCoverWindow.h"
 #import "SBAboutView.h"
 #import "SBBookmarks.h"
 #import "SBBookmarkListView.h"
@@ -103,7 +104,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructTextInputView];
 	[self destructWindow];
 	[self destructWindowController];
-	[super dealloc];
 }
 
 #pragma mark Document
@@ -301,7 +301,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (toolbar)
 	{
-		[toolbar release];
 		toolbar = nil;
 	}
 }
@@ -311,13 +310,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (urlField)
 	{
 		[urlField removeFromSuperview];
-		[urlField release];
 		urlField = nil;
 	}
 	if (urlView)
 	{
 		[urlView removeFromSuperview];
-		[urlView release];
 		urlView = nil;
 	}
 }
@@ -327,13 +324,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (loadButton)
 	{
 		[loadButton removeFromSuperview];
-		[loadButton release];
 		loadButton = nil;
 	}
 	if (loadView)
 	{
 		[loadView removeFromSuperview];
-		[loadView release];
 		loadView = nil;
 	}
 }
@@ -343,13 +338,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (encodingButton)
 	{
 		[encodingButton removeFromSuperview];
-		[encodingButton release];
 		encodingButton = nil;
 	}
 	if (encodingView)
 	{
 		[encodingView removeFromSuperview];
-		[encodingView release];
 		encodingView = nil;
 	}
 }
@@ -359,13 +352,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (zoomButton)
 	{
 		[zoomButton removeFromSuperview];
-		[zoomButton release];
 		zoomButton = nil;
 	}
 	if (zoomView)
 	{
 		[zoomView removeFromSuperview];
-		[zoomView release];
 		zoomView = nil;
 	}
 }
@@ -375,7 +366,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (tabbar)
 	{
 		[tabbar removeFromSuperview];
-		[tabbar release];
 		tabbar = nil;
 	}
 }
@@ -385,7 +375,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (splitView)
 	{
 		[splitView removeFromSuperview];
-		[splitView release];
 		splitView = nil;
 	}
 }
@@ -396,7 +385,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		tabView.delegate = nil;
 		[tabView removeFromSuperview];
-		[tabView release];
 		tabView = nil;
 	}
 }
@@ -406,7 +394,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (sidebar)
 	{
 		[sidebar removeFromSuperview];
-		[sidebar release];
 		sidebar = nil;
 	}
 }
@@ -416,7 +403,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (bookmarkView)
 	{
 		[bookmarkView removeFromSuperview];
-		[bookmarkView release];
 		bookmarkView = nil;
 	}
 }
@@ -426,7 +412,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (editBookmarkView)
 	{
 		[editBookmarkView removeFromSuperview];
-		[editBookmarkView release];
 		editBookmarkView = nil;
 	}
 }
@@ -436,7 +421,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (downloaderView)
 	{
 		[downloaderView removeFromSuperview];
-		[downloaderView release];
 		downloaderView = nil;
 	}
 }
@@ -446,7 +430,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (snapshotView)
 	{
 		[snapshotView removeFromSuperview];
-		[snapshotView release];
 		snapshotView = nil;
 	}
 }
@@ -456,7 +439,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (reportView)
 	{
 		[reportView removeFromSuperview];
-		[reportView release];
 		reportView = nil;
 	}
 }
@@ -466,7 +448,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (userAgentView)
 	{
 		[userAgentView removeFromSuperview];
-		[userAgentView release];
 		userAgentView = nil;
 	}
 }
@@ -476,7 +457,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (historyView)
 	{
 		[historyView removeFromSuperview];
-		[historyView release];
 		historyView = nil;
 	}
 }
@@ -486,7 +466,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (messageView)
 	{
 		[messageView removeFromSuperview];
-		[messageView release];
 		messageView = nil;
 	}
 }
@@ -496,7 +475,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (textInputView)
 	{
 		[textInputView removeFromSuperview];
-		[textInputView release];
 		textInputView = nil;
 	}
 }
@@ -509,7 +487,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect defaultFrame = SBDefaultDocumentWindowRect();
 	NSRect r = savedFrameString ? NSRectFromString(savedFrameString) : defaultFrame;
 	[self destructWindow];
-	window = [[[SBDocumentWindow alloc] initWithFrame:r delegate:self tabbarVisivility:YES] autorelease];
+	window = [[SBDocumentWindow alloc] initWithFrame:r delegate:self tabbarVisivility:YES];
 	if (window)
 	{
 		NSButton *button = nil;
@@ -524,7 +502,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructWindowController];
 	if (window)
 	{
-		windowController = [[[NSWindowController alloc] initWithWindow:window] autorelease];
+		windowController = [[NSWindowController alloc] initWithWindow:window];
 		[windowController setWindowFrameAutosaveName:kSBDocumentWindowAutosaveName];
 	}
 }
@@ -604,9 +582,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	zoomView = [[NSView alloc] initWithFrame:r];
 	[zoomView setAutoresizingMask:(NSViewMaxXMargin | NSViewMinXMargin | NSViewMaxYMargin | NSViewMinYMargin)];
 	zoomButton = [[SBSegmentedButton alloc] init];
-	zoomButton0 = [[[SBButton alloc] initWithFrame:r0] autorelease];
-	zoomButton1 = [[[SBButton alloc] initWithFrame:r1] autorelease];
-	zoomButton2 = [[[SBButton alloc] initWithFrame:r2] autorelease];
+	zoomButton0 = [[SBButton alloc] initWithFrame:r0];
+	zoomButton1 = [[SBButton alloc] initWithFrame:r1];
+	zoomButton2 = [[SBButton alloc] initWithFrame:r2];
 	zoomButton0.target = self;
 	zoomButton1.target = self;
 	zoomButton2.target = self;
@@ -692,7 +670,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			sidebar.view = bookmarksView;
 		}
-		if ((drawer = [[[SBDrawer alloc] initWithFrame:[sidebar drawerRect]] autorelease]))
+		if ((drawer = [[SBDrawer alloc] initWithFrame:[sidebar drawerRect]]))
 		{
 			sidebar.drawer = drawer;
 		}
@@ -706,7 +684,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBBookmarksView *bookmarksView = nil;
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	bookmarksView = [[[SBBookmarksView alloc] initWithFrame:[sidebar viewRect]] autorelease];
+	bookmarksView = [[SBBookmarksView alloc] initWithFrame:[sidebar viewRect]];
 	[bookmarksView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	bookmarksView.delegate = self;
 	[bookmarksView constructListView:[defaults integerForKey:kSBBookmarkMode]];
@@ -772,7 +750,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect availableRect = [sidebar.drawer availableRect];
 	SBDownloadsView *downloadsView = nil;
 	availableRect.origin = NSZeroPoint;
-	downloadsView = [[[SBDownloadsView alloc] initWithFrame:availableRect] autorelease];
+	downloadsView = [[SBDownloadsView alloc] initWithFrame:availableRect];
 	downloadsView.delegate = sidebar;
 	sidebar.drawer.view = downloadsView;
 	[downloadsView constructDownloadViews];
@@ -848,7 +826,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSToolbarItem *)toolbar:(NSToolbar *)aToolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
 	NSToolbarItem *item = nil;
-	item = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+	item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
 	if ([itemIdentifier isEqualToString:kSBToolbarURLFieldItemIdentifier])
 	{
 		[item setView:urlView];
@@ -1645,49 +1623,40 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldSaveAtRow:(NSInteger)rowIndex
 {
-	SBTabViewItem *tabViewItem = nil;
-	if ((tabViewItem = self.selectedTabViewItem))
-	{
-		NSMutableArray *resourceIdentifiers = nil;
-		if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
-		{
-			SBWebResourceIdentifier *resourceIdentifier = nil;
-			resourceIdentifier = rowIndex < [resourceIdentifiers count] ? [resourceIdentifiers objectAtIndex:rowIndex] : nil;
-			if (resourceIdentifier)
-			{
-				if (resourceIdentifier.request)
-				{
-					NSData *data = nil;
-					NSCachedURLResponse *response = nil;
-					response = [[NSURLCache sharedURLCache] cachedResponseForRequest:resourceIdentifier.request];
-					data = response ? [response data] : nil;
-					if (data)
-					{
-						NSString *filename = resourceIdentifier.URL ? [[resourceIdentifier.URL absoluteString] lastPathComponent] : @"UntitledData";
-						SBSavePanel *panel = [SBSavePanel savePanel];
-						[data retain];
-						[panel beginSheetForDirectory:nil file:filename modalForWindow:self.window modalDelegate:self didEndSelector:@selector(webResourceCachedDataSaveDidEnd:returnCode:contextInfo:) contextInfo:data];
-					}
-				}
-			}
-		}
-	}
-}
-
-- (void)webResourceCachedDataSaveDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	if (contextInfo != nil)
-	{
-		if (returnCode == NSOKButton)
-		{
-			NSData *data = (NSData *)contextInfo;
-			if ([data writeToFile:[sheet filename] atomically:YES])
-			{
-				
-			}
-		}
-		[(id)contextInfo release];
-	}
+    SBTabViewItem *tabViewItem = nil;
+    if ((tabViewItem = self.selectedTabViewItem))
+    {
+        NSArray *resourceIdentifiers = nil;
+        if ((resourceIdentifiers = tabViewItem.resourceIdentifiers))
+        {
+            SBWebResourceIdentifier *resourceIdentifier = nil;
+            resourceIdentifier = rowIndex < [resourceIdentifiers count] ? [resourceIdentifiers objectAtIndex:rowIndex] : nil;
+            if (resourceIdentifier)
+            {
+                if (resourceIdentifier.request)
+                {
+                    NSData *data = nil;
+                    NSCachedURLResponse *response = nil;
+                    response = [[NSURLCache sharedURLCache] cachedResponseForRequest:resourceIdentifier.request];
+                    data = response ? [response data] : nil;
+                    if (data)
+                    {
+                        NSString *filename = resourceIdentifier.URL ? [[resourceIdentifier.URL absoluteString] lastPathComponent] : @"UntitledData";
+                        SBSavePanel *panel = [SBSavePanel savePanel];
+                        panel.nameFieldStringValue = filename;
+                        [self.window beginSheet:panel completionHandler:^(NSModalResponse returnCode) {
+                            if (returnCode == NSFileHandlingPanelOKButton)
+                            {
+                                if ([data writeToURL:panel.URL atomically:YES])
+                                {
+                                }
+                            }
+                        }];
+                    }
+                }
+            }
+        }
+    }
 }
 
 - (void)webResourcesView:(SBWebResourcesView *)aWebResourcesView shouldDownloadAtRow:(NSInteger)rowIndex
@@ -2112,7 +2081,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		SBGoogleSuggestParser *parser = [SBGoogleSuggestParser parser];
 		NSError *error = [parser parseData:data];
-		NSMutableArray *items = !error ? [[parser.items mutableCopy] autorelease] : nil;
+		NSMutableArray *items = !error ? [parser.items mutableCopy] : nil;
 		// Parse XML
 		if ([items count] > 0)
 		{
@@ -2176,7 +2145,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					[item setObject:[bookmarkItem objectForKey:kSBBookmarkImage] forKey:kSBImage];
 				}
 				[item setObject:[NSNumber numberWithInteger:kSBURLFieldItemBookmarkType] forKey:kSBType];
-				[bmItems addObject:[[item copy] autorelease]];
+				[bmItems addObject:[item copy]];
 				[urlStrings addObject:urlString];
 			}
 		}
@@ -2206,7 +2175,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 						[item setObject:iconData forKey:kSBImage];
 					}
 					[item setObject:[NSNumber numberWithInteger:kSBURLFieldItemHistoryType] forKey:kSBType];
-					[hItems addObject:[[item copy] autorelease]];
+					[hItems addObject:[item copy]];
 				}
 			}
 		}
@@ -2388,27 +2357,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)saveDocumentAs:(id)sender
 {
-	SBSavePanel *panel = [SBSavePanel savePanel];
-	NSString *title = self.selectedWebDataSource.pageTitle;
-	NSString *name = [title ? title : NSLocalizedString(@"Untitled", nil) stringByAppendingPathExtension:@"webarchive"];
-	[panel beginSheetForDirectory:nil file:name modalForWindow:self.window modalDelegate:self didEndSelector:@selector(saveDocumentAsDidEnd:returnCode:contextInfo:) contextInfo:nil];
-}
-
-- (void)saveDocumentAsDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	if (returnCode == NSOKButton)
-	{
-		WebDataSource *dataSource = self.selectedWebDataSource;
-		WebArchive *archive = dataSource ? dataSource.webArchive : nil;
-		NSData *data = archive ? [archive data] : nil;
-		if (data)
-		{
-			if ([data writeToFile:[sheet filename] atomically:YES])
-			{
-				
-			}
-		}
-	}
+    SBSavePanel *panel = [SBSavePanel savePanel];
+    NSString *title = self.selectedWebDataSource.pageTitle;
+    NSString *name = [title ? title : NSLocalizedString(@"Untitled", nil) stringByAppendingPathExtension:@"webarchive"];
+    panel.nameFieldStringValue = name;
+    [self.window beginSheet:panel completionHandler:^(NSModalResponse returnCode) {
+        if (returnCode == NSFileHandlingPanelOKButton)
+        {
+            WebDataSource *dataSource = self.selectedWebDataSource;
+            WebArchive *archive = dataSource ? dataSource.webArchive : nil;
+            NSData *data = archive ? [archive data] : nil;
+            if (data)
+            {
+                if ([data writeToURL:panel.URL atomically:YES])
+                {
+                }
+            }
+        }
+    }];
 }
 
 - (void)downloadFromURL:(id)sender
@@ -2610,7 +2576,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[self hideSidebar];
 		}
 		else {
-			resourcesView = [[[SBWebResourcesView alloc] initWithFrame:[sidebar viewRect]] autorelease];
+			resourcesView = [[SBWebResourcesView alloc] initWithFrame:[sidebar viewRect]];
 			resourcesView.dataSource = self;
 			resourcesView.delegate = self;
 			sidebar.view = resourcesView;
@@ -2618,7 +2584,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else {
 		[self showSidebar];
-		resourcesView = [[[SBWebResourcesView alloc] initWithFrame:[sidebar viewRect]] autorelease];
+		resourcesView = [[SBWebResourcesView alloc] initWithFrame:[sidebar viewRect]];
 		resourcesView.dataSource = self;
 		resourcesView.delegate = self;
 		sidebar.view = resourcesView;
@@ -2796,7 +2762,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[self destructEditBookmarkView];
 			editBookmarkView = [[SBEditBookmarkView alloc] initWithFrame:NSMakeRect(0, 0, 880, 480)];
 			imageData = [item objectForKey:kSBBookmarkImage];
-			image = imageData ? [[[NSImage alloc] initWithData:imageData] autorelease] : nil;
+			image = imageData ? [[NSImage alloc] initWithData:imageData] : nil;
 			title = [item objectForKey:kSBBookmarkTitle];
 			urlString = [item objectForKey:kSBBookmarkURL];
 			labelName = [item objectForKey:kSBBookmarkLabelName];
@@ -3174,11 +3140,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		while (confirmed == -1)
 		{
 			// Wait event...
-			NSAutoreleasePool *pool= [[NSAutoreleasePool alloc] init];
-			NSEvent *event = nil;
-			event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantFuture] inMode:NSDefaultRunLoopMode dequeue:YES];
-			[NSApp sendEvent:event];
-			[pool release];
+			@autoreleasepool {
+				NSEvent *event = nil;
+				event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantFuture] inMode:NSDefaultRunLoopMode dequeue:YES];
+				[NSApp sendEvent:event];
+			}
 		}
 		r = confirmed == 1;
 	}
@@ -3217,11 +3183,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		while (confirmed == -1)
 		{
 			// Wait event...
-			NSAutoreleasePool *pool= [[NSAutoreleasePool alloc] init];
-			NSEvent *event = nil;
-			event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantFuture] inMode:NSDefaultRunLoopMode dequeue:YES];
-			[NSApp sendEvent:event];
-			[pool release];
+			@autoreleasepool {
+				NSEvent *event = nil;
+				event = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantFuture] inMode:NSDefaultRunLoopMode dequeue:YES];
+				[NSApp sendEvent:event];
+			}
 		}
 		if (confirmed == 1)
 		{

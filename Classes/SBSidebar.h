@@ -49,15 +49,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBDrawer *drawer;
 	SBSideBottombar *bottombar;
 	SBSidebarPosition position;
-	id<SBSidebarDelegate> siderbarDelegate;
+	id<SBSidebarDelegate> __unsafe_unretained siderbarDelegate;
 	NSViewAnimation *_divideAnimation;
 	CGFloat drawerHeight;
 }
 @property (nonatomic) SBSidebarPosition position;
-@property (nonatomic, assign) id<SBSidebarDelegate> siderbarDelegate;
-@property (nonatomic, retain) NSView *view;
-@property (nonatomic, retain) SBDrawer *drawer;
-@property (nonatomic, retain, readonly) SBSideBottombar *bottombar;
+@property (nonatomic, unsafe_unretained) id<SBSidebarDelegate> siderbarDelegate;
+@property (nonatomic, strong) NSView *view;
+@property (nonatomic, strong) SBDrawer *drawer;
+@property (nonatomic, strong, readonly) SBSideBottombar *bottombar;
 @property (nonatomic, readonly) BOOL visibleDrawer;
 @property (nonatomic, readonly) BOOL animating;
 @property (nonatomic) CGFloat drawerHeight;
@@ -91,12 +91,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBButton *drawerButton;
 	SBButton *newFolderButton;
 	SBBLKGUISlider *sizeSlider;
-	id<SBSideBottombarDelegate> delegate;
+	id<SBSideBottombarDelegate> __unsafe_unretained delegate;
 	BOOL drawerVisibility;
 }
-@property (nonatomic, retain) SBBLKGUISlider *sizeSlider;
+@property (nonatomic, strong) SBBLKGUISlider *sizeSlider;
 @property (nonatomic) SBSidebarPosition position;
-@property (nonatomic, assign) id<SBSideBottombarDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<SBSideBottombarDelegate> delegate;
 @property (nonatomic) BOOL drawerVisibility;
 
 - (id)initWithFrame:(NSRect)frame;

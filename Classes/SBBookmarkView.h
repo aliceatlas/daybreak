@@ -42,10 +42,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *doneButton;
 	NSInteger fillMode;
 }
-@property (nonatomic, retain) NSImage *image;
-@property (nonatomic, assign) NSString *message;
-@property (nonatomic, assign) NSString *title;
-@property (nonatomic, assign) NSString *urlString;
+@property (nonatomic, strong) NSImage *image;
+@property (nonatomic, weak) NSString *message;
+@property (nonatomic, weak) NSString *title;
+@property (nonatomic, weak) NSString *urlString;
 @property (nonatomic) NSInteger fillMode;
 
 // Getter
@@ -93,6 +93,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger index;
 }
 @property (nonatomic) NSUInteger index;
-@property (nonatomic, assign) NSString *labelName;
+@property (nonatomic, weak) NSString *labelName;
 
 @end

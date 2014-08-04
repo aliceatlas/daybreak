@@ -57,11 +57,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[frameColor release];
 	target = nil;
 	doneSelector = nil;
 	cancelSelector = nil;
-	[super dealloc];
 }
 
 #pragma mark NSCoding Protocol
@@ -195,7 +193,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[info setObject:self forKey:NSViewAnimationTargetKey];
 		[info setObject:[NSValue valueWithRect:self.frame] forKey:NSViewAnimationStartFrameKey];
 		[info setObject:[NSValue valueWithRect:frame] forKey:NSViewAnimationEndFrameKey];
-		animation = [[[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObject:info]] autorelease];
+		animation = [[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObject:info]];
 		[animation setDuration:0.25];
 		[animation startAnimation];
 	}
@@ -242,8 +240,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	info = [NSMutableDictionary dictionaryWithCapacity:0];
 	[info setObject:self forKey:NSViewAnimationTargetKey];
 	[info setObject:NSViewAnimationFadeInEffect forKey:NSViewAnimationEffectKey];
-	[animations addObject:[[info copy] autorelease]];
-	animation = [[[NSViewAnimation alloc] initWithViewAnimations:animations] autorelease];
+	[animations addObject:[info copy]];
+	animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
 	[animation setDuration:self.animationDuration];
 	[animation setDelegate:delegate];
 	[animation startAnimation];
@@ -257,8 +255,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	info = [NSMutableDictionary dictionaryWithCapacity:0];
 	[info setObject:self forKey:NSViewAnimationTargetKey];
 	[info setObject:NSViewAnimationFadeOutEffect forKey:NSViewAnimationEffectKey];
-	[animations addObject:[[info copy] autorelease]];
-	animation = [[[NSViewAnimation alloc] initWithViewAnimations:animations] autorelease];
+	[animations addObject:[info copy]];
+	animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
 	[animation setDuration:self.animationDuration];
 	[animation setDelegate:delegate];
 	[animation startAnimation];

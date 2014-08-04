@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIScrollView *scrollView;
 	NSView *view;
 }
-@property (nonatomic, retain) NSView *view;
+@property (nonatomic, strong) NSView *view;
 
 - (NSRect)availableRect;
 

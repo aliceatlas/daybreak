@@ -36,8 +36,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *cancelButton;
 	SBBLKGUIButton *doneButton;
 }
-@property (nonatomic, assign) NSString *message;
-@property (nonatomic, assign) NSString *urlString;
+@property (nonatomic, weak) NSString *message;
+@property (nonatomic, weak) NSString *urlString;
 
 // Rects
 - (NSPoint)margin;

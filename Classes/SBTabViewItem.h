@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBSourceTextView;
 @interface SBTabViewItem : NSTabViewItem <NSSplitViewDelegate>
 {
-	SBTabbarItem *tabbarItem;
+	SBTabbarItem *__weak tabbarItem;
 	NSURL *URL;
 	SBTabSplitView *splitView;
 	SBDrawer *sourceView;
@@ -50,21 +50,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMutableArray *resourceIdentifiers;
 	BOOL showSource;
 }
-@property (nonatomic, assign) NSView *view;
-@property (nonatomic, retain) SBTabSplitView *splitView;
-@property (nonatomic, assign) SBTabbarItem *tabbarItem;
-@property (nonatomic, readonly) SBTabView *tabView;
-@property (nonatomic, retain) NSURL *URL;
-@property (nonatomic, retain) SBWebView *webView;
-@property (nonatomic, retain) NSMutableArray *resourceIdentifiers;
+@property (nonatomic, weak) NSView *view;
+@property (nonatomic, strong) SBTabSplitView *splitView;
+@property (nonatomic, weak) SBTabbarItem *tabbarItem;
+@property (weak, nonatomic, readonly) SBTabView *tabView;
+@property (nonatomic, strong) NSURL *URL;
+@property (nonatomic, strong) SBWebView *webView;
+@property (nonatomic, strong) NSMutableArray *resourceIdentifiers;
 @property (nonatomic) BOOL showSource;
 @property (nonatomic) BOOL selected;
 @property (nonatomic, readonly) BOOL canBackward;
 @property (nonatomic, readonly) BOOL canForward;
-@property (nonatomic, readonly) NSString *mainFrameURLString;
-@property (nonatomic, readonly) NSString *pageTitle;
-@property (nonatomic, readonly) NSString *requestURLString;
-@property (nonatomic, readonly) NSString *documentSource;
+@property (weak, nonatomic, readonly) NSString *mainFrameURLString;
+@property (weak, nonatomic, readonly) NSString *pageTitle;
+@property (weak, nonatomic, readonly) NSString *requestURLString;
+@property (weak, nonatomic, readonly) NSString *documentSource;
 
 // Getter
 - (CGFloat)sourceBottomMargin;

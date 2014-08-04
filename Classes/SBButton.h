@@ -38,15 +38,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *keyEquivalent;
 	NSUInteger keyEquivalentModifierMask;
 }
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSImage *image;
-@property (nonatomic, retain) NSImage *disableImage;
-@property (nonatomic, retain) NSImage *backImage;
-@property (nonatomic, retain) NSImage *backDisableImage;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSImage *image;
+@property (nonatomic, strong) NSImage *disableImage;
+@property (nonatomic, strong) NSImage *backImage;
+@property (nonatomic, strong) NSImage *backDisableImage;
 @property (nonatomic) SEL action;
 @property (nonatomic) BOOL enabled;
 @property (nonatomic) BOOL pressed;
-@property (nonatomic, retain) NSString *keyEquivalent;
+@property (nonatomic, strong) NSString *keyEquivalent;
 @property (nonatomic) NSUInteger keyEquivalentModifierMask;
 
 // Setter

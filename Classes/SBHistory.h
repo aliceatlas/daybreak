@@ -29,7 +29,7 @@
 {
 	WebHistory *history;
 }
-@property (nonatomic, readonly, assign) NSArray *items;
+@property (nonatomic, readonly, weak) NSArray *items;
 
 + (id)sharedHistory;
 - (id)init;

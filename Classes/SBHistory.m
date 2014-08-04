@@ -51,12 +51,6 @@ static SBHistory *sharedHistory = nil;
 	return self;
 }
 
-- (void)dealloc
-{
-	[history release];
-	[super dealloc];
-}
-
 - (NSURL *)URL
 {
 	NSURL *URL = nil;
@@ -74,7 +68,7 @@ static SBHistory *sharedHistory = nil;
 		NSArray *orderedItems = [history orderedItemsLastVisitedOnDay:date];
 		[items addObjectsFromArray:orderedItems];
 	}
-	return [[items copy] autorelease];
+	return [items copy];
 }
 
 - (NSArray *)itemsAtIndexes:(NSIndexSet *)indexes
@@ -85,7 +79,7 @@ static SBHistory *sharedHistory = nil;
 - (void)addNewItemWithURLString:(NSString *)URLString title:(NSString *)title
 {
 	WebHistoryItem *item = nil;
-	item = [[[WebHistoryItem alloc] initWithURLString:URLString title:title lastVisitedTimeInterval:[[NSDate date] timeIntervalSince1970]] autorelease];
+	item = [[WebHistoryItem alloc] initWithURLString:URLString title:title lastVisitedTimeInterval:[[NSDate date] timeIntervalSince1970]];
 	[history addItems:[NSArray arrayWithObject:item]];
 	[self writeToFile];
 }

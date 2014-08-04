@@ -29,14 +29,14 @@
 @class SBDownloadView;
 @interface SBDownloadsView : SBView <NSAnimationDelegate>
 {
-	id<SBDownloadsViewDelegate> delegate;
+	id<SBDownloadsViewDelegate> __unsafe_unretained delegate;
 	NSMutableArray *downloadViews;
 	SBButton *removeButton;
 	SBButton *finderButton;
 	SBDownloadView *toolsItemView;
 	NSTimer *toolsTimer;
 }
-@property (nonatomic, assign) id<SBDownloadsViewDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<SBDownloadsViewDelegate> delegate;
 
 - (NSSize)cellSize;
 - (NSUInteger)blockX;

@@ -53,7 +53,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSImage *rightImage = nil;
 	
 	image = [[(NSPopUpButton *)controlView selectedItem] image];
-	attributedTitle = [[[NSAttributedString alloc] initWithString:[(NSPopUpButton *)controlView titleOfSelectedItem]] autorelease];
+	attributedTitle = [[NSAttributedString alloc] initWithString:[(NSPopUpButton *)controlView titleOfSelectedItem]];
 	
 	if ([self isBordered])
 	{
@@ -108,9 +108,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSFont *font = nil;
 		NSColor *foregroundColor = nil;
 		
-		mutableTitle = [[[NSMutableAttributedString alloc] initWithAttributedString:attributedTitle] autorelease];
+		mutableTitle = [[NSMutableAttributedString alloc] initWithAttributedString:attributedTitle];
 		range = NSMakeRange(0,[attributedTitle length]);
-		style = [[[NSMutableParagraphStyle alloc] init] autorelease];
+		style = [[NSMutableParagraphStyle alloc] init];
 		font = [NSFont fontWithName:[[self font] fontName] size:[NSFont systemFontSizeForControlSize:[self controlSize]]];
 		foregroundColor = ([self isEnabled] ? [self isHighlighted] ? [NSColor lightGrayColor] : [NSColor whiteColor] : [NSColor grayColor]);
 		

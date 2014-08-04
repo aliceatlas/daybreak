@@ -46,13 +46,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return self;
 }
 
-- (void)dealloc
-{
-	[sections release];
-	[sectionListView release];
-	[super dealloc];
-}
-
 - (NSRect)sectionListViewRect
 {
 	NSRect r = NSZeroRect;
@@ -99,7 +92,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	item = [SBSectionItem itemWithTitle:NSLocalizedString(@"Save downloaded files to", nil) keyName:kSBSaveDownloadedFilesTo controlClass:[NSOpenPanel class] context:context];
 	[groupe0 addItem:item];
 	if (context) context = nil;
-	context = [[[NSMenu alloc] init] autorelease];
+	context = [[NSMenu alloc] init];
 	for (index = 0; index < SBCountOfOpenMethods; index++)
 	{
 		[(NSMenu *)context addItemWithTitle:NSLocalizedString(SBOpenMethods[index], nil) representedObject:SBOpenMethods[index] target:nil action:nil];

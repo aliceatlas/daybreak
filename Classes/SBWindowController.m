@@ -38,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	frameRect.size.height = viewSize.height < visibleRect.size.height ? viewSize.height : visibleRect.size.height;
 	frameRect.origin.y = visibleRect.origin.y + (visibleRect.size.height - frameRect.size.height);
 	frameRect.origin.x = visibleRect.origin.x;
-	window = [[[NSWindow alloc] initWithContentRect:frameRect styleMask:(NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask) backing:NSBackingStoreBuffered defer:YES] autorelease];
+	window = [[NSWindow alloc] initWithContentRect:frameRect styleMask:(NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask) backing:NSBackingStoreBuffered defer:YES];
 	if (self = [self initWithWindow:window])
 	{
 		[window center];

@@ -36,7 +36,7 @@
 + (id)identifierWithURLRequest:(NSURLRequest *)aRequest
 {
 	id identifier = nil;
-	identifier = [[[self alloc] init] autorelease];
+	identifier = [[self alloc] init];
 	[identifier setRequest:aRequest];
 	return identifier;
 }
@@ -51,12 +51,6 @@
 		flag = YES;
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[request release];
-	[super dealloc];
 }
 
 - (NSURL *)URL

@@ -56,17 +56,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[image release];
 	[self destructMessageLabel];
-	[titleLabel release];
-	[urlLabel release];
-	[colorLabel release];
-	[titleField release];
-	[urlField release];
-	[colorPopup release];
-	[doneButton release];
-	[cancelButton release];
-	[super dealloc];
 }
 
 #pragma mark Getter
@@ -223,7 +213,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (messageLabel)
 	{
 		[messageLabel removeFromSuperview];
-		[messageLabel release];
 		messageLabel = nil;
 	}
 }
@@ -379,11 +368,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (image != inImage)
 	{
-		if (image)
-		{
-			[image release];
-		}
-		image = [inImage retain];
+		image = inImage;
 		[self setNeedsDisplay:YES];
 	}
 }
@@ -467,7 +452,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		CGPathAddLineToPoint(mpath, nil, p.x, p.y);
 		p = CGPointZero;
 		CGPathAddLineToPoint(mpath, nil, p.x, p.y);
-		path = (CGPathRef)[(id)CGPathCreateCopy(mpath) autorelease];
+        path = CFAutorelease(CGPathCreateCopy(mpath));
 		CGPathRelease(mpath);
 	}
 	CGContextSaveGState(ctx);

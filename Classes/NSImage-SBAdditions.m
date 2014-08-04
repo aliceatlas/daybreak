@@ -39,7 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (bitmapImageRep)
 	{
 		[view cacheDisplayInRect:view.bounds toBitmapImageRep:bitmapImageRep];
-		image = [[[NSImage alloc] initWithSize:view.bounds.size] autorelease];
+		image = [[NSImage alloc] initWithSize:view.bounds.size];
 		[image addRepresentation:bitmapImageRep];
 	}
 	return image;
@@ -52,7 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSPoint leftPoint = NSZeroPoint;
 	NSPoint rightPoint = NSZeroPoint;
 	NSRect fillRect = NSZeroRect;
-	image = [[[NSImage alloc] initWithSize:size] autorelease];
+	image = [[NSImage alloc] initWithSize:size];
 	[image lockFocus];
 	imageSize = [self size];
 	rightPoint = NSMakePoint(size.width - imageSize.width,0);
@@ -80,7 +80,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		CGFloat per = 0;
 		
 		transform = [NSAffineTransform transform];
-		image = [[[NSImage alloc] initWithSize:size] autorelease];
+		image = [[NSImage alloc] initWithSize:size];
 		
 		perSize.width = inRect.size.width / 4;
 		perSize.height = inRect.size.height / 3;
@@ -116,7 +116,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 + (NSImage *)colorImage:(NSSize)size colorName:(NSString *)colorName
 {
-	NSImage *image = [[[NSImage alloc] initWithSize:size] autorelease];
+	NSImage *image = [[NSImage alloc] initWithSize:size];
 	NSColor *color = [NSColor colorWithLabelColorName:colorName];
 	[image lockFocus];
 	if (color)
@@ -138,9 +138,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (srcImage)
 	{
 		NSBitmapImageRep *bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:srcImage];
-		image = [[[NSImage alloc] init] autorelease];
+		image = [[NSImage alloc] init];
 		[image addRepresentation:bitmapImageRep];
-		[bitmapImageRep release];
 	}
 	return image;
 }

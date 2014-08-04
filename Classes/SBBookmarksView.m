@@ -35,11 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[splitView release];
-	[listView release];
-	[scrollView release];
 	delegate = nil;
-	[super dealloc];
 }
 
 - (CGFloat)splitWidth:(CGFloat)proposedWidth
@@ -86,7 +82,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (listView)
 	{
 		[listView removeFromSuperview];
-		[listView release];
 		listView = nil;
 	}
 }
@@ -157,9 +152,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			searchbar.target = self;
 			searchbar.doneSelector = @selector(searchWithText:);
 			searchbar.cancelSelector = @selector(closeSearchbar);
-			splitView = [[SBFixedSplitView splitViewWithEmbedViews:[NSArray arrayWithObjects:searchbar, scrollView, nil] frameRect:scrollView.frame] retain];
+			splitView = [SBFixedSplitView splitViewWithEmbedViews:[NSArray arrayWithObjects:searchbar, scrollView, nil] frameRect:scrollView.frame];
 			[splitView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-			[searchbar autorelease];
 			r = YES;
 		}
 		[searchbar selectText:nil];
@@ -168,7 +162,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (splitView)
 		{
 			SBDisembedViewInSplitView(scrollView, splitView);
-			[splitView release];
 			splitView = nil;
 			[[scrollView window] makeFirstResponder:scrollView];
 			r = YES;

@@ -94,9 +94,9 @@
 - (NSParagraphStyle *)paragraphStyle
 {
 	NSMutableParagraphStyle *paragraph = nil;
-	paragraph = [[[NSMutableParagraphStyle alloc] init] autorelease];
+	paragraph = [[NSMutableParagraphStyle alloc] init];
 	[paragraph setAlignment:NSCenterTextAlignment];
-	return [[paragraph copy] autorelease];
+	return [paragraph copy];
 }
 
 - (NSRect)progressRect
@@ -164,7 +164,6 @@
 	if (progressIndicator)
 	{
 		[progressIndicator removeFromSuperview];
-		[progressIndicator release];
 		progressIndicator = nil;
 	}
 }

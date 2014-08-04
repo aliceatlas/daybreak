@@ -32,10 +32,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface SBSourceTextView : NSTextView
 {
-	id delegate;
+	id __unsafe_unretained delegate;
 	BOOL showFindbar;
 }
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic) BOOL showFindbar;
 
 - (void)executeOpenFindbar;

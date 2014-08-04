@@ -40,10 +40,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *doneButton;
 	NSString *versionString;
 }
-@property (nonatomic, assign) NSString *title;
-@property (nonatomic, assign) NSString *text;
-@property (nonatomic, retain) NSString *versionString;
-@property (nonatomic, retain) WebView *webView;
+@property (nonatomic, weak) NSString *title;
+@property (nonatomic, weak) NSString *text;
+@property (nonatomic, strong) NSString *versionString;
+@property (nonatomic, strong) WebView *webView;
 
 // Rect
 - (NSRect)imageRect;

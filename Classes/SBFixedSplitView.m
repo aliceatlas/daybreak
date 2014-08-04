@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSView *superview = [view1 superview] ? [view1 superview] : ([view2 superview] ? [view2 superview] : nil);
 	if (superview)
 	{
-		splitView = [[[SBFixedSplitView alloc] initWithFrame:frameRect] autorelease];
+		splitView = [[SBFixedSplitView alloc] initWithFrame:frameRect];
 		[superview addSubview:splitView];
 		[view1 removeFromSuperview];
 		[view2 removeFromSuperview];

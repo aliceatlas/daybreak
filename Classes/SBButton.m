@@ -53,14 +53,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[title release];
-	[image release];
-	[disableImage release];
-	[backImage release];
-	[backDisableImage release];
 	action = nil;
-	[keyEquivalent release];
-	[super dealloc];
 }
 
 #pragma mark NSCoding Protocol
@@ -160,8 +153,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (![title isEqualToString:inTitle])
 	{
-		[inTitle retain];
-		[title release];
 		title = inTitle;
 		[self setNeedsDisplayInRect:self.bounds];
 	}
@@ -271,8 +262,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		r.origin.x = padding + ((self.bounds.size.width - padding * 2) - r.size.width) / 2;
 		r.origin.y = (self.bounds.size.height - r.size.height) / 2;
 		[title drawInRect:r withAttributes:attributes];
-		[shadow release];
-		[style release];
 	}
 }
 

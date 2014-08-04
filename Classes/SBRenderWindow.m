@@ -33,7 +33,7 @@
 + (id)startRenderingWithSize:(NSSize)size delegate:(id)delegate url:(NSURL *)url
 {
 	NSRect r = NSMakeRectFromPointAndSize(NSZeroPoint, size);
-	SBRenderWindow *window = [[[SBRenderWindow alloc] initWithContentRect:r] autorelease];
+	SBRenderWindow *window = [[SBRenderWindow alloc] initWithContentRect:r];
 	window.delegate = delegate;
 	[[window.webView mainFrame] loadRequest:[NSURLRequest requestWithURL:url]];
 #if kSBFlagShowRenderWindow
@@ -64,9 +64,7 @@
 
 - (void)dealloc
 {
-	[webView release];
 	delegate = nil;
-	[super dealloc];
 }
 
 - (void)destruct
@@ -86,7 +84,6 @@
 		[webView setHostWindow:nil];
 		[webView setFrameLoadDelegate:nil];
 		[webView removeFromSuperview];
-		[webView release];
 		webView = nil;
 	}
 }

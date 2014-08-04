@@ -32,7 +32,7 @@
 
 + (id)downloadWithURL:(NSURL *)url
 {
-	id downloader = [[[self alloc] init] autorelease];
+	id downloader = [[self alloc] init];
 	[downloader setUrl:url];
 	return downloader;
 }
@@ -48,11 +48,7 @@
 
 - (void)dealloc
 {
-	[url release];
-	[connection release];
-	[receivedData release];
 	delegate = nil;
-	[super dealloc];
 }
 
 #pragma mark Delegate
@@ -110,7 +106,7 @@
 	{
 		if ([delegate respondsToSelector:@selector(downloader:didFinish:)])
 		{
-			NSData *data = [[receivedData copy] autorelease];
+			NSData *data = [receivedData copy];
 			[delegate downloader:self didFinish:data];
 		}
 	}
@@ -131,20 +127,12 @@
 
 - (void)destructConnection
 {
-	if (connection)
-	{
-		[connection release];
-		connection = nil;
-	}
+    connection = nil;
 }
 
 - (void)destructReceivedData
 {
-	if (receivedData)
-	{
-		[receivedData release];
-		receivedData = nil;
-	}
+    receivedData = nil;
 }
 
 - (void)start
@@ -156,7 +144,6 @@
 		request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kSBTimeoutInterval];
 		[self destructConnection];
 		connection = [NSURLConnection connectionWithRequest:request delegate:self];
-		[connection retain];
 	}
 }
 

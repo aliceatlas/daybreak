@@ -53,17 +53,6 @@ static SBAboutView *_sharedView;
 	return self;
 }
 
-- (void)dealloc
-{
-	[iconImageView release];
-	[nameLabel release];
-	[identifierLabel release];
-	[creditScrollView release];
-	[copyrightLabel release];
-	[backButton release];
-	[super dealloc];
-}
-
 #pragma mark Rects
 
 - (NSRect)iconImageRect
@@ -202,7 +191,7 @@ static SBAboutView *_sharedView;
 	[creditScrollView setHasVerticalScroller:YES];
 	[creditScrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]]];
 	[creditScrollView setDrawsBackground:NO];
-	creditLabel = [[[NSTextView alloc] initWithFrame:r] autorelease];
+	creditLabel = [[NSTextView alloc] initWithFrame:r];
 	[creditLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
 	[creditLabel setEditable:NO];
 	[creditLabel setSelectable:YES];

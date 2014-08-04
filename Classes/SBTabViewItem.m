@@ -34,6 +34,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBUtil.h"
 #import "SBWebView.h"
 
+@interface NSURLRequest (Private)
++ (void)setAllowsAnyHTTPSCertificate:(BOOL)allow forHost:(NSString *)host;
+@end;
+
+
 @implementation SBTabViewItem
 
 @dynamic view;
@@ -65,16 +70,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)dealloc
 {
 	tabbarItem = nil;
-	[URL release];
-	[splitView release];
-	[sourceView release];
 	[self destructWebView];
-	[sourceTextView release];
-	[webSplitView release];
-	[sourceSplitView release];
-	[sourceSaveButton release];
-	[sourceCloseButton release];
-	[super dealloc];
 }
 
 #pragma mark Getter
@@ -183,15 +179,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)setURL:(NSURL *)inURL
 {
-	if (URL != inURL)
-	{
-		if (URL)
-		{
-			[URL release];
-			URL = nil;
-		}
-		URL = [inURL retain];
-	}
+    URL = inURL;
 	[self constructWebView];
 }
 
@@ -308,7 +296,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[sourceView addSubview:openButton];
 			[sourceView addSubview:sourceSaveButton];
 			[sourceView addSubview:sourceCloseButton];
-			[openButton release];
 			if (webSplitView)
 			{
 				[webSplitView setFrame:wr];
@@ -319,7 +306,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				[splitView addSubview:webView];
 			}
 			[splitView addSubview:sourceView];
-			[scrollView release];
 			splitView.dividerThickness = 5.0;
 			[[webView window] makeFirstResponder:sourceTextView];
 		}
@@ -328,10 +314,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			if (sourceSplitView)
 				[sourceSplitView removeFromSuperview];
 			[sourceView removeFromSuperview];
-			[sourceTextView release];
-			if (sourceSplitView)
-				[sourceSplitView release];
-			[sourceView release];
 			sourceTextView = nil;
 			if (sourceSplitView)
 				sourceSplitView = nil;
@@ -359,30 +341,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				if (sourceSplitView)
 				{
 					[sourceSplitView removeFromSuperview];
-					[sourceSplitView retain];
 				}
 				else if (sourceView)
 				{
 					[sourceView removeFromSuperview];
-					[sourceView retain];
 				}
 			}
-			webSplitView = [[SBFixedSplitView splitViewWithEmbedViews:[NSArray arrayWithObjects:findbar, webView, nil] frameRect:webView.frame] retain];
+			webSplitView = [SBFixedSplitView splitViewWithEmbedViews:[NSArray arrayWithObjects:findbar, webView, nil] frameRect:webView.frame];
 			if (splitView)
 			{
 				if (sourceSplitView)
 				{
 					[splitView addSubview:sourceSplitView];
-					[sourceSplitView release];
 				}
 				else if (sourceView)
 				{
 					[splitView addSubview:sourceView];
-					[sourceView release];
 				}
 			}
 			[findbar selectText:nil];
-			[findbar release];
 			r = YES;
 		}
 	}
@@ -394,12 +371,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				if (sourceSplitView)
 				{
 					[sourceSplitView removeFromSuperview];
-					[sourceSplitView retain];
 				}
 				else if (sourceView)
 				{
 					[sourceView removeFromSuperview];
-					[sourceView retain];
 				}
 			}
 			SBDisembedViewInSplitView(webView, webSplitView);
@@ -408,15 +383,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				if (sourceSplitView)
 				{
 					[splitView addSubview:sourceSplitView];
-					[sourceSplitView release];
 				}
 				else if (sourceView)
 				{
 					[splitView addSubview:sourceView];
-					[sourceView release];
 				}
 			}
-			[webSplitView release];
 			webSplitView = nil;
 			[[webView window] makeFirstResponder:webView];
 			r = YES;
@@ -437,16 +409,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			findbar.doneSelector = @selector(executeCloseFindbar);
 			[sourceSaveButton setKeyEquivalent:[NSString string]];
 			[sourceCloseButton setKeyEquivalent:[NSString string]];
-			sourceSplitView = [[SBFixedSplitView splitViewWithEmbedViews:[NSArray arrayWithObjects:findbar, sourceView, nil] frameRect:sourceView.frame] retain];
+			sourceSplitView = [SBFixedSplitView splitViewWithEmbedViews:[NSArray arrayWithObjects:findbar, sourceView, nil] frameRect:sourceView.frame];
 			[findbar selectText:nil];
-			[findbar release];
 		}
 	}
 	else {
 		[sourceSaveButton setKeyEquivalent:@"\r"];
 		[sourceCloseButton setKeyEquivalent:@"\e"];
 		SBDisembedViewInSplitView(sourceView, sourceSplitView);
-		[sourceSplitView release];
 		sourceSplitView = nil;
 		[[sourceTextView window] makeFirstResponder:sourceTextView];
 	}
@@ -483,7 +453,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[webView setPolicyDelegate:nil];
 		[webView setDownloadDelegate:nil];
 		[webView removeFromSuperview];
-		[webView release];
 		webView = nil;
 	}
 }
@@ -499,7 +468,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[splitView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[self setView:view];
 	[self.view addSubview:splitView];
-	[view release];
 }
 
 - (void)constructWebView
@@ -904,16 +872,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 						NSURL *url = nil;
 						NSString *aTitle = nil;
 						NSString *message = nil;
-						NSDictionary *info = nil;
+                        NSAlert *alert = nil;
 						url = [NSURL URLWithString:urlString];
 						aTitle = NSLocalizedString(@"Server Certificate Untrusted", nil);
-						message = [NSString stringWithFormat:NSLocalizedString(@"The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", nil), [url host]];
-						info = [NSDictionary dictionaryWithObjectsAndKeys:
-								frame, WebElementFrameKey, 
-								url, WebElementLinkURLKey, 
-								aTitle, WebElementLinkTitleKey, nil];
-						[info retain];
-						NSBeginAlertSheet(aTitle, NSLocalizedString(@"Continue", nil), NSLocalizedString(@"Cancel", nil), nil, [sender window], self, @selector(serverCertificateUntrustedSheetDidEnd:returnCode:contextInfo:), nil, info, message);
+                        message = NSLocalizedString(@"The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", nil);
+                        alert = [NSAlert alertWithMessageText:aTitle defaultButton:NSLocalizedString(@"Continue", nil) alternateButton:NSLocalizedString(@"Cancel", nil) otherButton:nil informativeTextWithFormat:message, url.host];
+                        [alert beginSheetModalForWindow:sender.window completionHandler:^(NSModalResponse returnCode)
+                        {
+                            if (frame && url)
+                            {
+                                if (returnCode == NSOKButton)
+                                {
+                                    [NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
+                                    [frame loadRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:kSBTimeoutInterval]];
+                                    [self webView:self.webView didStartProvisionalLoadForFrame:frame];
+                                }
+                                else {
+                                    [self showErrorPageWithTitle:title urlString:[url absoluteString] frame:frame];
+                                }
+                            }
+                        }];
 						break;
 					}
 					case NSURLErrorServerCertificateHasUnknownRoot:
@@ -1105,24 +1083,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBOpenPanel *panel = [SBOpenPanel openPanel];
 	NSWindow *window = [self.tabView window];
-	[resultListener retain];
-	[panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(webOpenPanelDidEnd:returnCode:contextInfo:) contextInfo:resultListener];
+    [panel beginSheetModalForWindow:window completionHandler:^(NSInteger returnCode) {
+        if (returnCode == NSOKButton)
+        {
+            [resultListener chooseFilename:[panel.URLs[0] path]];
+        }
+        [panel orderOut:nil];
+    }];
 }
 
 - (NSString *)webView:(WebView *)sender runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WebFrame *)frame
 {
 	return [self.tabView executeShouldTextInput:prompt];
-}
-
-- (void)webOpenPanelDidEnd:(SBOpenPanel *)panel returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	id <WebOpenPanelResultListener> resultListener = (id <WebOpenPanelResultListener>)contextInfo;
-	if (returnCode == NSOKButton)
-	{
-		[resultListener chooseFilename:[[panel filenames] objectAtIndex:0]];
-	}
-	[resultListener release];
-	[panel orderOut:nil];
 }
 
 - (NSArray *)webView:(WebView *)sender contextMenuItemsForElement:(NSDictionary *)element defaultMenuItems:(NSArray *)defaultMenuItems
@@ -1175,12 +1147,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			/* Add Open in items */
 			NSMenuItem *newItem1 = nil;
 			NSMenuItem *newItem2 = nil;
-			newItem1 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open in Application...", nil) action:@selector(openURLInSelectedApplicationFromMenu:) keyEquivalent:@""] autorelease];
+			newItem1 = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open in Application...", nil) action:@selector(openURLInSelectedApplicationFromMenu:) keyEquivalent:@""];
 			[newItem1 setTarget:self];
 			[newItem1 setRepresentedObject:frameURL];
 			if (appName)
 			{
-				newItem2 = [[[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Open in %@", nil), appName] action:@selector(openURLInApplicationFromMenu:) keyEquivalent:@""] autorelease];
+				newItem2 = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Open in %@", nil), appName] action:@selector(openURLInApplicationFromMenu:) keyEquivalent:@""];
 				[newItem2 setTarget:self];
 				[newItem2 setRepresentedObject:frameURL];
 			}
@@ -1204,15 +1176,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				NSMenuItem *newItem0 = nil;
 				NSMenuItem *newItem1 = nil;
 				NSMenuItem *newItem2 = nil;
-				newItem0 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Link in New Tab", nil) action:@selector(openURLInNewTabFromMenu:) keyEquivalent:@""] autorelease];
+				newItem0 = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Link in New Tab", nil) action:@selector(openURLInNewTabFromMenu:) keyEquivalent:@""];
 				[newItem0 setTarget:self];
 				[newItem0 setRepresentedObject:linkURL];
-				newItem1 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Link in Application...", nil) action:@selector(openURLInSelectedApplicationFromMenu:) keyEquivalent:@""] autorelease];
+				newItem1 = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Link in Application...", nil) action:@selector(openURLInSelectedApplicationFromMenu:) keyEquivalent:@""];
 				[newItem1 setTarget:self];
 				[newItem1 setRepresentedObject:linkURL];
 				if (appName)
 				{
-					newItem2 = [[[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Open Link in %@", nil), appName] action:@selector(openURLInApplicationFromMenu:) keyEquivalent:@""] autorelease];
+					newItem2 = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Open Link in %@", nil), appName] action:@selector(openURLInApplicationFromMenu:) keyEquivalent:@""];
 					[newItem2 setTarget:self];
 					[newItem2 setRepresentedObject:linkURL];
 				}
@@ -1233,10 +1205,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSMenuItem *newItem1 = nil;
 		BOOL replaced = NO;
 		// Create items
-		newItem0 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Search in Google", nil) action:@selector(searchStringFromMenu:) keyEquivalent:@""] autorelease];
+		newItem0 = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Search in Google", nil) action:@selector(searchStringFromMenu:) keyEquivalent:@""];
 		[newItem0 setTarget:self];
 		[newItem0 setRepresentedObject:selectedString];
-		newItem1 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Google Search Results in New Tab", nil) action:@selector(searchStringInNewTabFromMenu:) keyEquivalent:@""] autorelease];
+		newItem1 = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Google Search Results in New Tab", nil) action:@selector(searchStringInNewTabFromMenu:) keyEquivalent:@""];
 		[newItem1 setTarget:self];
 		[newItem1 setRepresentedObject:selectedString];
 		// Find an item
@@ -1261,8 +1233,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	if (frame != [sender mainFrame])
 	{
-		NSMenuItem *newItem0 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Frame in Current Frame", nil) action:@selector(openFrameInCurrentFrameFromMenu:) keyEquivalent:@""] autorelease];
-		NSMenuItem *newItem1 = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Frame in New Tab", nil) action:@selector(openURLInNewTabFromMenu:) keyEquivalent:@""] autorelease];
+		NSMenuItem *newItem0 = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Frame in Current Frame", nil) action:@selector(openFrameInCurrentFrameFromMenu:) keyEquivalent:@""];
+		NSMenuItem *newItem1 = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Open Frame in New Tab", nil) action:@selector(openURLInNewTabFromMenu:) keyEquivalent:@""];
 		[newItem0 setTarget:self];
 		[newItem1 setTarget:self];
 		[newItem0 setRepresentedObject:frameURL];
@@ -1498,35 +1470,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	[self destructWebView];
 	[self.tabView removeTabViewItem:self];
-}
-
-- (void)serverCertificateUntrustedSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
-{
-	NSDictionary *info = (NSDictionary *)contextInfo;
-	WebFrame *frame = nil;
-	NSURL *url = nil;
-	NSString *title = nil;
-	
-	frame = [info objectForKey:WebElementFrameKey];
-	url = [info objectForKey:WebElementLinkURLKey];
-	title = [info objectForKey:WebElementLinkTitleKey];
-	
-	if (frame && url)
-	{
-		if (returnCode == NSOKButton)
-		{
-			[NSURLRequest setAllowsAnyHTTPSCertificate:YES forHost:[url host]];
-			[frame loadRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:kSBTimeoutInterval]];
-			[self webView:self.webView didStartProvisionalLoadForFrame:frame];
-		}
-		else {
-			[self showErrorPageWithTitle:title urlString:[url absoluteString] frame:frame];
-		}
-	}
-	if (contextInfo)
-	{
-		[(id)contextInfo release];
-	}
 }
 
 - (void)showErrorPageWithTitle:(NSString *)title urlString:(NSString *)urlString frame:(WebFrame *)frame

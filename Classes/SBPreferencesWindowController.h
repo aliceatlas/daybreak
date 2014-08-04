@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMutableArray *sections;
 	SBSectionListView *sectionListView;
 }
-@property (nonatomic, retain) NSMutableArray *sections;
+@property (nonatomic, strong) NSMutableArray *sections;
 
 - (NSRect)sectionListViewRect;
 - (void)prepare;

@@ -41,12 +41,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return [SBPopUpButtonCell class];
 }
 
-- (void)dealloc
-{
-	[backgroundImage release];
-	[super dealloc];
-}
-
 #pragma mark Setter
 
 - (void)setMenu:(NSMenu *)inMenu
@@ -125,10 +119,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			NSShadow *shadow = nil;
 			NSMutableParagraphStyle *style = nil;
 			CGFloat padding = 10.0;
-			shadow = [[[NSShadow alloc] init] autorelease];
+			shadow = [[NSShadow alloc] init];
 			[shadow setShadowOffset:NSMakeSize(0.0, -1.0)];
 			[shadow setShadowColor:[NSColor whiteColor]];
-			style = [[[NSMutableParagraphStyle alloc] init] autorelease];
+			style = [[NSMutableParagraphStyle alloc] init];
 			[style setLineBreakMode:NSLineBreakByTruncatingTail];
 			attributes = [NSDictionary dictionaryWithObjectsAndKeys:
 						  [NSFont boldSystemFontOfSize:11.0], NSFontAttributeName, 

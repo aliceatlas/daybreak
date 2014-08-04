@@ -34,7 +34,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMutableArray *items;
 	SBView *contentView;
 	SBButton *addButton;
-	id <SBTabbarDelegate> delegate;
+	id <SBTabbarDelegate> __unsafe_unretained delegate;
 	NSPoint _downPoint;
 	NSRect _draggedItemRect;
 	SBTabbarItem *_draggedItem;
@@ -45,9 +45,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSTimer *closableTimer;
 	SBTabbarItem *closableItem;
 }
-@property (nonatomic, retain) NSMutableArray *items;
-@property (nonatomic, assign) id <SBTabbarDelegate> delegate;
-@property (nonatomic, readonly, assign) SBTabbarItem *selectedTabbarItem;
+@property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, unsafe_unretained) id <SBTabbarDelegate> delegate;
+@property (nonatomic, readonly, weak) SBTabbarItem *selectedTabbarItem;
 
 - (id)init;
 // Rects

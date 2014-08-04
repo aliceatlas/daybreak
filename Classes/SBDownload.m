@@ -42,13 +42,13 @@
 + (id)itemWithURL:(NSURL *)URL
 {
 	NSURLDownload *download = nil;
-	download = [[[NSURLDownload alloc] initWithRequest:[NSURLRequest requestWithURL:URL] delegate:[SBDownloads sharedDownloads]] autorelease];
+	download = [[NSURLDownload alloc] initWithRequest:[NSURLRequest requestWithURL:URL] delegate:[SBDownloads sharedDownloads]];
 	return [self itemWithDownload:download];
 }
 
 + (id)itemWithDownload:(NSURLDownload *)download
 {
-	id item = [[[self alloc] init] autorelease];
+	id item = [[self alloc] init];
 	[(SBDownload *)item setDownload:download];
 	[(SBDownload *)item setDownloading:YES];
 	return item;
@@ -81,7 +81,6 @@
 - (void)stop
 {
 	[download cancel];
-	[download release];
 	download = nil;
 	downloading = NO;
 }

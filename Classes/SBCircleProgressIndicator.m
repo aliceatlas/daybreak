@@ -63,7 +63,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	CGColorRelease(backgroundColor);
 	CGColorRelease(fillColor);
-	[super dealloc];
 }
 
 #pragma mark View

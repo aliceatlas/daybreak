@@ -40,12 +40,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return self;
 }
 
-- (void)dealloc
-{
-	[images release];
-	[super dealloc];
-}
-
 #pragma mark NSCoding Protocol
 
 - (id)initWithCoder:(NSCoder *)decoder
@@ -90,8 +84,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (images != inImages)
 	{
-		[inImages retain];
-		[images release];
 		images = inImages;
 		if ([images count] > 0)
 		{

@@ -55,13 +55,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	[self destructProgressIndicator];
 	tabbar = nil;
-	[identifier release];
-	[image release];
-	[title release];
 	closeSelector = nil;
 	selectSelector = nil;
-	[area release];
-	[super dealloc];
 }
 
 #pragma mark Rects
@@ -113,12 +108,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (![title isEqualToString:inTitle])
 	{
-		[inTitle retain];
-		if (title)
-		{
-			[title release];
-			title = nil;
-		}
 		title = inTitle;
 		[self setNeedsDisplay:YES];
 	}
@@ -155,7 +144,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (progressIndicator)
 	{
 		[progressIndicator removeFromSuperview];
-		[progressIndicator release];
 		progressIndicator = nil;
 	}
 }
@@ -419,8 +407,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSSize size = NSZeroSize;
 		NSRect r = NSZeroRect;
 		CGFloat width = (b.size.width - titleLeftMargin - titleRightMargin);
-		NSShadow *shadow = [[[NSShadow alloc] init] autorelease];
-		NSMutableParagraphStyle *paragraph = [[[NSMutableParagraphStyle alloc] init] autorelease];
+		NSShadow *shadow = [[NSShadow alloc] init];
+		NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
 		[shadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];
 		[shadow setShadowOffset:NSMakeSize(0, -0.5)];
 		[shadow setShadowBlurRadius:0.5];

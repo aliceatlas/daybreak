@@ -243,7 +243,7 @@ NSString *SBBytesUnitString = @"bytes";
 		[self hasPrefix:@"http://localhost"])
 	{
 		NSString *string = [self URLEncodedString];
-		NSAttributedString *attributedString = [[[NSAttributedString alloc] initWithString:string] autorelease];
+		NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string];
 		NSRange range = {0, 0};
 		NSURL *URL = [attributedString URLAtIndex:NSMaxRange(range) effectiveRange:&range];
 		r = range.location == 0;

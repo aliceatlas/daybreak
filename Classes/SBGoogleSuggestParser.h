@@ -15,7 +15,7 @@
 	BOOL _inToplevel;
 	BOOL _inCompleteSuggestion;
 }
-@property (nonatomic, retain) NSMutableArray *items;
+@property (nonatomic, strong) NSMutableArray *items;
 
 + (id)parser;
 - (NSError *)parseData:(NSData *)data;

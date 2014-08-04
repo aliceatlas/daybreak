@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSArray *buttons;
 }
-@property (nonatomic, retain) NSArray *buttons;
+@property (nonatomic, strong) NSArray *buttons;
 
 - (id)init;
 // Setter

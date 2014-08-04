@@ -36,7 +36,7 @@
 	SBBLKGUIButton *cancelButton;
 	SBBLKGUIButton *doneButton;
 }
-@property (nonatomic, readonly) NSString *userAgentName;
+@property (weak, nonatomic, readonly) NSString *userAgentName;
 
 // Rects
 - (NSPoint)margin;

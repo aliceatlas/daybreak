@@ -47,7 +47,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		id belowView = [subviews objectAtIndex:0];
 		SBSavePanelContentView *savePanelContentView = nil;
-		savePanelContentView = [[[SBSavePanelContentView alloc] initWithFrame:contentView.frame] autorelease];
+		savePanelContentView = [[SBSavePanelContentView alloc] initWithFrame:contentView.frame];
 		[savePanelContentView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 		[contentView addSubview:savePanelContentView positioned:NSWindowBelow relativeTo:belowView];
 	}
@@ -103,7 +103,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		id belowView = [subviews objectAtIndex:0];
 		SBSavePanelContentView *savePanelContentView = nil;
-		savePanelContentView = [[[SBSavePanelContentView alloc] initWithFrame:contentView.frame] autorelease];
+		savePanelContentView = [[SBSavePanelContentView alloc] initWithFrame:contentView.frame];
 		[savePanelContentView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 		[contentView addSubview:savePanelContentView positioned:NSWindowBelow relativeTo:belowView];
 	}

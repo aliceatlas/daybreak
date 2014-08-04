@@ -87,7 +87,7 @@ static SBPreferences *_sharedPreferences;
 	// WebKitDeveloper
 	[info setObject:[NSNumber numberWithBool:YES] forKey:kWebKitDeveloperExtras];
 	[info setObject:[NSNumber numberWithBool:YES] forKey:kSBWhenNewTabOpensMakeActiveFlag];
-	[defaults registerDefaults:[[info copy] autorelease]];
+	[defaults registerDefaults:[info copy]];
 }
 
 - (NSString *)homepage:(BOOL)isInWindow

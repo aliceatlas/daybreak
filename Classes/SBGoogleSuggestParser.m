@@ -20,13 +20,7 @@ NSString *kSBGSSuggestionAttributeDataArgumentName = @"data";
 
 + (id)parser
 {
-	return [[[self alloc] init] autorelease];
-}
-
-- (void)dealloc
-{
-	[items release];
-	[super dealloc];
+	return [[self alloc] init];
 }
 
 - (NSError *)parseData:(NSData *)data
@@ -44,10 +38,7 @@ NSString *kSBGSSuggestionAttributeDataArgumentName = @"data";
 	self.items = [NSMutableArray arrayWithCapacity:0];
 	[parser parse];
 	
-	err = [parser parserError];
-	
-	[parser release];
-	return err;
+	return [parser parserError];
 }
 
 #pragma mark Delegate

@@ -27,9 +27,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface SBTabView : NSTabView
 {
-	id<SBTabViewDelegate> delegate;
+	id<SBTabViewDelegate> __unsafe_unretained delegate;
 }
-@property (nonatomic, assign) id<SBTabViewDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id<SBTabViewDelegate> delegate;
 @property (nonatomic) NSRect frame;
 @property (nonatomic) NSRect bounds;
 

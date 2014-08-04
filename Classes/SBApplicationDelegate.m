@@ -44,7 +44,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructUpdateView];
 	[self destructLocalizeWindowController];
 	[self destructPreferencesWindowController];
-	[super dealloc];
 }
 
 #pragma mark Application Delegate
@@ -235,7 +234,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (updateView)
 	{
 		[updateView removeFromSuperview];
-		[updateView release];
 		updateView = nil;
 	}
 }
@@ -245,7 +243,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (localizationWindowController)
 	{
 		[localizationWindowController close];
-		[localizationWindowController release];
 		localizationWindowController = nil;
 	}
 }
@@ -255,7 +252,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (preferencesWindowController)
 	{
 		[preferencesWindowController close];
-		[preferencesWindowController release];
 		preferencesWindowController = nil;
 	}
 }
@@ -291,8 +287,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	while (r.location != NSNotFound && r.length > 0);
 	if ([versionString length] != [mutableVString length])
-		versionString = [[mutableVString copy] autorelease];
-	[mutableVString release];
+		versionString = [mutableVString copy];
 	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:kSBUpdaterNewVersionURL, versionString]];
 	[window hideCoverWindow];
 	[self destructUpdateView];
@@ -502,12 +497,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMenuItem *validateStrings = nil;
 	NSMenuItem *debugUI = nil;
 	mainMenu = [NSApp mainMenu];
-	debugMenuItem = [[[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""] autorelease];
-	debugMenu = [[[NSMenu alloc] initWithTitle:@"Debug"] autorelease];
-	writeViewStructure = [[[NSMenuItem alloc] initWithTitle:@"Export View Structure..." action:@selector(writeViewStructure:) keyEquivalent:@""] autorelease];
-	writeMainMenu = [[[NSMenuItem alloc] initWithTitle:@"Export Menu as plist..." action:@selector(writeMainMenu:) keyEquivalent:@""] autorelease];
-	validateStrings = [[[NSMenuItem alloc] initWithTitle:@"Validate strings file..." action:@selector(validateStrings:) keyEquivalent:@""] autorelease];
-	debugUI = [[[NSMenuItem alloc] initWithTitle:@"Debug UI..." action:@selector(debugAddDummyDownloads:) keyEquivalent:@""] autorelease];
+	debugMenuItem = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+	debugMenu = [[NSMenu alloc] initWithTitle:@"Debug"];
+	writeViewStructure = [[NSMenuItem alloc] initWithTitle:@"Export View Structure..." action:@selector(writeViewStructure:) keyEquivalent:@""];
+	writeMainMenu = [[NSMenuItem alloc] initWithTitle:@"Export Menu as plist..." action:@selector(writeMainMenu:) keyEquivalent:@""];
+	validateStrings = [[NSMenuItem alloc] initWithTitle:@"Validate strings file..." action:@selector(validateStrings:) keyEquivalent:@""];
+	debugUI = [[NSMenuItem alloc] initWithTitle:@"Debug UI..." action:@selector(debugAddDummyDownloads:) keyEquivalent:@""];
 	[debugMenu addItem:writeViewStructure];
 	[debugMenu addItem:writeMainMenu];
 	[debugMenu addItem:validateStrings];

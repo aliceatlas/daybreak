@@ -144,7 +144,7 @@
 		
 		color = [self isHighlighted] ? [NSColor whiteColor] : [NSColor colorWithCalibratedRed:textColors[0] green:textColors[1] blue:textColors[2] alpha:textColors[3]];
 		font = [self font];
-		paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+		paragraphStyle = [[NSMutableParagraphStyle alloc] init];
 		[paragraphStyle setLineBreakMode:lineBreakMode];
 		attribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
 		sattribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, sTextColor, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];

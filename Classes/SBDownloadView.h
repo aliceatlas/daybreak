@@ -28,16 +28,16 @@
 @class SBCircleProgressIndicator;
 @interface SBDownloadView : SBView
 {
-	SBDownload *download;
+	SBDownload *__weak download;
 	SBCircleProgressIndicator *progressIndicator;
 	BOOL selected;
 	NSTrackingArea *area;
 }
-@property (nonatomic, assign) SBDownload *download;
-@property (nonatomic, retain) SBCircleProgressIndicator *progressIndicator;
+@property (nonatomic, weak) SBDownload *download;
+@property (nonatomic, strong) SBCircleProgressIndicator *progressIndicator;
 @property (nonatomic) BOOL selected;
-@property (nonatomic, readonly) NSFont *nameFont;
-@property (nonatomic, readonly) NSParagraphStyle *paragraphStyle;
+@property (unsafe_unretained, nonatomic, readonly) NSFont *nameFont;
+@property (unsafe_unretained, nonatomic, readonly) NSParagraphStyle *paragraphStyle;
 
 // Getter
 - (BOOL)isFirstResponder;

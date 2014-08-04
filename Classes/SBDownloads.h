@@ -36,7 +36,7 @@ extern NSString *SBDownloadsDidFailItemNotification;
 	NSMutableArray *items;
 	NSUInteger _identifier;
 }
-@property (nonatomic, retain) NSMutableArray *items;
+@property (nonatomic, strong) NSMutableArray *items;
 
 + (id)sharedDownloads;
 - (BOOL)downloading;

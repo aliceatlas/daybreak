@@ -42,7 +42,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)dealloc
 {
 	delegate = nil;
-	[super dealloc];
 }
 
 - (NSString *)textEncodingName

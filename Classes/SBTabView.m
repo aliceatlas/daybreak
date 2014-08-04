@@ -43,7 +43,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)dealloc
 {
 	delegate = nil;
-	[super dealloc];
 }
 
 - (NSString *)description
@@ -101,7 +100,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (SBTabViewItem *)addItemWithIdentifier:(NSNumber *)identifier
 {
 	SBTabViewItem *tabViewItem = nil;
-	tabViewItem = [[[SBTabViewItem alloc] initWithIdentifier:identifier] autorelease];
+	tabViewItem = [[SBTabViewItem alloc] initWithIdentifier:identifier];
 	[self addTabViewItem:tabViewItem];
 	return tabViewItem;
 }

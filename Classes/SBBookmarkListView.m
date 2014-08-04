@@ -62,14 +62,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	wrapperView = nil;
 	draggedItemView = nil;
 	toolsItemView = nil;
-	[draggedItems release];
-	[itemViews release];
 	[self destructSelectionView];
 	[self destructDraggingLineView];
 	[self destructControls];
 	[self destructToolsTimer];
 	[self destructSearchAnimations];
-	[super dealloc];
 }
 
 #pragma mark Responder
@@ -271,7 +268,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 		index++;
 	}
-	return [[indexes copy] autorelease];
+	return [indexes copy];
 }
 
 - (NSRect)dragginLineRectAtPoint:(NSPoint)point
@@ -380,7 +377,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				[ditems addObject:item];
 		}
 	}
-	return [ditems count] > 0 ? [[ditems copy] autorelease] : nil;
+	return [ditems count] > 0 ? [ditems copy] : nil;
 }
 
 - (BOOL)canScrollToNext
@@ -407,7 +404,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (selectionView)
 	{
 		[selectionView removeFromSuperview];
-		[selectionView release];
 		selectionView = nil;
 	}
 }
@@ -417,7 +413,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (draggingLineView)
 	{
 		[draggingLineView removeFromSuperview];
-		[draggingLineView release];
 		draggingLineView = nil;
 	}
 }
@@ -427,19 +422,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (removeButton)
 	{
 		[removeButton removeFromSuperview];
-		[removeButton release];
 		removeButton = nil;
 	}
 	if (editButton)
 	{
 		[editButton removeFromSuperview];
-		[editButton release];
 		editButton = nil;
 	}
 	if (updateButton)
 	{
 		[updateButton removeFromSuperview];
-		[updateButton release];
 		updateButton = nil;
 	}
 }
@@ -449,7 +441,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (toolsTimer)
 	{
 		[toolsTimer invalidate];
-		[toolsTimer release];
 		toolsTimer = nil;
 	}
 }
@@ -460,7 +451,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if ([searchAnimations isAnimating])
 			[searchAnimations stopAnimation];
-		[searchAnimations release];
 		searchAnimations = nil;
 	}
 }
@@ -559,7 +549,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (itemViews)
 	{
 		[itemViews removeAllObjects];
-		[itemViews release];
 		itemViews = nil;
 	}
 	itemViews = [[NSMutableArray alloc] initWithCapacity:0];
@@ -608,10 +597,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					offset++;
 			}
 			to -= offset;
-			[views retain];
 			[itemViews removeObjectsAtIndexes:indexes];
 			[itemViews insertObjects:views atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(to, [indexes count])]];
-			[views release];
 		}
 	}
 }
@@ -740,7 +727,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[info setObject:itemView forKey:NSViewAnimationTargetKey];
 			[info setObject:[NSValue valueWithRect:itemView.frame] forKey:NSViewAnimationStartFrameKey];
 			[info setObject:[NSValue valueWithRect:r] forKey:NSViewAnimationEndFrameKey];
-			[animations addObject:[[info copy] autorelease]];
+			[animations addObject:[info copy]];
 		}
 		else {
 			itemView.frame = r;
@@ -748,7 +735,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	if ([animations count] > 0)
 	{
-		NSViewAnimation *animation = [[[NSViewAnimation alloc] initWithViewAnimations:animations] autorelease];
+		NSViewAnimation *animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
 		[animation setDuration:duration];
 		[animation setDelegate:self];
 		[animation startAnimation];
@@ -775,7 +762,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		toolsItemView = itemView;
 		[self destructToolsTimer];
 		toolsTimer = [NSTimer scheduledTimerWithTimeInterval:kSBBookmarkToolsInterval target:self selector:@selector(layoutTools) userInfo:nil repeats:NO];
-		[toolsTimer retain];
 	}
 }
 
@@ -947,7 +933,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 		if ([indexes count] > 0)
 		{
-			[self showIndexes:[[indexes copy] autorelease]];
+			[self showIndexes:[indexes copy]];
 		}
 		else {
 			NSBeep();
@@ -992,7 +978,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[info setObject:itemView forKey:NSViewAnimationTargetKey];
 			[info setObject:[NSValue valueWithRect:startRect] forKey:NSViewAnimationStartFrameKey];
 			[info setObject:[NSValue valueWithRect:endRect] forKey:NSViewAnimationEndFrameKey];
-			[infos addObject:[[info copy] autorelease]];
+			[infos addObject:[info copy]];
 			
 			// Put to top level
 			[[itemView superview] addSubview:itemView];
@@ -1005,7 +991,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	if ([infos count] > 0)
 	{
-		[self performSelector:@selector(startAnimations:) withObject:[[infos copy] autorelease] afterDelay:0];
+		[self performSelector:@selector(startAnimations:) withObject:[infos copy] afterDelay:0];
 	}
 }
 
@@ -1045,7 +1031,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 		index++;
 	}
-	[self removeItemViewsAtIndexes:[[indexes copy] autorelease]];
+	[self removeItemViewsAtIndexes:[indexes copy]];
 }
 
 - (void)selectAll:(id)sender
@@ -1071,7 +1057,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 		index++;
 	}
-	[self openItemsAtIndexes:[[indexes copy] autorelease]];
+	[self openItemsAtIndexes:[indexes copy]];
 }
 
 #pragma mark Event
@@ -1269,12 +1255,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSMenu *labelsMenu = nil;
 		bookmarks = [SBBookmarks sharedBookmarks];
 		representedItems = [NSMutableArray arrayWithCapacity:0];
-		menu = [[[NSMenu alloc] init] autorelease];
+		menu = [[NSMenu alloc] init];
 		title = indexes.count == 1 ? NSLocalizedString(@"Open an item", nil) : [NSString stringWithFormat:NSLocalizedString(@"Open %d items", nil), indexes.count];
-		openItem = [[[NSMenuItem alloc] initWithTitle:title action:@selector(openItemsFromMenuItem:) keyEquivalent:[NSString string]] autorelease];
+		openItem = [[NSMenuItem alloc] initWithTitle:title action:@selector(openItemsFromMenuItem:) keyEquivalent:[NSString string]];
 		title = indexes.count == 1 ? NSLocalizedString(@"Remove an item", nil) : [NSString stringWithFormat:NSLocalizedString(@"Remove %d items", nil), indexes.count];
-		removeItem = [[[NSMenuItem alloc] initWithTitle:title action:@selector(removeItemsFromMenuItem:) keyEquivalent:[NSString string]] autorelease];
-		labelsItem = [[[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Label", nil) action:nil keyEquivalent:[NSString string]] autorelease];
+		removeItem = [[NSMenuItem alloc] initWithTitle:title action:@selector(removeItemsFromMenuItem:) keyEquivalent:[NSString string]];
+		labelsItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Label", nil) action:nil keyEquivalent:[NSString string]];
 		[openItem setTarget:bookmarks];
 		[removeItem setTarget:bookmarks];
 		for (i = [indexes lastIndex]; i != NSNotFound; i = [indexes indexLessThanIndex:i])
@@ -1384,7 +1370,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			BOOL shouldInset = YES;
 			NSImage *image = nil;
 			data = [pasteboard dataForType:NSTIFFPboardType];
-			if ((image = [[[NSImage alloc] initWithData:data] autorelease]))
+			if ((image = [[NSImage alloc] initWithData:data]))
 			{
 				shouldInset = !NSEqualSizes([image size], SBBookmarkImageMaxSize());
 			}
@@ -1392,7 +1378,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			{
 				NSBitmapImageRep *bitmapImageRep = nil;
 				NSImage *insetImage = nil;
-				insetImage = [[[[NSImage alloc] initWithData:data] autorelease] insetWithSize:SBBookmarkImageMaxSize() intersectRect:NSZeroRect offset:NSZeroPoint];
+				insetImage = [[[NSImage alloc] initWithData:data] insetWithSize:SBBookmarkImageMaxSize() intersectRect:NSZeroRect offset:NSZeroPoint];
 				if (insetImage)
 					bitmapImageRep = [insetImage bitmapImageRep];
 				if (bitmapImageRep)

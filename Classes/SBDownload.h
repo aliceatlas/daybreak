@@ -37,13 +37,13 @@
 	long long expectedLength;
 	SBStatus status;
 }
-@property (nonatomic, retain) NSNumber *identifier;
-@property (nonatomic, retain) NSString *name;
-@property (nonatomic, readonly, assign) NSURL *URL;
+@property (nonatomic, strong) NSNumber *identifier;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, readonly, weak) NSURL *URL;
 @property (nonatomic, readonly, assign) CGFloat progress;
-@property (nonatomic, retain) NSURLDownload *download;
-@property (nonatomic, retain) NSString *path;
-@property (nonatomic, retain) NSString *bytes;
+@property (nonatomic, strong) NSURLDownload *download;
+@property (nonatomic, strong) NSString *path;
+@property (nonatomic, strong) NSString *bytes;
 @property (nonatomic) long long receivedLength;
 @property (nonatomic) long long expectedLength;
 @property (nonatomic) BOOL downloading;

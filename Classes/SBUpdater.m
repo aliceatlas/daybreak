@@ -51,11 +51,6 @@ static SBUpdater *_sharedUpdater;
 	return self;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-}
-
 - (void)check
 {
 	[NSThread detachNewThreadSelector:@selector(checking) toTarget:self withObject:nil];
@@ -63,62 +58,62 @@ static SBUpdater *_sharedUpdater;
 
 - (void)checking
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	NSComparisonResult result = NSOrderedSame;
-	NSString *appVersionString = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-	NSURL *url = [NSURL URLWithString:SBVersionFileURL];
-	NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kSBTimeoutInterval];
-	NSURLResponse *responce = nil;
-	NSError *error = nil;
-	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&responce error:&error];
-	NSThread *currentThread = [NSThread currentThread];
-	NSMutableDictionary *threadDictionary = [currentThread threadDictionary];
-	
-	[threadDictionary setObject:[NSNumber numberWithInteger:result] forKey:kSBUpdaterResult];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(threadWillExit:) name:NSThreadWillExitNotification object:currentThread];
-	
-	if (data && appVersionString)
-	{
-		// Success for networking
-		// Parse data
-		NSString *string = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-		if ([string length] > 0)
+	@autoreleasepool {
+		NSComparisonResult result = NSOrderedSame;
+		NSString *appVersionString = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+		NSURL *url = [NSURL URLWithString:SBVersionFileURL];
+		NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:kSBTimeoutInterval];
+		NSURLResponse *responce = nil;
+		NSError *error = nil;
+		NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&responce error:&error];
+		NSThread *currentThread = [NSThread currentThread];
+		NSMutableDictionary *threadDictionary = [currentThread threadDictionary];
+		
+		[threadDictionary setObject:[NSNumber numberWithInteger:result] forKey:kSBUpdaterResult];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(threadWillExit:) name:NSThreadWillExitNotification object:currentThread];
+		
+		if (data && appVersionString)
 		{
-			NSRange range0;
-			range0 = [string rangeOfString:@"version=\""];
-			if (range0.location != NSNotFound)
+			// Success for networking
+			// Parse data
+			NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+			if ([string length] > 0)
 			{
-				NSRange range1;
-				range1 = [string rangeOfString:@"\";" options:0 range:NSMakeRange(NSMaxRange(range0), [string length] - NSMaxRange(range0))];
-				if (range1.location != NSNotFound)
+				NSRange range0;
+				range0 = [string rangeOfString:@"version=\""];
+				if (range0.location != NSNotFound)
 				{
-					NSString *versionString = nil;
-					range0 = NSMakeRange(NSMaxRange(range0), range1.location - NSMaxRange(range0));
-					versionString = [string substringWithRange:range0];
-					if ([versionString length] > 0)
+					NSRange range1;
+					range1 = [string rangeOfString:@"\";" options:0 range:NSMakeRange(NSMaxRange(range0), [string length] - NSMaxRange(range0))];
+					if (range1.location != NSNotFound)
 					{
-						result = [appVersionString compareAsVersionString:versionString];
-						[threadDictionary setObject:[NSNumber numberWithInteger:result] forKey:kSBUpdaterResult];
-						if (result == NSOrderedAscending)
+						NSString *versionString = nil;
+						range0 = NSMakeRange(NSMaxRange(range0), range1.location - NSMaxRange(range0));
+						versionString = [string substringWithRange:range0];
+						if ([versionString length] > 0)
 						{
-							// Should update
-							[threadDictionary setObject:versionString forKey:kSBUpdaterVersionString];
-						}
-						else if (result == NSOrderedSame)
-						{
-							// Not need updating
-							[threadDictionary setObject:versionString forKey:kSBUpdaterVersionString];
+							result = [appVersionString compareAsVersionString:versionString];
+							[threadDictionary setObject:[NSNumber numberWithInteger:result] forKey:kSBUpdaterResult];
+							if (result == NSOrderedAscending)
+							{
+								// Should update
+								[threadDictionary setObject:versionString forKey:kSBUpdaterVersionString];
+							}
+							else if (result == NSOrderedSame)
+							{
+								// Not need updating
+								[threadDictionary setObject:versionString forKey:kSBUpdaterVersionString];
+							}
 						}
 					}
 				}
 			}
 		}
+		else {
+			// Error
+			[threadDictionary setObject:NSLocalizedString(@"Could not check for updates.", nil) forKey:kSBUpdaterErrorDescription];
+		}
 	}
-	else {
-		// Error
-		[threadDictionary setObject:NSLocalizedString(@"Could not check for updates.", nil) forKey:kSBUpdaterErrorDescription];
-	}
-	[pool release];
 }
 
 - (void)threadWillExit:(NSNotification*)aNotification
@@ -126,7 +121,7 @@ static SBUpdater *_sharedUpdater;
 	NSThread *currentThread = [aNotification object];
 	NSMutableDictionary *threadDictionary = [currentThread threadDictionary];
 	NSString *errorDescription = [threadDictionary objectForKey:kSBUpdaterErrorDescription];
-	NSDictionary *userInfo = [[threadDictionary copy] autorelease];
+	NSDictionary *userInfo = [threadDictionary copy];
 	if (!errorDescription)
 	{
 		NSComparisonResult result = [[userInfo objectForKey:kSBUpdaterResult] integerValue];
@@ -157,7 +152,7 @@ static SBUpdater *_sharedUpdater;
 			{
 				// Error
 				[threadDictionary setObject:NSLocalizedString(@"Invalid version number.", nil) forKey:kSBUpdaterErrorDescription];
-				userInfo = [[threadDictionary copy] autorelease];
+				userInfo = [threadDictionary copy];
 				[self performSelectorOnMainThread:@selector(postDidFailCheckingNotification:) withObject:userInfo waitUntilDone:NO];
 			}
 		}

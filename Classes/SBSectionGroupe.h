@@ -30,8 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *title;
 	NSMutableArray *items;
 }
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSMutableArray *items;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSMutableArray *items;
 
 + (id)groupeWithTitle:(NSString *)title;
 - (void)addItem:(SBSectionItem *)item;
@@ -45,9 +45,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	Class controlClass;
 	id context;
 }
-@property (nonatomic, retain) NSString *title;
-@property (nonatomic, retain) NSString *keyName;
-@property (nonatomic, retain) id context;
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, strong) NSString *keyName;
+@property (nonatomic, strong) id context;
 
 + (id)itemWithTitle:(NSString *)title keyName:(NSString *)keyName controlClass:(Class)controlClass context:(id)context;
 - (Class)controlClass;

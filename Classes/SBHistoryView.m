@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		r.size.height = kSBMinFrameSizeHeight;
 	if (self = [super initWithFrame:r])
 	{
-		self.items = [[[[SBHistory sharedHistory] items] mutableCopy] autorelease];
+		self.items = [[[SBHistory sharedHistory] items] mutableCopy];
 		[self constructMessageLabel];
 		[self constructSearchField];
 		[self constructTableView];
@@ -54,19 +54,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[self setAutoresizingMask:(NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin)];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[messageLabel release];
-	[searchField release];
-	[tableView release];
-	[scrollView release];
-	[removeButton release];
-	[removeAllButton release];
-	[backButton release];
-	[items release];
-	[super dealloc];
 }
 
 #pragma mark Rects
@@ -181,7 +168,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)showAllItems
 {
-	self.items = [[[[SBHistory sharedHistory] items] mutableCopy] autorelease];
+	self.items = [[[SBHistory sharedHistory] items] mutableCopy];
 	[tableView reloadData];
 }
 
@@ -283,7 +270,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSTimeInterval interval = item ? [item lastVisitedTimeInterval] : 0;
 		if (interval > 0)
 		{
-			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] initWithDateFormat:@"%Y/%m/%d %H:%M:%S" allowNaturalLanguage:YES] autorelease];
+			NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] initWithDateFormat:@"%Y/%m/%d %H:%M:%S" allowNaturalLanguage:YES];
 			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
 			[dateFormatter setDateStyle:NSDateFormatterLongStyle];
 			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -296,7 +283,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSColor *color = [NSColor whiteColor];
 		NSFont *font = [NSFont systemFontOfSize:14.0];
 		NSDictionary *attribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, nil];
-		NSAttributedString *attributedString = [[[NSAttributedString alloc] initWithString:string attributes:attribute] autorelease];
+		NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string attributes:attribute];
 		[aCell setAttributedStringValue:attributedString];
 	}
 }
@@ -369,12 +356,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	tableRect.size = scrollerRect.size;
 	scrollView = [[SBBLKGUIScrollView alloc] initWithFrame:scrollerRect];
 	tableView = [[NSTableView alloc] initWithFrame:tableRect];
-	iconColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBImage] autorelease];
-	titleColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBTitle] autorelease];
-	urlColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBURL] autorelease];
-	dateColumn = [[[NSTableColumn alloc] initWithIdentifier:kSBDate] autorelease];
-	iconCell = [[[SBIconDataCell alloc] init] autorelease];
-	textCell = [[[NSCell alloc] init] autorelease];
+	iconColumn = [[NSTableColumn alloc] initWithIdentifier:kSBImage];
+	titleColumn = [[NSTableColumn alloc] initWithIdentifier:kSBTitle];
+	urlColumn = [[NSTableColumn alloc] initWithIdentifier:kSBURL];
+	dateColumn = [[NSTableColumn alloc] initWithIdentifier:kSBDate];
+	iconCell = [[SBIconDataCell alloc] init];
+	textCell = [[NSCell alloc] init];
 	iconCell.drawsBackground = NO;
 	[iconColumn setWidth:22.0];
 	[iconColumn setDataCell:iconCell];
@@ -536,7 +523,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if ([target respondsToSelector:doneSelector])
 		{
-			[target performSelector:doneSelector withObject:[[urls copy] autorelease]];
+			[target performSelector:doneSelector withObject:[urls copy]];
 		}
 	}
 }

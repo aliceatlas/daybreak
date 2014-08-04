@@ -38,11 +38,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return self;
 }
 
-- (void)dealloc
-{
-	[buttons release];
-	[super dealloc];
-}
 
 #pragma mark NSCoding Protocol
 
@@ -74,8 +69,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (buttons != inButtons)
 	{
-		[inButtons retain];
-		[buttons release];
 		buttons = inButtons;
 		for (SBButton *button in buttons)
 		{

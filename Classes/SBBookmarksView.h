@@ -35,12 +35,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIScrollView *scrollView;
 	SBBookmarkListView *listView;
 	SBSearchbar *searchbar;
-	id delegate;
+	id __unsafe_unretained delegate;
 }
-@property (nonatomic, retain) SBBookmarkListView *listView;
+@property (nonatomic, strong) SBBookmarkListView *listView;
 @property (nonatomic) CGFloat cellWidth;
 @property (nonatomic) SBBookmarkMode mode;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, unsafe_unretained) id delegate;
 
 - (CGFloat)splitWidth:(CGFloat)proposedWidth;
 // Destruction

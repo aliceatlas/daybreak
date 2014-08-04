@@ -31,9 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (self = [super initWithFrame:frameRect])
 	{
-		SBBLKGUISliderCell *cell = nil;
-		cell = [[[SBBLKGUISliderCell alloc] init] autorelease];
-		[self setCell:cell];
+		self.cell = [[SBBLKGUISliderCell alloc] init];
 	}
 	
 	return self;

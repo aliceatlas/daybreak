@@ -28,10 +28,10 @@
 @interface SBRenderWindow : NSWindow
 {
 	WebView *webView;
-	id delegate;
+	id __unsafe_unretained delegate;
 }
-@property (nonatomic, retain) WebView *webView;
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, strong) WebView *webView;
+@property (nonatomic, unsafe_unretained) id delegate;
 
 + (id)startRenderingWithSize:(NSSize)size delegate:(id)delegate url:(NSURL *)url;
 - (id)initWithContentRect:(NSRect)contentRect;

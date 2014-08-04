@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSImage *backgroundImage;
 }
-@property (nonatomic, retain) NSImage *backgroundImage;
+@property (nonatomic, strong) NSImage *backgroundImage;
 
 // Setter
 - (void)setMenu:(NSMenu *)inMenu;

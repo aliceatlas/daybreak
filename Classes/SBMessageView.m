@@ -41,15 +41,6 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[messageLabel release];
-	[textLabel release];
-	[doneButton release];
-	[cancelButton release];
-	[super dealloc];
-}
-
 #pragma mark Rects
 
 - (NSPoint)margin

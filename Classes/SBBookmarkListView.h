@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBBookmarkListItemView;
 @interface SBBookmarkListView : SBView <NSAnimationDelegate>
 {
-	SBBookmarksView *wrapperView;
+	SBBookmarksView *__weak wrapperView;
 	SBBookmarkMode mode;
 	NSSize cellSize;
 	CGFloat cellWidth;
@@ -54,19 +54,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSPoint _block;
 	NSPoint _point;
 	NSSize _offset;
-	id<SBBookmarkListViewDelegate> delegate;
+	id<SBBookmarkListViewDelegate> __unsafe_unretained delegate;
 	NSUInteger _animationIndex;
 	NSViewAnimation *searchAnimations;
 }
-@property (nonatomic, assign) SBBookmarksView *wrapperView;
+@property (nonatomic, weak) SBBookmarksView *wrapperView;
 @property (nonatomic) SBBookmarkMode mode;
 @property (nonatomic) NSSize cellSize;
 @property (nonatomic, readonly) CGFloat width;
 @property (nonatomic) CGFloat cellWidth;
 @property (nonatomic, readonly) NSPoint block;
-@property (nonatomic, readonly) NSMutableArray *items;
-@property (nonatomic, retain) NSArray *draggedItems;
-@property (nonatomic, assign) id<SBBookmarkListViewDelegate> delegate;
+@property (weak, nonatomic, readonly) NSMutableArray *items;
+@property (nonatomic, strong) NSArray *draggedItems;
+@property (nonatomic, unsafe_unretained) id<SBBookmarkListViewDelegate> delegate;
 
 // Getter
 - (CGFloat)splitWidth:(CGFloat)proposedWidth;

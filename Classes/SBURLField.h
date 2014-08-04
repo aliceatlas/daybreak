@@ -42,29 +42,29 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBButton *goButton;
 	SBURLFieldSheet *sheet;
 	SBURLFieldContentView *contentView;
-	id<SBURLFieldDatasource> dataSource;
-	id delegate;
+	id<SBURLFieldDatasource> __unsafe_unretained dataSource;
+	id __unsafe_unretained delegate;
 	NSMutableArray *gsItems;
 	NSMutableArray *bmItems;
 	NSMutableArray *hItems;
 	NSMutableArray *items;
 	BOOL _isOpenSheet;
 }
-@property (nonatomic, retain) SBButton *backwardButton;
-@property (nonatomic, retain) SBButton *forwardButton;
-@property (nonatomic, retain) SBURLImageView *imageView;
-@property (nonatomic, retain) SBURLTextField *field;
-@property (nonatomic, retain) SBButton *goButton;
-@property (nonatomic, retain) SBURLFieldSheet *sheet;
-@property (nonatomic, retain) SBURLFieldContentView *contentView;
-@property (nonatomic, assign) id<SBURLFieldDatasource> dataSource;
-@property (nonatomic, assign) id delegate;
-@property (nonatomic, assign) NSImage *image;
-@property (nonatomic, assign) NSString *stringValue;
-@property (nonatomic, retain) NSMutableArray *gsItems;
-@property (nonatomic, retain) NSMutableArray *bmItems;
-@property (nonatomic, retain) NSMutableArray *hItems;
-@property (nonatomic, retain) NSMutableArray *items;
+@property (nonatomic, strong) SBButton *backwardButton;
+@property (nonatomic, strong) SBButton *forwardButton;
+@property (nonatomic, strong) SBURLImageView *imageView;
+@property (nonatomic, strong) SBURLTextField *field;
+@property (nonatomic, strong) SBButton *goButton;
+@property (nonatomic, strong) SBURLFieldSheet *sheet;
+@property (nonatomic, strong) SBURLFieldContentView *contentView;
+@property (nonatomic, unsafe_unretained) id<SBURLFieldDatasource> dataSource;
+@property (nonatomic, unsafe_unretained) id delegate;
+@property (nonatomic, weak) NSImage *image;
+@property (nonatomic, weak) NSString *stringValue;
+@property (nonatomic, strong) NSMutableArray *gsItems;
+@property (nonatomic, strong) NSMutableArray *bmItems;
+@property (nonatomic, strong) NSMutableArray *hItems;
+@property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic) BOOL enabledBackward;
 @property (nonatomic) BOOL enabledForward;
 @property (nonatomic) BOOL enabledGo;
@@ -131,7 +131,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface SBURLImageView : NSImageView
 
-@property (nonatomic, readonly) SBURLField *field;
+@property (weak, nonatomic, readonly) SBURLField *field;
 
 - (NSURL *)url;
 - (NSData *)selectedWebViewImageDataForBookmark;
@@ -146,7 +146,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SEL commandAction;
 	SEL optionAction;
 }
-@property (nonatomic, readonly) SBURLField *field;
+@property (weak, nonatomic, readonly) SBURLField *field;
 @property (nonatomic) SEL commandAction;
 @property (nonatomic) SEL optionAction;
 
@@ -167,7 +167,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	id dataSource;
 	id delegate;
 }
-@property (nonatomic, readonly) SBURLField *field;
+@property (weak, nonatomic, readonly) SBURLField *field;
 @property (nonatomic, readonly) NSUInteger selectedRowIndex;
 
 // Construction

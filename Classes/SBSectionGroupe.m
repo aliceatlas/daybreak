@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 + (id)groupeWithTitle:(NSString *)title
 {
-	SBSectionGroupe *groupe = [[[SBSectionGroupe alloc] init] autorelease];
+	SBSectionGroupe *groupe = [[SBSectionGroupe alloc] init];
 	[groupe setTitle:title];
 	return groupe;
 }
@@ -45,13 +45,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		items = [[NSMutableArray alloc] initWithCapacity:0];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[title release];
-	[items release];
-	[super dealloc];
 }
 
 - (void)addItem:(SBSectionItem *)item
@@ -69,7 +62,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 + (id)itemWithTitle:(NSString *)title keyName:(NSString *)keyName controlClass:(Class)controlClass context:(id)context
 {
-	SBSectionItem *item = [[[SBSectionItem alloc] init] autorelease];
+	SBSectionItem *item = [[SBSectionItem alloc] init];
 	[item setTitle:title];
 	[item setKeyName:keyName];
 	[item setControlClass:controlClass];
@@ -86,14 +79,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		controlClass = [NSObject class];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[title release];
-	[keyName release];
-	[context release];
-	[super dealloc];
 }
 
 - (Class)controlClass
