@@ -289,8 +289,6 @@
 		0893E60F104FF4E800AF3283 /* BLKGUI_Radio-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Radio-Selected.png"; path = "Resources/Images/BLKGUI_Radio-Selected.png"; sourceTree = "<group>"; };
 		0893E610104FF4E800AF3283 /* BLKGUI_Radio-Selected-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Radio-Selected-Highlighted.png"; path = "Resources/Images/BLKGUI_Radio-Selected-Highlighted.png"; sourceTree = "<group>"; };
 		0893E611104FF4E800AF3283 /* BLKGUI_Radio-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Radio-Highlighted.png"; path = "Resources/Images/BLKGUI_Radio-Highlighted.png"; sourceTree = "<group>"; };
-		08941F281015E353004CD4EA /* SBSavePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSavePanel.h; path = Classes/SBSavePanel.h; sourceTree = "<group>"; };
-		08941F291015E353004CD4EA /* SBSavePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSavePanel.m; path = Classes/SBSavePanel.m; sourceTree = "<group>"; };
 		08943D0F1013566E0034A3E5 /* Finder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Finder.png; path = Resources/Images/Finder.png; sourceTree = "<group>"; };
 		08946ED21114731F00B09D17 /* Icon_Contribute.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Contribute.png; path = Resources/Images/Icon_Contribute.png; sourceTree = "<group>"; };
 		08946F0D111478F600B09D17 /* Icon_Checkout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Checkout.png; path = Resources/Images/Icon_Checkout.png; sourceTree = "<group>"; };
@@ -593,8 +591,6 @@
 				085C2AB60FE2ABB60099A0F6 /* SBDocumentWindow.h */,
 				085C2AB70FE2ABB60099A0F6 /* SBDocumentWindow.m */,
 				50ACCDF61963E76700CE593E /* SBCoverWindow.swift */,
-				08941F281015E353004CD4EA /* SBSavePanel.h */,
-				08941F291015E353004CD4EA /* SBSavePanel.m */,
 				505E49EF19882F3B001F5254 /* SBSavePanel.swift */,
 				5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */,
 			);
