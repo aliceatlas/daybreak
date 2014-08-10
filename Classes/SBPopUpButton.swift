@@ -35,7 +35,7 @@ class SBPopUpButton: NSPopUpButton {
         get { return super.menu }
         set(inMenu) {
             super.menu = inMenu
-            if inMenu {
+            if inMenu != nil {
                 for item in inMenu!.itemArray as [NSMenuItem] {
                     item.target = self
                     item.action = "executeAction:"
@@ -90,7 +90,7 @@ class SBPopUpButtonCell: NSPopUpButtonCell {
             NSGraphicsContext.restoreGraphicsState()
         }
         if let menu = view.menu {
-            if let item = menu.selectedItem() {
+            if let item = menu.selectedItem() { ///////
                 if let itemTitle: NSString = item.title {
                     if itemTitle.length > 0 {
                         var r = view.bounds

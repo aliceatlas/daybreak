@@ -31,9 +31,9 @@ class SBLoadButton: SBButton {
     var images: [NSImage]? {
         get { return _images }
         set(inImages) {
-            if !_images || (_images! != inImages!) {
+            if _images == nil || _images! != inImages! {
                 _images = inImages
-                if _images && !(_images!.isEmpty) {
+                if _images != nil && !(_images!.isEmpty) {
                     self.image = _images![0] as NSImage
                     self.needsDisplay = true
                 }
@@ -75,15 +75,15 @@ class SBLoadButton: SBButton {
     }
 
     
-    init(frame: NSRect) {
+    override init(frame: NSRect) {
         super.init(frame: frame)
         indicator = constructIndicator()
-        self.addSubview(indicator)
+        self.addSubview(indicator!)
     }
     
     // NSCoding Protocol
     
-    init(coder decoder: NSCoder) {
+    required init(coder decoder: NSCoder) {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             if decoder.containsValueForKey("images") {

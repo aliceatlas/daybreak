@@ -43,17 +43,17 @@ class SBSegmentedButton: SBView {
         }
     }
     
-    init() {
+    override init() {
         super.init()
     }
     
-    init(frame: NSRect) {
+    override init(frame: NSRect) {
         super.init(frame: frame)
     }
     
     // NSCoding Protocol
     
-    init(coder decoder: NSCoder) {
+    required init(coder decoder: NSCoder) {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             if decoder.containsValueForKey("buttons") {

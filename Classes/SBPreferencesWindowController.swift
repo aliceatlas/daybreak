@@ -32,7 +32,7 @@ class SBPreferencesWindowController: SBWindowController {
     var sections: [SBSectionGroupe] = []
     var sectionListView: SBSectionListView?
     
-    init(viewSize: NSSize) {
+    override init(viewSize: NSSize) {
         super.init(viewSize: viewSize)
         let window = self.window
         let r = window.frame
@@ -40,8 +40,12 @@ class SBPreferencesWindowController: SBWindowController {
         window.minSize = NSMakeSize(r.size.width, 100.0)
     }
     
-    init(window: NSWindow) {
+    override init(window: NSWindow) {
         super.init(window: window)
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
     }
     
     var sectionListViewRect: NSRect {
@@ -126,6 +130,6 @@ class SBPreferencesWindowController: SBWindowController {
         sectionListView = SBSectionListView(frame: r)
         sectionListView!.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         sectionListView!.sections = NSMutableArray(array: sections)
-        self.window.contentView.addSubview(sectionListView)
+        self.window.contentView.addSubview(sectionListView!)
     }
 }

@@ -197,21 +197,21 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // Actions
     
     func destructUpdateView() {
-        if updateView? {
+        if updateView != nil {
             updateView!.removeFromSuperview()
             updateView = nil
         }
     }
     
     func destructLocalizeWindowController() {
-        if localizationWindowController? {
+        if localizationWindowController != nil {
             localizationWindowController!.close()
             localizationWindowController = nil
         }
     }
     
     func destructPreferencesWindowController() {
-        if preferencesWindowController? {
+        if preferencesWindowController != nil {
             preferencesWindowController!.close()
             preferencesWindowController = nil
         }
@@ -260,12 +260,12 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func openStrings(#path: String, anotherPath: String? = nil) {
         let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSetS(path)
-        if textSet? && textSet!.count > 0 {
+        if textSet != nil && textSet!.count > 0 {
             self.destructLocalizeWindowController()
             localizationWindowController = SBLocalizationWindowController(viewSize: viewSize!)
             localizationWindowController!.fieldSet = fieldSet!
             localizationWindowController!.textSet = textSet!
-            if anotherPath? {
+            if anotherPath != nil {
                 localizationWindowController!.mergeFilePath(anotherPath)
             }
             localizationWindowController!.showWindow(nil)
@@ -337,7 +337,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func newDocument(AnyObject) {
         var error: NSError?
         SBGetDocumentController().openUntitledDocumentAndDisplay(true, error: &error)
-        if error? {
+        if error != nil {
             DebugLogS("\(__FUNCTION__) \(error)")
         }
     }
@@ -380,7 +380,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let info = NSBundle.mainBundle().localizedInfoDictionary
         if let string: String = info["SBHomePageURL"] as? NSString {
             if let document = SBGetSelectedDocument() {
-                if document.selectedWebDataSource? {
+                if document.selectedWebDataSource != nil {
                     document.constructNewTabWithURL(NSURL(string: string), selection: true)
                 } else {
                     document.openURLStringInSelectedTabViewItem(string)

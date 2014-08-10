@@ -57,6 +57,10 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         self.autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
     }
     
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
+    
     // Rects
 
     let margin = NSMakePoint(36.0, 32.0)
@@ -150,9 +154,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     // Delegate
     
     override func controlTextDidChange(_: NSNotification) {
-        if doneButton {
-            doneButton!.enabled = textLabel.stringValue.utf16Count > 0
-        }
+        doneButton?.enabled = textLabel.stringValue.utf16Count > 0
     }
     
     // Setter

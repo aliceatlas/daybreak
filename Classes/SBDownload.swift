@@ -33,7 +33,7 @@ class SBDownload: NSObject {
     private var _name: String?
     var name: String? {
         get {
-            return (_name == nil) ? URL?.absoluteString : _name
+            return _name ?? URL?.absoluteString
         }
         set(name) { _name = name }
     }

@@ -34,7 +34,7 @@ class SBDocumentController: NSDocumentController {
     }
     
     override func typeForContentsOfURL(inAbsoluteURL: NSURL?, error outError: NSErrorPointer) -> String! {
-        if inAbsoluteURL?.fileURL {
+        if inAbsoluteURL?.fileURL != nil {
             return super.typeForContentsOfURL(inAbsoluteURL, error: outError)
         } else {
             return kSBDocumentTypeName
@@ -57,7 +57,7 @@ class SBDocumentController: NSDocumentController {
         if type == kSBStringsDocumentTypeName {
         } else {
             if let document = self.makeUntitledDocumentOfType(kSBDocumentTypeName, error: outError) as? SBDocument {
-                if url {
+                if url != nil {
                     document.initialURL = url
                 }
                 document.sidebarVisibility = sidebarVisibility

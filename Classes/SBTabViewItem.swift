@@ -33,7 +33,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     }
     var URL: NSURL? {
         didSet {
-            if URL {
+            if URL != nil {
                 webView.mainFrame.loadRequest(NSURLRequest(URL: URL!, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval))
             }
         }
@@ -89,7 +89,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     var URLString: String? {
         get { return URL?.absoluteString }
         set(URLString) {
-            self.URL = URLString ? NSURL(string: URLString!.URLEncodedString()) : nil
+            self.URL = URLString != nil ? NSURL(string: URLString!.URLEncodedString()) : nil
         }
     }
     var selected: Bool {
@@ -103,12 +103,16 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     var requestURLString: String? { return webView.mainFrame?.dataSource?.request.URL.absoluteString }
     var documentSource: String? { return webView.mainFrame?.dataSource?.representation?.documentSource()? }
     
-    init(identifier: AnyObject) {
+    override init(identifier: AnyObject) {
         super.init(identifier: identifier)
     }
     
     deinit {
         destructWebView()
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
     }
     
     // MARK: Getter
@@ -173,7 +177,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         #if true
                     let horizontalScroller = scrollView.horizontalScroller as? SBBLKGUIScroller
                     let verticalScroller = scrollView.verticalScroller as? SBBLKGUIScroller
-                    if verticalScroller {
+                    if verticalScroller != nil {
                         r.size.width = r.size.width - verticalScroller!.frame.size.width
                     }
         #endif
@@ -186,14 +190,10 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                     scrollView.backgroundColor = NSColor(calibratedRed: red, green: green, blue: blue, alpha: alpha)
                     scrollView.drawsBackground = true
         #if true
-                    if horizontalScroller {
-                        horizontalScroller!.drawsBackground = true
-                        horizontalScroller!.backgroundColor = NSColor(calibratedWhite: 0.35, alpha: 1.0)
-                    }
-                    if verticalScroller {
-                        verticalScroller!.drawsBackground = true
-                        verticalScroller!.backgroundColor = NSColor(calibratedWhite: 0.35, alpha: 1.0)
-                    }
+                    horizontalScroller?.drawsBackground = true
+                    horizontalScroller?.backgroundColor = NSColor(calibratedWhite: 0.35, alpha: 1.0)
+                    verticalScroller?.drawsBackground = true
+                    verticalScroller?.backgroundColor = NSColor(calibratedWhite: 0.35, alpha: 1.0)
         #endif
                     sourceTextView!.delegate = self
                     sourceTextView!.minSize = NSMakeSize(0.0, r.size.height)
@@ -205,9 +205,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                     sourceTextView!.autoresizingMask = .ViewWidthSizable
                     sourceTextView!.textContainer.containerSize = NSMakeSize(r.size.width, CGFloat(FLT_MAX))
                     sourceTextView!.textContainer.widthTracksTextView = true
-                    if let sourcecode = self.documentSource {
-                        sourceTextView!.string = sourcecode
-                    }
+                    sourceTextView!.string = self.documentSource ?? ""
                     sourceTextView!.selectedRange = NSMakeRange(0, 0)
                     scrollView.documentView = sourceTextView
                     openButton.autoresizingMask = .ViewMinXMargin
@@ -228,27 +226,25 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                     sourceView!.addSubview(openButton)
                     sourceView!.addSubview(sourceSaveButton!)
                     sourceView!.addSubview(sourceCloseButton!)
-                    if webSplitView {
+                    if webSplitView != nil {
                         webSplitView!.frame = wr
                         splitView.addSubview(webSplitView!)
                     } else {
                         webView.frame = wr
                         splitView.addSubview(webView)
                     }
-                    splitView.addSubview(sourceView)
+                    splitView.addSubview(sourceView!)
                     splitView.invisibleDivider = false
-                    webView.window.makeFirstResponder(sourceTextView)
+                    webView.window!.makeFirstResponder(sourceTextView)
                 } else {
                     sourceTextView!.removeFromSuperview()
-                    if sourceSplitView {
-                        sourceSplitView!.removeFromSuperview()
-                    }
+                    sourceSplitView?.removeFromSuperview()
                     sourceView!.removeFromSuperview()
                     sourceTextView = nil
                     sourceSplitView = nil
                     sourceView = nil
                     splitView.invisibleDivider = true
-                    webView.window.makeFirstResponder(webView)
+                    webView.window!.makeFirstResponder(webView)
                 }
                 splitView.adjustSubviews()
             }
@@ -258,39 +254,39 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     func setShowFindbarInWebView(showFindbar: Bool) -> Bool {
         var r = false
         if showFindbar {
-            if !webSplitView {
+            if webSplitView == nil {
                 let findbar = SBFindbar(frame: NSMakeRect(0, 0, webView.frame.size.width, 24.0))
                 findbar.target = webView
                 findbar.doneSelector = "executeCloseFindbar"
-                if sourceSplitView {
+                if sourceSplitView != nil {
                     sourceSplitView!.removeFromSuperview()
-                } else if sourceView {
+                } else if sourceView != nil {
                     sourceView!.removeFromSuperview()
                 }
                 webSplitView = SBFixedSplitView(embedViews: [findbar, webView], frameRect: webView.frame)
-                if sourceSplitView {
+                if sourceSplitView != nil {
                     splitView.addSubview(sourceSplitView!)
-                } else if sourceView {
+                } else if sourceView != nil {
                     splitView.addSubview(sourceView!)
                 }
                 findbar.selectText(nil)
                 r = true
             }
         } else {
-            if webSplitView {
-                if sourceSplitView {
+            if webSplitView != nil {
+                if sourceSplitView != nil {
                     sourceSplitView!.removeFromSuperview()
-                } else if sourceView {
+                } else if sourceView != nil {
                     sourceView!.removeFromSuperview()
                 }
                 SBDisembedViewInSplitView(webView, webSplitView)
-                if sourceSplitView {
+                if sourceSplitView != nil {
                     splitView.addSubview(sourceSplitView!)
-                } else if sourceView {
+                } else if sourceView != nil {
                     splitView.addSubview(sourceView!)
                 }
                 webSplitView = nil
-                webView.window.makeFirstResponder(webView)
+                webView.window!.makeFirstResponder(webView)
                 r = true
             }
         }
@@ -299,7 +295,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     
     func setShowFindbarInSource(showFindbar: Bool) {
         if showFindbar {
-            if !sourceSplitView {
+            if sourceSplitView != nil {
                 let findbar = SBFindbar(frame: NSMakeRect(0, 0, sourceView!.frame.size.width, 24.0))
                 findbar.target = sourceTextView
                 findbar.doneSelector = "executeCloseFindbar"
@@ -313,7 +309,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
             sourceCloseButton!.keyEquivalent = "\u{1B}"
             SBDisembedViewInSplitView(sourceView, sourceSplitView)
             sourceSplitView = nil
-            sourceTextView!.window.makeFirstResponder(sourceTextView)
+            sourceTextView!.window!.makeFirstResponder(sourceTextView)
         }
     }
     
@@ -353,7 +349,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     }
     
     private func setUserAgent(inView: SBWebView?) {
-        let webView = inView ? inView! : self.webView
+        let webView = inView ?? self.webView
         var userAgentName = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as String
         // Set custom user agent
         if userAgentName == SBUserAgentNames[0] {
@@ -361,15 +357,13 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
             let infoDictionary = bundle.infoDictionary
             let localizedInfoDictionary = bundle.localizedInfoDictionary
             var applicationName: String? = localizedInfoDictionary["CFBundleName"] as? NSString
-            if !applicationName {
-                applicationName = infoDictionary["CFBundleName"] as? NSString
-            }
+            applicationName = applicationName ?? infoDictionary["CFBundleName"] as? NSString
             var version: String? = infoDictionary["CFBundleVersion"] as? NSString
-            if version {
+            if version != nil {
                 version = (version! as NSString).stringByDeletingSpaces()
             }
             var safariVersion = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString
-            safariVersion = safariVersion ? safariVersion!.substringFromIndex(1) : "0"
+            safariVersion = safariVersion?.substringFromIndex(1) ?? "0"
             if let applicationName = applicationName {
                 webView.applicationNameForUserAgent = applicationName
                 if let version = version {
@@ -385,12 +379,10 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
             let bundle = NSBundle(path: "/Applications/\(applicationName).app")
             let infoDictionary = bundle.infoDictionary
             var version: String? = infoDictionary["CFBundleShortVersionString"] as? NSString
-            if !version {
-                version = infoDictionary["CFBundleVersion"] as? NSString
-            }
+            version = version ?? infoDictionary["CFBundleVersion"] as? NSString
             var safariVersion = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString
-            safariVersion = safariVersion ? safariVersion!.substringFromIndex(1) : "0"
-            if version && safariVersion {
+            safariVersion = safariVersion?.substringFromIndex(1) ?? "0"
+            if version != nil && safariVersion != nil {
                 webView.applicationNameForUserAgent = "Version/\(version!) \(applicationName)/\(safariVersion!)"
                 webView.customUserAgent = nil
             }
@@ -434,14 +426,14 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     // MARK: TextView Delegate
     
     func textViewShouldOpenFindbar(textView: SBSourceTextView) {
-        if sourceSplitView {
+        if sourceSplitView != nil {
             setShowFindbarInSource(false)
         }
         setShowFindbarInSource(true)
     }
     
     func textViewShouldCloseFindbar(textView: SBSourceTextView) {
-        if sourceSplitView {
+        if sourceSplitView != nil {
             setShowFindbarInSource(false)
         }
     }
@@ -449,14 +441,14 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     // MARK: WebView Delegate
     
     func webViewShouldOpenFindbar(webView: SBWebView) {
-        if webSplitView {
+        if webSplitView != nil {
             setShowFindbarInWebView(false)
         }
         setShowFindbarInWebView(true)
     }
     
     func webViewShouldCloseFindbar(webView: SBWebView) -> Bool {
-        if webSplitView {
+        if webSplitView != nil {
             return setShowFindbarInWebView(false)
         }
         return false
@@ -537,7 +529,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     
     override func webView(sender: WebView, didFailProvisionalLoadWithError error: NSError?, forFrame frame: WebFrame) {
         // if ([[sender mainFrame] isEqual:frame]) {
-        if error {
+        if error != nil {
             DebugLogS("\(__FUNCTION__) \(error!.localizedDescription)")
             if let userInfo = error!.userInfo {
                 let urlString: String = userInfo[NSURLErrorFailingURLStringErrorKey] as NSString
@@ -626,7 +618,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                     default:
                         break
                 }
-                if title {
+                if title != nil {
                     self.showErrorPageWithTitle(title!, urlString: urlString, frame: frame)
                 }
             }
@@ -666,7 +658,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     
     override func webView(sender: WebView, resource identifier: AnyObject?, didReceiveResponse response: NSURLResponse, fromDataSource dataSource: WebDataSource) {
         let length = response.expectedContentLength
-        if identifier && length > 0 {
+        if identifier != nil && length > 0 {
             if let resourceID = identifier as? SBWebResourceIdentifier {
                 resourceID.length = length
                 if selected {
@@ -683,7 +675,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     }
     
     override func webView(sender: WebView, resource identifier: AnyObject?, didReceiveContentLength length: Int, fromDataSource dataSource: WebDataSource) {
-        if identifier && length > 0 {
+        if identifier != nil && length > 0 {
             if let resourceID = identifier as? SBWebResourceIdentifier {
                 resourceID.received += length
                 if selected {
@@ -697,7 +689,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         if let resourceID = identifier as? SBWebResourceIdentifier {
             if let response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceID.request) {
                 // Loaded from cache
-                let length = response.data ? response.data.length : 0
+                let length = response.data?.length ?? 0
                 if length > 0 {
                     resourceID.length = CLongLong(length)
                     resourceID.received = CLongLong(length)
@@ -712,7 +704,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     // MARK: WebUIDelegate
     
     override func webViewShow(sender: WebView) {
-        if let document = sender.window.delegate as? SBDocument {
+        if let document = sender.window!.delegate as? SBDocument {
             document.showWindows()
         }
     }
@@ -782,36 +774,34 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         let frameURL: NSURL? = frame.dataSource.request.URL
         let applicationBundleIdentifier: String? = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenApplicationBundleIdentifier)
         var appName: String?
-        if let applicationPath = applicationBundleIdentifier ? NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier(applicationBundleIdentifier) : nil {
+        if let applicationPath = applicationBundleIdentifier != nil ? NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier(applicationBundleIdentifier) : nil {
             let bundle = NSBundle(path: applicationPath)
             appName = bundle.localizedInfoDictionary["CFBundleDisplayName"] as? NSString
-            if !appName {
-                appName = bundle.infoDictionary["CFBundleName"] as? NSString
-            }
+            appName = appName ?? bundle.infoDictionary["CFBundleName"] as? NSString
         }
         
         menuItems.extend(defaultMenuItems as [NSMenuItem])
         
-        if !linkURL && selectedString.isEmpty {
-            if frameURL {
+        if linkURL == nil && selectedString.isEmpty {
+            if frameURL != nil {
                 // Add Open in items
                 let newItem1 = NSMenuItem(title: NSLocalizedString("Open in Application...", comment: ""), action:"openURLInSelectedApplicationFromMenu:", keyEquivalent: "")
                 newItem1.target = self
                 newItem1.representedObject = frameURL
                 var newItem2: NSMenuItem?
-                if appName {
+                if appName != nil {
                     newItem2 = NSMenuItem(title: NSString(format: NSLocalizedString("Open in %@", comment: ""), appName!), action: "openURLInApplicationFromMenu:", keyEquivalent: "")
                     newItem2!.target = self
                     newItem2!.representedObject = frameURL
                 }
                 menuItems.insert(NSMenuItem.separatorItem(), atIndex: 0)
-                if newItem2 {
+                if newItem2 != nil {
                     menuItems.insert(newItem2!, atIndex: 0)
                 }
                 menuItems.insert(newItem1, atIndex: 0)
             }
         }
-        if linkURL {
+        if linkURL != nil {
             for (index, item) in reverse(Array(enumerate(menuItems))) {
                 let tag = item.tag
                 if tag == 1 {
@@ -823,12 +813,12 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                     newItem1.target = self
                     newItem1.representedObject = frameURL
                     var newItem2: NSMenuItem?
-                    if appName {
+                    if appName != nil {
                         let newItem2 = NSMenuItem(title: NSString(format: NSLocalizedString("Open Link in %@", comment: ""), appName!), action: "openURLInApplicationFromMenu:", keyEquivalent: "")
                         newItem2.target = self
                         newItem2.representedObject = frameURL
                     }
-                    if newItem2 {
+                    if newItem2 != nil {
                         menuItems.insert(newItem2!, atIndex: index)
                     }
                     menuItems.insert(newItem1, atIndex: index)
@@ -889,7 +879,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         let navigationType = WebNavigationType.fromRaw(actionInformation[WebActionNavigationTypeKey as String] as NSNumber)!
         switch navigationType {
             case .LinkClicked:
-                if url.hasWebScheme() { // 'http', 'https', 'file'
+                if url.hasWebScheme() { // 'http', 'https', 'file' //////
                     if modifierFlags & .CommandKeyMask { // Command
                         var selection = true
                         let makeActiveFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBWhenNewTabOpensMakeActiveFlag)
@@ -934,7 +924,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     override func webView(webView: WebView, unableToImplementPolicyWithError error: NSError, frame: WebFrame) {
         if let string: String = error.userInfo["NSErrorFailingURLStringKey"] as? NSString {
             let url = NSURL(string: string)
-            if url.hasWebScheme() { // 'http', 'https', 'file'
+            if url.hasWebScheme() { // 'http', 'https', 'file' //////
                 // Error
             } else {
                 // open URL with other applications
@@ -949,7 +939,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     
     func addResourceIdentifier(identifier: SBWebResourceIdentifier) -> Bool {
         let anIdentifier = resourceIdentifiers.first { $0.request == identifier.request }
-        if !anIdentifier {
+        if anIdentifier == nil {
             resourceIdentifiers.append(identifier)
             return true
         }
@@ -981,7 +971,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
             let encodingName = webView.textEncodingName
             var error: NSError?
             var name: NSString? = self.pageTitle
-            name = (((name && name! != "") ? name : NSLocalizedString("Untitled", comment: "")) as NSString).stringByAppendingPathExtension("html")
+            if name == "" { name = nil }
+            name = (name ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")
             let filePath = NSTemporaryDirectory().stringByAppendingPathComponent(name!)
             let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(!encodingName.isEmpty ? encodingName : kSBDefaultEncodingName))
             if !(documentSource! as NSString).writeToFile(filePath, atomically: true, encoding: encoding, error: &error) {
@@ -998,7 +989,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     func saveDocumentSource(sender: AnyObject) {
         var name: NSString? = self.pageTitle
         let encodingName = webView.textEncodingName
-        name = (((name && name! != "") ? name : NSLocalizedString("Untitled", comment: "")) as NSString).stringByAppendingPathExtension("html")
+        name = ((name != nil && name! != "") ? name : NSLocalizedString("Untitled", comment: ""))!.stringByAppendingPathExtension("html")
         let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(!encodingName.isEmpty ? encodingName : kSBDefaultEncodingName))
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
@@ -1067,7 +1058,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                 let bundle = NSBundle(URL: panel.URL)
                 bundleIdentifier = bundle.bundleIdentifier
             }
-            if bundleIdentifier {
+            if bundleIdentifier != nil {
                 if self.openURL(url, inBundleIdentifier: bundleIdentifier!) {
                     NSUserDefaults.standardUserDefaults().setObject(bundleIdentifier!, forKey: kSBOpenApplicationBundleIdentifier)
                 }
@@ -1076,7 +1067,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     }
     
     func openURL(url: NSURL?, inBundleIdentifier bundleIdentifier: String?) -> Bool {
-        if url && bundleIdentifier {
+        if url != nil && bundleIdentifier != nil {
             return NSWorkspace.sharedWorkspace().openURLs([url!], withAppBundleIdentifier: bundleIdentifier!, options: .Default, additionalEventParamDescriptor:nil, launchIdentifiers: nil)
         }
         return false

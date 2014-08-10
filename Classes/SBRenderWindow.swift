@@ -59,8 +59,12 @@ class SBRenderWindow: NSWindow {
         webView!.frameLoadDelegate = self
         webView!.preferences = SBGetWebPreferences()
         webView!.hostWindow = self
-        self.contentView.addSubview(webView)
+        self.contentView.addSubview(webView!)
         self.releasedWhenClosed = true
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
     }
     
     func destruct() {

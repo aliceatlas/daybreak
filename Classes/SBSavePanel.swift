@@ -140,7 +140,7 @@ class SBSavePanelContentView: SBView {
         CGContextSaveGState(ctx)
         CGContextAddPath(ctx, path.takeUnretainedValue())
         CGContextClip(ctx)
-        SBDrawGradientInContext(ctx, count, UnsafePointer<CGFloat>(locations), UnsafePointer<CGFloat>(colors), UnsafePointer<CGPoint>(points))
+        SBDrawGradientInContext(ctx, count, UnsafeMutablePointer<CGFloat>(locations), UnsafeMutablePointer<CGFloat>(colors), UnsafeMutablePointer<CGPoint>(points))
         CGContextRestoreGState(ctx)
         
         // Stroke

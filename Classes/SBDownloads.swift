@@ -30,7 +30,7 @@ import Foundation
 
 private var _sharedDownloads = SBDownloads()
 
-@infix func ==(first: SBDownload, second: SBDownload) -> Bool {
+func ==(first: SBDownload, second: SBDownload) -> Bool {
     return first === second
 }
 extension SBDownload: Equatable {}
@@ -123,7 +123,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     
     func download(download: NSURLDownload, didReceiveResponse response: NSURLResponse) {
         if let item = items.first({ $0.download === download }) {
-            item.expectedLength = (Int(response.expectedContentLength) > 0) ? Int(response.expectedContentLength) : 0
+            item.expectedLength = max(0, Int(response.expectedContentLength))
             item.bytes = bytesString(item.receivedLength, item.expectedLength)
             // Update views
             self.executeDidUpdateItem(item)

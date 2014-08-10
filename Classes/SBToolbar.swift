@@ -46,7 +46,7 @@ class SBToolbar: NSToolbar {
             var view: NSView? = item.view
             while true {
                 view = view!.superview
-                if !view {
+                if view == nil {
                     break
                 }
                 delta.x += view!.frame.origin.x

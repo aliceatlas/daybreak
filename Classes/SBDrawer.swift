@@ -78,7 +78,7 @@ class SBDrawer: SBView {
         // Bottom
         let locations: [CGFloat] = [0.0, 1.0]
         let points: [CGPoint] = [CGPointZero, CGPointMake(0.0, CGFloat(kSBBottombarHeight))]
-        SBDrawGradientInContext(ctx, 2, UnsafePointer<CGFloat>(locations), UnsafePointer<CGFloat>(SBBottombarColors), UnsafePointer<CGPoint>(points))
+        SBDrawGradientInContext(ctx, 2, UnsafeMutablePointer<CGFloat>(locations), UnsafeMutablePointer<CGFloat>(SBBottombarColors), UnsafeMutablePointer<CGPoint>(points))
         
         // Line
         NSColor(calibratedWhite: 1.0, alpha: 0.3).set()

@@ -42,12 +42,12 @@ class SBBLKGUIScrollView: NSScrollView {
         }
     }
 
-    init(frame: NSRect) {
+    override init(frame: NSRect) {
         super.init(frame: frame)
         self.initialize()
     }
 
-    init(coder: NSCoder) {
+    required init(coder: NSCoder) {
         super.init(coder: coder)
         self.initialize()
     }
@@ -162,7 +162,7 @@ class SBBLKGUIScroller: NSScroller {
         let r = self.bounds
         if drawsBackground {
             let color = NSColor(calibratedWhite: 0.0, alpha:0.85)
-            (backgroundColor ? backgroundColor! : color).set()
+            (backgroundColor ?? color).set()
             NSRectFill(r)
         }
         super.drawRect(r)
@@ -194,7 +194,7 @@ class SBBLKGUIScroller: NSScroller {
             drawRect.origin.x = (arrowRect.origin.x + arrowRect.size.width) - drawRect.size.width
         }
         if drawsBackground {
-            (backgroundColor ? backgroundColor! : color).set()
+            (backgroundColor ?? color).set()
             NSRectFill(drawRect)
         }
         image.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: flipped)
@@ -213,7 +213,7 @@ class SBBLKGUIScroller: NSScroller {
             drawRect.origin.x = (arrowRect.origin.x + arrowRect.size.width) - (drawRect.size.width + rightImage.size.width)
         }
         if drawsBackground {
-            (backgroundColor ? backgroundColor! : color).set()
+            (backgroundColor ?? color).set()
             NSRectFill(drawRect)
         }
         image.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: flipped)
@@ -231,7 +231,7 @@ class SBBLKGUIScroller: NSScroller {
         let isVertical = self.bounds.size.width < self.bounds.size.height
         
         if drawsBackground {
-            (backgroundColor ? backgroundColor! : color).set()
+            (backgroundColor ?? color).set()
         } else {
             NSColor.blackColor().set()
         }
@@ -249,7 +249,7 @@ class SBBLKGUIScroller: NSScroller {
     
     override func drawKnob() {
         var drawRect = NSZeroRect
-        var m = 2
+        var m: CGFloat = 2
         
         let isVertical = self.bounds.size.width < self.bounds.size.height
         let knobRect = self.rectForPart(.Knob)

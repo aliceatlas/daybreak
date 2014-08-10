@@ -75,13 +75,13 @@ class SBButton: SBView, NSCoding {
         }
     }
     
-    init(frame: NSRect) {
+    override init(frame: NSRect) {
         super.init(frame: frame)
     }
 
     // NSCoding Protocol
     
-    init(coder decoder: NSCoder) {
+    required init(coder decoder: NSCoder) {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             image = decoder.decodeObjectForKey("image") as? NSImage
@@ -103,23 +103,23 @@ class SBButton: SBView, NSCoding {
     
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
-        if image {
+        if image != nil {
             coder.encodeObject(image!, forKey:"image")
         }
-        if disableImage {
+        if disableImage != nil {
             coder.encodeObject(disableImage!, forKey:"disableImage")
         }
-        if backImage {
+        if backImage != nil {
             coder.encodeObject(backImage!, forKey:"backImage")
         }
-        if backDisableImage {
+        if backDisableImage != nil {
             coder.encodeObject(backDisableImage!, forKey:"backDisableImage")
         }
         //if action {
         //    coder.encodeObject(String(_sel: action!), forKey:"action")
         //}
         coder.encodeObject(String(_sel: action), forKey:"action")
-        if keyEquivalent {
+        if keyEquivalent != nil {
             coder.encodeObject(keyEquivalent, forKey:"keyEquivalent")
         }
         coder.encodeBool(enabled, forKey: "enabled")
@@ -129,7 +129,7 @@ class SBButton: SBView, NSCoding {
     // Exec
     
     func executeAction() {
-        if let target = self.target {
+        if let target = self.target as? NSObject {
             //if let action = self.action {
                 //var sel = action
                 if target.respondsToSelector(action) {
@@ -172,23 +172,21 @@ class SBButton: SBView, NSCoding {
         var anImage: NSImage?
         var r = self.bounds
         if keyView {
-            anImage = (enabled || !disableImage) ? image : disableImage
+            anImage = (enabled || disableImage == nil) ? image : disableImage
         } else {
             if (enabled)
             {
-                anImage = backImage ? backImage : (image ? image : nil);
+                anImage = backImage ?? image
             }
             else {
-                anImage = backDisableImage ? backDisableImage : (backImage ? backImage : (image ? image : nil));
+                anImage = backDisableImage ?? backImage ?? image
             }
         }
-        if anImage {
-            anImage!.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-            if pressed {
-                anImage!.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeXOR, fraction: 0.3)
-            }
+        anImage?.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+        if pressed {
+            anImage?.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeXOR, fraction: 0.3)
         }
-        if title {
+        if title != nil {
             let padding: CGFloat = 10.0
             var shadow = NSShadow()
             shadow.shadowOffset = NSSize(width: 0.0, height: -1.0)

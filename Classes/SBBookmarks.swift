@@ -38,7 +38,7 @@ class SBBookmarks: NSObject {
         return _sharedBookmarks
     }
 
-    init() {
+    override init() {
         super.init()
         self.readFromFile()
     }
@@ -133,7 +133,7 @@ class SBBookmarks: NSObject {
             var error: NSError?
             let data = NSPropertyListSerialization.dataWithPropertyList(
                 SBBookmarksWithItems(items), format: NSPropertyListFormat.BinaryFormat_v1_0, options: 0, error: &error)
-            if error? {
+            if error != nil {
                 DebugLogS("\(__FUNCTION__) error = \(error)")
             } else {
                 r = data.writeToFile(path, atomically: true)

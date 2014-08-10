@@ -45,6 +45,10 @@ class SBCoverWindow: NSWindow {
         self.hasShadow = false
     }
     
+    required init(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     override func animationResizeTime(newWindowFrame: NSRect) -> NSTimeInterval {
         return 0
     }

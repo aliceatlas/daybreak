@@ -35,7 +35,7 @@ class SBHistory: NSObject {
         return _sharedHistory
     }
     
-    init() {
+    override init() {
         super.init()
         WebHistory.setOptionalSharedHistory(history)
         self.readFromFile()

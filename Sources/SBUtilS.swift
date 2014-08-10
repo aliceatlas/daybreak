@@ -87,8 +87,7 @@ func SBGetLocalizableTextSetS(path: String) -> (NSMutableArray?, NSArray?, NSSiz
 
 // Return value for key in "com.apple.internetconfig.plist"
 func SBDefaultHomePageS() -> String? {
-    let path = SBSearchFileInDirectory("com.apple.internetconfig", SBLibraryDirectory("Preferences"))
-    if path? {
+    if let path = SBSearchFileInDirectory("com.apple.internetconfig", SBLibraryDirectory("Preferences")) {
         if NSFileManager.defaultManager().fileExistsAtPath(path) {
             let internetConfig = NSDictionary(contentsOfFile: path)
             if internetConfig.count > 0 {
@@ -100,8 +99,7 @@ func SBDefaultHomePageS() -> String? {
 }
 
 func SBDefaultSaveDownloadedFilesToPathS() -> String? {
-    let path = SBSearchPath(.DownloadsDirectory, nil)
-    if path? {
+    if let path = SBSearchPath(.DownloadsDirectory, nil) {
         return path.stringByExpandingTildeInPath
     }
     return nil

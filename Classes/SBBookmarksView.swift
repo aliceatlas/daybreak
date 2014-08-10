@@ -36,7 +36,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     weak var delegate: SBBookmarksViewDelegate?
     
     func splitWidth(proposedWidth: CGFloat) -> CGFloat {
-        return listView ? listView!.splitWidth(proposedWidth) : 0
+        return listView?.splitWidth(proposedWidth) ?? 0
     }
     
     override var frame: NSRect {
@@ -70,10 +70,8 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     // Destruction
     
     func destructListView() {
-        if listView {
-            listView!.removeFromSuperview()
-            listView = nil
-        }
+        listView?.removeFromSuperview()
+        listView = nil
     }
     
     // Construction
@@ -93,7 +91,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         listView!.cellWidth = CGFloat(NSUserDefaults.standardUserDefaults().integerForKey(kSBBookmarkCellWidth as NSString) as Int)
         scrollView!.documentView = listView
         scrollView!.contentView.copiesOnScroll = true
-        self.addSubview(scrollView)
+        self.addSubview(scrollView!)
         listView!.setCellSizeForMode(inMode)
         listView!.createItemViews()
         listView!.delegate = self
@@ -133,10 +131,10 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
             }
             searchbar!.selectText(nil)
         } else {
-            if splitView {
+            if splitView != nil {
                 SBDisembedViewInSplitView(scrollView!, splitView!)
                 splitView = nil
-                scrollView!.window.makeFirstResponder(scrollView!)
+                scrollView!.window!.makeFirstResponder(scrollView!)
                 r = true
             }
         }
@@ -203,7 +201,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         CGContextSaveGState(ctx)
         CGContextAddRect(ctx, r)
         CGContextClip(ctx)
-        SBDrawGradientInContext(ctx, count, UnsafePointer<CGFloat>(locations), UnsafePointer<CGFloat>(colors), UnsafePointer<CGPoint>(points))
+        SBDrawGradientInContext(ctx, count, UnsafeMutablePointer<CGFloat>(locations), UnsafeMutablePointer<CGFloat>(colors), UnsafeMutablePointer<CGPoint>(points))
         CGContextRestoreGState(ctx)
     }
 }
