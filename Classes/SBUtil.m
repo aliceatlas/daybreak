@@ -1019,7 +1019,7 @@ CGImageRef SBBackwardIconImage(CGSize size, BOOL enabled, BOOL backing)
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBForwardIconImage(CGSize size, BOOL enabled, BOOL backing)
@@ -1076,7 +1076,7 @@ CGImageRef SBForwardIconImage(CGSize size, BOOL enabled, BOOL backing)
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBGoIconImage(CGSize size, BOOL enabled, BOOL backing)
@@ -1138,7 +1138,7 @@ CGImageRef SBGoIconImage(CGSize size, BOOL enabled, BOOL backing)
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBZoomOutIconImage(CGSize size)
@@ -1179,7 +1179,7 @@ CGImageRef SBZoomOutIconImage(CGSize size)
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBActualSizeIconImage(CGSize size)
@@ -1222,7 +1222,7 @@ CGImageRef SBActualSizeIconImage(CGSize size)
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBZoomInIconImage(CGSize size)
@@ -1265,7 +1265,7 @@ CGImageRef SBZoomInIconImage(CGSize size)
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBAddIconImage(CGSize size, BOOL backing)
@@ -1415,7 +1415,7 @@ CGImageRef SBAddIconImage(CGSize size, BOOL backing)
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBCloseIconImage()
@@ -1465,7 +1465,7 @@ CGImageRef SBCloseIconImage()
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBIconImageWithName(NSString *imageName, SBButtonShape shape, CGSize size)
@@ -1630,7 +1630,7 @@ CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size)
 	CGContextRestoreGState(ctx);
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBFindBackwardIconImage(CGSize size, BOOL enabled)
@@ -1715,7 +1715,7 @@ CGImageRef SBFindBackwardIconImage(CGSize size, BOOL enabled)
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBFindForwardIconImage(CGSize size, BOOL enabled)
@@ -1800,7 +1800,7 @@ CGImageRef SBFindForwardIconImage(CGSize size, BOOL enabled)
 	
 	image = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(image);
+    return (CGImageRef)CFAutorelease(image);
 }
 
 CGImageRef SBBookmarkReflectionMaskImage(CGSize size)
@@ -1829,7 +1829,7 @@ CGImageRef SBBookmarkReflectionMaskImage(CGSize size)
 	CGContextRestoreGState(ctx);
 	maskImage = CGBitmapContextCreateImage(ctx);
     CGContextRelease(ctx);
-    return CFAutorelease(maskImage);
+    return (CGImageRef)CFAutorelease(maskImage);
 }
 
 #pragma mark Math

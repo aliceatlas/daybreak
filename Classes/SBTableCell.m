@@ -124,7 +124,7 @@
 	}
 	else if (style == SBTableCellWhiteStyle)
 	{
-		NSColor *textColor = [(enabled ? NSColor.blackColor : NSColor.grayColor) colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
+		NSColor *textColor = [(self.enabled ? NSColor.blackColor : NSColor.grayColor) colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
 		[textColor getComponents:textColors];
 		sTextColor = self.highlighted ? NSColor.clearColor : NSColor.whiteColor;
 	}

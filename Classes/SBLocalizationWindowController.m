@@ -360,7 +360,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     [panel beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
         if (returnCode == NSFileHandlingPanelOKButton)
         {
-            [self mergeFilePath:panel.filename];
+            [self mergeFilePath:panel.URL.path];
         }
     }];
 }

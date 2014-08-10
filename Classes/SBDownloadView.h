@@ -36,6 +36,8 @@
 @property (nonatomic, weak) SBDownload *download;
 @property (nonatomic, strong) SBCircleProgressIndicator *progressIndicator;
 @property (nonatomic) BOOL selected;
+@property (nonatomic, readonly) NSFont *nameFont;
+@property (nonatomic, readonly) NSParagraphStyle *paragraphStyle;
 @property (nonatomic, readonly) BOOL isFirstResponder;
 @property (nonatomic, readonly) NSPoint padding;
 @property (nonatomic, readonly) CGFloat heights;
