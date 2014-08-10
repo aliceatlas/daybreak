@@ -42,25 +42,22 @@
 @property (nonatomic, readonly) NSFont *titleFont;
 @property (nonatomic, readonly) NSFont *urlFont;
 @property (nonatomic, readonly) NSParagraphStyle *paragraphStyle;
+@property (nonatomic, readonly) NSPoint padding;
+@property (nonatomic, readonly) CGFloat heights;
+@property (nonatomic, readonly) CGFloat titleHeight;
+@property (nonatomic, readonly) CGFloat bytesHeight;
+@property (nonatomic, readonly) BOOL visible;
+@property (nonatomic, readonly) NSRect imageRect;
+@property (nonatomic, readonly) NSRect titleRect;
+@property (nonatomic, readonly) NSRect bytesRect;
+@property (nonatomic, readonly) BOOL isFirstResponder;
 
-+ (id)viewWithFrame:(NSRect)frame item:(NSDictionary *)item;
++ (instancetype)viewWithFrame:(NSRect)frame item:(NSDictionary *)item;
 - (BOOL)hitToPoint:(NSPoint)point;
 - (BOOL)hitToRect:(NSRect)rect;
-- (BOOL)isFirstResponder;
-- (NSPoint)padding;
-- (CGFloat)heights;
-- (CGFloat)titleHeight;
-- (CGFloat)bytesHeight;
-- (BOOL)visible;
-- (NSFont *)titleFont;
 // Rects
-- (NSRect)imageRect;
-- (NSRect)titleRect;
 - (NSRect)titleRect:(NSString *)title;
-- (NSRect)bytesRect;
 // Setter
-- (void)setSelected:(BOOL)isSelected;
-- (void)setDragged:(BOOL)isDragged;
 - (void)showProgress;
 - (void)hideProgress;
 - (void)remove;

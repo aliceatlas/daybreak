@@ -29,9 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 + (SBFixedSplitView *)splitViewWithEmbedViews:(NSArray *)views frameRect:(NSRect)frameRect
 {
 	SBFixedSplitView *splitView = nil;
-	NSView *view1 = [views count] > 0 ? [views objectAtIndex:0] : nil;
-	NSView *view2 = [views count] > 1 ? [views objectAtIndex:1] : nil;
-	NSView *superview = [view1 superview] ? [view1 superview] : ([view2 superview] ? [view2 superview] : nil);
+	NSView *view1 = views.count > 0 ? views[0] : nil;
+	NSView *view2 = views.count > 1 ? views[1] : nil;
+	NSView *superview = view1.superview ? view1.superview : (view2.superview ? view2.superview : nil);
 	if (superview)
 	{
 		splitView = [[SBFixedSplitView alloc] initWithFrame:frameRect];
@@ -51,21 +51,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldSize
 {
-	if (![self isVertical])
+	if (!self.vertical)
 	{
-		NSArray *subviews = [self subviews];
-		NSView *subview1 = [subviews count] > 0 ? [subviews objectAtIndex:0] : nil;
-		NSView *subview2 = [subviews count] > 1 ? [subviews objectAtIndex:1] : nil;
+		NSArray *subviews = self.subviews;
+		NSView *subview1 = subviews.count > 0 ? subviews[0] : nil;
+		NSView *subview2 = subviews.count > 1 ? subviews[1] : nil;
 		if (subview1 && subview2)
 		{
-			NSRect r1 = [subview1 frame];
-			NSRect r2 = [subview2 frame];
+			NSRect r1 = subview1.frame;
+			NSRect r2 = subview2.frame;
 			r1.size.width = self.bounds.size.width;
 			r2.size.width = self.bounds.size.width;
 			r2.size.height = self.bounds.size.height - r1.size.height;
 			r2.origin.y = r1.size.height;
-			[subview1 setFrame:r1];
-			[subview2 setFrame:r2];
+            subview1.frame = r1;
+            subview2.frame = r2;
 		}
 	}else {
 		[super resizeSubviewsWithOldSize:oldSize];

@@ -38,17 +38,15 @@
 @property (nonatomic) BOOL selected;
 @property (unsafe_unretained, nonatomic, readonly) NSFont *nameFont;
 @property (unsafe_unretained, nonatomic, readonly) NSParagraphStyle *paragraphStyle;
+@property (nonatomic, readonly) BOOL isFirstResponder;
+@property (nonatomic, readonly) NSPoint padding;
+@property (nonatomic, readonly) CGFloat heights;
+@property (nonatomic, readonly) CGFloat titleHeight;
+@property (nonatomic, readonly) CGFloat bytesHeight;
+@property (nonatomic, readonly) NSRect progressRect;
 
 // Getter
-- (BOOL)isFirstResponder;
-- (NSPoint)padding;
-- (CGFloat)heights;
-- (CGFloat)titleHeight;
-- (CGFloat)bytesHeight;
-- (NSRect)progressRect;
 - (NSRect)nameRect:(NSString *)title;
-// Setter
-- (void)setSelected:(BOOL)isSelected;
 // Actions
 - (void)destructProgressIndicator;
 - (void)constructProgressIndicator;

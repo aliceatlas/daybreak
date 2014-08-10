@@ -208,38 +208,38 @@ enum {
 };
 
 // Button shapes
-typedef enum {
+typedef NS_ENUM(NSInteger, SBButtonShape) {
 	SBButtonExclusiveShape, 
 	SBButtonLeftShape, 
 	SBButtonCenterShape, 
 	SBButtonRightShape
-}SBButtonShape;
+};
 
 // Sidebar positions
-typedef enum {
+typedef NS_ENUM(NSInteger, SBSidebarPosition) {
 	SBSidebarLeftPosition, 
 	SBSidebarRightPosition
-}SBSidebarPosition;
+};
 
 // Bookmark display modes
-typedef enum {
+typedef NS_ENUM(NSInteger, SBBookmarkMode) {
 	SBBookmarkIconMode, 
 	SBBookmarkListMode, 
 	SBBookmarkTileMode
-}SBBookmarkMode;
+};
 
 // Circle progress styles
-typedef enum {
+typedef NS_ENUM(NSInteger, SBCircleProgressIndicatorStyle) {
 	SBCircleProgressIndicatorRegulerStyle, 
 	SBCircleProgressIndicatorWhiteStyle
-}SBCircleProgressIndicatorStyle;
+};
 
 // Status code
-typedef enum {
+typedef NS_ENUM(NSInteger, SBStatus) {
 	SBStatusUndone, 
 	SBStatusProcessing, 
 	SBStatusDone
-}SBStatus;
+};
 
 // Tags
 #define SBApplicationMenuTag 0
@@ -405,11 +405,4 @@ extern NSString *SBBookmarkPboardType;
 // WebInspector
 - (void)show:(id)arg1;
 - (void)showConsole:(id)arg1;
-@end
-
-// Methods for Snow Leopard 10.6
-@interface NSEvent (SBSnowLeopardAddition)
-
-- (CGFloat)magnification;
-
 @end

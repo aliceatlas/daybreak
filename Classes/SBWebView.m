@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @synthesize delegate, showFindbar, textEncodingName;
 
-- (id)initWithFrame:(NSRect)frameRect frameName:(NSString *)frameName groupName:(NSString *)groupName
+- (instancetype)initWithFrame:(NSRect)frameRect frameName:(NSString *)frameName groupName:(NSString *)groupName
 {
 	if (self = [super initWithFrame:frameRect frameName:frameName groupName:groupName])
 	{
@@ -46,14 +46,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSString *)textEncodingName
 {
-	return textEncodingName ? textEncodingName : [[self preferences] defaultTextEncodingName];
+	return textEncodingName ? textEncodingName : self.preferences.defaultTextEncodingName;
 }
 
 #pragma mark Menu Actions
 
 - (void)performFind:(id)sender
 {
-	if (self.bounds.size.width >= [SBFindbar availableWidth])
+	if (self.bounds.size.width >= SBFindbar.availableWidth)
 	{
 		[self executeOpenFindbar];
 	}
@@ -79,7 +79,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)performFindPrevious:(id)sender
 {
 	NSString *string = [[NSPasteboard pasteboardWithName:NSFindPboard] stringForType:NSStringPboardType];
-	if ([string length] > 0)
+	if (string.length > 0)
 	{
 		BOOL caseFlag = [[NSUserDefaults standardUserDefaults] boolForKey:kSBFindCaseFlag];
 		BOOL wrapFlag = [[NSUserDefaults standardUserDefaults] boolForKey:kSBFindWrapFlag];
@@ -147,13 +147,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSString *)documentString
 {
-	return [(id <WebDocumentText>)[[[self mainFrame] frameView] documentView] string];
+	return ((id <WebDocumentText>)self.mainFrame.frameView.documentView).string;
 }
 
 - (BOOL)isEmpty
 {
 	NSString *URLString = nil;
-	URLString = [[[[[self mainFrame] dataSource] request] URL] absoluteString];
+	URLString = self.mainFrame.dataSource.request.URL.absoluteString;
 	return (URLString == nil || [URLString isEqual:@""] || [URLString isEqual:[NSString string]]);
 }
 
@@ -161,9 +161,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRange)rageOfStringInWebDocument:(NSString *)string caseSensitive:(BOOL)caseFlag
 {
 	NSRange range = {NSNotFound, 0};
-	if ([[self documentString] length] > 0)
+	if (self.documentString.length > 0)
 	{
-		range = [[self documentString] rangeOfString:string options:(caseFlag ? NSCaseInsensitiveSearch : 0)];
+		range = [self.documentString rangeOfString:string options:(caseFlag ? NSCaseInsensitiveSearch : 0)];
 	}
 	
 	return range;
@@ -171,7 +171,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-	unichar charactor = [[theEvent characters] characterAtIndex:0];
+	unichar charactor = [theEvent.characters characterAtIndex:0];
 	if (charactor == '\e')
 	{
 		if (![self executeCloseFindbar])
@@ -200,7 +200,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (!_magnified)
 	{
-		CGFloat magnification = [event magnification];
+		CGFloat magnification = event.magnification;
 		if (magnification > 0)
 		{
 			[self zoomPageIn:nil];
@@ -216,12 +216,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)swipeWithEvent:(NSEvent *)event
 {
-	CGFloat deltaX = [event deltaX];
+	CGFloat deltaX = event.deltaX;
 	if (deltaX > 0)			// Left
 	{
-		if ([self canGoBack])
+		if (self.canGoBack)
 		{
-			if ([self isLoading])
+			if (self.loading)
 				[self stopLoading:nil];
 			[self goBack:nil];
 		}
@@ -231,9 +231,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if (deltaX < 0)	// Right
 	{
-		if ([self canGoForward])
+		if (self.canGoForward)
 		{
-			if ([self isLoading])
+			if (self.loading)
 				[self stopLoading:nil];
 			[self goForward:nil];
 		}
@@ -252,7 +252,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)showWebInspector:(id)sender
 {
-	id inspector = [self inspector];
+	id inspector = self.inspector;
 	if (inspector)
 	{
 		if ([inspector respondsToSelector:@selector(show:)])
@@ -262,7 +262,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)showConsole:(id)sender
 {
-	id inspector = [self inspector];
+	id inspector = self.inspector;
 	if (inspector)
 	{
 		if ([inspector respondsToSelector:@selector(show:)])

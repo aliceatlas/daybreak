@@ -61,14 +61,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, readonly) BOOL visibleDrawer;
 @property (nonatomic, readonly) BOOL animating;
 @property (nonatomic) CGFloat drawerHeight;
+@property (nonatomic, readonly) NSRect viewRect;
+@property (nonatomic, readonly) NSRect drawerRect;
+@property (nonatomic, readonly) NSRect bottombarRect;
 
-- (id)initWithFrame:(NSRect)frame;
-- (NSRect)viewRect;
-- (NSRect)drawerRect;
-- (NSRect)bottombarRect;
-- (void)setView:(NSView *)aView;
-- (void)setDrawer:(SBDrawer *)inDrawer;
-- (void)setPosition:(SBSidebarPosition)inPosition;
+- (instancetype)initWithFrame:(NSRect)frame;
 - (void)destructDrawer;
 - (void)destructBottombar;
 - (void)destructDividerAnimation;
@@ -98,19 +95,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) SBSidebarPosition position;
 @property (nonatomic, unsafe_unretained) id<SBSideBottombarDelegate> delegate;
 @property (nonatomic) BOOL drawerVisibility;
+@property (nonatomic, readonly) CGFloat buttonWidth;
+@property (nonatomic, readonly) CGFloat sliderWidth;
+@property (nonatomic, readonly) CGFloat sliderSideMargin;
+@property (nonatomic, readonly) NSRect resizableRect;
+@property (nonatomic, readonly) NSRect drawerButtonRect;
+@property (nonatomic, readonly) NSRect newFolderButtonRect;
+@property (nonatomic, readonly) NSRect sizeSliderRect;
 
-- (id)initWithFrame:(NSRect)frame;
-// Rects
-- (CGFloat)buttonWidth;
-- (CGFloat)sliderWidth;
-- (CGFloat)sliderSideMargin;
-- (NSRect)resizableRect;
-- (NSRect)drawerButtonRect;
-- (NSRect)newFolderButtonRect;
-- (NSRect)sizeSliderRect;
-- (void)setFrame:(NSRect)frame;
-- (void)setPosition:(SBSidebarPosition)inPosition;
-- (void)setDrawerVisibility:(BOOL)inDrawerVisibility;
+- (instancetype)initWithFrame:(NSRect)frame;
 - (void)destructDrawerButton;
 - (void)destructNewFolderButton;
 - (void)destructSizeSlider;

@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @synthesize delegate, showFindbar;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)performFind:(id)sender
 {
-	if (self.bounds.size.width >= [SBFindbar availableWidth])
+	if (self.bounds.size.width >= SBFindbar.availableWidth)
 	{
 		[self executeOpenFindbar];
 	}
@@ -59,8 +59,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *string = [[NSPasteboard pasteboardWithName:NSFindPboard] stringForType:NSStringPboardType];
 	if ([string length] > 0)
 	{
-		BOOL caseFlag = [[NSUserDefaults standardUserDefaults] boolForKey:kSBFindCaseFlag];
-		BOOL wrapFlag = [[NSUserDefaults standardUserDefaults] boolForKey:kSBFindWrapFlag];
+		BOOL caseFlag = [NSUserDefaults.standardUserDefaults boolForKey:kSBFindCaseFlag];
+		BOOL wrapFlag = [NSUserDefaults.standardUserDefaults boolForKey:kSBFindWrapFlag];
 		[self searchFor:string direction:YES caseSensitive:caseFlag wrap:wrapFlag continuous:NO];
 	}
 	else {
@@ -73,8 +73,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *string = [[NSPasteboard pasteboardWithName:NSFindPboard] stringForType:NSStringPboardType];
 	if ([string length] > 0)
 	{
-		BOOL caseFlag = [[NSUserDefaults standardUserDefaults] boolForKey:kSBFindCaseFlag];
-		BOOL wrapFlag = [[NSUserDefaults standardUserDefaults] boolForKey:kSBFindWrapFlag];
+		BOOL caseFlag = [NSUserDefaults.standardUserDefaults boolForKey:kSBFindCaseFlag];
+		BOOL wrapFlag = [NSUserDefaults.standardUserDefaults boolForKey:kSBFindWrapFlag];
 		[self searchFor:string direction:NO caseSensitive:caseFlag wrap:wrapFlag continuous:NO];
 	}
 	else {
@@ -85,10 +85,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)searchFor:(NSString *)searchString direction:(BOOL)forward caseSensitive:(BOOL)caseFlag wrap:(BOOL)wrapFlag continuous:(BOOL)continuous
 {
 	BOOL r = NO;
-	NSString *string = [self string];
+	NSString *string = self.string;
 	NSRange range = {NSNotFound, 0};
-	NSRange selectedRange = [self selectedRange];
-	NSRange allRange = {0, [string length]};
+	NSRange selectedRange = self.selectedRange;
+	NSRange allRange = {0, string.length};
 	NSRange searchRange = {NSNotFound, 0};
 	NSStringCompareOptions options = 0;
 	NSUInteger invalidLength = 0;
@@ -135,7 +135,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)selectRange:(NSRange)range
 {
-	[self setSelectedRange:range];
+    self.selectedRange = range;
 	[self scrollRangeToVisible:range];
 	[self showFindIndicatorForRange:range];
 }

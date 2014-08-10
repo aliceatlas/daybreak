@@ -69,24 +69,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) BOOL enabledForward;
 @property (nonatomic) BOOL enabledGo;
 @property (nonatomic) BOOL hiddenGo;
+@property (nonatomic, readonly) NSSize minimumSize;
+@property (nonatomic, readonly) NSFont *font;
+@property (nonatomic, readonly) CGFloat sheetHeight;
+@property (nonatomic, readonly) NSRect appearedSheetRect;
+@property (nonatomic, readonly) BOOL isOpenSheet;
+@property (nonatomic, getter=isEditing, readonly) BOOL editing;
+@property (nonatomic, readonly) BOOL isFirstResponder;
+@property (nonatomic, readonly) CGFloat buttonWidth;
+@property (nonatomic, readonly) CGFloat goButtonWidth;
+@property (nonatomic, readonly) CGFloat imageWidth;
+@property (nonatomic, readonly) NSRect backwardRect;
+@property (nonatomic, readonly) NSRect forwardRect;
+@property (nonatomic, readonly) NSRect imageRect;
+@property (nonatomic, readonly) NSRect fieldRect;
+@property (nonatomic) NSString *placeholderString;
+@property (nonatomic) NSArray *URLItems;
 
-- (NSSize)minimumSize;
-- (NSFont *)font;
-- (CGFloat)sheetHeight;
-- (NSRect)appearedSheetRect;
-- (BOOL)isOpenSheet;
-- (BOOL)isEditing;
-- (BOOL)isFirstResponder;
-- (SBURLFieldSheet *)sheet;
-- (NSMutableArray *)items;
-// Rects
-- (CGFloat)buttonWidth;
-- (CGFloat)goButtonWidth;
-- (CGFloat)imageWidth;
-- (NSRect)backwardRect;
-- (NSRect)forwardRect;
-- (NSRect)imageRect;
-- (NSRect)fieldRect;
 
 // Construction
 - (void)constructViews;
@@ -96,12 +95,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructSheet;
 
 - (BOOL)canSelectIndex:(NSInteger)index;
-
-// Setter
-- (void)setPlaceholderString:(NSString *)string;
-- (void)setDataSource:(id<SBURLFieldDatasource>)inDataSource;
-- (void)setDelegate:(id)inDelegate;
-- (void)setURLItems:(NSArray *)URLItems;
 
 // Action
 - (void)endEditing;
@@ -132,10 +125,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @interface SBURLImageView : NSImageView
 
 @property (weak, nonatomic, readonly) SBURLField *field;
+@property (nonatomic, readonly) NSURL *URL;
+@property (nonatomic, readonly) NSData *selectedWebViewImageDataForBookmark;
+@property (nonatomic, readonly) NSImage *dragImage;
 
-- (NSURL *)url;
-- (NSData *)selectedWebViewImageDataForBookmark;
-- (NSImage *)dragImage;
 - (void)mouseDraggedActionWithEvent:(NSEvent *)theEvent;
 - (void)mouseUpActionWithEvent:(NSEvent *)theEvent;
 
@@ -150,7 +143,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) SEL commandAction;
 @property (nonatomic) SEL optionAction;
 
-- (id)initWithFrame:(NSRect)frame;
+- (instancetype)initWithFrame:(NSRect)frame;
 
 @end
 
@@ -197,9 +190,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) BOOL sectionHeader;
 @property (nonatomic) BOOL drawsImage;
 
-- (CGFloat)side;
-- (CGFloat)leftMargin;
-- (CGFloat)imageWidth;
+@property (nonatomic, readonly) CGFloat side;
+@property (nonatomic, readonly) CGFloat leftMargin;
+@property (nonatomic, readonly) CGFloat imageWidth;
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 - (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 

@@ -30,9 +30,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSMenuItem *)selectedItem
 {
 	NSMenuItem *menuItem = nil;
-	for (NSMenuItem *item in [self itemArray])
+	for (NSMenuItem *item in self.itemArray)
 	{
-		if ([item state] == NSOnState)
+		if (item.state == NSOnState)
 		{
 			menuItem = item;
 			break;
@@ -43,20 +43,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)selectItem:(NSMenuItem *)menuItem
 {
-	for (NSMenuItem *item in [self itemArray])
+	for (NSMenuItem *item in self.itemArray)
 	{
-		[item setState:(item == menuItem ? NSOnState : NSOffState)];
+        item.state = (item == menuItem) ? NSOnState : NSOffState;
 	}
 }
 
 - (NSMenuItem *)selectItemWithRepresentedObject:(id)representedObject
 {
 	NSMenuItem *selectedItem = nil;
-	for (NSMenuItem *item in [self itemArray])
+	for (NSMenuItem *item in self.itemArray)
 	{
-		id repObject = [item representedObject];
+		id repObject = item.representedObject;
 		BOOL equal = (!repObject && !representedObject) || [repObject isEqualTo:representedObject];
-		[item setState:(equal ? (selectedItem ? NSOffState : NSOnState) : NSOffState)];
+        item.state = equal ? (selectedItem ? NSOffState : NSOnState) : NSOffState;
 		if (equal)
 		{
 			if (!selectedItem)
@@ -68,19 +68,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)deselectItem
 {
-	for (NSMenuItem *item in [self itemArray])
+	for (NSMenuItem *item in self.itemArray)
 	{
-		[item setState:NSOffState];
+        item.state = NSOffState;
 	}
 }
 
 - (NSMenuItem *)addItemWithTitle:(NSString *)aString target:(id)target action:(SEL)aSelector tag:(NSInteger)tag
 {
 	NSMenuItem *item = [[NSMenuItem alloc] init];
-	[item setTitle:aString];
-	[item setTarget:target];
-	[item setAction:aSelector];
-	[item setTag:tag];
+    item.title = aString;
+    item.target = target;
+    item.action = aSelector;
+    item.tag = tag;
 	[self addItem:item];
 	return item;
 }
@@ -88,10 +88,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSMenuItem *)addItemWithTitle:(NSString *)aString representedObject:(id)representedObject target:(id)target action:(SEL)aSelector
 {
 	NSMenuItem *item = [[NSMenuItem alloc] init];
-	[item setTitle:aString];
-	[item setTarget:target];
-	[item setAction:aSelector];
-	[item setRepresentedObject:representedObject];
+    item.title = aString;
+    item.target = target;
+    item.action = aSelector;
+    item.representedObject = representedObject;
 	[self addItem:item];
 	return item;
 }

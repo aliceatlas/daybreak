@@ -38,18 +38,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, strong) NSView *view;
 @property (nonatomic, strong) SBSidebar *sidebar;
 @property (nonatomic) SBSidebarPosition sidebarPosition;
-@property (nonatomic) NSRect frame;
 @property (nonatomic, readonly) BOOL visibleSidebar;
 @property (nonatomic) BOOL animating;
 @property (nonatomic) CGFloat sidebarWidth;
+@property (nonatomic, readonly) NSRect viewRect;
+@property (nonatomic, readonly) NSRect sidebarRect;
 
-// Rects
-- (NSRect)viewRect;
-- (NSRect)sidebarRect;
-// Setter
-- (void)setFrame:(NSRect)frame;
-- (void)setView:(NSView *)aView;
-- (void)setSidebar:(SBSidebar *)aSidebar;
 // Destruction
 - (void)destructDividerAnimation;
 // Actions

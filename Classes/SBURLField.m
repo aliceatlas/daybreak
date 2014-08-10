@@ -59,10 +59,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic enabledGo;
 @dynamic hiddenGo;
 
-- (id)initWithFrame:(NSRect)rect
+- (instancetype)initWithFrame:(NSRect)rect
 {
 	NSRect r = rect;
-	NSSize minSize = [self minimumSize];
+	NSSize minSize = self.minimumSize;
 	
 	if (r.size.width < minSize.width)
 		r.size.width = minSize.width;
@@ -88,27 +88,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSFont *)font
 {
-	return [field font];
+	return field.font;
 }
 
 - (CGFloat)sheetHeight
 {
-	NSInteger rowCount = (([items count] < SBURLFieldMaxRowCount) ? [items count] : SBURLFieldMaxRowCount);
+	NSInteger rowCount = ((items.count < SBURLFieldMaxRowCount) ? items.count : SBURLFieldMaxRowCount);
 	return SBURLFieldRowHeight * rowCount + SBURLFieldSheetPadding * 2;
 }
 
 - (NSRect)appearedSheetRect
 {
 	NSRect r = NSZeroRect;
-	NSRect bounds = [self bounds];
-	NSRect frame = [self frame];
+	NSRect bounds = self.bounds;
+	NSRect frame = self.frame;
 	NSPoint position = NSZeroPoint;
-	CGFloat buttonWidth = [self buttonWidth];
-	CGFloat goButtonWidth = [self goButtonWidth];
+	CGFloat buttonWidth = self.buttonWidth;
+	CGFloat goButtonWidth = self.goButtonWidth;
 	
 	r.size.width = bounds.size.width - buttonWidth * 2 - goButtonWidth;
-	r.size.height = [self sheetHeight];
-	position = [(SBToolbar *)[[self window] toolbar] itemRectInScreenForIdentifier:kSBToolbarURLFieldItemIdentifier].origin;
+	r.size.height = self.sheetHeight;
+	position = [(SBToolbar *)self.window.toolbar itemRectInScreenForIdentifier:kSBToolbarURLFieldItemIdentifier].origin;
 	r.origin.x = frame.origin.x + position.x;
 	r.origin.y = frame.origin.y + position.y;
 	r.origin.x = r.origin.x + buttonWidth * 2;
@@ -129,29 +129,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)isFirstResponder
 {
 	BOOL r = NO;
-	NSText *editor = [field currentEditor];
-	r = [[[self window] firstResponder] isEqual:editor];
+	NSText *editor = field.currentEditor;
+	r = [self.window.firstResponder isEqual:editor];
 	return r;
-}
-
-- (SBURLFieldSheet *)sheet
-{
-	return sheet;
 }
 
 - (NSImage *)image
 {
-	return [imageView image];
+	return imageView.image;
 }
 
 - (NSString *)stringValue
 {
-	return [field stringValue];
-}
-
-- (NSMutableArray *)items
-{
-	return items;
+	return field.stringValue;
 }
 
 - (BOOL)enabledBackward
@@ -194,7 +184,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)backwardRect
 {
 	NSRect r = NSZeroRect;
-	r.size.width = [self buttonWidth];
+	r.size.width = self.buttonWidth;
 	r.size.height = self.bounds.size.height;
 	r.origin.x = 0.0;
 	r.origin.y = 0.0;
@@ -204,7 +194,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)forwardRect
 {
 	NSRect r = NSZeroRect;
-	CGFloat buttonWidth = [self buttonWidth];
+	CGFloat buttonWidth = self.buttonWidth;
 	r.size.width = buttonWidth;
 	r.size.height = self.bounds.size.height;
 	r.origin.x = buttonWidth;
@@ -216,7 +206,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSRect r = NSZeroRect;
 	r.size.width = r.size.height = 16.0;
-	r.origin.x = [self buttonWidth] * 2 + ([self imageWidth] - r.size.width) / 2;
+	r.origin.x = self.buttonWidth * 2 + (self.imageWidth - r.size.width) / 2;
 	r.origin.y = (self.bounds.size.height - r.size.height) / 2;
 	return r;
 }
@@ -224,9 +214,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)fieldRect
 {
 	NSRect r = NSZeroRect;
-	CGFloat buttonWidth = [self buttonWidth];
-	CGFloat imageWidth = [self imageWidth];
-	r.size.width = self.bounds.size.width - imageWidth - 4.0 - buttonWidth * 2 - (goButton && !goButton.hidden ? [self goButtonWidth] : 0);
+	CGFloat buttonWidth = self.buttonWidth;
+	CGFloat imageWidth = self.imageWidth;
+	r.size.width = self.bounds.size.width - imageWidth - 4.0 - buttonWidth * 2 - (goButton && !goButton.hidden ? self.goButtonWidth : 0);
 	r.size.height = self.bounds.size.height - 2;
 	r.origin.x = buttonWidth * 2 + imageWidth;
 	r.origin.y = -2.0;
@@ -236,7 +226,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)goRect
 {
 	NSRect r = NSZeroRect;
-	CGFloat buttonWidth = [self goButtonWidth];
+	CGFloat buttonWidth = self.goButtonWidth;
 	r.size.width = buttonWidth;
 	r.size.height = self.bounds.size.height;
 	r.origin.x = self.bounds.size.width - buttonWidth;
@@ -258,8 +248,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructButtons
 {
-	NSRect backwardRect = [self backwardRect];
-	NSRect forwardRect = [self forwardRect];
+	NSRect backwardRect = self.backwardRect;
+	NSRect forwardRect = self.forwardRect;
 	backwardButton = [[SBButton alloc] initWithFrame:backwardRect];
 	forwardButton = [[SBButton alloc] initWithFrame:forwardRect];
 	backwardButton.image = [NSImage imageWithCGImage:SBBackwardIconImage(NSSizeToCGSize(backwardRect.size), YES, NO)];
@@ -280,32 +270,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructField
 {
-	imageView = [[SBURLImageView alloc] initWithFrame:[self imageRect]];
-	field = [[SBURLTextField alloc] initWithFrame:[self fieldRect]];
-	[imageView setImageFrameStyle:NSImageFrameNone];
-	[field setTarget:self];
-	[field setAction:@selector(executeShouldOpenURL)];
-	[field setCommandAction:@selector(executeShouldOpenURLInNewTab)];
-	[field setOptionAction:@selector(executeShouldDownloadURL)];
-	[field setBezeled:NO];
-	[field setDrawsBackground:NO];
-	[field setBordered:NO];
-	[field setFocusRingType:NSFocusRingTypeNone];
-	[field setDelegate:self];
-	[field setFont:[NSFont systemFontOfSize:13.0]];
-	[field setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[[field cell] setWraps:NO];
-	[[field cell] setScrollable:YES];
-	[field setRefusesFirstResponder:NO];
+	imageView = [[SBURLImageView alloc] initWithFrame:self.imageRect];
+	field = [[SBURLTextField alloc] initWithFrame:self.fieldRect];
+    imageView.imageFrameStyle = NSImageFrameNone;
+    field.target = self;
+    field.action = @selector(executeShouldOpenURL);
+    field.commandAction = @selector(executeShouldOpenURLInNewTab);
+    field.optionAction = @selector(executeShouldDownloadURL);
+    field.bezeled = NO;
+    field.drawsBackground = NO;
+    field.bordered = NO;
+    field.focusRingType = NSFocusRingTypeNone;
+    field.delegate = self;
+    field.font = [NSFont systemFontOfSize:13.0];
+    field.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+	[field.cell setWraps:NO];
+	[field.cell setScrollable:YES];
+    field.refusesFirstResponder = NO;
 	[self addSubview:imageView];
 	[self addSubview:field];
 }
 
 - (void)constructGoButton
 {
-	NSRect goRect = [self goRect];
+	NSRect goRect = self.goRect;
 	goButton = [[SBButton alloc] initWithFrame:goRect];
-	[goButton setAutoresizingMask:(NSViewMinXMargin)];
+    goButton.autoresizingMask = NSViewMinXMargin;
 	goButton.image = [NSImage imageWithCGImage:SBGoIconImage(NSSizeToCGSize(goRect.size), YES, NO)];
 	goButton.disableImage = [NSImage imageWithCGImage:SBGoIconImage(NSSizeToCGSize(goRect.size), NO, NO)];
 	goButton.backImage = [NSImage imageWithCGImage:SBGoIconImage(NSSizeToCGSize(goRect.size), YES, YES)];
@@ -318,7 +308,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructSheet
 {
-	NSRect sheetRect = [self appearedSheetRect];
+	NSRect sheetRect = self.appearedSheetRect;
 	NSRect contentRect = NSZeroRect;
 	
 	contentRect.size = sheetRect.size;
@@ -328,21 +318,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	hItems = [[NSMutableArray alloc] initWithCapacity:0];
 	sheet = [[SBURLFieldSheet alloc] initWithContentRect:sheetRect styleMask:(NSBorderlessWindowMask | NSNonactivatingPanelMask) backing:NSBackingStoreBuffered defer:YES];
 	contentView = [[SBURLFieldContentView alloc] initWithFrame:contentRect];
-	[sheet setAlphaValue:[[self window] alphaValue]];
-	[sheet setOpaque:NO];
-	[sheet setBackgroundColor:[NSColor clearColor]];
-	[sheet setHasShadow:NO];
-	[sheet setContentView:contentView];
+    sheet.alphaValue = self.window.alphaValue;
+    sheet.opaque = NO;
+    sheet.backgroundColor = NSColor.clearColor;
+    sheet.hasShadow = NO;
+    sheet.contentView = contentView;
 }
 
 - (void)tableViewDidSingleAction:(NSTableView *)tableView
 {
-	NSInteger rowIndex = [tableView selectedRow];
+	NSInteger rowIndex = tableView.selectedRow;
 	if (rowIndex > -1 && [self canSelectIndex:rowIndex])
 	{
 		[contentView pushSelectedItem];
 		[self disappearSheet];
-		[[field target] performSelector:[field action] withObject:field];
+		[field.target performSelector:field.action withObject:field];
 	}
 }
 
@@ -350,9 +340,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	BOOL can = NO;
 	BOOL matchIndex = NO;
-	NSUInteger gscount = [gsItems count];
-	NSUInteger bmcount = [bmItems count];
-	NSUInteger hcount = [hItems count];
+	NSUInteger gscount = gsItems.count;
+	NSUInteger bmcount = bmItems.count;
+	NSUInteger hcount = hItems.count;
 	if (gscount == 0 && bmcount == 0 && hcount == 0)
 	{
 		
@@ -387,7 +377,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
-	NSInteger rowIndex = [[aNotification object] selectedRow];
+    NSInteger rowIndex = [aNotification.object selectedRow];
 	if (rowIndex > -1 && [self canSelectIndex:rowIndex])
 	{
 		[contentView pushSelectedItem];
@@ -396,7 +386,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)tableViewSelectionIsChanging:(NSNotification *)aNotification
 {
-	[contentView setNeedsDisplay:YES];	// Keep drawing background
+	contentView.needsDisplay = YES;	// Keep drawing background
 }
 
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(NSInteger)rowIndex
@@ -407,7 +397,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSIndexSet *)tableView:(NSTableView *)tableView selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes
 {
 	NSIndexSet *indexes = nil;
-	NSInteger index = [proposedSelectionIndexes firstIndex];	// because single selection
+	NSInteger index = proposedSelectionIndexes.firstIndex;	// because single selection
 	BOOL canSelect = [self canSelectIndex:index];
 	if (canSelect)
 		indexes = proposedSelectionIndexes;
@@ -429,14 +419,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
 	NSEvent *currentEvent = [NSApp currentEvent];
-	NSString *characters = [currentEvent characters];
+	NSString *characters = currentEvent.characters;
 	unichar character = [characters characterAtIndex:0];
-	NSString *stringValue = [field stringValue];
+	NSString *stringValue = field.stringValue;
 	BOOL hasScheme = NO;
 	
 	// Update go button
 	self.hiddenGo = NO;
-	goButton.enabled = [stringValue length] > 0;
+	goButton.enabled = stringValue.length > 0;
 	goButton.title = goButton.enabled ? ([stringValue isURLString:&hasScheme] ? NSLocalizedString(@"Go", nil) : NSLocalizedString(@"Search", nil)) : nil;
 	
 	if (character == NSDeleteCharacter || 
@@ -459,7 +449,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)controlTextDidEndEditing:(NSNotification *)aNotification
 {
-	NSEvent *currentEvent = [[self window] currentEvent];
+	NSEvent *currentEvent = self.window.currentEvent;
 	
 	// Hide go button
 	self.hiddenGo = YES;
@@ -470,15 +460,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[self disappearSheet];
 	}
 	
-	if ([currentEvent type] == NSKeyDown)
+	if (currentEvent.type == NSKeyDown)
 	{
-		NSString *characters = [currentEvent characters];
+		NSString *characters = currentEvent.characters;
 		unichar character = [characters characterAtIndex:0];
 		if (character == NSTabCharacter || character == '\t')		// Tab
 		{
 			// If the user push Tab key, make first responder to next responder
-			id nextKeyView = [field nextKeyView];
-			[[self window] makeFirstResponder:nextKeyView];
+			id nextKeyView = field.nextKeyView;
+			[self.window makeFirstResponder:nextKeyView];
 		}
 	}
 }
@@ -491,9 +481,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (commandSelector == @selector(insertNewlineIgnoringFieldEditor:))
 		{
 			// Ignore new line action
-			NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+			NSNotificationCenter *center = NSNotificationCenter.defaultCenter;
 			[center postNotificationName:NSControlTextDidEndEditingNotification object:self];
-			[field sendAction:field.optionAction to:[field target]];
+			[field sendAction:field.optionAction to:field.target];
 			r = YES;
 		}
 	}
@@ -511,12 +501,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
 	NSString *object = nil;
-	NSString *identifier = [aTableColumn identifier];
-	NSDictionary *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
+	NSString *identifier = aTableColumn.identifier;
+	NSDictionary *item = (rowIndex < items.count) ? items[rowIndex] : nil;
 	if ([identifier isEqual:kSBURL])
 	{
-		NSInteger type = [[item objectForKey:kSBType] integerValue];
-		NSString *title = item ? [item objectForKey:kSBTitle] : nil;
+		NSInteger type = [item[kSBType] integerValue];
+		NSString *title = item ? item[kSBTitle] : nil;
 		if (type == kSBURLFieldItemNoneType)
 		{
 			object = title;
@@ -528,7 +518,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		else if (type == kSBURLFieldItemBookmarkType || 
 				 type == kSBURLFieldItemHistoryType)
 		{
-			object = item ? [item objectForKey:kSBURL] : nil;
+			object = item ? item[kSBURL] : nil;
 			if (title)
 				object = title;
 		}
@@ -536,15 +526,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return object;
 }
 
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+- (void)tableView:(NSTableView *)aTableView willDisplayCell:(SBURLFieldDataCell *)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	NSString *identifier = [aTableColumn identifier];
-	NSDictionary *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
-	NSInteger type = [[item objectForKey:kSBType] integerValue];
+	NSString *identifier = aTableColumn.identifier;
+	NSDictionary *item = (rowIndex < items.count) ? items[rowIndex] : nil;
+	NSInteger type = [item[kSBType] integerValue];
 	if ([identifier isEqualToString:kSBURL])
 	{
 		NSString *string = nil;
-		NSString *title = item ? [item objectForKey:kSBTitle] : nil;
+		NSString *title = item ? item[kSBTitle] : nil;
 		NSData *data = nil;
 		NSImage *image = nil;
 		BOOL separator = NO;
@@ -552,11 +542,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		BOOL drawsImage = YES;
 		if (type == kSBURLFieldItemNoneType)
 		{
-			data = item ? [item objectForKey:kSBImage] : nil;
+			data = item ? item[kSBImage] : nil;
 			if (data)
 			{
 				image = [[NSImage alloc] initWithData:data];
-				[image setSize:NSMakeSize(16.0, 16.0)];
+                image.size = NSMakeSize(16.0, 16.0);
 			}
 			string = title;
 			separator = rowIndex > 0;
@@ -570,29 +560,29 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		else if (type == kSBURLFieldItemBookmarkType || 
 				 type == kSBURLFieldItemHistoryType)
 		{
-			data = item ? [item objectForKey:kSBImage] : nil;
+			data = item ? item[kSBImage] : nil;
 			if (data)
 			{
 				image = [[NSImage alloc] initWithData:data];
-				[image setSize:NSMakeSize(16.0, 16.0)];
+                image.size = NSMakeSize(16.0, 16.0);
 			}
-			string = item ? [item objectForKey:kSBURL] : nil;
+			string = item ? item[kSBURL] : nil;
 			if (title)
 				string = title;
 		}
-		[aCell setSeparator:separator];
-		[aCell setSectionHeader:sectionHeader];
-		[aCell setDrawsImage:drawsImage];
+        aCell.separator = separator;
+        aCell.sectionHeader = sectionHeader;
+        aCell.drawsImage = drawsImage;
 		if (image)
 		{
-			[aCell setImage:image];
+            aCell.image = image;
 		}
 		else {
-			[aCell setImage:nil];
+			aCell.image = nil;
 		}
 		if (string)
 		{
-			[aCell setObjectValue:string];
+            aCell.objectValue = string;
 		}
 	}
 }
@@ -603,7 +593,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (self.image != image)
 	{
-		[imageView setImage:image];
+        imageView.image = image;
 	}
 }
 
@@ -615,48 +605,48 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	if (![self.stringValue isEqualToString:stringValue])
 	{
-		[field setStringValue:stringValue];
+        field.stringValue = stringValue;
 		// Update go button
 		BOOL hasScheme = NO;
-		goButton.enabled = [stringValue length] > 0;
+		goButton.enabled = stringValue.length > 0;
 		goButton.title = goButton.enabled ? ([stringValue isURLString:&hasScheme] ? NSLocalizedString(@"Go", nil) : NSLocalizedString(@"Search", nil)) : nil;
 	}
 }
 
 - (void)setURLString:(NSString *)URLString
 {
-	NSText *editor = [field currentEditor];
+	NSText *editor = field.currentEditor;
 	if (!editor)
-		editor = [[self window] fieldEditor:YES forObject:field];
-	NSRange selectedRange = [editor selectedRange];
+		editor = [self.window fieldEditor:YES forObject:field];
+	NSRange selectedRange = editor.selectedRange;
 	NSRange range = {NSNotFound, 0};
-	NSString *string = [self stringValue];
+	NSString *string = self.stringValue;
 	NSString *currentScheme = [SBURLFieldUtil schemeForURLString:string];
 	NSString *scheme = [SBURLFieldUtil schemeForURLString:URLString];
 	if ([scheme hasPrefix:string])
 	{
 		NSRange headRange = [URLString rangeOfString:string];
 		range.location = headRange.location + headRange.length;
-		range.length = [URLString length] - range.location;
+		range.length = URLString.length - range.location;
 	}
 	else {
 		CGFloat currentSchemeLength = 0;
 		CGFloat schemeLength = 0;
-		if (currentScheme) currentSchemeLength = [currentScheme length];
-		if (scheme) schemeLength = [scheme length];
+		if (currentScheme) currentSchemeLength = currentScheme.length;
+		if (scheme) schemeLength = scheme.length;
 		
 		selectedRange.location -= currentSchemeLength;
 		selectedRange.length -= currentSchemeLength;
 		range.location = selectedRange.location + schemeLength;
-		range.length = [URLString length] - range.location;
+		range.length = URLString.length - range.location;
 	}
-	[self setStringValue:URLString];
-	[editor setSelectedRange:range];
+    self.stringValue = URLString;
+    editor.selectedRange = range;
 }
 
 - (void)setPlaceholderString:(NSString *)string
 {
-	[[field cell] setPlaceholderString:string];
+	[field.cell setPlaceholderString:string];
 }
 
 - (void)setDataSource:(id)inDataSource
@@ -664,7 +654,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (dataSource != inDataSource)
 	{
 		dataSource = inDataSource;
-		[contentView setDataSource:self];
+        contentView.dataSource = self;
 	}
 }
 
@@ -673,18 +663,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (delegate != inDelegate)
 	{
 		delegate = inDelegate;
-		[contentView setDelegate:self];
+        contentView.delegate = self;
 	}
 }
 
 - (void)setURLItems:(NSArray *)URLItems
 {
 	[items removeAllObjects];
-	if ([URLItems count] > 0)
+	if (URLItems.count > 0)
 		[items addObjectsFromArray:URLItems];
 	[self reloadData];
 	
-	if ([items count] == 0)
+	if (items.count == 0)
 	{
 		[self disappearSheet];
 	}
@@ -712,7 +702,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setHiddenGo:(BOOL)hiddenGo
 {
 	goButton.hidden = hiddenGo;
-	field.frame = [self fieldRect];
+	field.frame = self.fieldRect;
 }
 
 #pragma mark Action
@@ -721,7 +711,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	[self disappearSheet];
 	self.hiddenGo = YES;
-	[[field cell] endEditing:[[self window] fieldEditor:NO forObject:field]];
+	[field.cell endEditing:[self.window fieldEditor:NO forObject:field]];
 }
 
 - (void)adjustSheet
@@ -729,13 +719,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect sheetRect = NSZeroRect;
 	sheetRect = [self appearedSheetRect];
 	[sheet setFrame:sheetRect display:YES];
-	[sheet setAlphaValue:[[self window] alphaValue]];
+    sheet.alphaValue = self.window.alphaValue;
 	[contentView adjustTable];
 }
 
 - (void)appearSheetIfNeeded:(BOOL)closable
 {
-	if ([items count] > 0)
+	if (items.count > 0)
 	{
 		if (!_isOpenSheet)
 		{
@@ -755,50 +745,50 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)appearSheet
 {
-	if (![sheet isVisible])
+	if (!sheet.visible)
 	{
 		[self adjustSheet];
-		[[self window] addChildWindow:sheet ordered:NSWindowAbove];
+		[self.window addChildWindow:sheet ordered:NSWindowAbove];
 		[contentView deselectRow];
 		[sheet orderFront:nil];
 		_isOpenSheet = YES;
-		[self setNeedsDisplay:YES];
-		[contentView setNeedsDisplay:YES];
+        self.needsDisplay = YES;
+		contentView.needsDisplay = YES;
 	}
 }
 
 - (void)disappearSheet
 {
-	if ([sheet isVisible])
+	if (sheet.visible)
 	{
-		[[self window] removeChildWindow:sheet];
-		[self setNeedsDisplay:YES];
+		[self.window removeChildWindow:sheet];
+        self.needsDisplay = YES;
 		[sheet orderOut:nil];
 		_isOpenSheet = NO;
-		[self setNeedsDisplay:YES];
+        self.needsDisplay = YES;
 	}
 }
 
 - (void)selectRowAbove
 {
-	NSInteger rowIndex = [contentView selectedRowIndex];
+	NSInteger rowIndex = contentView.selectedRowIndex;
 	do {
 		rowIndex--;
 	}
 	while (![self canSelectIndex:rowIndex]);
 	if (rowIndex < 1)
-		rowIndex = [items count] - 1;
+		rowIndex = items.count - 1;
 	[contentView selectRow:rowIndex];
 }
 
 - (void)selectRowBelow
 {
-	NSInteger rowIndex = [contentView selectedRowIndex];
+	NSInteger rowIndex = contentView.selectedRowIndex;
 	do {
 		rowIndex++;
 	}
 	while (![self canSelectIndex:rowIndex]);
-	if (rowIndex >= [items count])
+	if (rowIndex >= items.count)
 		rowIndex = 1;
 	[contentView selectRow:rowIndex];
 }
@@ -816,17 +806,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)setTextColor:(NSColor *)color
 {
-	[field setTextColor:color];
+    field.textColor = color;
 }
 
 - (void)setNextKeyView:(id)responder
 {
-	[field setNextKeyView:responder];
+    field.nextKeyView = responder;
 }
 
 - (void)updateGoTitle:(NSEvent *)theEvent
 {
-	NSUInteger modifierFlags = [theEvent modifierFlags];
+	NSUInteger modifierFlags = theEvent.modifierFlags;
 	if (modifierFlags & NSCommandKeyMask)
 	{
 		if (![goButton.title isEqualToString:NSLocalizedString(@"Open", nil)])
@@ -844,7 +834,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	else {
 		BOOL hasScheme = NO;
 		NSString *title = nil;
-		if ([self.stringValue length] > 0)
+		if (self.stringValue.length > 0)
 			title = [self.stringValue isURLString:&hasScheme] ? NSLocalizedString(@"Go", nil) : NSLocalizedString(@"Search", nil);
 		if (![goButton.title isEqualToString:title])
 		{
@@ -857,7 +847,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SEL selector = nil;
 	NSEvent *theEvent = [NSApp currentEvent];
-	NSUInteger modifierFlags = theEvent ? [theEvent modifierFlags] : 0;
+	NSUInteger modifierFlags = theEvent ? theEvent.modifierFlags : 0;
 	if (modifierFlags & NSCommandKeyMask)
 	{
 		selector = @selector(executeShouldOpenURLInNewTab);
@@ -959,7 +949,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)drawRect:(NSRect)rect
 {
 	CGRect r = CGRectZero;
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	CGPathRef path = nil;
 	
 	r = NSRectToCGRect(self.bounds);
@@ -1029,12 +1019,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (SBURLField *)field
 {
-	return (SBURLField *)[self superview];
+	return (SBURLField *)self.superview;
 }
 
-- (NSURL *)url
+- (NSURL *)URL
 {
-	return [NSURL URLWithString:[self.field stringValue]];
+	return [NSURL URLWithString:self.field.stringValue];
 }
 
 - (NSData *)selectedWebViewImageDataForBookmark
@@ -1050,20 +1040,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSImage *image = nil;
 	NSDictionary *attribute = nil;
-	NSString *urlString = [[self url] absoluteString];
+	NSString *urlString = self.URL.absoluteString;
 	NSSize size = NSZeroSize;
 	NSSize textSize = NSZeroSize;
-	NSFont *font = [self.field font];
+	NSFont *font = self.field.font;
 	NSRect imageRect = NSZeroRect;
 	NSRect textRect = NSZeroRect;
 	CGFloat margin = 0;
 	
 	margin = 5.0;
-	attribute = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+	attribute = @{NSFontAttributeName: font};
 	textSize = [urlString sizeWithAttributes:attribute];
-	size.height = [self bounds].size.height;
-	size.width = [self bounds].size.width + textSize.width + margin;
-	imageRect.size = [self bounds].size;
+	size.height = self.bounds.size.height;
+	size.width = self.bounds.size.width + textSize.width + margin;
+	imageRect.size = self.bounds.size;
 	imageRect.origin.x = (size.height - imageRect.size.width) / 2;
 	imageRect.origin.y = (size.height - imageRect.size.height) / 2;
 	textRect.size.height = size.height;
@@ -1082,27 +1072,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)mouseDown:(NSEvent *)event
 {
 	@autoreleasepool {
-		NSPoint point = [self convertPoint:[event locationInWindow] fromView:nil];
+		NSPoint point = [self convertPoint:event.locationInWindow fromView:nil];
 		
 		for (;;)
 		{
-			NSEvent *newEvent = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-			NSPoint newPoint = [self convertPoint:[newEvent locationInWindow] fromView:nil];
+			NSEvent *newEvent = [self.window nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+			NSPoint newPoint = [self convertPoint:newEvent.locationInWindow fromView:nil];
 			BOOL isDragging = NO;
-			if (NSPointInRect(newPoint,[self bounds]))
+			if (NSPointInRect(newPoint, self.bounds))
 			{
-				if ([newEvent type] == NSLeftMouseUp)
+				if (newEvent.type == NSLeftMouseUp)
 				{
 					[self mouseUpActionWithEvent:event];
 					break;
 				}
-				else if ([newEvent type] == NSLeftMouseDragged)
+				else if (newEvent.type == NSLeftMouseDragged)
 				{
 					isDragging = YES;
 				}
 			}
 			else {
-				if ([newEvent type] == NSLeftMouseDragged)
+				if (newEvent.type == NSLeftMouseDragged)
 				{
 					isDragging = YES;
 				}
@@ -1128,16 +1118,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSData *imageData = nil;
 	
 	pasteboard = [NSPasteboard pasteboardWithName:NSDragPboard];
-	title = [[self window] title];
-	imageData = [self selectedWebViewImageDataForBookmark];
-	[pasteboard declareTypes:[NSArray arrayWithObjects:NSURLPboardType, nil] owner:nil];
-	[[self url] writeToPasteboard:pasteboard];
+	title = self.window.title;
+	imageData = self.selectedWebViewImageDataForBookmark;
+	[pasteboard declareTypes:@[NSURLPboardType] owner:nil];
+	[self.URL writeToPasteboard:pasteboard];
 	if (title)
 		[pasteboard setString:title forType:NSStringPboardType];
 	if (imageData)
 		[pasteboard setData:imageData forType:NSTIFFPboardType];
 	
-	[self dragImage:[self dragImage] at:NSZeroPoint offset:NSZeroSize event:theEvent pasteboard:pasteboard source:[self window] slideBack:YES];
+	[self dragImage:self.dragImage at:NSZeroPoint offset:NSZeroSize event:theEvent pasteboard:pasteboard source:self.window slideBack:YES];
 }
 
 - (void)mouseUpActionWithEvent:(NSEvent *)theEvent
@@ -1153,7 +1143,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize commandAction;
 @synthesize optionAction;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -1165,7 +1155,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (SBURLField *)field
 {
-	return (SBURLField *)[self superview];
+	return (SBURLField *)self.superview;
 }
 
 #pragma mark Responder
@@ -1204,24 +1194,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (BOOL)performKeyEquivalent:(NSEvent *)event
 {
-	NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-	NSString *characters = [event characters];
+    NSNotificationCenter *center = NSNotificationCenter.defaultCenter;
+	NSString *characters = event.characters;
 	unichar character = [characters characterAtIndex:0];
 	if (character == NSCarriageReturnCharacter || character == NSEnterCharacter)
 	{
-		NSUInteger modifierFlags = [event modifierFlags];
+		NSUInteger modifierFlags = event.modifierFlags;
 		if (modifierFlags & NSCommandKeyMask)
 		{
 			// Command + Return
 			[center postNotificationName:NSControlTextDidEndEditingNotification object:self];
-			[self sendAction:commandAction to:[self target]];
+			[self sendAction:commandAction to:self.target];
 			return YES;
 		}
 	}
 	else {
-		if ([self.field isOpenSheet])
+		if (self.field.isOpenSheet)
 		{
-			if ([event type] == NSKeyDown)
+			if (event.type == NSKeyDown)
 			{
 				if (character == NSUpArrowFunctionKey)
 				{
@@ -1287,7 +1277,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic field;
 @dynamic selectedRowIndex;
 
-- (id)initWithFrame:(NSRect)rect
+- (instancetype)initWithFrame:(NSRect)rect
 {
 	if (self = [super initWithFrame:rect])
 	{
@@ -1305,16 +1295,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (SBURLField *)field
 {
 	id aField = nil;
-	if ([[_table delegate] isKindOfClass:[SBURLField class]])
+	if ([_table.delegate isKindOfClass:SBURLField.class])
 	{
-		aField = [_table delegate];
+		aField = _table.delegate;
 	}
 	return aField;
 }
 
 - (NSUInteger)selectedRowIndex
 {
-	return [_table selectedRow];
+	return _table.selectedRow;
 }
 
 #pragma mark Construction
@@ -1323,7 +1313,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSTableColumn *column = nil;
 	SBURLFieldDataCell *cell = nil;
-	NSRect bounds = [self bounds];
+    NSRect bounds = self.bounds;
 	NSRect scrollerRect = NSZeroRect;
 	NSRect tableRect = NSZeroRect;
 	scrollerRect.origin.x = 1;
@@ -1335,30 +1325,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	_table = [[NSTableView alloc] initWithFrame:tableRect];
 	column = [[NSTableColumn alloc] initWithIdentifier:kSBURL];
 	cell = [[SBURLFieldDataCell alloc] init];
-	[cell setFont:[NSFont systemFontOfSize:12.0]];
-	[cell setAlignment:NSLeftTextAlignment];
-	[column setDataCell:cell];
-	[column setEditable:NO];
-	[column setWidth:bounds.size.width];
-	[_table setBackgroundColor:[NSColor clearColor]];
-	[_table setRowHeight:SBURLFieldRowHeight - 2];
+	cell.font = [NSFont systemFontOfSize:12.0];
+	cell.alignment = NSLeftTextAlignment;
+	column.dataCell = cell;
+	column.editable = NO;
+	column.width = bounds.size.width;
+	_table.backgroundColor = NSColor.clearColor;
+	_table.rowHeight = SBURLFieldRowHeight - 2;
 	[_table addTableColumn:column];
-	[_table setAllowsMultipleSelection:NO];
-	[_table setAllowsColumnSelection:NO];
-	[_table setAllowsEmptySelection:YES];
-	[_table setAction:@selector(tableViewDidSingleAction:)];
-	[_table setColumnAutoresizingStyle:NSTableViewLastColumnOnlyAutoresizingStyle];
-	[_table setHeaderView:nil];
-	[_table setCornerView:nil];
-	[_table setAutoresizingMask:(NSViewWidthSizable)];
-	[_table setIntercellSpacing:NSZeroSize];
-	[_scroller setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[_scroller setAutohidesScrollers:YES];
-	[_scroller setHasVerticalScroller:YES];
-	[_scroller setAutohidesScrollers:YES];
-	[_scroller setBackgroundColor:[NSColor colorWithCalibratedRed:SBTableLightGrayCellColors[0] green:SBTableLightGrayCellColors[1] blue:SBTableLightGrayCellColors[2] alpha:SBTableLightGrayCellColors[3]]];
-	[_scroller setDrawsBackground:YES];
-	[_scroller setDocumentView:_table];
+	_table.allowsMultipleSelection = NO;
+	_table.allowsColumnSelection = NO;
+	_table.allowsEmptySelection = YES;
+	_table.action = @selector(tableViewDidSingleAction:);
+    _table.columnAutoresizingStyle = NSTableViewLastColumnOnlyAutoresizingStyle;
+    _table.headerView = nil;
+    _table.cornerView = nil;
+    _table.autoresizingMask = NSViewWidthSizable;
+    _table.intercellSpacing = NSZeroSize;
+    _scroller.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    _scroller.autohidesScrollers = YES;
+    _scroller.hasVerticalScroller = YES;
+    _scroller.autohidesScrollers = YES;
+	_scroller.backgroundColor = [NSColor colorWithCalibratedRed:SBTableLightGrayCellColors[0] green:SBTableLightGrayCellColors[1] blue:SBTableLightGrayCellColors[2] alpha:SBTableLightGrayCellColors[3]];
+    _scroller.drawsBackground = YES;
+    _scroller.documentView = _table;
 	[self addSubview:_scroller];
 }
 
@@ -1366,29 +1356,29 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)setDataSource:(id)inDataSource
 {
-	[_table setDataSource:inDataSource];
+    _table.dataSource = inDataSource;
 }
 
 - (void)setDelegate:(id)inDelegate
 {
-	[_table setDelegate:inDelegate];
+    _table.delegate = inDelegate;
 }
 
 #pragma mark Action
 
 - (void)adjustTable
 {
-	NSRect bounds = [self bounds];
-	NSRect scrollerRect = [_scroller frame];
-	NSRect tableRect = [_table frame];
-	NSInteger numberOfRows = [[_table dataSource] numberOfRowsInTableView:_table];
+	NSRect bounds = self.bounds;
+	NSRect scrollerRect = _scroller.frame;
+	NSRect tableRect = _table.frame;
+	NSInteger numberOfRows = [_table.dataSource numberOfRowsInTableView:_table];
 	NSInteger rowCount = ((numberOfRows < SBURLFieldMaxRowCount) ? numberOfRows : SBURLFieldMaxRowCount);
 	scrollerRect.size.width = bounds.size.width - 2;
 	scrollerRect.size.height = SBURLFieldRowHeight * rowCount;
 	scrollerRect.origin.y = SBURLFieldSheetPadding;
 	tableRect.size.width = scrollerRect.size.width;
-	[_scroller setFrame:scrollerRect];
-	[_table setFrame:tableRect];
+    _scroller.frame = scrollerRect;
+    _table.frame = tableRect;
 }
 
 - (BOOL)selectRow:(NSUInteger)rowIndex
@@ -1403,7 +1393,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBURLField *field = self.field;
 	[_table deselectAll:nil];
 	[_table scrollRowToVisible:0];
-	[field setImage:nil];
+    field.image = nil;
 }
 
 - (void)reloadData
@@ -1421,25 +1411,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	BOOL r = NO;
 	SBURLField *field = self.field;
-	if (index < [[field items] count])
+	if (index < field.items.count)
 	{
-		NSDictionary *selectedItem = [[field items] objectAtIndex:index];
-		NSInteger type = [[selectedItem objectForKey:kSBType] integerValue];
+		NSDictionary *selectedItem = field.items[index];
+		NSInteger type = [selectedItem[kSBType] integerValue];
 		if (type == kSBURLFieldItemGoogleSuggestType)
 		{
-			NSString *title = [selectedItem objectForKey:kSBTitle];
-			[field setURLString:title];
+			NSString *title = selectedItem[kSBTitle];
+            field.URLString = title;
 			r = YES;
 		}
 		else
 		{
-			NSString *URLString = [selectedItem objectForKey:kSBURL];
-			if (![URLString isEqualToString:[field stringValue]])
+			NSString *URLString = selectedItem[kSBURL];
+			if (![URLString isEqualToString:field.stringValue])
 			{
-				NSData *data = [selectedItem objectForKey:kSBImage];
+				NSData *data = selectedItem[kSBImage];
 				NSImage *icon = [[NSImage alloc] initWithData:data];
-				[field setURLString:URLString];
-				[field setImage:icon];
+                field.URLString = URLString;
+                field.image = icon;
 				r = YES;
 			}
 		}
@@ -1451,9 +1441,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)drawRect:(NSRect)rect
 {
-	NSRect b = [self bounds];
+	NSRect b = self.bounds;
 	CGRect r = NSRectToCGRect(b);
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	CGPathRef path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, NO, YES);
 	NSUInteger count = 4;
 	CGFloat locations[count];
@@ -1511,7 +1501,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize sectionHeader;
 @synthesize drawsImage;
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{
@@ -1550,8 +1540,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat backgroundColors[4];
 	CGFloat cellColors[4];
 	CGFloat selectedCellColors[4];
-	NSColor *selectedColor = [[NSColor alternateSelectedControlColor] colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
-	CGFloat leftMargin = [self side] + [self leftMargin];
+	NSColor *selectedColor = [NSColor.alternateSelectedControlColor colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
+	CGFloat leftMargin = self.side + self.leftMargin;
 	NSRect r = NSZeroRect;
 	
 	r = cellFrame;
@@ -1564,9 +1554,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRectFill(r);
 	[[NSColor colorWithCalibratedRed:cellColors[0] green:cellColors[1] blue:cellColors[2] alpha:cellColors[3]] set];
 	NSRectFill(cellFrame);
-	if ([self isHighlighted])
+	if (self.highlighted)
 	{
-		CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+		CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 		CGRect r = CGRectZero;
 		CGPathRef path = nil;
 		CGFloat components1[4];
@@ -1602,12 +1592,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	NSImage *image = [self image];
+	NSImage *image = self.image;
 	if (image)
 	{
 		NSRect r = NSZeroRect;
 		r.size = [image size];
-		r.origin.x = cellFrame.origin.x + [self side] + [self leftMargin] + ([self imageWidth] - r.size.width) / 2;
+		r.origin.x = cellFrame.origin.x + self.side + self.leftMargin + (self.imageWidth - r.size.width) / 2;
 		r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
 		[image drawInRect:r operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES];
 	}
@@ -1631,32 +1621,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSRect r = NSZeroRect;
 		NSRect sr = NSZeroRect;
 		NSMutableParagraphStyle *paragraphStyle = nil;
-		CGFloat imageWidth = [self imageWidth] + [self side] + [self leftMargin];
+		CGFloat imageWidth = self.imageWidth + self.side + self.leftMargin;
 		NSRect titleRect = NSMakeRect(cellFrame.origin.x + imageWidth, cellFrame.origin.y, cellFrame.size.width - imageWidth, cellFrame.size.height);
-		CGFloat side = [self side];
+		CGFloat side = self.side;
 		NSColor *textColor = [(sectionHeader ? [NSColor colorWithCalibratedRed:SBTableDarkGrayCellColors[0] green:SBTableDarkGrayCellColors[1] blue:SBTableDarkGrayCellColors[2] alpha:SBTableDarkGrayCellColors[3]] : [NSColor blackColor]) colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
 		
 		[textColor getComponents:textColors];
-		sTextColor = [self isHighlighted] ? [NSColor clearColor] : [NSColor whiteColor];
-		color = [self isHighlighted] ? [NSColor whiteColor] : [NSColor colorWithCalibratedRed:textColors[0] green:textColors[1] blue:textColors[2] alpha:textColors[3]];
+		sTextColor = self.highlighted ? NSColor.clearColor : NSColor.whiteColor;
+		color = [self isHighlighted] ? NSColor.whiteColor : [NSColor colorWithCalibratedRed:textColors[0] green:textColors[1] blue:textColors[2] alpha:textColors[3]];
 		font = [NSFont systemFontOfSize:sectionHeader ? 11.0 : 12.0];
 		paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-		[paragraphStyle setLineBreakMode:NSLineBreakByTruncatingTail];
-		attribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
-		sattribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, sTextColor, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
+        paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+		attribute = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle};
+		sattribute = @{NSFontAttributeName: font, NSForegroundColorAttributeName: sTextColor, NSParagraphStyleAttributeName: paragraphStyle};
 		size = [title sizeWithAttributes:attribute];
 		if (size.width > (titleRect.size.width - side * 2))
 			size.width = titleRect.size.width - side * 2;
 		r.size = size;
-		if ([self alignment] == NSLeftTextAlignment)
+		if (self.alignment == NSLeftTextAlignment)
 		{
 			r.origin.x = titleRect.origin.x + side;
 		}
-		else if ([self alignment] == NSRightTextAlignment)
+		else if (self.alignment == NSRightTextAlignment)
 		{
 			r.origin.x = titleRect.origin.x + side + ((titleRect.size.width - side * 2) - size.width);
 		}
-		else if ([self alignment] == NSCenterTextAlignment)
+		else if (self.alignment == NSCenterTextAlignment)
 		{
 			r.origin.x = titleRect.origin.x + ((titleRect.size.width - side * 2) - size.width) / 2;
 		}
@@ -1694,7 +1684,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	range = [urlString rangeOfString:@"://"];
 	if (range.location != NSNotFound)
 	{
-		range.length = (range.location + range.length);
+		range.length = range.location + range.length;
 		range.location = 0;
 		scheme = [urlString substringWithRange:range];
 	}

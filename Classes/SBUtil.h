@@ -59,6 +59,9 @@ NSString *SBBookmarksFilePath();
 NSString *SBBookmarksVersion1FilePath();
 NSString *SBHistoryFilePath();
 // Paths
+
+CF_IMPLICIT_BRIDGING_ENABLED
+
 CGPathRef SBRoundedPath(CGRect rect, CGFloat curve, CGFloat inner, BOOL top, BOOL bottom);
 CGPathRef SBLeftButtonPath(CGSize size);
 CGPathRef SBCenterButtonPath(CGSize size);
@@ -67,6 +70,9 @@ CGPathRef SBTrianglePath(CGRect rect, NSInteger direction);
 CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform);
 CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform);
 void SBCGPointApplyTransform3D(CGPoint *p, const CATransform3D *t);
+
+CF_IMPLICIT_BRIDGING_DISABLED
+
 // Drawing
 void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint points[]);
 void SBDrawRadialGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint centers[], CGFloat radiuses[]);
@@ -74,6 +80,9 @@ void SBGetAlternateSelectedLightControlColorComponents(CGFloat colors[4]);
 void SBGetAlternateSelectedControlColorComponents(CGFloat colors[4]);
 void SBGetAlternateSelectedDarkControlColorComponents(CGFloat colors[4]);
 // Image
+
+CF_IMPLICIT_BRIDGING_ENABLED
+
 CGImageRef SBBackwardIconImage(CGSize size, BOOL enabled, BOOL backing);
 CGImageRef SBForwardIconImage(CGSize size, BOOL enabled, BOOL backing);
 CGImageRef SBGoIconImage(CGSize size, BOOL enabled, BOOL backing);
@@ -82,8 +91,14 @@ CGImageRef SBActualSizeIconImage(CGSize size);
 CGImageRef SBZoomInIconImage(CGSize size);
 CGImageRef SBAddIconImage(CGSize size, BOOL backing);
 CGImageRef SBCloseIconImage();
-CGImageRef SBIconImageWithName(NSString *imageName, SBButtonShape shape, CGSize size);
-CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size);
+
+CF_IMPLICIT_BRIDGING_DISABLED
+
+CGImageRef SBIconImageWithName(NSString *imageName, SBButtonShape shape, CGSize size) CF_RETURNS_NOT_RETAINED;
+CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size) CF_RETURNS_NOT_RETAINED;
+
+CF_IMPLICIT_BRIDGING_ENABLED
+
 CGImageRef SBFindBackwardIconImage(CGSize size, BOOL enabled);
 CGImageRef SBFindForwardIconImage(CGSize size, BOOL enabled);
 CGImageRef SBBookmarkReflectionMaskImage(CGSize size);
@@ -91,6 +106,9 @@ CGImageRef SBBookmarkReflectionMaskImage(CGSize size);
 NSInteger SBRemainder(NSInteger value1, NSInteger value2);
 BOOL SBRemainderIsZero(NSInteger value1, NSInteger value2);
 NSInteger SBGreatestCommonDivisor(NSInteger a, NSInteger b);
+
+CF_IMPLICIT_BRIDGING_DISABLED
+
 // Others
 NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault);
 NSComparisonResult SBStringEncodingSortFunction(id num1, id num2, void *context);

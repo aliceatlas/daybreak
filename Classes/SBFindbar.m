@@ -30,7 +30,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @synthesize searchedString;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -72,7 +72,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)contentRect
 {
 	NSRect r = self.bounds;
-	r.size.width = r.size.width >= [[self class] minimumWidth] ? r.size.width : [[self class] minimumWidth];
+	r.size.width = r.size.width >= self.class.minimumWidth ? r.size.width : self.class.minimumWidth;
 	return r;
 }
 
@@ -86,8 +86,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)searchRect
 {
 	NSRect r = NSZeroRect;
-	NSRect closeRect = [self closeRect];
-	NSRect caseSensitiveRect = [self caseSensitiveRect];
+	NSRect closeRect = self.closeRect;
+	NSRect caseSensitiveRect = self.caseSensitiveRect;
 	CGFloat marginNextToCase = 150.0;
 	r.size.width = caseSensitiveRect.origin.x - NSMaxX(closeRect) - marginNextToCase - 24.0 * 2;
 	r.size.height = 19.0;
@@ -99,7 +99,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)backwardRect
 {
 	NSRect r = NSZeroRect;
-	NSRect searchRect = [self searchRect];
+	NSRect searchRect = self.searchRect;
 	r.size.width = 24.0;
 	r.size.height = 18.0;
 	r.origin.y = (self.bounds.size.height - r.size.height) / 2;
@@ -110,7 +110,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)forwardRect
 {
 	NSRect r = NSZeroRect;
-	NSRect backwardRect = [self backwardRect];
+	NSRect backwardRect = self.backwardRect;
 	r.size.width = 24.0;
 	r.size.height = 18.0;
 	r.origin.y = (self.bounds.size.height - r.size.height) / 2;
@@ -121,7 +121,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)caseSensitiveRect
 {
 	NSRect r = NSZeroRect;
-	NSRect wrapRect = [self wrapRect];
+	NSRect wrapRect = self.wrapRect;
 	r.size.width = 150.0;
 	r.size.height = self.bounds.size.height;
 	r.origin.x = wrapRect.origin.x - r.size.width;
@@ -131,7 +131,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)wrapRect
 {
 	NSRect r = NSZeroRect;
-	NSRect contentRect = [self contentRect];
+	NSRect contentRect = self.contentRect;
 	r.size.width = 150.0;
 	r.size.height = self.bounds.size.height;
 	r.origin.x = contentRect.size.width - r.size.width;
@@ -207,7 +207,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructContentView
 {
-	NSRect r = [self contentRect];
+	NSRect r = self.contentRect;
 	[self destructContentView];
 	contentView = [[NSView alloc] initWithFrame:r];
 	[self addSubview:contentView];
@@ -215,10 +215,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructCloseButton
 {
-	NSRect r = [self closeRect];
+	NSRect r = self.closeRect;
 	[self destructCloseButton];
 	closeButton = [[SBButton alloc] initWithFrame:r];
-	[closeButton setAutoresizingMask:(NSViewMaxXMargin)];
+    closeButton.autoresizingMask = NSViewMaxXMargin;
 	closeButton.image = [NSImage imageWithCGImage:SBIconImage(SBCloseIconImage(), SBButtonExclusiveShape, NSSizeToCGSize(r.size))];
 	closeButton.target = self;
 	closeButton.action = @selector(executeClose);
@@ -227,29 +227,29 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructSearchField
 {
-	NSRect r = [self searchRect];
+	NSRect r = self.searchRect;
 	NSString *string = [[NSPasteboard pasteboardWithName:NSFindPboard] stringForType:NSStringPboardType];
 	[self destructSearchField];
 	searchField = [[SBFindSearchField alloc] initWithFrame:r];
-	[searchField setAutoresizingMask:(NSViewWidthSizable)];
-	[searchField setDelegate:self];
-	[searchField setTarget:self];
-	[searchField setAction:@selector(search:)];
-	[searchField setNextAction:@selector(searchForward:)];
-	[searchField setPreviousAction:@selector(searchBackward:)];
-	[[searchField cell] setSendsWholeSearchString:YES];
-	[[searchField cell] setSendsSearchStringImmediately:NO];
+    searchField.autoresizingMask = NSViewWidthSizable;
+    searchField.delegate = self;
+    searchField.target = self;
+    searchField.action = @selector(search:);
+    searchField.nextAction = @selector(searchForward:);
+    searchField.previousAction = @selector(searchBackward:);
+    searchField.sendsWholeSearchString = YES;
+    searchField.sendsSearchStringImmediately = NO;
 	if (string)
-		[searchField setStringValue:string];
+        searchField.stringValue = string;
 	[contentView addSubview:searchField];
 }
 
 - (void)constructBackwardButton
 {
-	NSRect r = [self backwardRect];
+	NSRect r = self.backwardRect;
 	[self destructBackwardButton];
 	backwardButton = [[SBButton alloc] initWithFrame:r];
-	[backwardButton setAutoresizingMask:(NSViewMinXMargin)];
+    backwardButton.autoresizingMask = NSViewMinXMargin;
 	backwardButton.image = [NSImage imageWithCGImage:SBFindBackwardIconImage(NSSizeToCGSize(r.size), YES)];
 	backwardButton.disableImage = [NSImage imageWithCGImage:SBFindBackwardIconImage(NSSizeToCGSize(r.size), NO)];
 	backwardButton.target = self;
@@ -260,10 +260,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructForwardButton
 {
-	NSRect r = [self forwardRect];
+	NSRect r = self.forwardRect;
 	[self destructForwardButton];
 	forwardButton = [[SBButton alloc] initWithFrame:r];
-	[forwardButton setAutoresizingMask:(NSViewMinXMargin)];
+    forwardButton.autoresizingMask = NSViewMinXMargin;
 	forwardButton.image = [NSImage imageWithCGImage:SBFindForwardIconImage(NSSizeToCGSize(r.size), YES)];
 	forwardButton.disableImage = [NSImage imageWithCGImage:SBFindForwardIconImage(NSSizeToCGSize(r.size), NO)];
 	forwardButton.target = self;
@@ -274,33 +274,33 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructCaseSensitiveCheck
 {
-	NSRect r = [self caseSensitiveRect];
+	NSRect r = self.caseSensitiveRect;
 	BOOL caseFlag = [[NSUserDefaults standardUserDefaults] boolForKey:kSBFindCaseFlag];
 	[self destructCaseSensitiveCheck];
 	caseSensitiveCheck = [[SBBLKGUIButton alloc] initWithFrame:r];
-	[caseSensitiveCheck setAutoresizingMask:(NSViewMinXMargin)];
-	[caseSensitiveCheck setButtonType:NSSwitchButton];
-	[caseSensitiveCheck setFont:[NSFont systemFontOfSize:10.0]];
-	[caseSensitiveCheck setTitle:NSLocalizedString(@"Ignore Case", nil)];
-	[caseSensitiveCheck setState:caseFlag ? NSOnState : NSOffState];
-	[caseSensitiveCheck setTarget:self];
-	[caseSensitiveCheck setAction:@selector(checkCaseSensitive:)];
+    caseSensitiveCheck.autoresizingMask = NSViewMinXMargin;
+    caseSensitiveCheck.buttonType = NSSwitchButton;
+    caseSensitiveCheck.font = [NSFont systemFontOfSize:10.0];
+    caseSensitiveCheck.title = NSLocalizedString(@"Ignore Case", nil);
+    caseSensitiveCheck.state = caseFlag ? NSOnState : NSOffState;
+    caseSensitiveCheck.target = self;
+    caseSensitiveCheck.action = @selector(checkCaseSensitive:);
 	[contentView addSubview:caseSensitiveCheck];
 }
 
 - (void)constructWrapCheck
 {
-	NSRect r = [self wrapRect];
+	NSRect r = self.wrapRect;
 	BOOL wrapFlag = [[NSUserDefaults standardUserDefaults] boolForKey:kSBFindWrapFlag];
 	[self destructWrapCheck];
 	wrapCheck = [[SBBLKGUIButton alloc] initWithFrame:r];
-	[wrapCheck setAutoresizingMask:(NSViewMinXMargin)];
-	[wrapCheck setButtonType:NSSwitchButton];
-	[wrapCheck setFont:[NSFont systemFontOfSize:10.0]];
-	[wrapCheck setTitle:NSLocalizedString(@"Wrap Around", nil)];
-	[wrapCheck setState:wrapFlag ? NSOnState : NSOffState];
-	[wrapCheck setTarget:self];
-	[wrapCheck setAction:@selector(checkWrap:)];
+    wrapCheck.autoresizingMask = NSViewMinXMargin;
+    wrapCheck.buttonType = NSSwitchButton;
+    wrapCheck.font = [NSFont systemFontOfSize:10.0];
+    wrapCheck.title = NSLocalizedString(@"Wrap Around", nil);
+    wrapCheck.state = wrapFlag ? NSOnState : NSOffState;
+    wrapCheck.target = self;
+    wrapCheck.action = @selector(checkWrap:);
 	[contentView addSubview:wrapCheck];
 }
 
@@ -308,8 +308,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
-	NSString *string = [searchField stringValue];
-	if ([string length] > 0)
+	NSString *string = searchField.stringValue;
+	if (string.length > 0)
 	{
 		[self searchContinuous:nil];
 	}
@@ -322,7 +322,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if (command == @selector(cancelOperation:))
 		{
-			if ([[searchField stringValue] length] == 0)
+			if (searchField.stringValue.length == 0)
 			{
 				[self executeClose];
 				r = YES;
@@ -338,9 +338,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (contentView)
 	{
-		[contentView setFrame:[self contentRect]];
+        contentView.frame = self.contentRect;
 	}
-	[super setFrame:frame];
+    super.frame = frame;
 }
 
 #pragma mark Actions
@@ -357,8 +357,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)search:(id)sender
 {
-	NSString *string = [searchField stringValue];
-	if ([string length] > 0)
+	if (searchField.stringValue.length > 0)
 	{
 		[self executeSearch:YES continuous:NO];
 		[self executeClose];
@@ -377,13 +376,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)checkCaseSensitive:(id)sender
 {
-	BOOL caseFlag = [caseSensitiveCheck state] == NSOnState;
+	BOOL caseFlag = caseSensitiveCheck.state == NSOnState;
 	[[NSUserDefaults standardUserDefaults] setBool:caseFlag forKey:kSBFindCaseFlag];
 }
 
 - (void)checkWrap:(id)sender
 {
-	BOOL wrapFlag = [wrapCheck state] == NSOnState;
+	BOOL wrapFlag = wrapCheck.state == NSOnState;
 	[[NSUserDefaults standardUserDefaults] setBool:wrapFlag forKey:kSBFindWrapFlag];
 }
 
@@ -401,14 +400,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)executeSearch:(BOOL)forward continuous:(BOOL)continuous
 {
 	BOOL r = NO;
-	NSString *string = [searchField stringValue];
+	NSString *string = searchField.stringValue;
 	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithName:NSFindPboard];
-	[pasteboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:self];
+	[pasteboard declareTypes:@[NSStringPboardType] owner:self];
 	[pasteboard setString:string forType:NSStringPboardType];
 	if (target)
 	{
-		BOOL caseFlag = [caseSensitiveCheck state] == NSOnState;
-		BOOL wrap = [wrapCheck state] == NSOnState;
+		BOOL caseFlag = caseSensitiveCheck.state == NSOnState;
+		BOOL wrap = wrapCheck.state == NSOnState;
 		if ([target respondsToSelector:@selector(searchFor:direction:caseSensitive:wrap:continuous:)])
 		{
 			r = [target searchFor:string direction:forward caseSensitive:caseFlag wrap:wrap continuous:continuous];
@@ -423,7 +422,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)drawRect:(NSRect)rect
 {
 	NSRect bounds = self.bounds;
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	NSUInteger count = 2;
 	CGFloat locations[count];
 	CGFloat colors[count * 4];
@@ -454,22 +453,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)performFindNext:(id)sender
 {
-	if ([self target] && nextAction)
+	if (self.target && nextAction)
 	{
-		if ([[self target] respondsToSelector:nextAction])
+		if ([self.target respondsToSelector:nextAction])
 		{
-			[[self target] performSelector:nextAction withObject:self];
+			[self.target performSelector:nextAction withObject:self];
 		}
 	}
 }
 
 - (void)performFindPrevious:(id)sender
 {
-	if ([self target] && previousAction)
+	if (self.target && previousAction)
 	{
-		if ([[self target] respondsToSelector:previousAction])
+		if ([self.target respondsToSelector:previousAction])
 		{
-			[[self target] performSelector:previousAction withObject:self];
+			[self.target performSelector:previousAction withObject:self];
 		}
 	}
 }

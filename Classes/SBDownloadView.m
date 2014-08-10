@@ -37,7 +37,7 @@
 @dynamic nameFont;
 @dynamic paragraphStyle;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -63,7 +63,7 @@
 
 - (BOOL)isFirstResponder
 {
-	return [[self window] firstResponder] == [self superview];
+	return self.window.firstResponder == self.superview;
 }
 
 - (NSPoint)padding
@@ -73,7 +73,7 @@
 
 - (CGFloat)heights
 {
-	return [self titleHeight] + [self bytesHeight];
+	return self.titleHeight + self.bytesHeight;
 }
 
 - (CGFloat)titleHeight
@@ -95,7 +95,7 @@
 {
 	NSMutableParagraphStyle *paragraph = nil;
 	paragraph = [[NSMutableParagraphStyle alloc] init];
-	[paragraph setAlignment:NSCenterTextAlignment];
+    paragraph.alignment = NSCenterTextAlignment;
 	return [paragraph copy];
 }
 
@@ -103,8 +103,8 @@
 {
 	NSRect r = NSZeroRect;
 	NSRect b = self.bounds;
-	NSPoint padding = [self padding];
-	CGFloat bottomHeight = [self heights] + padding.y;
+	NSPoint padding = self.padding;
+	CGFloat bottomHeight = self.heights + padding.y;
 	r.size.width = r.size.height = 48.0;
 	r.origin.x = (b.size.width - r.size.width) / 2;
 	r.origin.y = bottomHeight + ((b.size.height - bottomHeight) - r.size.height) / 2;
@@ -115,16 +115,15 @@
 {
 	NSRect r = NSZeroRect;
 	NSRect drawRect = self.bounds;
-	NSPoint padding = [self padding];
-	CGFloat titleHeight = [self titleHeight];
-	CGFloat bytesHeight = [self bytesHeight];
+	NSPoint padding = self.padding;
+	CGFloat titleHeight = self.titleHeight;
+	CGFloat bytesHeight = self.bytesHeight;
 	CGFloat margin = 8.0;
 	CGFloat availableWidth = self.bounds.size.width - titleHeight;
-	if ([title length] > 0)
+	if (title.length > 0)
 	{
-		NSSize size = [title sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-												 self.nameFont, NSFontAttributeName, 
-												 self.paragraphStyle, NSParagraphStyleAttributeName, nil]];
+		NSSize size = [title sizeWithAttributes:@{NSFontAttributeName: self.nameFont, 
+                                                  NSParagraphStyleAttributeName: self.paragraphStyle}];
 		if (size.width <= availableWidth)
 		{
 			drawRect.origin.x = (availableWidth - size.width) / 2;
@@ -153,7 +152,7 @@
 	{
 		selected = isSelected;
 		progressIndicator.highlighted = selected;
-		[self setNeedsDisplay:YES];
+        self.needsDisplay = YES;
 	}
 }
 
@@ -170,11 +169,11 @@
 
 - (void)constructProgressIndicator
 {
-	NSRect r = [self progressRect];
+	NSRect r = self.progressRect;
 	[self destructProgressIndicator];
 	progressIndicator = [[SBCircleProgressIndicator alloc] initWithFrame:r];
 	progressIndicator.style = SBCircleProgressIndicatorWhiteStyle;
-	[progressIndicator setAutoresizingMask:(NSViewMinXMargin)];
+    progressIndicator.autoresizingMask = NSViewMinXMargin;
 	progressIndicator.selected = selected;
 	progressIndicator.alwaysDrawing = YES;
 	progressIndicator.showPercentage = YES;
@@ -189,32 +188,32 @@
 	}
 	else {
 		progressIndicator.progress = download.progress;
-		[progressIndicator setNeedsDisplay:YES];
+        progressIndicator.needsDisplay = YES;
 	}
 	[self setNeedsDisplay:YES];
 }
 
 - (void)remove
 {
-	SBDownloads *downloads = [SBDownloads sharedDownloads];
+	SBDownloads *downloads = SBDownloads.sharedDownloads;
 	[(SBDownloadsView *)self.superview layoutToolsHidden];
 	[downloads removeItem:download];
 }
 
 - (void)finder
 {
-	if ([[NSFileManager defaultManager] fileExistsAtPath:download.path])
+	if ([NSFileManager.defaultManager fileExistsAtPath:download.path])
 	{
-		[[NSWorkspace sharedWorkspace] selectFile:download.path inFileViewerRootedAtPath:nil];
+		[NSWorkspace.sharedWorkspace selectFile:download.path inFileViewerRootedAtPath:nil];
 		[(SBDownloadsView *)self.superview layoutToolsHidden];
 	}
 }
 
 - (void)open
 {
-	if ([[NSFileManager defaultManager] fileExistsAtPath:download.path])
+	if ([NSFileManager.defaultManager fileExistsAtPath:download.path])
 	{
-		[[NSWorkspace sharedWorkspace] openFile:download.path];
+		[NSWorkspace.sharedWorkspace openFile:download.path];
 	}
 }
 
@@ -227,7 +226,7 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-	NSPoint location = [theEvent locationInWindow];
+	NSPoint location = theEvent.locationInWindow;
 	NSPoint point = [self convertPoint:location fromView:nil];
 	if (NSPointInRect(point, self.bounds))
 	{
@@ -244,13 +243,13 @@
 
 - (void)drawRect:(NSRect)rect
 {
-	CGFloat bytesHeight = [self bytesHeight];
+	CGFloat bytesHeight = self.bytesHeight;
 	NSString *description = nil;
 	
 	[super drawRect:rect];
 	
 	// Icon
-	if ([download.path length] > 0)
+	if (download.path.length > 0)
 	{
 		NSWorkspace *space = [NSWorkspace sharedWorkspace];
 		NSImage *image = nil;
@@ -258,9 +257,9 @@
 		{
 			NSRect r = NSZeroRect;
 			NSRect b = self.bounds;
-			NSPoint padding = [self padding];
-			CGFloat heights = [self heights];
-			NSSize size = [image size];
+			NSPoint padding = self.padding;
+			CGFloat heights = self.heights;
+			NSSize size = image.size;
 			CGFloat fraction = 1.0;
 			r.size.height = (b.size.height - heights - padding.y * 3);
 			r.size.width = size.width * (r.size.height / size.height);
@@ -285,14 +284,14 @@
 		{
 			// Background
 			CGRect sr = NSRectToCGRect(r);
-			CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+			CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 			CGFloat components[4];
 			CGPathRef path = nil;
 			NSUInteger count = 2;
 			CGFloat locations[count];
 			CGFloat colors[count * 4];
 			CGPoint points[count];
-			if ([self isFirstResponder])
+			if (self.isFirstResponder)
 			{
 				SBGetAlternateSelectedControlColorComponents(components);
 			}
@@ -321,10 +320,10 @@
 			SBDrawGradientInContext(ctx, count, locations, colors, points);
 			CGContextRestoreGState(ctx);
 //			CGRect sr = NSRectToCGRect(r);
-//			CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+//			CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 //			CGFloat components[4];
 //			CGPathRef path = nil;
-//			if ([self isFirstResponder])
+//			if (self.isFirstResponder)
 //			{
 //				SBGetAlternateSelectedControlColorComponents(components);
 //			}
@@ -342,10 +341,9 @@
 //			CGContextRestoreGState(ctx);
 //			CGPathRelease(path);
 		}
-		attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-					  self.nameFont, NSFontAttributeName, 
-					  [NSColor whiteColor], NSForegroundColorAttributeName, 
-					  self.paragraphStyle, NSParagraphStyleAttributeName, nil];
+		attributes = @{NSFontAttributeName: self.nameFont,
+                       NSForegroundColorAttributeName: NSColor.whiteColor,
+                       NSParagraphStyleAttributeName: self.paragraphStyle};
 		size = [download.name sizeWithAttributes:attributes];
 		r.origin.y += (r.size.height - size.height) / 2;
 		r.size.height = size.height;
@@ -369,14 +367,13 @@
 		NSRect r = NSZeroRect;
 		NSDictionary *attributes = nil;
 		NSSize size = NSZeroSize;
-		NSPoint padding = [self padding];
+		NSPoint padding = self.padding;
 		r.size.width = rect.size.width;
 		r.size.height = bytesHeight;
 		r.origin.y = padding.y;
-		attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-					  [NSFont systemFontOfSize:9.0], NSFontAttributeName, 
-					  [NSColor lightGrayColor], NSForegroundColorAttributeName, 
-					  self.paragraphStyle, NSParagraphStyleAttributeName, nil];
+		attributes = @{NSFontAttributeName: [NSFont systemFontOfSize:9.0], 
+                       NSForegroundColorAttributeName: NSColor.lightGrayColor,
+                       NSParagraphStyleAttributeName: self.paragraphStyle};
 		size = [description sizeWithAttributes:attributes];
 		r.origin.y += (r.size.height - size.height) / 2;
 		r.size.height = size.height;

@@ -31,8 +31,8 @@
 }
 @property (nonatomic, readonly, weak) NSArray *items;
 
-+ (id)sharedHistory;
-- (id)init;
++ (SBHistory *)sharedHistory;
+- (instancetype)init;
 - (NSURL *)URL;
 - (NSArray *)itemsAtIndexes:(NSIndexSet *)indexes;
 - (void)addNewItemWithURLString:(NSString *)URLString title:(NSString *)title;

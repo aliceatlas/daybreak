@@ -40,17 +40,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *searchedString;
 }
 @property (nonatomic, strong) NSString *searchedString;
+@property (nonatomic, readonly) NSRect contentRect;
+@property (nonatomic, readonly) NSRect closeRect;
+@property (nonatomic, readonly) NSRect searchRect;
+@property (nonatomic, readonly) NSRect backwardRect;
+@property (nonatomic, readonly) NSRect forwardRect;
+@property (nonatomic, readonly) NSRect caseSensitiveRect;
+@property (nonatomic, readonly) NSRect wrapRect;
 
 + (CGFloat)minimumWidth;
 + (CGFloat)availableWidth;
-// Rects
-- (NSRect)contentRect;
-- (NSRect)closeRect;
-- (NSRect)searchRect;
-- (NSRect)backwardRect;
-- (NSRect)forwardRect;
-- (NSRect)caseSensitiveRect;
-- (NSRect)wrapRect;
 // Destruction
 - (void)destructContentView;
 - (void)destructCloseButton;

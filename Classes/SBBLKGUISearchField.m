@@ -29,18 +29,18 @@
 
 + (void)initialize
 {
-	if (self == [SBBLKGUISearchField class])
+	if (self == SBBLKGUISearchField.class)
 	{
-		[self setCellClass:[SBBLKGUISearchFieldCell class]];
+        self.cellClass = SBBLKGUISearchFieldCell.class;
 	}
 }
 
 + (Class)cellClass
 {
-	return [SBBLKGUISearchFieldCell class];
+    return SBBLKGUISearchFieldCell.class;
 }
 
-- (id)initWithFrame:(NSRect)rect
+- (instancetype)initWithFrame:(NSRect)rect
 {
 	if (self = [super initWithFrame:rect])
 	{
@@ -51,16 +51,16 @@
 
 - (void)setDefaultValues
 {
-	[self setAlignment:NSLeftTextAlignment];
-	[self setDrawsBackground:NO];
-	[self setTextColor:[NSColor whiteColor]];
+    self.alignment = NSLeftTextAlignment;
+    self.drawsBackground = NO;
+    self.textColor = NSColor.whiteColor;
 }
 
 @end
 
 @implementation SBBLKGUISearchFieldCell
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{
@@ -72,26 +72,23 @@
 - (void)setDefaultValues
 {
 	NSButtonCell *searchButtonCell = nil;
-	searchButtonCell = [self searchButtonCell];
-	[self setWraps:NO];
-	[self setScrollable:YES];
-	[self setFocusRingType:NSFocusRingTypeExterior];
-	[searchButtonCell setImage:[NSImage imageNamed:@"Search.png"]];
-	[searchButtonCell setAlternateImage:[NSImage imageNamed:@"Search.png"]];
+	searchButtonCell = self.searchButtonCell;
+    self.wraps = NO;
+    self.scrollable = YES;
+    self.focusRingType = NSFocusRingTypeExterior;
+    searchButtonCell.image = [NSImage imageNamed:@"Search.png"];
+	searchButtonCell.alternateImage = [NSImage imageNamed:@"Search.png"];
 }
 
 - (NSText *)setUpFieldEditorAttributes:(NSText *)textObj
 {
 	NSText *text = [super setUpFieldEditorAttributes:textObj];
-	if ([text isKindOfClass:[NSTextView class]])
+	if ([text isKindOfClass:NSTextView.class])
 	{
-		NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-									[NSColor whiteColor], 
-									NSForegroundColorAttributeName, 
-									[NSColor grayColor], 
-									NSBackgroundColorAttributeName, nil];
-		[(NSTextView *)text setInsertionPointColor:[NSColor whiteColor]];
-		[(NSTextView *)text setSelectedTextAttributes:attributes];
+		NSDictionary *attributes = @{NSForegroundColorAttributeName: NSColor.whiteColor,
+                                     NSBackgroundColorAttributeName: NSColor.grayColor};
+        ((NSTextView *)text).insertionPointColor = NSColor.whiteColor;
+        ((NSTextView *)text).selectedTextAttributes = attributes;
 	}
 	return text;
 }
@@ -99,9 +96,9 @@
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	CGRect r = CGRectZero;
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	CGPathRef path = nil;
-	CGFloat alpha = [controlView respondsToSelector:@selector(isEnabled)] ? ([(NSTextField *)controlView isEnabled] ? 1.0 : 0.2) : 1.0;
+	CGFloat alpha = [controlView respondsToSelector:@selector(isEnabled)] ? (((NSTextField *)controlView).enabled ? 1.0 : 0.2) : 1.0;
 	
 	r = NSRectToCGRect(cellFrame);
 	path = SBRoundedPath(r, r.size.height / 2, 0, YES, YES);
@@ -125,21 +122,6 @@
 	CGContextRestoreGState(ctx);
 	
 	[self drawInteriorWithFrame:cellFrame inView:controlView];
-}
-
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	[super drawInteriorWithFrame:cellFrame inView:controlView];
-}
-
-- (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
-{
-	[super editWithFrame:aRect inView:controlView editor:textObj delegate:anObject event:theEvent];
-}
-
-- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(int)selStart length:(int)selLength
-{
-	[super selectWithFrame:aRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
 }
 
 @end

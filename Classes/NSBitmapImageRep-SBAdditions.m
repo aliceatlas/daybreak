@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSData *data = nil;
 	NSDictionary *properties = nil;
-	properties = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:kSBBookmarkItemImageCompressionFactor] forKey:NSImageCompressionFactor];
+	properties = @{NSImageCompressionFactor: @((float)kSBBookmarkItemImageCompressionFactor)};
 	data = [self representationUsingType:NSJPEGFileType properties:properties];
 	return data;
 }

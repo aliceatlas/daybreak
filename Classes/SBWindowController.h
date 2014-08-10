@@ -30,6 +30,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSSize viewSize;
 }
 
-- (id)initWithViewSize:(NSSize)inViewSize;
+- (instancetype)initWithViewSize:(NSSize)inViewSize;
 
 @end

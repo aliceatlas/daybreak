@@ -61,8 +61,8 @@
 	NSImage *highlightedImage;
 }
 @property (nonatomic, strong) NSImage *highlightedImage;
+@property (nonatomic, readonly) CGFloat side;
 
-- (CGFloat)side;
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 
 @end

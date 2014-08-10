@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation SBReportView
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	NSRect r = frame;
 	if (r.size.width < kSBMinFrameSizeWidth)
@@ -51,7 +51,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[self constructSwitch];
 		[self constructWay];
 		[self constructButtons];
-		[self setAutoresizingMask:(NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin)];
+        self.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin;
 	}
 	return self;
 }
@@ -71,9 +71,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)iconRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = 32.0;
-	r.origin.x = [self labelWidth] - r.size.width;
+	r.origin.x = self.labelWidth - r.size.width;
 	r.size.height = 32.0;
 	r.origin.y = self.bounds.size.height - margin.y - r.size.height;
 	return r;
@@ -82,8 +82,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)titleRect
 {
 	NSRect r = NSZeroRect;
-	NSRect iconRect = [self iconRect];
-	NSPoint margin = [self margin];
+	NSRect iconRect = self.iconRect;
+	NSPoint margin = self.margin;
 	r.origin.x = NSMaxX(iconRect) + 10.0;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
 	r.size.height = 19.0;
@@ -94,10 +94,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)summeryLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect iconRect = [self iconRect];
-	NSPoint margin = [self margin];
+	NSRect iconRect = self.iconRect;
+	NSPoint margin = self.margin;
 	r.origin.x = margin.x;
-	r.size.width = [self labelWidth] - r.origin.x;
+	r.size.width = self.labelWidth - r.origin.x;
 	r.size.height = 19.0;
 	r.origin.y = iconRect.origin.y - 20.0 - r.size.height;
 	return r;
@@ -106,8 +106,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)summeryFieldRect
 {
 	NSRect r = NSZeroRect;
-	NSRect summeryLabelRect = [self summeryLabelRect];
-	NSPoint margin = [self margin];
+	NSRect summeryLabelRect = self.summeryLabelRect;
+	NSPoint margin = self.margin;
 	r.origin.x = NSMaxX(summeryLabelRect) + 8.0;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
 	r.size.height = 58.0;
@@ -118,10 +118,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)userAgentLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect summeryFieldRect = [self summeryFieldRect];
-	NSPoint margin = [self margin];
+	NSRect summeryFieldRect = self.summeryFieldRect;
+	NSPoint margin = self.margin;
 	r.origin.x = margin.x;
-	r.size.width = [self labelWidth] - r.origin.x;
+	r.size.width = self.labelWidth - r.origin.x;
 	r.size.height = 19.0;
 	r.origin.y = summeryFieldRect.origin.y - 20.0 - r.size.height;
 	return r;
@@ -130,8 +130,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)userAgentPopupRect
 {
 	NSRect r = NSZeroRect;
-	NSRect userAgentLabelRect = [self userAgentLabelRect];
-	NSPoint margin = [self margin];
+	NSRect userAgentLabelRect = self.userAgentLabelRect;
+	NSPoint margin = self.margin;
 	r.origin.x = NSMaxX(userAgentLabelRect) + 8.0;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
 	r.size.height = 26.0;
@@ -142,10 +142,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)switchLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect userAgentPopupRect = [self userAgentPopupRect];
-	NSPoint margin = [self margin];
+	NSRect userAgentPopupRect = self.userAgentPopupRect;
+	NSPoint margin = self.margin;
 	r.origin.x = margin.x;
-	r.size.width = [self labelWidth] - r.origin.x;
+	r.size.width = self.labelWidth - r.origin.x;
 	r.size.height = 19.0;
 	r.origin.y = userAgentPopupRect.origin.y - 20.0 - r.size.height;
 	return r;
@@ -154,8 +154,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)switchRect
 {
 	NSRect r = NSZeroRect;
-	NSRect switchLabelRect = [self switchLabelRect];
-	NSPoint margin = [self margin];
+	NSRect switchLabelRect = self.switchLabelRect;
+	NSPoint margin = self.margin;
 	r.origin.x = NSMaxX(switchLabelRect) + 8.0;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
 	r.size.height = 18.0;
@@ -166,10 +166,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)wayLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect switchRect = [self switchRect];
-	NSPoint margin = [self margin];
+	NSRect switchRect = self.switchRect;
+	NSPoint margin = self.margin;
 	r.origin.x = margin.x;
-	r.size.width = [self labelWidth] - r.origin.x;
+	r.size.width = self.labelWidth - r.origin.x;
 	r.size.height = 19.0;
 	r.origin.y = switchRect.origin.y - 20.0 - r.size.height;
 	return r;
@@ -178,8 +178,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)wayFieldRect
 {
 	NSRect r = NSZeroRect;
-	NSRect wayLabelRect = [self wayLabelRect];
-	NSPoint margin = [self margin];
+	NSRect wayLabelRect = self.wayLabelRect;
+	NSPoint margin = self.margin;
 	r.origin.x = NSMaxX(wayLabelRect) + 8.0;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
 	r.origin.y = (32.0 + margin.y * 2) + 4.0;
@@ -190,7 +190,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)cancelRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = 124.0;
 	r.size.height = 32.0;
 	r.origin.x = self.bounds.size.width - (margin.x + r.size.width * 2 + 8.0);
@@ -201,7 +201,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)doneRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = 124.0;
 	r.size.height = 32.0;
 	r.origin.x = self.bounds.size.width - (margin.x + r.size.width);
@@ -215,42 +215,42 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSImage *image = nil;
 	image = [NSImage imageNamed:@"Bug"];
-	iconImageView = [[NSImageView alloc] initWithFrame:[self iconRect]];
-	titleLabel = [[NSTextField alloc] initWithFrame:[self titleRect]];
+	iconImageView = [[NSImageView alloc] initWithFrame:self.iconRect];
+	titleLabel = [[NSTextField alloc] initWithFrame:self.titleRect];
 	if (image)
 	{
-		[image setSize:[iconImageView frame].size];
-		[iconImageView setImage:image];
+        image.size = iconImageView.frame.size;
+        iconImageView.image = image;
 	}
-	[titleLabel setStringValue:NSLocalizedString(@"Send Bug Report", nil)];
-	[titleLabel setBordered:NO];
-	[titleLabel setEditable:NO];
-	[titleLabel setSelectable:NO];
-	[titleLabel setDrawsBackground:NO];
-	[titleLabel setFont:[NSFont boldSystemFontOfSize:16.0]];
-	[titleLabel setTextColor:[NSColor whiteColor]];
-	[titleLabel setAutoresizingMask:(NSViewWidthSizable)];
+    titleLabel.stringValue = NSLocalizedString(@"Send Bug Report", nil);
+    titleLabel.bordered = NO;
+    titleLabel.editable = NO;
+    titleLabel.selectable = NO;
+    titleLabel.drawsBackground = NO;
+    titleLabel.font = [NSFont boldSystemFontOfSize:16.0];
+    titleLabel.textColor = NSColor.whiteColor;
+    titleLabel.autoresizingMask = NSViewWidthSizable;
 	[self addSubview:iconImageView];
 	[self addSubview:titleLabel];
 }
 
 - (void)constructSummery
 {
-	summeryLabel = [[NSTextField alloc] initWithFrame:[self summeryLabelRect]];
-	summeryField = [[SBBLKGUITextField alloc] initWithFrame:[self summeryFieldRect]];
-	[summeryLabel setStringValue:NSLocalizedString(@"Summary", nil)];
-	[summeryLabel setAlignment:NSRightTextAlignment];
-	[summeryLabel setBordered:NO];
-	[summeryLabel setEditable:NO];
-	[summeryLabel setSelectable:NO];
-	[summeryLabel setDrawsBackground:NO];
-	[summeryLabel setFont:[NSFont systemFontOfSize:14.0]];
-	[summeryLabel setTextColor:[NSColor whiteColor]];
-	[summeryField setAlignment:NSLeftTextAlignment];
-	[summeryField setFont:[NSFont systemFontOfSize:14.0]];
-	[summeryField setTextColor:[NSColor whiteColor]];
-	[summeryField setDelegate:self];
-	[[summeryField cell] setWraps:YES];
+	summeryLabel = [[NSTextField alloc] initWithFrame:self.summeryLabelRect];
+	summeryField = [[SBBLKGUITextField alloc] initWithFrame:self.summeryFieldRect];
+    summeryLabel.stringValue = NSLocalizedString(@"Summary", nil);
+    summeryLabel.alignment = NSRightTextAlignment;
+    summeryLabel.bordered = NO;
+    summeryLabel.editable = NO;
+    summeryLabel.selectable = NO;
+    summeryLabel.drawsBackground = NO;
+    summeryLabel.font = [NSFont systemFontOfSize:14.0];
+    summeryLabel.textColor = NSColor.whiteColor;
+    summeryField.alignment = NSLeftTextAlignment;
+    summeryField.font = [NSFont systemFontOfSize:14.0];
+    summeryField.textColor = NSColor.whiteColor;
+    summeryField.delegate = self;
+	[summeryField.cell setWraps:YES];
 	[self addSubview:summeryLabel];
 	[self addSubview:summeryField];
 }
@@ -261,26 +261,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *userAgentName = nil;
 	NSMutableArray *names = nil;
 	NSInteger selectedIndex = 0;
-	userAgentLabel = [[NSTextField alloc] initWithFrame:[self userAgentLabelRect]];
-	userAgentPopup = [[SBBLKGUIPopUpButton alloc] initWithFrame:[self userAgentPopupRect]];
-	[userAgentLabel setStringValue:NSLocalizedString(@"User Agent", nil)];
-	[userAgentLabel setAlignment:NSRightTextAlignment];
-	[userAgentLabel setBordered:NO];
-	[userAgentLabel setEditable:NO];
-	[userAgentLabel setSelectable:NO];
-	[userAgentLabel setDrawsBackground:NO];
-	[userAgentLabel setFont:[NSFont systemFontOfSize:14.0]];
-	[userAgentLabel setTextColor:[NSColor whiteColor]];
-	menu = [userAgentPopup menu];
+	userAgentLabel = [[NSTextField alloc] initWithFrame:self.userAgentLabelRect];
+	userAgentPopup = [[SBBLKGUIPopUpButton alloc] initWithFrame:self.userAgentPopupRect];
+    userAgentLabel.stringValue = NSLocalizedString(@"User Agent", nil);
+    userAgentLabel.alignment = NSRightTextAlignment;
+    userAgentLabel.bordered = NO;
+    userAgentLabel.editable = NO;
+    userAgentLabel.selectable = NO;
+    userAgentLabel.drawsBackground = NO;
+    userAgentLabel.font = [NSFont systemFontOfSize:14.0];
+    userAgentLabel.textColor = NSColor.whiteColor;
+	menu = userAgentPopup.menu;
 	names = [NSMutableArray arrayWithCapacity:0];
 	NSImage *icon0 = [SBUserAgentNames[0] isEqualToString:@"Sunrise"] ? [NSImage imageNamed:@"Application.icns"] : nil;
 	NSImage *icon1 = [SBUserAgentNames[1] isEqualToString:@"Safari"] ? [[NSImage alloc] initWithContentsOfFile:@"/Applications/Safari.app/Contents/Resources/compass.icns"] : nil;
-	if (icon0) [icon0 setSize:NSMakeSize(24.0, 24.0)];
-	if (icon1) [icon1 setSize:NSMakeSize(24.0, 24.0)];
+	if (icon0) icon0.size = NSMakeSize(24.0, 24.0);
+    if (icon1) icon1.size = NSMakeSize(24.0, 24.0);
 	userAgentName = [[NSUserDefaults standardUserDefaults] objectForKey:kSBUserAgentName];
 	[names addObject:SBUserAgentNames[0]];
 	[names addObject:SBUserAgentNames[1]];
-	if (![userAgentName isEqualToString:SBUserAgentNames[0]] && ![userAgentName isEqualToString:SBUserAgentNames[1]] && [userAgentName length] > 0)
+	if (![userAgentName isEqualToString:SBUserAgentNames[0]] && ![userAgentName isEqualToString:SBUserAgentNames[1]] && userAgentName.length > 0)
 	{
 		[names addObject:userAgentName];
 	}
@@ -288,14 +288,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
 	for (NSUInteger i = 0; i < [names count]; i++)
 	{
-		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[names objectAtIndex:i] action:@selector(selectApp:) keyEquivalent:@""];
-		[item setTarget:self];
+		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:names[i] action:@selector(selectApp:) keyEquivalent:@""];
+        item.target = self;
 		if (i < 2)
-			[item setImage:images[i]];
+            item.image = images[i];
 		[menu addItem:item];
 	}
 	selectedIndex = [userAgentPopup indexOfItemWithTitle:userAgentName];
-	[userAgentPopup setPullsDown:YES];
+    userAgentPopup.pullsDown = YES;
 	[userAgentPopup selectItemAtIndex:selectedIndex];
 	[self addSubview:userAgentLabel];
 	[self addSubview:userAgentPopup];
@@ -304,62 +304,62 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructSwitch
 {
 	SBBLKGUIButtonCell *cell = nil;
-	switchLabel = [[NSTextField alloc] initWithFrame:[self switchLabelRect]];
+	switchLabel = [[NSTextField alloc] initWithFrame:self.switchLabelRect];
 	cell = [[SBBLKGUIButtonCell alloc] init];
-	[cell setButtonType:NSRadioButton];
-	switchMatrix = [[NSMatrix alloc] initWithFrame:[self switchRect] mode:NSRadioModeMatrix prototype:cell numberOfRows:1 numberOfColumns:2];
-	[switchLabel setStringValue:NSLocalizedString(@"Reproducibility", nil)];
-	[switchLabel setAlignment:NSRightTextAlignment];
-	[switchLabel setBordered:NO];
-	[switchLabel setEditable:NO];
-	[switchLabel setSelectable:NO];
-	[switchLabel setDrawsBackground:NO];
-	[switchLabel setFont:[NSFont systemFontOfSize:14.0]];
-	[switchLabel setTextColor:[NSColor whiteColor]];
-	[switchMatrix setCellSize:NSMakeSize(150.0, 18.0)];
-	[switchMatrix setDrawsBackground:NO];
+    cell.buttonType = NSRadioButton;
+	switchMatrix = [[NSMatrix alloc] initWithFrame:self.switchRect mode:NSRadioModeMatrix prototype:cell numberOfRows:1 numberOfColumns:2];
+    switchLabel.stringValue = NSLocalizedString(@"Reproducibility", nil);
+    switchLabel.alignment = NSRightTextAlignment;
+    switchLabel.bordered = NO;
+    switchLabel.editable = NO;
+    switchLabel.selectable = NO;
+    switchLabel.drawsBackground = NO;
+    switchLabel.font = [NSFont systemFontOfSize:14.0];
+    switchLabel.textColor = NSColor.whiteColor;
+    switchMatrix.cellSize = NSMakeSize(150.0, 18.0);
+    switchMatrix.drawsBackground = NO;
 	[[switchMatrix cellAtRow:0 column:0] setTitle:NSLocalizedString(@"Describe", nil)];
 	[[switchMatrix cellAtRow:0 column:1] setTitle:NSLocalizedString(@"None", nil)];
-	[switchMatrix setTarget:self];
-	[switchMatrix setAction:@selector(switchReproducibility:)];
+    switchMatrix.target = self;
+    switchMatrix.action = @selector(switchReproducibility:);
 	[self addSubview:switchLabel];
 	[self addSubview:switchMatrix];
 }
 
 - (void)constructWay
 {
-	wayLabel = [[NSTextField alloc] initWithFrame:[self wayLabelRect]];
-	wayField = [[SBBLKGUITextField alloc] initWithFrame:[self wayFieldRect]];
-	[wayLabel setStringValue:NSLocalizedString(@"A way to reproduce", nil)];
-	[wayLabel setAlignment:NSRightTextAlignment];
-	[wayLabel setBordered:NO];
-	[wayLabel setEditable:NO];
-	[wayLabel setSelectable:NO];
-	[wayLabel setDrawsBackground:NO];
-	[wayLabel setFont:[NSFont systemFontOfSize:14.0]];
-	[wayLabel setTextColor:[NSColor whiteColor]];
-	[wayField setAlignment:NSLeftTextAlignment];
-	[wayField setFont:[NSFont systemFontOfSize:14.0]];
-	[wayField setTextColor:[NSColor whiteColor]];
-	[wayField setDelegate:self];
-	[[wayField cell] setWraps:YES];
+	wayLabel = [[NSTextField alloc] initWithFrame:self.wayLabelRect];
+	wayField = [[SBBLKGUITextField alloc] initWithFrame:self.wayFieldRect];
+    wayLabel.stringValue = NSLocalizedString(@"A way to reproduce", nil);
+    wayLabel.alignment = NSRightTextAlignment;
+    wayLabel.bordered = NO;
+    wayLabel.editable = NO;
+    wayLabel.selectable = NO;
+    wayLabel.drawsBackground = NO;
+    wayLabel.font = [NSFont systemFontOfSize:14.0];
+    wayLabel.textColor = NSColor.whiteColor;
+    wayField.alignment = NSLeftTextAlignment;
+    wayField.font = [NSFont systemFontOfSize:14.0];
+    wayField.textColor = NSColor.whiteColor;
+    wayField.delegate = self;
+	[wayField.cell setWraps:YES];
 	[self addSubview:wayLabel];
 	[self addSubview:wayField];
 }
 
 - (void)constructButtons
 {
-	cancelButton = [[SBBLKGUIButton alloc] initWithFrame:[self cancelRect]];
-	doneButton = [[SBBLKGUIButton alloc] initWithFrame:[self doneRect]];
-	[cancelButton setTitle:NSLocalizedString(@"Cancel", nil)];
-	[cancelButton setTarget:self];
-	[cancelButton setAction:@selector(cancel)];
-	[cancelButton setKeyEquivalent:@"\e"];
-	[doneButton setTitle:NSLocalizedString(@"Done", nil)];
-	[doneButton setTarget:self];
-	[doneButton setAction:@selector(send)];
-	[doneButton setEnabled:NO];
-	[doneButton setKeyEquivalent:@"\r"];
+	cancelButton = [[SBBLKGUIButton alloc] initWithFrame:self.cancelRect];
+	doneButton = [[SBBLKGUIButton alloc] initWithFrame:self.doneRect];
+    cancelButton.title = NSLocalizedString(@"Cancel", nil);
+    cancelButton.target = self;
+    cancelButton.action = @selector(cancel);
+	cancelButton.keyEquivalent = @"\e";
+    doneButton.title = NSLocalizedString(@"Done", nil);
+    doneButton.target = self;
+    doneButton.action = @selector(send);
+    doneButton.enabled = NO;
+	doneButton.keyEquivalent = @"\r";
 	[self addSubview:cancelButton];
 	[self addSubview:doneButton];
 }
@@ -376,12 +376,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)validateDoneButton
 {
 	BOOL canDone = NO;
-	canDone = [[summeryField stringValue] length] > 0;
-	if (canDone && [switchMatrix selectedColumn] == 0)
+	canDone = summeryField.stringValue.length > 0;
+	if (canDone && switchMatrix.selectedColumn == 0)
 	{
-		canDone = [[wayField stringValue] length] > 0;
+		canDone = wayField.stringValue.length > 0;
 	}
-	[doneButton setEnabled:canDone];
+    doneButton.enabled = canDone;
 }
 
 - (void)selectApp:(id)sender
@@ -391,26 +391,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)switchReproducibility:(id)sender
 {
-	BOOL selected = [switchMatrix selectedColumn] == 0;
-	[wayField setEnabled:selected];
+	BOOL selected = switchMatrix.selectedColumn == 0;
+	wayField.enabled = selected;
 	[self validateDoneButton];
 }
 
 - (NSString *)sendMailWithMessage:(NSString *)message subject:(NSString *)subject to:(NSArray *)addresses
 {
 	NSString *errorString = nil;
-	NSUInteger i, count;
-	count = [addresses count];
-	if ([addresses count] > 0)
+	if (addresses.count > 0)
 	{
 		NSString *urlString = nil;
 		urlString = @"mailto:";
-		urlString = [urlString stringByAppendingString:[addresses objectAtIndex:0]];
-		if ([addresses count] > 1)
+		urlString = [urlString stringByAppendingString:addresses[0]];
+		if (addresses.count > 1)
 		{
-			for (i = 0; i < count; i++)
+			for (NSString *address in addresses)
 			{
-				NSString *address = [addresses objectAtIndex:i];
 				urlString = [urlString stringByAppendingFormat:@", %@", address];
 			}
 		}
@@ -423,7 +420,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			urlString = [urlString stringByAppendingFormat:@"%@body=%@", subject != nil ? @"&" : @"?", message];
 		}
 		urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:urlString]];
+		[NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:urlString]];
 	}
 	else {
 		// Error
@@ -449,11 +446,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	// Get properties
 	message = [NSMutableString stringWithCapacity:0];
-	summery = [summeryField stringValue];
-	userAgent = [userAgentPopup titleOfSelectedItem];
-	reproducibility = ([switchMatrix selectedColumn] == 0);
-	wayToReproduce = [wayField stringValue];
-	osVersion = [[NSProcessInfo processInfo] operatingSystemVersionString];
+	summery = summeryField.stringValue;
+	userAgent = userAgentPopup.titleOfSelectedItem;
+	reproducibility = (switchMatrix.selectedColumn == 0);
+	wayToReproduce = wayField.stringValue;
+	osVersion = NSProcessInfo.processInfo.operatingSystemVersionString;
 	if (result == KERN_SUCCESS)
 	{
 		if (hostInfo.cpu_type == CPU_TYPE_POWERPC)
@@ -468,36 +465,36 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			processor = @"Unknown Processor";
 		}
 	}
-	applicationVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+	applicationVersion = NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"];
 	
 	// Make message
-	if ([summery length] > 0)
+	if (summery.length > 0)
 	{
 		[message appendFormat:@"%@ : \n%@\n\n", NSLocalizedString(@"Summary", nil), summery];
 	}
-	if ([userAgent length] > 0)
+	if (userAgent.length > 0)
 	{
 		[message appendFormat:@"%@ : \n%@\n\n", NSLocalizedString(@"User Agent", nil), userAgent];
 	}
-	if (reproducibility && [wayToReproduce length] > 0)if (reproducibility)
+	if (reproducibility && wayToReproduce.length > 0)
 	{
 		[message appendFormat:@"%@ : \n%@\n\n", NSLocalizedString(@"A way to reproduce", nil), wayToReproduce];
 	}
-	if ([osVersion length] > 0)
+	if (osVersion.length > 0)
 	{
 		[message appendFormat:@"%@ : %@\n", NSLocalizedString(@"OS", nil), osVersion];
 	}
-	if ([processor length] > 0)
+	if (processor.length > 0)
 	{
 		[message appendFormat:@"%@ : %@\n", NSLocalizedString(@"Processor", nil), processor];
 	}
-	if ([applicationVersion length] > 0)
+	if (applicationVersion.length > 0)
 	{
 		[message appendFormat:@"%@ : %@\n", NSLocalizedString(@"Application Version", nil), applicationVersion];
 	}
 	
 	// Send message
-	errorDescription = [self sendMailWithMessage:[message copy] subject:NSLocalizedString(@"Sunrise Bug Report", nil) to:[NSArray arrayWithObject:kSBBugReportMailAddress]];
+	errorDescription = [self sendMailWithMessage:[message copy] subject:NSLocalizedString(@"Sunrise Bug Report", nil) to:@[kSBBugReportMailAddress]];
 	if (!errorDescription)
 	{
 		[self done];

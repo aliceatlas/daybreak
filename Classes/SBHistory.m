@@ -31,7 +31,7 @@
 
 static SBHistory *sharedHistory = nil;
 
-+ (id)sharedHistory
++ (SBHistory *)sharedHistory
 {
 	if (!sharedHistory)
 	{
@@ -40,7 +40,7 @@ static SBHistory *sharedHistory = nil;
 	return sharedHistory;
 }
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{

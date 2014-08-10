@@ -67,23 +67,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (weak, nonatomic, readonly) NSMutableArray *items;
 @property (nonatomic, strong) NSArray *draggedItems;
 @property (nonatomic, unsafe_unretained) id<SBBookmarkListViewDelegate> delegate;
+@property (nonatomic, readonly) CGFloat minimumHeight;
+@property (nonatomic, readonly) NSPoint spacing;
+@property (nonatomic, readonly) NSIndexSet *selectedIndexes;
+@property (nonatomic, getter=getSelectedItems, readonly) NSArray *selectedItems;
+@property (nonatomic, readonly) BOOL canScrollToNext;
+@property (nonatomic, readonly) BOOL canScrollToPrevious;
 
 // Getter
 - (CGFloat)splitWidth:(CGFloat)proposedWidth;
-- (CGFloat)minimumHeight;
-- (NSPoint)spacing;
-- (NSPoint)block;
 - (NSRect)itemRectAtIndex:(NSInteger)index;
 - (SBBookmarkListItemView *)itemViewAtPoint:(NSPoint)point;
 - (NSUInteger)indexAtPoint:(NSPoint)point;
-- (NSIndexSet *)selectedIndexes;
 - (NSRect)dragginLineRectAtPoint:(NSPoint)point;
 - (NSRect)removeButtonRect:(SBBookmarkListItemView *)itemView;
 - (NSRect)editButtonRect:(SBBookmarkListItemView *)itemView;
 - (NSRect)updateButtonRect:(SBBookmarkListItemView *)itemView;
-- (NSArray *)getSelectedItems;
-- (BOOL)canScrollToNext;
-- (BOOL)canScrollToPrevious;
 // Destruction
 - (void)destructControls;
 // Construction
@@ -95,8 +94,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)destructSearchAnimations;
 // Setter
 - (void)setCellSizeForMode:(SBBookmarkMode)inMode;
-- (void)setMode:(SBBookmarkMode)inMode;
-- (void)setCellWidth:(CGFloat)inCellWidth;
 // Actions
 - (void)addForItem:(NSDictionary *)item;
 - (void)addForItems:(NSArray *)inItems toIndex:(NSInteger)toIndex;

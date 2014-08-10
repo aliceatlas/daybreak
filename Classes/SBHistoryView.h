@@ -42,19 +42,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 @property (nonatomic, weak) NSString *message;
 @property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, readonly) NSPoint margin;
+@property (nonatomic, readonly) CGFloat labelWidth;
+@property (nonatomic, readonly) NSRect iconRect;
+@property (nonatomic, readonly) CGFloat buttonHeight;
+@property (nonatomic, readonly) CGFloat buttonMargin;
+@property (nonatomic, readonly) CGFloat searchFieldWidth;
+@property (nonatomic, readonly) NSRect messageLabelRect;
+@property (nonatomic, readonly) NSRect tableViewRect;
+@property (nonatomic, readonly) NSRect removeButtonRect;
+@property (nonatomic, readonly) NSRect removeAllButtonRect;
+@property (nonatomic, readonly) NSRect backButtonRect;
 
-// Rects
-- (NSPoint)margin;
-- (CGFloat)labelWidth;
-- (NSRect)iconRect;
-- (CGFloat)buttonHeight;
-- (CGFloat)buttonMargin;
-- (CGFloat)searchFieldWidth;
-- (NSRect)messageLabelRect;
-- (NSRect)tableViewRect;
-- (NSRect)removeButtonRect;
-- (NSRect)removeAllButtonRect;
-- (NSRect)backButtonRect;
 // Construction
 - (void)constructMessageLabel;
 - (void)constructSearchField;
@@ -62,7 +61,5 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructRemoveButtons;
 - (void)constructBackButton;
 - (void)makeResponderChain;
-// Setter
-- (void)setMessage:(NSString *)message;
 
 @end

@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize versionString;
 @synthesize webView;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	NSRect r = frame;
 	if (r.size.width < kSBMinFrameSizeWidth)
@@ -55,7 +55,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[self constructTextLabel];
 		[self constructWebView];
 		[self constructButtons];
-		[self setAutoresizingMask:(NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin)];
+        self.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin;
 	}
 	return self;
 }
@@ -85,8 +85,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)titleRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	NSRect imageRect = [self imageRect];
+	NSPoint margin = self.margin;
+	NSRect imageRect = self.imageRect;
 	r.size.height = 19.0;
 	r.origin.x = NSMaxX(imageRect) + 10;
 	r.origin.y = imageRect.origin.y + 34;
@@ -97,8 +97,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)textRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	NSRect imageRect = [self imageRect];
+	NSPoint margin = self.margin;
+	NSRect imageRect = self.imageRect;
 	r.size.height = 19.0;
 	r.origin.x = NSMaxX(imageRect) + 10;
 	r.origin.y = imageRect.origin.y + 10;
@@ -109,9 +109,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)webRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	NSRect imageRect = [self imageRect];
-	CGFloat bottomMargin = [self bottomMargin];
+	NSPoint margin = self.margin;
+	NSRect imageRect = self.imageRect;
+	CGFloat bottomMargin = self.bottomMargin;
 	r.origin.x = imageRect.origin.x;
 	r.origin.y = bottomMargin;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
@@ -122,7 +122,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)indicatorRect
 {
 	NSRect r = NSZeroRect;
-	NSRect webRect = [self webRect];
+	NSRect webRect = self.webRect;
 	r.size.width = r.size.height = 32.0;
 	r.origin.x = NSMidX(webRect) - r.size.width / 2;
 	r.origin.y = NSMidY(webRect) - r.size.height / 2;
@@ -132,10 +132,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)skipButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSRect webRect = [self webRect];
+	NSRect webRect = self.webRect;
 	r.size.height = 32.0;
 	r.origin.x = webRect.origin.x;
-	r.origin.y = ([self bottomMargin] - r.size.height) / 2;
+	r.origin.y = (self.bottomMargin - r.size.height) / 2;
 	r.size.width = 165.0;
 	return r;
 }
@@ -143,7 +143,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)cancelButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSRect skipButtonRect = [self skipButtonRect];
+	NSRect skipButtonRect = self.skipButtonRect;
 	r = skipButtonRect;
 	r.origin.x = self.bounds.size.width - 273.0;
 	r.size.width = 131.0;
@@ -153,7 +153,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)doneButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSRect skipButtonRect = [self skipButtonRect];
+	NSRect skipButtonRect = self.skipButtonRect;
 	r = skipButtonRect;
 	r.origin.x = self.bounds.size.width - 134.0;
 	r.size.width = 114.0;
@@ -164,86 +164,86 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructImageView
 {
 	NSImage *image = nil;
-	imageView = [[NSImageView alloc] initWithFrame:[self imageRect]];
+	imageView = [[NSImageView alloc] initWithFrame:self.imageRect];
 	image = [NSImage imageNamed:@"Application.icns"];
 	if (image)
 	{
-		[image setSize:[imageView frame].size];
-		[imageView setImage:image];
+		image.size = imageView.frame.size;
+        imageView.image = image;
 	}
 	[self addSubview:imageView];
 }
 
 - (void)constructTitleLabel
 {
-	titleLabel = [[NSTextField alloc] initWithFrame:[self titleRect]];
-	[titleLabel setBordered:NO];
-	[titleLabel setEditable:NO];
-	[titleLabel setSelectable:NO];
-	[titleLabel setDrawsBackground:NO];
-	[titleLabel setFont:[NSFont boldSystemFontOfSize:16.0]];
-	[titleLabel setTextColor:[NSColor whiteColor]];
-	[titleLabel setAutoresizingMask:(NSViewWidthSizable)];
+	titleLabel = [[NSTextField alloc] initWithFrame:self.titleRect];
+    titleLabel.bordered = NO;
+    titleLabel.editable = NO;
+    titleLabel.selectable = NO;
+	titleLabel.drawsBackground = NO;
+	titleLabel.font = [NSFont boldSystemFontOfSize:16.0];
+	titleLabel.textColor = NSColor.whiteColor;
+    titleLabel.autoresizingMask = NSViewWidthSizable;
 	[self addSubview:titleLabel];
 }
 
 - (void)constructTextLabel
 {
-	textLabel = [[NSTextField alloc] initWithFrame:[self textRect]];
-	[textLabel setBordered:NO];
-	[textLabel setEditable:NO];
-	[textLabel setSelectable:NO];
-	[textLabel setDrawsBackground:NO];
-	[textLabel setFont:[NSFont systemFontOfSize:13.0]];
-	[textLabel setTextColor:[NSColor lightGrayColor]];
-	[textLabel setAutoresizingMask:(NSViewWidthSizable)];
+    textLabel = [[NSTextField alloc] initWithFrame:self.titleRect];
+    textLabel.bordered = NO;
+    textLabel.editable = NO;
+    textLabel.selectable = NO;
+    textLabel.drawsBackground = NO;
+    textLabel.font = [NSFont systemFontOfSize:13.0];
+    textLabel.textColor = NSColor.lightGrayColor;
+    textLabel.autoresizingMask = NSViewWidthSizable;
 	[self addSubview:textLabel];
 }
 
 - (void)constructWebView
 {
-	indicator = [[NSProgressIndicator alloc] initWithFrame:[self indicatorRect]];
-	webView = [[WebView alloc] initWithFrame:[self webRect] frameName:nil groupName:nil];
-	[indicator setControlSize:NSRegularControlSize];
-	[indicator setStyle:NSProgressIndicatorSpinningStyle];
-	[indicator setDisplayedWhenStopped:NO];
-	[webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[webView setFrameLoadDelegate:self];
-	[webView setUIDelegate:self];
-	[webView setHidden:YES];
-	[webView setDrawsBackground:NO];
-//	[[webView mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com/"]]];
+	indicator = [[NSProgressIndicator alloc] initWithFrame:self.indicatorRect];
+	webView = [[WebView alloc] initWithFrame:self.webRect frameName:nil groupName:nil];
+    indicator.controlSize = NSRegularControlSize;
+    indicator.style = NSProgressIndicatorSpinningStyle;
+    indicator.displayedWhenStopped = NO;
+    webView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    webView.frameLoadDelegate = self;
+    webView.UIDelegate = self;
+    webView.hidden = YES;
+    webView.drawsBackground = NO;
+//	[webView.mainFrame loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://www.google.com/"]]];
 	[self addSubview:webView];
 	[self addSubview:indicator];
 }
 
 - (void)constructButtons
 {
-	skipButton = [[SBBLKGUIButton alloc] initWithFrame:[self skipButtonRect]];
-	cancelButton = [[SBBLKGUIButton alloc] initWithFrame:[self cancelButtonRect]];
-	doneButton = [[SBBLKGUIButton alloc] initWithFrame:[self doneButtonRect]];
-	[skipButton setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
-	[cancelButton setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[doneButton setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[skipButton setTarget:self];
-	[cancelButton setTarget:self];
-	[doneButton setTarget:self];
-	[skipButton setAction:nil];
-	[skipButton setAction:@selector(skip)];
-	[cancelButton setAction:@selector(cancel)];
-	[doneButton setAction:@selector(done)];
-	[skipButton setButtonType:NSMomentaryLight];
-	[cancelButton setButtonType:NSMomentaryLight];
-	[doneButton setButtonType:NSMomentaryLight];
-	[skipButton setTitle:NSLocalizedString(@"Skip This Version", nil)];
-	[cancelButton setTitle:NSLocalizedString(@"Not Now", nil)];
-	[doneButton setTitle:NSLocalizedString(@"Download", nil)];
-	[skipButton setFont:[NSFont systemFontOfSize:11.0]];
-	[cancelButton setFont:[NSFont systemFontOfSize:11.0]];
-	[doneButton setFont:[NSFont systemFontOfSize:11.0]];
-	[cancelButton setKeyEquivalent:@"\e"];
-	[doneButton setKeyEquivalent:@"\r"];
-	[doneButton setEnabled:NO];
+	skipButton = [[SBBLKGUIButton alloc] initWithFrame:self.skipButtonRect];
+	cancelButton = [[SBBLKGUIButton alloc] initWithFrame:self.cancelButtonRect];
+	doneButton = [[SBBLKGUIButton alloc] initWithFrame:self.doneButtonRect];
+    skipButton.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
+    cancelButton.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    doneButton.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    skipButton.target = self;
+    cancelButton.target = self;
+    doneButton.target = self;
+    skipButton.action = nil;
+    skipButton.action = @selector(skip);
+    cancelButton.action = @selector(cancel);
+    doneButton.action = @selector(done);
+    skipButton.buttonType = NSMomentaryPushInButton;
+    cancelButton.buttonType = NSMomentaryPushInButton;
+    doneButton.buttonType = NSMomentaryPushInButton;
+    skipButton.title = NSLocalizedString(@"Skip This Version", nil);
+    cancelButton.title = NSLocalizedString(@"Not Now", nil);
+    doneButton.title = NSLocalizedString(@"Download", nil);
+    skipButton.font = [NSFont systemFontOfSize:11.0];
+    cancelButton.font = [NSFont systemFontOfSize:11.0];
+    doneButton.font = [NSFont systemFontOfSize:11.0];
+	cancelButton.keyEquivalent = @"\e";
+	doneButton.keyEquivalent = @"\r";
+    doneButton.enabled = NO;
 	[self addSubview:skipButton];
 	[self addSubview:cancelButton];
 	[self addSubview:doneButton];
@@ -255,11 +255,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSString *htmlString = nil;
 	NSURL *baseURL = nil;
-	baseURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Releasenotes" ofType:@"html"]];
+	baseURL = [NSBundle.mainBundle URLForResource:@"Releasenotes" withExtension:@"html"];
 	htmlString = [self htmlStringWithBaseURL:baseURL releaseNotesData:data];
 	[indicator stopAnimation:nil];
-	[[webView mainFrame] loadHTMLString:htmlString baseURL:baseURL];
-	[doneButton setEnabled:YES];
+	[webView.mainFrame loadHTMLString:htmlString baseURL:baseURL];
+    doneButton.enabled = YES;
 }
 
 - (void)downloader:(SBDownloader *)downloader didFail:(NSError *)error
@@ -274,17 +274,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	[webView setHidden:NO];
+    webView.hidden = NO;
 	[indicator stopAnimation:nil];
-	[doneButton setEnabled:YES];
+    doneButton.enabled = YES;
 }
 
-- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)errorforFrame:(WebFrame *)frame
+- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
 	[indicator stopAnimation:nil];
 }
 
-- (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)errorforFrame:(WebFrame *)frame
+- (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
 	[indicator stopAnimation:nil];
 }
@@ -293,24 +293,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSString *)title
 {
-	return [titleLabel stringValue];
+	return titleLabel.stringValue;
 }
 
 - (NSString *)text
 {
-	return [textLabel stringValue];
+	return textLabel.stringValue;
 }
 
 #pragma mark Setter
 
 - (void)setTitle:(NSString *)title
 {
-	[titleLabel setStringValue:title];
+    titleLabel.stringValue = title;
 }
 
 - (void)setText:(NSString *)text
 {
-	[textLabel setStringValue:text];
+    textLabel.stringValue = text;
 }
 
 #pragma mark Actions

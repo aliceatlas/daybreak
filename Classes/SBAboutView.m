@@ -29,7 +29,7 @@ static SBAboutView *_sharedView;
 
 @implementation SBAboutView
 
-+ (id)sharedView
++ (SBAboutView *)sharedView
 {
 	if (!_sharedView)
 	{
@@ -38,7 +38,7 @@ static SBAboutView *_sharedView;
 	return _sharedView;
 }
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -48,7 +48,7 @@ static SBAboutView *_sharedView;
 		[self constructCreditLabel];
 		[self constructCopyrightLabel];
 		[self constructBackButton];
-		[self setAutoresizingMask:(NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin)];
+        self.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin;
 	}
 	return self;
 }
@@ -67,7 +67,7 @@ static SBAboutView *_sharedView;
 - (NSRect)nameLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect iconRect = [self iconImageRect];
+	NSRect iconRect = self.iconImageRect;
 	r.size.width = 240.0;
 	r.size.height = 24.0;
 	r.origin.x = NSMaxX(iconRect) + iconRect.origin.x;
@@ -78,7 +78,7 @@ static SBAboutView *_sharedView;
 - (NSRect)identifierLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect nameRect = [self nameLabelRect];
+	NSRect nameRect = self.nameLabelRect;
 	r.origin.x = nameRect.origin.x;
 	r.size.width = self.bounds.size.width - r.origin.x;
 	r.size.height = 16.0;
@@ -89,8 +89,8 @@ static SBAboutView *_sharedView;
 - (NSRect)creditLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect identifierLabelRect = [self identifierLabelRect];
-	NSRect copyrightLabelRect = [self copyrightLabelRect];
+	NSRect identifierLabelRect = self.identifierLabelRect;
+	NSRect copyrightLabelRect = self.copyrightLabelRect;
 	r.origin.x = identifierLabelRect.origin.x;
 	r.size.width = self.bounds.size.width - r.origin.x;
 	r.origin.y = NSMaxY(copyrightLabelRect) + 10.0;
@@ -101,7 +101,7 @@ static SBAboutView *_sharedView;
 - (NSRect)copyrightLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect iconRect = [self iconImageRect];
+	NSRect iconRect = self.iconImageRect;
 	r.origin.x = NSMaxX(iconRect) + iconRect.origin.x;
 	r.size.width = self.bounds.size.width - r.origin.x;
 	r.size.height = 16.0;
@@ -122,113 +122,113 @@ static SBAboutView *_sharedView;
 
 - (void)constructIconImageView
 {
-	NSRect r = [self iconImageRect];
+	NSRect r = self.iconImageRect;
 	NSImage *image = [NSImage imageNamed:@"Application.icns"];
 	if (image)
 	{
 		iconImageView = [[NSImageView alloc] initWithFrame:r];
-		[iconImageView setImageFrameStyle:NSImageFrameNone];
-		[iconImageView setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin | NSViewMaxYMargin)];
-		[image setSize:r.size];
-		[iconImageView setImage:image];
-		[iconImageView setImageScaling:NSImageScaleProportionallyDown];
+        iconImageView.imageFrameStyle = NSImageFrameNone;
+        iconImageView.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin | NSViewMaxYMargin;
+        image.size = r.size;
+        iconImageView.image = image;
+        iconImageView.imageScaling = NSImageScaleProportionallyDown;
 		[self addSubview:iconImageView];
 	}
 }
 
 - (void)constructNameLabel
 {
-	NSRect r = [self nameLabelRect];
-	NSBundle *bundle = [NSBundle mainBundle];
-	NSDictionary *info = [bundle infoDictionary];
-	NSDictionary *localizedInfo = [bundle localizedInfoDictionary];
-	NSString *name = localizedInfo ? [localizedInfo objectForKey:@"CFBundleName"] : nil;
-	NSString *version = info ? [info objectForKey:@"CFBundleVersion"] : nil;
+	NSRect r = self.nameLabelRect;
+	NSBundle *bundle = NSBundle.mainBundle;
+	NSDictionary *info = bundle.infoDictionary;
+	NSDictionary *localizedInfo = bundle.localizedInfoDictionary;
+	NSString *name = localizedInfo ? localizedInfo[@"CFBundleName"] : nil;
+	NSString *version = info ? info[@"CFBundleVersion"] : nil;
 	NSString *string = name ? (version ? [NSString stringWithFormat:@"%@ %@", name, version] : name) : nil;
 	if (string)
 	{
 		nameLabel = [[NSTextField alloc] initWithFrame:r];
-		[nameLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-		[nameLabel setEditable:NO];
-		[nameLabel setBordered:NO];
-		[nameLabel setDrawsBackground:NO];
-		[nameLabel setTextColor:[NSColor whiteColor]];
-		[[nameLabel cell] setFont:[NSFont boldSystemFontOfSize:20]];
-		[[nameLabel cell] setAlignment:NSLeftTextAlignment];
-		[nameLabel setStringValue:string];
+        nameLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+        nameLabel.editable = NO;
+        nameLabel.bordered = NO;
+        nameLabel.drawsBackground = NO;
+        nameLabel.textColor = NSColor.whiteColor;
+		[nameLabel.cell setFont:[NSFont boldSystemFontOfSize:20]];
+		[nameLabel.cell setAlignment:NSLeftTextAlignment];
+        nameLabel.stringValue = string;
 		[self addSubview:nameLabel];
 	}
 }
 
 - (void)constructIdentifierLabel
 {
-	NSRect r = [self identifierLabelRect];
-	NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
-	NSString *string = info ? [info objectForKey:@"CFBundleIdentifier"] : nil;
+	NSRect r = self.identifierLabelRect;
+	NSDictionary *info = NSBundle.mainBundle.infoDictionary;
+	NSString *string = info ? info[@"CFBundleIdentifier"] : nil;
 	if (string)
 	{
 		identifierLabel = [[NSTextField alloc] initWithFrame:r];
-		[identifierLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-		[identifierLabel setEditable:NO];
-		[identifierLabel setBordered:NO];
-		[identifierLabel setDrawsBackground:NO];
-		[identifierLabel setTextColor:[NSColor colorWithCalibratedWhite:0.8 alpha:1.0]];
-		[[identifierLabel cell] setFont:[NSFont systemFontOfSize:12.0]];
-		[[identifierLabel cell] setAlignment:NSLeftTextAlignment];
-		[identifierLabel setStringValue:string];
+        identifierLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+        identifierLabel.editable = NO;
+        identifierLabel.bordered = NO;
+        identifierLabel.drawsBackground = NO;
+        identifierLabel.textColor = [NSColor colorWithCalibratedWhite:0.8 alpha:1.0];
+		[identifierLabel.cell setFont:[NSFont systemFontOfSize:12.0]];
+		[identifierLabel.cell setAlignment:NSLeftTextAlignment];
+        identifierLabel.stringValue = string;
 		[self addSubview:identifierLabel];
 	}
 }
 
 - (void)constructCreditLabel
 {
-	NSRect r = [self creditLabelRect];
+	NSRect r = self.creditLabelRect;
 	NSString *rtfdPath = [[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtfd"];
 	NSTextView *creditLabel = nil;
 	creditScrollView = [[SBBLKGUIScrollView alloc] initWithFrame:r];
-	[creditScrollView setAutohidesScrollers:YES];
-	[creditScrollView setHasHorizontalScroller:NO];
-	[creditScrollView setHasVerticalScroller:YES];
-	[creditScrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]]];
-	[creditScrollView setDrawsBackground:NO];
+    creditScrollView.autohidesScrollers = YES;
+    creditScrollView.hasHorizontalScroller = NO;
+    creditScrollView.hasVerticalScroller = YES;
+	creditScrollView.backgroundColor = [NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]];
+    creditScrollView.drawsBackground = NO;
 	creditLabel = [[NSTextView alloc] initWithFrame:r];
-	[creditLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[creditLabel setEditable:NO];
-	[creditLabel setSelectable:YES];
-	[creditLabel setDrawsBackground:NO];
+    creditLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    creditLabel.editable = NO;
+    creditLabel.selectable = YES;
+    creditLabel.drawsBackground = NO;
 	[creditLabel readRTFDFromFile:rtfdPath];
-	[creditScrollView setDocumentView:creditLabel];
+    creditScrollView.documentView = creditLabel;
 	[self addSubview:creditScrollView];
 }
 
 - (void)constructCopyrightLabel
 {
-	NSRect r = [self copyrightLabelRect];
-	NSDictionary *info = [[NSBundle mainBundle] localizedInfoDictionary];
-	NSString *string = info ? [info objectForKey:@"NSHumanReadableCopyright"] : nil;
+	NSRect r = self.copyrightLabelRect;
+	NSDictionary *info = NSBundle.mainBundle.localizedInfoDictionary;
+	NSString *string = info ? info[@"NSHumanReadableCopyright"] : nil;
 	if (string)
 	{
 		copyrightLabel = [[NSTextField alloc] initWithFrame:r];
-		[copyrightLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-		[copyrightLabel setEditable:NO];
-		[copyrightLabel setBordered:NO];
-		[copyrightLabel setDrawsBackground:NO];
-		[copyrightLabel setTextColor:[NSColor grayColor]];
-		[[copyrightLabel cell] setFont:[NSFont systemFontOfSize:12.0]];
-		[[copyrightLabel cell] setAlignment:NSLeftTextAlignment];
-		[copyrightLabel setStringValue:string];
+        copyrightLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+        copyrightLabel.editable = NO;
+        copyrightLabel.bordered = NO;
+        copyrightLabel.drawsBackground = NO;
+        copyrightLabel.textColor = NSColor.grayColor;
+		[copyrightLabel.cell setFont:[NSFont systemFontOfSize:12.0]];
+		[copyrightLabel.cell setAlignment:NSLeftTextAlignment];
+        copyrightLabel.stringValue = string;
 		[self addSubview:copyrightLabel];
 	}
 }
 
 - (void)constructBackButton
 {
-	NSRect r = [self backButtonRect];
+	NSRect r = self.backButtonRect;
 	backButton = [[SBBLKGUIButton alloc] initWithFrame:r];
-	[backButton setTitle:NSLocalizedString(@"Back", nil)];
-	[backButton setTarget:self];
-	[backButton setAction:@selector(cancel)];
-	[backButton setKeyEquivalent:@"\e"];
+    backButton.title = NSLocalizedString(@"Back", nil);
+    backButton.target = self;
+    backButton.action = @selector(cancel);
+	backButton.keyEquivalent = @"\e";
 	[self addSubview:backButton];
 }
 
@@ -238,7 +238,7 @@ static SBAboutView *_sharedView;
 {
 	unichar character;
 	
-	character = [[theEvent characters] characterAtIndex:0];
+	character = [theEvent.characters characterAtIndex:0];
 	if (character == NSDeleteCharacter || character == NSCarriageReturnCharacter || character == NSEnterCharacter)
 	{
 		[self cancel];
@@ -252,16 +252,16 @@ static SBAboutView *_sharedView;
 - (void)drawRect:(NSRect)rect
 {
 	NSImage *image = [NSImage imageNamed:@"Application.icns"];
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	[[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]] set];
 	NSRectFillUsingOperation(rect, NSCompositeSourceOver);
 	
 	if (image)
 	{
-		CGRect imageRect = NSRectToCGRect([self iconImageRect]);
+		CGRect imageRect = NSRectToCGRect(self.iconImageRect);
 		CGImageRef maskImage = nil;
 		
-		[image setSize:NSSizeFromCGSize(imageRect.size)];
+		image.size = NSSizeFromCGSize(imageRect.size);
 		[image drawInRect:NSRectFromCGRect(imageRect) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 		
 		imageRect.origin.y = imageRect.size.height * 1.5 - self.bounds.size.height;

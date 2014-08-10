@@ -30,13 +30,13 @@
 @dynamic message;
 @dynamic text;
 
-- (id)initWithFrame:(NSRect)frame text:(NSString *)inText
+- (instancetype)initWithFrame:(NSRect)frame text:(NSString *)inText
 {
 	if (self = [super initWithFrame:frame])
 	{
 		[self constructMessageLabel];
 		[self constructTextLabel:inText];
-		[self setAutoresizingMask:(NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin)];
+        self.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin;
 	}
 	return self;
 }
@@ -71,7 +71,7 @@
 - (NSRect)messageLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = self.bounds.size.width - margin.x * 2;
 	r.size.height = 36.0;
 	r.origin.x = margin.x;
@@ -82,22 +82,20 @@
 - (NSRect)textLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect messageLabelRect = [self messageLabelRect];
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = self.bounds.size.width - margin.x * 2;
 	r.size.height = self.bounds.size.height - margin.y * 2;
 	r.origin.x = margin.x;
-	r.origin.y = messageLabelRect.origin.y - r.size.height;
+	r.origin.y = self.messageLabelRect.origin.y - r.size.height;
 	return r;
 }
 
 - (NSRect)doneButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	CGFloat buttonMargin = [self buttonMargin];
-	r.size = [self buttonSize];
-	r.origin.y = margin.y;
+	CGFloat buttonMargin = self.buttonMargin;
+	r.size = self.buttonSize;
+	r.origin.y = self.margin.y;
 	r.origin.x = (self.bounds.size.width - (r.size.width * 2 + buttonMargin)) / 2 + r.size.width + buttonMargin;
 	return r;
 }
@@ -105,11 +103,9 @@
 - (NSRect)cancelButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	CGFloat buttonMargin = [self buttonMargin];
-	r.size = [self buttonSize];
-	r.origin.y = margin.y;
-	r.origin.x = (self.bounds.size.width - (r.size.width * 2 + buttonMargin)) / 2;
+	r.size = self.buttonSize;
+	r.origin.y = self.margin.y;
+	r.origin.x = (self.bounds.size.width - (r.size.width * 2 + self.buttonMargin)) / 2;
 	return r;
 }
 
@@ -117,57 +113,57 @@
 
 - (void)constructMessageLabel
 {
-	NSRect r = [self messageLabelRect];
+	NSRect r = self.messageLabelRect;
 	messageLabel = [[NSTextField alloc] initWithFrame:r];
-	[messageLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[messageLabel setEditable:NO];
-	[messageLabel setBordered:NO];
-	[messageLabel setDrawsBackground:NO];
-	[messageLabel setTextColor:[NSColor whiteColor]];
-	[[messageLabel cell] setFont:[NSFont boldSystemFontOfSize:16]];
-	[[messageLabel cell] setAlignment:NSCenterTextAlignment];
-	[[messageLabel cell] setWraps:YES];
-	[textLabel setStringValue:@"JavaScript"];
+    messageLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    messageLabel.editable = NO;
+    messageLabel.bordered = NO;
+    messageLabel.drawsBackground = NO;
+    messageLabel.textColor = NSColor.whiteColor;
+    messageLabel.font = [NSFont boldSystemFontOfSize:16];
+    messageLabel.alignment = NSCenterTextAlignment;
+	[messageLabel.cell setWraps:YES];
+	textLabel.stringValue = @"JavaScript";
 	[self addSubview:messageLabel];
 }
 
 - (void)constructTextLabel:(NSString *)inText
 {
-	NSRect r = [self textLabelRect];
-	NSFont *font = [self textFont];
-	NSSize size = [inText sizeWithAttributes:[NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName]];
+	NSRect r = self.textLabelRect;
+	NSFont *font = self.textFont;
+	NSSize size = [inText sizeWithAttributes:@{NSFontAttributeName: font}];
 	textLabel = [[NSTextField alloc] initWithFrame:r];
-	[textLabel setEditable:NO];
-	[textLabel setBordered:NO];
-	[textLabel setDrawsBackground:NO];
-	[textLabel setTextColor:[NSColor whiteColor]];
-	[[textLabel cell] setFont:font];
-	[[textLabel cell] setAlignment:size.width > (r.size.width - 20.0) ? NSLeftTextAlignment : NSCenterTextAlignment];
-	[[textLabel cell] setWraps:YES];
-	[textLabel setStringValue:inText];
+    textLabel.editable = NO;
+    textLabel.bordered = NO;
+    textLabel.drawsBackground = NO;
+    textLabel.textColor = NSColor.whiteColor;
+    textLabel.font = font;
+	textLabel.alignment = size.width > (r.size.width - 20.0) ? NSLeftTextAlignment : NSCenterTextAlignment;
+	[textLabel.cell setWraps:YES];
+    textLabel.stringValue = inText;
 	[self addSubview:textLabel];
 }
 
 - (void)constructDoneButton
 {
-	NSRect r = [self doneButtonRect];
+	NSRect r = self.doneButtonRect;
 	doneButton = [[SBBLKGUIButton alloc] initWithFrame:r];
-	[doneButton setTitle:NSLocalizedString(@"OK", nil)];
-	[doneButton setTarget:self];
-	[doneButton setAction:@selector(done)];
-	[doneButton setEnabled:YES];
-	[doneButton setKeyEquivalent:@"\r"];	// busy if button is added into a view
+    doneButton.title = NSLocalizedString(@"OK", nil);
+    doneButton.target = self;
+    doneButton.action = @selector(done);
+    doneButton.enabled = YES;
+	doneButton.keyEquivalent = @"\r";	// busy if button is added into a view
 	[self addSubview:doneButton];
 }
 
 - (void)constructCancelButton
 {
-	NSRect r = [self cancelButtonRect];
+	NSRect r = self.cancelButtonRect;
 	cancelButton = [[SBBLKGUIButton alloc] initWithFrame:r];
-	[cancelButton setTitle:NSLocalizedString(@"Cancel", nil)];
-	[cancelButton setTarget:self];
-	[cancelButton setAction:@selector(cancel)];
-	[cancelButton setKeyEquivalent:@"\e"];
+    cancelButton.title = NSLocalizedString(@"Cancel", nil);
+    cancelButton.target = self;
+    cancelButton.action = @selector(cancel);
+	cancelButton.keyEquivalent = @"\e";
 	[self addSubview:cancelButton];
 }
 
@@ -175,24 +171,24 @@
 
 - (NSString *)message
 {
-	return [messageLabel stringValue];
+	return messageLabel.stringValue;
 }
 
 - (NSString *)text
 {
-	return [textLabel stringValue];
+	return textLabel.stringValue;
 }
 
 #pragma mark Setter
 
 - (void)setMessage:(NSString *)message
 {
-	[messageLabel setStringValue:message];
+    messageLabel.stringValue = message;
 }
 
 - (void)setText:(NSString *)inText
 {
-	[textLabel setStringValue:inText];
+    textLabel.stringValue = inText;
 }
 
 - (void)setDoneSelector:(SEL)inDoneSelector

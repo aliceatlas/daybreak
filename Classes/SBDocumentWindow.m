@@ -51,27 +51,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize backWindow;
 @synthesize tabbarVisivility;
 
-- (id)initWithFrame:(NSRect)frame delegate:(id)delegate tabbarVisivility:(BOOL)inTabbarVisivility
+- (instancetype)initWithFrame:(NSRect)frame delegate:(id)delegate tabbarVisivility:(BOOL)inTabbarVisivility
 {
-	NSUInteger styleMask = (NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask);
+	NSUInteger styleMask = NSTitledWindowMask | NSClosableWindowMask |NSMiniaturizableWindowMask | NSResizableWindowMask;
 	if (self = [super initWithContentRect:frame styleMask:styleMask backing:NSBackingStoreBuffered defer:YES])
 	{
 		[self constructInnerView];
-		[self setMinSize:NSMakeSize(kSBDocumentWindowMinimumSizeWidth, kSBDocumentWindowMinimumSizeHeight)];
-		[self setDelegate:delegate];
-		[self setReleasedWhenClosed:YES];
-		[self setShowsToolbarButton:YES];
-		[self setOneShot:YES];
-		[self setAcceptsMouseMovedEvents:YES];
-		if (floor(NSAppKitVersionNumber) > 1038)
-		{
-			/* Lion only */
-			/* NSWindowCollectionBehaviorFullScreenPrimary */
-			/* NSWindowCollectionBehaviorFullScreenAuxiliary */
-			[self setCollectionBehavior:(1 << 7 | 1 << 8)];
-			/* NSWindowAnimationBehaviorNone */
-			[self setAnimationBehavior:2];
-		}
+        self.minSize = NSMakeSize(kSBDocumentWindowMinimumSizeWidth, kSBDocumentWindowMinimumSizeHeight);
+        self.delegate = delegate;
+        self.releasedWhenClosed = YES;
+        self.showsToolbarButton = YES;
+        self.oneShot = YES;
+        self.acceptsMouseMovedEvents = YES;
+        self.collectionBehavior = NSWindowCollectionBehaviorFullScreenPrimary | NSWindowCollectionBehaviorFullScreenAuxiliary;
+        self.animationBehavior = NSWindowAnimationBehaviorNone;
 		tabbarVisivility = inTabbarVisivility;
 	}
 	return self;
@@ -79,7 +72,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)dealloc
 {
-	[self setDelegate:nil];
+    self.delegate = nil;
 	[self destructCoverWindow];
 }
 
@@ -91,7 +84,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (BOOL)canBecomeKeyWindow
 {
-	BOOL r = [self isCovering] ? NO : [super canBecomeKeyWindow];
+	BOOL r = self.covering ? NO : super.canBecomeKeyWindow;
 	return r;
 }
 
@@ -108,17 +101,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSString *)title
 {
-	return [super title];
+	return super.title;
 }
 
 - (SBToolbar *)toolbar
 {
-	return (SBToolbar *)[super toolbar];
+	return (SBToolbar *)super.toolbar;
 }
 
 - (NSView *)contentView
 {
-	return [super contentView];
+	return super.contentView;
 }
 
 #pragma mark Rects
@@ -136,9 +129,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)tabbarRect
 {
 	NSRect r = NSZeroRect;
-	NSRect innerRect = [self innerRect];
+	NSRect innerRect = self.innerRect;
 	r.size.width = innerRect.size.width;
-	r.size.height = [self tabbarHeight];
+	r.size.height = self.tabbarHeight;
 	r.origin.y = tabbarVisivility ? innerRect.size.height - r.size.height : innerRect.size.height;
 	return r;
 }
@@ -146,15 +139,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)splitViewRect
 {
 	NSRect r = NSZeroRect;
-	NSRect innerRect = [self innerRect];
+	NSRect innerRect = self.innerRect;
 	r.size.width = innerRect.size.width;
-	r.size.height = tabbarVisivility ? innerRect.size.height - [self tabbarHeight] : innerRect.size.height;
+	r.size.height = tabbarVisivility ? innerRect.size.height - self.tabbarHeight : innerRect.size.height;
 	return r;
 }
 
 - (CGFloat)sheetPosition
 {
-	CGFloat position = [self splitViewRect].size.height;
+	CGFloat position = self.splitViewRect.size.height;
 	return position;
 }
 
@@ -163,11 +156,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)performKeyEquivalent:(NSEvent *)theEvent
 {
 	BOOL r = NO;
-	if ([self delegate])
+	if (self.delegate)
 	{
-		if ([[self delegate] respondsToSelector:@selector(window:shouldHandleKeyEvent:)])
+		if ([self.delegate respondsToSelector:@selector(window:shouldHandleKeyEvent:)])
 		{
-			r = [(id<SBDocumentWindowDelegate>)[self delegate] window:self shouldHandleKeyEvent:theEvent];
+			r = [(id<SBDocumentWindowDelegate>)self.delegate window:self shouldHandleKeyEvent:theEvent];
 		}
 	}
 	if (!r)
@@ -182,7 +175,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)performClose:(id)sender
 {
 	BOOL shouldClose = YES;
-	id delegate = [self delegate];
+	id delegate = self.delegate;
 	if (delegate)
 	{
 		if ([delegate respondsToSelector:@selector(window:shouldClose:)])
@@ -200,8 +193,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructInnerView
 {
-	innerView = [[SBInnerView alloc] initWithFrame:[self innerRect]];
-	[innerView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+	innerView = [[SBInnerView alloc] initWithFrame:self.innerRect];
+    innerView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
 	[self.contentView addSubview:innerView];
 }
 
@@ -210,10 +203,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	BOOL r = YES;
-	SEL selector = [menuItem action];
+	SEL selector = menuItem.action;
 	if (selector == @selector(toggleToolbarShown:))
 	{
-		[menuItem setTitle:[self.toolbar isVisible] ? NSLocalizedString(@"Hide Toolbar", nil) : NSLocalizedString(@"Show Toolbar", nil)];
+        menuItem.title = self.toolbar.visible ? NSLocalizedString(@"Hide Toolbar", nil) : NSLocalizedString(@"Show Toolbar", nil);
 		r = !self.coverWindow;
 	}
 	else {
@@ -230,20 +223,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		title = [NSString string];
 	}
-	[super setTitle:title];
+    super.title = title;
 }
 
 - (void)setToolbar:(SBToolbar *)toolbar
 {
 	if (self.toolbar != toolbar)
 	{
-		[super setToolbar:(NSToolbar *)toolbar];
+        super.toolbar = toolbar;
 	}
 }
 
 - (void)setContentView:(NSView *)contentView
 {
-	[super setContentView:contentView];
+    super.contentView = contentView;
 }
 
 - (void)setTabbar:(SBTabbar *)inTabbar
@@ -251,13 +244,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (tabbar != inTabbar)
 	{
 		tabbar = inTabbar;
-		NSRect r = [self tabbarRect];
+		NSRect r = self.tabbarRect;
 		if (!NSEqualRects(tabbar.frame, r))
 		{
 			tabbar.frame = r;
 		}
-		[tabbar setAutoresizingMask:(NSViewWidthSizable | NSViewMinYMargin)];
-		[self.innerView addSubview:(NSView *)tabbar];
+        tabbar.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
+		[self.innerView addSubview:tabbar];
 	}
 }
 
@@ -266,12 +259,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (splitView != inSplitView)
 	{
 		splitView = inSplitView;
-		NSRect r = [self splitViewRect];
+		NSRect r = self.splitViewRect;
 		if (!NSEqualRects(splitView.frame, r))
 		{
-			[splitView setFrame:r];
+            splitView.frame = r;
 		}
-		[splitView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+        splitView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
 		[self.innerView addSubview:(NSView *)splitView];
 	}
 }
@@ -302,7 +295,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[coverWindow close];
 		coverWindow = nil;
 	}
-	[self setShowsToolbarButton:YES];
+    self.showsToolbarButton = YES;
 }
 
 - (void)showCoverWindow:(SBView *)view
@@ -315,10 +308,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self constructCoverWindowWithView:view];
 }
 
-- (void)constructCoverWindowWithView:(id)view
+- (void)constructCoverWindowWithView:(NSView *)view
 {
 	SBBLKGUIScrollView *scrollView = nil;
-	NSRect vr = [view frame];
+	NSRect vr = view.frame;
 	NSRect br = self.splitView.bounds;
 	NSRect r = NSZeroRect;
 	BOOL hasHorizontalScroller = vr.size.width > br.size.width;
@@ -330,32 +323,32 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructCoverWindow];
 	coverWindow = [[SBCoverWindow alloc] initWithParentWindow:self size:br.size];
 	scrollView = [[SBBLKGUIScrollView alloc] initWithFrame:NSIntegralRect(r)];
-	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setHasHorizontalScroller:hasHorizontalScroller];
-	[scrollView setHasVerticalScroller:hasVerticalScroller];
-	[scrollView setDrawsBackground:NO];
-	[[coverWindow contentView] addSubview:scrollView];
-	[scrollView setDocumentView:view];
-	[self setShowsToolbarButton:NO];
+    scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    scrollView.hasHorizontalScroller = hasHorizontalScroller;
+    scrollView.hasVerticalScroller = hasVerticalScroller;
+    scrollView.drawsBackground = NO;
+	[coverWindow.contentView addSubview:scrollView];
+    scrollView.documentView = view;
+    self.showsToolbarButton = NO;
 	
 #if 1
 	[self addChildWindow:coverWindow ordered:NSWindowAbove];
 	[coverWindow makeKeyWindow];
 #else
 	NSViewAnimation *animation = nil;
-	NSMutableDictionary *animationInfo = [NSMutableDictionary dictionaryWithCapacity:0];
-	[[coverWindow contentView] setHidden:YES];
+	NSDictionary *animationInfo = nil;
+    coverWindow.contentView.hidden = YES;
 	[NSApp beginSheet:coverWindow modalForWindow:self modalDelegate:self didEndSelector:@selector(coverWindowDidEnd:returnCode:contextInfo:) contextInfo:nil];
     
-	[animationInfo setObject:[coverWindow contentView] forKey:NSViewAnimationTargetKey];
-	[animationInfo setObject:NSViewAnimationFadeInEffect forKey:NSViewAnimationEffectKey];
-	animation = [[[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObject:animationInfo]] autorelease];
-    [animation setDuration:0.35];
-    [animation setAnimationBlockingMode:NSAnimationNonblockingThreaded];
-    [animation setAnimationCurve:NSAnimationEaseIn];
-	[animation setDelegate:self];
+    animationInfo = @{NSViewAnimationTargetKey: coverWindow.contentView,
+                      NSViewAnimationEffectKey: NSViewAnimationFadeInEffect};
+	animation = [[NSViewAnimation alloc] initWithViewAnimations:@[animationInfo]];
+    animation.duration = 0.35;
+    animation.animationBlockingMode = NSAnimationNonblockingThreaded;
+    animation.animationCurve = NSAnimationEaseIn;
+    animation.delegate = self;
 	[animation startAnimation];
-	[[coverWindow contentView] setHidden:NO];
+    coverWindow.contentView.hidden = NO;
 #endif
 }
 
@@ -370,9 +363,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #else
 - (void)animationDidStop:(NSAnimation *)animation
 {
-	if ([coverWindow contentView])
+	if (coverWindow.contentView)
 	{
-		[[coverWindow contentView] setHidden:NO];
+        coverWindow.contentView.hidden = NO;
 	}
 }
 
@@ -389,14 +382,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)hideToolbar
 {
-	if ([self.toolbar isVisible])
+	if (self.toolbar.visible)
 		[self toggleToolbarShown:self];
 }
 
 - (void)showToolbar
 {
-	if (![self.toolbar isVisible])
-		[self toggleToolbarShown:self];
+    if (self.toolbar.visible)
+        [self toggleToolbarShown:self];
 }
 
 - (void)hideTabbar
@@ -405,12 +398,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		tabbarVisivility = NO;
 		NSRect r = NSZeroRect;
-		r = [self tabbarRect];
+		r = self.tabbarRect;
 		if (!NSEqualRects(tabbar.frame, r))
 		{
 			tabbar.frame = r;
 		}
-		r = [self splitViewRect];
+		r = self.splitViewRect;
 		if (!NSEqualRects(splitView.frame, r))
 		{
 			splitView.frame = r;
@@ -424,12 +417,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		tabbarVisivility = YES;
 		NSRect r = NSZeroRect;
-		r = [self tabbarRect];
+		r = self.tabbarRect;
 		if (!NSEqualRects(tabbar.frame, r))
 		{
 			tabbar.frame = r;
 		}
-		r = [self splitViewRect];
+		r = self.splitViewRect;
 		if (!NSEqualRects(splitView.frame, r))
 		{
 			splitView.frame = r;
@@ -444,11 +437,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	doneRect.size.width = 105.0;
 	doneRect.size.height = 24.0;
 	doneButton = [[SBBLKGUIButton alloc] initWithFrame:doneRect];
-	[doneButton setTitle:NSLocalizedString(@"Done", nil)];
-	[doneButton setTarget:self];
-	[doneButton setAction:@selector(doneFlip)];
-	[doneButton setEnabled:YES];
-	[doneButton setKeyEquivalent:@"\r"];
+    doneButton.title = NSLocalizedString(@"Done", nil);
+    doneButton.target = self;
+    doneButton.action = @selector(doneFlip);
+    doneButton.enabled = YES;
+	doneButton.keyEquivalent = @"\r";
 	[self flip:(SBView *)doneButton];
 }
 
@@ -462,11 +455,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	br.origin.y = self.frame.origin.y + (self.frame.size.height - br.size.height) / 2;
 	br.size.height -= 23.0;
 	backWindow = [[NSWindow alloc] initWithContentRect:br styleMask:(NSTitledWindowMask | NSClosableWindowMask) backing:NSBackingStoreBuffered defer:YES];
-	[backWindow setBackgroundColor:[NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]]];
-	[view setFrame:NSMakeRect((br.size.width - view.frame.size.width) / 2, (br.size.height - view.frame.size.height) / 2, view.frame.size.width, view.frame.size.height)];
-	[[backWindow contentView] addSubview:view];
+	backWindow.backgroundColor = [NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]];
+	view.frame = NSMakeRect((br.size.width - view.frame.size.width) / 2, (br.size.height - view.frame.size.height) / 2, view.frame.size.width, view.frame.size.height);
+	[backWindow.contentView addSubview:view];
 	[backWindow makeKeyAndOrderFront:nil];
-	[self setAlphaValue:0];
+    self.alphaValue = 0;
 }
 
 - (void)doneFlip
@@ -476,7 +469,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[backWindow close];
 		backWindow = nil;
 	}
-	[self setAlphaValue:1];
+    self.alphaValue = 1;
 }
 
 @end

@@ -29,18 +29,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 + (void)initialize
 {
-	if (self == [SBBLKGUITextField class])
+	if (self == SBBLKGUITextField.class)
 	{
-		[self setCellClass:[SBBLKGUITextFieldCell class]];
+        self.cellClass = SBBLKGUITextFieldCell.class;
 	}
 }
 
 + (Class)cellClass
 {
-	return [SBBLKGUITextFieldCell class];
+	return SBBLKGUITextFieldCell.class;
 }
 
-- (id)initWithFrame:(NSRect)rect
+- (instancetype)initWithFrame:(NSRect)rect
 {
 	if (self = [super initWithFrame:rect])
 	{
@@ -51,16 +51,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)setDefaultValues
 {
-	[self setAlignment:NSRightTextAlignment];
-	[self setDrawsBackground:NO];
-	[self setTextColor:[NSColor whiteColor]];
+    self.alignment = NSRightTextAlignment;
+    self.drawsBackground = NO;
+    self.textColor = NSColor.whiteColor;
 }
 
 @end
 
 @implementation SBBLKGUITextFieldCell
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{
@@ -71,23 +71,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)setDefaultValues
 {
-	[self setWraps:NO];
-	[self setScrollable:YES];
-	[self setFocusRingType:NSFocusRingTypeExterior];
+    self.wraps = NO;
+    self.scrollable = YES;
+    self.focusRingType = NSFocusRingTypeExterior;
 }
 
 - (NSText *)setUpFieldEditorAttributes:(NSText *)textObj
 {
 	NSText *text = [super setUpFieldEditorAttributes:textObj];
-	if ([text isKindOfClass:[NSTextView class]])
+	if ([text isKindOfClass:NSTextView.class])
 	{
-		NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-									[NSColor whiteColor], 
-									NSForegroundColorAttributeName, 
-									[NSColor grayColor], 
-									NSBackgroundColorAttributeName, nil];
-		[(NSTextView *)text setInsertionPointColor:[NSColor whiteColor]];
-		[(NSTextView *)text setSelectedTextAttributes:attributes];
+		NSDictionary *attributes = @{NSForegroundColorAttributeName: NSColor.whiteColor,
+                                     NSBackgroundColorAttributeName: NSColor.grayColor};
+        ((NSTextView *)text).insertionPointColor = NSColor.whiteColor;
+        ((NSTextView *)text).selectedTextAttributes = attributes;
 	}
 	return text;
 }
@@ -95,9 +92,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	CGRect r = CGRectZero;
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	CGPathRef path = nil;
-	CGFloat alpha = [controlView respondsToSelector:@selector(isEnabled)] ? ([(NSTextField *)controlView isEnabled] ? 1.0 : 0.2) : 1.0;
+	CGFloat alpha = [controlView respondsToSelector:@selector(isEnabled)] ? (((NSTextField *)controlView).enabled ? 1.0 : 0.2) : 1.0;
 	
 	r = NSRectToCGRect(cellFrame);
 	path = SBRoundedPath(r, SBFieldRoundedCurve, 0, YES, YES);
@@ -121,21 +118,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextRestoreGState(ctx);
 	
 	[self drawInteriorWithFrame:cellFrame inView:controlView];
-}
-
-- (void)drawInteriorWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
-{
-	[super drawInteriorWithFrame:cellFrame inView:controlView];
-}
-
-- (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
-{
-	[super editWithFrame:aRect inView:controlView editor:textObj delegate:anObject event:theEvent];
-}
-
-- (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(int)selStart length:(int)selLength
-{
-	[super selectWithFrame:aRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
 }
 
 @end

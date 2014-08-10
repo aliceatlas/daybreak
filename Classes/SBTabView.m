@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic bounds;
 @synthesize delegate;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -47,40 +47,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: %p frame = %@>", [self className], self, NSStringFromRect(self.frame)];
-}
-
-- (NSRect)frame
-{
-	return [super frame];
-}
-
-- (NSRect)bounds
-{
-	return [super bounds];
-}
-
-- (void)setFrame:(NSRect)frame
-{
-	[super setFrame:frame];
-}
-
-- (void)setBounds:(NSRect)bounds
-{
-	[super setBounds:bounds];
+	return [NSString stringWithFormat:@"<%@: %p frame = %@>", self.className, self, NSStringFromRect(self.frame)];
 }
 
 - (SBTabViewItem *)selectedTabViewItem
 {
-	return (SBTabViewItem *)[super selectedTabViewItem];
+	return (SBTabViewItem *)super.selectedTabViewItem;
 }
 
 - (SBTabViewItem *)tabViewItemWithIdentifier:(NSNumber *)identifier
 {
 	SBTabViewItem *tabViewItem = nil;
-	for (SBTabViewItem *item in [self tabViewItems])
+	for (SBTabViewItem *item in self.tabViewItems)
 	{
-		if ([[item identifier] isEqualToNumber:identifier])
+		if ([item.identifier isEqualToNumber:identifier])
 		{
 			tabViewItem = item;
 			break;
@@ -116,16 +96,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)openURLInSelectedTabViewItem:(NSString *)URLString
 {
 	SBTabViewItem *tabViewItem = nil;
-	tabViewItem = [self selectedTabViewItem];
+	tabViewItem = self.selectedTabViewItem;
 	if (tabViewItem)
 	{
-		[tabViewItem setURLString:URLString];
+        tabViewItem.URLString = URLString;
 	}
 }
 
 - (void)closeAllTabViewItem
 {
-	for (SBTabViewItem *item in [[self tabViewItems] reverseObjectEnumerator])
+	for (SBTabViewItem *item in self.tabViewItems.reverseObjectEnumerator)
 	{
 		[item removeFromTabView];
 	}
@@ -317,37 +297,37 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)mouseDown:(NSEvent *)theEvent
 {
 	[super mouseDown:theEvent];
-	[[self superview] mouseDown:theEvent];
+	[self.superview mouseDown:theEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
 	[super mouseDragged:theEvent];
-	[[self superview] mouseDragged:theEvent];
+	[self.superview mouseDragged:theEvent];
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
 	[super mouseMoved:theEvent];
-	[[self superview] mouseMoved:theEvent];
+	[self.superview mouseMoved:theEvent];
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
 	[super mouseEntered:theEvent];
-	[[self superview] mouseEntered:theEvent];
+	[self.superview mouseEntered:theEvent];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
 	[super mouseExited:theEvent];
-	[[self superview] mouseExited:theEvent];
+	[self.superview mouseExited:theEvent];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
 	[super mouseUp:theEvent];
-	[[self superview] mouseUp:theEvent];
+	[self.superview mouseUp:theEvent];
 }
 
 @end

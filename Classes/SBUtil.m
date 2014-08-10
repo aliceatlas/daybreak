@@ -29,19 +29,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 SBApplicationDelegate *SBGetApplicationDelegate()
 {
-	return (SBApplicationDelegate *)[[NSApplication sharedApplication] delegate];
+	return (SBApplicationDelegate *)NSApplication.sharedApplication.delegate;
 }
 
 SBDocumentController *SBGetDocumentController()
 {
-	return (SBDocumentController *)[SBDocumentController sharedDocumentController];
+	return (SBDocumentController *)SBDocumentController.sharedDocumentController;
 }
 
 SBDocument *SBGetSelectedDocument()
 {
 	SBDocument *document = nil;
-	NSArray *documents = [[NSApplication sharedApplication] orderedDocuments];
-	if ([documents count] == 0)
+	NSArray *documents = NSApplication.sharedApplication.orderedDocuments;
+	if (documents.count == 0)
 	{
 		if (!document)
 		{
@@ -50,9 +50,9 @@ SBDocument *SBGetSelectedDocument()
 		}
 	}
 	else {
-		if ([[documents objectAtIndex:0] isKindOfClass:[SBDocument class]])
+		if ([documents[0] isKindOfClass:SBDocument.class])
 		{
-			document = [documents objectAtIndex:0];
+			document = documents[0];
 		}
 	}
 	return document;
@@ -62,18 +62,18 @@ WebPreferences *SBGetWebPreferences()
 {
 	WebPreferences *preferences = nil;
 	preferences = [[WebPreferences alloc] initWithIdentifier:kSBWebPreferencesIdentifier];
-	[preferences setAutosaves:YES];
+    preferences.autosaves = YES;
 	return preferences;
 }
 
 NSMenu *SBMenuWithTag(NSInteger tag)
 {
 	NSMenu *menu = nil;
-	for (NSMenuItem *menuItem in [[[NSApplication sharedApplication] mainMenu] itemArray])
+	for (NSMenuItem *menuItem in NSApplication.sharedApplication.mainMenu.itemArray)
 	{
-		if ([menuItem tag] == tag)
+		if (menuItem.tag == tag)
 		{
-			menu = [menuItem submenu];
+			menu = menuItem.submenu;
 			break;
 		}
 	}
@@ -83,9 +83,9 @@ NSMenu *SBMenuWithTag(NSInteger tag)
 NSMenuItem *SBMenuItemWithTag(NSInteger tag)
 {
 	NSMenuItem *item = nil;
-	for (NSMenuItem *menuItem in [[[NSApplication sharedApplication] mainMenu] itemArray])
+	for (NSMenuItem *menuItem in NSApplication.sharedApplication.mainMenu.itemArray)
 	{
-		NSMenu *menu = [menuItem submenu];
+		NSMenu *menu = menuItem.submenu;
 		item = [menu itemWithTag:tag];
 		if (item)
 		{
@@ -100,9 +100,9 @@ NSMenuItem *SBMenuItemWithTag(NSInteger tag)
 NSRect SBDefaultDocumentWindowRect()
 {
 	NSRect r = NSZeroRect;
-	NSArray *screens = [NSScreen screens];
-	NSScreen *screen = [screens count] > 0 ? [screens objectAtIndex:0] : nil;
-	r = screen ? [screen visibleFrame] : NSZeroRect;
+	NSArray *screens = NSScreen.screens;
+	NSScreen *screen = screens.count > 0 ? screens[0] : nil;
+	r = screen ? screen.visibleFrame : NSZeroRect;
 	return r;
 }
 
@@ -116,7 +116,7 @@ NSString *SBDefaultHomePage()
 	path = SBSearchFileInDirectory(@"com.apple.internetconfig", SBLibraryDirectory(@"Preferences"));
 	if (path)
 	{
-		if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+		if ([NSFileManager.defaultManager fileExistsAtPath:path])
 		{
 			internetConfig = [NSDictionary dictionaryWithContentsOfFile:path];
 			if (internetConfig)
@@ -132,7 +132,7 @@ NSString *SBDefaultSaveDownloadedFilesToPath()
 {
 	NSString *path = SBSearchPath(NSDownloadsDirectory, nil);
 	if (path)
-		path = [path stringByExpandingTildeInPath];
+		path = path.stringByExpandingTildeInPath;
 	return path;
 }
 
@@ -140,21 +140,18 @@ NSDictionary *SBDefaultBookmarks()
 {
 	NSArray *items = nil;
 	NSDictionary *defaultItem = nil;
-	NSString *path = [[NSBundle mainBundle] pathForResource:@"DefaultBookmark" ofType:@"plist"];
+	NSString *path = [NSBundle.mainBundle pathForResource:@"DefaultBookmark" ofType:@"plist"];
 	if ((defaultItem = [NSDictionary dictionaryWithContentsOfFile:path]))
 	{
-		NSString *title = nil;
-		NSData *imageData = nil;
-		NSString *URLString = nil;
-		title = [defaultItem objectForKey:kSBBookmarkTitle];
-		imageData = [defaultItem objectForKey:kSBBookmarkImage];
-		URLString = [defaultItem objectForKey:kSBBookmarkURL];
+		NSString *title = defaultItem[kSBBookmarkTitle];
+		NSData *imageData = defaultItem[kSBBookmarkImage];
+		NSString *URLString = defaultItem[kSBBookmarkURL];
 		if (!title) title = NSLocalizedString(@"Untitled", nil);
 		if (!URLString) URLString = @"http://www.example.com/";
 		if (!imageData) imageData = SBEmptyBookmarkImageData();
-		items = [NSArray arrayWithObject:SBCreateBookmarkItem(title, URLString, imageData, [NSDate date], nil, NSStringFromPoint(NSZeroPoint))];
+		items = @[SBCreateBookmarkItem(title, URLString, imageData, [NSDate date], nil, NSStringFromPoint(NSZeroPoint))];
 	}
-	return [items count] > 0 ? SBBookmarksWithItems(items) : nil;
+	return items.count > 0 ? SBBookmarksWithItems(items) : nil;
 }
 
 NSData *SBEmptyBookmarkImageData()
@@ -211,7 +208,7 @@ NSData *SBEmptyBookmarkImageData()
 	CGContextRestoreGState(ctx);
 	CGPathRelease(path);
 	
-	paledImage = [[NSImage imageNamed:@"PaledApplicationIcon"] CGImage];
+	paledImage = [NSImage imageNamed:@"PaledApplicationIcon"].CGImage;
 	if (paledImage)
 	{
 		CGRect r = CGRectZero;
@@ -230,7 +227,7 @@ NSData *SBEmptyBookmarkImageData()
 	{
 		bitmapImageRep = [[NSBitmapImageRep alloc] initWithCGImage:image];
 		CGImageRelease(image);
-		data = [bitmapImageRep data];
+		data = bitmapImageRep.data;
 	}
 	return data;
 }
@@ -240,9 +237,8 @@ NSData *SBEmptyBookmarkImageData()
 NSDictionary *SBBookmarksWithItems(NSArray *items)
 {
 	NSDictionary *info = nil;
-	info = [NSDictionary dictionaryWithObjectsAndKeys:
-			SBBookmarkVersion, kSBBookmarkVersion, 
-			items, kSBBookmarkItems, nil];
+	info = @{kSBBookmarkVersion: SBBookmarkVersion, 
+             kSBBookmarkItems: items};
 	return info;
 }
 
@@ -251,17 +247,17 @@ NSDictionary *SBCreateBookmarkItem(NSString *title, NSString *url, NSData *image
 	NSMutableDictionary *item = nil;
 	item = [NSMutableDictionary dictionaryWithCapacity:0];
 	if (title)
-		[item setObject:title forKey:kSBBookmarkTitle];
+		item[kSBBookmarkTitle] = title;
 	if (url)
-		[item setObject:url forKey:kSBBookmarkURL];
+		item[kSBBookmarkURL] = url;
 	if (imageData)
-		[item setObject:imageData forKey:kSBBookmarkImage];
+		item[kSBBookmarkImage] = imageData;
 	if (date)
-		[item setObject:date forKey:kSBBookmarkDate];
+		item[kSBBookmarkDate] = date;
 	if (labelName)
-		[item setObject:labelName forKey:kSBBookmarkLabelName];
+		item[kSBBookmarkLabelName] = labelName;
 	if (offsetString)
-		[item setObject:offsetString forKey:kSBBookmarkOffset];
+		item[kSBBookmarkOffset] = offsetString;
 	return [item copy];
 }
 
@@ -277,10 +273,10 @@ NSMenu *SBBookmarkLabelColorMenu(BOOL pullsDown, id target, SEL action, id repre
 		NSImage *image = [NSImage colorImage:NSMakeSize(24.0, 16.0) colorName:labelName];
 		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(labelName, nil) action:action keyEquivalent:@""];
 		if (target)
-			[item setTarget:target];
+            item.target = target;
 		if (representedObject)
-			[item setRepresentedObject:representedObject];
-		[item setImage:image];
+            item.representedObject = representedObject;
+        item.image = image;
 		[menu addItem:item];
 	}
 	return menu;
@@ -289,34 +285,34 @@ NSMenu *SBBookmarkLabelColorMenu(BOOL pullsDown, id target, SEL action, id repre
 NSArray *SBBookmarkItemsFromBookmarkDictionaryList(NSArray *bookmarkDictionaryList)
 {
 	NSMutableArray *items = nil;
-	if ([bookmarkDictionaryList count] > 0)
+	if (bookmarkDictionaryList.count > 0)
 	{
 		NSData *emptyImageData = SBEmptyBookmarkImageData();
 		items = [NSMutableArray arrayWithCapacity:0];
 		for (NSDictionary *dictionary in bookmarkDictionaryList)
 		{
-			NSString *type = [dictionary objectForKey:@"WebBookmarkType"];
-			NSString *URLString = [dictionary objectForKey:@"URLString"];
-			NSDictionary *uriDictionary = [dictionary objectForKey:@"URIDictionary"];
-			NSString *title = uriDictionary ? [uriDictionary objectForKey:@"title"] : nil;
+			NSString *type = dictionary[@"WebBookmarkType"];
+			NSString *URLString = dictionary[@"URLString"];
+			NSDictionary *uriDictionary = dictionary[@"URIDictionary"];
+			NSString *title = uriDictionary ? uriDictionary[@"title"] : nil;
 			BOOL hasScheme = NO;
 			if ([type isEqualToString:@"WebBookmarkTypeLeaf"] && [URLString isURLString:&hasScheme])
 			{
 				NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
 				if (!hasScheme)
 				{
-					URLString = [@"http://" stringByAppendingString:[URLString stringByDeletingScheme]];
+					URLString = [@"http://" stringByAppendingString:URLString.stringByDeletingScheme];
 				}
 				if (title)
-					[item setObject:title forKey:kSBBookmarkTitle];
+					item[kSBBookmarkTitle] = title;
 				if (emptyImageData)
-					[item setObject:emptyImageData forKey:kSBBookmarkImage];
-				[item setObject:URLString forKey:kSBBookmarkURL];
+					item[kSBBookmarkImage] = emptyImageData;
+				item[kSBBookmarkURL] = URLString;
 				[items addObject:[item copy]];
 			}
 		}
 	}
-	return [items count] > 0 ? [items copy] : nil;
+	return items.count > 0 ? [items copy] : nil;
 }
 
 #pragma mark Rects
@@ -332,8 +328,8 @@ NSString *SBFilePathInApplicationBundle(NSString *name, NSString *ext)
 {
 	NSString *path = nil;
 	NSFileManager *manager = nil;
-	manager = [NSFileManager defaultManager];
-	path = [[NSBundle mainBundle] pathForResource:name ofType:ext];
+	manager = NSFileManager.defaultManager;
+	path = [NSBundle.mainBundle pathForResource:name ofType:ext];
 	if (![manager fileExistsAtPath:path])
 	{
 		path = nil;
@@ -357,7 +353,7 @@ NSString *SBSearchFileInDirectory(NSString *filename, NSString *directoryPath)
 	if (directoryPath)
 	{
 		NSString *findFileName = nil;
-		NSFileManager *manager = [NSFileManager defaultManager];
+		NSFileManager *manager = NSFileManager.defaultManager;
 		NSArray *contents = [manager contentsOfDirectoryAtPath:directoryPath error:nil];
 		for (NSString *file in contents)
 		{
@@ -380,9 +376,9 @@ NSString *SBSearchPath(NSSearchPathDirectory searchPathDirectory, NSString *subd
 	NSString *path = nil;
     NSArray *paths = nil;
 	NSFileManager *manager = nil;
-	manager = [NSFileManager defaultManager];
+	manager = NSFileManager.defaultManager;
 	paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, NSUserDomainMask, YES);
-    path = [paths count] > 0 ? [paths objectAtIndex:0] : nil;
+    path = paths.count > 0 ? paths[0] : nil;
 	if ([manager fileExistsAtPath:path])
 	{
 		if (subdirectory)
@@ -413,7 +409,7 @@ NSString *SBBookmarksFilePath()
 {
 	NSString *path = nil;
 	NSFileManager *manager = nil;
-	manager = [NSFileManager defaultManager];
+	manager = NSFileManager.defaultManager;
 	path = [SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName) stringByAppendingPathComponent:kSBBookmarksFileName];
 	if ([manager fileExistsAtPath:path])
 	{
@@ -468,7 +464,7 @@ NSString *SBBookmarksVersion1FilePath()
 {
 	NSString *path = nil;
 	NSFileManager *manager = nil;
-	manager = [NSFileManager defaultManager];
+	manager = NSFileManager.defaultManager;
 	path = [SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName_Version1) stringByAppendingPathComponent:kSBBookmarksFileName];
 	if ([manager fileExistsAtPath:path])
 	{
@@ -948,19 +944,19 @@ void SBDrawRadialGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat l
 
 void SBGetAlternateSelectedLightControlColorComponents(CGFloat colors[4])
 {
-	NSColor *selectedDarkColor = [[[NSColor alternateSelectedControlColor] blendedColorWithFraction:0.3 ofColor:[NSColor whiteColor]] colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+	NSColor *selectedDarkColor = [[NSColor.alternateSelectedControlColor blendedColorWithFraction:0.3 ofColor:NSColor.whiteColor] colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
 	[selectedDarkColor getComponents:colors];
 }
 
 void SBGetAlternateSelectedControlColorComponents(CGFloat colors[4])
 {
-	NSColor *selectedColor = [[NSColor alternateSelectedControlColor] colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+	NSColor *selectedColor = [NSColor.alternateSelectedControlColor colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
 	[selectedColor getComponents:colors];
 }
 
 void SBGetAlternateSelectedDarkControlColorComponents(CGFloat colors[4])
 {
-	NSColor *selectedDarkColor = [[[NSColor alternateSelectedControlColor] blendedColorWithFraction:0.3 ofColor:[NSColor blackColor]] colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+	NSColor *selectedDarkColor = [[NSColor.alternateSelectedControlColor blendedColorWithFraction:0.3 ofColor:NSColor.blackColor] colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
 	[selectedDarkColor getComponents:colors];
 }
 
@@ -1157,12 +1153,12 @@ CGImageRef SBZoomOutIconImage(CGSize size)
 	CGColorSpaceRelease(colorSpace);
 	
 	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:bctx];
+    NSGraphicsContext.currentContext = bctx;
 	
 	// Frame
 	if (frameImage)
 	{
-		r.size = [frameImage size];
+		r.size = frameImage.size;
 		r.origin.x = (size.width - r.size.width) / 2;
 		r.origin.y = (size.height - r.size.height) / 2;
 		[frameImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
@@ -1171,7 +1167,7 @@ CGImageRef SBZoomOutIconImage(CGSize size)
 	// Image
 	if (iconImage)
 	{
-		r.size = [iconImage size];
+		r.size = iconImage.size;
 		r.origin.x = (size.width - r.size.width) / 2;
 		r.origin.y = (size.height - r.size.height) / 2;
 		[iconImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
@@ -1198,12 +1194,12 @@ CGImageRef SBActualSizeIconImage(CGSize size)
 	CGColorSpaceRelease(colorSpace);
 	
 	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:bctx];
+    NSGraphicsContext.currentContext = bctx;
 	
 	// Frame
 	if (frameImage)
 	{
-		r.size = [frameImage size];
+		r.size = frameImage.size;
 		r.origin.x = (size.width - r.size.width) / 2;
 		r.origin.y = (size.height - r.size.height) / 2;
 		[frameImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
@@ -1212,11 +1208,11 @@ CGImageRef SBActualSizeIconImage(CGSize size)
 	// Image
 	if (iconImage)
 	{
-		r.size = [iconImage size];
+		r.size = iconImage.size;
 		r.origin.x = (size.width - r.size.width) / 2;
 		r.origin.y = (size.height - r.size.height) / 2;
 		[NSGraphicsContext saveGraphicsState];
-		[NSGraphicsContext setCurrentContext:bctx];
+        NSGraphicsContext.currentContext = bctx;
 		[iconImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 	}
 	[NSGraphicsContext restoreGraphicsState];
@@ -1241,12 +1237,12 @@ CGImageRef SBZoomInIconImage(CGSize size)
 	CGColorSpaceRelease(colorSpace);
 	
 	[NSGraphicsContext saveGraphicsState];
-	[NSGraphicsContext setCurrentContext:bctx];
+    NSGraphicsContext.currentContext = bctx;
 	
 	// Frame
 	if (frameImage)
 	{
-		r.size = [frameImage size];
+		r.size = frameImage.size;
 		r.origin.x = (size.width - r.size.width) / 2;
 		r.origin.y = (size.height - r.size.height) / 2;
 		[frameImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
@@ -1255,11 +1251,11 @@ CGImageRef SBZoomInIconImage(CGSize size)
 	// Image
 	if (iconImage)
 	{
-		r.size = [iconImage size];
+		r.size = iconImage.size;
 		r.origin.x = (size.width - r.size.width) / 2;
 		r.origin.y = (size.height - r.size.height) / 2;
 		[NSGraphicsContext saveGraphicsState];
-		[NSGraphicsContext setCurrentContext:bctx];
+        NSGraphicsContext.currentContext = bctx;
 		[iconImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 	}
 	[NSGraphicsContext restoreGraphicsState];
@@ -1471,7 +1467,7 @@ CGImageRef SBCloseIconImage()
 
 CGImageRef SBIconImageWithName(NSString *imageName, SBButtonShape shape, CGSize size)
 {
-	return SBIconImage([[NSImage imageNamed:imageName] CGImage], shape, size);
+	return SBIconImage([NSImage imageNamed:imageName].CGImage, shape, size);
 }
 
 CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size)
@@ -1874,21 +1870,19 @@ id SBValueForKey(NSString *keyName, NSDictionary *dictionary)
 {
 	id value = nil;
 	
-	value = [dictionary objectForKey:keyName];
+	value = dictionary[keyName];
 	if (value == nil) {
 		int i;
-		for (i = 0; i < [[dictionary allValues] count]; i++)
+		for (id object in dictionary.allValues)
 		{
-			id object = nil;
-			object = [[dictionary allValues] objectAtIndex:i];
-			if ([object isKindOfClass:[NSDictionary class]]) {
+			if ([object isKindOfClass:NSDictionary.class]) {
 				value = SBValueForKey(keyName, object);
 			}
 		}
 	}
-	else if ([value isKindOfClass:[NSDictionary class]])
+	else if ([value isKindOfClass:NSDictionary.class])
 	{
-		value = [[value allValues] objectAtIndex:0];
+		value = ((NSDictionary *)value).allValues[0];
 	}
 	return value;
 }
@@ -1899,13 +1893,13 @@ NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
 	NSArray *encs = nil;
 	NSMutableArray *mencs = [NSMutableArray arrayWithCapacity:0];
 #if kSBFlagShowAllStringEncodings
-    const NSStringEncoding *encoding = [NSString availableStringEncodings];
+    const NSStringEncoding *encoding = NSString.availableStringEncodings;
 	NSData *hint = nil;
 	
 	// Get available encodings
     while (*encoding)
 	{
-		[mencs addObject:[NSNumber numberWithUnsignedInteger:*encoding]];
+		[mencs addObject:@(*encoding)];
 		encoding++;
 	}
 	
@@ -1917,7 +1911,7 @@ NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
 	// Get available encodings
     while (*encoding)	// Continue while encoding is NULL
 	{
-		[mencs addObject:[NSNumber numberWithUnsignedInteger:*encoding]];
+		[mencs addObject:@(*encoding)];
 		encoding++;
 	}
 	encs = [mencs copy];
@@ -1926,24 +1920,24 @@ NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
 	// Create menu items
 	for (NSNumber *enc in encs)
 	{
-		NSStringEncoding stringEncoding = [enc unsignedIntegerValue];
+		NSStringEncoding stringEncoding = enc.unsignedIntegerValue;
 		if (stringEncoding == NSNotFound)
 		{
-			[menu addItem:[NSMenuItem separatorItem]];
+			[menu addItem:NSMenuItem.separatorItem];
 		}
 		else {
 			NSString *encodingName = nil;
 			NSString *ianaName = nil;
 			encodingName = [NSString localizedNameOfStringEncoding:stringEncoding];
-			ianaName = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding([enc unsignedIntegerValue]));
-			DebugLog(@"%d\t%d\t%@\t%@\t%@", CFStringIsEncodingAvailable(CFStringConvertNSStringEncodingToEncoding([enc unsignedIntegerValue])), stringEncoding, encodingName, (NSString *)CFStringGetNameOfEncoding(CFStringConvertNSStringEncodingToEncoding([enc unsignedIntegerValue])), ianaName);
+			ianaName = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(enc.unsignedIntegerValue));
+			DebugLog(@"%d\t%lu\t%@\t%@\t%@", CFStringIsEncodingAvailable(CFStringConvertNSStringEncodingToEncoding(enc.unsignedIntegerValue)), (unsigned long)stringEncoding, encodingName, (NSString *)CFStringGetNameOfEncoding(CFStringConvertNSStringEncodingToEncoding(enc.unsignedIntegerValue)), ianaName);
 			if (encodingName)
 			{
 				NSMenuItem *item = nil;
 				item = [[NSMenuItem alloc] initWithTitle:encodingName action:selector keyEquivalent:@""];
 				if (target)
-					[item setTarget:target];
-				[item setRepresentedObject:ianaName];
+                    item.target = target;
+                item.representedObject = ianaName;
 				[menu addItem:item];
 			}
 		}
@@ -1953,9 +1947,9 @@ NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
 		NSMenuItem *defaultItem = nil;
 		defaultItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Default", nil) action:selector keyEquivalent:@""];
 		if (target)
-			[defaultItem setTarget:target];
-		[defaultItem setRepresentedObject:nil];
-		[menu insertItem:[NSMenuItem separatorItem] atIndex:0];
+            defaultItem.target = target;
+        defaultItem.representedObject = nil;
+		[menu insertItem:NSMenuItem.separatorItem atIndex:0];
 		[menu insertItem:defaultItem atIndex:0];
 	}
 	return menu;
@@ -1994,7 +1988,7 @@ void SBRunAlertWithMessage(NSString *message)
 void SBDisembedViewInSplitView(NSView *view, NSSplitView *splitView)
 {
 	NSRect r = splitView.frame;
-	id superview = [splitView superview];
+	id superview = splitView.superview;
 	if (superview)
 	{
 		view.frame = r;
@@ -2016,20 +2010,20 @@ BOOL SBAllowsDrag(NSPoint downPoint, NSPoint dragPoint)
 
 void SBLocalizeTitlesInMenu(NSMenu *menu)
 {
-	NSString *mtitle = [menu title];
+	NSString *mtitle = menu.title;
 	NSString *mlocalizedTitle = NSLocalizedString(mtitle, nil);
 	if (![mtitle isEqualToString:mlocalizedTitle])
 	{
-		[menu setTitle:mlocalizedTitle];
+        menu.title = mlocalizedTitle;
 	}
-	for (NSMenuItem *item in [menu itemArray])
+	for (NSMenuItem *item in menu.itemArray)
 	{
-		NSMenu *submenu = [item submenu];
-		NSString *title = [item title];
+		NSMenu *submenu = item.submenu;
+		NSString *title = item.title;
 		NSString *localizedTitle = NSLocalizedString(title, nil);
 		if (![title isEqualToString:localizedTitle])
 		{
-			[item setTitle:localizedTitle];
+            item.title = localizedTitle;
 		}
 		if (submenu)
 		{
@@ -2048,13 +2042,13 @@ void SBGetLocalizableTextSet(NSString *path, NSMutableArray **tSet, NSArray **fS
 	
 	localizableString = [NSString stringWithContentsOfFile:path encoding:NSUTF16StringEncoding error:&error];
 	
-	if ([localizableString length] > 0)
+	if (localizableString.length > 0)
 	{
 		NSSize fieldSize = NSMakeSize(300, 22);
 		NSPoint offset = NSMakePoint(45, 12);
 		CGFloat margin = 20;
 		NSArray *lines = [localizableString componentsSeparatedByString:@"\n"];
-		NSInteger count = [lines count];
+		NSInteger count = lines.count;
 		
 		size.width = offset.x + fieldSize.width * 2 + margin * 2;
 		size.height = (fieldSize.height + offset.y) * count + offset.y + margin * 2;
@@ -2077,7 +2071,7 @@ void SBGetLocalizableTextSet(NSString *path, NSMutableArray **tSet, NSArray **fS
 				
 				for (NSString *component in components)
 				{
-					if ([component length] > 0)
+					if (component.length > 0)
 					{
 						NSTextField *field = nil;
 						BOOL isMenuitem = ![component hasPrefix:@"//"];
@@ -2085,12 +2079,12 @@ void SBGetLocalizableTextSet(NSString *path, NSMutableArray **tSet, NSArray **fS
 						NSString *string = component;
 						fieldRect.origin.x = j * (fieldSize.width + offset.x);
 						field = [[NSTextField alloc] initWithFrame:fieldRect];
-						[field setEditable:editable];
-						[field setSelectable:isMenuitem];
-						[field setBordered:isMenuitem];
-						[field setDrawsBackground:isMenuitem];
-						[field setBezeled:editable];
-						[[field cell] setScrollable:isMenuitem];
+                        field.editable = editable;
+                        field.selectable = isMenuitem;
+                        field.bordered = isMenuitem;
+                        field.drawsBackground = isMenuitem;
+                        field.bezeled = editable;
+						[field.cell setScrollable:isMenuitem];
 						if (isMenuitem)
 						{
 							string = [component stringByDeletingQuotations];
@@ -2100,11 +2094,11 @@ void SBGetLocalizableTextSet(NSString *path, NSMutableArray **tSet, NSArray **fS
 					}
 					j++;
 				}
-				if ([texts count] >= 1)
+				if (texts.count >= 1)
 				{
 					[textSet addObject:texts];
 				}
-				if ([fields count] >= 1)
+				if (fields.count >= 1)
 				{
 					[fieldSet addObject:fields];
 				}
@@ -2130,8 +2124,8 @@ NSData *SBLocalizableStringsData(NSArray *fieldSet)
 		NSString *text1 = nil;
 		if ([fields count] == 1)
 		{
-			field0 = [fields objectAtIndex:0];
-			text0 = field0 ? [field0 stringValue] : nil;
+			field0 = fields[0];
+			text0 = field0 ? field0.stringValue : nil;
 			if (text0)
 			{
 				[string appendFormat:@"\n%@\n", text0];
@@ -2139,10 +2133,10 @@ NSData *SBLocalizableStringsData(NSArray *fieldSet)
 		}
 		else if ([fields count] == 2)
 		{
-			field0 = [fields objectAtIndex:0];
-			field1 = [fields objectAtIndex:1];
-			text0 = field0 ? [field0 stringValue] : nil;
-			text1 = field1 ? [field1 stringValue] : nil;
+			field0 = fields[0];
+			field1 = fields[1];
+			text0 = field0 ? field0.stringValue : nil;
+			text1 = field1 ? field1.stringValue : nil;
 			if (text0 && text1)
 			{
 				[string appendFormat:@"\"%@\" = \"%@\";\n", text0, text1];
@@ -2161,23 +2155,21 @@ NSData *SBLocalizableStringsData(NSArray *fieldSet)
 NSDictionary *SBDebugViewStructure(NSView *view)
 {
 	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-	NSArray *subviews = [view subviews];
+	NSArray *subviews = view.subviews;
 	NSString *description = nil;
-	NSUInteger count = [subviews count];
-	if ([view isKindOfClass:[SBView class]])
-		description = [view description];
+	if ([view isKindOfClass:SBView.class])
+		description = view.description;
 	else
-		description = [NSString stringWithFormat:@"%@ %@", view, NSStringFromRect([view frame])];
-	[info setObject:description forKey:@"Description"];
-	if (count > 0)
+		description = [NSString stringWithFormat:@"%@ %@", view, NSStringFromRect(view.frame)];
+	info[@"Description"] = description;
+	if (subviews.count > 0)
 	{
 		NSMutableArray *childs = [NSMutableArray arrayWithCapacity:0];
-		for (NSUInteger i = 0; i < count; i++)
+		for (id subview in subviews)
 		{
-			id subview = [subviews objectAtIndex:i];
 			[childs addObject:SBDebugViewStructure(subview)];
 		}
-		[info setObject:[childs copy] forKey:@"Children"];
+		info[@"Children"] = [childs copy];
 	}
 	return [info copy];
 }
@@ -2185,66 +2177,61 @@ NSDictionary *SBDebugViewStructure(NSView *view)
 NSDictionary *SBDebugLayerStructure(CALayer *layer)
 {
 	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-	NSArray *sublayers = [layer sublayers];
+	NSArray *sublayers = layer.sublayers;
 	NSString *description = nil;
-	NSUInteger count = [sublayers count];
 	description = [NSString stringWithFormat:@"%@ %@", layer, NSStringFromRect(NSRectFromCGRect([layer frame]))];
-	[info setObject:description forKey:@"Description"];
-	if (count > 0)
+	info[@"Description"] = description;
+	if (sublayers.count > 0)
 	{
 		NSMutableArray *childs = [NSMutableArray arrayWithCapacity:0];
-		for (NSUInteger i = 0; i < count; i++)
+		for (id sublayer in sublayers)
 		{
-			id sublayer = [sublayers objectAtIndex:i];
 			[childs addObject:SBDebugLayerStructure(sublayer)];
 		}
-		[info setObject:[childs copy] forKey:@"Children"];
+		info[@"Children"] = [childs copy];
 	}
 	return [info copy];
 }
 
 NSDictionary *SBDebugDumpMainMenu()
 {
-	NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-	NSArray *items = SBDebugDumpMenu([[NSApplication sharedApplication] mainMenu]);
-	[info setObject:items forKey:@"MenuItems"];
-	return [info copy];
+    return @{@"MenuItems": SBDebugDumpMenu(NSApplication.sharedApplication.mainMenu)};
 }
 
 NSArray *SBDebugDumpMenu(NSMenu *menu)
 {
 	NSMutableArray *items = [NSMutableArray arrayWithCapacity:0];
-	for (NSMenuItem *item in [menu itemArray])
+	for (NSMenuItem *item in menu.itemArray)
 	{
 		NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-		NSMenu *submenu = [item submenu];
-		NSString *title = [item title];
-		id target = [item target];
-		SEL action = [item action];
-		NSInteger tag = [item tag];
-		NSInteger state = [item state];
-		NSImage *image = [item image];
-		NSString *keyEquivalent = [item keyEquivalent];
-		NSUInteger keyEquivalentModifierMask = [item keyEquivalentModifierMask];
-		NSString *toolTip = [item toolTip];
+		NSMenu *submenu = item.submenu;
+		NSString *title = item.title;
+		id target = item.target;
+		SEL action = item.action;
+		NSInteger tag = item.tag;
+		NSInteger state = item.state;
+		NSImage *image = item.image;
+		NSString *keyEquivalent = item.keyEquivalent;
+		NSUInteger keyEquivalentModifierMask = item.keyEquivalentModifierMask;
+		NSString *toolTip = item.toolTip;
 		if (title)
-			[info setObject:title forKey:@"Title"];
+			info[@"Title"] = title;
 		if (target)
-			[info setObject:[NSString stringWithFormat:@"%@", target] forKey:@"Target"];
+			info[@"Target"] = [NSString stringWithFormat:@"%@", target];
 		if (action)
-			[info setObject:NSStringFromSelector(action) forKey:@"Action"];
-		[info setObject:[NSNumber numberWithInteger:tag] forKey:@"Tag"];
-		[info setObject:[NSNumber numberWithInteger:state] forKey:@"State"];
+			info[@"Action"] = NSStringFromSelector(action);
+		info[@"Tag"] = @(tag);
+		info[@"State"] = @(state);
 		if (image)
-			[info setObject:[image TIFFRepresentation] forKey:@"Image"];
+			info[@"Image"] = image.TIFFRepresentation;
 		if (keyEquivalent)
-			[info setObject:keyEquivalent forKey:@"KeyEquivalent"];
-		[info setObject:[NSNumber numberWithUnsignedInteger:keyEquivalentModifierMask] forKey:@"KeyEquivalentModifierMask"];
+			info[@"KeyEquivalent"] = keyEquivalent;
+		info[@"KeyEquivalentModifierMask"] = @(keyEquivalentModifierMask);
 		if (toolTip)
-			[info setObject:toolTip forKey:@"ToolTip"];
+			info[@"ToolTip"] = toolTip;
 		if (submenu)
 		{
-			[info setObject:SBDebugDumpMenu(submenu) forKey:@"MenuItems"];
+			info[@"MenuItems"] = SBDebugDumpMenu(submenu);
 		}
 		[items addObject:[info copy]];
 	}

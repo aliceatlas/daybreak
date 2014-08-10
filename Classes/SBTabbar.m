@@ -34,13 +34,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize delegate;
 @dynamic selectedTabbarItem;
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super initWithFrame:NSZeroRect])
 	{
 		[self constructContentView];
 		[self constructItems];
-		[self registerForDraggedTypes:[NSArray arrayWithObjects:SBBookmarkPboardType, NSURLPboardType, NSFilenamesPboardType, nil]];
+		[self registerForDraggedTypes:@[SBBookmarkPboardType, NSURLPboardType, NSFilenamesPboardType]];
 		_animating = NO;
 	}
 	return self;
@@ -76,10 +76,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	BOOL r = NO;
 	NSRect bounds = self.bounds;
-	CGFloat itemWidth = [self itemWidth];
-	CGFloat itemMinWidth = [self itemMinimumWidth];
-	CGFloat width = bounds.size.width - [self addButtonWidth];
-	NSInteger count = [items count];
+	CGFloat itemWidth = self.itemWidth;
+	CGFloat itemMinWidth = self.itemMinimumWidth;
+	CGFloat width = bounds.size.width - self.addButtonWidth;
+	NSInteger count = items.count;
 	r = ((count * itemWidth) > width) && ((width / count) < itemMinWidth);
 	return r;
 }
@@ -91,23 +91,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (CGFloat)innerWidth
 {
-	return self.bounds.size.width - [self addButtonWidth];
+	return self.bounds.size.width - self.addButtonWidth;
 }
 
 - (NSRect)addButtonRect
 {
-	return [self addButtonRect:[items count]];
+	return [self addButtonRect:items.count];
 }
 
 - (NSRect)addButtonRect:(NSInteger)count
 {
 	NSRect r = NSZeroRect;
-	CGFloat itemWidth = [self itemWidth];
-	CGFloat itemMinWidth = [self itemMinimumWidth];
-	CGFloat width = [self innerWidth];
+	CGFloat itemWidth = self.itemWidth;
+	CGFloat itemMinWidth = self.itemMinimumWidth;
+	CGFloat width = self.innerWidth;
 	if ((count * itemWidth) > width)
 	{
-		CGFloat w = (width / count);
+		CGFloat w = width / count;
 		itemWidth = w < itemMinWidth ? itemMinWidth : w;
 	}
 	r.size.width = [self addButtonWidth];
@@ -118,21 +118,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSRect)newItemRect
 {
-	return [self itemRectAtIndex:[items count]];
+	return [self itemRectAtIndex:items.count];
 }
 
 - (NSRect)itemRectAtIndex:(NSInteger)index
 {
 	NSRect r = NSZeroRect;
-	CGFloat itemWidth = [self itemWidth];
-	CGFloat itemMinWidth = [self itemMinimumWidth];
-	CGFloat width = [self innerWidth];
-	NSInteger count = [items count];
+	CGFloat itemWidth = self.itemWidth;
+	CGFloat itemMinWidth = self.itemMinimumWidth;
+	CGFloat width = self.innerWidth;
+	NSInteger count = items.count;
 	if (index >= count)
 		count += 1;
 	if ((count * itemWidth) > width)
 	{
-		CGFloat w = (width / count);
+		CGFloat w = width / count;
 		itemWidth = w < itemMinWidth ? itemMinWidth : w;
 	}
 	r.size.width = itemWidth;
@@ -144,7 +144,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSInteger)indexForPoint:(NSPoint)point rect:(NSRect *)rect
 {
 	NSInteger index = NSNotFound;
-	NSInteger count = [items count];
+	NSInteger count = items.count;
 	for (index = 0; index < count; index++)
 	{
 		NSRect r = [self itemRectAtIndex:index];
@@ -199,7 +199,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (_draggedItem)
 	{
 		// Needs display dragged item
-		[_draggedItem setNeedsDisplay:YES];
+        _draggedItem.needsDisplay = YES;
 	}
 	return progress;
 }
@@ -225,10 +225,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (toolbarVisible != isToolbarVisible)
 	{
 		toolbarVisible = isToolbarVisible;
-		[self setNeedsDisplay:YES];
-		if ([[self subviews] count] > 0)
+        self.needsDisplay = YES;
+		if (self.subviews.count > 0)
 		{
-			for (NSView *subview in [self subviews])
+			for (NSView *subview in self.subviews)
 			{
 				if ([subview respondsToSelector:@selector(setToolbarVisible:)])
 				{
@@ -308,7 +308,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructAddButton
 {
-	NSRect r = [self addButtonRect];
+	NSRect r = self.addButtonRect;
 	[self destructAddButton];
 	addButton = [[SBButton alloc] initWithFrame:r];
 	addButton.image = [NSImage imageWithCGImage:SBAddIconImage(NSSizeToCGSize(r.size), NO)];
@@ -429,7 +429,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)selectItem:(SBTabbarItem *)item
 {
-	if ([items count] > 0)
+	if (items.count > 0)
 	{
 		BOOL changed = NO;
 		for (SBTabbarItem *anItem in items)
@@ -459,20 +459,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)selectItemForIndex:(NSUInteger)index
 {
 	SBTabbarItem *item = nil;
-	NSUInteger count = [items count];
+	NSUInteger count = items.count;
 	if (index == 0)
 	{
 		if (count > 0)
 		{
-			item = [items objectAtIndex:index];
+			item = items[index];
 		}
 	}
 	else if (index == count)
 	{
-		item = [items objectAtIndex:index - 1];
+		item = items[index - 1];
 	}
 	else {
-		item = [items objectAtIndex:index];
+		item = items[index];
 	}
 	if (item)
 	{
@@ -482,9 +482,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)selectLastItem
 {
-	if ([items count] > 0)
+	if (items.count > 0)
 	{
-		[self selectItem:[items lastObject]];
+		[self selectItem:items.lastObject];
 	}
 	else {
 		NSBeep();
@@ -493,7 +493,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)selectPreviousItem
 {
-	if ([items count] > 0)
+	if (items.count > 0)
 	{
 		SBTabbarItem *prevItem = nil;
 		for (SBTabbarItem *item in items)
@@ -505,7 +505,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			prevItem = item;
 		}
 		if (!prevItem)
-			prevItem = [items lastObject];
+			prevItem = items.lastObject;
 		[self selectItem:prevItem];
 	}
 	else {
@@ -515,7 +515,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)selectNextItem
 {
-	if ([items count] > 0)
+	if (items.count > 0)
 	{
 		SBTabbarItem *item = nil;
 		BOOL find = NO;
@@ -533,7 +533,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			}
 		}
 		if (!item)
-			item = [items objectAtIndex:0];
+			item = items[0];
 		[self selectItem:item];
 	}
 	else {
@@ -543,9 +543,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)closeItem:(SBTabbarItem *)item
 {
-	if ([items count] > 0)
+	if (items.count > 0)
 	{
-		BOOL shouldSelect = (item.selected);
+		BOOL shouldSelect = item.selected;
 		NSString *itemIdentifier = [item.identifier copy];
 		NSUInteger index = [items indexOfObject:item];
 		if ([self removeItem:item])
@@ -565,7 +565,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)closeSelectedItem
 {
-	if ([items count] > 0)
+	if (items.count > 0)
 	{
 		for (SBTabbarItem *item in items)
 		{
@@ -588,7 +588,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)closeItemFromMenu:(NSMenuItem *)menuItem
 {
-	SBTabbarItem *item = [items objectAtIndex:[menuItem tag]];
+	SBTabbarItem *item = items[menuItem.tag];
 	if (item)
 	{
 		[self closeItem:item];
@@ -597,9 +597,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)closeOtherItemsFromMenu:(NSMenuItem *)menuItem
 {
-	for (SBTabbarItem *item in [items reverseObjectEnumerator])
+	for (SBTabbarItem *item in items.reverseObjectEnumerator)
 	{
-		if ([items indexOfObject:item] != [menuItem tag])
+		if ([items indexOfObject:item] != menuItem.tag)
 		{
 			[self closeItem:item];
 		}
@@ -608,7 +608,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)reloadItemFromMenu:(NSMenuItem *)menuItem
 {
-	SBTabbarItem *item = [items objectAtIndex:[menuItem tag]];
+	SBTabbarItem *item = items[menuItem.tag];
 	if (item)
 	{
 		[self executeShouldReloadItem:item];
@@ -617,29 +617,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)layout
 {
-	BOOL filled = [self filled];
-	NSRect bounds = self.bounds;
-	NSSize size = bounds.size;
-	if (filled)
+	NSSize size = self.bounds.size;
+	if (self.filled)
 	{
-		CGFloat itemMinWidth = [self itemMinimumWidth];
-		NSInteger count = [items count];
-		size.width = itemMinWidth * count + [self addButtonWidth];
-		[contentView setAutoresizingMask:(NSViewMinYMargin)];
+		CGFloat itemMinWidth = self.itemMinimumWidth;
+		NSInteger count = items.count;
+		size.width = itemMinWidth * count + self.addButtonWidth;
+        contentView.autoresizingMask = NSViewMinYMargin;
 	}
 	else {
-		[contentView setFrameOrigin:NSZeroPoint];
-		[contentView setAutoresizingMask:(NSViewWidthSizable | NSViewMinYMargin)];
+        contentView.frameOrigin = NSZeroPoint;
+        contentView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
 	}
-	[contentView setFrameSize:size];
+	contentView.frameSize = size;
 }
 
 - (void)scroll:(CGFloat)deltaX
 {
-	if ([self filled])
+	if (self.filled)
 	{
 		NSRect bounds = self.bounds;
-		NSRect contentRect = [contentView frame];
+		NSRect contentRect = contentView.frame;
 		CGFloat x = (contentRect.origin.x + deltaX);
 		if (x > 0)
 			contentRect.origin.x = 0;
@@ -647,7 +645,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			contentRect.origin.x = (bounds.size.width - contentRect.size.width);
 		else
 			contentRect.origin.x = x;
-		[contentView setFrame:contentRect];
+        contentView.frame = contentRect;
 	}
 }
 
@@ -680,12 +678,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)autoScroll:(NSEvent *)theEvent
 {
 	[self destructAutoScrollTimer];
-	if ([self filled])
+	if (self.filled)
 	{
 		NSDictionary *userInfo = nil;
 		NSPoint point = NSZeroPoint;
-		userInfo = [NSDictionary dictionaryWithObject:theEvent forKey:@"Event"];
-		point = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		userInfo = @{@"Event": theEvent};
+		point = [self convertPoint:theEvent.locationInWindow fromView:nil];
 		if ([self autoScrollWithPoint:point])
 		{
 			autoScrollTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(mouseDraggedWithTimer:) userInfo:userInfo repeats:YES];
@@ -695,13 +693,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)mouseDraggedWithTimer:(NSTimer *)timer
 {
-	NSEvent *theEvent = [[timer userInfo] objectForKey:@"Event"];
+	NSEvent *theEvent = timer.userInfo[@"Event"];
 	[self mouseDragged:theEvent];
 }
 
 - (BOOL)canClosable
 {
-	return [items count] > 1;
+	return items.count > 1;
 }
 
 - (void)constructClosableTimerForItem:(SBTabbarItem *)item
@@ -739,8 +737,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSRect r = NSZeroRect;
 	NSInteger index = 0;
-	NSEvent *currentEvent = [[NSApplication sharedApplication] currentEvent];
-	NSPoint location = [currentEvent locationInWindow];
+	NSEvent *currentEvent = NSApplication.sharedApplication.currentEvent;
+	NSPoint location = currentEvent.locationInWindow;
 	for (SBTabbarItem *item in items)
 	{
 		// Update frame of item
@@ -750,18 +748,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			item.frame = r;
 		}
 		else {
-			[item setNeedsDisplay:YES];
+            item.needsDisplay = YES;
 		}
 		if (_draggedItem)
 		{
 			// Ignore while dragging
 		}
 		else {
-			if ([self canClosable])
+			if (self.canClosable)
 			{
 				// If the mouse is entered in the closable rect, make a tabbar item closable
 				NSPoint point = [item convertPoint:location fromView:nil];
-				if (CGRectContainsPoint([item closableRect], NSPointToCGPoint(point)))
+				if (CGRectContainsPoint(item.closableRect, NSPointToCGPoint(point)))
 				{
 					[self constructClosableTimerForItem:item];
 				}
@@ -769,7 +767,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 		index++;
 	}
-	addButton.frame = [self addButtonRect];
+	addButton.frame = self.addButtonRect;
 	addButton.pressed = NO;
 	[self layout];
 }
@@ -779,7 +777,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect r = NSZeroRect;
 	NSInteger index = 0;
 	NSMutableArray *animations = [NSMutableArray arrayWithCapacity:0];
-	NSMutableDictionary *info = nil;
 	
 	for (SBTabbarItem *item in items)
 	{
@@ -791,32 +788,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 		if (!NSEqualRects(item.frame, r) && !_animating)
 		{
-			info = [NSMutableDictionary dictionaryWithCapacity:0];
-			[info setObject:item forKey:NSViewAnimationTargetKey];
-			[info setObject:[NSValue valueWithRect:item.frame] forKey:NSViewAnimationStartFrameKey];
-			[info setObject:[NSValue valueWithRect:r] forKey:NSViewAnimationEndFrameKey];
-			[animations addObject:[info copy]];
+            [animations addObject:
+                @{NSViewAnimationTargetKey: item,
+                  NSViewAnimationStartFrameKey: [NSValue valueWithRect:item.frame],
+                  NSViewAnimationEndFrameKey: [NSValue valueWithRect:r]}];
 		}
 		else {
-			[item setNeedsDisplay:YES];
+            item.needsDisplay = YES;
 		}
 		index++;
 	}
 	r = [self addButtonRect:index];
 	if (!NSEqualRects(addButton.frame, r) && !_animating)
 	{
-		info = [NSMutableDictionary dictionaryWithCapacity:0];
-		[info setObject:addButton forKey:NSViewAnimationTargetKey];
-		[info setObject:[NSValue valueWithRect:addButton.frame] forKey:NSViewAnimationStartFrameKey];
-		[info setObject:[NSValue valueWithRect:r] forKey:NSViewAnimationEndFrameKey];
-		[animations addObject:[info copy]];
+        [animations addObject:
+         @{NSViewAnimationTargetKey: addButton,
+           NSViewAnimationStartFrameKey: [NSValue valueWithRect:addButton.frame],
+           NSViewAnimationEndFrameKey: [NSValue valueWithRect:r]}];
 	}
 	
 	if ([animations count] > 0 && !_animating)
 	{
 		NSViewAnimation *animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
-		[animation setDuration:0.25];
-		[animation setDelegate:self];
+        animation.duration = 0.25;
+        animation.delegate = self;
 		[animation startAnimation];
 	}
 }
@@ -836,10 +831,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)performDragOperation:(id<NSDraggingInfo>)sender
 {
 	BOOL r = YES;
-	NSPasteboard *pasteboard = [sender draggingPasteboard];
-	NSArray *types = [pasteboard types];
+	NSPasteboard *pasteboard = sender.draggingPasteboard;
+	NSArray *types = pasteboard.types;
 	NSArray *pbItems = [pasteboard propertyListForType:SBBookmarkPboardType];
-	NSPoint point = [contentView convertPoint:[sender draggingLocation] fromView:nil];
+	NSPoint point = [contentView convertPoint:sender.draggingLocation fromView:nil];
 	
 	if ([types containsObject:SBBookmarkPboardType] && [pbItems count] > 0)
 	{
@@ -847,21 +842,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		urls = [NSMutableArray arrayWithCapacity:0];
 		for (NSDictionary *item in pbItems)
 		{
-			NSString *urlString = [item objectForKey:kSBBookmarkURL];
-			NSURL *url = [urlString length] ? [NSURL URLWithString:urlString] : nil;
+			NSString *urlString = item[kSBBookmarkURL];
+			NSURL *url = urlString.length ? [NSURL URLWithString:urlString] : nil;
 			if (url)
 			{
 				[urls addObject:url];
 			}
 		}
-		if ([urls count] > 0)
+		if (urls.count > 0)
 		{
-			if ([urls count] == 1)
+			if (urls.count == 1)
 			{
 				SBTabbarItem *item = nil;
 				if ((item = [self itemAtPoint:point]))
 				{
-					[self executeShouldOpenURLs:[NSArray arrayWithObject:[urls objectAtIndex:0]] startInItem:item];
+					[self executeShouldOpenURLs:@[urls[0]] startInItem:item];
 				}
 				else {
 					[self executeShouldAddNewItemForURLs:[urls copy]];
@@ -878,10 +873,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		SBTabbarItem *item = nil;
 		if ((item = [self itemAtPoint:point]))
 		{
-			[self executeShouldOpenURLs:[NSArray arrayWithObject:url] startInItem:item];
+			[self executeShouldOpenURLs:@[url] startInItem:item];
 		}
 		else {
-			[self executeShouldAddNewItemForURLs:[NSArray arrayWithObject:url]];
+			[self executeShouldAddNewItemForURLs:@[url]];
 		}
 	}
 	return r;
@@ -891,9 +886,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	if ([items count] > 1)
+	if (items.count > 1)
 	{
-		NSPoint location = [theEvent locationInWindow];
+		NSPoint location = theEvent.locationInWindow;
 		_draggedItem = nil;
 		_shouldReselectItem = nil;
 		_draggedItemRect = NSZeroRect;
@@ -903,9 +898,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	if ([items count] > 1 || _draggedItem)
+	if (items.count > 1 || _draggedItem)
 	{
-		NSPoint location = [theEvent locationInWindow];
+		NSPoint location = theEvent.locationInWindow;
 		NSPoint point = [contentView convertPoint:location fromView:nil];
 		if (SBAllowsDrag(_downPoint, point))
 		{
@@ -939,7 +934,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				}
 				_draggedItem.frame = r;
 				[self dragItemAtPoint:point];
-				[self setNeedsDisplay:YES];
+                self.needsDisplay = YES;
 				[self autoScroll:theEvent];
 			}
 		}
@@ -965,7 +960,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (_draggedItem)
 	{
-		NSPoint location = [theEvent locationInWindow];
+		NSPoint location = theEvent.locationInWindow;
 		NSPoint point = [contentView convertPoint:location fromView:nil];
 		NSRect r = NSZeroRect;
 		NSInteger index = [self indexForPoint:point rect:&r];
@@ -989,7 +984,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-	CGFloat deltaX = [theEvent deltaX];
+	CGFloat deltaX = theEvent.deltaX;
 	[self scroll:deltaX];
 }
 
@@ -998,7 +993,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMenu *menu = nil;
 	if (item)
 	{
-		BOOL single = [items count] == 1;
+		BOOL single = items.count == 1;
 		NSInteger index = [items indexOfObject:item];
 		menu = [[NSMenu alloc] init];
 		[menu addItemWithTitle:NSLocalizedString(@"New Tab", nil) action:@selector(addNewItem:) keyEquivalent:[NSString string]];
@@ -1010,7 +1005,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[menu addItemWithTitle:NSLocalizedString(@"Close", nil) target:self action:@selector(closeItemFromMenu:) tag:index];
 			[menu addItemWithTitle:NSLocalizedString(@"Close Others", nil) target:self action:@selector(closeOtherItemsFromMenu:) tag:index];
 		}
-		[menu addItem:[NSMenuItem separatorItem]];
+		[menu addItem:NSMenuItem.separatorItem];
 		[menu addItemWithTitle:NSLocalizedString(@"Reload", nil) target:self action:@selector(reloadItemFromMenu:) tag:index];
 	}
 	return menu;
@@ -1027,7 +1022,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)drawRect:(NSRect)rect
 {
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	CGMutablePathRef path = nil;
 	NSUInteger count = 2;
 	CGFloat locations[count];

@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic message;
 @synthesize items;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	NSRect r = frame;
 	if (r.size.width < kSBMinFrameSizeWidth)
@@ -44,14 +44,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		r.size.height = kSBMinFrameSizeHeight;
 	if (self = [super initWithFrame:r])
 	{
-		self.items = [[[SBHistory sharedHistory] items] mutableCopy];
+		self.items = [SBHistory.sharedHistory.items mutableCopy];
 		[self constructMessageLabel];
 		[self constructSearchField];
 		[self constructTableView];
 		[self constructRemoveButtons];
 		[self constructBackButton];
 		[self makeResponderChain];
-		[self setAutoresizingMask:(NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin)];
+        self.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin;
 	}
 	return self;
 }
@@ -86,9 +86,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)iconRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = 32.0;
-	r.origin.x = [self labelWidth] - r.size.width;
+	r.origin.x = self.labelWidth - r.size.width;
 	r.size.height = 32.0;
 	r.origin.y = self.bounds.size.height - margin.y - r.size.height;
 	return r;
@@ -97,10 +97,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)messageLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect iconRect = [self iconRect];
-	NSPoint margin = [self margin];
+    NSRect iconRect = self.iconRect;
+	NSPoint margin = self.margin;
 	r.origin.x = NSMaxX(iconRect) + 10.0;
-	r.size.width = self.bounds.size.width - r.origin.x - [self searchFieldWidth] - margin.x;
+	r.size.width = self.bounds.size.width - r.origin.x - self.searchFieldWidth - margin.x;
 	r.size.height = 20.0;
 	r.origin.y = self.bounds.size.height - margin.y - r.size.height - (iconRect.size.height - r.size.height) / 2;
 	return r;
@@ -109,33 +109,31 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)searchFieldRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	NSRect iconRect = [self iconRect];
-	r.size.width = [self searchFieldWidth];
+	NSPoint margin = self.margin;
+	r.size.width = self.searchFieldWidth;
 	r.size.height = 20.0;
 	r.origin.x = self.bounds.size.width - r.size.width - margin.x;
-	r.origin.y = self.bounds.size.height - margin.y - r.size.height - (iconRect.size.height - r.size.height) / 2;
+	r.origin.y = self.bounds.size.height - margin.y - r.size.height - (self.iconRect.size.height - r.size.height) / 2;
 	return r;
 }
 
 - (NSRect)tableViewRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	NSRect iconRect = [self iconRect];
+	NSPoint margin = self.margin;
 	r.origin.x = margin.x;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
-	r.size.height = self.bounds.size.height - iconRect.size.height - 10.0 - margin.y * 3 - [self buttonHeight];
-	r.origin.y = margin.y * 2 + [self buttonHeight];
+	r.size.height = self.bounds.size.height - self.iconRect.size.height - 10.0 - margin.y * 3 - self.buttonHeight;
+	r.origin.y = margin.y * 2 + self.buttonHeight;
 	return r;
 }
 
 - (NSRect)removeButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = 105.0;
-	r.size.height = [self buttonHeight];
+	r.size.height = self.buttonHeight;
 	r.origin.y = margin.y;
 	r.origin.x = margin.x;
 	return r;
@@ -144,8 +142,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)removeAllButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSRect removeButtonRect = [self removeButtonRect];
-	NSPoint margin = [self margin];
+	NSRect removeButtonRect = self.removeButtonRect;
+	NSPoint margin = self.margin;
 	r.size.width = 140.0;
 	r.size.height = removeButtonRect.size.height;
 	r.origin.y = margin.y;
@@ -156,11 +154,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)backButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = 105.0;
-	r.size.height = [self buttonHeight];
+	r.size.height = self.buttonHeight;
 	r.origin.y = margin.y;
-	r.origin.x = (self.bounds.size.width - r.size.width - margin.x);
+	r.origin.x = self.bounds.size.width - r.size.width - margin.x;
 	return r;
 }
 
@@ -168,7 +166,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)showAllItems
 {
-	self.items = [[[SBHistory sharedHistory] items] mutableCopy];
+	self.items = [SBHistory.sharedHistory.items mutableCopy];
 	[tableView reloadData];
 }
 
@@ -177,26 +175,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *searchFieldText = nil;
 	NSArray *searchWords = nil;
 	NSArray *allItems = nil;
-	allItems = [[SBHistory sharedHistory] items];
-	searchFieldText = [searchField stringValue];
-	searchWords = [searchFieldText length] > 0 ? [searchFieldText componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] : nil;
+	allItems = SBHistory.sharedHistory.items;
+	searchFieldText = searchField.stringValue;
+	searchWords = searchFieldText.length > 0 ? [searchFieldText componentsSeparatedByCharactersInSet:NSCharacterSet.whitespaceCharacterSet] : nil;
 	[items removeAllObjects];
-	if ([searchWords count] > 0)
+	if (searchWords.count > 0)
 	{
 		for (WebHistoryItem *item in allItems)
 		{
 			NSString *string = [NSString string];
-			string = [item originalURLString] ? [string stringByAppendingFormat:@" %@", [item originalURLString]] : string;
-			string = [item URLString] ? [string stringByAppendingFormat:@" %@", [item URLString]] : string;
-			string = [item title] ? [string stringByAppendingFormat:@" %@", [item title]] : string;
-			if ([string length] > 0)
+			string = item.originalURLString ? [string stringByAppendingFormat:@" %@", item.originalURLString] : string;
+			string = item.URLString ? [string stringByAppendingFormat:@" %@", item.URLString] : string;
+			string = item.title ? [string stringByAppendingFormat:@" %@", item.title] : string;
+			if (string.length > 0)
 			{
 				NSUInteger index = 0;
 				for (NSString *searchWord in searchWords)
 				{
-					if ([searchWord length] == 0 || [string rangeOfString:searchWord options:NSCaseInsensitiveSearch].location != NSNotFound)
+					if (searchWord.length == 0 || [string rangeOfString:searchWord options:NSCaseInsensitiveSearch].location != NSNotFound)
 					{
-						if (index == [searchWords count] - 1)
+						if (index == searchWords.count - 1)
 						{
 							[items addObject:item];
 						}
@@ -219,23 +217,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView
 {
 	NSUInteger count = 0;
-	count = [items count];
-	[removeAllButton setEnabled:(count > 0)];
+	count = items.count;
+    removeAllButton.enabled = count > 0;
 	return count;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
 	NSString *object = nil;
-	NSString *identifier = [aTableColumn identifier];
-	WebHistoryItem *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
+	NSString *identifier = aTableColumn.identifier;
+	WebHistoryItem *item = (rowIndex < items.count) ? items[rowIndex] : nil;
 	if ([identifier isEqual:kSBTitle])
 	{
-		object = item ? [item title] : nil;
+		object = item ? item.title : nil;
 	}
 	else if ([identifier isEqual:kSBURL])
 	{
-		object = item ? [item URLString] : nil;
+		object = item ? item.URLString : nil;
 	}
 	else if ([identifier isEqual:kSBDate])
 	{
@@ -244,47 +242,47 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return object;
 }
 
-- (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+- (void)tableView:(NSTableView *)aTableView willDisplayCell:(NSCell *)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
-	NSString *identifier = [aTableColumn identifier];
-	WebHistoryItem *item = (rowIndex < [items count]) ? [items objectAtIndex:rowIndex] : nil;
+	NSString *identifier = aTableColumn.identifier;
+	WebHistoryItem *item = (rowIndex < items.count) ? items[rowIndex] : nil;
 	NSString *string = nil;
 	if ([identifier isEqualToString:kSBImage])
 	{
-		NSImage *image = item ? [item icon] : nil;
+		NSImage *image = item ? item.icon : nil;
 		if (image)
 		{
-			[aCell setImage:image];
+            aCell.image = image;
 		}
 	}
 	else if ([identifier isEqual:kSBTitle])
 	{
-		string = item ? [item title] : nil;
+		string = item ? item.title : nil;
 	}
 	else if ([identifier isEqual:kSBURL])
 	{
-		string = item ? [item URLString] : nil;
+		string = item ? item.URLString : nil;
 	}
 	else if ([identifier isEqual:kSBDate])
 	{
-		NSTimeInterval interval = item ? [item lastVisitedTimeInterval] : 0;
+		NSTimeInterval interval = item ? item.lastVisitedTimeInterval : 0;
 		if (interval > 0)
 		{
 			NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] initWithDateFormat:@"%Y/%m/%d %H:%M:%S" allowNaturalLanguage:YES];
-			[dateFormatter setFormatterBehavior:NSDateFormatterBehavior10_4];
-			[dateFormatter setDateStyle:NSDateFormatterLongStyle];
-			[dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-			[dateFormatter setLocale:[NSLocale currentLocale]];
+            dateFormatter.formatterBehavior = NSDateFormatterBehavior10_4;
+            dateFormatter.dateStyle = NSDateFormatterLongStyle;
+            dateFormatter.timeStyle = NSDateFormatterShortStyle;
+			dateFormatter.locale = NSLocale.currentLocale;
 			string = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:interval]];
 		}
 	}
-	if ([string length] > 0)
+	if (string.length > 0)
 	{
-		NSColor *color = [NSColor whiteColor];
+		NSColor *color = NSColor.whiteColor;
 		NSFont *font = [NSFont systemFontOfSize:14.0];
-		NSDictionary *attribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, nil];
+		NSDictionary *attribute = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color};
 		NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string attributes:attribute];
-		[aCell setAttributedStringValue:attributedString];
+        aCell.attributedStringValue = attributedString;
 	}
 }
 
@@ -292,9 +290,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
-	if ([aNotification object] == searchField)
+	if (aNotification.object == searchField)
 	{
-		if ([[searchField stringValue] length] == 0)
+		if (searchField.stringValue.length == 0)
 		{
 			[self showAllItems];
 		}
@@ -303,7 +301,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)tableViewSelectionDidChange:(NSNotification *)aNotification
 {
-	[removeButton setEnabled:([[tableView selectedRowIndexes] count] > 0)];
+    removeButton.enabled = tableView.selectedRowIndexes.count > 0;
 }
 
 #pragma mark Construction
@@ -312,40 +310,40 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSImage *image = nil;
 	image = [NSImage imageNamed:@"History"];
-	iconImageView = [[NSImageView alloc] initWithFrame:[self iconRect]];
-	messageLabel = [[NSTextField alloc] initWithFrame:[self messageLabelRect]];
+	iconImageView = [[NSImageView alloc] initWithFrame:self.iconRect];
+	messageLabel = [[NSTextField alloc] initWithFrame:self.messageLabelRect];
 	if (image)
 	{
-		[image setSize:[iconImageView frame].size];
-		[iconImageView setImage:image];
+        image.size = iconImageView.frame.size;
+        iconImageView.image = image;
 	}
-	[messageLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[messageLabel setEditable:NO];
-	[messageLabel setBordered:NO];
-	[messageLabel setDrawsBackground:NO];
-	[messageLabel setTextColor:[NSColor whiteColor]];
-	[[messageLabel cell] setFont:[NSFont boldSystemFontOfSize:16]];
-	[[messageLabel cell] setAlignment:NSLeftTextAlignment];
-	[[messageLabel cell] setWraps:YES];
+    messageLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    messageLabel.editable = NO;
+    messageLabel.bordered = NO;
+    messageLabel.drawsBackground = NO;
+	messageLabel.textColor = NSColor.whiteColor;
+    messageLabel.font = [NSFont boldSystemFontOfSize:16];
+    messageLabel.alignment = NSLeftTextAlignment;
+	[messageLabel.cell setWraps:YES];
 	[self addSubview:iconImageView];
 	[self addSubview:messageLabel];
 }
 
 - (void)constructSearchField
 {
-	NSRect searchFieldRect = [self searchFieldRect];
+	NSRect searchFieldRect = self.searchFieldRect;
 	searchField = [[SBBLKGUISearchField alloc] initWithFrame:searchFieldRect];
-	[searchField setDelegate:self];
-	[searchField setTarget:self];
-	[searchField setAction:@selector(search:)];
-	[[searchField cell] setSendsWholeSearchString:YES];
-	[[searchField cell] setSendsSearchStringImmediately:YES];
+    searchField.delegate = self;
+    searchField.target = self;
+    searchField.action = @selector(search:);
+	[searchField.cell setSendsWholeSearchString:YES];
+	[searchField.cell setSendsSearchStringImmediately:YES];
 	[self addSubview:searchField];
 }
 
 - (void)constructTableView
 {
-	NSRect scrollerRect = [self tableViewRect];
+	NSRect scrollerRect = self.tableViewRect;
 	NSTableColumn *iconColumn = nil;
 	NSTableColumn *titleColumn = nil;
 	NSTableColumn *urlColumn = nil;
@@ -363,105 +361,105 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	iconCell = [[SBIconDataCell alloc] init];
 	textCell = [[NSCell alloc] init];
 	iconCell.drawsBackground = NO;
-	[iconColumn setWidth:22.0];
-	[iconColumn setDataCell:iconCell];
-	[iconColumn setEditable:NO];
-	[titleColumn setDataCell:textCell];
-	[titleColumn setWidth:(tableRect.size.width - 22.0) * 0.3];
-	[titleColumn setEditable:NO];
-	[urlColumn setDataCell:textCell];
-	[urlColumn setWidth:(tableRect.size.width - 22.0) * 0.4];
-	[urlColumn setEditable:NO];
-	[dateColumn setDataCell:textCell];
-	[dateColumn setWidth:(tableRect.size.width - 22.0) * 0.3];
-	[dateColumn setEditable:NO];
-	[tableView setBackgroundColor:[NSColor clearColor]];
-	[tableView setRowHeight:20];
+    iconColumn.width = 22.0;
+    iconColumn.dataCell = iconCell;
+    iconColumn.editable = NO;
+    titleColumn.dataCell = textCell;
+    titleColumn.width = (tableRect.size.width - 22.0) * 0.3;
+    titleColumn.editable = NO;
+    urlColumn.dataCell = textCell;
+    urlColumn.width = (tableRect.size.width - 22.0) * 0.4;
+    urlColumn.editable = NO;
+    dateColumn.dataCell = textCell;
+    dateColumn.width = (tableRect.size.width - 22.0) * 0.3;
+    dateColumn.editable = NO;
+	tableView.backgroundColor = NSColor.clearColor;
+    tableView.rowHeight = 20;
 	[tableView addTableColumn:iconColumn];
 	[tableView addTableColumn:titleColumn];
 	[tableView addTableColumn:urlColumn];
 	[tableView addTableColumn:dateColumn];
-	[tableView setAllowsMultipleSelection:YES];
-	[tableView setAllowsColumnSelection:NO];
-	[tableView setAllowsEmptySelection:YES];
-	[tableView setDoubleAction:@selector(tableViewDidDoubleAction:)];
-	[tableView setColumnAutoresizingStyle:NSTableViewLastColumnOnlyAutoresizingStyle];
-	[tableView setHeaderView:nil];
-	[tableView setCornerView:nil];
-	[tableView setAutoresizingMask:(NSViewWidthSizable)];
-	[tableView setDataSource:self];
-	[tableView setDelegate:self];
-	[tableView setFocusRingType:NSFocusRingTypeNone];
-	[tableView setDoubleAction:@selector(open)];
-	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setAutohidesScrollers:YES];
-	[scrollView setHasVerticalScroller:YES];
-	[scrollView setHasHorizontalScroller:NO];
-	[scrollView setAutohidesScrollers:YES];
-	[scrollView setBackgroundColor:[NSColor blackColor]];
-	[scrollView setDrawsBackground:NO];
-	[scrollView setDocumentView:tableView];
+    tableView.allowsMultipleSelection = YES;
+    tableView.allowsColumnSelection = NO;
+    tableView.allowsEmptySelection = YES;
+    tableView.doubleAction = @selector(tableViewDidDoubleAction:);
+	tableView.columnAutoresizingStyle = NSTableViewLastColumnOnlyAutoresizingStyle;
+    tableView.headerView = nil;
+    tableView.cornerView = nil;
+    tableView.autoresizingMask = NSViewWidthSizable;
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    tableView.focusRingType = NSFocusRingTypeNone;
+    tableView.doubleAction = @selector(open);
+    scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    scrollView.autohidesScrollers = YES;
+    scrollView.hasVerticalScroller = YES;
+    scrollView.hasHorizontalScroller = NO;
+    scrollView.autohidesScrollers = YES;
+	scrollView.backgroundColor = NSColor.blackColor;
+    scrollView.drawsBackground = NO;
+    scrollView.documentView = tableView;
 	[self addSubview:scrollView];
 }
 
 - (void)constructRemoveButtons
 {
-	removeButton = [[SBBLKGUIButton alloc] initWithFrame:[self removeButtonRect]];
-	removeAllButton = [[SBBLKGUIButton alloc] initWithFrame:[self removeAllButtonRect]];
-	[removeButton setTitle:NSLocalizedString(@"Remove", nil)];
-	[removeButton setTarget:self];
-	[removeButton setAction:@selector(remove)];
-	[removeButton setEnabled:NO];
-	[removeAllButton setTitle:NSLocalizedString(@"Remove All", nil)];
-	[removeAllButton setTarget:self];
-	[removeAllButton setAction:@selector(removeAll)];
-	[removeAllButton setEnabled:NO];
+	removeButton = [[SBBLKGUIButton alloc] initWithFrame:self.removeButtonRect];
+	removeAllButton = [[SBBLKGUIButton alloc] initWithFrame:self.removeAllButtonRect];
+    removeButton.title = NSLocalizedString(@"Remove", nil);
+    removeButton.target = self;
+    removeButton.action = @selector(remove);
+    removeButton.enabled = NO;
+    removeAllButton.title = NSLocalizedString(@"Remove All", nil);
+    removeAllButton.target = self;
+    removeAllButton.action = @selector(removeAll);
+    removeAllButton.enabled = NO;
 	[self addSubview:removeButton];
 	[self addSubview:removeAllButton];
 }
 
 - (void)constructBackButton
 {
-	backButton = [[SBBLKGUIButton alloc] initWithFrame:[self backButtonRect]];
-	[backButton setTitle:NSLocalizedString(@"Back", nil)];
-	[backButton setTarget:self];
-	[backButton setAction:@selector(cancel)];
-	[backButton setKeyEquivalent:@"\e"];
+	backButton = [[SBBLKGUIButton alloc] initWithFrame:self.backButtonRect];
+    backButton.title = NSLocalizedString(@"Back", nil);
+    backButton.target = self;
+    backButton.action = @selector(cancel);
+	backButton.keyEquivalent = @"\e";
 	[self addSubview:backButton];
 }
 
 - (void)makeResponderChain
 {
 	if (removeAllButton)
-		[removeButton setNextKeyView:removeAllButton];
+        removeButton.nextKeyView = removeAllButton;
 	if (removeButton)
-		[backButton setNextKeyView:removeButton];
+        backButton.nextKeyView = removeButton;
 	if (backButton)
-		[tableView setNextKeyView:backButton];
+        tableView.nextKeyView = backButton;
 	if (tableView)
-		[removeAllButton setNextKeyView:tableView];
+		removeAllButton.nextKeyView = tableView;
 }
 
 #pragma mark Getter
 
 - (NSString *)message
 {
-	return [messageLabel stringValue];
+	return messageLabel.stringValue;
 }
 
 #pragma mark Setter
 
 - (void)setMessage:(NSString *)message
 {
-	[messageLabel setStringValue:message];
+    messageLabel.stringValue = message;
 }
 
 #pragma mark Actions
 
 - (void)search:(id)sender
 {
-	NSString *string = [searchField stringValue];
-	if ([string length] > 0)
+	NSString *string = searchField.stringValue;
+	if (string.length > 0)
 	{
 		[self updateItems];
 		[tableView reloadData];
@@ -470,11 +468,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)remove
 {
-	NSIndexSet *indexes = [tableView selectedRowIndexes];
-	NSArray *removedItems = [indexes count] > 0 ? [items objectsAtIndexes:indexes] : nil;
-	if ([removedItems count] > 0)
+	NSIndexSet *indexes = tableView.selectedRowIndexes;
+	NSArray *removedItems = indexes.count > 0 ? [items objectsAtIndexes:indexes] : nil;
+	if (removedItems.count > 0)
 	{
-		[[SBHistory sharedHistory] removeItems:removedItems];
+		[SBHistory.sharedHistory removeItems:removedItems];
 		[tableView deselectAll:nil];
 		[self updateItems];
 		[tableView reloadData];
@@ -498,7 +496,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (returnCode == NSOKButton)
 	{
-		[[SBHistory sharedHistory] removeAllItems];
+		[SBHistory.sharedHistory removeAllItems];
 		[tableView deselectAll:nil];
 		[self updateItems];
 		[tableView reloadData];
@@ -510,11 +508,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSMutableArray *urls = [NSMutableArray arrayWithCapacity:0];
 	NSUInteger index = 0;
-	NSIndexSet *indexes = [tableView selectedRowIndexes];
-	for (index = [indexes lastIndex]; index != NSNotFound; index = [indexes indexLessThanIndex:index])
+    NSIndexSet *indexes = tableView.selectedRowIndexes;
+	for (index = indexes.lastIndex; index != NSNotFound; index = [indexes indexLessThanIndex:index])
 	{
-		WebHistoryItem *item = (index < [items count]) ? [items objectAtIndex:index] : nil;
-		NSString *URLString = [item URLString];
+		WebHistoryItem *item = (index < items.count) ? items[index] : nil;
+		NSString *URLString = item.URLString;
 		NSURL *url = URLString ? [NSURL URLWithString:URLString] : nil;
 		if (url)
 			[urls addObject:url];

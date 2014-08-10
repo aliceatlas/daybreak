@@ -39,13 +39,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic animating;
 @synthesize drawerHeight;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
 		drawerHeight = 0;
-		[self setVertical:NO];
-		[self setDividerStyle:NSSplitViewDividerStyleThin];
+        self.vertical = NO;
+        self.dividerStyle = NSSplitViewDividerStyleThin;
 	}
 	return self;
 }
@@ -62,7 +62,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@: %p frame = %@>", [self className], self, NSStringFromRect(self.frame)];
+	return [NSString stringWithFormat:@"<%@: %p frame = %@>", self.className, self, NSStringFromRect(self.frame)];
 }
 
 - (NSRect)viewRect
@@ -101,12 +101,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (BOOL)animating
 {
-	return (_divideAnimation != nil);
-}
-
-- (void)setFrame:(NSRect)frame
-{
-	[super setFrame:frame];
+	return _divideAnimation != nil;
 }
 
 #pragma mark Delegate
@@ -187,9 +182,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			[view removeFromSuperview];
 		}
 		view = aView;
-		[view setFrame:[self viewRect]];
-		if ([[self subviews] count] > 0)
-			[self addSubview:view positioned:NSWindowBelow relativeTo:[[self subviews] objectAtIndex:0]];
+        view.frame = self.viewRect;
+		if (self.subviews.count > 0)
+			[self addSubview:view positioned:NSWindowBelow relativeTo:self.subviews[0]];
 		else
 			[self addSubview:view];
 	}
@@ -263,11 +258,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructBottombar
 {
 	[self destructBottombar];
-	bottombar = [[SBSideBottombar alloc] initWithFrame:[self bottombarRect]];
+	bottombar = [[SBSideBottombar alloc] initWithFrame:self.bottombarRect];
 	bottombar.delegate = self;
 	bottombar.position = position;
 	bottombar.drawerVisibility = self.visibleDrawer;
-	[bottombar setAutoresizingMask:(NSViewWidthSizable | NSViewMaxYMargin)];
+    bottombar.autoresizingMask = NSViewWidthSizable | NSViewMaxYMargin;
 	[drawer addSubview:bottombar];
 }
 
@@ -295,23 +290,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		NSTimeInterval duration = 0.25;
 		NSMutableArray *animations = [NSMutableArray arrayWithCapacity:0];
-		NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-		[info setObject:subview0 forKey:NSViewAnimationTargetKey];
-		[info setObject:[NSValue valueWithRect:r0] forKey:NSViewAnimationEndFrameKey];
-		[animations addObject:[info copy]];
-		[info removeAllObjects];
-		[info setObject:subview1 forKey:NSViewAnimationTargetKey];
-		[info setObject:[NSValue valueWithRect:r1] forKey:NSViewAnimationEndFrameKey];
-		[animations addObject:[info copy]];
+        NSDictionary *info = @{NSViewAnimationTargetKey: subview0,
+                                      NSViewAnimationEndFrameKey: [NSValue valueWithRect:r0]};
+		[animations addObject:info];
+        info = @{NSViewAnimationTargetKey: subview1,
+                                      NSViewAnimationEndFrameKey: [NSValue valueWithRect:r1]};
+		[animations addObject:info];
 		[self destructDividerAnimation];
 		_divideAnimation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
-		[_divideAnimation setDuration:duration];
-		[_divideAnimation setDelegate:self];
+        _divideAnimation.duration = duration;
+        _divideAnimation.delegate = self;
 		[_divideAnimation startAnimation];
 	}
 	else {
-		[subview0 setFrame:r0];
-		[subview1 setFrame:r1];
+        subview0.frame = r0;
+        subview1.frame = r1;
 		[self adjustSubviews];
 	}
 }
@@ -349,7 +342,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize delegate;
 @synthesize drawerVisibility;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{

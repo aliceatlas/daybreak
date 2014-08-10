@@ -29,25 +29,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 + (void)initialize
 {
-	if (self == [SBBLKGUIButton class])
+	if (self == SBBLKGUIButton.class)
 	{
-		[self setCellClass:[SBBLKGUIButtonCell class]];
+        self.cellClass = SBBLKGUIButtonCell.class;
 	}
 }
 
 + (Class)cellClass
 {
-	return [SBBLKGUIButtonCell class];
+    return SBBLKGUIButtonCell.class;
 }
 
-- (id)initWithFrame:(NSRect)frameRect
+- (instancetype)initWithFrame:(NSRect)frameRect
 {
 	self = [super initWithFrame:frameRect];
 	
 	if (self)
 	{
-		[self setButtonType:NSMomentaryChangeButton];
-		[self setBezelStyle:NSRoundedBezelStyle];
+        self.buttonType = NSMomentaryChangeButton;
+        self.bezelStyle = NSRoundedBezelStyle;
 	}
 	
 	return self;
@@ -55,22 +55,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSButtonType)buttonType
 {
-	return [[self cell] buttonType];
+	return [self.cell buttonType];
 }
 
 - (BOOL)isSelected
 {
-	return [[self cell] isSelected];
+	return [self.cell isSelected];
 }
 
 - (void)setButtonType:(NSButtonType)buttonType
 {
-	[[self cell] setButtonType:buttonType];
+	[self.cell setButtonType:buttonType];
 }
 
 - (void)setSelected:(BOOL)isSelected
 {
-	[[self cell] setSelected:isSelected];
+	[self.cell setSelected:isSelected];
 }
 
 @end
@@ -80,14 +80,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setButtonType:(NSButtonType)buttonType
 {
 	_buttonType = buttonType;
-	[super setButtonType:_buttonType];
+    super.buttonType = _buttonType;
 }
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
 	NSImage *image = nil;
-	BOOL isDone = [controlView respondsToSelector:@selector(keyEquivalent)] ? [[(NSButton *)controlView keyEquivalent] isEqualToString:@"\r"] : NO;
-	//if (NSEqualRects(cellFrame, [controlView bounds]))
+	BOOL isDone = [controlView respondsToSelector:@selector(keyEquivalent)] ? [((NSButton *)controlView).keyEquivalent isEqualToString:@"\r"] : NO;
+	//if (NSEqualRects(cellFrame, controlView.bounds))
 	{
 		NSImage *leftImage = nil;
 		NSImage *centerImage = nil;
@@ -98,41 +98,41 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			NSRect imageRect = NSZeroRect;
 			
-			if ([self state] == NSOnState)
+			if (self.state == NSOnState)
 			{
-				image = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_CheckBox-Selected-Highlighted.png" : @"BLKGUI_CheckBox-Selected.png")];
+				image = [NSImage imageNamed:(self.highlighted ? @"BLKGUI_CheckBox-Selected-Highlighted.png" : @"BLKGUI_CheckBox-Selected.png")];
 			}
 			else {
-				image = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_CheckBox-Highlighted.png" : @"BLKGUI_CheckBox.png")];
+				image = [NSImage imageNamed:(self.highlighted ? @"BLKGUI_CheckBox-Highlighted.png" : @"BLKGUI_CheckBox.png")];
 			}
 			
-			imageRect.size = [image size];
+			imageRect.size = image.size;
 			r.size = imageRect.size;
 			r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
-			[image drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
+			[image drawInRect:r operation:NSCompositeSourceOver fraction:(self.enabled ? 1.0 : 0.5) respectFlipped:controlView.isFlipped];
 		}
 		else if (_buttonType == NSRadioButton)
 		{
 			NSRect imageRect = NSZeroRect;
 			
-			if ([self state] == NSOnState)
+			if (self.state == NSOnState)
 			{
-				image = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_Radio-Selected-Highlighted.png" : @"BLKGUI_Radio-Selected.png")];
+				image = [NSImage imageNamed:(self.highlighted ? @"BLKGUI_Radio-Selected-Highlighted.png" : @"BLKGUI_Radio-Selected.png")];
 			}
 			else {
-				image = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_Radio-Highlighted.png" : @"BLKGUI_Radio.png")];
+				image = [NSImage imageNamed:(self.highlighted ? @"BLKGUI_Radio-Highlighted.png" : @"BLKGUI_Radio.png")];
 			}
 			
-			imageRect.size = (image ? [image size] : NSZeroSize);
+			imageRect.size = image ? image.size : NSZeroSize;
 			r.size = imageRect.size;
 			r.origin.x = cellFrame.origin.x;
 			r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
-			[image drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
+			[image drawInRect:r operation:NSCompositeSourceOver fraction:(self.enabled ? 1.0 : 0.5) respectFlipped:controlView.isFlipped];
 		}
 		else {
 			if (isDone)
 			{
-				if ([self isHighlighted])
+				if (self.highlighted)
 				{
 					leftImage = [NSImage imageNamed:@"BLKGUI_Button-Active-Highlighted-Left.png"];
 					centerImage = [NSImage imageNamed:@"BLKGUI_Button-Active-Highlighted-Center.png"];
@@ -145,7 +145,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				}
 			}
 			else {
-				if ([self isHighlighted])
+				if (self.highlighted)
 				{
 					leftImage = [NSImage imageNamed:@"BLKGUI_Button-Highlighted-Left.png"];
 					centerImage = [NSImage imageNamed:@"BLKGUI_Button-Highlighted-Center.png"];
@@ -160,26 +160,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			
 			if (leftImage)
 			{
-				r.size = [leftImage size];
+				r.size = leftImage.size;
 				r.origin.y = (cellFrame.size.height - r.size.height) / 2;
-				[leftImage drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
+				[leftImage drawInRect:r operation:NSCompositeSourceOver fraction:(self.enabled ? 1.0 : 0.5) respectFlipped:controlView.flipped];
 				offset = NSMaxX(r);
 			}
 			if (centerImage)
 			{
-				r.origin.x = leftImage ? [leftImage size].width : 0.0;
-				r.size.width = cellFrame.size.width - ((leftImage ? [leftImage size].width : 0) + (rightImage ? [rightImage size].width : 0));
-				r.size.height = [centerImage size].height;
+				r.origin.x = leftImage ? leftImage.size.width : 0.0;
+				r.size.width = cellFrame.size.width - ((leftImage ? leftImage.size.width : 0) + (rightImage ? rightImage.size.width : 0));
+				r.size.height = centerImage.size.height;
 				r.origin.y = (cellFrame.size.height - r.size.height) / 2;
-				[centerImage drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
+				[centerImage drawInRect:r operation:NSCompositeSourceOver fraction:(self.enabled ? 1.0 : 0.5) respectFlipped:controlView.flipped];
 				offset = NSMaxX(r);
 			}
 			if (rightImage)
 			{
 				r.origin.x = offset;
-				r.size = [rightImage size];
+				r.size = rightImage.size;
 				r.origin.y = (cellFrame.size.height - r.size.height) / 2;
-				[rightImage drawInRect:r operation:NSCompositeSourceOver fraction:([self isEnabled] ? 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
+				[rightImage drawInRect:r operation:NSCompositeSourceOver fraction:(self.enabled ? 1.0 : 0.5) respectFlipped:controlView.isFlipped];
 			}
 		}
 	}
@@ -187,30 +187,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if ([self title] > 0)
 	{
 		NSDictionary *attributes = nil;
-		NSString *title = [self title];
+		NSString *title = self.title;
 		NSSize size = NSZeroSize;
 		float frameMargin = 2.0;
-		NSFont *font = [self font];
+		NSFont *font = self.font;
 		NSRect frame = NSMakeRect(cellFrame.origin.x + frameMargin, cellFrame.origin.y, cellFrame.size.width - frameMargin * 2, cellFrame.size.height);
 		NSRect r = frame;
 		NSColor *foregroundColor = nil;
 		if (_buttonType == NSSwitchButton || _buttonType == NSRadioButton)
 		{
-			foregroundColor = [self isEnabled] ? [NSColor whiteColor] : [NSColor grayColor];
+			foregroundColor = self.enabled ? NSColor.whiteColor : NSColor.grayColor;
 		}
 		else {
-			foregroundColor = [self isEnabled] ? ([self isHighlighted] ? [NSColor grayColor] : [NSColor whiteColor]) : (isDone ? [NSColor grayColor] : [NSColor darkGrayColor]);
+			foregroundColor = self.enabled ? (self.highlighted ? NSColor.grayColor : NSColor.whiteColor) : (isDone ? NSColor.grayColor : NSColor.darkGrayColor);
 		}
-		attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-					  font, NSFontAttributeName, 
-					  foregroundColor, NSForegroundColorAttributeName, 
-					  nil];
+		attributes = @{NSFontAttributeName: font, 
+                       NSForegroundColorAttributeName: foregroundColor};
 		if (_buttonType == NSSwitchButton || _buttonType == NSRadioButton)
 		{
 			int i = 0, l = 0, h = 1;
-			size.width = frame.size.width - (image ? ([image size].width + 2) : 2);
-			size.height = [font pointSize] + 2.0;
-			for (i = 1; i <= [title length]; i++)
+			size.width = frame.size.width - (image ? (image.size.width + 2) : 2);
+			size.height = font.pointSize + 2.0;
+			for (i = 1; i <= title.length; i++)
 			{
 				NSString *t = [title substringWithRange:NSMakeRange(l, i - l)];
 				NSSize s = [t sizeWithAttributes:attributes];
@@ -235,12 +233,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			r.origin.x = (frame.size.width - r.size.width) / 2;
 			r.origin.y = (frame.size.height - r.size.height) / 2;
 			r.origin.y -= 2.0;
-			if ([self image])
+			if (self.image)
 			{
-				NSImage *image = [self image];
+				NSImage *image = self.image;
 				NSRect imageRect = NSZeroRect;
 				float margin = 3.0;
-				imageRect.size = (image ? [image size] : NSZeroSize);
+				imageRect.size = image ? image.size : NSZeroSize;
 				if (r.origin.x > (imageRect.size.width + margin))
 				{
 					float width = imageRect.size.width + r.size.width + margin;
@@ -253,7 +251,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					size.width = frame.size.width - r.origin.x;
 				}
 				imageRect.origin.y = (frame.size.height - imageRect.size.height) / 2 - 1;
-				[image drawInRect:imageRect operation:NSCompositeSourceOver fraction:([self isEnabled] ? [self isHighlighted] ? 0.5 : 1.0 : 0.5) respectFlipped:[controlView isFlipped]];
+				[image drawInRect:imageRect operation:NSCompositeSourceOver fraction:(self.enabled ? self.highlighted ? 0.5 : 1.0 : 0.5) respectFlipped:controlView.isFlipped];
 			}
 		}
 		[title drawInRect:r withAttributes:attributes];

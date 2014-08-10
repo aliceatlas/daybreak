@@ -29,22 +29,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 + (void)initialize
 {
-	if (self == [SBBLKGUIPopUpButtonCell class])
+	if (self == SBBLKGUIPopUpButtonCell.class)
 	{
-		[self setCellClass:[SBBLKGUIPopUpButtonCell class]];
+        self.cellClass = SBBLKGUIPopUpButtonCell.class;
 	}
 }
 
 + (Class)cellClass
 {
-	return [SBBLKGUIPopUpButtonCell class];
+    return SBBLKGUIPopUpButtonCell.class;
 }
 
 @end
 
 @implementation SBBLKGUIPopUpButtonCell
 
-- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSPopUpButton *)controlView
 {
 	NSImage *image = nil;
 	NSAttributedString *attributedTitle = nil;
@@ -52,44 +52,44 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSImage *centerImage = nil;
 	NSImage *rightImage = nil;
 	
-	image = [[(NSPopUpButton *)controlView selectedItem] image];
-	attributedTitle = [[NSAttributedString alloc] initWithString:[(NSPopUpButton *)controlView titleOfSelectedItem]];
+	image = controlView.selectedItem.image;
+	attributedTitle = [[NSAttributedString alloc] initWithString:controlView.titleOfSelectedItem];
 	
-	if ([self isBordered])
+	if (self.bordered)
 	{
 		NSRect drawRect = NSZeroRect;
 		float fraction = 0;
 		
-		fraction = ([self isEnabled] ? 1.0 : 0.5);
+        fraction = self.enabled ? 1.0 : 0.5;
 		
-		leftImage = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_PopUp-Highlighted-Left.png" : @"BLKGUI_PopUp-Left.png")];
-		centerImage = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_PopUp-Highlighted-Center.png" : @"BLKGUI_PopUp-Center.png")];
-		rightImage = [NSImage imageNamed:([self isHighlighted] ? @"BLKGUI_PopUp-Highlighted-Right.png" : @"BLKGUI_PopUp-Right.png")];
+		leftImage = [NSImage imageNamed:(self.highlighted ? @"BLKGUI_PopUp-Highlighted-Left.png" : @"BLKGUI_PopUp-Left.png")];
+		centerImage = [NSImage imageNamed:(self.highlighted ? @"BLKGUI_PopUp-Highlighted-Center.png" : @"BLKGUI_PopUp-Center.png")];
+		rightImage = [NSImage imageNamed:(self.highlighted ? @"BLKGUI_PopUp-Highlighted-Right.png" : @"BLKGUI_PopUp-Right.png")];
 		
 		// Left
 		drawRect.origin = cellFrame.origin;
-		drawRect.size = [leftImage size];
+		drawRect.size = leftImage.size;
 		drawRect.origin.y = (cellFrame.size.height - drawRect.size.height) / 2;
-		[leftImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:fraction respectFlipped:[controlView isFlipped]];
+		[leftImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:fraction respectFlipped:controlView.isFlipped];
 		
 		// Center
-		drawRect.origin.x = [leftImage size].width;
-		drawRect.size.width = cellFrame.size.width - ([leftImage size].width + [rightImage size].width);
+		drawRect.origin.x = leftImage.size.width;
+		drawRect.size.width = cellFrame.size.width - (leftImage.size.width + rightImage.size.width);
 		drawRect.origin.y = (cellFrame.size.height - drawRect.size.height) / 2;
-		[centerImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:fraction respectFlipped:[controlView isFlipped]];
+		[centerImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:fraction respectFlipped:controlView.isFlipped];
 		
 		// Right
-		drawRect.size = [rightImage size];
+		drawRect.size = rightImage.size;
 		drawRect.origin.x = cellFrame.size.width - drawRect.size.width;
 		drawRect.origin.y = (cellFrame.size.height - drawRect.size.height) / 2;
-		[rightImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:fraction respectFlipped:[controlView isFlipped]];
+		[rightImage drawInRect:drawRect operation:NSCompositeSourceOver fraction:fraction respectFlipped:controlView.isFlipped];
 	}
 	
 	if (image)
 	{
-		CGContextRef ctx = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+		CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 		NSRect imageRect = NSZeroRect;
-		imageRect.size = [image size];
+		imageRect.size = image.size;
 		imageRect.origin.x = cellFrame.origin.x + 5.0;
 		imageRect.origin.y = cellFrame.origin.y + ((cellFrame.size.height - imageRect.size.height) / 2);
 		CGContextSaveGState(ctx);
@@ -99,7 +99,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		CGContextRestoreGState(ctx);
 	}
 	
-	if ([attributedTitle length] > 0)
+	if (attributedTitle.length > 0)
 	{
 		NSRect titleRect = NSZeroRect;
 		NSMutableAttributedString *mutableTitle = nil;
@@ -109,22 +109,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSColor *foregroundColor = nil;
 		
 		mutableTitle = [[NSMutableAttributedString alloc] initWithAttributedString:attributedTitle];
-		range = NSMakeRange(0,[attributedTitle length]);
+		range = NSMakeRange(0, attributedTitle.length);
 		style = [[NSMutableParagraphStyle alloc] init];
-		font = [NSFont fontWithName:[[self font] fontName] size:[NSFont systemFontSizeForControlSize:[self controlSize]]];
-		foregroundColor = ([self isEnabled] ? [self isHighlighted] ? [NSColor lightGrayColor] : [NSColor whiteColor] : [NSColor grayColor]);
+		font = [NSFont fontWithName:self.font.fontName size:[NSFont systemFontSizeForControlSize:self.controlSize]];
+		foregroundColor = (self.enabled ? self.highlighted ? NSColor.lightGrayColor : NSColor.whiteColor : NSColor.grayColor);
 		
-		[style setAlignment:NSCenterTextAlignment];
-		[style setLineBreakMode:NSLineBreakByTruncatingTail];
+        style.alignment = NSCenterTextAlignment;
+        style.lineBreakMode = NSLineBreakByTruncatingTail;
 		[mutableTitle beginEditing];
 		[mutableTitle addAttribute:NSForegroundColorAttributeName value:foregroundColor range:range];
 		[mutableTitle addAttribute:NSFontAttributeName value:font range:range];
 		[mutableTitle addAttribute:NSParagraphStyleAttributeName value:style range:range];
 		[mutableTitle endEditing];
 		
-		titleRect.size.width = [mutableTitle size].width;
-		titleRect.size.height = [mutableTitle size].height;
-		titleRect.origin.x = cellFrame.origin.x + (leftImage ? [leftImage size].width : 0.0) + 5.0 + (image ? [image size].width + 5.0 : 0);
+		titleRect.size.width = mutableTitle.size.width;
+		titleRect.size.height = mutableTitle.size.height;
+		titleRect.origin.x = cellFrame.origin.x + (leftImage ? leftImage.size.width : 0.0) + 5.0 + (image ? image.size.width + 5.0 : 0);
 		titleRect.origin.y = cellFrame.origin.y + ((cellFrame.size.height - titleRect.size.height) / 2) - 2;
 		[mutableTitle drawInRect:titleRect];
 	}

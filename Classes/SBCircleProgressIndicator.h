@@ -45,8 +45,4 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) BOOL alwaysDrawing;
 @property (nonatomic) BOOL showPercentage;
 
-- (void)setProgress:(CGFloat)inProgress;
-- (void)setSelected:(BOOL)inSelected;
-- (void)setHighlighted:(BOOL)inHighlighted;
-
 @end

@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize alwaysDrawing;
 @synthesize showPercentage;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
     if (self = [super initWithFrame:frame])
 	{
@@ -86,7 +86,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (progress != inProgress)
 	{
 		progress = inProgress;
-		[self setNeedsDisplay:YES];
+        self.needsDisplay = YES;
 		if (!alwaysDrawing)
 		{
 			if (inProgress >= 1.0)
@@ -102,8 +102,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (selected != inSelected)
 	{
 		selected = inSelected;
-		[self setNeedsDisplay:YES];
-	}
+        self.needsDisplay = YES;
+    }
 }
 
 - (void)setHighlighted:(BOOL)inHighlighted
@@ -111,7 +111,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (highlighted != inHighlighted)
 	{
 		highlighted = inHighlighted;
-		[self setNeedsDisplay:YES];
+        self.needsDisplay = YES;
 	}
 }
 
@@ -138,8 +138,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)clearProgress
 {
 	progress = -1;
-	[self setNeedsDisplay:YES];
-	[[super superview] setNeedsDisplay:YES];
+    self.needsDisplay = YES;
+    super.superview.needsDisplay = YES;
 }
 
 #pragma mark Drawing
@@ -151,7 +151,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (progress >= 0)
 		{
 			NSRect r = self.bounds;
-			CGContextRef ctx = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+			CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 			CGMutablePathRef path = nil;
 			CGColorRef color = nil;
 			CGPoint cp = CGPointZero;
@@ -175,11 +175,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			lw = 1.5;
 			radius = (r.size.width < r.size.height ? r.size.width / 2 : r.size.height / 2) - lw;
 			sa = 0;
-			ea = (progress * 360);
+			ea = progress * 360;
 			startAngle = (sa - 270) * (M_PI / 180);
 			endAngle = (-ea - 270) * (M_PI / 180);
 			
-			superview = [self superview];
+			superview = self.superview;
 			isFirstResponder = [superview respondsToSelector:@selector(isFirstResponder)] ? [superview isFirstResponder] : NO;
 			
 			if (selected && keyView)
@@ -286,14 +286,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				NSDictionary *sattributes = nil;
 				NSRect tr = NSZeroRect;
 				NSRect sr = NSZeroRect;
-				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							  [NSFont boldSystemFontOfSize:10.0], NSFontAttributeName, 
-							  [NSColor whiteColor], NSForegroundColorAttributeName, 
-							  nil];
-				sattributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							   [NSFont boldSystemFontOfSize:10.0], NSFontAttributeName, 
-							   [NSColor colorWithCalibratedWhite:0.0 alpha:0.75], NSForegroundColorAttributeName, 
-							   nil];
+				attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:10.0], 
+                               NSForegroundColorAttributeName: NSColor.whiteColor};
+				sattributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:10.0], 
+                                NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.0 alpha:0.75]};
 				tr.size = [percentage sizeWithAttributes:attributes];
 				tr.origin.x = (r.size.width - tr.size.width) / 2;
 				tr.origin.y = (r.size.height - tr.size.height) / 2;

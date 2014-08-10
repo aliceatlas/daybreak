@@ -38,27 +38,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) CGFloat animationDuration;
 @property (nonatomic) BOOL keyView;
 @property (nonatomic) BOOL toolbarVisible;
-@property (nonatomic) NSRect frame;
-@property (nonatomic, weak) CALayer *layer;
-@property (nonatomic) BOOL wantsLayer;
-@property (nonatomic) BOOL hidden;
 @property (nonatomic) CGFloat alphaValue;
 @property (weak, nonatomic, readonly) NSView *subview;
 @property (nonatomic, unsafe_unretained) id target;
 @property (nonatomic, assign) SEL doneSelector;
 @property (nonatomic, assign) SEL cancelSelector;
+@property (nonatomic, readonly) NSString *description;
 
-// Getter
-- (NSString *)description;
 // Setter
-- (void)setFrame:(NSRect)frame;
-- (void)setLayer:(CALayer *)layer;
-- (void)setWantsLayer:(BOOL)wantsLayer;
-- (void)setHidden:(BOOL)hidden;
-- (void)setAlphaValue:(CGFloat)alphaValue;
 - (void)setFrame:(NSRect)frame animate:(BOOL)animate;
-- (void)setKeyView:(BOOL)isKeyView;
-- (void)setToolbarVisible:(BOOL)isToolbarVisible;
 // Actions
 - (void)fadeIn:(id)delegate;
 - (void)fadeOut:(id)delegate;

@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)drawRect:(NSRect)rect
 {
 	NSRect bounds = self.bounds;
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	NSUInteger count = 2;
 	CGFloat locations[count];
 	CGPoint points[count];
