@@ -222,7 +222,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let info = NSBundle.mainBundle().localizedInfoDictionary
         let urlString: String = info["SBReleaseNotesURL"] as NSString
         self.destructUpdateView()
-        updateView = SBUpdateView(frame: window.splitViewRect())
+        updateView = SBUpdateView(frame: window.splitViewRect)
         updateView!.title = NSString(format: NSLocalizedString("A new version of Sunrise %@ is available.", comment: ""), versionString)
         updateView!.text = NSLocalizedString("If you click the \"Download\" button, the download of the disk image file will begin. ", comment: "")
         updateView!.versionString = versionString

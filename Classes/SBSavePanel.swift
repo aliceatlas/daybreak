@@ -138,14 +138,14 @@ class SBSavePanelContentView: SBView {
         let strokePath = SBRoundedPath(CGRectInset(r, 0.5, 0.5), 8.0, 0.0, false, true)
         // Frame
         CGContextSaveGState(ctx)
-        CGContextAddPath(ctx, path.takeUnretainedValue())
+        CGContextAddPath(ctx, path)
         CGContextClip(ctx)
         SBDrawGradientInContext(ctx, count, UnsafeMutablePointer<CGFloat>(locations), UnsafeMutablePointer<CGFloat>(colors), UnsafeMutablePointer<CGPoint>(points))
         CGContextRestoreGState(ctx)
         
         // Stroke
         CGContextSaveGState(ctx)
-        CGContextAddPath(ctx, strokePath.takeUnretainedValue())
+        CGContextAddPath(ctx, strokePath)
         CGContextSetLineWidth(ctx, 0.5)
         CGContextSetRGBStrokeColor(ctx, strokeColor[0], strokeColor[1], strokeColor[2], strokeColor[3])
         CGContextStrokePath(ctx)

@@ -879,7 +879,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         let navigationType = WebNavigationType.fromRaw(actionInformation[WebActionNavigationTypeKey as String] as NSNumber)!
         switch navigationType {
             case .LinkClicked:
-                if url.hasWebScheme() { // 'http', 'https', 'file' //////
+                if url.hasWebScheme { // 'http', 'https', 'file'
                     if modifierFlags & .CommandKeyMask { // Command
                         var selection = true
                         let makeActiveFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBWhenNewTabOpensMakeActiveFlag)
@@ -924,7 +924,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     override func webView(webView: WebView, unableToImplementPolicyWithError error: NSError, frame: WebFrame) {
         if let string: String = error.userInfo["NSErrorFailingURLStringKey"] as? NSString {
             let url = NSURL(string: string)
-            if url.hasWebScheme() { // 'http', 'https', 'file' //////
+            if url.hasWebScheme { // 'http', 'https', 'file'
                 // Error
             } else {
                 // open URL with other applications
