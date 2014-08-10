@@ -37,25 +37,21 @@
 }
 @property (nonatomic, weak) NSString *message;
 @property (nonatomic, weak) NSString *text;
+@property (nonatomic, readonly) NSPoint margin;
+@property (nonatomic, readonly) CGFloat labelWidth;
+@property (nonatomic, readonly) NSSize buttonSize;
+@property (nonatomic, readonly) CGFloat buttonMargin;
+@property (nonatomic, readonly) NSFont *textFont;
+@property (nonatomic, readonly) NSRect messageLabelRect;
+@property (nonatomic, readonly) NSRect textLabelRect;
+@property (nonatomic, readonly) NSRect doneButtonRect;
+@property (nonatomic, readonly) NSRect cancelButtonRect;
 
-- (id)initWithFrame:(NSRect)frame text:(NSString *)inText;
-// Rects
-- (NSPoint)margin;
-- (CGFloat)labelWidth;
-- (NSSize)buttonSize;
-- (CGFloat)buttonMargin;
-- (NSFont *)textFont;
-- (NSRect)messageLabelRect;
-- (NSRect)textLabelRect;
-- (NSRect)doneButtonRect;
-- (NSRect)cancelButtonRect;
+- (instancetype)initWithFrame:(NSRect)frame text:(NSString *)inText NS_DESIGNATED_INITIALIZER;
 // Construction
 - (void)constructMessageLabel;
 - (void)constructTextLabel:(NSString *)inText;
 - (void)constructDoneButton;
 - (void)constructCancelButton;
-// Setter
-- (void)setMessage:(NSString *)message;
-- (void)setText:(NSString *)inText;
 
 @end

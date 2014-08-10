@@ -39,7 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize doneSelector;
 @synthesize cancelSelector;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -63,7 +63,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark NSCoding Protocol
 
-- (id)initWithCoder:(NSCoder *)decoder
+- (instancetype)initWithCoder:(NSCoder *)decoder
 {
 	if ((self = [super initWithCoder:decoder]))
 	{
@@ -111,43 +111,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"%@ %@", [super description], NSStringFromRect(self.frame)];
-}
-
-- (CALayer *)layer
-{
-	return [super layer];
-}
-
-- (BOOL)wantsLayer
-{
-	return [super wantsLayer];
+	return [NSString stringWithFormat:@"%@ %@", super.description, NSStringFromRect(self.frame)];
 }
 
 - (CGFloat)alphaValue
 {
-	return [super alphaValue];
+	return super.alphaValue;
 }
 
 - (NSView *)subview
 {
 	NSView *subview = nil;
-	NSArray *subviews = [self subviews];
-	subview = [subviews count] > 0 ? [subviews objectAtIndex:0] : nil;
+	NSArray *subviews = self.subviews;
+	subview = subviews.count > 0 ? subviews[0] : nil;
 	return subview;
 }
 
 #pragma mark Setter
-
-- (void)setLayer:(CALayer *)layer
-{
-	[super setLayer:layer];
-}
-
-- (void)setWantsLayer:(BOOL)wantsLayer
-{
-	[super setWantsLayer:wantsLayer];
-}
 
 - (void)setAlphaValue:(CGFloat)alphaValue
 {
@@ -160,7 +140,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		if (!self.wantsLayer)
 			self.wantsLayer = YES;
 	}
-	[super setAlphaValue:alphaValue];
+    super.alphaValue = alphaValue;
 }
 
 - (void)setFrame:(NSRect)frame animate:(BOOL)animate
@@ -168,12 +148,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (animate)
 	{
 		NSViewAnimation *animation = nil;
-		NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-		[info setObject:self forKey:NSViewAnimationTargetKey];
-		[info setObject:[NSValue valueWithRect:self.frame] forKey:NSViewAnimationStartFrameKey];
-		[info setObject:[NSValue valueWithRect:frame] forKey:NSViewAnimationEndFrameKey];
-		animation = [[NSViewAnimation alloc] initWithViewAnimations:[NSArray arrayWithObject:info]];
-		[animation setDuration:0.25];
+        NSDictionary *info = @{NSViewAnimationTargetKey: self,
+                               NSViewAnimationStartFrameKey: [NSValue valueWithRect:self.frame],
+                               NSViewAnimationEndFrameKey: [NSValue valueWithRect:frame]};
+		animation = [[NSViewAnimation alloc] initWithViewAnimations:@[info]];
+        animation.duration = 0.25;
 		[animation startAnimation];
 	}
 	else {
@@ -186,10 +165,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (keyView != isKeyView)
 	{
 		keyView = isKeyView;
-		[self setNeedsDisplay:YES];
-		if ([[self subviews] count] > 0)
+        self.needsDisplay = YES;
+		if (self.subviews.count > 0)
 		{
-			for (NSView *subview in [self subviews])
+			for (NSView *subview in self.subviews)
 			{
 				if ([subview respondsToSelector:@selector(setKeyView:)])
 				{
@@ -205,7 +184,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (toolbarVisible != isToolbarVisible)
 	{
 		toolbarVisible = isToolbarVisible;
-		[self setNeedsDisplay:YES];
+        self.needsDisplay = YES;
 	}
 }
 
@@ -214,31 +193,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)fadeIn:(id)delegate
 {
 	NSViewAnimation *animation = nil;
-	NSMutableArray *animations = [NSMutableArray arrayWithCapacity:0];
-	NSMutableDictionary *info = nil;
-	info = [NSMutableDictionary dictionaryWithCapacity:0];
-	[info setObject:self forKey:NSViewAnimationTargetKey];
-	[info setObject:NSViewAnimationFadeInEffect forKey:NSViewAnimationEffectKey];
-	[animations addObject:[info copy]];
+    NSArray *animations = nil;
+    animations = @[@{NSViewAnimationTargetKey: self,
+                     NSViewAnimationEffectKey: NSViewAnimationFadeInEffect}];
 	animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
-	[animation setDuration:self.animationDuration];
-	[animation setDelegate:delegate];
+    animation.duration = self.animationDuration;
+    animation.delegate = delegate;
 	[animation startAnimation];
 }
 
 - (void)fadeOut:(id)delegate
 {
-	NSViewAnimation *animation = nil;
-	NSMutableArray *animations = [NSMutableArray arrayWithCapacity:0];
-	NSMutableDictionary *info = nil;
-	info = [NSMutableDictionary dictionaryWithCapacity:0];
-	[info setObject:self forKey:NSViewAnimationTargetKey];
-	[info setObject:NSViewAnimationFadeOutEffect forKey:NSViewAnimationEffectKey];
-	[animations addObject:[info copy]];
-	animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
-	[animation setDuration:self.animationDuration];
-	[animation setDelegate:delegate];
-	[animation startAnimation];
+    NSViewAnimation *animation = nil;
+    NSArray *animations = nil;
+    animations = @[@{NSViewAnimationTargetKey: self,
+                     NSViewAnimationEffectKey: NSViewAnimationFadeOutEffect}];
+    animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
+    animation.duration = self.animationDuration;
+    animation.delegate = delegate;
+    [animation startAnimation];
 }
 
 - (void)done

@@ -37,9 +37,9 @@
 	NSTimer *toolsTimer;
 }
 @property (nonatomic, unsafe_unretained) id<SBDownloadsViewDelegate> delegate;
+@property (nonatomic, readonly) NSSize cellSize;
+@property (nonatomic, readonly) NSUInteger blockX;
 
-- (NSSize)cellSize;
-- (NSUInteger)blockX;
 - (NSRect)cellFrameAtIndex:(NSUInteger)index;
 - (NSRect)removeButtonRect:(SBDownloadView *)itemView;
 - (NSRect)finderButtonRect:(SBDownloadView *)itemView;

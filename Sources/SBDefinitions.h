@@ -406,10 +406,3 @@ typedef NSUInteger WebFindOptions;
 - (void)show:(id)arg1;
 - (void)showConsole:(id)arg1;
 @end
-
-// Methods for Snow Leopard 10.6
-@interface NSEvent (SBSnowLeopardAddition)
-
-- (CGFloat)magnification;
-
-@end

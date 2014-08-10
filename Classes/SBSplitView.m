@@ -37,7 +37,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic animating;
 @synthesize sidebarWidth;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -45,8 +45,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		sidebarWidth = [[NSUserDefaults standardUserDefaults] floatForKey:kSBSidebarWidth];
 		if (sidebarWidth < kSBSidebarMinimumWidth)
 			sidebarWidth = kSBDefaultSidebarWidth;
-		[self setVertical:YES];
-		[self setDividerStyle:NSSplitViewDividerStyleThin];
+        self.vertical = YES;
+        self.dividerStyle = NSSplitViewDividerStyleThin;
 	}
 	return self;
 }
@@ -76,27 +76,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Getter
 
-- (NSRect)frame
-{
-	return [super frame];
-}
-
 - (BOOL)animating
 {
-	return (_divideAnimation != nil);
+	return _divideAnimation != nil;
 }
 
 - (BOOL)visibleSidebar
 {
-	return [sidebar superview] != nil;
+	return sidebar.superview != nil;
 }
 
 #pragma mark Setter
-
-- (void)setFrame:(NSRect)frame
-{
-	[super setFrame:frame];
-}
 
 - (void)setView:(NSView *)aView
 {
@@ -134,7 +124,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			[self switchView:inSidebarPosition];
 			sidebar.position = sidebarPosition;
-			if ([self visibleSidebar])
+			if (self.visibleSidebar)
 			{
 				[self openSidebar:nil];
 			}
@@ -176,11 +166,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)sidebarDidOpenDrawer:(SBSidebar *)inSidebar
 {
-	if ([self delegate])
+	if (self.delegate)
 	{
-		if ([[self delegate] respondsToSelector:@selector(splitViewDidOpenDrawer:)])
+		if ([self.delegate respondsToSelector:@selector(splitViewDidOpenDrawer:)])
 		{
-			[[self delegate] performSelector:@selector(splitViewDidOpenDrawer:) withObject:self];
+			[self.delegate performSelector:@selector(splitViewDidOpenDrawer:) withObject:self];
 		}
 	}
 }
@@ -214,9 +204,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (view && sidebar)
 	{
 		BOOL switching = NO;
-		NSArray *subviews = [self subviews];
-		NSView *subview0 = [subviews count] > 0 ? [subviews objectAtIndex:0] : nil;
-		NSView *subview1 = [subviews count] > 1 ? [subviews objectAtIndex:1] : nil;
+		NSArray *subviews = self.subviews;
+		NSView *subview0 = subviews.count > 0 ? subviews[0] : nil;
+		NSView *subview1 = subviews.count > 1 ? subviews[1] : nil;
 		if (position == SBSidebarLeftPosition && subview0 == view && subview1 == sidebar)
 		{
 			switching = YES;
@@ -239,12 +229,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)takeSidebarIfNeeded
 {
 	dividerThickness = 0.0;
-	if ([sidebar superview] == self)
+	if (sidebar.superview == self)
 	{
 		[self takeSidebar];
-		sidebar.frame = [self sidebarRect];
+		sidebar.frame = self.sidebarRect;
 	}
-	view.frame = [self viewRect];
+	view.frame = self.viewRect;
 	[self adjustSubviews];
 }
 
@@ -256,12 +246,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)returnSidebarIfNeeded
 {
 	dividerThickness = SBSplitViewDividerThickness;
-	if ([sidebar superview] != self)
+	if (sidebar.superview != self)
 	{
 		[self returnSidebar];
 	}
-	view.frame = [self viewRect];
-	sidebar.frame = [self sidebarRect];
+	view.frame = self.viewRect;
+	sidebar.frame = self.sidebarRect;
 	[self adjustSubviews];
 }
 

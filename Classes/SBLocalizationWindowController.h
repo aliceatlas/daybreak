@@ -51,10 +51,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 @property (nonatomic, strong) NSMutableArray *textSet;
 @property (nonatomic, strong) NSArray *fieldSet;
+@property (nonatomic, readonly) CGFloat margin;
+@property (nonatomic, readonly) CGFloat topMargin;
+@property (nonatomic, readonly) CGFloat bottomMargin;
 
-- (CGFloat)margin;
-- (CGFloat)topMargin;
-- (CGFloat)bottomMargin;
 - (void)constructCommonViews;
 - (void)constructEditView;
 - (void)constructButtonsInEditView;

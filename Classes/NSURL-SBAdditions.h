@@ -27,6 +27,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface NSURL (SBAdditions)
 
-- (BOOL)hasWebScheme;
+@property (nonatomic, readonly) BOOL hasWebScheme;
 
 @end

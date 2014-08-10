@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation SBBLKGUISlider
 
-- (id)initWithFrame:(NSRect)frameRect
+- (instancetype)initWithFrame:(NSRect)frameRect
 {
 	if (self = [super initWithFrame:frameRect])
 	{
@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)drawKnob:(NSRect)knobRect
 {
-	CGContextRef ctx = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	CGMutablePathRef path = nil;
 	NSUInteger count = 2;
 	CGFloat locations[count];
@@ -82,7 +82,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //{
 //	[super drawWithFrame:cellFrame inView:controlView];
 //	
-//	[super drawBarInside:cellFrame flipped:[controlView isFlipped]];
+//	[super drawBarInside:cellFrame flipped:controlView.isFlipped];
 //	[self drawKnob];
 //}
 

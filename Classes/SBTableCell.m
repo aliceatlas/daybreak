@@ -33,7 +33,7 @@
 @synthesize showSelection;
 @synthesize lineBreakMode;
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{
@@ -69,7 +69,7 @@
 	}
 	else if (style == SBTableCellWhiteStyle)
 	{
-		NSColor *selectedColor = [[NSColor alternateSelectedControlColor] colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+		NSColor *selectedColor = [NSColor.alternateSelectedControlColor colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
 		memcpy(backgroundColors, SBBackgroundLightGrayColors, sizeof(SBBackgroundLightGrayColors));
 		memcpy(cellColors, SBTableLightGrayCellColors, sizeof(SBTableLightGrayCellColors));
 		[selectedColor getComponents:selectedCellColors];
@@ -87,9 +87,9 @@
 	{
 		[[NSColor colorWithCalibratedRed:cellColors[0] green:cellColors[1] blue:cellColors[2] alpha:cellColors[3]] set];
 		NSRectFill(NSInsetRect(cellFrame, 0.0, 0.5));
-		if ([self isHighlighted] && showSelection)
+		if (self.highlighted && showSelection)
 		{
-			CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+			CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 			CGRect r = CGRectZero;
 			CGPathRef path = nil;
 			r = NSRectToCGRect(cellFrame);
@@ -102,7 +102,7 @@
 		}
 	}
 	else {
-		if ([self isHighlighted] && showSelection)
+		if (self.highlighted && showSelection)
 			[[NSColor colorWithCalibratedRed:selectedCellColors[0] green:selectedCellColors[1] blue:selectedCellColors[2] alpha:selectedCellColors[3]] set];
 		else
 			[[NSColor colorWithCalibratedRed:cellColors[0] green:cellColors[1] blue:cellColors[2] alpha:cellColors[3]] set];
@@ -116,20 +116,20 @@
 	CGFloat textColors[4];
 	NSColor *sTextColor = nil;
 	
-	title = [self title];
+	title = self.title;
 	if (style == SBTableCellGrayStyle)
 	{
 		memcpy(textColors, SBSidebarTextColors, sizeof(SBSidebarTextColors));
-		sTextColor = [NSColor blackColor];
+		sTextColor = NSColor.blackColor;
 	}
 	else if (style == SBTableCellWhiteStyle)
 	{
-		NSColor *textColor = [(self.enabled ? [NSColor blackColor] : [NSColor grayColor]) colorUsingColorSpace:[NSColorSpace genericRGBColorSpace]];
+		NSColor *textColor = [(enabled ? NSColor.blackColor : NSColor.grayColor) colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
 		[textColor getComponents:textColors];
-		sTextColor = [self isHighlighted] ? [NSColor clearColor] : [NSColor whiteColor];
+		sTextColor = self.highlighted ? NSColor.clearColor : NSColor.whiteColor;
 	}
 	
-	if ([title length] > 0 && (style == SBTableCellGrayStyle || style == SBTableCellWhiteStyle))
+	if (title.length > 0 && (style == SBTableCellGrayStyle || style == SBTableCellWhiteStyle))
 	{
 		NSSize size = NSZeroSize;
 		NSColor *color = nil;
@@ -139,27 +139,27 @@
 		NSRect r = NSZeroRect;
 		NSRect sr = NSZeroRect;
 		NSMutableParagraphStyle *paragraphStyle = nil;
-		CGFloat side = [self side] + (cellFrame.size.height - 0.5 * 2) / 2;
+		CGFloat side = self.side + (cellFrame.size.height - 0.5 * 2) / 2;
 		
-		color = [self isHighlighted] ? [NSColor whiteColor] : [NSColor colorWithCalibratedRed:textColors[0] green:textColors[1] blue:textColors[2] alpha:textColors[3]];
-		font = [self font];
+		color = self.highlighted ? NSColor.whiteColor : [NSColor colorWithCalibratedRed:textColors[0] green:textColors[1] blue:textColors[2] alpha:textColors[3]];
+		font = self.font;
 		paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-		[paragraphStyle setLineBreakMode:lineBreakMode];
-		attribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
-		sattribute = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, sTextColor, NSForegroundColorAttributeName, paragraphStyle, NSParagraphStyleAttributeName, nil];
+        paragraphStyle.lineBreakMode = lineBreakMode;
+		attribute = @{NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle};
+		sattribute = @{NSFontAttributeName: font, NSForegroundColorAttributeName: sTextColor, NSParagraphStyleAttributeName: paragraphStyle};
 		size = [title sizeWithAttributes:attribute];
 		if (size.width > (cellFrame.size.width - side * 2))
 			size.width = cellFrame.size.width - side * 2;
 		r.size = size;
-		if ([self alignment] == NSLeftTextAlignment)
+		if (self.alignment == NSLeftTextAlignment)
 		{
 			r.origin.x = cellFrame.origin.x + side;
 		}
-		else if ([self alignment] == NSRightTextAlignment)
+		else if (self.alignment == NSRightTextAlignment)
 		{
 			r.origin.x = cellFrame.origin.x + side + ((cellFrame.size.width - side * 2) - size.width);
 		}
-		else if ([self alignment] == NSCenterTextAlignment)
+		else if (self.alignment == NSCenterTextAlignment)
 		{
 			r.origin.x = cellFrame.origin.x + ((cellFrame.size.width - side * 2) - size.width) / 2;
 		}
@@ -184,7 +184,7 @@
 
 @synthesize drawsBackground;
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init])
 	{
@@ -212,11 +212,11 @@
 
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
 {
-	NSImage *image = [self image];
+	NSImage *image = self.image;
 	if (image)
 	{
 		NSRect r = NSZeroRect;
-		r.size = [image size];
+		r.size = image.size;
 		r.origin.x = cellFrame.origin.x + (cellFrame.size.width - r.size.width) / 2;
 		r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
 		[image drawInRect:r operation:NSCompositeSourceOver fraction:1.0 respectFlipped:YES];

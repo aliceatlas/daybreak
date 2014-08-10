@@ -40,7 +40,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize selectSelector;
 @dynamic progress;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
     if (self = [super initWithFrame:frame])
 	{
@@ -91,7 +91,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setKeyView:(BOOL)isKeyView
 {
 	progressIndicator.keyView = isKeyView;
-	[super setKeyView:isKeyView];
+    super.keyView = isKeyView;
 }
 
 - (void)setToolbarVisible:(BOOL)isToolbarVisible
@@ -100,7 +100,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		toolbarVisible = isToolbarVisible;
 		progressIndicator.toolbarVisible = isToolbarVisible;
-		[self setNeedsDisplay:YES];
+        self.needsDisplay = YES;
 	}
 }
 
@@ -109,7 +109,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (![title isEqualToString:inTitle])
 	{
 		title = inTitle;
-		[self setNeedsDisplay:YES];
+        self.needsDisplay = YES;
 	}
 }
 
@@ -119,7 +119,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		selected = inSelected;
 		progressIndicator.selected = inSelected;
-		[self setNeedsDisplay:YES];
+        self.needsDisplay = YES;
 	}
 }
 
@@ -128,8 +128,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (closable != inClosable)
 	{
 		closable = inClosable;
-		[self setNeedsDisplay:YES];
-	}
+        self.needsDisplay = YES;
+    }
 }
 
 - (void)setProgress:(CGFloat)progress
@@ -154,7 +154,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	[self destructProgressIndicator];
 	progressIndicator = [[SBCircleProgressIndicator alloc] initWithFrame:NSRectFromCGRect(self.progressRect)];
-	[progressIndicator setAutoresizingMask:(NSViewMinXMargin)];
+    progressIndicator.autoresizingMask = NSViewMinXMargin;
 	[self addSubview:progressIndicator];
 }
 
@@ -166,7 +166,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if ([target respondsToSelector:closeSelector])
 		{
-			[[NSRunLoop currentRunLoop] cancelPerformSelector:closeSelector target:target argument:nil];
+			[NSRunLoop.currentRunLoop cancelPerformSelector:closeSelector target:target argument:nil];
 			[target performSelector:closeSelector withObject:self afterDelay:0];
 		}
 	}
@@ -185,26 +185,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Event
 
-#pragma mark Event
-
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	NSPoint location = [theEvent locationInWindow];
+	NSPoint location = theEvent.locationInWindow;
 	NSPoint point = [self convertPoint:location fromView:nil];
 	_dragInClose = NO;
 	if (closable)
 	{
-		_downInClose = CGRectContainsPoint([self closableRect], NSPointToCGPoint(point));
+		_downInClose = CGRectContainsPoint(self.closableRect, NSPointToCGPoint(point));
 		if (_downInClose)
 		{
 			// Close
 			_dragInClose = YES;
-			[self setNeedsDisplay:YES];
+			self.needsDisplay = YES;
 		}
 	}
 	if (!_dragInClose)
 	{
-		[[self superview] mouseDown:theEvent];
+		[self.superview mouseDown:theEvent];
 		if (!self.selected)
 		{
 			[self executeShouldSelect];
@@ -217,30 +215,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	NSPoint location = [theEvent locationInWindow];
+	NSPoint location = theEvent.locationInWindow;
 	NSPoint point = [self convertPoint:location fromView:nil];
 	if (_downInClose)
 	{
 		// Close
-		BOOL close =  CGRectContainsPoint([self closableRect], NSPointToCGPoint(point));
+		BOOL close =  CGRectContainsPoint(self.closableRect, NSPointToCGPoint(point));
 		if (_dragInClose != close)
 		{
 			_dragInClose = close;
-			[self setNeedsDisplay:YES];
+            self.needsDisplay = YES;
 		}
 	}
 	else {
-		[[self superview] mouseDragged:theEvent];
+		[self.superview mouseDragged:theEvent];
 	}
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-	if ([tabbar canClosable])
+	if (tabbar.canClosable)
 	{
-		NSPoint location = [theEvent locationInWindow];
+		NSPoint location = theEvent.locationInWindow;
 		NSPoint point = [self convertPoint:location fromView:nil];
-		[[self superview] mouseMoved:theEvent];
+		[self.superview mouseMoved:theEvent];
 		if (CGRectContainsPoint(NSRectToCGRect(self.bounds), NSPointToCGPoint(point)))
 		{
 			[tabbar constructClosableTimerForItem:self];
@@ -253,13 +251,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
-	[[self superview] mouseEntered:theEvent];
+	[self.superview mouseEntered:theEvent];
 }
 
 - (void)mouseExited:(NSEvent *)theEvent
 {
-	[[self superview] mouseExited:theEvent];
-	if ([tabbar canClosable])
+	[self.superview mouseExited:theEvent];
+	if (tabbar.canClosable)
 	{
 		[tabbar applyDisclosableAllItem];
 	}
@@ -267,25 +265,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-	NSPoint location = [theEvent locationInWindow];
+	NSPoint location = theEvent.locationInWindow;
 	NSPoint point = [self convertPoint:location fromView:nil];
 	if (_downInClose)
 	{
 		// Close
 		if (self.closable)
 		{
-			if (CGRectContainsPoint([self closableRect], NSPointToCGPoint(point)))
+			if (CGRectContainsPoint(self.closableRect, NSPointToCGPoint(point)))
 			{
 				[self executeShouldClose];
 			}
 		}
 	}
 	else {
-		[[self superview] mouseUp:theEvent];
+		[self.superview mouseUp:theEvent];
 	}
 	_dragInClose = NO;
 	_downInClose = NO;
-	[self setNeedsDisplay:YES];
+    self.needsDisplay = YES;
 }
 
 - (NSMenu *)menuForEvent:(NSEvent *)theEvent
@@ -297,7 +295,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)drawRect:(NSRect)rect
 {
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	CGRect b = NSRectToCGRect(self.bounds);
 	CGPathRef path = nil;
 	CGPathRef strokePath = nil;
@@ -310,7 +308,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat grayScaleUp = 0.0;
 	CGFloat strokeGrayScale = 0.0;
 	CGFloat titleLeftMargin = 10.0;
-	CGFloat titleRightMargin = self.bounds.size.width - [self progressRect].origin.x;
+	CGFloat titleRightMargin = self.bounds.size.width - self.progressRect.origin.x;
 	locations[0] = 0.0;
 	locations[1] = 1.0;
 	
@@ -358,7 +356,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (closable)
 	{
 		// Close button
-		CGRect closableRect = [self closableRect];
+		CGRect closableRect = self.closableRect;
 		CGMutablePathRef xPath = CGPathCreateMutable();
 		CGPoint p = CGPointZero;
 		CGFloat across = closableRect.size.width;
@@ -400,23 +398,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		titleLeftMargin = across + margin * 2;
 	}
 	
-	if ([title length] > 0)
+	if (title.length > 0)
 	{
 		// Title
-		NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:0];
+		NSDictionary *attributes = nil;
 		NSSize size = NSZeroSize;
 		NSRect r = NSZeroRect;
-		CGFloat width = (b.size.width - titleLeftMargin - titleRightMargin);
+		CGFloat width = b.size.width - titleLeftMargin - titleRightMargin;
 		NSShadow *shadow = [[NSShadow alloc] init];
 		NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
-		[shadow setShadowColor:[NSColor colorWithCalibratedWhite:1.0 alpha:1.0]];
-		[shadow setShadowOffset:NSMakeSize(0, -0.5)];
-		[shadow setShadowBlurRadius:0.5];
-		[paragraph setLineBreakMode:NSLineBreakByTruncatingTail];
-		[attributes setObject:[NSFont boldSystemFontOfSize:12.0] forKey:NSFontAttributeName];
-		[attributes setObject:[NSColor colorWithCalibratedWhite:0.1 alpha:1.0] forKey:NSForegroundColorAttributeName];
-		[attributes setObject:shadow forKey:NSShadowAttributeName];
-		[attributes setObject:paragraph forKey:NSParagraphStyleAttributeName];
+        shadow.shadowColor = [NSColor colorWithCalibratedWhite:1.0 alpha:1.0];
+        shadow.shadowOffset = NSMakeSize(0, -0.5);
+        shadow.shadowBlurRadius = 0.5;
+        paragraph.lineBreakMode = NSLineBreakByTruncatingTail;
+        attributes = @{
+            NSFontAttributeName: [NSFont boldSystemFontOfSize:12.0],
+            NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.1 alpha:1.0],
+            NSShadowAttributeName: shadow,
+            NSParagraphStyleAttributeName: paragraph};
 		size = [title sizeWithAttributes:attributes];
 		r.size = size;
 		if (size.width > width)

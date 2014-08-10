@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic urlString;
 @synthesize fillMode;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -66,7 +66,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *title = self.title;
 	NSString *urlString = self.urlString;
 	NSData *data = [[image bitmapImageRep] data];
-	NSString *labelName = SBBookmarkLabelColorNames[[colorPopup indexOfSelectedItem] - 1];
+	NSString *labelName = SBBookmarkLabelColorNames[colorPopup.indexOfSelectedItem - 1];
 	NSString *offset = NSStringFromPoint(NSZeroPoint);
 	return SBCreateBookmarkItem(title, urlString, data, [NSDate date], labelName, offset);
 }
@@ -107,8 +107,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)messageLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect imageRect = [self imageRect];
-	NSPoint margin = [self margin];
+	NSRect imageRect = self.imageRect;
+	NSPoint margin = self.margin;
 	r.size.width = self.bounds.size.width - margin.x * 2;
 	r.size.height = 36.0;
 	r.origin.x = margin.x;
@@ -119,9 +119,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)titleLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect imageRect = [self imageRect];
+	NSRect imageRect = self.imageRect;
 	r.origin.x = NSMaxX(imageRect) + 10.0;
-	r.size.width = [self labelWidth];
+	r.size.width = self.labelWidth;
 	r.size.height = 24.0;
 	r.origin.y = NSMaxY(imageRect) - r.size.height;
 	return r;
@@ -130,9 +130,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)urlLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect titleRect = [self titleLabelRect];
+	NSRect titleRect = self.titleLabelRect;
 	r.origin.x = titleRect.origin.x;
-	r.size.width = [self labelWidth];
+	r.size.width = self.labelWidth;
 	r.size.height = 24.0;
 	r.origin.y = titleRect.origin.y - 10.0 - r.size.height;
 	return r;
@@ -141,9 +141,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)colorLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect urlRect = [self urlLabelRect];
+	NSRect urlRect = self.urlLabelRect;
 	r.origin.x = urlRect.origin.x;
-	r.size.width = [self labelWidth];
+	r.size.width = self.labelWidth;
 	r.size.height = 24.0;
 	r.origin.y = urlRect.origin.y - 10.0 - r.size.height;
 	return r;
@@ -152,8 +152,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)titleFieldRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	NSRect titleLabelRect = [self titleLabelRect];
+	NSPoint margin = self.margin;
+	NSRect titleLabelRect = self.titleLabelRect;
 	r.origin.x = NSMaxX(titleLabelRect) + 10.0;
 	r.origin.y = titleLabelRect.origin.y;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
@@ -164,8 +164,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)urlFieldRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	NSRect urlLabelRect = [self urlLabelRect];
+	NSPoint margin = self.margin;
+	NSRect urlLabelRect = self.urlLabelRect;
 	r.origin.x = NSMaxX(urlLabelRect) + 10.0;
 	r.origin.y = urlLabelRect.origin.y;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
@@ -176,7 +176,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)colorPopupRect
 {
 	NSRect r = NSZeroRect;
-	NSRect colorLabelRect = [self colorLabelRect];
+	NSRect colorLabelRect = self.colorLabelRect;
 	r.origin.x = NSMaxX(colorLabelRect) + 10.0;
 	r.origin.y = colorLabelRect.origin.y;
 	r.size.width = 150.0;
@@ -187,9 +187,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)doneButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	CGFloat buttonMargin = [self buttonMargin];
-	r.size = [self buttonSize];
+	NSPoint margin = self.margin;
+	CGFloat buttonMargin = self.buttonMargin;
+	r.size = self.buttonSize;
 	r.origin.y = margin.y;
 	r.origin.x = (self.bounds.size.width - (r.size.width * 2 + buttonMargin)) / 2 + r.size.width + buttonMargin;
 	return r;
@@ -198,9 +198,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)cancelButtonRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
-	CGFloat buttonMargin = [self buttonMargin];
-	r.size = [self buttonSize];
+	NSPoint margin = self.margin;
+	CGFloat buttonMargin = self.buttonMargin;
+	r.size = self.buttonSize;
 	r.origin.y = margin.y;
 	r.origin.x = (self.bounds.size.width - (r.size.width * 2 + buttonMargin)) / 2;
 	return r;
@@ -221,145 +221,145 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructMessageLabel
 {
-	NSRect r = [self messageLabelRect];
+	NSRect r = self.messageLabelRect;
 	messageLabel = [[NSTextField alloc] initWithFrame:r];
-	[messageLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[messageLabel setEditable:NO];
-	[messageLabel setBordered:NO];
-	[messageLabel setDrawsBackground:NO];
-	[messageLabel setTextColor:[NSColor whiteColor]];
-	[[messageLabel cell] setFont:[NSFont boldSystemFontOfSize:16]];
-	[[messageLabel cell] setAlignment:NSCenterTextAlignment];
-	[[messageLabel cell] setWraps:YES];
+    messageLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    messageLabel.editable = NO;
+    messageLabel.bordered = NO;
+    messageLabel.drawsBackground = NO;
+    messageLabel.textColor = NSColor.whiteColor;
+	[messageLabel.cell setFont:[NSFont boldSystemFontOfSize:16]];
+	[messageLabel.cell setAlignment:NSCenterTextAlignment];
+	[messageLabel.cell setWraps:YES];
 	[self addSubview:messageLabel];
 }
 
 - (void)constructTitleLabel
 {
-	NSRect r = [self titleLabelRect];
+	NSRect r = self.titleLabelRect;
 	titleLabel = [[NSTextField alloc] initWithFrame:r];
-	[titleLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[titleLabel setEditable:NO];
-	[titleLabel setBordered:NO];
-	[titleLabel setDrawsBackground:NO];
-	[titleLabel setTextColor:[NSColor lightGrayColor]];
-	[[titleLabel cell] setFont:[NSFont systemFontOfSize:12]];
-	[[titleLabel cell] setAlignment:NSRightTextAlignment];
-	[titleLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Title", nil)]];
+    titleLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    titleLabel.editable = NO;
+    titleLabel.bordered = NO;
+    titleLabel.drawsBackground = NO;
+    titleLabel.textColor = NSColor.lightGrayColor;
+	[titleLabel.cell setFont:[NSFont systemFontOfSize:12]];
+	[titleLabel.cell setAlignment:NSRightTextAlignment];
+    titleLabel.stringValue = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Title", nil)];
 	[self addSubview:titleLabel];
 }
 
 - (void)constructURLLabel
 {
-	NSRect r = [self urlLabelRect];
+	NSRect r = self.urlLabelRect;
 	urlLabel = [[NSTextField alloc] initWithFrame:r];
-	[urlLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[urlLabel setEditable:NO];
-	[urlLabel setBordered:NO];
-	[urlLabel setDrawsBackground:NO];
-	[urlLabel setTextColor:[NSColor lightGrayColor]];
-	[[urlLabel cell] setFont:[NSFont systemFontOfSize:12]];
-	[[urlLabel cell] setAlignment:NSRightTextAlignment];
-	[urlLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"URL", nil)]];
+    urlLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    urlLabel.editable = NO;
+    urlLabel.bordered = NO;
+    urlLabel.drawsBackground = NO;
+    urlLabel.textColor = NSColor.lightGrayColor;
+	[urlLabel.cell setFont:[NSFont systemFontOfSize:12]];
+	[urlLabel.cell setAlignment:NSRightTextAlignment];
+	urlLabel.stringValue = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"URL", nil)];
 	[self addSubview:urlLabel];
 }
 
 - (void)constructColorLabel
 {
-	NSRect r = [self colorLabelRect];
+	NSRect r = self.colorLabelRect;
 	colorLabel = [[NSTextField alloc] initWithFrame:r];
-	[colorLabel setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[colorLabel setEditable:NO];
-	[colorLabel setBordered:NO];
-	[colorLabel setDrawsBackground:NO];
-	[colorLabel setTextColor:[NSColor lightGrayColor]];
-	[[colorLabel cell] setFont:[NSFont systemFontOfSize:12]];
-	[[colorLabel cell] setAlignment:NSRightTextAlignment];
-	[colorLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Label", nil)]];
+    colorLabel.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    colorLabel.editable = NO;
+    colorLabel.bordered = NO;
+    colorLabel.drawsBackground = NO;
+    colorLabel.textColor = NSColor.lightGrayColor;
+	[colorLabel.cell setFont:[NSFont systemFontOfSize:12]];
+	[colorLabel.cell setAlignment:NSRightTextAlignment];
+    colorLabel.stringValue = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Label", nil)];
 	[self addSubview:colorLabel];
 }
 
 - (void)constructTitleField
 {
-	NSRect r = [self titleFieldRect];
+	NSRect r = self.titleFieldRect;
 	titleField = [[SBBLKGUITextField alloc] initWithFrame:r];
-	[titleField setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[[titleField cell] setAlignment:NSLeftTextAlignment];
+    titleField.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+	[titleField.cell setAlignment:NSLeftTextAlignment];
 	[self addSubview:titleField];
 }
 
 - (void)constructURLField
 {
-	NSRect r = [self urlFieldRect];
+	NSRect r = self.urlFieldRect;
 	urlField = [[SBBLKGUITextField alloc] initWithFrame:r];
-	[urlField setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[urlField setDelegate:self];
-	[[urlField cell] setAlignment:NSLeftTextAlignment];
+    urlField.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    urlField.delegate = self;
+	[urlField.cell setAlignment:NSLeftTextAlignment];
 	[self addSubview:urlField];
 }
 
 - (void)constructColorPopup
 {
-	NSRect r = [self colorPopupRect];
+	NSRect r = self.colorPopupRect;
 	colorPopup = [[SBBLKGUIPopUpButton alloc] initWithFrame:r];
-	[colorPopup setAutoresizingMask:(NSViewMinXMargin | NSViewMinYMargin)];
-	[colorPopup setPullsDown:YES];
-	[[colorPopup cell] setAlignment:NSLeftTextAlignment];
-	[colorPopup setMenu:SBBookmarkLabelColorMenu(YES, nil, nil, nil)];
+    colorPopup.autoresizingMask = NSViewMinXMargin | NSViewMinYMargin;
+    colorPopup.pullsDown = YES;
+	[colorPopup.cell setAlignment:NSLeftTextAlignment];
+    colorPopup.menu = SBBookmarkLabelColorMenu(YES, nil, nil, nil);
 	[colorPopup selectItemAtIndex:1];
 	[self addSubview:colorPopup];
 }
 
 - (void)constructDoneButton
 {
-	NSRect r = [self doneButtonRect];
+	NSRect r = self.doneButtonRect;
 	doneButton = [[SBBLKGUIButton alloc] initWithFrame:r];
-	[doneButton setTitle:NSLocalizedString(@"Add", nil)];
-	[doneButton setTarget:self];
-	[doneButton setAction:@selector(done)];
-	[doneButton setKeyEquivalent:@"\r"];	// busy if button is added into a view
-	[doneButton setEnabled:NO];
+    doneButton.title = NSLocalizedString(@"Add", nil);
+    doneButton.target = self;
+    doneButton.action = @selector(done);
+	doneButton.keyEquivalent = @"\r";	// busy if button is added into a view
+    doneButton.enabled = NO;
 	[self addSubview:doneButton];
 }
 
 - (void)constructCancelButton
 {
-	NSRect r = [self cancelButtonRect];
+	NSRect r = self.cancelButtonRect;
 	cancelButton = [[SBBLKGUIButton alloc] initWithFrame:r];
-	[cancelButton setTitle:NSLocalizedString(@"Cancel", nil)];
-	[cancelButton setTarget:self];
-	[cancelButton setAction:@selector(cancel)];
-	[cancelButton setKeyEquivalent:@"\e"];
+    cancelButton.title = NSLocalizedString(@"Cancel", nil);
+    cancelButton.target = self;
+    cancelButton.action = @selector(cancel);
+	cancelButton.keyEquivalent = @"\e";
 	[self addSubview:cancelButton];
 }
 
 - (void)makeResponderChain
 {
 	if (urlField)
-		[titleField setNextKeyView:urlField];
+        titleField.nextKeyView = urlField;
 	if (cancelButton)
-		[urlField setNextKeyView:cancelButton];
+        urlField.nextKeyView = cancelButton;
 	if (doneButton)
-		[cancelButton setNextKeyView:doneButton];
+        cancelButton.nextKeyView = doneButton;
 	if (titleField)
-		[doneButton setNextKeyView:titleField];
+        doneButton.nextKeyView = titleField;
 }
 
 #pragma mark Getter
 
 - (NSString *)message
 {
-	return [messageLabel stringValue];
+	return messageLabel.stringValue;
 }
 
 - (NSString *)title
 {
-	return [titleField stringValue];
+	return titleField.stringValue;
 }
 
 - (NSString *)urlString
 {
-	return [urlField stringValue];
+	return urlField.stringValue;
 }
 
 #pragma mark Setter
@@ -369,34 +369,33 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (image != inImage)
 	{
 		image = inImage;
-		[self setNeedsDisplay:YES];
+		self.needsDisplay = YES;
 	}
 }
 
 - (void)setMessage:(NSString *)message
 {
-	[messageLabel setStringValue:message];
+    messageLabel.stringValue = message;
 }
 
 - (void)setTitle:(NSString *)title
 {
-	[titleField setStringValue:title];
+    titleField.stringValue = title;
 }
 
 - (void)setUrlString:(NSString *)urlString
 {
-	[urlField setStringValue:urlString];
-	[doneButton setEnabled:[urlString length] > 0];
+    urlField.stringValue = urlString;
+    doneButton.enabled = urlString.length > 0;
 }
 
 #pragma mark Delegate
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
-	if ([aNotification object] == urlField)
+	if (aNotification.object == urlField)
 	{
-		NSString *stringValue = [urlField stringValue];
-		[doneButton setEnabled:[stringValue length] > 0];
+        doneButton.enabled = urlField.stringValue.length > 0;
 	}
 }
 
@@ -404,7 +403,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)makeFirstResponderToTitleField
 {
-	[[self window] makeFirstResponder:titleField];
+	[self.window makeFirstResponder:titleField];
 }
 
 #pragma mark Drawing
@@ -412,7 +411,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)drawRect:(NSRect)rect
 {
 	NSRect bounds = self.bounds;
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	NSUInteger count = 2;
 	CGFloat locations[count];
 	CGFloat colors[count * 4];
@@ -463,7 +462,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	if (image)
 	{
-		CGRect imageRect = NSRectToCGRect([self imageRect]);
+		CGRect imageRect = NSRectToCGRect(self.imageRect);
 		CGImageRef maskImage = nil;
 		
 		[image drawInRect:NSRectFromCGRect(imageRect) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:0.85];
@@ -474,7 +473,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		CGContextTranslateCTM(ctx, 0.0, 0.0);
 		CGContextScaleCTM(ctx, 1.0, -1.0);
 		CGContextClipToMask(ctx, imageRect, maskImage);
-		[image drawInRect:NSRectFromCGRect(imageRect) fromRect:NSMakeRect(0, 0, [image size].width, [image size].height * 0.5) operation:NSCompositeSourceOver fraction:1.0];
+		[image drawInRect:NSRectFromCGRect(imageRect) fromRect:NSMakeRect(0, 0, image.size.width, image.size.height * 0.5) operation:NSCompositeSourceOver fraction:1.0];
 	}
 }
 
@@ -485,14 +484,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize index;
 @dynamic labelName;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
 		index = NSNotFound;
 		[self destructMessageLabel];
 		
-		[doneButton setTitle:NSLocalizedString(@"Done", nil)];
+        doneButton.title = NSLocalizedString(@"Done", nil);
 	}
 	return self;
 }
@@ -500,7 +499,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSString *)labelName
 {
 	NSString *labelName = nil;
-	NSInteger itemIndex = [colorPopup indexOfSelectedItem] - 1;
+	NSInteger itemIndex = colorPopup.indexOfSelectedItem - 1;
 	if (itemIndex < SBBookmarkCountOfLabelColors)
 	{
 		labelName = SBBookmarkLabelColorNames[itemIndex];

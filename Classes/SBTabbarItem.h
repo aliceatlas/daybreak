@@ -52,14 +52,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, assign) SEL closeSelector;
 @property (nonatomic, assign) SEL selectSelector;
 @property (nonatomic) CGFloat progress;
+@property (nonatomic, readonly) CGRect closableRect;
+@property (nonatomic, readonly) CGRect progressRect;
 
-// Rects
-- (CGRect)closableRect;
-- (CGRect)progressRect;
-// Setter
-- (void)setTitle:(NSString *)inTitle;
-- (void)setSelected:(BOOL)inSelected;
-- (void)setClosable:(BOOL)inClosable;
 // Destruction
 - (void)destructProgressIndicator;
 // Construction

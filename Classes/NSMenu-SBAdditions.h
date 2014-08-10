@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @interface NSMenu (SBAdditions)
 
-- (NSMenuItem *)selectedItem;
+@property (nonatomic, readonly) NSMenuItem *selectedItem;
 - (void)selectItem:(NSMenuItem *)menuItem;
 - (NSMenuItem *)selectItemWithRepresentedObject:(id)representedObject;
 - (void)deselectItem;

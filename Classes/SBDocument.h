@@ -97,19 +97,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic) BOOL sidebarVisibility;
 @property (nonatomic, readonly) SBTabViewItem *selectedTabViewItem;
 @property (nonatomic, readonly) SBWebView *selectedWebView;
-@property (nonatomic, readonly) id selectedWebDocumentView;
+@property (nonatomic, readonly) NSView *selectedWebDocumentView;
 @property (nonatomic, readonly) WebDataSource *selectedWebDataSource;
 @property (nonatomic, readonly) NSImage *selectedWebViewImageForBookmark;
 @property (nonatomic, readonly) NSData *selectedWebViewImageDataForBookmark;
 @property (nonatomic, readonly) SBWebResourcesView *resourcesView;
+@property (nonatomic, readonly) NSNumber *createdIdentifier;
+@property (nonatomic, readonly) NSInteger tabCount;
+@property (nonatomic, readonly) NSRect visibleRectOfSelectedWebDocumentView;
+@property (nonatomic, readonly) NSImage *selectedWebViewImage;
+@property (nonatomic, readonly) CGFloat minimumDownloadsDrawerHeight;
+@property (nonatomic, readonly) BOOL shouldCloseDocument;
 
 // Getter
-- (NSNumber *)createdIdentifier;
-- (NSInteger)tabCount;
-- (NSRect)visibleRectOfSelectedWebDocumentView;
 - (NSImage *)selectedWebViewImage:(NSSize)size;
-- (NSImage *)selectedWebViewImage;
-- (CGFloat)minimumDownloadsDrawerHeight;
 - (CGFloat)adjustedSplitPositon:(CGFloat)proposedPosition;
 // Destruction
 - (void)destructWindow;
@@ -161,7 +162,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Actions
 - (void)performCloseFromButton:(id)sender;
 - (void)performClose:(id)sender;
-- (BOOL)shouldCloseDocument;
 - (void)openAndConstructTabWithURLs:(NSArray *)urls startInTabbarItem:(SBTabbarItem *)aTabbarItem;
 - (void)openAndConstructTabWithBookmarkItems:(NSArray *)items;
 - (void)adjustSplitViewIfNeeded;

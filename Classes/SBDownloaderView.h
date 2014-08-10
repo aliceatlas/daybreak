@@ -36,19 +36,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *cancelButton;
 	SBBLKGUIButton *doneButton;
 }
-@property (nonatomic, weak) NSString *message;
-@property (nonatomic, weak) NSString *urlString;
+@property (nonatomic) NSString *message;
+@property (nonatomic) NSString *urlString;
+@property (nonatomic, readonly) NSPoint margin;
+@property (nonatomic, readonly) CGFloat labelWidth;
+@property (nonatomic, readonly) NSSize buttonSize;
+@property (nonatomic, readonly) CGFloat buttonMargin;
+@property (nonatomic, readonly) NSRect messageLabelRect;
+@property (nonatomic, readonly) NSRect urlLabelRect;
+@property (nonatomic, readonly) NSRect urlFieldRect;
+@property (nonatomic, readonly) NSRect doneButtonRect;
+@property (nonatomic, readonly) NSRect cancelButtonRect;
 
-// Rects
-- (NSPoint)margin;
-- (CGFloat)labelWidth;
-- (NSSize)buttonSize;
-- (CGFloat)buttonMargin;
-- (NSRect)messageLabelRect;
-- (NSRect)urlLabelRect;
-- (NSRect)urlFieldRect;
-- (NSRect)doneButtonRect;
-- (NSRect)cancelButtonRect;
 // Construction
 - (void)constructMessageLabel;
 - (void)constructURLLabel;
@@ -56,9 +55,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructDoneButton;
 - (void)constructCancelButton;
 - (void)makeResponderChain;
-// Setter
-- (void)setMessage:(NSString *)message;
-- (void)setUrlString:(NSString *)urlString;
 //  Actions
 - (void)makeFirstResponderToURLField;
 

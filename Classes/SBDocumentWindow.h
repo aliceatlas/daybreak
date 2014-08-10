@@ -51,25 +51,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, strong) SBCoverWindow *coverWindow;
 @property (nonatomic, strong) NSWindow *backWindow;
 @property (nonatomic) BOOL tabbarVisivility;
+@property (nonatomic, getter=isCovering, readonly) BOOL covering;
+@property (nonatomic, readonly) CGFloat tabbarHeight;
+@property (nonatomic, readonly) NSRect tabbarRect;
+@property (nonatomic, readonly) NSRect splitViewRect;
+@property (nonatomic, readonly) CGFloat sheetPosition;
 
-- (id)initWithFrame:(NSRect)frame delegate:(id)delegate tabbarVisivility:(BOOL)inTabbarVisivility;
+- (instancetype)initWithFrame:(NSRect)frame delegate:(id)delegate tabbarVisivility:(BOOL)inTabbarVisivility NS_DESIGNATED_INITIALIZER;
 
-- (BOOL)isCovering;
-// Rects
-- (CGFloat)tabbarHeight;
-- (NSRect)tabbarRect;
-- (NSRect)splitViewRect;
-- (CGFloat)sheetPosition;
 // Construction
 - (void)constructInnerView;
-// Setter
-- (void)setTitle:(NSString *)title;
-- (void)setToolbar:(SBToolbar *)toolbar;
-- (void)setTabbar:(SBTabbar *)inTabbar;
-- (void)setSplitView:(SBSplitView *)inSplitView;
 // Actions
 - (void)destructCoverWindow;
-- (void)constructCoverWindowWithView:(id)view;
+- (void)constructCoverWindowWithView:(NSView *)view;
 - (void)hideCoverWindow;
 - (void)showCoverWindow:(SBView *)view;
 - (void)hideToolbar;

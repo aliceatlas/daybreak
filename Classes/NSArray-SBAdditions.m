@@ -31,9 +31,9 @@
 {
 	BOOL r = YES;
 	NSUInteger i = 0;
-	for (i = [indexes lastIndex]; i != NSNotFound; i = [indexes indexLessThanIndex:i])
+	for (i = indexes.lastIndex; i != NSNotFound; i = [indexes indexLessThanIndex:i])
 	{
-		if (i >= [self count])
+		if (i >= self.count)
 		{
 			r = NO;
 		}

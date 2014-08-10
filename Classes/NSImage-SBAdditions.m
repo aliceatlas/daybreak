@@ -54,7 +54,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect fillRect = NSZeroRect;
 	image = [[NSImage alloc] initWithSize:size];
 	[image lockFocus];
-	imageSize = [self size];
+	imageSize = self.size;
 	rightPoint = NSMakePoint(size.width - imageSize.width,0);
 	fillRect = NSMakeRect(sideCapWidth, 0, size.width - sideCapWidth * 2, size.height);
 	[self drawAtPoint:leftPoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
@@ -69,7 +69,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSImage *image = nil;
 	if (self)
 	{
-		NSSize imageSize = [self size];
+		NSSize imageSize = self.size;
 		NSRect inRect = NSEqualRects(intersectRect, NSZeroRect) ? NSMakeRect(0, 0, imageSize.width, imageSize.height) : intersectRect;
 		NSAffineTransform *transform = nil;
 		NSPoint translate = NSZeroPoint;
@@ -125,7 +125,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSRectFill(NSMakeRect(0, 0, size.width, size.height));
 	}
 	else {
-		[[NSColor grayColor] set];
+		[NSColor.grayColor set];
 		NSFrameRect(NSMakeRect(0, 0, size.width, size.height));
 	}
 	[image unlockFocus];
@@ -149,8 +149,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGImageRef image = nil;
 	if (self)
 	{
-		NSBitmapImageRep *bitmapImageRep = [self bitmapImageRep];
-		image = [bitmapImageRep CGImage];
+		NSBitmapImageRep *bitmapImageRep = self.bitmapImageRep;
+		image = bitmapImageRep.CGImage;
 	}
 	return image;
 }
@@ -159,19 +159,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	id imageRep = nil;
 	imageRep = [self bestRepresentationForDevice:nil];
-	if ([imageRep isKindOfClass:[NSBitmapImageRep class]])
+	if ([imageRep isKindOfClass:NSBitmapImageRep.class])
 	{
 		
 	}
 	else {
-		imageRep = [NSBitmapImageRep imageRepWithData:[self TIFFRepresentation]];
+		imageRep = [NSBitmapImageRep imageRepWithData:self.TIFFRepresentation];
 	}
 	return (NSBitmapImageRep *)imageRep;
 }
 
 - (void)drawInRect:(NSRect)rect operation:(NSCompositingOperation)op fraction:(CGFloat)requestedAlpha respectFlipped:(BOOL)respectContextIsFlipped
 {
-	BOOL isFlipped = [self isFlipped];
+	BOOL isFlipped = self.isFlipped;
 	if (isFlipped != respectContextIsFlipped)
 	{
 		// Set flipped peroperty

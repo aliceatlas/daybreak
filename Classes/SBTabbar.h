@@ -48,16 +48,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic, unsafe_unretained) id <SBTabbarDelegate> delegate;
 @property (nonatomic, readonly) SBTabbarItem *selectedTabbarItem;
+@property (nonatomic, readonly) CGFloat itemWidth;
+@property (nonatomic, readonly) CGFloat itemMinimumWidth;
+@property (nonatomic, readonly) CGFloat addButtonWidth;
+@property (nonatomic, readonly) NSRect addButtonRect;
+@property (nonatomic, readonly) CGFloat innerWidth;
+@property (nonatomic, readonly) NSRect newItemRect;
+@property (nonatomic, readonly) BOOL canClosable;
 
-- (id)init;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 // Rects
-- (CGFloat)itemWidth;
-- (CGFloat)itemMinimumWidth;
-- (CGFloat)addButtonWidth;
-- (NSRect)addButtonRect;
 - (NSRect)addButtonRect:(NSInteger)count;
-- (CGFloat)innerWidth;
-- (NSRect)newItemRect;
 - (NSRect)itemRectAtIndex:(NSInteger)index;
 - (NSInteger)indexForPoint:(NSPoint)point rect:(NSRect *)rect;
 - (SBTabbarItem *)itemAtPoint:(NSPoint)point;
@@ -102,7 +103,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (BOOL)autoScrollWithPoint:(NSPoint)point;
 - (void)autoScroll:(NSEvent *)theEvent;
 - (void)mouseDraggedWithTimer:(NSTimer *)timer;
-- (BOOL)canClosable;
 - (void)constructClosableTimerForItem:(SBTabbarItem *)item;
 - (void)applyClosableItem;
 - (void)applyDisclosableAllItem;

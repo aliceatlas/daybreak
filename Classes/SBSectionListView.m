@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize sectionGroupeViews;
 @synthesize sections;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -64,7 +64,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	r.size.width = self.bounds.size.width - 20.0;
 	for (SBSectionGroupe *groupe in sections)
 	{
-		r.size.height += [groupe.items count] * kSBSectionItemHeight + kSBSectionTitleHeight + kSBSectionMarginY;
+		r.size.height += groupe.items.count * kSBSectionItemHeight + kSBSectionTitleHeight + kSBSectionMarginY;
 		i++;
 	}
 	return r;
@@ -74,11 +74,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSRect r = NSZeroRect;
 	NSInteger i = 0;
-	CGFloat height = [self contentViewRect].size.height;
+	CGFloat height = self.contentViewRect.size.height;
 	r.size.width = self.bounds.size.width - 20.0;
 	for (SBSectionGroupe *groupe in sections)
 	{
-		CGFloat h = [groupe.items count] * kSBSectionItemHeight + kSBSectionTitleHeight + kSBSectionMarginY;
+		CGFloat h = groupe.items.count * kSBSectionItemHeight + kSBSectionTitleHeight + kSBSectionMarginY;
 		if (i < index)
 		{
 			r.origin.y += h;
@@ -114,13 +114,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	scrollView = [[NSScrollView alloc] initWithFrame:self.bounds];
 	clipView = [[SBBLKGUIClipView alloc] initWithFrame:self.bounds];
 	contentView = [[NSView alloc] initWithFrame:self.bounds];
-	[scrollView setContentView:clipView];
-	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setDrawsBackground:NO];
-	[scrollView setHasHorizontalScroller:NO];
-	[scrollView setHasVerticalScroller:YES];
-	[scrollView setDocumentView:contentView];
-	[scrollView setAutohidesScrollers:YES];
+    scrollView.contentView = clipView;
+    scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    scrollView.drawsBackground = NO;
+    scrollView.hasHorizontalScroller = NO;
+    scrollView.hasVerticalScroller = YES;
+    scrollView.documentView = contentView;
+    scrollView.autohidesScrollers = YES;
 	[self addSubview:scrollView];
 }
 
@@ -136,12 +136,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		NSRect gr = [self groupeViewRectAtIndex:index];
 		groupeView = [[SBSectionGroupeView alloc] initWithFrame:gr];
 		groupeView.groupe = groupe;
-		[groupeView setAutoresizingMask:(NSViewWidthSizable)];
+        groupeView.autoresizingMask = NSViewWidthSizable;
 		for (SBSectionItem *item in groupe.items)
 		{
 			SBSectionItemView *itemView = nil;
 			itemView = [[SBSectionItemView alloc] initWithItem:item];
-			[itemView setAutoresizingMask:(NSViewWidthSizable)];
+            itemView.autoresizingMask = NSViewWidthSizable;
 			[groupeView addItemView:itemView];
 		}
 		[contentView addSubview:groupeView];
@@ -154,7 +154,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (sections != inSections)
 	{
 		sections = inSections;
-		contentView.frame = [self contentViewRect];
+		contentView.frame = self.contentViewRect;
 		[contentView scrollRectToVisible:NSMakeRect(0, NSMaxY(contentView.frame), 0, 0)];
 		[self constructSectionGroupeViews];
 	}
@@ -167,7 +167,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize itemViews;
 @synthesize groupe;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -189,7 +189,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)addItemView:(SBSectionItemView *)itemView
 {
-	itemView.frame = [self itemViewRectAtIndex:[itemViews count]];
+	itemView.frame = [self itemViewRectAtIndex:itemViews.count];
 	[itemView constructControl];
 	[itemViews addObject:itemView];
 	[self addSubview:itemView];
@@ -197,7 +197,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)drawRect:(NSRect)rect
 {
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+    CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	CGRect r = CGRectZero;
 	NSRect tr = NSZeroRect;
 	CGPathRef path = nil;
@@ -262,31 +262,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	tr.size.height = 24.0;
 	tr.origin.y += r.size.height - tr.size.height - 5.0;
 	tr.size.width -= kSBSectionInnerMarginX * 2;
-	attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-				  [NSFont boldSystemFontOfSize:13.0], NSFontAttributeName, 
-				  [NSColor colorWithCalibratedWhite:0.65 alpha:1.0], NSForegroundColorAttributeName, nil];
+	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
+                   NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.65 alpha:1.0]};
 	[groupe.title drawInRect:tr withAttributes:attributes];
 	tr.origin.y -= 1.0;
 	tr.origin.x += 1.0;
-	attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-				  [NSFont boldSystemFontOfSize:13.0], NSFontAttributeName, 
-				  [NSColor colorWithCalibratedWhite:0.55 alpha:1.0], NSForegroundColorAttributeName, nil];
+	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
+                   NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.55 alpha:1.0]};
 	[groupe.title drawInRect:tr withAttributes:attributes];
 	tr.origin.x -= 2.0;
-	attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-				  [NSFont boldSystemFontOfSize:13.0], NSFontAttributeName, 
-				  [NSColor colorWithCalibratedWhite:0.55 alpha:1.0], NSForegroundColorAttributeName, nil];
+	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
+                   NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.55 alpha:1.0]};
 	[groupe.title drawInRect:tr withAttributes:attributes];
 	tr.origin.y -= 2.0;
 	tr.origin.x += 1.0;
-	attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-				  [NSFont boldSystemFontOfSize:13.0], NSFontAttributeName, 
-				  [NSColor colorWithCalibratedWhite:0.45 alpha:1.0], NSForegroundColorAttributeName, nil];
+	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
+                   NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.45 alpha:1.0]};
 	[groupe.title drawInRect:tr withAttributes:attributes];
 	tr.origin.y += 2.0;
-	attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-				  [NSFont boldSystemFontOfSize:13.0], NSFontAttributeName, 
-				  [NSColor colorWithCalibratedWhite:1.0 alpha:1.0], NSForegroundColorAttributeName, nil];
+	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
+                   NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:1.0 alpha:1.0]};
 	[groupe.title drawInRect:tr withAttributes:attributes];
 }
 
@@ -298,7 +293,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize currentImageView;
 @synthesize currentField;
 
-- (id)initWithItem:(SBSectionItem *)inItem
+- (instancetype)initWithItem:(SBSectionItem *)inItem
 {
 	if (self = [super initWithFrame:NSZeroRect])
 	{
@@ -331,8 +326,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)constructControl
 {
-	NSRect r = [self valueRect];
-	if ([item controlClass] == [NSPopUpButton class])
+	NSRect r = self.valueRect;
+	if (item.controlClass == NSPopUpButton.class)
 	{
 		NSString *string = [SBPreferences objectForKey:item.keyName];
 		NSPopUpButton *popUp = nil;
@@ -340,34 +335,34 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		r.origin.y = (r.size.height - 26.0) / 2;
 		r.size.height = 26.0;
 		popUp = [[NSPopUpButton alloc] initWithFrame:r pullsDown:NO];
-		if ([item.context isKindOfClass:[NSMenu class]])
+		if ([item.context isKindOfClass:NSMenu.class])
 		{
-			[popUp setTarget:self];
-			[popUp setAction:@selector(select:)];
-			[popUp setMenu:item.context];
+            popUp.target = self;
+            popUp.action = @selector(select:);
+            popUp.menu = item.context;
 		}
 		selectedItem = [[popUp menu] selectItemWithRepresentedObject:string];
 		if (selectedItem)
 			[popUp selectItem:selectedItem];
 		[self addSubview:popUp];
 	}
-	else if ([item controlClass] == [NSTextField class])
+	else if (item.controlClass == NSTextField.class)
 	{
 		NSString *string = [SBPreferences objectForKey:item.keyName];
 		NSTextField *field = nil;
 		r.origin.y = (r.size.height - 22.0) / 2;
 		r.size.height = 22.0;
 		field = [[NSTextField alloc] initWithFrame:r];
-		[field setDelegate:self];
-		[[field cell] setFocusRingType:NSFocusRingTypeNone];
-		[[field cell] setPlaceholderString:[item.context isKindOfClass:[NSString class]] ? item.context : nil];
+        field.delegate = self;
+        field.focusRingType = NSFocusRingTypeNone;
+		field.placeholderString = [item.context isKindOfClass:NSString.class] ? item.context : nil;
 		if (string)
-			[field setStringValue:string];
+            field.stringValue = string;
 		[self addSubview:field];
 	}
-	else if ([item controlClass] == [NSOpenPanel class])
+	else if (item.controlClass == NSOpenPanel.class)
 	{
-		NSWorkspace *space = [NSWorkspace sharedWorkspace];
+		NSWorkspace *space = NSWorkspace.sharedWorkspace;
 		NSString *path = [SBPreferences objectForKey:item.keyName];
 		NSString *tpath = nil;
 		NSImage *image = [space iconForFile:path];
@@ -391,24 +386,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		button = [[NSButton alloc] initWithFrame:br];
 		imageView = [[NSImageView alloc] initWithFrame:ir];
 		field = [[NSTextField alloc] initWithFrame:fr];
-		[button setTarget:self];
-		[button setAction:@selector(open:)];
-		[button setTitle:NSLocalizedString(@"Open…", nil)];
-		[button setButtonType:NSMomentaryLightButton];
-		[button setBezelStyle:NSRoundedBezelStyle];
+        button.target = self;
+        button.action = @selector(open:);
+        button.title = NSLocalizedString(@"Open…", nil);
+        button.buttonType = NSMomentaryLightButton;
+        button.bezelStyle = NSRoundedBezelStyle;
 		if (image)
-			[image setSize:NSMakeSize(16.0, 16.0)];
-		[imageView setImage:image];
-		[imageView setImageFrameStyle:NSImageFrameNone];
-		[field setBordered:NO];
-		[field setSelectable:NO];
-		[field setEditable:NO];
-		[field setDrawsBackground:NO];
-		[[field cell] setPlaceholderString:[item.context isKindOfClass:[NSString class]] ? item.context : nil];
+            image.size = NSMakeSize(16.0, 16.0);
+        imageView.image = image;
+        imageView.imageFrameStyle = NSImageFrameNone;
+        field.bordered = NO;
+        field.selectable = NO;
+        field.editable = NO;
+        field.drawsBackground = NO;
+        field.placeholderString = [item.context isKindOfClass:NSString.class] ? item.context : nil;
 		if (path)
 		{
 			tpath = [path stringByAbbreviatingWithTildeInPath];
-			[field setStringValue:tpath];
+            field.stringValue = tpath;
 		}
 		[self addSubview:imageView];
 		[self addSubview:field];
@@ -416,18 +411,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		self.currentImageView = imageView;
 		self.currentField = field;
 	}
-	else if ([item controlClass] == [NSButton class])
+	else if (item.controlClass == NSButton.class)
 	{
 		BOOL enabled = [SBPreferences boolForKey:item.keyName];
 		NSButton *button = nil;
 		r.origin.y = (r.size.height - 18.0) / 2;
 		r.size.height = 18.0;
 		button = [[NSButton alloc] initWithFrame:r];
-		[button setTarget:self];
-		[button setAction:@selector(check:)];
-		[button setButtonType:NSSwitchButton];
-		[button setTitle:[item.context isKindOfClass:[NSString class]] ? item.context : nil];
-		[button setState:enabled ? NSOnState : NSOffState];
+        button.target = self;
+        button.action = @selector(check:);
+        button.buttonType = NSSwitchButton;
+		button.title = [item.context isKindOfClass:NSString.class] ? item.context : nil;
+        button.state = enabled ? NSOnState : NSOffState;
 		[self addSubview:button];
 	}
 }
@@ -436,21 +431,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
-	NSTextField *field = [aNotification object];
-	NSString *text = [field stringValue];
+	NSTextField *field = aNotification.object;
+	NSString *text = field.stringValue;
 	if (item.keyName)
 		[SBPreferences setObject:text forKey:item.keyName];
 }
 
 #pragma mark Actions
 
-- (void)select:(id)sender
+- (void)select:(NSPopUpButton *)sender
 {
 	//kSBOpenURLFromApplications
 	//kSBDefaultEncoding
-	NSPopUpButton *popUpButton = (NSPopUpButton *)sender;
-	NSMenuItem *selectedItem = [popUpButton respondsToSelector:@selector(selectedItem)] ? [popUpButton selectedItem] : nil;
-	id representedObject = selectedItem ? [selectedItem representedObject] : nil;
+	NSMenuItem *selectedItem = [sender respondsToSelector:@selector(selectedItem)] ? [sender selectedItem] : nil;
+	id representedObject = selectedItem ? selectedItem.representedObject : nil;
 	if (representedObject && item.keyName)
 	{
 		[SBPreferences setObject:representedObject forKey:item.keyName];
@@ -470,9 +464,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			if (self.currentImageView && self.currentField && item.keyName)
 			{
-				NSWorkspace *space = [NSWorkspace sharedWorkspace];
+                NSWorkspace *space = NSWorkspace.sharedWorkspace;
 				NSString *path = panel.URL.path;
-				NSString *tpath = [path stringByAbbreviatingWithTildeInPath];
+                NSString *tpath = path.stringByAbbreviatingWithTildeInPath;
 				NSImage *image = [space iconForFile:path];
 				if (image)
 					image.size = NSMakeSize(16.0, 16.0);
@@ -481,7 +475,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				[SBPreferences setObject:path forKey:item.keyName];
 			}
 		}
-		
 	}];
 }
 
@@ -496,7 +489,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)drawRect:(NSRect)rect
 {
-	CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+	CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 	CGRect r = NSRectToCGRect(self.bounds);
 	CGFloat margin = 0;
 	CGMutablePathRef path = CGPathCreateMutable();
@@ -518,13 +511,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGPathRelease(path);
 	
 	titleString = [NSString stringWithFormat:@"%@ :", item.title];
-	titleRect = [self titleRect];
+	titleRect = self.titleRect;
 	paragraph = [[NSMutableParagraphStyle alloc] init];
-	[paragraph setAlignment:NSRightTextAlignment];
-	attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-				  [NSFont boldSystemFontOfSize:12.0], NSFontAttributeName, 
-				  [NSColor colorWithCalibratedWhite:0.3 alpha:1.0], NSForegroundColorAttributeName, 
-				  paragraph, NSParagraphStyleAttributeName, nil];
+    paragraph.alignment = NSRightTextAlignment;
+	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:12.0], 
+                   NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.3 alpha:1.0],
+                   NSParagraphStyleAttributeName: paragraph};
 	titleRect.size.height = [titleString sizeWithAttributes:attributes].height;
 	titleRect.origin.y = (self.bounds.size.height - titleRect.size.height) / 2;
 	[titleString drawInRect:titleRect withAttributes:attributes];

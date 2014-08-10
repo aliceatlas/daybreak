@@ -34,14 +34,14 @@
 @synthesize mode, item, selected, dragged;
 @dynamic titleFont, urlFont, paragraphStyle;
 
-+ (id)viewWithFrame:(NSRect)frame item:(NSDictionary *)item
++ (instancetype)viewWithFrame:(NSRect)frame item:(NSDictionary *)item
 {
-	id view = [[self alloc] initWithFrame:frame];
-    ((SBBookmarkListItemView *)view).item = item;
+	SBBookmarkListItemView *view = [[self alloc] initWithFrame:frame];
+    view.item = item;
 	return view;
 }
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -57,22 +57,17 @@
 #pragma mark View
 
 // Clicking through
-- (NSView*)hitTest:(NSPoint)point
+- (NSView *)hitTest:(NSPoint)point
 {
 	NSView *view = [super hitTest:point];
 	return (view == self) ? nil : view;
-}
-
-- (void)setNeedsDisplay:(BOOL)display
-{
-	[super setNeedsDisplay:display];
 }
 
 #pragma mark Getter
 
 - (BOOL)isFirstResponder
 {
-	return [[self window] firstResponder] == [self superview];
+	return self.window.firstResponder == self.superview;
 }
 
 - (NSPoint)padding
@@ -83,7 +78,7 @@
 
 - (CGFloat)heights
 {
-	return [self titleHeight] + [self bytesHeight];
+	return self.titleHeight + self.bytesHeight;
 }
 
 - (CGFloat)titleHeight
@@ -98,7 +93,7 @@
 
 - (BOOL)visible
 {
-	return NSIntersectsRect([self.superview visibleRect], self.frame);
+	return NSIntersectsRect(self.superview.visibleRect, self.frame);
 }
 
 - (NSFont *)titleFont
@@ -115,14 +110,14 @@
 {
 	NSMutableParagraphStyle *paragraph = nil;
 	paragraph = [[NSMutableParagraphStyle alloc] init];
-	[paragraph setLineBreakMode:NSLineBreakByTruncatingTail];
+    paragraph.lineBreakMode = NSLineBreakByTruncatingTail;
 	if (mode == SBBookmarkIconMode || mode == SBBookmarkListMode)
 	{
-		[paragraph setAlignment:NSCenterTextAlignment];
+        paragraph.alignment = NSCenterTextAlignment;
 	}
 	if (mode == SBBookmarkListMode)
 	{
-		[paragraph setAlignment:NSLeftTextAlignment];
+        paragraph.alignment = NSLeftTextAlignment;
 	}
 	return [paragraph copy];
 }
@@ -132,12 +127,12 @@
 - (NSRect)imageRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint padding = mode == SBBookmarkIconMode ? [self padding] : NSZeroPoint;
-	CGFloat titleHeight = mode == SBBookmarkIconMode ? [self titleHeight] : 0.0;
-	CGFloat bytesHeight = mode == SBBookmarkIconMode ? [self bytesHeight] : 0.0;
-	NSData *imageData = [item objectForKey:kSBBookmarkImage];
+	NSPoint padding = mode == SBBookmarkIconMode ? self.padding : NSZeroPoint;
+	CGFloat titleHeight = mode == SBBookmarkIconMode ? self.titleHeight : 0.0;
+	CGFloat bytesHeight = mode == SBBookmarkIconMode ? self.bytesHeight : 0.0;
+	NSData *imageData = item[kSBBookmarkImage];
 	NSImage *image = [[NSImage alloc] initWithData:imageData];
-	NSSize imageSize = image ? [image size] : NSZeroSize;
+	NSSize imageSize = image ? image.size : NSZeroSize;
 	NSPoint p = NSZeroPoint;
 	CGFloat s = 0;
 	r = NSZeroRect;
@@ -163,23 +158,22 @@
 
 - (NSRect)titleRect
 {
-	return [self titleRect:(item ? [item objectForKey:kSBBookmarkTitle] : nil)];
+	return [self titleRect:(item ? item[kSBBookmarkTitle] : nil)];
 }
 
 - (NSRect)titleRect:(NSString *)title
 {
 	NSRect r = NSZeroRect;
 	NSRect drawRect = self.bounds;
-	NSPoint padding = [self padding];
-	CGFloat titleHeight = [self titleHeight];
-	CGFloat bytesHeight = [self bytesHeight];
+	NSPoint padding = self.padding;
+	CGFloat titleHeight = self.titleHeight;
+	CGFloat bytesHeight = self.bytesHeight;
 	CGFloat margin = titleHeight / 2;
 	CGFloat availableWidth = self.bounds.size.width - titleHeight;
-	if ([title length] > 0)
+	if (title.length > 0)
 	{
-		NSSize size = [title sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-												 self.titleFont, NSFontAttributeName, 
-												 self.paragraphStyle, NSParagraphStyleAttributeName, nil]];
+		NSSize size = [title sizeWithAttributes:@{NSFontAttributeName: self.titleFont, 
+                                                  NSParagraphStyleAttributeName: self.paragraphStyle}];
 		if (size.width <= availableWidth)
 		{
 			drawRect.origin.x = (availableWidth - size.width) / 2;
@@ -204,8 +198,8 @@
 {
 	NSRect r = NSZeroRect;
 	NSRect bounds = self.bounds;
-	NSPoint padding = [self padding];
-	CGFloat bytesHeight = [self bytesHeight];
+	NSPoint padding = self.padding;
+	CGFloat bytesHeight = self.bytesHeight;
 	r.size.width = bounds.size.width;
 	r.size.height = bytesHeight;
 	r.origin.y = padding.y;
@@ -219,7 +213,7 @@
 	//if (selected != isSelected)
 	{
 		selected = isSelected;
-		[self setNeedsDisplay:YES];
+        self.needsDisplay = YES;
 	}
 }
 
@@ -239,15 +233,15 @@
 	if (!progressIndicator)
 	{
 		NSRect r = NSZeroRect;
-		NSPoint padding = [self padding];
-		CGFloat titleHeight = [self titleHeight];
-		CGFloat bytesHeight = [self bytesHeight];
+		NSPoint padding = self.padding;
+		CGFloat titleHeight = self.titleHeight;
+		CGFloat bytesHeight = self.bytesHeight;
 		r.size.width = r.size.height = 32.0;
 		r.origin.x = (self.bounds.size.width - r.size.width) / 2;
 		r.origin.y = ((self.bounds.size.height - titleHeight - bytesHeight - padding.y) - r.size.height) / 2 + (titleHeight + bytesHeight + padding.y);
 		progressIndicator = [[NSProgressIndicator alloc] initWithFrame:r];
-		[progressIndicator setStyle:NSProgressIndicatorSpinningStyle];
-		[progressIndicator setControlSize:NSRegularControlSize];
+        progressIndicator.style = NSProgressIndicatorSpinningStyle;
+        progressIndicator.controlSize = NSRegularControlSize;
 	}
 	[progressIndicator startAnimation:nil];
 	[self addSubview:progressIndicator];
@@ -283,7 +277,7 @@
 
 - (void)update
 {
-	NSString *urlString = [item objectForKey:kSBBookmarkURL];
+	NSString *urlString = item[kSBBookmarkURL];
 	NSURL *url = urlString ? [NSURL URLWithString:urlString] : nil;
 	if (url)
 	{
@@ -297,9 +291,9 @@
 	BOOL r = NO;
 	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
 	{
-		r = NSPointInRect(point, [self imageRect]);
-		if (!r) r = NSPointInRect(point, [self titleRect]);
-		if (!r) r = NSPointInRect(point, [self bytesRect]);
+		r = NSPointInRect(point, self.imageRect);
+		if (!r) r = NSPointInRect(point, self.titleRect);
+		if (!r) r = NSPointInRect(point, self.bytesRect);
 	}
 	else if (mode == SBBookmarkListMode)
 	{
@@ -313,9 +307,9 @@
 	BOOL r = NO;
 	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
 	{
-		r = NSIntersectsRect(rect, [self imageRect]);
-		if (!r) r = NSIntersectsRect(rect, [self titleRect]);
-		if (!r) r = NSIntersectsRect(rect, [self bytesRect]);
+		r = NSIntersectsRect(rect, self.imageRect);
+		if (!r) r = NSIntersectsRect(rect, self.titleRect);
+		if (!r) r = NSIntersectsRect(rect, self.bytesRect);
 	}
 	else if (mode == SBBookmarkListMode)
 	{
@@ -336,14 +330,13 @@
 	NSData *data = nil;
 	if (image)
 	{
-		data = [[image bitmapImageRep] data];
+		data = image.bitmapImageRep.data;
 	}
 	if (data)
 	{
-		SBBookmarks *bookmarks = [SBBookmarks sharedBookmarks];
 		NSMutableDictionary *mItem = [item mutableCopy];
-		[mItem setObject:data forKey:kSBBookmarkImage];
-		[bookmarks replaceItem:item withItem:[mItem copy]];
+		mItem[kSBBookmarkImage] = data;
+		[SBBookmarks.sharedBookmarks replaceItem:item withItem:[mItem copy]];
 	}
 	[self hideProgress];
 	[renderWindow close];
@@ -364,7 +357,7 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-	NSPoint location = [theEvent locationInWindow];
+	NSPoint location = theEvent.locationInWindow;
 	NSPoint point = [self convertPoint:location fromView:nil];
 	if (NSPointInRect(point, self.bounds))
 	{
@@ -381,23 +374,23 @@
 
 - (void)drawRect:(NSRect)rect
 {
-	if ([self visible])
+	if (self.visible)
 	{
-		CGContextRef ctx = [[NSGraphicsContext currentContext] graphicsPort];
+		CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;
 		NSRect bounds = self.bounds;
 		NSRect r = NSZeroRect;
-		NSData *imageData = [item objectForKey:kSBBookmarkImage];
-		NSString *title = [item objectForKey:kSBBookmarkTitle];
-		NSString *urlString = [item objectForKey:kSBBookmarkURL];
-		NSString *labelColorName = [item objectForKey:kSBBookmarkLabelName];
+		NSData *imageData = item[kSBBookmarkImage];
+		NSString *title = item[kSBBookmarkTitle];
+		NSString *urlString = item[kSBBookmarkURL];
+		NSString *labelColorName = item[kSBBookmarkLabelName];
 		NSColor *labelColor = labelColorName ? [NSColor colorWithLabelColorName:labelColorName] : nil;
-		NSPoint padding = [self padding];
-		NSDictionary *attributes = nil;
+		NSPoint padding = self.padding;
+		NSMutableDictionary *attributes = nil;
 		NSSize size = NSZeroSize;
 		
 		if (mode == SBBookmarkIconMode)
 		{
-			CGFloat titleHeight = [self titleHeight];
+			CGFloat titleHeight = self.titleHeight;
 			
 			// image
 			if (imageData)
@@ -405,10 +398,10 @@
 				NSImage *image = [[NSImage alloc] initWithData:imageData];
 				CGPathRef path = nil;
 				CGColorRef shadowColor = nil;
-				r = [self imageRect];
+				r = self.imageRect;
 				
 				// frame
-				if ([self isFirstResponder] && selected)
+				if (self.isFirstResponder && selected)
 				{
 					CGFloat components[4];
 					CGRect fr = CGRectInset(NSRectToCGRect(r), -padding.x / 1.5, -padding.y / 1.5);
@@ -477,7 +470,7 @@
 					CGFloat components[4];
 					CGPathRef path = nil;
 					CGFloat tmargin = margin - 1.0;
-					if ([self isFirstResponder])
+					if (self.isFirstResponder)
 					{
 						SBGetAlternateSelectedControlColorComponents(components);
 					}
@@ -498,18 +491,17 @@
 					CGContextFillPath(ctx);
 					CGContextRestoreGState(ctx);
 				}
-				if (labelColor && ! selected)
+				if (labelColor && !selected)
 				{
 					shadow = [[NSShadow alloc] init];
-					[shadow setShadowOffset:NSMakeSize(0.0, -1.0)];
-					[shadow setShadowBlurRadius:2.0];
-					[shadow setShadowColor:[NSColor blackColor]];
+                    shadow.shadowOffset = NSMakeSize(0.0, -1.0);
+                    shadow.shadowBlurRadius = 2.0;
+                    shadow.shadowColor = NSColor.blackColor;
 				}
-				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							  self.titleFont, NSFontAttributeName, 
-							  [NSColor whiteColor], NSForegroundColorAttributeName, 
-							  self.paragraphStyle, NSParagraphStyleAttributeName, 
-							  shadow, NSShadowAttributeName, nil];
+				attributes = [@{NSFontAttributeName: self.titleFont,
+                                NSForegroundColorAttributeName: NSColor.whiteColor,
+                                NSParagraphStyleAttributeName: self.paragraphStyle} mutableCopy];
+                if (shadow) attributes[NSShadowAttributeName] = shadow;
 				size = [title sizeWithAttributes:attributes];
 				r.origin.y += (r.size.height - size.height) / 2;
 				r.size.height = size.height;
@@ -518,11 +510,10 @@
 			// url string
 			if (urlString)
 			{
-				r = [self bytesRect];
-				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							  self.urlFont, NSFontAttributeName, 
-							  [NSColor lightGrayColor], NSForegroundColorAttributeName, 
-							  self.paragraphStyle, NSParagraphStyleAttributeName, nil];
+				r = self.bytesRect;
+				attributes = @{NSFontAttributeName: self.urlFont, 
+                               NSForegroundColorAttributeName: NSColor.lightGrayColor,
+                               NSParagraphStyleAttributeName: self.paragraphStyle};
 				size = [urlString sizeWithAttributes:attributes];
 				r.origin.y += (r.size.height - size.height) / 2;
 				r.size.height = size.height;
@@ -544,7 +535,7 @@
 			if (imageData)
 			{
 				NSImage *image = [[NSImage alloc] initWithData:imageData];
-				r = [self imageRect];
+				r = self.imageRect;
 				path = SBRoundedPath(NSRectToCGRect(r), 0.0, 0.0, NO, NO);
 				CGContextSaveGState(ctx);
 				CGContextAddPath(ctx, path);
@@ -591,7 +582,7 @@
 			if (selected)
 			{
 				CGFloat components[4];
-				if ([self isFirstResponder])
+				if (self.isFirstResponder)
 				{
 					SBGetAlternateSelectedControlColorComponents(components);
 				}
@@ -642,7 +633,7 @@
 			urlRect = NSMakeRect((NSMaxX(titleRect) + padding.x), 0, (bounds.size.width - (NSMaxX(titleRect) + padding.x)), bounds.size.height);
 			
 			// line
-			[[NSColor darkGrayColor] set];
+			[NSColor.darkGrayColor set];
 			NSRectFill(NSMakeRect(bounds.origin.x, NSMaxY(bounds) - 1.0, bounds.size.width, 1.0));
 			
 			// image
@@ -685,7 +676,7 @@
 					CGFloat locations[count];
 					CGFloat colors[count * 4];
 					CGPoint points[count];
-					if ([self isFirstResponder])
+					if (self.isFirstResponder)
 					{
 						SBGetAlternateSelectedControlColorComponents(components);
 					}
@@ -723,15 +714,14 @@
 				if (labelColor && ! selected)
 				{
 					shadow = [[NSShadow alloc] init];
-					[shadow setShadowOffset:NSMakeSize(0.0, -1.0)];
-					[shadow setShadowBlurRadius:2.0];
-					[shadow setShadowColor:[NSColor blackColor]];
+                    shadow.shadowOffset = NSMakeSize(0.0, -1.0);
+                    shadow.shadowBlurRadius = 2.0;
+                    shadow.shadowColor = NSColor.blackColor;
 				}
-				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							  self.titleFont, NSFontAttributeName, 
-							  [NSColor whiteColor], NSForegroundColorAttributeName, 
-							  self.paragraphStyle, NSParagraphStyleAttributeName, 
-							  shadow, NSShadowAttributeName, nil];
+				attributes = @{NSFontAttributeName: self.titleFont, 
+                               NSForegroundColorAttributeName: NSColor.whiteColor,
+                               NSParagraphStyleAttributeName: self.paragraphStyle,
+                               NSShadowAttributeName: shadow};
 				size = [title sizeWithAttributes:attributes];
 				titleRect.origin.y += (titleRect.size.height - size.height) / 2;
 				titleRect.size.height = size.height;
@@ -741,17 +731,16 @@
 			if (urlString)
 			{
 				NSColor *color = nil;
-				color = selected ? [NSColor whiteColor] : (labelColor ? [NSColor blackColor] : [NSColor lightGrayColor]);
-				attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-							  self.urlFont, NSFontAttributeName, 
-							  color, NSForegroundColorAttributeName, 
-							  self.paragraphStyle, NSParagraphStyleAttributeName, nil];
+				color = selected ? NSColor.whiteColor : (labelColor ? NSColor.blackColor : NSColor.lightGrayColor);
+				attributes = @{NSFontAttributeName: self.urlFont, 
+                               NSForegroundColorAttributeName: color,
+                               NSParagraphStyleAttributeName: self.paragraphStyle};
 				size = [urlString sizeWithAttributes:attributes];
 				urlRect.origin.y += (urlRect.size.height - size.height) / 2;
 				urlRect.size.height = size.height;
 				[urlString drawInRect:urlRect withAttributes:attributes];
 			}
-			[[NSColor darkGrayColor] set];
+			[NSColor.darkGrayColor set];
 			NSFrameRect(bounds);
 		}
 	}

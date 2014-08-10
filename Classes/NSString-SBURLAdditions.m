@@ -36,7 +36,7 @@ NSString *SBBytesUnitString = @"bytes";
 {
 	BOOL r = NO;
 	NSInteger i = 0;
-	NSInteger length = [self length];
+	NSInteger length = self.length;
 	for (i = 0; i < length; i++)
 	{
 		unichar c = [self characterAtIndex:i];
@@ -56,42 +56,42 @@ NSString *SBBytesUnitString = @"bytes";
 	NSArray *array1 = [string componentsSeparatedByString:@" "];
 	NSString *string0 = nil;
 	NSString *string1 = nil;
-	if ([array1 count] > 1 && [array0 count] > 1)
+	if (array1.count > 1 && array0.count > 1)
 	{
-		string0 = [array0 objectAtIndex:0];
-		string1 = [array1 objectAtIndex:0];
+		string0 = array0[0];
+		string1 = array1[0];
 		result = [string0 compare:string1];
 		if (result == NSOrderedSame)
 		{
-			string0 = [array0 objectAtIndex:1];
-			string1 = [array1 objectAtIndex:1];
+			string0 = array0[1];
+			string1 = array1[1];
 			result = [string0 compare:string1];
 		}
 	}
-	else if ([array1 count] > 0 && [array0 count] > 1)
+	else if (array1.count > 0 && array0.count > 1)
 	{
-		string0 = [array0 objectAtIndex:0];
-		string1 = [array1 objectAtIndex:0];
+		string0 = array0[0];
+		string1 = array1[0];
 		result = [string0 compare:string1];
 		if (result == NSOrderedSame)
 		{
 			result = NSOrderedAscending;
 		}
 	}
-	else if ([array1 count] > 1 && [array0 count] > 0)
+	else if (array1.count > 1 && array0.count > 0)
 	{
-		string0 = [array0 objectAtIndex:0];
-		string1 = [array1 objectAtIndex:0];
+		string0 = array0[0];
+		string1 = array1[0];
 		result = [string0 compare:string1];
 		if (result == NSOrderedSame)
 		{
 			result = NSOrderedDescending;
 		}
 	}
-	else if ([array1 count] > 0 && [array0 count] > 0)
+	else if (array1.count > 0 && array0.count > 0)
 	{
-		string0 = [array0 objectAtIndex:0];
-		string1 = [array1 objectAtIndex:0];
+		string0 = array0[0];
+		string1 = array1[0];
 		result = [string0 compare:string1];
 	}
 	return result;
@@ -242,7 +242,7 @@ NSString *SBBytesUnitString = @"bytes";
 	if (([self rangeOfString:@" "].location == NSNotFound && [self rangeOfString:@"."].location != NSNotFound) || 
 		[self hasPrefix:@"http://localhost"])
 	{
-		NSString *string = [self URLEncodedString];
+		NSString *string = self.URLEncodedString;
 		NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string];
 		NSRange range = {0, 0};
 		NSURL *URL = [attributedString URLAtIndex:NSMaxRange(range) effectiveRange:&range];
@@ -250,9 +250,9 @@ NSString *SBBytesUnitString = @"bytes";
 		if (r)
 		{
 #if 1
-			*hasScheme = [[URL scheme] length] > 0 ? [string hasPrefix:[URL scheme]] : NO;
+			*hasScheme = URL.scheme.length > 0 ? [string hasPrefix:URL.scheme] : NO;
 #else
-			*hasScheme = [[URL absoluteString] isEqualToString:string];
+			*hasScheme = [URL.absoluteString isEqualToString:string];
 #endif
 		}
 	}
@@ -269,7 +269,7 @@ NSString *SBBytesUnitString = @"bytes";
 		NSString *scheme = SBSchemes[index];
 		if ([string hasPrefix:scheme])
 		{
-			string = [string substringFromIndex:[scheme length]];
+			string = [string substringFromIndex:scheme.length];
 			break;
 		}
 	}
@@ -281,7 +281,7 @@ NSString *SBBytesUnitString = @"bytes";
 	NSString *string = nil;
 	NSURL *requestURL = nil;
 	requestURL = [NSURL _web_URLWithUserTypedString:self];
-	string = [requestURL absoluteString];
+	string = requestURL.absoluteString;
 	return string;
 }
 
@@ -308,10 +308,10 @@ NSString *SBBytesUnitString = @"bytes";
 				stringValue = [@"http://" stringByAppendingString:stringValue];
 			}
 		}
-		stringValue = [stringValue URLEncodedString];
+		stringValue = stringValue.URLEncodedString;
 	}
 	else {
-		stringValue = [self searchURLString];
+		stringValue = self.searchURLString;
 	}
 	return stringValue;
 }
@@ -324,13 +324,13 @@ NSString *SBBytesUnitString = @"bytes";
 	NSDictionary *info = nil;
 	NSString *gSearchFormat = nil;
 	
-	info = [[NSBundle mainBundle] localizedInfoDictionary];
-	gSearchFormat = info ? [info objectForKey:@"SBGSearchFormat"] : nil;
+	info = NSBundle.mainBundle.localizedInfoDictionary;
+	gSearchFormat = info ? info[@"SBGSearchFormat"] : nil;
 	if (gSearchFormat)
 	{
 		str = [NSString stringWithFormat:gSearchFormat, stringValue];
 		requestURL = [NSURL _web_URLWithUserTypedString:str];
-		stringValue = [requestURL absoluteString];
+		stringValue = requestURL.absoluteString;
 	}
 	return stringValue;
 }

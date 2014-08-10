@@ -43,17 +43,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, unsafe_unretained) id target;
 @property (nonatomic, assign) SEL doneSelector;
 @property (nonatomic, assign) SEL cancelSelector;
+@property (nonatomic, readonly) NSString *description;
 
-// Getter
-- (NSString *)description;
 // Setter
-- (void)setFrame:(NSRect)frame;
-- (void)setLayer:(CALayer *)layer;
-- (void)setWantsLayer:(BOOL)wantsLayer;
-- (void)setAlphaValue:(CGFloat)alphaValue;
 - (void)setFrame:(NSRect)frame animate:(BOOL)animate;
-- (void)setKeyView:(BOOL)isKeyView;
-- (void)setToolbarVisible:(BOOL)isToolbarVisible;
 // Actions
 - (void)fadeIn:(id)delegate;
 - (void)fadeOut:(id)delegate;

@@ -40,8 +40,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, unsafe_unretained) id delegate;
 @property (nonatomic) BOOL showFindbar;
 @property (nonatomic, strong) NSString *textEncodingName;
+@property (nonatomic, readonly) NSString *documentString;
+@property (nonatomic, getter=isEmpty, readonly) BOOL empty;
+@property (nonatomic, readonly) id inspector;
 
-- (id)initWithFrame:(NSRect)frameRect frameName:(NSString *)frameName groupName:(NSString *)groupName;
+- (instancetype)initWithFrame:(NSRect)frameRect frameName:(NSString *)frameName groupName:(NSString *)groupName NS_DESIGNATED_INITIALIZER;
 
 - (void)executeOpenFindbar;
 - (BOOL)executeCloseFindbar;
@@ -52,11 +55,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (BOOL)searchFor:(NSString *)searchString direction:(BOOL)forward caseSensitive:(BOOL)caseFlag wrap:(BOOL)wrapFlag continuous:(BOOL)continuous;
 
-- (NSString *)documentString;
-- (BOOL)isEmpty;
 - (NSRange)rageOfStringInWebDocument:(NSString *)string caseSensitive:(BOOL)caseFlag;
 
-- (id)inspector;
 - (void)showWebInspector:(id)sender;
 - (void)showConsole:(id)sender;
 

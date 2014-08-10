@@ -33,7 +33,7 @@
 @synthesize dataSource;
 @synthesize delegate;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -52,7 +52,7 @@
 
 - (void)constructTableView
 {
-	NSRect scrollerRect = [self bounds];
+	NSRect scrollerRect = self.bounds;
 	NSTableColumn *urlColumn = nil;
 	NSTableColumn *lengthColumn = nil;
 	NSTableColumn *cachedColumn = nil;
@@ -76,61 +76,61 @@
 	lengthTextCell = [[SBTableCell alloc] init];
 	cachedCell = [[SBWebResourceButtonCell alloc] init];
 	actionCell = [[SBWebResourceButtonCell alloc] init];
-	[urlTextCell setFont:[NSFont systemFontOfSize:12.0]];
-	[urlTextCell setShowRoundedPath:YES];
-	[urlTextCell setAlignment:NSLeftTextAlignment];
-	[urlTextCell setLineBreakMode:NSLineBreakByTruncatingMiddle];
-	[lengthTextCell setFont:[NSFont systemFontOfSize:10.0]];
-	[lengthTextCell setShowRoundedPath:NO];
-	[lengthTextCell setShowSelection:NO];
-	[lengthTextCell setAlignment:NSRightTextAlignment];
-	[cachedCell setTarget:self];
-	[cachedCell setAction:@selector(save:)];
-	[actionCell setTarget:self];
-	[actionCell setAction:@selector(download:)];
-	[urlColumn setDataCell:urlTextCell];
-	[urlColumn setWidth:(tableRect.size.width - lengthWidth - cachedWidth - actionWidth)];
-	[urlColumn setEditable:NO];
-	[urlColumn setResizingMask:NSTableColumnAutoresizingMask];
-	[lengthColumn setDataCell:lengthTextCell];
-	[lengthColumn setWidth:lengthWidth];
-	[lengthColumn setEditable:NO];
-	[lengthColumn setResizingMask:NSTableColumnNoResizing];
-	[cachedColumn setDataCell:cachedCell];
-	[cachedColumn setWidth:cachedWidth];
-	[cachedColumn setEditable:NO];
-	[cachedColumn setResizingMask:NSTableColumnNoResizing];
-	[actionColumn setDataCell:actionCell];
-	[actionColumn setWidth:actionWidth];
-	[actionColumn setEditable:NO];
-	[actionColumn setResizingMask:NSTableColumnNoResizing];
-	[tableView setBackgroundColor:[NSColor clearColor]];
-	[tableView setRowHeight:20];
+    urlTextCell.font = [NSFont systemFontOfSize:12.0];
+    urlTextCell.showRoundedPath = YES;
+    urlTextCell.alignment = NSLeftTextAlignment;
+    urlTextCell.lineBreakMode = NSLineBreakByTruncatingMiddle;
+    lengthTextCell.font = [NSFont systemFontOfSize:10.0];
+    lengthTextCell.showRoundedPath = NO;
+    lengthTextCell.showSelection = NO;
+    lengthTextCell.alignment = NSRightTextAlignment;
+    cachedCell.target = self;
+    cachedCell.action = @selector(save:);
+    actionCell.target = self;
+    actionCell.action = @selector(download:);
+    urlColumn.dataCell = urlTextCell;
+    urlColumn.width = tableRect.size.width - lengthWidth - cachedWidth - actionWidth;
+    urlColumn.editable = NO;
+    urlColumn.resizingMask = NSTableColumnAutoresizingMask;
+    lengthColumn.dataCell = lengthTextCell;
+    lengthColumn.width = lengthWidth;
+	lengthColumn.editable = NO;
+    lengthColumn.resizingMask = NSTableColumnNoResizing;
+    cachedColumn.dataCell = cachedCell;
+    cachedColumn.width = cachedWidth;
+    cachedColumn.editable = NO;
+    cachedColumn.resizingMask = NSTableColumnNoResizing;
+    actionColumn.dataCell = actionCell;
+    actionColumn.width = actionWidth;
+    actionColumn.editable = NO;
+    actionColumn.resizingMask = NSTableColumnNoResizing;
+	tableView.backgroundColor = NSColor.clearColor;
+    tableView.rowHeight = 20;
 	[tableView addTableColumn:urlColumn];
 	[tableView addTableColumn:lengthColumn];
 	[tableView addTableColumn:cachedColumn];
 	[tableView addTableColumn:actionColumn];
-	[tableView setAllowsMultipleSelection:YES];
-	[tableView setAllowsColumnSelection:NO];
-	[tableView setAllowsEmptySelection:YES];
-	[tableView setDoubleAction:@selector(tableViewDidDoubleAction:)];
-	[tableView setColumnAutoresizingStyle:NSTableViewLastColumnOnlyAutoresizingStyle];
-	[tableView setHeaderView:nil];
-	[tableView setCornerView:nil];
-	[tableView setAutoresizingMask:(NSViewWidthSizable)];
-	[tableView setDataSource:self];
-	[tableView setDelegate:self];
-	[tableView setFocusRingType:NSFocusRingTypeNone];
-	[tableView setDoubleAction:@selector(open)];
-	[tableView setIntercellSpacing:NSZeroSize];
-	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setAutohidesScrollers:YES];
-	[scrollView setHasVerticalScroller:YES];
-	[scrollView setHasHorizontalScroller:NO];
-	[scrollView setAutohidesScrollers:YES];
-	[scrollView setBackgroundColor:[NSColor colorWithCalibratedRed:SBBackgroundColors[0] green:SBBackgroundColors[1] blue:SBBackgroundColors[2] alpha:SBBackgroundColors[3]]];
-	[scrollView setDrawsBackground:YES];
-	[scrollView setDocumentView:tableView];
+    tableView.allowsMultipleSelection = YES;
+    tableView.allowsColumnSelection = NO;
+    tableView.allowsEmptySelection = YES;
+	tableView.doubleAction = @selector(tableViewDidDoubleAction:);
+	tableView.columnAutoresizingStyle = NSTableViewLastColumnOnlyAutoresizingStyle;
+	tableView.headerView = nil;
+    tableView.cornerView = nil;
+    tableView.autoresizingMask = NSViewWidthSizable;
+    tableView.dataSource = self;
+    tableView.delegate = self;
+	tableView.focusRingType = NSFocusRingTypeNone;
+    tableView.doubleAction = @selector(open);
+    tableView.intercellSpacing = NSZeroSize;
+	scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    scrollView.autohidesScrollers = YES;
+    scrollView.hasVerticalScroller = YES;
+    scrollView.hasHorizontalScroller = NO;
+    scrollView.autohidesScrollers = YES;
+	scrollView.backgroundColor = [NSColor colorWithCalibratedRed:SBBackgroundColors[0] green:SBBackgroundColors[1] blue:SBBackgroundColors[2] alpha:SBBackgroundColors[3]];
+    scrollView.drawsBackground = YES;
+    scrollView.documentView = tableView;
 	[self addSubview:scrollView];
 }
 
@@ -173,7 +173,7 @@
 
 - (void)save:(NSTableView  *)aTableView
 {
-	NSInteger rowIndex = [aTableView clickedRow];
+	NSInteger rowIndex = aTableView.clickedRow;
 	if (rowIndex != NSNotFound)
 	{
 		if ([delegate respondsToSelector:@selector(webResourcesView:shouldSaveAtRow:)])
@@ -185,7 +185,7 @@
 
 - (void)download:(NSTableView  *)aTableView
 {
-	NSInteger rowIndex = [aTableView clickedRow];
+	NSInteger rowIndex = aTableView.clickedRow;
 	if (rowIndex != NSNotFound)
 	{
 		if ([delegate respondsToSelector:@selector(webResourcesView:shouldDownloadAtRow:)])
@@ -236,23 +236,23 @@
 	if ([self isHighlighted])
 	{
 		fraction = self.highlightedImage ? 1.0 : 0.5;
-		image = self.highlightedImage ? self.highlightedImage : [self image];
+		image = self.highlightedImage ? self.highlightedImage : self.image;
 	}
 	else {
-		image = [self image];
+		image = self.image;
 	}
 	if (image)
 	{
 		NSSize size = NSZeroSize;
 		NSRect r = NSZeroRect;
-		CGFloat side = [self side];
+		CGFloat side = self.side;
 		
-		size = [image size];
+		size = image.size;
 		r.size = size;
 		r.origin.x = cellFrame.origin.x + side + ((cellFrame.size.width - side * 2) - r.size.width) / 2;
 		r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2;
 		r = NSIntegralRect(r);
-		[image drawInRect:r operation:NSCompositeSourceOver fraction:fraction respectFlipped:![image isFlipped]];
+		[image drawInRect:r operation:NSCompositeSourceOver fraction:fraction respectFlipped:!image.isFlipped];
 	}
 }
 

@@ -41,7 +41,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @dynamic filename;
 @synthesize data;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	NSRect r = frame;
 	if (r.size.width < kSBMinFrameSizeWidth)
@@ -59,14 +59,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[self constructViews];
 		[self constructDoneButton];
 		[self constructCancelButton];
-		[self setAutoresizingMask:(NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin)];
+        self.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin;
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSWindowDidResizeNotification object:[self window]];
+	[NSNotificationCenter.defaultCenter removeObserver:self name:NSWindowDidResizeNotification object:self.window];
 	[self destructUpdateTimer];
 	target = nil;
 }
@@ -96,8 +96,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)doneButtonRect
 {
 	NSRect r = NSZeroRect;
-	CGFloat buttonMargin = [self buttonMargin];
-	r.size = [self buttonSize];
+	CGFloat buttonMargin = self.buttonMargin;
+	r.size = self.buttonSize;
 	r.origin.x = (self.bounds.size.width - (r.size.width * 2 + buttonMargin)) / 2 + r.size.width + buttonMargin;
 	return r;
 }
@@ -105,8 +105,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)cancelButtonRect
 {
 	NSRect r = NSZeroRect;
-	CGFloat buttonMargin = [self buttonMargin];
-	r.size = [self buttonSize];
+	CGFloat buttonMargin = self.buttonMargin;
+	r.size = self.buttonSize;
 	r.origin.x = (self.bounds.size.width - (r.size.width * 2 + buttonMargin)) / 2;
 	return r;
 }
@@ -117,7 +117,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSTabViewItem *tabViewItem0 = nil;
 	NSTabViewItem *tabViewItem1 = nil;
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
 	NSMenu *menu = nil;
 	NSInteger i = 0;
 	NSInteger count = 0;
@@ -154,80 +154,80 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	visibleRect = NSZeroRect;
 	successSize = NSZeroSize;
 	successScale = 1.0;
-	[lockButton setImagePosition:NSImageOnly];
-	[[lockButton cell] setButtonType:NSToggleButton];
-	[lockButton setImage:[NSImage imageNamed:@"Icon_Lock.png"]];
-	[lockButton setAlternateImage:[NSImage imageNamed:@"Icon_Unlock.png"]];
-	[[lockButton cell] setImageScaling:NSImageScaleNone];
-	[sizeLabel setBordered:NO];
-	[lockButton setBordered:NO];
-	[scaleLabel setBordered:NO];
-	[filetypeLabel setBordered:NO];
-	[tiffOptionLabel setBordered:NO];
-	[jpgOptionLabel setBordered:NO];
-	[filesizeLabel setBordered:NO];
-	[filesizeField setBordered:NO];
-	[sizeLabel setEditable:NO];
-	[scaleLabel setEditable:NO];
-	[filetypeLabel setEditable:NO];
-	[tiffOptionLabel setEditable:NO];
-	[jpgOptionLabel setEditable:NO];
-	[filesizeLabel setEditable:NO];
-	[filesizeField setEditable:NO];
-	[sizeLabel setDrawsBackground:NO];
-	[scaleLabel setDrawsBackground:NO];
-	[filetypeLabel setDrawsBackground:NO];
-	[tiffOptionLabel setDrawsBackground:NO];
-	[jpgOptionLabel setDrawsBackground:NO];
-	[filesizeLabel setDrawsBackground:NO];
-	[filesizeField setDrawsBackground:NO];
-	[sizeLabel setTextColor:[NSColor whiteColor]];
-	[scaleLabel setTextColor:[NSColor whiteColor]];
-	[filetypeLabel setTextColor:[NSColor whiteColor]];
-	[tiffOptionLabel setTextColor:[NSColor whiteColor]];
-	[jpgOptionLabel setTextColor:[NSColor whiteColor]];
-	[filesizeLabel setTextColor:[NSColor whiteColor]];
-	[filesizeField setTextColor:[NSColor whiteColor]];
-	[optionTabView setTabViewType:NSNoTabsNoBorder];
-	[optionTabView setDrawsBackground:NO];
+    lockButton.imagePosition = NSImageOnly;
+    lockButton.buttonType = NSToggleButton;
+    lockButton.image = [NSImage imageNamed:@"Icon_Lock.png"];
+    lockButton.alternateImage = [NSImage imageNamed:@"Icon_Unlock.png"];
+	[lockButton.cell setImageScaling:NSImageScaleNone];
+    sizeLabel.bordered = NO;
+    lockButton.bordered = NO;
+    scaleLabel.bordered = NO;
+    filetypeLabel.bordered = NO;
+    tiffOptionLabel.bordered = NO;
+    jpgOptionLabel.bordered = NO;
+    filesizeLabel.bordered = NO;
+    filesizeField.bordered = NO;
+    sizeLabel.editable = NO;
+    scaleLabel.editable = NO;
+    filetypeLabel.editable = NO;
+    tiffOptionLabel.editable = NO;
+    jpgOptionLabel.editable = NO;
+    filesizeLabel.editable = NO;
+    filesizeField.editable = NO;
+    sizeLabel.drawsBackground = NO;
+    scaleLabel.drawsBackground = NO;
+    filetypeLabel.drawsBackground = NO;
+    tiffOptionLabel.drawsBackground = NO;
+    jpgOptionLabel.drawsBackground = NO;
+    filesizeLabel.drawsBackground = NO;
+    filesizeField.drawsBackground = NO;
+    sizeLabel.textColor = NSColor.whiteColor;
+    scaleLabel.textColor = NSColor.whiteColor;
+    filetypeLabel.textColor = NSColor.whiteColor;
+    tiffOptionLabel.textColor = NSColor.whiteColor;
+    jpgOptionLabel.textColor = NSColor.whiteColor;
+    filesizeLabel.textColor = NSColor.whiteColor;
+    filesizeField.textColor = NSColor.whiteColor;
+    optionTabView.tabViewType = NSNoTabsNoBorder;
+    optionTabView.drawsBackground = NO;
 	
 	// Controls
-	[onlyVisibleButton setButtonType:NSSwitchButton];
-	[onlyVisibleButton setState:[defaults boolForKey:kSBSnapshotOnlyVisiblePortion] ? NSOnState : NSOffState];
-	[updateButton setButtonType:NSMomentaryPushInButton];
-	[onlyVisibleButton setTarget:self];
-	[updateButton setTarget:self];
-	[onlyVisibleButton setAction:@selector(checkOnlyVisible:)];
-	[updateButton setAction:@selector(update:)];
-	[onlyVisibleButton setTitle:NSLocalizedString(@"Only visible portion", nil)];
-	[updateButton setImage:[NSImage imageNamed:@"Icon_Camera.png"]];
-	[updateButton setTitle:NSLocalizedString(@"Update", nil)];
-	[onlyVisibleButton setFont:[NSFont systemFontOfSize:10.0]];
-	[updateButton setFont:[NSFont systemFontOfSize:11.0]];
-	[updateButton setKeyEquivalentModifierMask:NSCommandKeyMask];
-	[updateButton setKeyEquivalent:@"r"];
-	[widthField setDelegate:self];
-	[heightField setDelegate:self];
-	[scaleField setDelegate:self];
+    onlyVisibleButton.buttonType = NSSwitchButton;
+    onlyVisibleButton.state = [defaults boolForKey:kSBSnapshotOnlyVisiblePortion] ? NSOnState : NSOffState;
+    updateButton.buttonType = NSMomentaryPushInButton;
+    onlyVisibleButton.target = self;
+    updateButton.target = self;
+    onlyVisibleButton.action = @selector(checkOnlyVisible:);
+    updateButton.action = @selector(update:);
+    onlyVisibleButton.title = NSLocalizedString(@"Only visible portion", nil);
+    updateButton.image = [NSImage imageNamed:@"Icon_Camera.png"];
+    updateButton.title = NSLocalizedString(@"Update", nil);
+    onlyVisibleButton.font = [NSFont systemFontOfSize:10.0];
+    updateButton.font = [NSFont systemFontOfSize:11.0];
+    updateButton.keyEquivalentModifierMask = NSCommandKeyMask;
+	updateButton.keyEquivalent = @"r";
+    widthField.delegate = self;
+    heightField.delegate = self;
+    scaleField.delegate = self;
 	
 	// Views
 	tabViewItem0 = [[NSTabViewItem alloc] initWithIdentifier:[NSString stringWithFormat:@"%d", NSTIFFFileType]];
 	tabViewItem1 = [[NSTabViewItem alloc] initWithIdentifier:[NSString stringWithFormat:@"%d", NSJPEGFileType]];
-	[scrollView setDocumentView:imageView];
-	[scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[scrollView setHasHorizontalScroller:YES];
-	[scrollView setHasVerticalScroller:YES];
-	[scrollView setAutohidesScrollers:YES];
-	[scrollView setBackgroundColor:[NSColor blackColor]];
-	[scrollView setDrawsBackground:YES];
+    scrollView.documentView = imageView;
+    scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    scrollView.hasHorizontalScroller = YES;
+    scrollView.hasVerticalScroller = YES;
+    scrollView.autohidesScrollers = YES;
+    scrollView.backgroundColor = NSColor.blackColor;
+    scrollView.drawsBackground = YES;
 	[optionTabView addTabViewItem:tabViewItem0];
 	[optionTabView addTabViewItem:tabViewItem1];
 	
-	[sizeLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Size", nil)]];
-	[scaleLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Scale", nil)]];
-	[filetypeLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"File Type", nil)]];
-	[filesizeLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"File Size", nil)]];
-	[progressField setStringValue:NSLocalizedString(@"Updating...", nil)];
+    sizeLabel.stringValue = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Size", nil)];
+    scaleLabel.stringValue = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Scale", nil)];
+    filetypeLabel.stringValue = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"File Type", nil)];
+    filesizeLabel.stringValue = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"File Size", nil)];
+    progressField.stringValue = NSLocalizedString(@"Updating...", nil);
 	
 	// Default values
 	if ([defaults objectForKey:kSBSnapshotFileType])
@@ -253,7 +253,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	
 	// File type
-	menu = [filetypePopup menu];
+    menu = filetypePopup.menu;
 	count = 4;
 	NSString *fileTypeNames[4] = {@"TIFF", @"GIF", @"JPEG", @"PNG"};
 	NSBitmapImageFileType filetypes[4] = {NSTIFFFileType, NSGIFFileType, NSJPEGFileType, NSPNGFileType};
@@ -261,67 +261,67 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	for (i = 0; i < count; i++)
 	{
 		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:fileTypeNames[i] action:@selector(selectFiletype:) keyEquivalent:@""];
-		[item setTarget:self];
-		[item setTag:filetypes[i]];
-		[item setState:(filetype == filetypes[i] ? NSOnState : NSOffState)];
+        item.target = self;
+        item.tag = filetypes[i];
+        item.state = filetype == filetypes[i] ? NSOnState : NSOffState;
 		if (filetype == filetypes[i])
 			selectedIndex = i + 1;
 		[menu addItem:item];
 	}
-	[filetypePopup setPullsDown:YES];
+    filetypePopup.pullsDown = YES;
 	[filetypePopup selectItemAtIndex:selectedIndex];
 	
 	// Option view
 	if (filetype == NSTIFFFileType)
 	{
 		[optionTabView selectTabViewItemWithIdentifier:[NSString stringWithFormat:@"%d", NSTIFFFileType]];
-		[optionTabView setHidden:NO];
+        optionTabView.hidden = NO;
 	}
 	else if (filetype == NSJPEGFileType)
 	{
 		[optionTabView selectTabViewItemWithIdentifier:[NSString stringWithFormat:@"%d", NSJPEGFileType]];
-		[optionTabView setHidden:NO];
+        optionTabView.hidden = NO;
 	}
 	else {
-		[optionTabView setHidden:YES];
+        optionTabView.hidden = YES;
 	}
-	[tiffOptionLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Compression", nil)]];
-	[jpgOptionLabel setStringValue:[NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Quality", nil)]];
+    tiffOptionLabel.stringValue = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Compression", nil)];
+    jpgOptionLabel.stringValue = [NSString stringWithFormat:@"%@ :", NSLocalizedString(@"Quality", nil)];
 	
 	count = 3;
-	menu = [tiffOptionPopup menu];
+	menu = tiffOptionPopup.menu;
 	NSString *compressionNames[3] = {NSLocalizedString(@"None", nil), @"LZW", @"PackBits"};
 	NSTIFFCompression compressions[3] = {NSTIFFCompressionNone, NSTIFFCompressionLZW, NSTIFFCompressionPackBits};
 	[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
 	for (i = 0; i < count; i++)
 	{
 		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:compressionNames[i] action:@selector(selectTiffOption:) keyEquivalent:@""];
-		[item setTag:compressions[i]];
-		[item setState:(tiffCompression == compressions[i] ? NSOnState : NSOffState)];
+        item.tag = compressions[i];
+        item.state = tiffCompression == compressions[i] ? NSOnState : NSOffState;
 		if (tiffCompression == compressions[i])
 			selectedIndex = i + 1;
 		[menu addItem:item];
 	}
-	[tiffOptionPopup setPullsDown:YES];
+    tiffOptionPopup.pullsDown = YES;
 	[tiffOptionPopup selectItemAtIndex:selectedIndex];
-	[[jpgOptionSlider cell] setControlSize:NSMiniControlSize];
-	[jpgOptionSlider setMinValue:0.0];
-	[jpgOptionSlider setMaxValue:1.0];
-	[jpgOptionSlider setNumberOfTickMarks:11];
-	[jpgOptionSlider setTickMarkPosition:NSTickMarkBelow];
-	[jpgOptionSlider setAllowsTickMarkValuesOnly:YES];
-	[jpgOptionSlider setFloatValue:jpgFactor];
-	[jpgOptionSlider setTarget:self];
-	[jpgOptionSlider setAction:@selector(slideJpgOption:)];
-	[jpgOptionField setEditable:NO];
-	[jpgOptionField setSelectable:NO];
-	[jpgOptionField setBordered:NO];
-	[jpgOptionField setDrawsBackground:NO];
-	[jpgOptionField setTextColor:[NSColor whiteColor]];
-	[jpgOptionField setStringValue:[NSString stringWithFormat:@"%.1f", jpgFactor]];
+	jpgOptionSlider.controlSize = NSMiniControlSize;
+    jpgOptionSlider.minValue = 0.0;
+    jpgOptionSlider.maxValue = 1.0;
+    jpgOptionSlider.numberOfTickMarks = 11;
+    jpgOptionSlider.tickMarkPosition = NSTickMarkBelow;
+    jpgOptionSlider.allowsTickMarkValuesOnly = YES;
+    jpgOptionSlider.floatValue = jpgFactor;
+    jpgOptionSlider.target = self;
+    jpgOptionSlider.action = @selector(slideJpgOption:);
+    jpgOptionField.editable = NO;
+    jpgOptionField.selectable = NO;
+    jpgOptionField.bordered = NO;
+    jpgOptionField.drawsBackground = NO;
+    jpgOptionField.textColor = NSColor.whiteColor;
+    jpgOptionField.stringValue = [NSString stringWithFormat:@"%.1f", jpgFactor];
 	
 	// Notification
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:[self window]];
+	[NSNotificationCenter.defaultCenter addObserver:self selector:@selector(windowDidResize:) name:NSWindowDidResizeNotification object:self.window];
 	
 	[self addSubview:scrollView];
 	[self addSubview:toolsView];
@@ -336,35 +336,35 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[toolsView addSubview:filetypeLabel];
 	[toolsView addSubview:filetypePopup];
 	[toolsView addSubview:optionTabView];
-	[[tabViewItem0 view] addSubview:tiffOptionLabel];
-	[[tabViewItem0 view] addSubview:tiffOptionPopup];
-	[[tabViewItem1 view] addSubview:jpgOptionLabel];
-	[[tabViewItem1 view] addSubview:jpgOptionSlider];
-	[[tabViewItem1 view] addSubview:jpgOptionField];
+	[tabViewItem0.view addSubview:tiffOptionLabel];
+	[tabViewItem0.view addSubview:tiffOptionPopup];
+	[tabViewItem1.view addSubview:jpgOptionLabel];
+	[tabViewItem1.view addSubview:jpgOptionSlider];
+	[tabViewItem1.view addSubview:jpgOptionField];
 	[toolsView addSubview:filesizeLabel];
 	[toolsView addSubview:filesizeField];
 }
 
 - (void)constructDoneButton
 {
-	NSRect r = [self doneButtonRect];
+	NSRect r = self.doneButtonRect;
 	doneButton = [[SBBLKGUIButton alloc] initWithFrame:r];
-	[doneButton setTitle:NSLocalizedString(@"Done", nil)];
-	[doneButton setTarget:self];
-	[doneButton setAction:@selector(save:)];
-	[doneButton setEnabled:NO];
-	[doneButton setKeyEquivalent:@"\r"];	// busy if button is added into a view
+    doneButton.title = NSLocalizedString(@"Done", nil);
+    doneButton.target = self;
+    doneButton.action = @selector(save:);
+    doneButton.enabled = NO;
+	doneButton.keyEquivalent = @"\r";	// busy if button is added into a view
 	[self addSubview:doneButton];
 }
 
 - (void)constructCancelButton
 {
-	NSRect r = [self cancelButtonRect];
+	NSRect r = self.cancelButtonRect;
 	cancelButton = [[SBBLKGUIButton alloc] initWithFrame:r];
-	[cancelButton setTitle:NSLocalizedString(@"Cancel", nil)];
-	[cancelButton setTarget:self];
-	[cancelButton setAction:@selector(cancel)];
-	[cancelButton setKeyEquivalent:@"\e"];
+    cancelButton.title = NSLocalizedString(@"Cancel", nil);
+    cancelButton.target = self;
+    cancelButton.action = @selector(cancel);
+	cancelButton.keyEquivalent = @"\e";
 	[self addSubview:cancelButton];
 }
 
@@ -372,10 +372,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)windowDidResize:(NSNotification *)notification
 {
-	NSRect imageRect = [imageView frame];
-	NSSize imageSize = [[imageView image] size];
+	NSRect imageRect = imageView.frame;
+	NSSize imageSize = imageView.image.size;
 	NSRect scrollBounds = NSZeroRect;
-	scrollBounds.size = [scrollView frame].size;
+	scrollBounds.size = scrollView.frame.size;
 	if (imageSize.width != imageRect.size.width)
 	{
 		imageRect.size.width = imageSize.width;
@@ -392,15 +392,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		imageRect.size.height = scrollBounds.size.height;
 	}
-	if (!NSEqualRects(imageRect, [imageView frame]))
+	if (!NSEqualRects(imageRect, imageView.frame))
 	{
-		[imageView setFrame:imageRect];
+		imageView.frame = imageRect;
 	}
 }
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
-	id field = [aNotification object];
+	id field = aNotification.object;
 	NSDictionary *userInfo = nil;
 	[self destructUpdateTimer];
 	if ([self shouldShowSizeWarning:field])
@@ -409,26 +409,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		int r = NSRunAlertPanel(aTitle, @"", NSLocalizedString(@"Continue", nil), NSLocalizedString(@"Cancel", nil), nil);
 		if (r == NSOKButton)
 		{
-			userInfo = [NSDictionary dictionaryWithObject:field forKey:@"Object"];
+			userInfo = @{@"Object": field};
 			updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateWithTimer:) userInfo:userInfo repeats:NO];
 		}
 		else {
 			if (field == widthField)
 			{
-				[widthField setIntValue:(int)successSize.width];
+                widthField.intValue = (int)successSize.width;
 			}
 			else if (field == heightField)
 			{
-				[heightField setIntValue:(int)successSize.height];
+                heightField.intValue = (int)successSize.height;
 			}
 			else if (field == scaleField)
 			{
-				[scaleField setIntValue:(int)(successScale * 100)];
+                scaleField.intValue = (int)(successScale * 100);
 			}
 		}
 	}
 	else {
-		userInfo = [NSDictionary dictionaryWithObject:field forKey:@"Object"];
+		userInfo = @{@"Object": field};
 		updateTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateWithTimer:) userInfo:userInfo repeats:NO];
 	}
 }
@@ -446,60 +446,60 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL r = NO;
 	if (field == scaleField)
 	{
-		CGFloat s = (CGFloat)[scaleField intValue] / 100;
-		if ([lockButton state] == NSOffState)
+		CGFloat s = (CGFloat)scaleField.intValue / 100;
+		if (lockButton.state == NSOffState)
 		{
-			if ([onlyVisibleButton state] == NSOnState)
+			if (onlyVisibleButton.state == NSOnState)
 			{
 				r = (visibleRect.size.width * s >= kSBMaxImageSizeWidth);
 				if (!r)
 					r = (visibleRect.size.height * s >= kSBMaxImageSizeHeight);
 			}
 			else {
-				r = ([image size].width * s >= kSBMaxImageSizeWidth);
+				r = (image.size.width * s >= kSBMaxImageSizeWidth);
 				if (!r)
-					r = ([image size].height * s >= kSBMaxImageSizeHeight);
+					r = (image.size.height * s >= kSBMaxImageSizeHeight);
 			}
 		}
 	}
 	else if (field == widthField)
 	{
-		int w = [widthField intValue];
+		int w = widthField.intValue;
 		r = (w >= kSBMaxImageSizeWidth);
 		if (!r)
 		{
-			if ([lockButton state] == NSOffState)
+			if (lockButton.state == NSOffState)
 			{
 				CGFloat per = 1.0;
-				if ([onlyVisibleButton state] == NSOnState)
+				if (onlyVisibleButton.state == NSOnState)
 				{
 					per = w / visibleRect.size.width;
 					r = (visibleRect.size.height * per >= kSBMaxImageSizeHeight);
 				}
 				else {
 					per = w / visibleRect.size.width;
-					r = ([image size].height * per >= kSBMaxImageSizeHeight);
+					r = (image.size.height * per >= kSBMaxImageSizeHeight);
 				}
 			}
 		}
 	}
 	else if (field == heightField)
 	{
-		int h = [heightField intValue];
+		int h = heightField.intValue;
 		r = (h >= kSBMaxImageSizeHeight);
 		if (!r)
 		{
-			if ([lockButton state] == NSOffState)
+			if (lockButton.state == NSOffState)
 			{
 				CGFloat per = 1.0;
-				if ([onlyVisibleButton state] == NSOnState)
+				if (onlyVisibleButton.state == NSOnState)
 				{
 					per = h / visibleRect.size.height;
 					r = (visibleRect.size.width * per >= kSBMaxImageSizeWidth);
 				}
 				else {
 					per = h / visibleRect.size.height;
-					r = ([image size].width * per >= kSBMaxImageSizeWidth);
+					r = (image.size.width * per >= kSBMaxImageSizeWidth);
 				}
 			}
 		}
@@ -522,33 +522,33 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL can = NO;
 	if (inImage)
 	{
-		can = !(NSEqualSizes([inImage size], NSZeroSize) || ([inImage size].width == 0 || [inImage size].height == 0));
+		can = !(NSEqualSizes(inImage.size, NSZeroSize) || (inImage.size.width == 0 || inImage.size.height == 0));
 		if (can)
 		{
 			NSRect r = NSZeroRect;
 			BOOL enableVisiblity = NO;
 			image = inImage;
-			if ([onlyVisibleButton state] == NSOnState)
+			if (onlyVisibleButton.state == NSOnState)
 			{
 				r.size = visibleRect.size;
 			}
 			else {
-				r.size = [image size];
+				r.size = image.size;
 			}
-			enableVisiblity = !(NSEqualSizes(visibleRect.size, [image size]) || (visibleRect.size.width == 0 || visibleRect.size.height == 0));
-			[onlyVisibleButton setEnabled:enableVisiblity];
-			if (!enableVisiblity && [onlyVisibleButton state] == NSOnState)
+			enableVisiblity = !(NSEqualSizes(visibleRect.size, image.size) || (visibleRect.size.width == 0 || visibleRect.size.height == 0));
+            onlyVisibleButton.enabled = enableVisiblity;
+			if (!enableVisiblity && onlyVisibleButton.state == NSOnState)
 			{
-				[onlyVisibleButton setState:NSOffState];
-				r.size = [image size];
+                onlyVisibleButton.state = NSOffState;
+				r.size = image.size;
 			}
 			else {
-				[onlyVisibleButton setState:[[NSUserDefaults standardUserDefaults] boolForKey:kSBSnapshotOnlyVisiblePortion] ? NSOnState : NSOffState];
+                onlyVisibleButton.state = [[NSUserDefaults standardUserDefaults] boolForKey:kSBSnapshotOnlyVisiblePortion] ? NSOnState : NSOffState;
 			}
 			// Set image to image view
-			[widthField setIntValue:(int)r.size.width];
-			[heightField setIntValue:(int)r.size.height];
-			[scaleField setIntValue:100];
+            widthField.intValue = (int)r.size.width;
+            heightField.intValue = (int)r.size.height;
+            scaleField.intValue = 100;
 			[self updateForField:nil];
 			successScale = 1.0;
 		}
@@ -567,9 +567,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)showProgress
 {
-	NSRect r = NSZeroRect;
-	r = [scrollView frame];
-	[progressBackgroundView setFrame:r];
+    progressBackgroundView.frame = scrollView.frame;
 	[progressIndicator startAnimation:nil];
 	[self addSubview:progressBackgroundView];
 }
@@ -582,8 +580,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)updateWithTimer:(NSTimer *)timer
 {
-	NSDictionary *userInfo = [timer userInfo];
-	id field = (userInfo ? [userInfo objectForKey:@"Object"] : nil);
+	NSDictionary *userInfo = timer.userInfo;
+	id field = userInfo ? userInfo[@"Object"] : nil;
 	[self destructUpdateTimer];
 	[self updateForField:field];
 }
@@ -595,7 +593,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// Perform update
 	if ([self respondsToSelector:@selector(updatingForField:)])
 	{
-		NSArray *modes = [NSArray arrayWithObjects:NSDefaultRunLoopMode, NSEventTrackingRunLoopMode, NSModalPanelRunLoopMode, nil];
+		NSArray *modes = @[NSDefaultRunLoopMode, NSEventTrackingRunLoopMode, NSModalPanelRunLoopMode];
 		[self performSelector:@selector(updatingForField:) withObject:field afterDelay:0 inModes:modes];
 	}
 }
@@ -610,8 +608,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)updatePreviewImage
 {
-	CGFloat width = (CGFloat)[widthField intValue];
-	CGFloat height = (CGFloat)[heightField intValue];
+	CGFloat width = (CGFloat)widthField.intValue;
+	CGFloat height = (CGFloat)heightField.intValue;
 	unsigned int length = 0;
 	NSImage *compressedImage = nil;
 	data = [self imageData:filetype size:NSMakeSize(width, height)];
@@ -623,50 +621,50 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		NSString *fileSizeString = nil;
 		// Set image to image view
-		[imageView setImage:compressedImage];
+        imageView.image = compressedImage;
 		// Get length of image data
-		length = [data length];
+		length = data.length;
 		// Set length as string
 		fileSizeString = [NSString bytesStringForLength:length];
-		[filesizeField setStringValue:fileSizeString];
-		[doneButton setEnabled:YES];
+        filesizeField.stringValue = fileSizeString;
+        doneButton.enabled = YES;
 	}
 	else {
-		[doneButton setEnabled:NO];
+        doneButton.enabled = NO;
 	}
 }
 
 - (void)updateFieldsForField:(id)field
 {
-	BOOL locked = [lockButton state] == NSOffState;
+	BOOL locked = lockButton.state == NSOffState;
 	NSSize newSize = NSZeroSize;
-	NSRect r = [imageView frame];
+	NSRect r = imageView.frame;
 	CGFloat value = 0.0;
 	CGFloat per = 1.0;
-	if ([onlyVisibleButton state] == NSOnState)
+	if (onlyVisibleButton.state == NSOnState)
 	{
 		newSize = visibleRect.size;
 	}
 	else {
-		newSize = [image size];
+		newSize = image.size;
 	}
 	if ([field isEqual:widthField])
 	{
-		value = (CGFloat)[widthField intValue];
+		value = (CGFloat)widthField.intValue;
 		if (value < 1)
 		{
 			value = 1;
 		}
 		if (locked)
 		{
-			if ([onlyVisibleButton state] == NSOnState)
+			if (onlyVisibleButton.state == NSOnState)
 			{
 				per = value / visibleRect.size.width;
 				newSize.height = visibleRect.size.height * per;
 			}
 			else {
-				per = value / [image size].width;
-				newSize.height = [image size].height * per;
+				per = value / image.size.width;
+				newSize.height = image.size.height * per;
 			}
 			if (newSize.height < 1)
 			{
@@ -676,30 +674,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			{
 				per = 0.01;
 			}
-			[heightField setIntValue:(int)newSize.height];
-			[scaleField setIntValue:(int)(per * 100)];
+            heightField.intValue = (int)newSize.height;
+            scaleField.intValue = (int)(per * 100);
 		}
 		newSize.width = value;
-		[widthField setIntValue:(int)newSize.width];
+        widthField.intValue = (int)newSize.width;
 	}
 	else if ([field isEqual:heightField])
 	{
-		value = (CGFloat)[heightField intValue];
+		value = (CGFloat)heightField.intValue;
 		if (value < 1)
 		{
-			[heightField setIntValue:1];
+            heightField.intValue = 1;
 			value = 1;
 		}
 		if (locked)
 		{
-			if ([onlyVisibleButton state] == NSOnState)
+			if (onlyVisibleButton.state == NSOnState)
 			{
 				per = value / visibleRect.size.height;
 				newSize.width = visibleRect.size.width * per;
 			}
 			else {
-				per = value / [image size].height;
-				newSize.width = [image size].width * per;
+				per = value / image.size.height;
+				newSize.width = image.size.width * per;
 			}
 			if (newSize.width < 1)
 			{
@@ -709,67 +707,67 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			{
 				per = 0.01;
 			}
-			[widthField setIntValue:(int)newSize.width];
-			[scaleField setIntValue:(int)(per * 100)];
+            widthField.intValue = (int)newSize.width;
+            scaleField.intValue = (int)(per * 100);
 		}
 		newSize.height = value;
-		[heightField setIntValue:(int)newSize.height];
+        heightField.intValue = (int)newSize.height;
 	}
 	else if ([field isEqual:scaleField])
 	{
 		if (locked)
 		{
-			per = ((CGFloat)[scaleField intValue] / 100);
+			per = (CGFloat)scaleField.intValue / 100;
 			if (per < 0.01)
 			{
-				[scaleField setIntValue:1];
+				scaleField.intValue = 1;
 				per = 0.01;
 			}
-			if ([onlyVisibleButton state] == NSOnState)
+			if (onlyVisibleButton.state == NSOnState)
 			{
 				newSize.width = visibleRect.size.width * per;
 				newSize.height = visibleRect.size.height * per;
 			}
 			else {
-				newSize.width = [image size].width * per;
-				newSize.height = [image size].height * per;
+				newSize.width = image.size.width * per;
+				newSize.height = image.size.height * per;
 			}
-			[widthField setIntValue:(int)newSize.width];
-			[heightField setIntValue:(int)newSize.height];
-			[scaleField setIntValue:(int)(per * 100)];
+            widthField.intValue = (int)newSize.width;
+            heightField.intValue = (int)newSize.height;
+            scaleField.intValue = (int)(per * 100);
 			successScale = per;
 		}
 	}
 	else {
 		if (locked)
 		{
-			per = ((CGFloat)[scaleField intValue] / 100);
+			per = (CGFloat)scaleField.intValue / 100;
 		}
 		if (per < 0.01)
 		{
-			[scaleField setIntValue:1];
+            scaleField.intValue = 1;
 			per = 0.01;
 		}
-		if ([onlyVisibleButton state] == NSOnState)
+		if (onlyVisibleButton.state == NSOnState)
 		{
 			newSize.width = visibleRect.size.width * per;
 			newSize.height = visibleRect.size.height * per;
 		}
 		else {
-			newSize.width = [image size].width * per;
-			newSize.height = [image size].height * per;
+			newSize.width = image.size.width * per;
+			newSize.height = image.size.height * per;
 		}
-		[widthField setIntValue:(int)newSize.width];
-		[heightField setIntValue:(int)newSize.height];
-		[scaleField setIntValue:(int)(per * 100)];
+        widthField.intValue = (int)newSize.width;
+        heightField.intValue = (int)newSize.height;
+        scaleField.intValue = (int)(per * 100);
 	}
 	[self updatePreviewImage];
 	r.size = newSize;
-	if (r.size.width < [scrollView frame].size.width)
-		r.size.width = [scrollView frame].size.width;
-	if (r.size.height < [scrollView frame].size.height)
-		r.size.height = [scrollView frame].size.height;
-	[imageView setFrame:r];
+	if (r.size.width < scrollView.frame.size.width)
+		r.size.width = scrollView.frame.size.width;
+	if (r.size.height < scrollView.frame.size.height)
+		r.size.height = scrollView.frame.size.height;
+    imageView.frame = r;
 	[imageView display];
 	[imageView scrollPoint:NSMakePoint(0, r.size.height)];
 }
@@ -779,7 +777,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)checkOnlyVisible:(id)sender
 {
-	[[NSUserDefaults standardUserDefaults] setBool:([onlyVisibleButton state] == NSOnState) forKey:kSBSnapshotOnlyVisiblePortion];
+	[[NSUserDefaults standardUserDefaults] setBool:(onlyVisibleButton.state == NSOnState) forKey:kSBSnapshotOnlyVisiblePortion];
 	[self updateForField:nil];
 }
 
@@ -796,7 +794,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			NSImage *selectedWebViewImage = [target selectedWebViewImage];
 			if (selectedWebViewImage)
 			{
-				[self setImage:selectedWebViewImage];
+                self.image = selectedWebViewImage;
 			}
 		}
 	}
@@ -804,28 +802,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)lock:(id)sender
 {
-	BOOL locked = [lockButton state] == NSOffState;
+	BOOL locked = lockButton.state == NSOffState;
 	if (locked)
 	{
 		[self updateForField:widthField];
 	}
-	[scaleField setEnabled:locked];
+    scaleField.enabled = locked;
 }
 
-- (void)selectFiletype:(id)sender
+- (void)selectFiletype:(NSMenuItem *)sender
 {
-	NSMenuItem *item = (NSMenuItem *)sender;
-	int tag = [item tag];
+	int tag = sender.tag;
 	if (filetype != tag)
 	{
-		NSArray *items = [[filetypePopup menu] itemArray];
-		int i = 0;
-		int count = [items count];
+		NSArray *items = filetypePopup.menu.itemArray;
 		filetype = tag;
-		for (i = 0; i < count; i ++)
+		for (NSMenuItem *item in items)
 		{
-			NSMenuItem *item = [items objectAtIndex:i];
-			[item setState:(filetype == [item tag] ? NSOnState : NSOffState)];
+            item.state = filetype == item.tag ? NSOnState : NSOffState;
 		}
 		// Update image
 		[self updateForField:nil];
@@ -835,32 +829,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (filetype == NSTIFFFileType)
 	{
 		[optionTabView selectTabViewItemWithIdentifier:[NSString stringWithFormat:@"%d", NSTIFFFileType]];
-		[optionTabView setHidden:NO];
+        optionTabView.hidden = NO;
 	}
 	else if (filetype == NSJPEGFileType)
 	{
 		[optionTabView selectTabViewItemWithIdentifier:[NSString stringWithFormat:@"%d", NSJPEGFileType]];
-		[optionTabView setHidden:NO];
+        optionTabView.hidden = NO;
 	}
 	else {
-		[optionTabView setHidden:YES];
+        optionTabView.hidden = YES;
 	}
 }
 
-- (void)selectTiffOption:(id)sender
+- (void)selectTiffOption:(NSMenuItem *)sender
 {
-	NSMenuItem *item = (NSMenuItem *)sender;
-	int tag = [item tag];
+	int tag = [sender tag];
 	if (tiffCompression != tag)
 	{
-		NSArray *items = [[tiffOptionPopup menu] itemArray];
-		int i = 0;
-		int count = [items count];
+		NSArray *items = tiffOptionPopup.menu.itemArray;
 		tiffCompression = tag;
-		for (i = 0; i < count; i ++)
+		for (NSMenuItem *item in items)
 		{
-			NSMenuItem *item = [items objectAtIndex:i];
-			[item setState:(tiffCompression == [item tag] ? NSOnState : NSOffState)];
+            item.state = tiffCompression == item.tag ? NSOnState : NSOffState;
 		}
 		// Update image
 		[self updateForField:nil];
@@ -871,8 +861,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)slideJpgOption:(id)sender
 {
-	jpgFactor = [jpgOptionSlider floatValue];
-	[jpgOptionField setStringValue:[NSString stringWithFormat:@"%.1f", jpgFactor]];
+	jpgFactor = jpgOptionSlider.floatValue;
+	jpgOptionField.stringValue = [NSString stringWithFormat:@"%.1f", jpgFactor];
 	// Save to defaults
 	[[NSUserDefaults standardUserDefaults] setFloat:jpgFactor forKey:kSBSnapshotJPGFactor];
 	// Update image
@@ -901,7 +891,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (image)
 	{
-		[imageView setImage:nil];
+        imageView.image = nil;
 		image = nil;
 	}
 	[self destructUpdateTimer];
@@ -945,20 +935,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	// Resize
 	anImage = [[NSImage alloc] initWithSize:size];
-	if ([onlyVisibleButton state] == NSOnState)
+	if (onlyVisibleButton.state == NSOnState)
 	{
 		fromRect = visibleRect;
-		fromRect.origin.y = [image size].height - NSMaxY(visibleRect);
+		fromRect.origin.y = image.size.height - NSMaxY(visibleRect);
 	}
 	else {
-		fromRect.size = [image size];
+		fromRect.size = image.size;
 	}
 	[anImage lockFocus];
 	[image drawInRect:NSMakeRect(0, 0, size.width, size.height) fromRect:fromRect operation:NSCompositeSourceOver fraction:1.0];
 	[anImage unlockFocus];
 	
 	// Change filetype
-	aData = [anImage TIFFRepresentation];
+	aData = anImage.TIFFRepresentation;
 	if (inFiletype == NSTIFFFileType)
 	{
 		bitmapImageRep = [NSBitmapImageRep imageRepWithData:aData];
@@ -967,13 +957,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	else if (inFiletype == NSGIFFileType)
 	{
 		bitmapImageRep = [NSBitmapImageRep imageRepWithData:aData];
-		properties = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSImageDitherTransparency, nil];
+		properties = @{NSImageDitherTransparency: @YES};
 		aData = [bitmapImageRep representationUsingType:NSGIFFileType properties:properties];
 	}
 	else if (inFiletype == NSJPEGFileType)
 	{
 		bitmapImageRep = [NSBitmapImageRep imageRepWithData:aData];
-		properties = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:jpgFactor] forKey:NSImageCompressionFactor];
+		properties = @{NSImageCompressionFactor: @(jpgFactor)};
 		aData = [bitmapImageRep representationUsingType:NSJPEGFileType properties:properties];
 	}
 	else if (inFiletype == NSPNGFileType)

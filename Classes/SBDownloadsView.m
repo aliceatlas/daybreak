@@ -33,7 +33,7 @@
 
 @synthesize delegate;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
@@ -80,7 +80,7 @@
 {
 	NSUInteger blockX = 0;
 	NSRect b = self.bounds;
-	NSSize cellSize = [self cellSize];
+	NSSize cellSize = self.cellSize;
 	if (b.size.width < cellSize.width)
 		blockX = 1;
 	else
@@ -92,9 +92,9 @@
 {
 	NSRect r = NSZeroRect;
 	NSRect b = self.bounds;
-	NSUInteger blockX = [self blockX];
+	NSUInteger blockX = self.blockX;
 	NSPoint p = NSZeroPoint;
-	r.size = [self cellSize];
+	r.size = self.cellSize;
 	p.y = index >= blockX ? (index / blockX) : 0;
 	p.x = index - p.y * blockX;
 	r.origin.x = p.x * r.size.width;
@@ -143,10 +143,10 @@
 	}
 	if (!find)
 	{
-		NSUInteger count = [downloadViews count];
+		NSUInteger count = downloadViews.count;
 		NSRect r = [self cellFrameAtIndex:count];
 		downloadView = [[SBDownloadView alloc] initWithFrame:r];
-		[downloadView setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
+        downloadView.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
 		downloadView.download = item;
 		[downloadView update];
 		[downloadViews addObject:downloadView];
@@ -171,7 +171,7 @@
 	}
 	if (find)
 	{
-		if ([downloadViews count] > 0)
+		if (downloadViews.count > 0)
 		{
 			[self layoutItems:YES];
 		}
@@ -258,7 +258,7 @@
 	for (SBDownloadView *downloadView in downloadViews)
 	{
 		if (downloadView.selected)
-			[downloadView setNeedsDisplay:YES];
+            downloadView.needsDisplay = YES;
 	}
 }
 
@@ -298,7 +298,7 @@
 
 - (void)constructDownloadViews
 {
-	SBDownloads *downloads = [SBDownloads sharedDownloads];
+	SBDownloads *downloads = SBDownloads.sharedDownloads;
 	for (SBDownload *item in downloads.items)
 	{
 		[self addForItem:item];
@@ -313,32 +313,32 @@
 	[self destructControls];
 	removeButton = [[SBButton alloc] initWithFrame:removeRect];
 	finderButton = [[SBButton alloc] initWithFrame:finderRect];
-	[removeButton setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
+    removeButton.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
 	removeButton.image = [NSImage imageWithCGImage:SBIconImage(SBCloseIconImage(), SBButtonLeftShape, NSSizeToCGSize(removeRect.size))];
 	removeButton.action = @selector(remove);
-	[finderButton setAutoresizingMask:(NSViewMaxXMargin | NSViewMinYMargin)];
+    finderButton.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
 	finderButton.image = [NSImage imageWithCGImage:SBIconImageWithName(@"Finder", SBButtonRightShape, NSSizeToCGSize(finderRect.size))];
 	finderButton.action = @selector(finder);
 }
 
 - (void)layoutItems:(BOOL)animated
 {
-	NSSize enclosingSize = [self enclosingScrollView] ? [[self enclosingScrollView] contentSize] : self.bounds.size;
+	NSSize enclosingSize = self.enclosingScrollView ? self.enclosingScrollView.contentSize : self.bounds.size;
 	if (enclosingSize.width > 0 && enclosingSize.height > 0)
 	{
 		NSUInteger index = 0;
 		NSRect r = self.frame;
 		NSPoint block = NSZeroPoint;
-		NSSize cellSize = [self cellSize];
+		NSSize cellSize = self.cellSize;
 		NSMutableArray *animations = [NSMutableArray arrayWithCapacity:0];
-		NSEvent *currentEvent = [[NSApplication sharedApplication] currentEvent];
-		NSPoint location = [currentEvent locationInWindow];
+		NSEvent *currentEvent = NSApplication.sharedApplication.currentEvent;
+		NSPoint location = currentEvent.locationInWindow;
 		SBDownloadView *currentDownloadView = nil;
-		NSUInteger count = [downloadViews count];
+		NSUInteger count = downloadViews.count;
 
 		
 		// Calculate the view frame
-		block.x = [self blockX];
+		block.x = self.blockX;
 		block.y = (NSUInteger)(count / block.x);
 		if ((count / block.x) - (NSUInteger)(count / block.x) > 0)
 			block.y += 1;
@@ -359,14 +359,13 @@
 			NSPoint point = [self convertPoint:location fromView:nil];
 			if (!NSEqualRects(r0, r1))
 			{
-				NSRect visibleRect = [self visibleRect];
+				NSRect visibleRect = self.visibleRect;
 				if (animated && (NSIntersectsRect(visibleRect, downloadView.frame) || NSIntersectsRect(visibleRect, r)))	// Only visible views
 				{
-					NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-					[info setObject:downloadView forKey:NSViewAnimationTargetKey];
-					[info setObject:[NSValue valueWithRect:r0] forKey:NSViewAnimationStartFrameKey];
-					[info setObject:[NSValue valueWithRect:r1] forKey:NSViewAnimationEndFrameKey];
-					[animations addObject:[info copy]];
+                    [animations addObject:@{
+                        NSViewAnimationTargetKey: downloadView,
+                        NSViewAnimationStartFrameKey: [NSValue valueWithRect:r0],
+                        NSViewAnimationEndFrameKey: [NSValue valueWithRect:r1]}];
 				}
 				else {
 					downloadView.frame = r1;
@@ -378,11 +377,11 @@
 			}
 			index++;
 		}
-		if ([animations count] > 0)
+		if (animations.count > 0)
 		{
 			NSViewAnimation *animation = [[NSViewAnimation alloc] initWithViewAnimations:animations];
-			[animation setDuration:0.25];
-			[animation setDelegate:self];
+            animation.duration = 0.25;
+            animation.delegate = self;
 			[animation startAnimation];
 		}
 		if (currentDownloadView)
@@ -397,7 +396,7 @@
 - (void)delete:(id)sender
 {
 	NSMutableArray *selectedDownloads = [NSMutableArray arrayWithCapacity:0];
-	SBDownloads *downloads = [SBDownloads sharedDownloads];
+	SBDownloads *downloads = SBDownloads.sharedDownloads;
 	[self layoutToolsHidden];
 	for (SBDownloadView *downloadView in downloadViews)
 	{
@@ -406,7 +405,7 @@
 			[selectedDownloads addObject:downloadView.download];
 		}
 	}
-	if ([selectedDownloads count] > 0)
+	if (selectedDownloads.count > 0)
 	{
 		[downloads removeItems:selectedDownloads];
 	}
@@ -427,7 +426,7 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	NSPoint location = [theEvent locationInWindow];
+	NSPoint location = theEvent.locationInWindow;
 	NSPoint point = [self convertPoint:location fromView:nil];
 	NSInteger index = 0;
 	for (SBDownloadView *downloadView in downloadViews)
@@ -446,7 +445,7 @@
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-	NSString *characters = [theEvent characters];
+	NSString *characters = theEvent.characters;
 	unichar character = [characters characterAtIndex:0];
 	if (character == NSDeleteCharacter)
 	{
@@ -456,9 +455,9 @@
 
 - (void)mouseUp:(NSEvent*)theEvent
 {
-	if([theEvent clickCount] == 2)
+	if(theEvent.clickCount == 2)
 	{
-		NSPoint location = [theEvent locationInWindow];
+		NSPoint location = theEvent.locationInWindow;
 		NSPoint point = [self convertPoint:location fromView:nil];
 		NSInteger index = 0;
 		for (SBDownloadView *downloadView in downloadViews)

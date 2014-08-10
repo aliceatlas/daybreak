@@ -42,7 +42,7 @@
 - (NSRect)searchRect
 {
 	NSRect r = NSZeroRect;
-	NSRect closeRect = [self closeRect];
+	NSRect closeRect = self.closeRect;
 	r.size.width = self.bounds.size.width - NSMaxX(closeRect);
 	r.size.height = 19.0;
 	r.origin.x = NSMaxX(closeRect);
@@ -54,18 +54,18 @@
 
 - (void)constructSearchField
 {
-	NSRect r = [self searchRect];
+	NSRect r = self.searchRect;
 	NSString *string = [[NSPasteboard pasteboardWithName:NSFindPboard] stringForType:NSStringPboardType];
 	[self destructSearchField];
 	searchField = [[SBFindSearchField alloc] initWithFrame:r];
-	[searchField setAutoresizingMask:(NSViewWidthSizable)];
-	[searchField setDelegate:self];
-	[searchField setTarget:self];
-	[searchField setAction:@selector(executeDoneSelector:)];
-	[[searchField cell] setSendsWholeSearchString:YES];
-	[[searchField cell] setSendsSearchStringImmediately:NO];
+    searchField.autoresizingMask = NSViewWidthSizable;
+    searchField.delegate = self;
+    searchField.target = self;
+    searchField.action = @selector(executeDoneSelector:);
+    searchField.sendsWholeSearchString = YES;
+    searchField.sendsSearchStringImmediately = NO;
 	if (string)
-		[searchField setStringValue:string];
+        searchField.stringValue = string;
 	[contentView addSubview:searchField];
 }
 
@@ -93,8 +93,8 @@
 
 - (void)executeDoneSelector:(id)sender
 {
-	NSString *text = [searchField stringValue];
-	if ([text length] > 0)
+	NSString *text = searchField.stringValue;
+	if (text.length > 0)
 	{
 		if (target && doneSelector)
 		{

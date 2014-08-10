@@ -37,9 +37,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 @property (nonatomic, strong) NSMutableArray *sectionGroupeViews;
 @property (nonatomic, strong) NSMutableArray *sections;
+@property (nonatomic, readonly) NSRect contentViewRect;
 
-- (id)initWithFrame:(NSRect)frame;
-- (NSRect)contentViewRect;
+- (instancetype)initWithFrame:(NSRect)frame;
 - (NSRect)groupeViewRectAtIndex:(NSInteger)index;
 - (void)destructScrollView;
 - (void)constructScrollView;
@@ -69,10 +69,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, strong) SBSectionItem *item;
 @property (nonatomic, weak) NSImageView *currentImageView;
 @property (nonatomic, weak) NSTextField *currentField;
+@property (nonatomic, readonly) NSRect titleRect;
+@property (nonatomic, readonly) NSRect valueRect;
 
-- (id)initWithItem:(SBSectionItem *)inItem;
-- (NSRect)titleRect;
-- (NSRect)valueRect;
+- (instancetype)initWithItem:(SBSectionItem *)inItem NS_DESIGNATED_INITIALIZER;
 - (void)constructControl;
 
 @end

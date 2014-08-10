@@ -29,14 +29,14 @@
 
 @dynamic userAgentName;
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
 		[self constructTitle];
 		[self constructPopup];
 		[self constructButtons];
-		[self setAutoresizingMask:(NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin)];
+        self.autoresizingMask = NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin;
 	}
 	return self;
 }
@@ -56,20 +56,18 @@
 - (NSRect)iconRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
 	r.size.width = 32.0;
-	r.origin.x = [self labelWidth] - r.size.width;
+	r.origin.x = self.labelWidth - r.size.width;
 	r.size.height = 32.0;
-	r.origin.y = self.bounds.size.height - margin.y - r.size.height;
+	r.origin.y = self.bounds.size.height - self.margin.y - r.size.height;
 	return r;
 }
 
 - (NSRect)titleRect
 {
 	NSRect r = NSZeroRect;
-	NSRect iconRect = [self iconRect];
-	NSPoint margin = [self margin];
-	r.origin.x = NSMaxX(iconRect) + 10.0;
+	NSPoint margin = self.margin;
+	r.origin.x = NSMaxX(self.iconRect) + 10.0;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
 	r.size.height = 19.0;
 	r.origin.y = self.bounds.size.height - margin.y - r.size.height - (32.0 - r.size.height) / 2;
@@ -79,10 +77,9 @@
 - (NSRect)popupRect
 {
 	NSRect r = NSZeroRect;
-	NSRect iconRect = [self iconRect];
-	NSPoint margin = [self margin];
+	NSRect iconRect = self.iconRect;
 	r.origin.x = iconRect.origin.x;
-	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
+	r.size.width = self.bounds.size.width - r.origin.x - self.margin.x;
 	r.size.height = 26;
 	r.origin.y = iconRect.origin.y - 20.0 - r.size.height;
 	return r;
@@ -91,10 +88,9 @@
 - (NSRect)fieldRect
 {
 	NSRect r = NSZeroRect;
-	NSRect popupRect = [self popupRect];
-	NSPoint margin = [self margin];
+	NSRect popupRect = self.popupRect;
 	r.origin.x = popupRect.origin.x;
-	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
+	r.size.width = self.bounds.size.width - r.origin.x - self.margin.x;
 	r.size.height = 58.0;
 	r.origin.y = popupRect.origin.y - 20.0 - r.size.height;
 	return r;
@@ -103,7 +99,7 @@
 - (NSRect)cancelRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = 124.0;
 	r.size.height = 32.0;
 	r.origin.x = self.bounds.size.width - (margin.x + r.size.width * 2 + 8.0);
@@ -114,7 +110,7 @@
 - (NSRect)doneRect
 {
 	NSRect r = NSZeroRect;
-	NSPoint margin = [self margin];
+	NSPoint margin = self.margin;
 	r.size.width = 124.0;
 	r.size.height = 32.0;
 	r.origin.x = self.bounds.size.width - (margin.x + r.size.width);
@@ -125,10 +121,10 @@
 - (NSString *)userAgentName
 {
 	NSString *userAgentName = nil;
-	NSInteger selectedIndex = [popup indexOfSelectedItem];
+	NSInteger selectedIndex = popup.indexOfSelectedItem;
 	if (selectedIndex == SBCountOfUserAgentNames)
 	{
-		userAgentName = [field stringValue];
+		userAgentName = field.stringValue;
 	}
 	else {
 		userAgentName = SBUserAgentNames[selectedIndex - 1];
@@ -142,21 +138,21 @@
 {
 	NSImage *image = nil;
 	image = [NSImage imageNamed:@"UserAgent"];
-	iconImageView = [[NSImageView alloc] initWithFrame:[self iconRect]];
-	titleLabel = [[NSTextField alloc] initWithFrame:[self titleRect]];
+	iconImageView = [[NSImageView alloc] initWithFrame:self.iconRect];
+	titleLabel = [[NSTextField alloc] initWithFrame:self.titleRect];
 	if (image)
 	{
-		[image setSize:[iconImageView frame].size];
-		[iconImageView setImage:image];
+        image.size = iconImageView.frame.size;
+        iconImageView.image = image;
 	}
-	[titleLabel setStringValue:NSLocalizedString(@"Select User Agent", nil)];
-	[titleLabel setBordered:NO];
-	[titleLabel setEditable:NO];
-	[titleLabel setSelectable:NO];
-	[titleLabel setDrawsBackground:NO];
-	[titleLabel setFont:[NSFont boldSystemFontOfSize:16.0]];
-	[titleLabel setTextColor:[NSColor whiteColor]];
-	[titleLabel setAutoresizingMask:(NSViewWidthSizable)];
+    titleLabel.stringValue = NSLocalizedString(@"Select User Agent", nil);
+    titleLabel.bordered = NO;
+    titleLabel.editable = NO;
+    titleLabel.selectable = NO;
+    titleLabel.drawsBackground = NO;
+    titleLabel.font = [NSFont boldSystemFontOfSize:16.0];
+	titleLabel.textColor = NSColor.whiteColor;
+    titleLabel.autoresizingMask = NSViewWidthSizable;
 	[self addSubview:iconImageView];
 	[self addSubview:titleLabel];
 }
@@ -168,15 +164,15 @@
 	NSUInteger count = 0;
 	NSUInteger i = 0;
 	NSUInteger selectedIndex = NSNotFound;
-	popup = [[SBBLKGUIPopUpButton alloc] initWithFrame:[self popupRect]];
-	field = [[SBBLKGUITextField alloc] initWithFrame:[self fieldRect]];
-	[field setAlignment:NSLeftTextAlignment];
-	[field setFont:[NSFont systemFontOfSize:14.0]];
-	[field setTextColor:[NSColor whiteColor]];
-	[field setDelegate:self];
-	[[field cell] setWraps:YES];
-	[field setHidden:YES];
-	menu = [popup menu];
+	popup = [[SBBLKGUIPopUpButton alloc] initWithFrame:self.popupRect];
+	field = [[SBBLKGUITextField alloc] initWithFrame:self.fieldRect];
+    field.alignment = NSLeftTextAlignment;
+    field.font = [NSFont systemFontOfSize:14.0];
+	field.textColor = NSColor.whiteColor;
+    field.delegate = self;
+	[field.cell setWraps:YES];
+	field.hidden = YES;
+	menu = popup.menu;
 	count = SBCountOfUserAgentNames;
 	userAgentName = [[NSUserDefaults standardUserDefaults] objectForKey:kSBUserAgentName];
 	if (userAgentName)
@@ -193,25 +189,25 @@
 	if (selectedIndex == NSNotFound)
 	{
 		selectedIndex = count;
-		[field setStringValue:userAgentName];
-		[field setHidden:NO];
+        field.stringValue = userAgentName;
+        field.hidden = NO;
 	}
 	NSImage *icon0 = [SBUserAgentNames[0] isEqualToString:@"Sunrise"] ? [NSImage imageNamed:@"Application.icns"] : nil;
 	NSImage *icon1 = [SBUserAgentNames[1] isEqualToString:@"Safari"] ? [[NSImage alloc] initWithContentsOfFile:@"/Applications/Safari.app/Contents/Resources/compass.icns"] : nil;
-	if (icon0) [icon0 setSize:NSMakeSize(24.0, 24.0)];
-	if (icon1) [icon1 setSize:NSMakeSize(24.0, 24.0)];
+    if (icon0) icon0.size = NSMakeSize(24.0, 24.0);
+    if (icon1) icon1.size = NSMakeSize(24.0, 24.0);
 	NSImage *images[2] = {icon0, icon1};
 	[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
 	for (i = 0; i < count; i++)
 	{
 		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(SBUserAgentNames[i], nil) action:@selector(selectApp:) keyEquivalent:@""];
-		[item setTarget:self];
+        item.target = self;
 		if (i < 2)
-			[item setImage:images[i]];
-		[item setTag:i];
+            item.image = images[i];
+        item.tag = i;
 		[menu addItem:item];
 	}
-	[popup setPullsDown:YES];
+    popup.pullsDown = YES;
 	[popup selectItemAtIndex:selectedIndex];
 	[self addSubview:popup];
 	[self addSubview:field];
@@ -219,17 +215,17 @@
 
 - (void)constructButtons
 {
-	cancelButton = [[SBBLKGUIButton alloc] initWithFrame:[self cancelRect]];
-	doneButton = [[SBBLKGUIButton alloc] initWithFrame:[self doneRect]];
-	[cancelButton setTitle:NSLocalizedString(@"Cancel", nil)];
-	[cancelButton setTarget:self];
-	[cancelButton setAction:@selector(cancel)];
-	[cancelButton setKeyEquivalent:@"\e"];
-	[doneButton setTitle:NSLocalizedString(@"Done", nil)];
-	[doneButton setTarget:self];
-	[doneButton setEnabled:([self.userAgentName length] > 0)];
-	[doneButton setAction:@selector(done)];
-	[doneButton setKeyEquivalent:@"\r"];
+	cancelButton = [[SBBLKGUIButton alloc] initWithFrame:self.cancelRect];
+	doneButton = [[SBBLKGUIButton alloc] initWithFrame:self.doneRect];
+    cancelButton.title = NSLocalizedString(@"Cancel", nil);
+    cancelButton.target = self;
+    cancelButton.action = @selector(cancel);
+	cancelButton.keyEquivalent = @"\e";
+    doneButton.title = NSLocalizedString(@"Done", nil);
+    doneButton.target = self;
+    doneButton.enabled = self.userAgentName.length > 0;
+    doneButton.action = @selector(done);
+	doneButton.keyEquivalent = @"\r";
 	[self addSubview:cancelButton];
 	[self addSubview:doneButton];
 }
@@ -238,23 +234,23 @@
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
-	[doneButton setEnabled:([self.userAgentName length] > 0)];
+	doneButton.enabled = self.userAgentName.length > 0;
 }
 
 #pragma mark Actions
 
 - (void)selectApp:(id)sender
 {
-	NSInteger selectedIndex = [popup indexOfSelectedItem];
+	NSInteger selectedIndex = popup.indexOfSelectedItem;
 	if (selectedIndex == SBCountOfUserAgentNames)
 	{
-		[field setHidden:NO];
+        field.hidden = NO;
 		[field selectText:nil];
 	}
 	else {
-		[field setHidden:YES];
+        field.hidden = YES;
 	}
-	[doneButton setEnabled:([self.userAgentName length] > 0)];
+    doneButton.enabled = self.userAgentName.length > 0;
 }
 
 - (void)done

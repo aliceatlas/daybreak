@@ -27,12 +27,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation SBWindowController
 
-- (id)initWithViewSize:(NSSize)inViewSize
+- (instancetype)initWithViewSize:(NSSize)inViewSize
 {
 	NSRect frameRect = NSZeroRect;
 	NSWindow *window = nil;
-	NSScreen *screen = [[NSScreen screens] objectAtIndex:0];
-	NSRect visibleRect = [screen visibleFrame];
+	NSScreen *screen = NSScreen.screens[0];
+	NSRect visibleRect = screen.visibleFrame;
 	viewSize = inViewSize;
 	frameRect.size.width = viewSize.width + 20 * 2;
 	frameRect.size.height = viewSize.height < visibleRect.size.height ? viewSize.height : visibleRect.size.height;

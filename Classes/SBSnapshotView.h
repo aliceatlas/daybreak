@@ -70,14 +70,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, readonly) NSString *filename;
 @property (nonatomic, strong) NSData *data;
+@property (nonatomic, readonly) NSPoint margin;
+@property (nonatomic, readonly) CGFloat labelWidth;
+@property (nonatomic, readonly) NSSize buttonSize;
+@property (nonatomic, readonly) CGFloat buttonMargin;
+@property (nonatomic, readonly) NSRect doneButtonRect;
+@property (nonatomic, readonly) NSRect cancelButtonRect;
 
-// Rects
-- (NSPoint)margin;
-- (CGFloat)labelWidth;
-- (NSSize)buttonSize;
-- (CGFloat)buttonMargin;
-- (NSRect)doneButtonRect;
-- (NSRect)cancelButtonRect;
 // Construction
 - (void)constructViews;
 - (void)constructDoneButton;

@@ -30,11 +30,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	id<SBTabViewDelegate> __unsafe_unretained delegate;
 }
 @property (nonatomic, unsafe_unretained) id<SBTabViewDelegate> delegate;
-@property (nonatomic) NSRect frame;
-@property (nonatomic) NSRect bounds;
+@property (nonatomic, readonly) SBTabViewItem *selectedTabViewItem;
 
-- (id)initWithFrame:(NSRect)frame;
-- (SBTabViewItem *)selectedTabViewItem;
+- (instancetype)initWithFrame:(NSRect)frame;
 - (SBTabViewItem *)tabViewItemWithIdentifier:(NSNumber *)identifier;
 // Actions
 - (SBTabViewItem *)addItemWithIdentifier:(NSNumber *)identifier;

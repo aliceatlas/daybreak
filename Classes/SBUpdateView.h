@@ -40,29 +40,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *doneButton;
 	NSString *versionString;
 }
-@property (nonatomic, weak) NSString *title;
-@property (nonatomic, weak) NSString *text;
+@property (nonatomic) NSString *title;
+@property (nonatomic) NSString *text;
 @property (nonatomic, strong) NSString *versionString;
 @property (nonatomic, strong) WebView *webView;
+@property (nonatomic, readonly) NSRect imageRect;
+@property (nonatomic, readonly) NSRect titleRect;
+@property (nonatomic, readonly) NSRect textRect;
+@property (nonatomic, readonly) NSRect webRect;
+@property (nonatomic, readonly) NSRect indicatorRect;
+@property (nonatomic, readonly) NSRect skipButtonRect;
+@property (nonatomic, readonly) NSRect cancelButtonRect;
+@property (nonatomic, readonly) NSRect doneButtonRect;
 
-// Rect
-- (NSRect)imageRect;
-- (NSRect)titleRect;
-- (NSRect)textRect;
-- (NSRect)webRect;
-- (NSRect)indicatorRect;
-- (NSRect)skipButtonRect;
-- (NSRect)cancelButtonRect;
-- (NSRect)doneButtonRect;
 // Construct
 - (void)constructImageView;
 - (void)constructTitleLabel;
 - (void)constructTextLabel;
 - (void)constructWebView;
 - (void)constructButtons;
-// Setter
-- (void)setTitle:(NSString *)title;
-- (void)setText:(NSString *)text;
 // Actions
 - (void)loadRequest:(NSURL *)url;
 

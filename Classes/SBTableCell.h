@@ -24,10 +24,10 @@
 
 #import "SBDefinitions.h"
 
-typedef enum {
+typedef NS_ENUM(NSInteger, SBTableCellStyle) {
 	SBTableCellGrayStyle = 0, 
 	SBTableCellWhiteStyle = 1
-}SBTableCellStyle;
+};
 
 @interface SBTableCell : NSCell
 {
@@ -39,9 +39,9 @@ typedef enum {
 @property (nonatomic) SBTableCellStyle style;
 @property (nonatomic) BOOL showRoundedPath;
 @property (nonatomic) BOOL showSelection;
-@property NSLineBreakMode lineBreakMode;
+@property (nonatomic) NSLineBreakMode lineBreakMode;
+@property (nonatomic, readonly) CGFloat side;
 
-- (CGFloat)side;
 - (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 
 @end

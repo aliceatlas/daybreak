@@ -47,24 +47,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (nonatomic, weak) NSString *title;
 @property (nonatomic, weak) NSString *urlString;
 @property (nonatomic) NSInteger fillMode;
+@property (nonatomic, readonly) NSDictionary *itemRepresentation;
+@property (nonatomic, readonly) NSPoint margin;
+@property (nonatomic, readonly) CGFloat labelWidth;
+@property (nonatomic, readonly) NSSize buttonSize;
+@property (nonatomic, readonly) CGFloat buttonMargin;
+@property (nonatomic, readonly) NSRect imageRect;
+@property (nonatomic, readonly) NSRect messageLabelRect;
+@property (nonatomic, readonly) NSRect titleLabelRect;
+@property (nonatomic, readonly) NSRect urlLabelRect;
+@property (nonatomic, readonly) NSRect colorLabelRect;
+@property (nonatomic, readonly) NSRect titleFieldRect;
+@property (nonatomic, readonly) NSRect urlFieldRect;
+@property (nonatomic, readonly) NSRect colorPopupRect;
+@property (nonatomic, readonly) NSRect doneButtonRect;
+@property (nonatomic, readonly) NSRect cancelButtonRect;
 
-// Getter
-- (NSDictionary *)itemRepresentation;
-// Rects
-- (NSPoint)margin;
-- (CGFloat)labelWidth;
-- (NSSize)buttonSize;
-- (CGFloat)buttonMargin;
-- (NSRect)imageRect;
-- (NSRect)messageLabelRect;
-- (NSRect)titleLabelRect;
-- (NSRect)urlLabelRect;
-- (NSRect)colorLabelRect;
-- (NSRect)titleFieldRect;
-- (NSRect)urlFieldRect;
-- (NSRect)colorPopupRect;
-- (NSRect)doneButtonRect;
-- (NSRect)cancelButtonRect;
 // Destruction
 - (void)destructMessageLabel;
 // Construction
@@ -78,11 +76,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructDoneButton;
 - (void)constructCancelButton;
 - (void)makeResponderChain;
-// Setter
-- (void)setImage:(NSImage *)inImage;
-- (void)setMessage:(NSString *)message;
-- (void)setTitle:(NSString *)title;
-- (void)setUrlString:(NSString *)urlString;
 //  Actions
 - (void)makeFirstResponderToTitleField;
 
