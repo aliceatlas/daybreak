@@ -71,7 +71,7 @@ extension String {
     
     var URLEncodedString: String {
         let requestURL = NSURL._web_URLWithUserTypedString(self)
-        return requestURL.absoluteString
+        return requestURL.absoluteString!
     }
 
     var searchURLString: String {
