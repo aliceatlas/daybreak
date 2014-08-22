@@ -30,13 +30,12 @@ import Cocoa
 
 class SBDrawer: SBView {
     lazy var scrollView: SBBLKGUIScrollView = {
-        var scrollView = SBBLKGUIScrollView(frame: self.availableRect)
+        let scrollView = SBBLKGUIScrollView(frame: self.availableRect)
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView.autohidesScrollers = true
         scrollView.hasHorizontalScroller = false
         scrollView.hasVerticalScroller = true
-        let (red, green, blue, alpha) = SBBackgroundColors
-        scrollView.backgroundColor = NSColor(calibratedRed: red, green: green, blue: blue, alpha: alpha)
+        scrollView.backgroundColor = SBBackgroundColor
         scrollView.drawsBackground = true
         self.addSubview(scrollView)
         return scrollView
@@ -71,8 +70,7 @@ class SBDrawer: SBView {
         let ctx = SBCurrentGraphicsPort
         
         // Background
-        let (red, green, blue, alpha) = SBWindowBackColors
-        NSColor(calibratedRed: red, green: green, blue: blue, alpha: alpha).set()
+        SBWindowBackColor.set()
         NSRectFill(rect)
         
         // Bottom

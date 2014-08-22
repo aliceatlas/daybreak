@@ -32,12 +32,6 @@ let DebugLogS = NSLog
 func DebugLogS(format: String, args: AnyObject...) {}
 #endif
 
-let SBUserAgentNames = [
-    "Sunrise",
-    "Safari",
-    "Other"
-]
-
 let SBDownloadsDidAddItemNotification = "SBDownloadsDidAddItemNotification"
 let SBDownloadsWillRemoveItemNotification = "SBDownloadsWillRemoveItemNotification"
 let SBDownloadsDidUpdateItemNotification = "SBDownloadsDidUpdateItemNotification"
@@ -232,14 +226,14 @@ NSString *kSBUpdaterErrorDescription = @"ErrorDescription";
 // Pasteboard type
 NSString *SBTabbarItemPboardType = @"SBTabbarItemPboardType";
 NSString *SBSafariBookmarkDictionaryListPboardType = @"BookmarkDictionaryListPboardType";
+*/
 
 // Window
-CGFloat SBWindowBackColors[4] = {0.2, 0.22, 0.24, 1.0};
+let SBWindowBackColor = NSColor(calibratedRed: 0.2, green: 0.22, blue: 0.24, alpha: 1.0)
 
 // Bookmark color names
-CGFloat SBBackgroundColors[4] = {0.2, 0.22, 0.24, 1.0};
-CGFloat SBBackgroundLightGrayColors[4] = {0.86, 0.87, 0.88, 1.0};
-*/
+let SBBackgroundColor = NSColor(calibratedRed: 0.2, green: 0.22, blue: 0.24, alpha: 1.0)
+let SBBackgroundLightGrayColor = NSColor(calibratedRed: 0.86, green: 0.87, blue: 0.88, alpha: 1.0)
 let SBBookmarkLabelColorNames = [
     "None",
     "Red",
@@ -270,23 +264,22 @@ CGFloat SBBookmarkLabelColorRGBA[] = {
 // Bottombar
 var SBBottombarColors: [CGFloat] = [0.17, 0.19, 0.22, 1.0, 0.27, 0.3, 0.33, 1.0]
 
-/*
 // WebResourcesView
-CGFloat SBTableCellColors[4] = {0.29, 0.31, 0.33, 1.0};
-CGFloat SBTableGrayCellColors[4] = {0.64, 0.67, 0.7, 1.0};
-CGFloat SBTableLightGrayCellColors[4] = {0.86, 0.87, 0.88, 1.0};
-CGFloat SBTableDarkGrayCellColors[4] = {0.48, 0.5, 0.52, 1.0};
-CGFloat SBSidebarSelectedCellColors[4] = {0.49, 0.51, 0.53, 1.0};
-CGFloat SBSidebarTextColors[4] = {0.66, 0.67, 0.68, 1.0};
+let SBTableCellColor = NSColor(calibratedRed: 0.29, green: 0.31, blue: 0.33, alpha: 1.0)
+let SBTableGrayCellColor = NSColor(calibratedRed: 0.64, green: 0.67, blue: 0.7, alpha: 1.0)
+let SBTableLightGrayCellColor = NSColor(calibratedRed: 0.86, green: 0.87, blue: 0.88, alpha: 1.0)
+let SBTableDarkGrayCellColor = NSColor(calibratedRed: 0.48, green: 0.5, blue: 0.52, alpha: 1.0)
+let SBSidebarSelectedCellColor = NSColor(calibratedRed: 0.49, green: 0.51, blue: 0.53, alpha: 1.0)
+let SBSidebarTextColor = NSColor(calibratedRed: 0.66, green: 0.67, blue: 0.68, alpha: 1.0)
 
 // User agent names
-NSInteger SBCountOfUserAgentNames = 3;
-NSString *SBUserAgentNames[] = {
-@"Sunrise", 
-@"Safari", 
-@"Other"
-};
+let SBUserAgentNames = [
+    "Sunrise",
+    "Safari",
+    "Other"
+]
 
+/*
 // Web schemes
 NSInteger SBCountOfSchemes = 3;
 NSString *SBSchemes[] = {

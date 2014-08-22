@@ -59,7 +59,7 @@ class SBUpdater: NSObject {
         if data != nil && appVersionString != nil {
             // Success for networking
             // Parse data
-            let string = NSString(data: data, encoding: NSUTF8StringEncoding)
+            let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
             if string.length > 0 {
                 let range0 = string.rangeOfString("version=\"")
                 if range0.location != NSNotFound {

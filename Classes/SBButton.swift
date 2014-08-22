@@ -120,7 +120,7 @@ class SBButton: SBView, NSCoding {
         //}
         coder.encodeObject(String(_sel: action), forKey:"action")
         if keyEquivalent != nil {
-            coder.encodeObject(keyEquivalent, forKey:"keyEquivalent")
+            coder.encodeObject(keyEquivalent!, forKey:"keyEquivalent")
         }
         coder.encodeBool(enabled, forKey: "enabled")
         coder.encodeInteger(keyEquivalentModifierMask, forKey: "keyEquivalentModifierMask")

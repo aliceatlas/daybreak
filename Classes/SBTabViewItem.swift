@@ -45,7 +45,6 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         splitView.delegate = self
         splitView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         self.view = view
-        view.addSubview(splitView)
         return splitView
     }()
     var sourceView: SBDrawer?
@@ -101,10 +100,11 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     var mainFrameURLString: String? { return webView.mainFrameURL? }
     var pageTitle: String? { return webView.mainFrame.dataSource?.pageTitle? }
     var requestURLString: String? { return webView.mainFrame?.dataSource?.request.URL.absoluteString }
-    var documentSource: String? { return webView.mainFrame?.dataSource?.representation?.documentSource()? }
+    var documentSource: String? { return webView.mainFrame?.dataSource?.representation?.documentSource() }
     
     override init(identifier: AnyObject) {
         super.init(identifier: identifier)
+        view.addSubview(splitView)
     }
     
     deinit {
@@ -186,8 +186,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                     scrollView.autohidesScrollers = true
                     scrollView.hasHorizontalScroller = false
                     scrollView.hasVerticalScroller = true
-                    let (red, green, blue, alpha) = SBBackgroundColors
-                    scrollView.backgroundColor = NSColor(calibratedRed: red, green: green, blue: blue, alpha: alpha)
+                    scrollView.backgroundColor = SBBackgroundColor
                     scrollView.drawsBackground = true
         #if true
                     horizontalScroller?.drawsBackground = true
@@ -205,7 +204,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                     sourceTextView!.autoresizingMask = .ViewWidthSizable
                     sourceTextView!.textContainer.containerSize = NSMakeSize(r.size.width, CGFloat(FLT_MAX))
                     sourceTextView!.textContainer.widthTracksTextView = true
-                    sourceTextView!.string = self.documentSource ?? ""
+                    sourceTextView!.string = (self.documentSource ?? "")!
                     sourceTextView!.selectedRange = NSMakeRange(0, 0)
                     scrollView.documentView = sourceTextView
                     openButton.autoresizingMask = .ViewMinXMargin
@@ -362,15 +361,12 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
             if version != nil {
                 version = (version! as NSString).stringByDeletingSpaces()
             }
-            var safariVersion = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString
-            safariVersion = safariVersion?.substringFromIndex(1) ?? "0"
-            if let applicationName = applicationName {
-                webView.applicationNameForUserAgent = applicationName
-                if let version = version {
-                    webView.applicationNameForUserAgent = "\(webView.applicationNameForUserAgent)/\(version)"
-                    if let safariVersion = safariVersion {
-                        webView.applicationNameForUserAgent = "\(webView.applicationNameForUserAgent) Safari/\(safariVersion)"
-                    }
+            var safariVersion = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString as? String
+            safariVersion = (safariVersion != nil) ? suffix(safariVersion!, safariVersion!.utf16Count - 1) : "0"
+            if applicationName != nil {
+                webView.applicationNameForUserAgent = applicationName!
+                if version != nil {
+                    webView.applicationNameForUserAgent = "\(webView.applicationNameForUserAgent)/\(version!) Safari/\(safariVersion!)"
                 }
                 webView.customUserAgent = nil
             }
@@ -380,8 +376,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
             let infoDictionary = bundle.infoDictionary
             var version: String? = infoDictionary["CFBundleShortVersionString"] as? NSString
             version = version ?? infoDictionary["CFBundleVersion"] as? NSString
-            var safariVersion = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString
-            safariVersion = safariVersion?.substringFromIndex(1) ?? "0"
+            var safariVersion = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString as? String
+            safariVersion = (safariVersion != nil) ? suffix(safariVersion!, safariVersion!.utf16Count - 1) : "0"
             if version != nil && safariVersion != nil {
                 webView.applicationNameForUserAgent = "Version/\(version!) \(applicationName)/\(safariVersion!)"
                 webView.customUserAgent = nil
@@ -597,14 +593,14 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                         alert.messageText = aTitle
                         alert.addButtonWithTitle(NSLocalizedString("Continue", comment: ""))
                         alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: ""))
-                        alert.informativeText = NSString(format: NSLocalizedString("The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", comment: ""), url.host)
+                        alert.informativeText = NSString(format: NSLocalizedString("The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", comment: ""), url.host!)
                         alert.beginSheetModalForWindow(sender.window) {
                             if $0 == NSOKButton {
                                 NSURLRequest.setAllowsAnyHTTPSCertificate(true, forHost: url.host)
                                 frame.loadRequest(NSURLRequest(URL: url, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval))
                                 self.webView(self.webView, didStartProvisionalLoadForFrame: frame)
                             } else {
-                                self.showErrorPageWithTitle(aTitle, urlString: url.absoluteString, frame: frame)
+                                self.showErrorPageWithTitle(aTitle, urlString: url.absoluteString!, frame: frame)
                             }
                         }
                     case NSURLErrorServerCertificateHasUnknownRoot:
@@ -689,7 +685,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         if let resourceID = identifier as? SBWebResourceIdentifier {
             if let response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceID.request) {
                 // Loaded from cache
-                let length = response.data?.length ?? 0
+                let length = response.data.length
                 if length > 0 {
                     resourceID.length = CLongLong(length)
                     resourceID.received = CLongLong(length)
@@ -880,23 +876,23 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         switch navigationType {
             case .LinkClicked:
                 if url.hasWebScheme { // 'http', 'https', 'file'
-                    if modifierFlags & .CommandKeyMask { // Command
+                    if modifierFlags & .CommandKeyMask != nil { // Command
                         var selection = true
                         let makeActiveFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBWhenNewTabOpensMakeActiveFlag)
                         // Make it active flag and Shift key mask
                         if makeActiveFlag {
-                            if modifierFlags & .ShiftKeyMask {
+                            if modifierFlags & .ShiftKeyMask != nil {
                                 selection = false
                             }
                         } else {
-                            if modifierFlags & .ShiftKeyMask {
+                            if modifierFlags & .ShiftKeyMask != nil {
                             } else {
                                 selection = false
                             }
                         }
                         sbTabView.executeShouldAddNewItemForURL(url, selection: selection)
                         listener.ignore()
-                    } else if modifierFlags & .AlternateKeyMask { // Option
+                    } else if modifierFlags & .AlternateKeyMask != nil { // Option
                         listener.download()
                     } else {
                         listener.use()
@@ -922,7 +918,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     }
     
     override func webView(webView: WebView, unableToImplementPolicyWithError error: NSError, frame: WebFrame) {
-        if let string: String = error.userInfo["NSErrorFailingURLStringKey"] as? NSString {
+        if let string: String = error.userInfo?["NSErrorFailingURLStringKey"] as? NSString {
             let url = NSURL(string: string)
             if url.hasWebScheme { // 'http', 'https', 'file'
                 // Error
@@ -978,7 +974,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
             if !(documentSource! as NSString).writeToFile(filePath, atomically: true, encoding: encoding, error: &error) {
                 SBRunAlertWithMessage(error!.localizedDescription)
             } else {
-                let appPath = openPanel.URL.path
+                let appPath = openPanel.URL.path!
                 if !NSWorkspace.sharedWorkspace().openFile(filePath, withApplication: appPath) {
                     SBRunAlertWithMessage(NSString(format: NSLocalizedString("Could not open in %@.", comment: ""), appPath))
                 }
@@ -996,7 +992,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         savePanel.nameFieldStringValue = name
         if savePanel.runModal() == NSFileHandlingPanelOKButton {
             var error: NSError?
-            if !(documentSource! as NSString).writeToFile(savePanel.URL.path, atomically: true, encoding: encoding, error: &error) {
+            if !(documentSource! as NSString).writeToFile(savePanel.URL.path!, atomically: true, encoding: encoding, error: &error) {
                 SBRunAlertWithMessage(error!.localizedDescription)
             }
         }
@@ -1014,7 +1010,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         let searchMessage = NSLocalizedString("You can search the web for this URL.", comment: "")
         var message = NSString(format: NSLocalizedString("Sunrise can’t open the page “%@”", comment: ""), urlString)
         message = "\(message)<br /><br />\(searchMessage)<br /><a href=\"\(searchURLString)\">\(urlString)</a>"
-        let path = bundle.pathForResource("Error", ofType: "html")
+        let path = bundle.pathForResource("Error", ofType: "html")!
         if NSFileManager.defaultManager().fileExistsAtPath(path) {
             var htmlString = NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)
             htmlString = NSString(format: htmlString, title, message)
@@ -1094,7 +1090,6 @@ class SBTabSplitView: NSSplitView {
         return invisibleDivider ? 0.0 : 5.0
     }
     override var dividerColor: NSColor {
-        let (red, green, blue, alpha) = SBWindowBackColors
-        return NSColor(calibratedRed: red, green: green, blue: blue, alpha: alpha)
+        return SBWindowBackColor
     }
 }

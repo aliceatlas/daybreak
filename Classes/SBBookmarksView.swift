@@ -85,7 +85,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         scrollView!.autohidesScrollers = true
         scrollView!.hasHorizontalScroller = false
         scrollView!.hasVerticalScroller = true
-        scrollView!.backgroundColor = NSColor(calibratedRed: SBBackgroundColors.0, green: SBBackgroundColors.1, blue: SBBackgroundColors.2, alpha: SBBackgroundColors.3)
+        scrollView!.backgroundColor = SBBackgroundColor
         scrollView!.drawsBackground = true
         listView!.wrapperView = self
         listView!.cellWidth = CGFloat(NSUserDefaults.standardUserDefaults().integerForKey(kSBBookmarkCellWidth as NSString) as Int)

@@ -133,8 +133,8 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     func download(download: NSURLDownload, decideDestinationWithSuggestedFilename filename: String) {
         if let item = items.first({ $0.download === download }) {
             item.path = SBPreferences.objectForKey(kSBSaveDownloadedFilesTo) as String
-            if NSFileManager.defaultManager().fileExistsAtPath(item.path) {
-                item.path = item.path?.stringByAppendingPathComponent(filename)
+            if NSFileManager.defaultManager().fileExistsAtPath(item.path!) {
+                item.path = item.path!.stringByAppendingPathComponent(filename)
                 item.download?.setDestination(item.path, allowOverwrite: false)
                 // Update views
                 self.executeDidUpdateItem(item)

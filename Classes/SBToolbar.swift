@@ -55,8 +55,8 @@ class SBToolbar: NSToolbar {
                     break
                 }
             }
-            if item.view {
-                r = item.view.frame
+            if item.view != nil {
+                r = item.view!.frame
                 r.origin.x += delta.x
                 r.origin.y += delta.y
             }

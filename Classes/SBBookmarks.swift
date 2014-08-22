@@ -46,14 +46,11 @@ class SBBookmarks: NSObject {
     // Getter
     
     func containsURL(urlString: String) -> Bool {
-        return self.indexOfURL(urlString) != NSNotFound
+        return indexOfURL(urlString) != NSNotFound
     }
     
-    func indexOfURL(urlString: String) -> UInt {
-        if let index = items.firstIndex({ $0[kSBBookmarkURL] as NSString == urlString }) {
-            return UInt(index)
-        }
-        return NSNotFound
+    func indexOfURL(urlString: String) -> Int {
+        return items.firstIndex({ $0[kSBBookmarkURL] as NSString == urlString }) ?? NSNotFound
     }
     
     func isEqualBookmarkItems(item1: BookmarkItem, anotherItem item2: BookmarkItem) -> Bool {
@@ -71,16 +68,16 @@ class SBBookmarks: NSObject {
         return nil
     }
     
-    func containsItem(bookmarkItem: BookmarkItem) -> UInt {
+    func containsItem(bookmarkItem: BookmarkItem) -> Int {
         if let i = items.firstIndex({ self.isEqualBookmarkItems($0, anotherItem: bookmarkItem) }) {
-            return UInt(i)
+            return Int(i)
         }
         return NSNotFound
     }
     
-    func indexOfItem(bookmarkItem: BookmarkItem) -> UInt {
+    func indexOfItem(bookmarkItem: BookmarkItem) -> Int {
         if let i = items.firstIndex({ $0 === bookmarkItem }) {
-            return UInt(i)
+            return Int(i)
         }
         return NSNotFound
     }
@@ -88,7 +85,7 @@ class SBBookmarks: NSObject {
     func indexesOfItems(bookmarkItems: [BookmarkItem]) -> NSIndexSet {
         let indexes = NSMutableIndexSet()
         for bookmarkItem in bookmarkItems {
-            let index = self.indexOfItem(bookmarkItem)
+            let index = indexOfItem(bookmarkItem)
             if index != NSNotFound {
                 indexes.addIndex(Int(index))
             }
@@ -152,15 +149,15 @@ class SBBookmarks: NSObject {
             } else {
                 items[Int(index)] = dict
             }
-            self.writeToFile()
-            SBDispatch(self.notifyDidUpdate)
+            writeToFile()
+            SBDispatch(notifyDidUpdate)
         }
     }
     
     func replaceItem(item: BookmarkItem, atIndex index: UInt) {
         items[Int(index)] = NSMutableDictionary(dictionary: item)
         self.writeToFile()
-        SBDispatch(self.notifyDidUpdate)
+        SBDispatch(notifyDidUpdate)
     }
     
     func replaceItem(oldItem: BookmarkItem, withItem newItem: BookmarkItem) {
@@ -168,7 +165,7 @@ class SBBookmarks: NSObject {
         if index != NSNotFound {
             items[Int(index)] = NSMutableDictionary(dictionary: newItem)
             self.writeToFile()
-            SBDispatch(self.notifyDidUpdate)
+            SBDispatch(notifyDidUpdate)
         }
     }
     
@@ -179,7 +176,7 @@ class SBBookmarks: NSObject {
                 items.insert(NSMutableDictionary(dictionary: item), atIndex: i + Int(toIndex))
             }
             self.writeToFile()
-            SBDispatch(self.notifyDidUpdate)
+            SBDispatch(notifyDidUpdate)
         }
     }
     

@@ -89,11 +89,11 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         if let document = SBGetSelectedDocument() {
             for filename in filenames {
                 var error: NSError?
-                let url = NSURL.fileURLWithPath(filename) as NSURL
+                let url = NSURL.fileURLWithPath(filename)!
                 if let type = documentController.typeForContentsOfURL(url, error: &error) {
                     if type == kSBStringsDocumentTypeName {
                         let path = NSBundle.mainBundle().pathForResource("Localizable", ofType:"strings")
-                        self.openStrings(path: path, anotherPath:url.path)
+                        self.openStrings(path: path!, anotherPath:url.path!)
                     } else if type == kSBDocumentTypeName {
                         document.constructNewTabWithURL(url, selection: (index == filenames.count - 1))
                         index++
@@ -145,7 +145,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // Apple Events
     
     func openURL(event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
-        if let URLString = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject)).stringValue {
+        if let URLString = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
             if let method = NSUserDefaults.standardUserDefaults().objectForKey(kSBOpenURLFromApplications) as? NSString {
                 switch method {
                     case "in a new window":
@@ -173,12 +173,12 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     // Notifications
     
-    func updaterShouldUpdate(aNotification: NSNotification) {
-        self.update(aNotification.userInfo[kSBUpdaterVersionString as NSString] as NSString)
+    func updaterShouldUpdate(notification: NSNotification) {
+        self.update(notification.userInfo![kSBUpdaterVersionString as NSString] as NSString)
     }
     
-    func updaterNotNeedUpdate(aNotification: NSNotification) {
-        let versionString = aNotification.userInfo[kSBUpdaterVersionString as NSString] as NSString
+    func updaterNotNeedUpdate(notification: NSNotification) {
+        let versionString = notification.userInfo![kSBUpdaterVersionString as NSString] as NSString
         let title = NSString(format: NSLocalizedString("Sunrise %@ is currently the newest version available.", comment: ""), versionString)
         let alert = NSAlert()
         alert.messageText = title
@@ -186,8 +186,8 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         alert.runModal()
     }
     
-    func updaterDidFailChecking(aNotification: NSNotification) {
-        let errorDescription = aNotification.userInfo[kSBUpdaterErrorDescription as NSString] as NSString
+    func updaterDidFailChecking(notification: NSNotification) {
+        let errorDescription = notification.userInfo![kSBUpdaterErrorDescription as NSString] as NSString
         let alert = NSAlert()
         alert.messageText = errorDescription
         alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
@@ -288,7 +288,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let title = NSLocalizedString("Sunrise Feedback", comment: "")
         if kSBFeedbackMailAddress.length > 0 {
             var urlString: NSString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
-            urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+            urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
             NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString))
         }
     }
@@ -371,7 +371,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func plugins(sender: AnyObject) {
         if let path = SBFilePathInApplicationBundle("Plug-ins", "html") {
             if let document = SBGetSelectedDocument() {
-                document.constructNewTabWithURL(NSURL.fileURLWithPath(path) as NSURL, selection: true)
+                document.constructNewTabWithURL(NSURL.fileURLWithPath(path), selection: true)
             }
         }
     }

@@ -42,16 +42,11 @@ class SBHistory: NSObject {
     }
     
     func URL() -> NSURL {
-        return NSURL.fileURLWithPath(SBHistoryFilePath())
+        return NSURL.fileURLWithPath(SBHistoryFilePath())!
     }
     
     var items: [WebHistoryItem] {
-        var _items: [WebHistoryItem] = []
-        for date in history.orderedLastVisitedDays {
-            let orderedItems = history.orderedItemsLastVisitedOnDay(date as NSCalendarDate) as [WebHistoryItem]
-            _items += orderedItems
-        }
-        return _items
+        return history.orderedLastVisitedDays.map({self.history.orderedItemsLastVisitedOnDay($0 as NSCalendarDate) as [WebHistoryItem]}).reduce([], +)
     }
     
     func itemsAtIndexes(indexes: NSIndexSet) -> [WebHistoryItem] {
