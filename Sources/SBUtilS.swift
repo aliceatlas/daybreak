@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-func SBGetLocalizableTextSetS(path: String) -> (NSMutableArray?, NSArray?, NSSize?) {
+func SBGetLocalizableTextSetS(path: String) -> (([[String]])?, ([[NSTextField]])?, NSSize?) {
     let localizableString = NSString.stringWithContentsOfFile(path, encoding: NSUTF16StringEncoding, error: nil)
     if localizableString.length > 0 {
         let fieldSize = NSSize(width: 300, height: 22)
@@ -79,7 +79,7 @@ func SBGetLocalizableTextSetS(path: String) -> (NSMutableArray?, NSArray?, NSSiz
                     fieldSet.append(fields)
                 }
             }
-            return (NSMutableArray(array: textSet), fieldSet, size)
+            return (textSet, fieldSet, size)
         }
     }
     return (nil, nil, nil)

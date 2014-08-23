@@ -1264,6 +1264,7 @@
 				INFOPLIST_FILE = Resources/plists/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-D __debug__";
 				SDKROOT = macosx;
 			};
 			name = Debug;

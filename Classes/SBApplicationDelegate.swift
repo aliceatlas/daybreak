@@ -33,14 +33,6 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     var preferencesWindowController: SBPreferencesWindowController?
     var updateView: SBUpdateView?
     
-    #if __debug__
-    // Debug
-    func constructDebugMenu()
-    func writeViewStructure(sender: AnyObject)
-    func writeMainMenu(sender: AnyObject)
-    func validateStrings(sender: AnyObject)
-    #endif
-
     deinit {
         self.destructUpdateView()
         self.destructLocalizeWindowController()
@@ -260,11 +252,11 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func openStrings(#path: String, anotherPath: String? = nil) {
         let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSetS(path)
-        if textSet != nil && textSet!.count > 0 {
+        if textSet != nil && !(textSet!.isEmpty) {
             self.destructLocalizeWindowController()
             localizationWindowController = SBLocalizationWindowController(viewSize: viewSize!)
             localizationWindowController!.fieldSet = fieldSet!
-            localizationWindowController!.textSet = textSet!
+            localizationWindowController!.textSet = NSMutableArray(array: textSet!)
             if anotherPath != nil {
                 localizationWindowController!.mergeFilePath(anotherPath)
             }
@@ -405,37 +397,42 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
             debugMenu.addItem(item)
         }
         debugMenuItem.submenu = debugMenu
-        mainMenu.addItem(debugMenuItem)
+        mainMenu!.addItem(debugMenuItem)
     }
     
     func writeViewStructure(AnyObject) {
         let document = SBGetSelectedDocument()
         if let view = document.window.contentView {
-            let panel = NSSavePanel.savePanel()
-            if panel.runModalForDirectory(nil, file: "ViewStructure.plist") == NSFileHandlingPanelOKButton {
-                SBDebugWriteViewStructure(view, panel.filename)
+            let panel = NSSavePanel()
+            panel.nameFieldStringValue = "ViewStructure.plist"
+            if panel.runModal() == NSFileHandlingPanelOKButton {
+                SBDebugWriteViewStructure(view, panel.URL.path!)
             }
         }
     }
     
     func writeMainMenu(AnyObject) {
-        let panel = NSSavePanel.savePanel()
-        if panel.runModalForDirectory(nil, file: "Menu.plist") == NSFileHandlingPanelOKButton {
-            SBDebugWriteMainMenu(panel.filename)
+        let panel = NSSavePanel()
+        panel.nameFieldStringValue = "Menu.plist"
+        if panel.runModal() == NSFileHandlingPanelOKButton {
+            SBDebugWriteMainMenu(panel.URL.path!)
         }
     }
     
     func validateStrings(AnyObject) {
         let panel = SBOpenPanel.sbOpenPanel()
-        let path = NSBundle.mainBundle().resourcePath
-        if panel.runModalForDirectory(path, file:nil, types:["strings"]) {
-            let (tset: [[String]], _, _) = SBGetLocalizableTextSetS(panel.filename)
-            for (index, texts) in enumerate(tset) {
-                let text0 = texts[0]
-                for (i, ts) in enumerate(tset) {
-                    let t0 = ts[0]
-                    if text0 == t0 && index != i {
-                        NSLog("Same keys \(i): \(t0)")
+        panel.allowedFileTypes = ["strings"]
+        panel.directoryURL = NSBundle.mainBundle().resourceURL
+        if panel.runModal() == NSFileHandlingPanelOKButton {
+            let (textSet, _, _) = SBGetLocalizableTextSetS(panel.URL.path!)
+            if textSet != nil {
+                for (index, texts) in enumerate(textSet!) {
+                    let text0 = texts[0]
+                    for (i, ts) in enumerate(textSet!) {
+                        let t0 = ts[0]
+                        if text0 == t0 && index != i {
+                            NSLog("Same keys \(i): \(t0)")
+                        }
                     }
                 }
             }
