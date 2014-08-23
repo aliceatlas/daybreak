@@ -39,12 +39,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         }
     }
     lazy var splitView: SBTabSplitView = {
-        let r = self.tabView.bounds
-        let view = NSView(frame: r)
-        let splitView = SBTabSplitView(frame: r)
+        let splitView = SBTabSplitView(frame: NSZeroRect)
         splitView.delegate = self
         splitView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-        self.view = view
         return splitView
     }()
     var sourceView: SBDrawer?
@@ -104,6 +101,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     
     override init(identifier: AnyObject) {
         super.init(identifier: identifier)
+        view = NSView(frame: NSZeroRect)
         view.addSubview(splitView)
     }
     
@@ -122,7 +120,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         for childFrame in frame.childFrames as [WebFrame] {
             frames.append(childFrame)
             if !childFrame.childFrames.isEmpty {
-                frames.extend(webFramesInFrame(childFrame))
+                frames += webFramesInFrame(childFrame)
             }
         }
         return frames
