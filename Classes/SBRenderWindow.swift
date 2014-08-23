@@ -85,7 +85,7 @@ class SBRenderWindow: NSWindow {
         }
     }
     
-    // Delegate
+    // MARK: Delegate
     
     override func webView(sender: WebView, didStartProvisionalLoadForFrame frame: WebFrame) {
         if let delegate = self.delegate as? SBRenderWindowDelegate {

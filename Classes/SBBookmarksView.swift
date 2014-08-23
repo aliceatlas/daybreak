@@ -53,7 +53,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         listView!.layoutItemViews()
     }*/
     
-    // Delegate
+    // MARK: Delegate
     
     func bookmarkListViewShouldOpenSearchbar(bookmarkListView: SBBookmarkListView) {
         if self.bounds.size.width >= SBSearchbar.availableWidth() {
@@ -67,14 +67,14 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         return self.setShowSearchbar(false)
     }
     
-    // Destruction
+    // MARK: Destruction
     
     func destructListView() {
         listView?.removeFromSuperview()
         listView = nil
     }
     
-    // Construction
+    // MARK: Construction
     
     func constructListView(inMode: SBBookmarkMode) {
         let r = self.bounds
@@ -97,7 +97,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         listView!.delegate = self
     }
     
-    // Getter
+    // MARK: Getter
     
     var cellWidth: CGFloat {
         get { return listView!.cellWidth }
@@ -151,7 +151,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         self.setShowSearchbar(false)
     }
     
-    // Execute
+    // MARK: Execute
     
     func executeDidChangeMode() {
         delegate?.bookmarksView?(self, didChangeMode: listView!.mode)
@@ -165,7 +165,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         delegate?.bookmarksView?(self, didChangeCellWidth: listView!.cellWidth)
     }
     
-    // Actions
+    // MARK: Actions
     
     func addForBookmarkItem(item: NSDictionary) {
         listView?.addForItem(item)
@@ -184,7 +184,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         listView!.updateItems()
     }
     
-    // Drawing
+    // MARK: Drawing
     
    override func drawRect(rect: NSRect) {
         let ctx = SBCurrentGraphicsPort

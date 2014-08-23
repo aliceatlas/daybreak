@@ -61,7 +61,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         fatalError("NSCoding not supported")
     }
     
-    // Rects
+    // MARK: Rects
 
     let margin = NSMakePoint(36.0, 32.0)
     let labelWidth = 85.0
@@ -99,7 +99,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         return NSRect(origin: origin, size: size)
     }
     
-    // Construction
+    // MARK: Construction
     
     func constructMessageLabel(inMessage: String) {
         let r = messageLabelRect
@@ -151,13 +151,13 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         self.addSubview(cancelButton!)
     }
     
-    // Delegate
+    // MARK: Delegate
     
     override func controlTextDidChange(_: NSNotification) {
         doneButton?.enabled = textLabel.stringValue.utf16Count > 0
     }
     
-    // Setter
+    // MARK: Setter
     
     override var doneSelector: Selector {
         didSet {

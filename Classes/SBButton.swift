@@ -79,7 +79,7 @@ class SBButton: SBView, NSCoding {
         super.init(frame: frame)
     }
 
-    // NSCoding Protocol
+    // MARK: NSCoding Protocol
     
     required init(coder decoder: NSCoder) {
         super.init(coder: decoder)
@@ -126,7 +126,7 @@ class SBButton: SBView, NSCoding {
         coder.encodeInteger(keyEquivalentModifierMask, forKey: "keyEquivalentModifierMask")
     }
     
-    // Exec
+    // MARK: Exec
     
     func executeAction() {
         if let target = self.target as? NSObject {
@@ -139,7 +139,7 @@ class SBButton: SBView, NSCoding {
         }
     }
     
-    // Event
+    // MARK: Event
     
     override func mouseDown(event: NSEvent) {
         if enabled {
@@ -166,7 +166,7 @@ class SBButton: SBView, NSCoding {
         }
     }
     
-    // Drawing
+    // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
         var anImage: NSImage?

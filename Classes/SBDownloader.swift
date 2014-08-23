@@ -42,7 +42,7 @@ class SBDownloader: NSObject {
         return SBDownloader(URL: url)
     }
     
-    // Delegate
+    // MARK: Delegate
     
     func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {
         return nil
@@ -81,7 +81,7 @@ class SBDownloader: NSObject {
         self.destructConnection()
     }
     
-    // Execute
+    // MARK: Execute
     
     func executeDidFinish() {
         delegate?.downloader(self, didFinish: receivedData!.copy() as NSData) // ???(!)
@@ -91,7 +91,7 @@ class SBDownloader: NSObject {
         delegate?.downloader?(self, didFail: error)
     }
     
-    // Actions
+    // MARK: Actions
     
     func destructConnection() {
         connection = nil

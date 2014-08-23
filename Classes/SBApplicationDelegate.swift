@@ -134,7 +134,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         return flag
     }
     
-    // Apple Events
+    // MARK: Apple Events
     
     func openURL(event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
         if let URLString = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
@@ -163,7 +163,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    // Notifications
+    // MARK: Notifications
     
     func updaterShouldUpdate(notification: NSNotification) {
         self.update(notification.userInfo![kSBUpdaterVersionString as NSString] as NSString)
@@ -186,7 +186,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         alert.runModal()
     }
 
-    // Actions
+    // MARK: Actions
     
     func destructUpdateView() {
         if updateView != nil {
@@ -272,9 +272,9 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    // Menu
+    // MARK: Menu
     
-    // Application
+    // MARK: Application
     
     @IBAction func provideFeedback(AnyObject) {
         let title = NSLocalizedString("Sunrise Feedback", comment: "")
@@ -324,7 +324,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    // File
+    // MARK: File
     
     func newDocument(AnyObject) {
         var error: NSError?
@@ -349,7 +349,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    // Help
+    // MARK: Help
     
     func localize(sender: AnyObject) {
         /*if localizationWindowController!.window.isVisible() {
@@ -382,7 +382,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
 
     #if __debug__
-    // Debug
+    // MARK: Debug
     
     func constructDebugMenu() {
         let mainMenu = NSApp.mainMenu

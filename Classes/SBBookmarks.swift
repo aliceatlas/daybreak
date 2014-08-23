@@ -43,7 +43,7 @@ class SBBookmarks: NSObject {
         self.readFromFile()
     }
     
-    // Getter
+    // MARK: Getter
     
     func containsURL(urlString: String) -> Bool {
         return indexOfURL(urlString) != NSNotFound
@@ -93,13 +93,13 @@ class SBBookmarks: NSObject {
         return indexes
     }
     
-    // Notify
+    // MARK: Notify
     
     func notifyDidUpdate() {
         NSNotificationCenter.defaultCenter().postNotificationName(SBBookmarksDidUpdateNotification, object: self)
     }
     
-    // Actions
+    // MARK: Actions
     
     func readFromFile() -> Bool {
         if kSBCountOfDebugBookmarks > 0 {
@@ -229,7 +229,7 @@ class SBBookmarks: NSObject {
         SBDispatch(self.notifyDidUpdate)
     }
     
-    // Exec
+    // MARK: Exec
     
     func openItemsFromMenuItem(menuItem: NSMenuItem) {
         let representedItems = menuItem.representedObject as [BookmarkItem]

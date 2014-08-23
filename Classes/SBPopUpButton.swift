@@ -50,7 +50,7 @@ class SBPopUpButton: NSPopUpButton {
     
     override class func cellClass() -> AnyClass! { return SBPopUpButtonCell.self }
     
-    // Actions
+    // MARK: Actions
     
     func executeAction(sender: AnyObject) {
         if let item = sender as? NSMenuItem {

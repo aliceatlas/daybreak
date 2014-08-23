@@ -81,7 +81,7 @@ class SBLoadButton: SBButton {
         self.addSubview(indicator!)
     }
     
-    // NSCoding Protocol
+    // MARK: NSCoding Protocol
     
     required init(coder decoder: NSCoder) {
         super.init(coder: decoder)
@@ -131,7 +131,7 @@ class SBLoadButton: SBButton {
         return indicator
     }
     
-    // Event
+    // MARK: Event
     
     override func mouseUp(event: NSEvent) {
         if enabled {
@@ -145,7 +145,7 @@ class SBLoadButton: SBButton {
         }
     }
     
-    // Drawing
+    // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
         super.drawRect(self.bounds)

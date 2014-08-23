@@ -51,7 +51,7 @@ class SBSegmentedButton: SBView {
         super.init(frame: frame)
     }
     
-    // NSCoding Protocol
+    // MARK: NSCoding Protocol
     
     required init(coder decoder: NSCoder) {
         super.init(coder: decoder)
@@ -69,7 +69,7 @@ class SBSegmentedButton: SBView {
         }
     }
     
-    // Actions
+    // MARK: Actions
     
     func adjustFrame() {
         self.frame = buttons.map({ $0.frame }).reduce(NSZeroRect, NSUnionRect)

@@ -64,7 +64,7 @@ class SBDrawer: SBView {
         }
     }
     
-    // Drawing
+    // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
         let ctx = SBCurrentGraphicsPort

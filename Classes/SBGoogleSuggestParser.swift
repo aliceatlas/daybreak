@@ -55,7 +55,7 @@ class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
         return parser.parse() ? nil : parser.parserError
     }
     
-    // Delegate
+    // MARK: Delegate
     
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName: String?, attributes: NSDictionary) {
         if elementName == kSBGSToplevelTagName {

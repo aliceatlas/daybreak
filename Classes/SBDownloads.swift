@@ -47,7 +47,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         return items.any { $0.downloading }
     }
     
-    // Actions
+    // MARK: Actions
     
     func addItem(item: SBDownload) {
         items.append(item)
@@ -78,7 +78,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         removeObjects(&items, inItems)
     }
     
-    // Execute
+    // MARK: Execute
     
     func executeDidAddItem(item: SBDownload) {
         let userInfo = [kSBDownloadsItem: item]
@@ -100,7 +100,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         NSNotificationCenter.defaultCenter().postNotificationName(SBDownloadsDidFinishItemNotification, object: self, userInfo: userInfo)
     }
     
-    // NSURLDownload Delegate
+    // MARK: NSURLDownload Delegate
     
     func downloadDidBegin(download: NSURLDownload) {
         var downloadItem = items.first { $0.download === download }
@@ -193,7 +193,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         }
     }
     
-    // Function
+    // MARK: Function
     
     func createdIdentifier() -> Int {
         return _identifier++

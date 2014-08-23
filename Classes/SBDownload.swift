@@ -62,7 +62,7 @@ class SBDownload: NSObject {
         return (status == SBStatus.Done) ? 1.0 : ((expectedLength == 0) ? 0 : Float(receivedLength) / Float(expectedLength))
     }
     
-    // Actions
+    // MARK: Actions
     
     func stop() {
         download?.cancel()
