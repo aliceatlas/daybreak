@@ -62,8 +62,8 @@
     searchField.delegate = self;
     searchField.target = self;
     searchField.action = @selector(executeDoneSelector:);
-    searchField.sendsWholeSearchString = YES;
-    searchField.sendsSearchStringImmediately = NO;
+    [searchField.cell setSendsWholeSearchString:YES];
+    [searchField.cell setSendsSearchStringImmediately:NO];
 	if (string)
         searchField.stringValue = string;
 	[contentView addSubview:searchField];

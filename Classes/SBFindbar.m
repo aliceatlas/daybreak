@@ -240,8 +240,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     searchField.action = @selector(search:);
     searchField.nextAction = @selector(searchForward:);
     searchField.previousAction = @selector(searchBackward:);
-    searchField.sendsWholeSearchString = YES;
-    searchField.sendsSearchStringImmediately = NO;
+    [searchField.cell setSendsWholeSearchString:YES];
+    [searchField.cell setSendsSearchStringImmediately:NO];
 	if (string)
         searchField.stringValue = string;
 	[contentView addSubview:searchField];
