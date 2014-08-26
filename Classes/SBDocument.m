@@ -33,7 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBSnapshotView.h"
 #import "SBTabbar.h"
 #import "SBTabbarItem.h"
-#import "SBTabView.h"
 #import "SBURLField.h"
 #import "SBUtil.h"
 #import "SBWebView.h"
@@ -369,7 +368,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (tabView)
 	{
-		tabView.delegate = nil;
+		tabView.sbDelegate = nil;
 		[tabView removeFromSuperview];
 		tabView = nil;
 	}
@@ -636,7 +635,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (splitView)
 	{
 		tabView = [[SBTabView alloc] initWithFrame:[splitView viewRect]];
-		tabView.delegate = self;
+		tabView.sbDelegate = self;
         tabView.tabViewType = NSNoTabsNoBorder;
         tabView.drawsBackground = NO;
 		splitView.view = tabView;
@@ -2191,8 +2190,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)performCloseFromButton:(id)sender
 {
-	tabView.delegate = nil;
-	[tabView closeAllTabViewItem];	// For destructing flash in the webViews
+	tabView.sbDelegate = nil;
+	[tabView closeAllTabViewItems];	// For destructing flash in the webViews
 	[self close];
 }
 
@@ -2216,8 +2215,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	if (should)
 	{
-		tabView.delegate = nil;
-		[tabView closeAllTabViewItem];	// For destructing flash in the webViews
+		tabView.sbDelegate = nil;
+		[tabView closeAllTabViewItems];	// For destructing flash in the webViews
 	}
 	return should;
 }

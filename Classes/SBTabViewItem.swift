@@ -748,7 +748,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         }
     }
     
-    override func webView(sender: WebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String, initiatedByFrame frame: WebFrame) -> String {
+    override func webView(sender: WebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String, initiatedByFrame frame: WebFrame) -> String? {
         return sbTabView.executeShouldTextInput(prompt)
     }
     

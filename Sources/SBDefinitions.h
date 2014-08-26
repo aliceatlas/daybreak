@@ -333,28 +333,6 @@ extern NSString *SBBookmarkPboardType;
 @protocol SBURLFieldDatasource <NSObject>
 @end
 
-@class SBTabView;
-@class SBTabViewItem;
-@class SBWebResourceIdentifier;
-@protocol SBTabViewDelegate <NSObject>
-- (void)tabView:(SBTabView *)aTabView selectedItemDidStartLoading:(SBTabViewItem *)aTabViewItem;
-- (void)tabView:(SBTabView *)aTabView selectedItemDidFinishLoading:(SBTabViewItem *)aTabViewItem;
-- (void)tabView:(SBTabView *)aTabView selectedItemDidFailLoading:(SBTabViewItem *)aTabViewItem;
-- (void)tabView:(SBTabView *)aTabView selectedItemDidReceiveTitle:(SBTabViewItem *)aTabViewItem;
-- (void)tabView:(SBTabView *)aTabView selectedItemDidReceiveIcon:(SBTabViewItem *)aTabViewItem;
-- (void)tabView:(SBTabView *)aTabView selectedItemDidReceiveServerRedirect:(SBTabViewItem *)aTabViewItem;
-- (void)tabView:(SBTabView *)aTabView shouldAddNewItemForURL:(NSURL *)url selection:(BOOL)selection;
-- (void)tabView:(SBTabView *)aTabView shouldSearchString:(NSString *)string newTab:(BOOL)newTab;
-- (BOOL)tabView:(SBTabView *)aTabView shouldConfirmWithMessage:(NSString *)message;
-- (void)tabView:(SBTabView *)aTabView shouldShowMessage:(NSString *)message;
-- (NSString *)tabView:(SBTabView *)aTabView shouldTextInput:(NSString *)prompt;
-- (void)tabView:(SBTabView *)aTabView didAddResourceID:(SBWebResourceIdentifier *)resourceID;
-- (void)tabView:(SBTabView *)aTabView didReceiveExpectedContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID;
-- (void)tabView:(SBTabView *)aTabView didReceiveContentLengthOfResourceID:(SBWebResourceIdentifier *)resourceID;
-- (void)tabView:(SBTabView *)aTabView didReceiveFinishLoadingOfResourceID:(SBWebResourceIdentifier *)resourceID;
-- (void)tabView:(SBTabView *)aTabView didSelectTabViewItem:(SBTabViewItem *)aTabViewItem;
-@end
-
 @class SBSplitView;
 @protocol SBSplitViewDelegate <NSSplitViewDelegate>
 - (void)splitViewDidOpenDrawer:(SBSplitView *)aSplitView;

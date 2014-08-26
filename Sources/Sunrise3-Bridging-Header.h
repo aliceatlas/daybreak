@@ -22,7 +22,6 @@
 #import "SBWebView.h"
 #import "SBTabbarItem.h"
 #import "SBSourceTextView.h"
-#import "SBTabView.h"
 
 #import "NSSavePanel-SBAdditions.h"
 
