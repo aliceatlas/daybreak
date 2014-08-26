@@ -1875,7 +1875,6 @@ id SBValueForKey(NSString *keyName, NSDictionary *dictionary)
 	
 	value = dictionary[keyName];
 	if (value == nil) {
-		int i;
 		for (id object in dictionary.allValues)
 		{
 			if ([object isKindOfClass:NSDictionary.class]) {
