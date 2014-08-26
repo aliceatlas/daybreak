@@ -30,7 +30,6 @@ import Foundation
 
 extension String {
     func stringByAppendingPathComponent(pathComponent: String) -> String {
-        let zot = NSString(string: self)
-        return zot.stringByAppendingPathComponent(pathComponent)
+        return (self as NSString).stringByAppendingPathComponent(pathComponent)
     }
 }
