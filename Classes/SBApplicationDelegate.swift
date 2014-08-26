@@ -196,17 +196,13 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func destructLocalizeWindowController() {
-        if localizationWindowController != nil {
-            localizationWindowController!.close()
-            localizationWindowController = nil
-        }
+        localizationWindowController?.close()
+        localizationWindowController = nil
     }
     
     func destructPreferencesWindowController() {
-        if preferencesWindowController != nil {
-            preferencesWindowController!.close()
-            preferencesWindowController = nil
-        }
+        preferencesWindowController?.close()
+        preferencesWindowController = nil
     }
     
     func update(versionString: String) {
@@ -256,9 +252,9 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
             destructLocalizeWindowController()
             localizationWindowController = SBLocalizationWindowController(viewSize: viewSize!)
             localizationWindowController!.fieldSet = fieldSet!
-            localizationWindowController!.textSet = NSMutableArray(array: textSet!)
+            localizationWindowController!.textSet = textSet!
             if anotherPath != nil {
-                localizationWindowController!.mergeFilePath(anotherPath)
+                localizationWindowController!.mergeFilePath(anotherPath!)
             }
             localizationWindowController!.showWindow(nil)
             
@@ -351,12 +347,12 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Help
     
     func localize(sender: AnyObject) {
-        /*if localizationWindowController!.window.isVisible() {
+        if localizationWindowController != nil && localizationWindowController!.window.occlusionState != .Visible {
             localizationWindowController!.showWindow(nil)
         } else {
             let path = NSBundle.mainBundle().pathForResource("Localizable", ofType:"strings")
-            openStrings(path: path)
-        }*/
+            openStrings(path: path!)
+        }
     }
     
     func plugins(sender: AnyObject) {

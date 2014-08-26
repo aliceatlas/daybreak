@@ -106,11 +106,6 @@ class SBPreferencesWindowController: SBWindowController {
         prepare()
     }
     
-    override init(window: NSWindow) {
-        super.init(window: window)
-        prepare()
-    }
-    
     required init(coder: NSCoder) {
         fatalError("NSCoding not supported")
     }
