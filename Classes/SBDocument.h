@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDefinitions.h"
 #import "SBDocumentWindow.h"
 #import "SBSplitView.h"
-#import "SBWebResourcesView.h"
 
 @class SBBookmarkView;
 @class SBBookmarksView;
@@ -52,10 +51,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBWebView;
 @class SBToolbar;
 @class SBPopUpButton;
+@class SBWebResourcesView;
 @protocol SBBookmarksViewDelegate;
 @protocol SBSplitViewDelegate;
 @protocol SBTabbarDelegate;
 @protocol SBToolbarDelegate;
+@protocol SBWebResourcesViewDelegate;
+@protocol SBWebResourcesViewDataSource;
 @interface SBDocument : NSDocument <SBTabbarDelegate, SBDownloaderDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBBookmarksViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate, NSWindowDelegate>
 {
 	SBDocumentWindow *__weak window;

@@ -127,7 +127,6 @@
 		08AEC6C80FF7A107005A39DA /* SBBLKGUISlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEC6C70FF7A107005A39DA /* SBBLKGUISlider.m */; };
 		08B00EE210AE5A33002277E5 /* UserAgent.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B00EE110AE5A33002277E5 /* UserAgent.png */; };
 		08BD344E118DC08400E17E69 /* Cached.png in Resources */ = {isa = PBXBuildFile; fileRef = 08BD344D118DC08400E17E69 /* Cached.png */; };
-		08BE0CF11143E88E00314946 /* SBWebResourcesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08BE0CF01143E88E00314946 /* SBWebResourcesView.m */; };
 		08C1D4B70FF9092A005709D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C1D4B60FF9092A005709D7 /* QuartzCore.framework */; };
 		08C3F2E610DDFCFA00340900 /* Credits.rtfd in Resources */ = {isa = PBXBuildFile; fileRef = 08C3F2E510DDFCFA00340900 /* Credits.rtfd */; };
 		08C6DBCC114B4B610019BCE9 /* Download.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C6DBCB114B4B610019BCE9 /* Download.png */; };
@@ -155,6 +154,7 @@
 		505E49FB198CA096001F5254 /* SBSectionGroupe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49FA198CA095001F5254 /* SBSectionGroupe.swift */; };
 		505E49FD198CA577001F5254 /* SBTabViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49FC198CA577001F5254 /* SBTabViewItem.swift */; };
 		506D2ADA19A23ACD007A8842 /* SBDownloaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */; };
+		506D2ADC19A2432E007A8842 /* SBWebResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D2ADB19A2432E007A8842 /* SBWebResourcesView.swift */; };
 		506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49EF19882F3B001F5254 /* SBSavePanel.swift */; };
 		506E44B4198E654800178D36 /* NSSavePanel-SBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 506E44B2198E654800178D36 /* NSSavePanel-SBAdditions.h */; };
 		506E44B5198E654800178D36 /* NSSavePanel-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */; };
@@ -377,8 +377,6 @@
 		08BD047B114D2AB500BF9834 /* fi */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fi; path = Resources/fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08BD344D118DC08400E17E69 /* Cached.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cached.png; path = Resources/Images/Cached.png; sourceTree = "<group>"; };
 		08BE0189153F0033002D108B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		08BE0CEF1143E88E00314946 /* SBWebResourcesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebResourcesView.h; path = Classes/SBWebResourcesView.h; sourceTree = "<group>"; };
-		08BE0CF01143E88E00314946 /* SBWebResourcesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWebResourcesView.m; path = Classes/SBWebResourcesView.m; sourceTree = "<group>"; };
 		08C1D4B60FF9092A005709D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		08C3F2E510DDFCFA00340900 /* Credits.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; name = Credits.rtfd; path = Resources/Credits.rtfd; sourceTree = "<group>"; };
 		08C6DBCB114B4B610019BCE9 /* Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Download.png; path = Resources/Images/Download.png; sourceTree = "<group>"; };
@@ -423,6 +421,7 @@
 		505E49FA198CA095001F5254 /* SBSectionGroupe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSectionGroupe.swift; path = Classes/SBSectionGroupe.swift; sourceTree = "<group>"; };
 		505E49FC198CA577001F5254 /* SBTabViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabViewItem.swift; path = Classes/SBTabViewItem.swift; sourceTree = "<group>"; };
 		506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloaderView.swift; path = Classes/SBDownloaderView.swift; sourceTree = "<group>"; };
+		506D2ADB19A2432E007A8842 /* SBWebResourcesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBWebResourcesView.swift; path = Classes/SBWebResourcesView.swift; sourceTree = "<group>"; };
 		506E44B2198E654800178D36 /* NSSavePanel-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSavePanel-SBAdditions.h"; path = "Classes/NSSavePanel-SBAdditions.h"; sourceTree = "<group>"; };
 		506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSavePanel-SBAdditions.m"; path = "Classes/NSSavePanel-SBAdditions.m"; sourceTree = "<group>"; };
 		5072657119A0CA380099DA28 /* SBMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBMessageView.swift; path = Classes/SBMessageView.swift; sourceTree = "<group>"; };
@@ -763,8 +762,7 @@
 				089956C60FE39C2500DED3BA /* SBSidebar.h */,
 				089956C70FE39C2500DED3BA /* SBSidebar.m */,
 				5044E66A19666D550053CBF1 /* SBBookmarksView.swift */,
-				08BE0CEF1143E88E00314946 /* SBWebResourcesView.h */,
-				08BE0CF01143E88E00314946 /* SBWebResourcesView.m */,
+				506D2ADB19A2432E007A8842 /* SBWebResourcesView.swift */,
 				505E49F8198C91A3001F5254 /* SBDrawer.swift */,
 				088D26DE101B3EC400691CEC /* SBBookmarkListView.h */,
 				088D26DF101B3EC400691CEC /* SBBookmarkListView.m */,
@@ -1049,6 +1047,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				506D2ADC19A2432E007A8842 /* SBWebResourcesView.swift in Sources */,
 				085C2AB80FE2ABB60099A0F6 /* SBDocumentWindow.m in Sources */,
 				0840676C0FE2B95200CC80E3 /* SBUtil.m in Sources */,
 				0840678B0FE2C11700CC80E3 /* SBURLField.m in Sources */,
@@ -1129,7 +1128,6 @@
 				085A73791091C75500FE7556 /* SBHistoryView.m in Sources */,
 				506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */,
 				089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */,
-				08BE0CF11143E88E00314946 /* SBWebResourcesView.m in Sources */,
 				08F1DEA41156653700712D67 /* SBBLKGUISearchField.m in Sources */,
 				081412BD1168671B002FDF25 /* SBTableCell.m in Sources */,
 			);
