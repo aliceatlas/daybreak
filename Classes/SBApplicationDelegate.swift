@@ -297,7 +297,6 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let viewSize = NSSize(width: 800, height: 700)
         destructPreferencesWindowController()
         preferencesWindowController = SBPreferencesWindowController(viewSize: viewSize)
-        preferencesWindowController!.prepare()
         preferencesWindowController!.showWindow(nil)
     }
     

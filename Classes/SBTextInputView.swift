@@ -27,33 +27,66 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBTextInputView: SBView, NSTextFieldDelegate {
-    var messageLabel: NSTextField!
-    var textLabel: SBBLKGUITextField!
-    var cancelButton: SBBLKGUIButton?
-    var doneButton: SBBLKGUIButton?
+    lazy var messageLabel: NSTextField = {
+        let font = NSFont.boldSystemFontOfSize(16)
+        let messageLabel = NSTextField(frame: self.messageLabelRect)
+        messageLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        messageLabel.editable = false
+        messageLabel.bordered = false
+        messageLabel.drawsBackground = false
+        messageLabel.textColor = NSColor.whiteColor()
+        messageLabel.font = font
+        (messageLabel.cell() as NSTextFieldCell).wraps = true
+        return messageLabel
+    }()
+    lazy var textLabel: SBBLKGUITextField = {
+        let textLabel = SBBLKGUITextField(frame: self.textLabelRect)
+        textLabel.alignment = .LeftTextAlignment
+        textLabel.font = NSFont.systemFontOfSize(14.0)
+        textLabel.textColor = NSColor.whiteColor()
+        textLabel.delegate = self
+        (textLabel.cell() as NSTextFieldCell).wraps = true
+        return textLabel
+    }()
+    lazy var doneButton: SBBLKGUIButton = {
+        let doneButton = SBBLKGUIButton(frame: self.doneButtonRect)
+        doneButton.title = NSLocalizedString("OK", comment: "")
+        doneButton.target = self
+        doneButton.action = "done"
+        doneButton.enabled = true
+        doneButton.keyEquivalent = "\r" // busy if button is added into a view
+        return doneButton
+    }()
+    lazy var cancelButton: SBBLKGUIButton = {
+        let cancelButton = SBBLKGUIButton(frame: self.cancelButtonRect)
+        cancelButton.title = NSLocalizedString("Cancel", comment: "")
+        cancelButton.target = self
+        cancelButton.action = "cancel"
+        cancelButton.keyEquivalent = "\u{1B}"
+        return cancelButton
+    }()
     
     var message: String {
-        get {
-            return messageLabel.stringValue
-        }
+        get { return messageLabel.stringValue }
         set(message) {
+            let size = (message as NSString).sizeWithAttributes([NSFontAttributeName: messageLabel.font])
+            messageLabel.alignment = size.width > (messageLabelRect.size.width - 20.0) ? .LeftTextAlignment : .CenterTextAlignment
             messageLabel.stringValue = message
         }
     }
     
     var text: String {
-        get {
-            return textLabel.stringValue
-        }
-        set(text) {
-            textLabel.stringValue = text
-        }
+        get { return textLabel.stringValue }
+        set(text) { textLabel.stringValue = text }
     }
     
     init(frame: NSRect, prompt: NSString) {
         super.init(frame: frame)
-        constructMessageLabel(prompt)
-        constructTextLabel()
+        message = prompt
+        addSubview(messageLabel)
+        addSubview(textLabel)
+        addSubview(doneButton)
+        addSubview(cancelButton)
         autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
     }
     
@@ -99,79 +132,9 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         return NSRect(origin: origin, size: size)
     }
     
-    // MARK: Construction
-    
-    func constructMessageLabel(inMessage: String) {
-        let r = messageLabelRect
-        let font = NSFont.boldSystemFontOfSize(16)
-        let size = NSString(string: inMessage).sizeWithAttributes([NSFontAttributeName: font])
-        messageLabel = NSTextField(frame: r)
-        messageLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
-        messageLabel.editable = false
-        messageLabel.bordered = false
-        messageLabel.drawsBackground = false
-        messageLabel.textColor = NSColor.whiteColor()
-        let cell = messageLabel.cell() as NSTextFieldCell
-        cell.font = font
-        cell.alignment = size.width > (r.size.width - 20.0) ? .LeftTextAlignment : .CenterTextAlignment
-        (messageLabel.cell() as NSTextFieldCell).wraps = true
-        messageLabel.stringValue = inMessage
-        addSubview(messageLabel)
-    }
-    
-    func constructTextLabel() {
-        let r = textLabelRect
-        textLabel = SBBLKGUITextField(frame: r)
-        textLabel.alignment = .LeftTextAlignment
-        textLabel.font = NSFont.systemFontOfSize(14.0)
-        textLabel.textColor = NSColor.whiteColor()
-        textLabel.delegate = self
-        (textLabel.cell() as NSTextFieldCell).wraps = true
-        addSubview(textLabel)
-    }
-    
-    func constructDoneButton() {
-        let r = doneButtonRect
-        doneButton = SBBLKGUIButton(frame: r)
-        doneButton!.title = NSLocalizedString("OK", comment: "")
-        doneButton!.target = self
-        doneButton!.action = "done"
-        doneButton!.enabled = true
-        doneButton!.keyEquivalent = "\r" // busy if button is added into a view
-        addSubview(doneButton!)
-    }
-    
-    func constructCancelButton() {
-        let r = cancelButtonRect
-        cancelButton = SBBLKGUIButton(frame: r)
-        cancelButton!.title = NSLocalizedString("Cancel", comment: "")
-        cancelButton!.target = self
-        cancelButton!.action = "cancel"
-        cancelButton!.keyEquivalent = "\u{1B}"
-        addSubview(cancelButton!)
-    }
-    
     // MARK: Delegate
     
     override func controlTextDidChange(_: NSNotification) {
-        doneButton?.enabled = textLabel.stringValue.utf16Count > 0
-    }
-    
-    // MARK: Setter
-    
-    override var doneSelector: Selector {
-        didSet {
-            if doneSelector != nil && doneButton == nil {
-                constructDoneButton()
-            }
-        }
-    }
-    
-    override var cancelSelector: Selector {
-        didSet {
-            if cancelSelector != nil && cancelButton == nil {
-                constructCancelButton()
-            }
-        }
+        doneButton.enabled = textLabel.stringValue.utf16Count > 0
     }
 }

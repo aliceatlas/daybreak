@@ -40,30 +40,25 @@ protocol SBWebResourcesViewDelegate {
 }
 
 class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
-    var scrollView: NSScrollView!
-    var tableView: NSTableView!
-    weak var dataSource: SBWebResourcesViewDataSource?
-    weak var delegate: SBWebResourcesViewDelegate?
-    
-    override init(frame: NSRect) {
-        super.init(frame: frame)
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("NSCoding not supported")
-    }
-    
-    // MARK: Constructions
-    
-    func constructTableView() {
-        var scrollerRect = self.bounds
+    lazy var scrollView: NSScrollView = {
+        let scrollView = SBBLKGUIScrollView(frame: self.bounds)
+        scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        scrollView.autohidesScrollers = true
+        scrollView.hasVerticalScroller = true
+        scrollView.hasHorizontalScroller = false
+        scrollView.autohidesScrollers = true
+        scrollView.backgroundColor = SBBackgroundColor
+        scrollView.drawsBackground = true
+        scrollView.documentView = self.tableView
+        return scrollView
+    }()
+    lazy var tableView: NSTableView = {
         var tableRect = NSZeroRect
         let lengthWidth: CGFloat = 110.0
         let cachedWidth: CGFloat = 22.0
         let actionWidth: CGFloat = 22.0
-        tableRect.size = scrollerRect.size
-        scrollView = SBBLKGUIScrollView(frame: scrollerRect)
-        tableView = NSTableView(frame: tableRect)
+        tableRect.size = self.bounds.size
+        let tableView = NSTableView(frame: tableRect)
         let urlColumn = NSTableColumn(identifier: kSBURL)
         let lengthColumn = NSTableColumn(identifier: "Length")
         let cachedColumn = NSTableColumn(identifier: "Cached")
@@ -119,15 +114,18 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         tableView.focusRingType = .None
         tableView.doubleAction = "open"
         tableView.intercellSpacing = NSZeroSize
-        scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-        scrollView.autohidesScrollers = true
-        scrollView.hasVerticalScroller = true
-        scrollView.hasHorizontalScroller = false
-        scrollView.autohidesScrollers = true
-        scrollView.backgroundColor = SBBackgroundColor
-        scrollView.drawsBackground = true
-        scrollView.documentView = tableView
+        return tableView
+    }()
+    weak var dataSource: SBWebResourcesViewDataSource?
+    weak var delegate: SBWebResourcesViewDelegate?
+    
+    override init(frame: NSRect) {
+        super.init(frame: frame)
         addSubview(scrollView)
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
     }
     
     // MARK: DataSource

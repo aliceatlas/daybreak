@@ -46,7 +46,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         titleLabel.autoresizingMask = .ViewWidthSizable
         return titleLabel
     }()
-    private lazy var popup: SBBLKGUIPopUpButton! = {
+    private lazy var popup: SBBLKGUIPopUpButton = {
         var selectedIndex: Int?
         let popup = SBBLKGUIPopUpButton(frame: self.popupRect)
         let count = SBUserAgentNames.count
@@ -79,7 +79,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         popup.selectItemAtIndex(selectedIndex!)
         return popup
     }()
-    private lazy var field: SBBLKGUITextField! = {
+    private lazy var field: SBBLKGUITextField = {
         let field = SBBLKGUITextField(frame: self.fieldRect)
         field.alignment = .LeftTextAlignment
         field.font = NSFont.systemFontOfSize(14.0)
@@ -97,7 +97,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()
-    private lazy var doneButton: SBBLKGUIButton! = {
+    private lazy var doneButton: SBBLKGUIButton = {
         let doneButton = SBBLKGUIButton(frame: self.doneRect)
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self

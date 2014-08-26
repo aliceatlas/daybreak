@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Cocoa
 
 class SBDrawer: SBView {
-    lazy var scrollView: SBBLKGUIScrollView! = {
+    lazy var scrollView: SBBLKGUIScrollView = {
         let scrollView = SBBLKGUIScrollView(frame: self.availableRect)
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView.autohidesScrollers = true

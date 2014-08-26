@@ -29,40 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Cocoa
 
 class SBPreferencesWindowController: SBWindowController {
-    var sections: [SBSectionGroup] = []
-    var sectionListView: SBSectionListView?
-    
-    override init(viewSize: NSSize) {
-        super.init(viewSize: viewSize)
-        window.maxSize = NSMakeSize(window.frame.size.width, CGFloat.infinity)
-        window.minSize = NSMakeSize(window.frame.size.width, 100.0)
-    }
-    
-    override init(window: NSWindow) {
-        super.init(window: window)
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("NSCoding not supported")
-    }
-    
-    var sectionListViewRect: NSRect {
-        var r = window.contentRectForFrameRect(window.frame)
-        r.origin = NSZeroPoint
-        // r.origin.x = 20;
-        // r.origin.y = 20;
-        // r.size.width -= r.origin.x * 2
-        // r.size.height -= r.origin.y * 2
-        return r
-    }
-    
-    func prepare() {
-        constructSections()
-        constructSectionListView()
-    }
-    
-    func constructSections() {
-        sections.removeAll(keepCapacity: false)
+    lazy var sections: [SBSectionGroup] = {
+        var sections: [SBSectionGroup] = []
+        
         let group0 = SBSectionGroup(title: NSLocalizedString("General", comment: ""))
         group0.addItem(SBSectionItem(title: NSLocalizedString("Open new windows with home page", comment: ""), keyName: kSBOpenNewWindowsWithHomePage, controlClass: NSButton.self, context: nil))
         group0.addItem(SBSectionItem(title: NSLocalizedString("Open new tabs with home page", comment: ""), keyName: kSBOpenNewTabsWithHomePage, controlClass: NSButton.self, context: nil))
@@ -120,13 +89,43 @@ class SBPreferencesWindowController: SBWindowController {
         group5.addItem(SBSectionItem(title: NSLocalizedString("Enable Web Inspector", comment: ""), keyName: kWebKitDeveloperExtras, controlClass: NSButton.self, context: nil))
         group5.addItem(SBSectionItem(title: NSLocalizedString("When a new tab opens, make it active", comment: ""), keyName: kSBWhenNewTabOpensMakeActiveFlag, controlClass: NSButton.self, context: nil))
         sections.append(group5)
+        
+        return sections
+    }()
+    lazy var sectionListView: SBSectionListView = {
+        let sectionListView = SBSectionListView(frame: self.sectionListViewRect)
+        sectionListView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        sectionListView.sections = NSMutableArray(array: self.sections)
+        return sectionListView
+    }()
+    
+    override init(viewSize: NSSize) {
+        super.init(viewSize: viewSize)
+        window.maxSize = NSMakeSize(window.frame.size.width, CGFloat.infinity)
+        window.minSize = NSMakeSize(window.frame.size.width, 100.0)
+        prepare()
     }
     
-    func constructSectionListView() {
-        let r = sectionListViewRect
-        sectionListView = SBSectionListView(frame: r)
-        sectionListView!.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-        sectionListView!.sections = NSMutableArray(array: sections)
-        window.contentView.addSubview(sectionListView!)
+    override init(window: NSWindow) {
+        super.init(window: window)
+        prepare()
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
+    
+    var sectionListViewRect: NSRect {
+        var r = window.contentRectForFrameRect(window.frame)
+        r.origin = NSZeroPoint
+        // r.origin.x = 20
+        // r.origin.y = 20
+        // r.size.width -= r.origin.x * 2
+        // r.size.height -= r.origin.y * 2
+        return r
+    }
+    
+    func prepare() {
+        window.contentView.addSubview(sectionListView)
     }
 }

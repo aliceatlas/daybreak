@@ -42,7 +42,15 @@ class SBLoadButton: SBButton {
         }
     }
     
-    var indicator: NSProgressIndicator?
+    lazy var indicator: NSProgressIndicator = {
+        let indicator = NSProgressIndicator(frame: NSMakeRect((self.bounds.size.width - 16.0) / 2, (self.bounds.size.height - 16.0) / 2, 16.0, 16.0))
+        indicator.autoresizingMask = .ViewMaxXMargin | .ViewMinXMargin | .ViewMaxYMargin | .ViewMinYMargin
+        indicator.usesThreadedAnimation = true
+        indicator.style = .SpinningStyle
+        indicator.displayedWhenStopped = false
+        indicator.controlSize = .SmallControlSize
+        return indicator
+    }()
     
     var _on = false
     var on: Bool {
@@ -53,9 +61,9 @@ class SBLoadButton: SBButton {
             if isOn != _on {
                 _on = isOn
                 if isOn {
-                    indicator?.startAnimation(nil)
+                    indicator.startAnimation(nil)
                 } else {
-                    indicator?.stopAnimation(nil)
+                    indicator.stopAnimation(nil)
                 }
                 switchImage()
             }
@@ -77,8 +85,7 @@ class SBLoadButton: SBButton {
     
     override init(frame: NSRect) {
         super.init(frame: frame)
-        indicator = constructIndicator()
-        addSubview(indicator!)
+        addSubview(indicator)
     }
     
     // MARK: NSCoding Protocol
@@ -119,16 +126,6 @@ class SBLoadButton: SBButton {
                 }
             }
         }
-    }
-
-    func constructIndicator() -> NSProgressIndicator {
-        let indicator = NSProgressIndicator(frame: NSMakeRect((bounds.size.width - 16.0) / 2, (bounds.size.height - 16.0) / 2, 16.0, 16.0))
-        indicator.autoresizingMask = .ViewMaxXMargin | .ViewMinXMargin | .ViewMaxYMargin | .ViewMinYMargin
-        indicator.usesThreadedAnimation = true
-        indicator.style = .SpinningStyle
-        indicator.displayedWhenStopped = false
-        indicator.controlSize = .SmallControlSize
-        return indicator
     }
     
     // MARK: Event
