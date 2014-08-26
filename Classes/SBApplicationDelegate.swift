@@ -228,7 +228,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func doneUpdate() {
         let document = SBGetSelectedDocument()
         let window = document.window
-        var versionString: NSString = updateView!.versionString
+        var versionString: NSString = updateView!.versionString!
         let mutableVString = versionString.mutableCopy() as NSMutableString
         var r: NSRange
         do {

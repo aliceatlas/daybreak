@@ -106,7 +106,6 @@
 		08A73C5D1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A73C5C1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m */; };
 		08A9D837102477DA003C87E4 /* Bug.png in Resources */ = {isa = PBXBuildFile; fileRef = 08A9D836102477DA003C87E4 /* Bug.png */; };
 		08AA157C1029C98A000F2568 /* Bookmarks-List.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AA157B1029C98A000F2568 /* Bookmarks-List.png */; };
-		08ADB68A104A2AA1004B1D8E /* SBUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ADB689104A2AA1004B1D8E /* SBUpdateView.m */; };
 		08AEC4C30FF73C49005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEC4B30FF73C48005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png */; };
 		08AEC4C40FF73C49005A39DA /* BLKGUI_ScrollerSlot-Horizontal-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEC4B40FF73C48005A39DA /* BLKGUI_ScrollerSlot-Horizontal-Left.png */; };
 		08AEC4C50FF73C49005A39DA /* BLKGUI_ScrollerKnob-Vertical-Top.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEC4B50FF73C48005A39DA /* BLKGUI_ScrollerKnob-Vertical-Top.png */; };
@@ -158,6 +157,7 @@
 		5072657219A0CA380099DA28 /* SBMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5072657119A0CA380099DA28 /* SBMessageView.swift */; };
 		5072657519A0D9530099DA28 /* SBUserAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5072657419A0D9530099DA28 /* SBUserAgentView.swift */; };
 		50782C8619AC6EB400CB8706 /* SBHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */; };
+		50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8719AC77E400CB8706 /* SBUpdateView.swift */; };
 		507A8E23195FFF6700BF56AD /* SBDefinitions.m in Sources */ = {isa = PBXBuildFile; fileRef = 507A8E22195FFF6700BF56AD /* SBDefinitions.m */; };
 		508FAC5319653AC400F4380F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FAC5219653AC400F4380F /* main.swift */; };
 		50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66A19666D550053CBF1 /* SBBookmarksView.swift */; };
@@ -345,8 +345,6 @@
 		08A73C5C1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBitmapImageRep-SBAdditions.m"; path = "Classes/NSBitmapImageRep-SBAdditions.m"; sourceTree = "<group>"; };
 		08A9D836102477DA003C87E4 /* Bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Bug.png; path = Resources/Images/Bug.png; sourceTree = "<group>"; };
 		08AA157B1029C98A000F2568 /* Bookmarks-List.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Bookmarks-List.png"; path = "Resources/Images/Bookmarks-List.png"; sourceTree = "<group>"; };
-		08ADB688104A2AA1004B1D8E /* SBUpdateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBUpdateView.h; path = Classes/SBUpdateView.h; sourceTree = "<group>"; };
-		08ADB689104A2AA1004B1D8E /* SBUpdateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBUpdateView.m; path = Classes/SBUpdateView.m; sourceTree = "<group>"; };
 		08AEC4B30FF73C48005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerSlot-Vertical-Top.png"; path = "Resources/Images/BLKGUI_ScrollerSlot-Vertical-Top.png"; sourceTree = "<group>"; };
 		08AEC4B40FF73C48005A39DA /* BLKGUI_ScrollerSlot-Horizontal-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerSlot-Horizontal-Left.png"; path = "Resources/Images/BLKGUI_ScrollerSlot-Horizontal-Left.png"; sourceTree = "<group>"; };
 		08AEC4B50FF73C48005A39DA /* BLKGUI_ScrollerKnob-Vertical-Top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerKnob-Vertical-Top.png"; path = "Resources/Images/BLKGUI_ScrollerKnob-Vertical-Top.png"; sourceTree = "<group>"; };
@@ -422,6 +420,7 @@
 		506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSavePanel-SBAdditions.m"; path = "Classes/NSSavePanel-SBAdditions.m"; sourceTree = "<group>"; };
 		5072657119A0CA380099DA28 /* SBMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBMessageView.swift; path = Classes/SBMessageView.swift; sourceTree = "<group>"; };
 		5072657419A0D9530099DA28 /* SBUserAgentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBUserAgentView.swift; path = Classes/SBUserAgentView.swift; sourceTree = "<group>"; };
+		50782C8719AC77E400CB8706 /* SBUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBUpdateView.swift; path = Classes/SBUpdateView.swift; sourceTree = "<group>"; };
 		507A8E21195FFF6700BF56AD /* SBDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDefinitions.h; path = Sources/SBDefinitions.h; sourceTree = "<group>"; };
 		507A8E22195FFF6700BF56AD /* SBDefinitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBDefinitions.m; path = Sources/SBDefinitions.m; sourceTree = "<group>"; };
 		507A8E24195FFF8800BF56AD /* SBDefinitionsS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDefinitionsS.swift; path = Sources/SBDefinitionsS.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -742,8 +741,7 @@
 				089F20AA104C0D9100549CAC /* SBReportView.m */,
 				08F914CF103531C50026ABD1 /* SBSnapshotView.h */,
 				08F914D0103531C50026ABD1 /* SBSnapshotView.m */,
-				08ADB688104A2AA1004B1D8E /* SBUpdateView.h */,
-				08ADB689104A2AA1004B1D8E /* SBUpdateView.m */,
+				50782C8719AC77E400CB8706 /* SBUpdateView.swift */,
 				50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */,
 				5072657419A0D9530099DA28 /* SBUserAgentView.swift */,
 				5072657119A0CA380099DA28 /* SBMessageView.swift */,
@@ -1086,6 +1084,7 @@
 				088E985010082393005FC4C0 /* SBBottombar.m in Sources */,
 				088E997F1008532C005FC4C0 /* SBSourceTextView.m in Sources */,
 				088E99B610086FD1005FC4C0 /* SBFixedSplitView.m in Sources */,
+				50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */,
 				088DF2FB1008A3F100113786 /* SBFindbar.m in Sources */,
 				506D2ADA19A23ACD007A8842 /* SBDownloaderView.swift in Sources */,
 				505E49F9198C91A4001F5254 /* SBDrawer.swift in Sources */,
@@ -1111,7 +1110,6 @@
 				505E49FB198CA096001F5254 /* SBSectionGroup.swift in Sources */,
 				50B2A99D1960221D00DA1B4A /* SBApplicationDelegate.swift in Sources */,
 				50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */,
-				08ADB68A104A2AA1004B1D8E /* SBUpdateView.m in Sources */,
 				089F20AB104C0D9100549CAC /* SBReportView.m in Sources */,
 				08A73C331052C6CE00EBD683 /* NSScrollView-SBAdditions.m in Sources */,
 				08A73C391052C88800EBD683 /* NSColor-SBAdditions.m in Sources */,

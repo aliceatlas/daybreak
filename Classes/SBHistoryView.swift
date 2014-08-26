@@ -1,5 +1,3 @@
-let kSBMinFrameSizeWidth: CGFloat = 480
-let kSBMinFrameSizeHeight: CGFloat = 320
 /*
 SBHistoryView.swift
 
@@ -29,6 +27,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource {
+    let kSBMinFrameSizeWidth: CGFloat = 480
+    let kSBMinFrameSizeHeight: CGFloat = 320
+    
 	private lazy var iconImageView: NSImageView = {
         let image: NSImage? = NSImage(named: "History")
         let iconImageView = NSImageView(frame: self.iconRect)
