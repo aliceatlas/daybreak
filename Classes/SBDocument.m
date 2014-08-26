@@ -482,7 +482,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         button.target = self;
         button.action = @selector(performCloseFromButton:);
 	}
-    return nil;
+    return newWindow;
 }
 
 - (NSWindowController *)constructWindowController:(SBDocumentWindow *)newWindow
