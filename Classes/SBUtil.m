@@ -2166,12 +2166,12 @@ NSDictionary *SBDebugViewStructure(NSView *view)
 	info[@"Description"] = description;
 	if (subviews.count > 0)
 	{
-		NSMutableArray *childs = [NSMutableArray arrayWithCapacity:0];
+		NSMutableArray *children = [NSMutableArray arrayWithCapacity:0];
 		for (id subview in subviews)
 		{
-			[childs addObject:SBDebugViewStructure(subview)];
+			[children addObject:SBDebugViewStructure(subview)];
 		}
-		info[@"Children"] = [childs copy];
+		info[@"Children"] = [children copy];
 	}
 	return [info copy];
 }
@@ -2185,12 +2185,12 @@ NSDictionary *SBDebugLayerStructure(CALayer *layer)
 	info[@"Description"] = description;
 	if (sublayers.count > 0)
 	{
-		NSMutableArray *childs = [NSMutableArray arrayWithCapacity:0];
+		NSMutableArray *children = [NSMutableArray arrayWithCapacity:0];
 		for (id sublayer in sublayers)
 		{
-			[childs addObject:SBDebugLayerStructure(sublayer)];
+			[children addObject:SBDebugLayerStructure(sublayer)];
 		}
-		info[@"Children"] = [childs copy];
+		info[@"Children"] = [children copy];
 	}
 	return [info copy];
 }

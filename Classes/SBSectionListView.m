@@ -39,14 +39,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @implementation SBSectionListView
 
-@synthesize sectionGroupeViews;
+@synthesize sectionGroupViews;
 @synthesize sections;
 
 - (instancetype)initWithFrame:(NSRect)frame
 {
 	if (self = [super initWithFrame:frame])
 	{
-		sectionGroupeViews = [[NSMutableArray alloc] initWithCapacity:0];
+		sectionGroupViews = [[NSMutableArray alloc] initWithCapacity:0];
 		[self constructScrollView];
 	}
 	return self;
@@ -62,23 +62,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect r = NSZeroRect;
 	NSInteger i = 0;
 	r.size.width = self.bounds.size.width - 20.0;
-	for (SBSectionGroupe *groupe in sections)
+	for (SBSectionGroup *group in sections)
 	{
-		r.size.height += groupe.items.count * kSBSectionItemHeight + kSBSectionTitleHeight + kSBSectionMarginY;
+		r.size.height += group.items.count * kSBSectionItemHeight + kSBSectionTitleHeight + kSBSectionMarginY;
 		i++;
 	}
 	return r;
 }
 
-- (NSRect)groupeViewRectAtIndex:(NSInteger)index
+- (NSRect)groupViewRectAtIndex:(NSInteger)index
 {
 	NSRect r = NSZeroRect;
 	NSInteger i = 0;
 	CGFloat height = self.contentViewRect.size.height;
 	r.size.width = self.bounds.size.width - 20.0;
-	for (SBSectionGroupe *groupe in sections)
+	for (SBSectionGroup *group in sections)
 	{
-		CGFloat h = groupe.items.count * kSBSectionItemHeight + kSBSectionTitleHeight + kSBSectionMarginY;
+		CGFloat h = group.items.count * kSBSectionItemHeight + kSBSectionTitleHeight + kSBSectionMarginY;
 		if (i < index)
 		{
 			r.origin.y += h;
@@ -124,27 +124,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self addSubview:scrollView];
 }
 
-- (void)constructSectionGroupeViews
+- (void)constructSectionGroupViews
 {
 	NSInteger index = 0;
-	for (SBSectionGroupeView *sectionView in sectionGroupeViews)
+	for (SBSectionGroupView *sectionView in sectionGroupViews)
 		[sectionView removeFromSuperview];
-	[sectionGroupeViews removeAllObjects];
-	for (SBSectionGroupe *groupe in sections)
+	[sectionGroupViews removeAllObjects];
+	for (SBSectionGroup *group in sections)
 	{
-		SBSectionGroupeView *groupeView = nil;
-		NSRect gr = [self groupeViewRectAtIndex:index];
-		groupeView = [[SBSectionGroupeView alloc] initWithFrame:gr];
-		groupeView.groupe = groupe;
-        groupeView.autoresizingMask = NSViewWidthSizable;
-		for (SBSectionItem *item in groupe.items)
+		SBSectionGroupView *groupView = nil;
+		NSRect gr = [self groupViewRectAtIndex:index];
+		groupView = [[SBSectionGroupView alloc] initWithFrame:gr];
+		groupView.group = group;
+        groupView.autoresizingMask = NSViewWidthSizable;
+		for (SBSectionItem *item in group.items)
 		{
 			SBSectionItemView *itemView = nil;
 			itemView = [[SBSectionItemView alloc] initWithItem:item];
             itemView.autoresizingMask = NSViewWidthSizable;
-			[groupeView addItemView:itemView];
+			[groupView addItemView:itemView];
 		}
-		[contentView addSubview:groupeView];
+		[contentView addSubview:groupView];
 		index++;
 	}
 }
@@ -156,16 +156,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		sections = inSections;
 		contentView.frame = self.contentViewRect;
 		[contentView scrollRectToVisible:NSMakeRect(0, NSMaxY(contentView.frame), 0, 0)];
-		[self constructSectionGroupeViews];
+		[self constructSectionGroupViews];
 	}
 }
 
 @end
 
-@implementation SBSectionGroupeView
+@implementation SBSectionGroupView
 
 @synthesize itemViews;
-@synthesize groupe;
+@synthesize group;
 
 - (instancetype)initWithFrame:(NSRect)frame
 {
@@ -264,25 +264,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	tr.size.width -= kSBSectionInnerMarginX * 2;
 	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
                    NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.65 alpha:1.0]};
-	[groupe.title drawInRect:tr withAttributes:attributes];
+	[group.title drawInRect:tr withAttributes:attributes];
 	tr.origin.y -= 1.0;
 	tr.origin.x += 1.0;
 	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
                    NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.55 alpha:1.0]};
-	[groupe.title drawInRect:tr withAttributes:attributes];
+	[group.title drawInRect:tr withAttributes:attributes];
 	tr.origin.x -= 2.0;
 	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
                    NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.55 alpha:1.0]};
-	[groupe.title drawInRect:tr withAttributes:attributes];
+	[group.title drawInRect:tr withAttributes:attributes];
 	tr.origin.y -= 2.0;
 	tr.origin.x += 1.0;
 	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
                    NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:0.45 alpha:1.0]};
-	[groupe.title drawInRect:tr withAttributes:attributes];
+	[group.title drawInRect:tr withAttributes:attributes];
 	tr.origin.y += 2.0;
 	attributes = @{NSFontAttributeName: [NSFont boldSystemFontOfSize:13.0], 
                    NSForegroundColorAttributeName: [NSColor colorWithCalibratedWhite:1.0 alpha:1.0]};
-	[groupe.title drawInRect:tr withAttributes:attributes];
+	[group.title drawInRect:tr withAttributes:attributes];
 }
 
 @end

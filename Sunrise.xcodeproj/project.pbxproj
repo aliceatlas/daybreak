@@ -151,7 +151,7 @@
 		505E49F4198A2645001F5254 /* SBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49F3198A2645001F5254 /* SBButton.swift */; };
 		505E49F6198B7639001F5254 /* SBToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49F5198B7638001F5254 /* SBToolbar.swift */; };
 		505E49F9198C91A4001F5254 /* SBDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49F8198C91A3001F5254 /* SBDrawer.swift */; };
-		505E49FB198CA096001F5254 /* SBSectionGroupe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49FA198CA095001F5254 /* SBSectionGroupe.swift */; };
+		505E49FB198CA096001F5254 /* SBSectionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49FA198CA095001F5254 /* SBSectionGroup.swift */; };
 		505E49FD198CA577001F5254 /* SBTabViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49FC198CA577001F5254 /* SBTabViewItem.swift */; };
 		506D2ADA19A23ACD007A8842 /* SBDownloaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */; };
 		506D2ADC19A2432E007A8842 /* SBWebResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D2ADB19A2432E007A8842 /* SBWebResourcesView.swift */; };
@@ -418,7 +418,7 @@
 		505E49F3198A2645001F5254 /* SBButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBButton.swift; path = Classes/SBButton.swift; sourceTree = "<group>"; };
 		505E49F5198B7638001F5254 /* SBToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBToolbar.swift; path = Classes/SBToolbar.swift; sourceTree = "<group>"; };
 		505E49F8198C91A3001F5254 /* SBDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDrawer.swift; path = Classes/SBDrawer.swift; sourceTree = "<group>"; };
-		505E49FA198CA095001F5254 /* SBSectionGroupe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSectionGroupe.swift; path = Classes/SBSectionGroupe.swift; sourceTree = "<group>"; };
+		505E49FA198CA095001F5254 /* SBSectionGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSectionGroup.swift; path = Classes/SBSectionGroup.swift; sourceTree = "<group>"; };
 		505E49FC198CA577001F5254 /* SBTabViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabViewItem.swift; path = Classes/SBTabViewItem.swift; sourceTree = "<group>"; };
 		506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloaderView.swift; path = Classes/SBDownloaderView.swift; sourceTree = "<group>"; };
 		506D2ADB19A2432E007A8842 /* SBWebResourcesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBWebResourcesView.swift; path = Classes/SBWebResourcesView.swift; sourceTree = "<group>"; };
@@ -538,7 +538,7 @@
 				088440651032950200AF4E2D /* SBSectionListView.m */,
 				0899556C0FE380D400DED3BA /* SBSplitView.h */,
 				0899556D0FE380D400DED3BA /* SBSplitView.m */,
-				505E49FA198CA095001F5254 /* SBSectionGroupe.swift */,
+				505E49FA198CA095001F5254 /* SBSectionGroup.swift */,
 				084067890FE2C11700CC80E3 /* SBURLField.h */,
 				0840678A0FE2C11700CC80E3 /* SBURLField.m */,
 				081412BB1168671B002FDF25 /* SBTableCell.h */,
@@ -1100,7 +1100,7 @@
 				505E49F6198B7639001F5254 /* SBToolbar.swift in Sources */,
 				088440661032950200AF4E2D /* SBSectionListView.m in Sources */,
 				08F914D1103531C50026ABD1 /* SBSnapshotView.m in Sources */,
-				505E49FB198CA096001F5254 /* SBSectionGroupe.swift in Sources */,
+				505E49FB198CA096001F5254 /* SBSectionGroup.swift in Sources */,
 				50B2A99D1960221D00DA1B4A /* SBApplicationDelegate.swift in Sources */,
 				50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */,
 				08ADB68A104A2AA1004B1D8E /* SBUpdateView.m in Sources */,

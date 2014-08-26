@@ -1,5 +1,5 @@
 /*
-SBSectionGroupe.swift
+SBSectionGroup.swift
 
 Copyright (c) 2014, Alice Atlas
 Copyright (c) 2010, Atsushi Jike
@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Cocoa
 
-class SBSectionGroupe: NSObject {
+class SBSectionGroup: NSObject {
     var title: String?
     var items: [SBSectionItem] = []
     

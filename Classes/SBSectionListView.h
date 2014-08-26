@@ -25,35 +25,35 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDefinitions.h"
 #import "SBView.h"
 
-@class SBSectionGroupe;
+@class SBSectionGroup;
 @class SBSectionItem;
 @class SBSectionItemView;
 @interface SBSectionListView : SBView
 {
 	NSScrollView *scrollView;
 	NSView *contentView;
-	NSMutableArray *sectionGroupeViews;
+	NSMutableArray *sectionGroupViews;
 	NSMutableArray *sections;
 }
-@property (strong) NSMutableArray *sectionGroupeViews;
+@property (strong) NSMutableArray *sectionGroupViews;
 @property (strong) NSMutableArray *sections;
 @property (readonly) NSRect contentViewRect;
 
 - (instancetype)initWithFrame:(NSRect)frame;
-- (NSRect)groupeViewRectAtIndex:(NSInteger)index;
+- (NSRect)groupViewRectAtIndex:(NSInteger)index;
 - (void)destructScrollView;
 - (void)constructScrollView;
-- (void)constructSectionGroupeViews;
+- (void)constructSectionGroupViews;
 
 @end
 
-@interface SBSectionGroupeView : SBView
+@interface SBSectionGroupView : SBView
 {
 	NSMutableArray *itemViews;
-	SBSectionGroupe *groupe;
+	SBSectionGroup *group;
 }
 @property (strong) NSMutableArray *itemViews;
-@property (strong) SBSectionGroupe *groupe;
+@property (strong) SBSectionGroup *group;
 
 - (NSRect)itemViewRectAtIndex:(NSInteger)index;
 - (void)addItemView:(SBSectionItemView *)itemView;
