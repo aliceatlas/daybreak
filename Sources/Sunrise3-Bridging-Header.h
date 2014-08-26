@@ -27,6 +27,8 @@
 
 #import "NSSavePanel-SBAdditions.h"
 
+#import "SBTableCell.h"
+
 @interface NSToolbar (Private)
 - (NSView *)_toolbarView;
 @end
