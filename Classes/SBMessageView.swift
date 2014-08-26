@@ -90,7 +90,7 @@ class SBMessageView: SBView {
         addSubview(cancelButton)
         addSubview(doneButton)
         let viewsDictionary: [NSObject: AnyObject] = ["textLabel": textLabel, "messageLabel": messageLabel, "cancelButton": cancelButton, "doneButton": doneButton]
-        self.autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
     }
     
     required init(coder: NSCoder) {

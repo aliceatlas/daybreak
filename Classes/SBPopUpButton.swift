@@ -54,25 +54,25 @@ class SBPopUpButton: NSPopUpButton {
     
     func executeAction(sender: AnyObject) {
         if let item = sender as? NSMenuItem {
-            self.selectItemWithRepresentedObject(item.representedObject?)
-            self.setNeedsDisplayInRect(self.bounds)
+            selectItemWithRepresentedObject(item.representedObject?)
+            setNeedsDisplayInRect(bounds)
             if let item = sender as? NSMenuItem {
-                self.operation?(item)
+                operation?(item)
             }
         }
     }
     
     func selectItemWithRepresentedObject(representedObject: AnyObject?) {
-        if let menu = self.menu {
+        if let menu = menu {
             menu.selectItemWithRepresentedObject(representedObject)
-            self.setNeedsDisplayInRect(self.bounds)
+            setNeedsDisplayInRect(bounds)
         }
     }
     
     func deselectItem() {
-        if let menu = self.menu {
+        if let menu = menu {
             menu.deselectItem()
-            self.setNeedsDisplayInRect(self.bounds)
+            setNeedsDisplayInRect(bounds)
         }
     }
 }

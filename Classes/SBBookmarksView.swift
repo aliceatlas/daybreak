@@ -56,15 +56,15 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     // MARK: Delegate
     
     func bookmarkListViewShouldOpenSearchbar(bookmarkListView: SBBookmarkListView) {
-        if self.bounds.size.width >= SBSearchbar.availableWidth() {
-            self.setShowSearchbar(true)
+        if bounds.size.width >= SBSearchbar.availableWidth() {
+            setShowSearchbar(true)
         } else {
             NSBeep()
         }
     }
    
     func bookmarkListViewShouldCloseSearchbar(bookmarkListView: SBBookmarkListView) -> Bool {
-        return self.setShowSearchbar(false)
+        return setShowSearchbar(false)
     }
     
     // MARK: Destruction
@@ -77,10 +77,9 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     // MARK: Construction
     
     func constructListView(inMode: SBBookmarkMode) {
-        let r = self.bounds
-        self.destructListView()
-        scrollView = SBBLKGUIScrollView(frame: r)
-        listView = SBBookmarkListView(frame: r)
+        destructListView()
+        scrollView = SBBLKGUIScrollView(frame: bounds)
+        listView = SBBookmarkListView(frame: bounds)
         scrollView!.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView!.autohidesScrollers = true
         scrollView!.hasHorizontalScroller = false
@@ -91,7 +90,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         listView!.cellWidth = CGFloat(NSUserDefaults.standardUserDefaults().integerForKey(kSBBookmarkCellWidth as NSString) as Int)
         scrollView!.documentView = listView
         scrollView!.contentView.copiesOnScroll = true
-        self.addSubview(scrollView!)
+        addSubview(scrollView!)
         listView!.setCellSizeForMode(inMode)
         listView!.createItemViews()
         listView!.delegate = self
@@ -148,7 +147,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     }
     
     func closeSearchbar() {
-        self.setShowSearchbar(false)
+        setShowSearchbar(false)
     }
     
     // MARK: Execute
@@ -188,7 +187,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     
    override func drawRect(rect: NSRect) {
         let ctx = SBCurrentGraphicsPort
-        let r = NSRectToCGRect(self.bounds)
+        let r = NSRectToCGRect(bounds)
         let count: UInt = 2
         let locations: [CGFloat] = [0.0, 1.0]
         var colors: [CGFloat]

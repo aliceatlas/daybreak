@@ -194,7 +194,7 @@ class SBWebResourceButtonCell: NSButtonCell {
         var image: NSImage? = self.image
         if highlighted {
             fraction = highlightedImage != nil ? 1.0 : 0.5
-            image = self.highlightedImage ?? self.image
+            image = highlightedImage ?? image
         }
         if image != nil {
             var r = NSZeroRect

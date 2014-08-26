@@ -55,7 +55,7 @@ class SBDownload: NSObject {
     
     init(download: NSURLDownload) {
         self.download = download
-        self.downloading = true
+        downloading = true
     }
     
     var progress: Float {

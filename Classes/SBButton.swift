@@ -43,7 +43,7 @@ class SBButton: SBView, NSCoding {
         set(isEnabled) {
             if _enabled != isEnabled {
                 _enabled = isEnabled
-                self.needsDisplay = true
+                needsDisplay = true
             }
         }
     }
@@ -52,7 +52,7 @@ class SBButton: SBView, NSCoding {
         set(isPressed) {
             if _pressed != isPressed {
                 _pressed = isPressed
-                self.needsDisplay = true
+                needsDisplay = true
             }
         }
     }
@@ -61,7 +61,7 @@ class SBButton: SBView, NSCoding {
         set(inTitle) {
             if _title != inTitle {
                 _title = inTitle
-                self.setNeedsDisplayInRect(self.bounds)
+                setNeedsDisplayInRect(bounds)
             }
         }
     }
@@ -70,7 +70,7 @@ class SBButton: SBView, NSCoding {
         set(isToolbarVisible) {
             if toolbarVisible != isToolbarVisible {
                 super.toolbarVisible = isToolbarVisible
-                self.needsDisplay = true
+                needsDisplay = true
             }
         }
     }
@@ -129,8 +129,8 @@ class SBButton: SBView, NSCoding {
     // MARK: Exec
     
     func executeAction() {
-        if let target = self.target as? NSObject {
-            //if let action = self.action {
+        if let target = target as? NSObject {
+            //if let action = action {
                 //var sel = action
                 if target.respondsToSelector(action) {
                     SBPerform(target, action, self)
@@ -143,25 +143,25 @@ class SBButton: SBView, NSCoding {
     
     override func mouseDown(event: NSEvent) {
         if enabled {
-            self.pressed = true
+            pressed = true
         }
     }
     
     override func mouseDragged(event: NSEvent) {
         if enabled {
             let location = event.locationInWindow
-            let point = self.convertPoint(location, fromView: nil)
-            self.pressed = NSPointInRect(point, self.bounds)
+            let point = convertPoint(location, fromView: nil)
+            pressed = NSPointInRect(point, bounds)
         }
     }
     
     override func mouseUp(event: NSEvent) {
         if enabled {
             let location = event.locationInWindow
-            let point = self.convertPoint(location, fromView: nil)
-            if NSPointInRect(point, self.bounds) {
-                self.pressed = false
-                self.executeAction()
+            let point = convertPoint(location, fromView: nil)
+            if NSPointInRect(point, bounds) {
+                pressed = false
+                executeAction()
             }
         }
     }
@@ -170,7 +170,7 @@ class SBButton: SBView, NSCoding {
     
     override func drawRect(rect: NSRect) {
         var anImage: NSImage?
-        var r = self.bounds
+        var r = bounds
         if keyView {
             anImage = (enabled || disableImage == nil) ? image : disableImage
         } else {
@@ -200,11 +200,9 @@ class SBButton: SBView, NSCoding {
                 NSShadowAttributeName: shadow,
                 NSParagraphStyleAttributeName: style]
             r.size = title!.sizeWithAttributes(attributes)
-            if r.size.width > (self.bounds.size.width - padding * 2) {
-                r.size.width = self.bounds.size.width - padding * 2
-            }
-            r.origin.x = padding + ((self.bounds.size.width - padding * 2) - r.size.width) / 2
-            r.origin.y = (self.bounds.size.height - r.size.height) / 2
+            r.size.width = min(r.size.width, bounds.size.width - padding * 2)
+            r.origin.x = padding + ((bounds.size.width - padding * 2) - r.size.width) / 2
+            r.origin.y = (bounds.size.height - r.size.height) / 2
             title!.drawInRect(r, withAttributes: attributes)
         }
     }

@@ -41,8 +41,8 @@ class SBWebResourceIdentifier: NSObject /*, NSCoding */ {
         return SBWebResourceIdentifier(URLRequest: aRequest)
     }
     
-    init(URLRequest aRequest: NSURLRequest) {
-        self.request = aRequest
+    init(URLRequest request: NSURLRequest) {
+        self.request = request
     }
     
     override var description: String {

@@ -59,8 +59,8 @@ class SBRenderWindow: NSWindow {
         webView!.frameLoadDelegate = self
         webView!.preferences = SBGetWebPreferences()
         webView!.hostWindow = self
-        self.contentView.addSubview(webView!)
-        self.releasedWhenClosed = true
+        contentView.addSubview(webView!)
+        releasedWhenClosed = true
     }
     
     required init(coder: NSCoder) {
@@ -68,12 +68,12 @@ class SBRenderWindow: NSWindow {
     }
     
     func destruct() {
-        self.destructWebView()
-        self.close()
+        destructWebView()
+        close()
     }
     
     func destructWebView() {
-        if let webView = self.webView {
+        if let webView = webView {
             if webView.loading {
                 webView.stopLoading(nil)
             }
@@ -88,13 +88,13 @@ class SBRenderWindow: NSWindow {
     // MARK: Delegate
     
     override func webView(sender: WebView, didStartProvisionalLoadForFrame frame: WebFrame) {
-        if let delegate = self.delegate as? SBRenderWindowDelegate {
+        if let delegate = delegate as? SBRenderWindowDelegate {
             delegate.renderWindowDidStartRendering?(self)
         }
     }
     
     override func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
-        if let delegate = self.delegate as? SBRenderWindowDelegate {
+        if let delegate = delegate as? SBRenderWindowDelegate {
             if delegate.respondsToSelector("renderWindow:didFinishRenderingImage:") {
                 if let webDocumentView = sender.mainFrame.frameView.documentView {
                     let image = NSImage(view: webDocumentView).insetWithSize(SBBookmarkImageMaxSize(), intersectRect: webDocumentView.bounds, offset: NSZeroPoint)
@@ -102,17 +102,17 @@ class SBRenderWindow: NSWindow {
                 }
             }
         }
-        self.destruct()
+        destruct()
     }
     
     override func webView(sender: WebView, didFailProvisionalLoadWithError error: NSError, forFrame frame: WebFrame) {
-        if let delegate = self.delegate as? SBRenderWindowDelegate {
+        if let delegate = delegate as? SBRenderWindowDelegate {
             delegate.renderWindow?(self, didFailWithError: error)
         }
     }
     
     override func webView(sender: WebView, didFailLoadWithError error: NSError, forFrame frame: WebFrame) {
-        if let delegate = self.delegate as? SBRenderWindowDelegate {
+        if let delegate = delegate as? SBRenderWindowDelegate {
             delegate.renderWindow?(self, didFailWithError: error)
         }
     }

@@ -44,12 +44,12 @@ class SBBLKGUIScrollView: NSScrollView {
 
     override init(frame: NSRect) {
         super.init(frame: frame)
-        self.initialize()
+        initialize()
     }
 
     required init(coder: NSCoder) {
         super.init(coder: coder)
-        self.initialize()
+        initialize()
     }
     
     class func _horizontalScrollerClass() -> AnyClass {
@@ -61,28 +61,27 @@ class SBBLKGUIScrollView: NSScrollView {
     }
 
     func initialize() {
-        contentView = self.contentView
-        self.contentView = SBBLKGUIClipView(frame: contentView.frame)
+        contentView = SBBLKGUIClipView(frame: contentView.frame)
         
         /*
-      	self.hasVerticalScroller = hasVerticalScroller
-      	self.hasHorizontalScroller = hasHorizontalScroller
-        if self.hasVerticalScroller {
-      		let scroller = self.verticalScroller
+      	hasVerticalScroller = hasVerticalScroller
+      	hasHorizontalScroller = hasHorizontalScroller
+        if hasVerticalScroller {
+      		let scroller = verticalScroller
             let newScroller = SBBLKGUIScroller(frame: scroller.frame)
-      		newScroller.backgroundColor = self.backgroundColor
+      		newScroller.backgroundColor = backgroundColor
       		newScroller.arrowsPosition = .ScrollerArrowsMaxEnd
       		newScroller.controlSize = scroller.controlSize
-      		self.verticalScroller = newScroller
+      		verticalScroller = newScroller
       	}
       	
-        if self.hasHorizontalScroller {
-      		let scroller = self.horizontalScroller
+        if hasHorizontalScroller {
+      		let scroller = horizontalScroller
             let newScroller = SBBLKGUIScroller(frame: scroller.frame)
-            newScroller.backgroundColor = self.backgroundColor
+            newScroller.backgroundColor = backgroundColor
             newScroller.arrowsPosition = .ScrollerArrowsMaxEnd
             newScroller.controlSize = scroller.controlSize
-            self.horizontalScroller = newScroller
+            horizontalScroller = newScroller
       	}
         */
     }
@@ -93,11 +92,11 @@ class SBBLKGUIScrollView: NSScrollView {
         set(color) {
             super.backgroundColor = color
             /*
-            if self.hasVerticalScroller {
-                self.verticalScroller.backgroundColor = color
+            if hasVerticalScroller {
+                verticalScroller.backgroundColor = color
             }
-            if self.hasHorizontalScroller {
-                self.horizontalScroller.backgroundColor = color
+            if hasHorizontalScroller {
+                horizontalScroller.backgroundColor = color
             }
             */
         }
@@ -108,11 +107,11 @@ class SBBLKGUIScrollView: NSScrollView {
         set(drawsBackground) {
             super.drawsBackground = drawsBackground
             /*
-            if self.hasVerticalScroller {
-                self.verticalScroller.drawsBackground = drawsBackground
+            if hasVerticalScroller {
+                verticalScroller.drawsBackground = drawsBackground
             }
-            if self.hasHorizontalScroller {
-                self.horizontalScroller.drawsBackground = drawsBackground
+            if hasHorizontalScroller {
+                horizontalScroller.drawsBackground = drawsBackground
             }
             */
         }
@@ -120,7 +119,7 @@ class SBBLKGUIScrollView: NSScrollView {
     */
     
     override func drawRect(rect: NSRect) {
-        if self.drawsBackground {
+        if drawsBackground {
             NSColor(calibratedWhite: 0.0, alpha: 0.85).set()
             NSRectFill(rect)
             NSColor.lightGrayColor().set()
@@ -142,7 +141,7 @@ class SBBLKGUIScroller: NSScroller {
         set(inDrawsBackground) {
             if _drawsBackground != inDrawsBackground {
                 _drawsBackground = inDrawsBackground
-                self.needsDisplay = true
+                needsDisplay = true
             }
         }
     }
@@ -153,19 +152,18 @@ class SBBLKGUIScroller: NSScroller {
         set(inBackgroundColor) {
             if _backgroundColor != inBackgroundColor {
                 _backgroundColor = inBackgroundColor
-                self.needsDisplay = true
+                needsDisplay = true
             }
         }
     }
     
     override func drawRect(rect: NSRect) {
-        let r = self.bounds
         if drawsBackground {
             let color = NSColor(calibratedWhite: 0.0, alpha:0.85)
             (backgroundColor ?? color).set()
-            NSRectFill(r)
+            NSRectFill(bounds)
         }
-        super.drawRect(r)
+        super.drawRect(bounds)
     }
     
     func drawArrow(arrow: NSScrollerArrow, highlightPart part: Int) {
@@ -173,8 +171,8 @@ class SBBLKGUIScroller: NSScroller {
         var drawRect = NSZeroRect
         var image: NSImage!
         
-        let isVertical = self.bounds.size.width < self.bounds.size.height
-        let arrowRect = self.bounds
+        let isVertical = bounds.size.width < bounds.size.height
+        let arrowRect = bounds
         
         // Fill bounds
         backgroundColor?.set()
@@ -220,15 +218,15 @@ class SBBLKGUIScroller: NSScroller {
         
         // Stroke bounds
         NSColor.lightGrayColor().set()
-        NSFrameRect(self.bounds)
+        NSFrameRect(bounds)
     }
     
     override func drawKnobSlotInRect(rect: NSRect, highlight: Bool) {
-        let r = self.rectForPart(.KnobSlot)
+        let r = rectForPart(.KnobSlot)
         let color = NSColor(calibratedWhite: 0.0, alpha:0.85)
         var drawRect = NSZeroRect
         
-        let isVertical = self.bounds.size.width < self.bounds.size.height
+        let isVertical = bounds.size.width < bounds.size.height
         
         if drawsBackground {
             (backgroundColor ?? color).set()
@@ -251,8 +249,8 @@ class SBBLKGUIScroller: NSScroller {
         var drawRect = NSZeroRect
         var m: CGFloat = 2
         
-        let isVertical = self.bounds.size.width < self.bounds.size.height
-        let knobRect = self.rectForPart(.Knob)
+        let isVertical = bounds.size.width < bounds.size.height
+        let knobRect = rectForPart(.Knob)
         
         if isVertical {
             // Bottom

@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Cocoa
 
 class SBDrawer: SBView {
-    lazy var scrollView: SBBLKGUIScrollView = {
+    lazy var scrollView: SBBLKGUIScrollView! = {
         let scrollView = SBBLKGUIScrollView(frame: self.availableRect)
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView.autohidesScrollers = true
@@ -37,7 +37,6 @@ class SBDrawer: SBView {
         scrollView.hasVerticalScroller = true
         scrollView.backgroundColor = SBBackgroundColor
         scrollView.drawsBackground = true
-        self.addSubview(scrollView)
         return scrollView
     }()
     var view: NSView? {
@@ -48,9 +47,9 @@ class SBDrawer: SBView {
     }
     
     var availableRect: NSRect {
-        var r = self.bounds
-        if let subview = self.subview {
-            var sr = subview.frame
+        var r = bounds
+        if subview != nil {
+            var sr = subview!.frame
             r.size.height -= NSMaxY(sr)
             r.origin.y = NSMaxY(sr)
         }
@@ -62,6 +61,15 @@ class SBDrawer: SBView {
         if let view = view as? SBDownloadsView {
             view.layoutItems(false)
         }
+    }
+
+    override init(frame: NSRect) {
+        super.init(frame: frame)
+        addSubview(scrollView)
+    }
+
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
     }
     
     // MARK: Drawing

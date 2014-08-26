@@ -100,7 +100,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         addSubview(doneButton)
         addSubview(cancelButton)
         makeResponderChain()
-        self.autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
     }
     
     required init(coder: NSCoder) {

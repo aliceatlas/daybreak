@@ -51,17 +51,17 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     
     func addItem(item: SBDownload) {
         items.append(item)
-        item.identifier = self.createdIdentifier()
+        item.identifier = createdIdentifier()
         // Update views
-        self.executeDidAddItem(item)
+        executeDidAddItem(item)
     }
     
     func addItemWithURL(url: NSURL) {
-        self.addItem(SBDownload(URL: url))
+        addItem(SBDownload(URL: url))
     }
     
     func removeItem(item: SBDownload) {
-        self.removeItems([item])
+        removeItems([item])
     }
     
     func removeItems(inItems: [SBDownload]) {
@@ -74,7 +74,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
             }
         }
         // Update views
-        self.executeWillRemoveItem(inItems)
+        executeWillRemoveItem(inItems)
         removeObjects(&items, inItems)
     }
     
@@ -106,17 +106,17 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         var downloadItem = items.first { $0.download === download }
         if downloadItem == nil {
             downloadItem = SBDownload(download: download)
-            self.addItem(downloadItem!)
+            addItem(downloadItem!)
         }
         // Update view
         downloadItem!.status = .Processing
-        self.executeDidUpdateItem(downloadItem!)
+        executeDidUpdateItem(downloadItem!)
     }
     
     func download(download: NSURLDownload, willSendRequest request: NSURLRequest, redirectResponse: NSURLResponse) -> NSURLRequest {
         if let item = items.first({ $0.download === download }) {
             // Update views
-            self.executeDidUpdateItem(item)
+            executeDidUpdateItem(item)
         }
         return request
     }
@@ -126,7 +126,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
             item.expectedLength = max(0, Int(response.expectedContentLength))
             item.bytes = bytesString(item.receivedLength, item.expectedLength)
             // Update views
-            self.executeDidUpdateItem(item)
+            executeDidUpdateItem(item)
         }
     }
     
@@ -137,7 +137,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
                 item.path = item.path!.stringByAppendingPathComponent(filename)
                 item.download?.setDestination(item.path, allowOverwrite: false)
                 // Update views
-                self.executeDidUpdateItem(item)
+                executeDidUpdateItem(item)
             } else {
                 //<# Alert not found path #>
                 item.receivedLength = 0
@@ -155,7 +155,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
             }
             item.bytes = bytesString(item.receivedLength, item.expectedLength)
             // Update views
-            self.executeDidUpdateItem(item)
+            executeDidUpdateItem(item)
         }
     }
     
@@ -165,7 +165,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
             item.status = .Done
             item.downloading = false
             // Update views
-            self.executeDidFinishItem(item)
+            executeDidFinishItem(item)
         }
     }
     
@@ -176,7 +176,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
             item.receivedLength = 0
             item.expectedLength = 0
             // Update views
-            self.executeDidUpdateItem(item)
+            executeDidUpdateItem(item)
         }
     }
     

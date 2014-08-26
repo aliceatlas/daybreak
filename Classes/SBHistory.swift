@@ -38,10 +38,10 @@ class SBHistory: NSObject {
     override init() {
         super.init()
         WebHistory.setOptionalSharedHistory(history)
-        self.readFromFile()
+        readFromFile()
     }
     
-    func URL() -> NSURL {
+    var URL: NSURL {
         return NSURL.fileURLWithPath(SBHistoryFilePath())!
     }
     
@@ -56,30 +56,30 @@ class SBHistory: NSObject {
     func addNewItem(#URLString: String, title: String) {
         let item = WebHistoryItem(URLString: URLString, title: title, lastVisitedTimeInterval: NSDate().timeIntervalSince1970)
         history.addItems([item])
-        self.writeToFile()
+        writeToFile()
     }
     
     func removeItems(inItems: [WebHistoryItem]) {
         if !inItems.isEmpty {
             history.removeItems(inItems)
-            self.writeToFile()
+            writeToFile()
         }
     }
     
     func removeAtIndexes(indexes: NSIndexSet) {
-        self.removeItems(self.itemsAtIndexes(indexes))
+        removeItems(itemsAtIndexes(indexes))
     }
     
     func removeAllItems() {
         history.removeAllItems()
-        self.writeToFile()
+        writeToFile()
     }
     
     func readFromFile() -> Bool {
-        return history.loadFromURL(self.URL(), error: nil)
+        return history.loadFromURL(URL, error: nil)
     }
     
     func writeToFile() -> Bool {
-        return history.saveToURL(self.URL(), error: nil)
+        return history.saveToURL(URL, error: nil)
     }
 }

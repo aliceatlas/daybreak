@@ -34,14 +34,14 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     var updateView: SBUpdateView?
     
     deinit {
-        self.destructUpdateView()
-        self.destructLocalizeWindowController()
-        self.destructPreferencesWindowController()
+        destructUpdateView()
+        destructLocalizeWindowController()
+        destructPreferencesWindowController()
     }
     
     func applicationWillFinishLaunching(aNotification: NSNotification) {
         #if __debug__
-        self.constructDebugMenu()
+        constructDebugMenu()
         #endif
         // Handle AppleScript (Open URL from other application)
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(self, andSelector: "openURL:withReplyEvent:", forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
@@ -85,7 +85,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
                 if let type = documentController.typeForContentsOfURL(url, error: &error) {
                     if type == kSBStringsDocumentTypeName {
                         let path = NSBundle.mainBundle().pathForResource("Localizable", ofType:"strings")
-                        self.openStrings(path: path!, anotherPath:url.path!)
+                        openStrings(path: path!, anotherPath:url.path!)
                     } else if type == kSBDocumentTypeName {
                         document.constructNewTabWithURL(url, selection: (index == filenames.count - 1))
                         index++
@@ -166,7 +166,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Notifications
     
     func updaterShouldUpdate(notification: NSNotification) {
-        self.update(notification.userInfo![kSBUpdaterVersionString as NSString] as NSString)
+        update(notification.userInfo![kSBUpdaterVersionString as NSString] as NSString)
     }
     
     func updaterNotNeedUpdate(notification: NSNotification) {
@@ -213,7 +213,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let window = SBGetSelectedDocument().window
         let info = NSBundle.mainBundle().localizedInfoDictionary
         let urlString: String = info["SBReleaseNotesURL"] as NSString
-        self.destructUpdateView()
+        destructUpdateView()
         updateView = SBUpdateView(frame: window.splitViewRect)
         updateView!.title = NSString(format: NSLocalizedString("A new version of Sunrise %@ is available.", comment: ""), versionString)
         updateView!.text = NSLocalizedString("If you click the \"Download\" button, the download of the disk image file will begin. ", comment: "")
@@ -242,7 +242,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
         let url = NSURL(string: NSString(format: kSBUpdaterNewVersionURL, versionString))
         window.hideCoverWindow()
-        self.destructUpdateView()
+        destructUpdateView()
         document.startDownloadingForURL(url)
     }
     
@@ -253,7 +253,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func openStrings(#path: String, anotherPath: String? = nil) {
         let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSetS(path)
         if textSet != nil && !(textSet!.isEmpty) {
-            self.destructLocalizeWindowController()
+            destructLocalizeWindowController()
             localizationWindowController = SBLocalizationWindowController(viewSize: viewSize!)
             localizationWindowController!.fieldSet = fieldSet!
             localizationWindowController!.textSet = NSMutableArray(array: textSet!)
@@ -295,7 +295,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func preferences(AnyObject) {
         let viewSize = NSSize(width: 800, height: 700)
-        self.destructPreferencesWindowController()
+        destructPreferencesWindowController()
         preferencesWindowController = SBPreferencesWindowController(viewSize: viewSize)
         preferencesWindowController!.prepare()
         preferencesWindowController!.showWindow(nil)
@@ -356,7 +356,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
             localizationWindowController!.showWindow(nil)
         } else {
             let path = NSBundle.mainBundle().pathForResource("Localizable", ofType:"strings")
-            self.openStrings(path: path)
+            openStrings(path: path)
         }*/
     }
     

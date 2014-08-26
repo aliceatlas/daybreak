@@ -65,7 +65,7 @@ extension Array {
     }
     
     func any(condition: (Element) -> Bool) -> Bool {
-        if let x = self.first(condition) {
+        if let x = first(condition) {
             return true
         }
         return false

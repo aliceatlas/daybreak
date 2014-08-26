@@ -85,7 +85,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     var URLString: String? {
         get { return URL?.absoluteString }
         set(URLString) {
-            self.URL = URLString != nil ? NSURL(string: URLString!.URLEncodedString()) : nil
+            URL = URLString != nil ? NSURL(string: URLString!.URLEncodedString()) : nil
         }
     }
     var selected: Bool {
@@ -152,7 +152,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                     var wr = view.bounds
                     wr.size.height *= 0.6
                     r.size.height *= 0.4
-                    br.size.height = self.sourceBottomMargin
+                    br.size.height = sourceBottomMargin
                     tr.size.height = r.size.height - br.size.height
                     tr.origin.y = br.size.height
                     saveRect.size.width = 105.0
@@ -202,7 +202,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                     sourceTextView!.autoresizingMask = .ViewWidthSizable
                     sourceTextView!.textContainer.containerSize = NSMakeSize(r.size.width, CGFloat(FLT_MAX))
                     sourceTextView!.textContainer.widthTracksTextView = true
-                    sourceTextView!.string = (self.documentSource ?? "")!
+                    sourceTextView!.string = (documentSource ?? "")!
                     sourceTextView!.selectedRange = NSMakeRange(0, 0)
                     scrollView.documentView = sourceTextView
                     openButton.autoresizingMask = .ViewMinXMargin
@@ -311,7 +311,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     }
     
     func hideFinderbarInWebView() {
-        self.setShowFindbarInWebView(false)
+        setShowFindbarInWebView(false)
     }
     
     func hideFinderbarInSource() {
@@ -387,31 +387,31 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
 
     // MARK: SplitView Delegate
 
-    func splitView(splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
-        return splitView !== self.splitView || subview !== webView
+    func splitView(aSplitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
+        return aSplitView !== splitView || subview !== webView
     }
 
-    func splitView(splitView: NSSplitView, shouldHideDividerAtIndex dividerIndex: Int) -> Bool {
+    func splitView(aSplitView: NSSplitView, shouldHideDividerAtIndex dividerIndex: Int) -> Bool {
         return false
     }
 
-    func splitView(splitView: NSSplitView, shouldCollapseSubview subview: NSView, forDoubleClickOnDividerAtIndex dividerIndex: Int) -> Bool {
+    func splitView(aSplitView: NSSplitView, shouldCollapseSubview subview: NSView, forDoubleClickOnDividerAtIndex dividerIndex: Int) -> Bool {
         return true
     }
 
-    func splitView(splitView: NSSplitView, constrainSplitPosition proposedPosition: CGFloat, ofSubviewAt offset: Int) -> CGFloat {
+    func splitView(aSplitView: NSSplitView, constrainSplitPosition proposedPosition: CGFloat, ofSubviewAt offset: Int) -> CGFloat {
         return proposedPosition
     }
 
-    func splitView(splitView: NSSplitView, constrainMaxCoordinate proposedMax: CGFloat, ofSubviewAt offset: Int) -> CGFloat {
-        if splitView === self.splitView {
-            return splitView.bounds.size.height - 10 - self.sourceBottomMargin
+    func splitView(aSplitView: NSSplitView, constrainMaxCoordinate proposedMax: CGFloat, ofSubviewAt offset: Int) -> CGFloat {
+        if aSplitView === splitView {
+            return splitView.bounds.size.height - 10 - sourceBottomMargin
         }
         return proposedMax
     }
 
-    func splitView(splitView: NSSplitView, constrainMinCoordinate proposedMin: CGFloat, ofSubviewAt offset: Int) -> CGFloat {
-        if splitView === self.splitView {
+    func splitView(aSplitView: NSSplitView, constrainMinCoordinate proposedMin: CGFloat, ofSubviewAt offset: Int) -> CGFloat {
+        if aSplitView === splitView {
             return 10
         }
         return proposedMin
@@ -613,7 +613,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                         break
                 }
                 if title != nil {
-                    self.showErrorPageWithTitle(title!, urlString: urlString, frame: frame)
+                    showErrorPageWithTitle(title!, urlString: urlString, frame: frame)
                 }
             }
         }
@@ -964,7 +964,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
         if openPanel.runModal() == NSFileHandlingPanelOKButton {
             let encodingName = webView.textEncodingName
             var error: NSError?
-            var name: NSString? = self.pageTitle
+            var name: NSString? = pageTitle
             if name == "" { name = nil }
             name = (name ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")
             let filePath = NSTemporaryDirectory().stringByAppendingPathComponent(name!)
@@ -981,7 +981,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     }
     
     func saveDocumentSource(sender: AnyObject) {
-        var name: NSString? = self.pageTitle
+        var name: NSString? = pageTitle
         let encodingName = webView.textEncodingName
         name = ((name != nil && name! != "") ? name : NSLocalizedString("Untitled", comment: ""))!.stringByAppendingPathExtension("html")
         let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(!encodingName.isEmpty ? encodingName : kSBDefaultEncodingName))
@@ -997,8 +997,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     }
     
     func removeFromTabView() {
-        self.destructWebView()
-        self.tabView.removeTabViewItem(self)
+        destructWebView()
+        tabView.removeTabViewItem(self)
     }
     
     func showErrorPageWithTitle(title: String, urlString: String, frame: WebFrame) {
@@ -1034,7 +1034,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     func openURLInApplicationFromMenu(menuItem: NSMenuItem) {
         if let url = menuItem.representedObject as? NSURL {
             if let savedBundleIdentifier: String = NSUserDefaults.standardUserDefaults().objectForKey(kSBOpenApplicationBundleIdentifier) as? NSString {
-                self.openURL(url, inBundleIdentifier: savedBundleIdentifier)
+                openURL(url, inBundleIdentifier: savedBundleIdentifier)
             }
         }
     }
@@ -1053,7 +1053,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
                 bundleIdentifier = bundle.bundleIdentifier
             }
             if bundleIdentifier != nil {
-                if self.openURL(url, inBundleIdentifier: bundleIdentifier!) {
+                if openURL(url, inBundleIdentifier: bundleIdentifier!) {
                     NSUserDefaults.standardUserDefaults().setObject(bundleIdentifier!, forKey: kSBOpenApplicationBundleIdentifier)
                 }
             }
@@ -1069,7 +1069,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     
     func openFrameInCurrentFrameFromMenu(menuItem: NSMenuItem) {
         if let url = menuItem.representedObject as? NSURL {
-            self.URL = url
+            URL = url
         }
     }
     

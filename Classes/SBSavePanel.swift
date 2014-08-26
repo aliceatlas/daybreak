@@ -40,7 +40,7 @@ class SBSavePanel: NSSavePanel {
     }
     
     func constructBackgroundView() {
-        if let contentView = self.contentView as? NSView {
+        if let contentView = contentView as? NSView {
             let subviews = contentView.subviews
             if !subviews.isEmpty {
                 if let belowView = subviews[0] as? NSView {
@@ -53,8 +53,8 @@ class SBSavePanel: NSSavePanel {
     }
     
     func switchButtonType() {
-        let subviews = self.contentView.subviews
-        self.switchButtonTypeInSubViews(subviews)
+        let subviews = contentView.subviews
+        switchButtonTypeInSubViews(subviews)
     }
     
     func switchButtonTypeInSubViews(subviews: [AnyObject]) {
@@ -64,7 +64,7 @@ class SBSavePanel: NSSavePanel {
                     button.bezelStyle = .TexturedRoundedBezelStyle
                 }
             } else if let view = subview as? NSView {
-                self.switchButtonTypeInSubViews(view.subviews)
+                switchButtonTypeInSubViews(view.subviews)
             }
         }
     }
@@ -82,7 +82,7 @@ class SBOpenPanel: NSOpenPanel {
     }
     
     func constructBackgroundView() {
-        if let contentView = self.contentView as? NSView {
+        if let contentView = contentView as? NSView {
             let subviews = contentView.subviews
             if !subviews.isEmpty {
                 if let belowView = subviews[0] as? NSView {
@@ -95,8 +95,7 @@ class SBOpenPanel: NSOpenPanel {
     }
     
     func switchButtonType() {
-        let subviews = self.contentView.subviews
-        self.switchButtonTypeInSubViews(subviews)
+        switchButtonTypeInSubViews(contentView.subviews)
     }
     
     func switchButtonTypeInSubViews(subviews: [AnyObject]) {
@@ -106,7 +105,7 @@ class SBOpenPanel: NSOpenPanel {
                     button.bezelStyle = .TexturedRoundedBezelStyle
                 }
             } else if let view = subview as? NSView {
-                self.switchButtonTypeInSubViews(view.subviews)
+                switchButtonTypeInSubViews(view.subviews)
             }
         }
     }
@@ -117,7 +116,7 @@ class SBSavePanelContentView: SBView {
     
     override func drawRect(rect: NSRect) {
         let ctx = SBCurrentGraphicsPort
-        let r = NSRectToCGRect(self.bounds)
+        let r = NSRectToCGRect(bounds)
         let count: UInt = 3
         let locations: [CGFloat] = [0.0, 0.95, 1.0]
         let extended = r.size.height < 350.0

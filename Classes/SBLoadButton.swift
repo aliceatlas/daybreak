@@ -34,8 +34,8 @@ class SBLoadButton: SBButton {
             if _images == nil || _images! != inImages! {
                 _images = inImages
                 if _images != nil && !(_images!.isEmpty) {
-                    self.image = _images![0] as NSImage
-                    self.needsDisplay = true
+                    image = _images![0] as NSImage
+                    needsDisplay = true
                 }
                 on = false
             }
@@ -57,7 +57,7 @@ class SBLoadButton: SBButton {
                 } else {
                     indicator?.stopAnimation(nil)
                 }
-                self.switchImage()
+                switchImage()
             }
         }
     }
@@ -78,7 +78,7 @@ class SBLoadButton: SBButton {
     override init(frame: NSRect) {
         super.init(frame: frame)
         indicator = constructIndicator()
-        self.addSubview(indicator!)
+        addSubview(indicator!)
     }
     
     // MARK: NSCoding Protocol
@@ -87,34 +87,34 @@ class SBLoadButton: SBButton {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             if decoder.containsValueForKey("images") {
-                self.images = decoder.decodeObjectOfClass(NSArray.self, forKey: "images") as? [NSImage]
+                images = decoder.decodeObjectOfClass(NSArray.self, forKey: "images") as? [NSImage]
             }
             if decoder.containsValueForKey("on") {
-                self.on = decoder.decodeBoolForKey("on")
+                on = decoder.decodeBoolForKey("on")
             }
         }
     }
     
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
-        if let images = self.images {
+        if let images = images {
             coder.encodeObject(images, forKey: "images")
         }
         coder.encodeBool(on, forKey: "on")
     }
     
     func switchImage() {
-        if let images = self.images {
+        if let images = images {
             if images.count == 2 {
                 if on {
-                    if self.image === images[0] {
-                        self.image = images[1] as NSImage
-                        self.needsDisplay = true
+                    if image === images[0] {
+                        image = images[1] as NSImage
+                        needsDisplay = true
                     }
                 } else {
-                    if self.image === images[1] {
-                        self.image = images[0] as NSImage
-                        self.needsDisplay = true
+                    if image === images[1] {
+                        image = images[0] as NSImage
+                        needsDisplay = true
                     }
                 }
             }
@@ -122,7 +122,7 @@ class SBLoadButton: SBButton {
     }
 
     func constructIndicator() -> NSProgressIndicator {
-        let indicator = NSProgressIndicator(frame: NSMakeRect((self.bounds.size.width - 16.0) / 2, (self.bounds.size.height - 16.0) / 2, 16.0, 16.0))
+        let indicator = NSProgressIndicator(frame: NSMakeRect((bounds.size.width - 16.0) / 2, (bounds.size.height - 16.0) / 2, 16.0, 16.0))
         indicator.autoresizingMask = .ViewMaxXMargin | .ViewMinXMargin | .ViewMaxYMargin | .ViewMinYMargin
         indicator.usesThreadedAnimation = true
         indicator.style = .SpinningStyle
@@ -136,11 +136,11 @@ class SBLoadButton: SBButton {
     override func mouseUp(event: NSEvent) {
         if enabled {
             let location = event.locationInWindow
-            let point = self.convertPoint(location, fromView: nil)
-            if NSPointInRect(point, self.bounds) {
-                self.pressed = false
-                self.on = !on
-                self.executeAction()
+            let point = convertPoint(location, fromView: nil)
+            if NSPointInRect(point, bounds) {
+                pressed = false
+                on = !on
+                executeAction()
             }
         }
     }
@@ -148,6 +148,6 @@ class SBLoadButton: SBButton {
     // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
-        super.drawRect(self.bounds)
+        super.drawRect(bounds)
     }
 }

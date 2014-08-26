@@ -46,22 +46,22 @@ class SBDocumentController: NSDocumentController {
         if let homepage = SBPreferences.sharedPreferences.homepage(true) {
             NSLog("YES", homepage)
             let url = (countElements(homepage) > 0) ? NSURL.URLWithString(NSString(string: homepage).requestURLString()) : nil
-            return self.openUntitledDocumentAndDisplay(displayDocument, sidebarVisibility: sidebarVisibility, initialURL: url, error: outError)
+            return openUntitledDocumentAndDisplay(displayDocument, sidebarVisibility: sidebarVisibility, initialURL: url, error: outError)
         }
         NSLog("NO")
         return nil
     }
     
     func openUntitledDocumentAndDisplay(displayDocument: Bool, sidebarVisibility: Bool, initialURL url: NSURL?, error outError: NSErrorPointer) -> AnyObject! {
-        let type = self.typeForContentsOfURL(url, error: outError)
+        let type = typeForContentsOfURL(url, error: outError)
         if type == kSBStringsDocumentTypeName {
         } else {
-            if let document = self.makeUntitledDocumentOfType(kSBDocumentTypeName, error: outError) as? SBDocument {
+            if let document = makeUntitledDocumentOfType(kSBDocumentTypeName, error: outError) as? SBDocument {
                 if url != nil {
                     document.initialURL = url
                 }
                 document.sidebarVisibility = sidebarVisibility
-                self.addDocument(document)
+                addDocument(document)
                 document.makeWindowControllers()
                 if displayDocument {
                     document.showWindows()

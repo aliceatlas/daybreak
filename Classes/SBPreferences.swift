@@ -75,7 +75,7 @@ class SBPreferences: NSObject {
     }
     
     class func boolForKey(keyName: String) -> Bool {
-        return (self.objectForKey(keyName) as NSNumber).boolValue
+        return (objectForKey(keyName) as NSNumber).boolValue
     }
     
     class func objectForKey(keyName: String) -> AnyObject? {
@@ -105,7 +105,7 @@ class SBPreferences: NSObject {
     }
     
     class func setBool(value: Bool, forKey keyName: String) {
-        self.setObject(NSNumber(bool: value), forKey: keyName)
+        setObject(NSNumber(bool: value), forKey: keyName)
     }
     
     class func setObject(object: AnyObject, forKey keyName: String) {

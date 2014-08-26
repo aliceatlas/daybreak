@@ -52,9 +52,9 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     
     init(frame: NSRect, prompt: NSString) {
         super.init(frame: frame)
-        self.constructMessageLabel(prompt)
-        self.constructTextLabel()
-        self.autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        constructMessageLabel(prompt)
+        constructTextLabel()
+        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
     }
     
     required init(coder: NSCoder) {
@@ -70,15 +70,15 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     let textFont = NSFont.systemFontOfSize(16)
     
     var messageLabelRect: NSRect {
-        let size = NSSize(width: self.bounds.size.width - margin.x * 2, height: 36.0)
-        let origin = NSPoint(x: margin.x, y: self.bounds.size.height - size.height - margin.y)
+        let size = NSSize(width: bounds.size.width - margin.x * 2, height: 36.0)
+        let origin = NSPoint(x: margin.x, y: bounds.size.height - size.height - margin.y)
         return NSRect(origin: origin, size: size)
     }
     
     var textLabelRect: NSRect {
         let size = NSSize(
-            width: self.bounds.size.width - margin.x * 2,
-            height: (self.bounds.size.height - messageLabelRect.size.height - buttonSize.height) - margin.y * 4)
+            width: bounds.size.width - margin.x * 2,
+            height: (bounds.size.height - messageLabelRect.size.height - buttonSize.height) - margin.y * 4)
         let origin = NSPoint(x: margin.x, y: messageLabelRect.origin.y - size.height)
         return NSRect(origin: origin, size: size)
     }
@@ -86,7 +86,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     var doneButtonRect: NSRect {
         let size = buttonSize
         let origin = NSPoint(
-            x: ((self.bounds.size.width - (size.width * 2 + buttonMargin)) / 2) + size.width + buttonMargin,
+            x: ((bounds.size.width - (size.width * 2 + buttonMargin)) / 2) + size.width + buttonMargin,
             y: margin.y)
         return NSRect(origin: origin, size: size)
     }
@@ -94,7 +94,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     var cancelButtonRect: NSRect {
         let size = buttonSize
         let origin = NSPoint(
-            x: (self.bounds.size.width - (size.width * 2 + buttonMargin)) / 2,
+            x: (bounds.size.width - (size.width * 2 + buttonMargin)) / 2,
             y: margin.y)
         return NSRect(origin: origin, size: size)
     }
@@ -116,7 +116,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         cell.alignment = size.width > (r.size.width - 20.0) ? .LeftTextAlignment : .CenterTextAlignment
         (messageLabel.cell() as NSTextFieldCell).wraps = true
         messageLabel.stringValue = inMessage
-        self.addSubview(messageLabel)
+        addSubview(messageLabel)
     }
     
     func constructTextLabel() {
@@ -127,7 +127,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         textLabel.textColor = NSColor.whiteColor()
         textLabel.delegate = self
         (textLabel.cell() as NSTextFieldCell).wraps = true
-        self.addSubview(textLabel)
+        addSubview(textLabel)
     }
     
     func constructDoneButton() {
@@ -138,7 +138,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         doneButton!.action = "done"
         doneButton!.enabled = true
         doneButton!.keyEquivalent = "\r" // busy if button is added into a view
-        self.addSubview(doneButton!)
+        addSubview(doneButton!)
     }
     
     func constructCancelButton() {
@@ -148,7 +148,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         cancelButton!.target = self
         cancelButton!.action = "cancel"
         cancelButton!.keyEquivalent = "\u{1B}"
-        self.addSubview(cancelButton!)
+        addSubview(cancelButton!)
     }
     
     // MARK: Delegate
@@ -162,7 +162,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     override var doneSelector: Selector {
         didSet {
             if doneSelector != nil && doneButton == nil {
-                self.constructDoneButton()
+                constructDoneButton()
             }
         }
     }
@@ -170,7 +170,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     override var cancelSelector: Selector {
         didSet {
             if cancelSelector != nil && cancelButton == nil {
-                self.constructCancelButton()
+                constructCancelButton()
             }
         }
     }

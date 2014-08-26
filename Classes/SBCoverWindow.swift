@@ -35,18 +35,18 @@ class SBCoverWindow: NSWindow {
         frame.size = size
         super.init(contentRect: frame, styleMask: styleMask, backing: .Buffered, defer: true)
         
-        self.minSize = size
-        self.releasedWhenClosed = true
-        self.showsToolbarButton = false
-        self.oneShot = false
-        self.acceptsMouseMovedEvents = false
-        self.opaque = false
-        self.backgroundColor = NSColor(calibratedWhite:0.0, alpha:0.8)
-        self.hasShadow = false
+        minSize = size
+        releasedWhenClosed = true
+        showsToolbarButton = false
+        oneShot = false
+        acceptsMouseMovedEvents = false
+        opaque = false
+        backgroundColor = NSColor(calibratedWhite:0.0, alpha:0.8)
+        hasShadow = false
     }
     
     required init(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("NSCoding not supported")
     }
     
     override func animationResizeTime(newWindowFrame: NSRect) -> NSTimeInterval {

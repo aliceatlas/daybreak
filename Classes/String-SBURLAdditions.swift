@@ -48,15 +48,15 @@ extension String {
             }
             stringValue = stringValue.URLEncodedString
         } else {
-            stringValue = self.searchURLString
+            stringValue = searchURLString
         }
         return stringValue
     }
     
     func isURLString(inout hasScheme: Bool) -> Bool {
         var r = false
-        if (find(self, " ") == nil && find(self, ".") == nil) || self.hasPrefix("http://localhost") {
-            let string = self.URLEncodedString
+        if (find(self, " ") == nil && find(self, ".") == nil) || hasPrefix("http://localhost") {
+            let string = URLEncodedString
             let attributedString = NSAttributedString(string: string)
             var range = NSMakeRange(0, 0)
             let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)

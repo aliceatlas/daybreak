@@ -54,8 +54,8 @@ class SBDownloader: NSObject {
             statusCode = resp.statusCode
         }
         if statusCode != 200 {
-            self.executeDidFail(nil)
-            self.cancel()
+            executeDidFail(nil)
+            cancel()
         }
     }
     
@@ -69,16 +69,16 @@ class SBDownloader: NSObject {
     
     func connectionDidFinishLoading(connection: NSURLConnection) {
         if receivedData?.length > 0 {
-            self.executeDidFinish()
+            executeDidFinish()
         } else {
-            self.executeDidFail(nil)
+            executeDidFail(nil)
         }
-        self.destructConnection()
+        destructConnection()
     }
     
     func connection(connection: NSURLConnection, didFailWithError error: NSError) {
-        self.executeDidFail(error)
-        self.destructConnection()
+        executeDidFail(error)
+        destructConnection()
     }
     
     // MARK: Execute
@@ -102,15 +102,15 @@ class SBDownloader: NSObject {
     }
     
     func start() {
-        self.destructReceivedData()
+        destructReceivedData()
         if url != nil {
             let request = NSURLRequest(URL: url!, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
-            self.destructConnection()
+            destructConnection()
             connection = NSURLConnection(request: request, delegate: self)
         }
     }
     
     func cancel() {
-        self.connection?.cancel()
+        connection?.cancel()
     }
 }

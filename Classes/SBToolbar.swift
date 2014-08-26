@@ -13,22 +13,22 @@ class SBToolbar: NSToolbar {
             if shown != super.visible {
                 super.visible = shown
                 if shown {
-                    self.executeDidVisible()
+                    executeDidVisible()
                 } else {
-                    self.executeDidInvisible()
+                    executeDidInvisible()
                 }
             }
         }
     }
     
     func executeDidVisible() {
-        if let delegate = self.delegate as? SBToolbarDelegate {
+        if let delegate = delegate as? SBToolbarDelegate {
             delegate.toolbarDidVisible(self)
         }
     }
     
     func executeDidInvisible() {
-        if let delegate = self.delegate as? SBToolbarDelegate {
+        if let delegate = delegate as? SBToolbarDelegate {
             delegate.toolbarDidInvisible(self)
         }
     }
@@ -51,7 +51,7 @@ class SBToolbar: NSToolbar {
                 }
                 delta.x += view!.frame.origin.x
                 delta.y += view!.frame.origin.y
-                if view! === self._toolbarView() {
+                if view! === _toolbarView() {
                     break
                 }
             }

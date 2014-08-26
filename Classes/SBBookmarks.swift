@@ -40,7 +40,7 @@ class SBBookmarks: NSObject {
 
     override init() {
         super.init()
-        self.readFromFile()
+        readFromFile()
     }
     
     // MARK: Getter
@@ -156,7 +156,7 @@ class SBBookmarks: NSObject {
     
     func replaceItem(item: BookmarkItem, atIndex index: UInt) {
         items[Int(index)] = NSMutableDictionary(dictionary: item)
-        self.writeToFile()
+        writeToFile()
         SBDispatch(notifyDidUpdate)
     }
     
@@ -164,7 +164,7 @@ class SBBookmarks: NSObject {
         let index = indexOfItem(oldItem)
         if index != NSNotFound {
             items[Int(index)] = NSMutableDictionary(dictionary: newItem)
-            self.writeToFile()
+            writeToFile()
             SBDispatch(notifyDidUpdate)
         }
     }
@@ -175,7 +175,7 @@ class SBBookmarks: NSObject {
             for (i, item) in enumerate(inItems) {
                 items.insert(NSMutableDictionary(dictionary: item), atIndex: i + Int(toIndex))
             }
-            self.writeToFile()
+            writeToFile()
             SBDispatch(notifyDidUpdate)
         }
     }
@@ -208,14 +208,14 @@ class SBBookmarks: NSObject {
     }
 
     func removeItemsAtIndexes(indexes: NSIndexSet) {
-        self.items.removeObjectsAtIndexes(indexes)
-        self.writeToFile()
-        SBDispatch(self.notifyDidUpdate)
+        items.removeObjectsAtIndexes(indexes)
+        writeToFile()
+        SBDispatch(notifyDidUpdate)
     }
     
     func doubleClickItemsAtIndexes(indexes: NSIndexSet) {
-        let selectedItems = self.items.objectsAtIndexes(indexes)
-        self.openItemsInSelectedDocument(selectedItems)
+        let selectedItems = items.objectsAtIndexes(indexes)
+        openItemsInSelectedDocument(selectedItems)
     }
     
     func changeLabelName(labelName: String, atIndexes indexes: NSIndexSet) {
@@ -225,8 +225,8 @@ class SBBookmarks: NSObject {
             return
         }
         
-        self.writeToFile()
-        SBDispatch(self.notifyDidUpdate)
+        writeToFile()
+        SBDispatch(notifyDidUpdate)
     }
     
     // MARK: Exec
@@ -234,7 +234,7 @@ class SBBookmarks: NSObject {
     func openItemsFromMenuItem(menuItem: NSMenuItem) {
         let representedItems = menuItem.representedObject as [BookmarkItem]
         if !representedItems.isEmpty {
-            self.openItemsInSelectedDocument(representedItems)
+            openItemsInSelectedDocument(representedItems)
         }
     }
     
@@ -249,7 +249,7 @@ class SBBookmarks: NSObject {
     func removeItemsFromMenuItem(menuItem: NSMenuItem) {
         let representedIndexes = menuItem.representedObject as NSIndexSet
         if representedIndexes.count > 0 {
-            self.removeItemsAtIndexes(representedIndexes)
+            removeItemsAtIndexes(representedIndexes)
         }
     }
     
@@ -258,7 +258,7 @@ class SBBookmarks: NSObject {
         let tag = menuItem.menu.indexOfItem(menuItem)
         if representedIndexes.count > 0 && tag < SBBookmarkLabelColorNames.count {
             let labelName = SBBookmarkLabelColorNames[tag]
-            self.changeLabelName(labelName, atIndexes: representedIndexes)
+            changeLabelName(labelName, atIndexes: representedIndexes)
         }
     }
 }

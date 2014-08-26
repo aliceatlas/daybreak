@@ -36,9 +36,9 @@ class SBSegmentedButton: SBView {
             if buttons != _buttons {
                 _buttons = buttons
                 for button in buttons {
-                    self.addSubview(button)
+                    addSubview(button)
                 }
-                self.adjustFrame()
+                adjustFrame()
             }
         }
     }
@@ -57,7 +57,7 @@ class SBSegmentedButton: SBView {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             if decoder.containsValueForKey("buttons") {
-                self.buttons = decoder.decodeObjectForKey("buttons") as [SBButton]
+                buttons = decoder.decodeObjectForKey("buttons") as [SBButton]
             }
         }
     }
@@ -72,6 +72,6 @@ class SBSegmentedButton: SBView {
     // MARK: Actions
     
     func adjustFrame() {
-        self.frame = buttons.map({ $0.frame }).reduce(NSZeroRect, NSUnionRect)
+        frame = buttons.map({ $0.frame }).reduce(NSZeroRect, NSUnionRect)
     }
 }
