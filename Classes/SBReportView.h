@@ -42,18 +42,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *cancelButton;
 	SBBLKGUIButton *doneButton;
 }
-@property (nonatomic, readonly) NSPoint margin;
-@property (nonatomic, readonly) CGFloat labelWidth;
-@property (nonatomic, readonly) NSRect iconRect;
-@property (nonatomic, readonly) NSRect titleRect;
-@property (nonatomic, readonly) NSRect summeryLabelRect;
-@property (nonatomic, readonly) NSRect summeryFieldRect;
-@property (nonatomic, readonly) NSRect switchLabelRect;
-@property (nonatomic, readonly) NSRect switchRect;
-@property (nonatomic, readonly) NSRect wayLabelRect;
-@property (nonatomic, readonly) NSRect wayFieldRect;
-@property (nonatomic, readonly) NSRect cancelRect;
-@property (nonatomic, readonly) NSRect doneRect;
+@property (readonly) NSPoint margin;
+@property (readonly) CGFloat labelWidth;
+@property (readonly) NSRect iconRect;
+@property (readonly) NSRect titleRect;
+@property (readonly) NSRect summeryLabelRect;
+@property (readonly) NSRect summeryFieldRect;
+@property (readonly) NSRect switchLabelRect;
+@property (readonly) NSRect switchRect;
+@property (readonly) NSRect wayLabelRect;
+@property (readonly) NSRect wayFieldRect;
+@property (readonly) NSRect cancelRect;
+@property (readonly) NSRect doneRect;
 
 // Construction
 - (void)constructTitle;

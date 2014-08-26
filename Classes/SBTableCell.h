@@ -36,11 +36,11 @@ typedef NS_ENUM(NSInteger, SBTableCellStyle) {
 	BOOL showSelection;
 	NSLineBreakMode lineBreakMode;
 }
-@property (nonatomic) SBTableCellStyle style;
-@property (nonatomic) BOOL showRoundedPath;
-@property (nonatomic) BOOL showSelection;
-@property (nonatomic) NSLineBreakMode lineBreakMode;
-@property (nonatomic, readonly) CGFloat side;
+@property SBTableCellStyle style;
+@property BOOL showRoundedPath;
+@property BOOL showSelection;
+@property NSLineBreakMode lineBreakMode;
+@property (readonly) CGFloat side;
 
 - (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 
@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger, SBTableCellStyle) {
 {
 	BOOL drawsBackground;
 }
-@property (nonatomic) BOOL drawsBackground;
+@property BOOL drawsBackground;
 
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 

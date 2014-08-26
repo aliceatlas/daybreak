@@ -279,7 +279,7 @@ class SBPopUpButtonCell: NSPopUpButtonCell {
 {
     NSMenu *menu;
 }
-@property (nonatomic, retain) NSMenu *menu;
+@property (retain) NSMenu *menu;
 
 // Setter
 - (void)setMenu:(NSMenu *)inMenu;

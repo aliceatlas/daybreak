@@ -36,13 +36,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL alwaysDrawing;
 	BOOL showPercentage;
 }
-@property (nonatomic) SBCircleProgressIndicatorStyle style;
-@property (nonatomic) CGFloat progress;
-@property (nonatomic) BOOL selected;
-@property (nonatomic) BOOL highlighted;
-@property (nonatomic) CGColorRef backgroundColor;
-@property (nonatomic) CGColorRef fillColor;
-@property (nonatomic) BOOL alwaysDrawing;
-@property (nonatomic) BOOL showPercentage;
+@property SBCircleProgressIndicatorStyle style;
+@property CGFloat progress;
+@property BOOL selected;
+@property BOOL highlighted;
+@property CGColorRef backgroundColor;
+@property CGColorRef fillColor;
+@property BOOL alwaysDrawing;
+@property BOOL showPercentage;
 
 @end

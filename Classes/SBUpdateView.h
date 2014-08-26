@@ -40,18 +40,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *doneButton;
 	NSString *versionString;
 }
-@property (nonatomic) NSString *title;
-@property (nonatomic) NSString *text;
-@property (nonatomic, strong) NSString *versionString;
-@property (nonatomic, strong) WebView *webView;
-@property (nonatomic, readonly) NSRect imageRect;
-@property (nonatomic, readonly) NSRect titleRect;
-@property (nonatomic, readonly) NSRect textRect;
-@property (nonatomic, readonly) NSRect webRect;
-@property (nonatomic, readonly) NSRect indicatorRect;
-@property (nonatomic, readonly) NSRect skipButtonRect;
-@property (nonatomic, readonly) NSRect cancelButtonRect;
-@property (nonatomic, readonly) NSRect doneButtonRect;
+@property NSString *title;
+@property NSString *text;
+@property (strong) NSString *versionString;
+@property (strong) WebView *webView;
+@property (readonly) NSRect imageRect;
+@property (readonly) NSRect titleRect;
+@property (readonly) NSRect textRect;
+@property (readonly) NSRect webRect;
+@property (readonly) NSRect indicatorRect;
+@property (readonly) NSRect skipButtonRect;
+@property (readonly) NSRect cancelButtonRect;
+@property (readonly) NSRect doneButtonRect;
 
 // Construct
 - (void)constructImageView;

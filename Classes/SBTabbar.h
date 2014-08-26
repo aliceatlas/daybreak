@@ -45,16 +45,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSTimer *closableTimer;
 	SBTabbarItem *closableItem;
 }
-@property (nonatomic, strong) NSMutableArray *items;
-@property (nonatomic, unsafe_unretained) id <SBTabbarDelegate> delegate;
-@property (nonatomic, readonly) SBTabbarItem *selectedTabbarItem;
-@property (nonatomic, readonly) CGFloat itemWidth;
-@property (nonatomic, readonly) CGFloat itemMinimumWidth;
-@property (nonatomic, readonly) CGFloat addButtonWidth;
-@property (nonatomic, readonly) NSRect addButtonRect;
-@property (nonatomic, readonly) CGFloat innerWidth;
-@property (nonatomic, readonly) NSRect newItemRect;
-@property (nonatomic, readonly) BOOL canClosable;
+@property (strong) NSMutableArray *items;
+@property (unsafe_unretained) id <SBTabbarDelegate> delegate;
+@property (readonly) SBTabbarItem *selectedTabbarItem;
+@property (readonly) CGFloat itemWidth;
+@property (readonly) CGFloat itemMinimumWidth;
+@property (readonly) CGFloat addButtonWidth;
+@property (readonly) NSRect addButtonRect;
+@property (readonly) CGFloat innerWidth;
+@property (readonly) NSRect newItemRect;
+@property (readonly) BOOL canClosable;
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 // Rects

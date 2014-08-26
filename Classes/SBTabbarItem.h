@@ -42,18 +42,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL _dragInClose;
 	NSTrackingArea *area;
 }
-@property (nonatomic, weak) SBTabbar *tabbar;
-@property (nonatomic, strong) SBCircleProgressIndicator *progressIndicator;
-@property (nonatomic, strong) NSNumber *identifier;
-@property (nonatomic, strong) NSImage *image;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic) BOOL selected;
-@property (nonatomic) BOOL closable;
-@property (nonatomic, assign) SEL closeSelector;
-@property (nonatomic, assign) SEL selectSelector;
-@property (nonatomic) CGFloat progress;
-@property (nonatomic, readonly) CGRect closableRect;
-@property (nonatomic, readonly) CGRect progressRect;
+@property (weak) SBTabbar *tabbar;
+@property (strong) SBCircleProgressIndicator *progressIndicator;
+@property (strong) NSNumber *identifier;
+@property (strong) NSImage *image;
+@property (strong) NSString *title;
+@property BOOL selected;
+@property BOOL closable;
+@property (assign) SEL closeSelector;
+@property (assign) SEL selectSelector;
+@property CGFloat progress;
+@property (readonly) CGRect closableRect;
+@property (readonly) CGRect progressRect;
 
 // Destruction
 - (void)destructProgressIndicator;

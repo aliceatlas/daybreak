@@ -35,17 +35,17 @@
 	SBBLKGUIButton *cancelButton;
 	SBBLKGUIButton *doneButton;
 }
-@property (nonatomic, weak) NSString *message;
-@property (nonatomic, weak) NSString *text;
-@property (nonatomic, readonly) NSPoint margin;
-@property (nonatomic, readonly) CGFloat labelWidth;
-@property (nonatomic, readonly) NSSize buttonSize;
-@property (nonatomic, readonly) CGFloat buttonMargin;
-@property (nonatomic, readonly) NSFont *textFont;
-@property (nonatomic, readonly) NSRect messageLabelRect;
-@property (nonatomic, readonly) NSRect textLabelRect;
-@property (nonatomic, readonly) NSRect doneButtonRect;
-@property (nonatomic, readonly) NSRect cancelButtonRect;
+@property (weak) NSString *message;
+@property (weak) NSString *text;
+@property (readonly) NSPoint margin;
+@property (readonly) CGFloat labelWidth;
+@property (readonly) NSSize buttonSize;
+@property (readonly) CGFloat buttonMargin;
+@property (readonly) NSFont *textFont;
+@property (readonly) NSRect messageLabelRect;
+@property (readonly) NSRect textLabelRect;
+@property (readonly) NSRect doneButtonRect;
+@property (readonly) NSRect cancelButtonRect;
 
 - (instancetype)initWithFrame:(NSRect)frame text:(NSString *)inText NS_DESIGNATED_INITIALIZER;
 // Construction

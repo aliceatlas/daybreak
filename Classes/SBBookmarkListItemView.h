@@ -35,22 +35,22 @@
 	BOOL dragged;
 	NSTrackingArea *area;
 }
-@property (nonatomic) SBBookmarkMode mode;
-@property (nonatomic, strong) NSDictionary *item;
-@property (nonatomic) BOOL selected;
-@property (nonatomic) BOOL dragged;
-@property (nonatomic, readonly) NSFont *titleFont;
-@property (nonatomic, readonly) NSFont *urlFont;
-@property (nonatomic, readonly) NSParagraphStyle *paragraphStyle;
-@property (nonatomic, readonly) NSPoint padding;
-@property (nonatomic, readonly) CGFloat heights;
-@property (nonatomic, readonly) CGFloat titleHeight;
-@property (nonatomic, readonly) CGFloat bytesHeight;
-@property (nonatomic, readonly) BOOL visible;
-@property (nonatomic, readonly) NSRect imageRect;
-@property (nonatomic, readonly) NSRect titleRect;
-@property (nonatomic, readonly) NSRect bytesRect;
-@property (nonatomic, readonly) BOOL isFirstResponder;
+@property SBBookmarkMode mode;
+@property (strong) NSDictionary *item;
+@property BOOL selected;
+@property BOOL dragged;
+@property (readonly) NSFont *titleFont;
+@property (readonly) NSFont *urlFont;
+@property (readonly) NSParagraphStyle *paragraphStyle;
+@property (readonly) NSPoint padding;
+@property (readonly) CGFloat heights;
+@property (readonly) CGFloat titleHeight;
+@property (readonly) CGFloat bytesHeight;
+@property (readonly) BOOL visible;
+@property (readonly) NSRect imageRect;
+@property (readonly) NSRect titleRect;
+@property (readonly) NSRect bytesRect;
+@property (readonly) BOOL isFirstResponder;
 
 + (instancetype)viewWithFrame:(NSRect)frame item:(NSDictionary *)item;
 - (BOOL)hitToPoint:(NSPoint)point;

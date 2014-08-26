@@ -37,12 +37,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSTextField *copyrightLabel;
 	SBBLKGUIButton *backButton;
 }
-@property (nonatomic, readonly) NSRect iconImageRect;
-@property (nonatomic, readonly) NSRect nameLabelRect;
-@property (nonatomic, readonly) NSRect identifierLabelRect;
-@property (nonatomic, readonly) NSRect creditLabelRect;
-@property (nonatomic, readonly) NSRect copyrightLabelRect;
-@property (nonatomic, readonly) NSRect backButtonRect;
+@property (readonly) NSRect iconImageRect;
+@property (readonly) NSRect nameLabelRect;
+@property (readonly) NSRect identifierLabelRect;
+@property (readonly) NSRect creditLabelRect;
+@property (readonly) NSRect copyrightLabelRect;
+@property (readonly) NSRect backButtonRect;
 
 + (SBAboutView *)sharedView;
 - (instancetype)initWithFrame:(NSRect)frame;

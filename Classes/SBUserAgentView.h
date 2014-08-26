@@ -36,15 +36,15 @@
 	SBBLKGUIButton *cancelButton;
 	SBBLKGUIButton *doneButton;
 }
-@property (nonatomic, readonly) NSString *userAgentName;
-@property (nonatomic, readonly) NSPoint margin;
-@property (nonatomic, readonly) CGFloat labelWidth;
-@property (nonatomic, readonly) NSRect iconRect;
-@property (nonatomic, readonly) NSRect titleRect;
-@property (nonatomic, readonly) NSRect popupRect;
-@property (nonatomic, readonly) NSRect fieldRect;
-@property (nonatomic, readonly) NSRect cancelRect;
-@property (nonatomic, readonly) NSRect doneRect;
+@property (readonly) NSString *userAgentName;
+@property (readonly) NSPoint margin;
+@property (readonly) CGFloat labelWidth;
+@property (readonly) NSRect iconRect;
+@property (readonly) NSRect titleRect;
+@property (readonly) NSRect popupRect;
+@property (readonly) NSRect fieldRect;
+@property (readonly) NSRect cancelRect;
+@property (readonly) NSRect doneRect;
 
 // Construction
 - (void)constructTitle;

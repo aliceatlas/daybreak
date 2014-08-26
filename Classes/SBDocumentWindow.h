@@ -40,22 +40,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBSplitView *splitView;
 	BOOL tabbarVisivility;
 }
-@property (nonatomic, readonly) NSRect innerRect;
-@property (nonatomic) BOOL keyView;
+@property (readonly) NSRect innerRect;
+@property BOOL keyView;
 @property (copy) NSString *title;
 @property (strong) SBToolbar *toolbar;
 @property (strong) NSView *contentView;
-@property (nonatomic, strong) SBInnerView *innerView;
-@property (nonatomic, strong) SBTabbar *tabbar;
-@property (nonatomic, strong) SBSplitView *splitView;
-@property (nonatomic, strong) SBCoverWindow *coverWindow;
-@property (nonatomic, strong) NSWindow *backWindow;
-@property (nonatomic) BOOL tabbarVisivility;
-@property (nonatomic, getter=isCovering, readonly) BOOL covering;
-@property (nonatomic, readonly) CGFloat tabbarHeight;
-@property (nonatomic, readonly) NSRect tabbarRect;
-@property (nonatomic, readonly) NSRect splitViewRect;
-@property (nonatomic, readonly) CGFloat sheetPosition;
+@property (strong) SBInnerView *innerView;
+@property (strong) SBTabbar *tabbar;
+@property (strong) SBSplitView *splitView;
+@property (strong) SBCoverWindow *coverWindow;
+@property (strong) NSWindow *backWindow;
+@property BOOL tabbarVisivility;
+@property (getter=isCovering, readonly) BOOL covering;
+@property (readonly) CGFloat tabbarHeight;
+@property (readonly) NSRect tabbarRect;
+@property (readonly) NSRect splitViewRect;
+@property (readonly) CGFloat sheetPosition;
 
 - (instancetype)initWithFrame:(NSRect)frame delegate:(id)delegate tabbarVisivility:(BOOL)inTabbarVisivility NS_DESIGNATED_INITIALIZER;
 

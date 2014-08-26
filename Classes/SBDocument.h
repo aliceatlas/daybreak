@@ -87,27 +87,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger _identifier;
 	NSInteger confirmed;
 }
-@property (nonatomic, weak) SBDocumentWindow *window;
-@property (nonatomic, weak) NSWindowController *windowController;
-@property (nonatomic, strong) NSToolbar *toolbar;
-@property (nonatomic, strong) SBURLField *urlField;
-@property (nonatomic, strong) SBTabbar *tabbar;
-@property (nonatomic, strong) SBSplitView *splitView;
-@property (nonatomic, strong) NSURL *initialURL;
-@property (nonatomic) BOOL sidebarVisibility;
-@property (nonatomic, readonly) SBTabViewItem *selectedTabViewItem;
-@property (nonatomic, readonly) SBWebView *selectedWebView;
-@property (nonatomic, readonly) NSView *selectedWebDocumentView;
-@property (nonatomic, readonly) WebDataSource *selectedWebDataSource;
-@property (nonatomic, readonly) NSImage *selectedWebViewImageForBookmark;
-@property (nonatomic, readonly) NSData *selectedWebViewImageDataForBookmark;
-@property (nonatomic, readonly) SBWebResourcesView *resourcesView;
-@property (nonatomic, readonly) NSNumber *createdIdentifier;
-@property (nonatomic, readonly) NSInteger tabCount;
-@property (nonatomic, readonly) NSRect visibleRectOfSelectedWebDocumentView;
-@property (nonatomic, readonly) NSImage *selectedWebViewImage;
-@property (nonatomic, readonly) CGFloat minimumDownloadsDrawerHeight;
-@property (nonatomic, readonly) BOOL shouldCloseDocument;
+@property (weak) SBDocumentWindow *window;
+@property (weak) NSWindowController *windowController;
+@property (strong) NSToolbar *toolbar;
+@property (strong) SBURLField *urlField;
+@property (strong) SBTabbar *tabbar;
+@property (strong) SBSplitView *splitView;
+@property (strong) NSURL *initialURL;
+@property BOOL sidebarVisibility;
+@property (readonly) SBTabViewItem *selectedTabViewItem;
+@property (readonly) SBWebView *selectedWebView;
+@property (readonly) NSView *selectedWebDocumentView;
+@property (readonly) WebDataSource *selectedWebDataSource;
+@property (readonly) NSImage *selectedWebViewImageForBookmark;
+@property (readonly) NSData *selectedWebViewImageDataForBookmark;
+@property (readonly) SBWebResourcesView *resourcesView;
+@property (readonly) NSNumber *createdIdentifier;
+@property (readonly) NSInteger tabCount;
+@property (readonly) NSRect visibleRectOfSelectedWebDocumentView;
+@property (readonly) NSImage *selectedWebViewImage;
+@property (readonly) CGFloat minimumDownloadsDrawerHeight;
+@property (readonly) BOOL shouldCloseDocument;
 
 // Getter
 - (NSImage *)selectedWebViewImage:(NSSize)size;

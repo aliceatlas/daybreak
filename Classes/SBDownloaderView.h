@@ -36,17 +36,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *cancelButton;
 	SBBLKGUIButton *doneButton;
 }
-@property (nonatomic) NSString *message;
-@property (nonatomic) NSString *urlString;
-@property (nonatomic, readonly) NSPoint margin;
-@property (nonatomic, readonly) CGFloat labelWidth;
-@property (nonatomic, readonly) NSSize buttonSize;
-@property (nonatomic, readonly) CGFloat buttonMargin;
-@property (nonatomic, readonly) NSRect messageLabelRect;
-@property (nonatomic, readonly) NSRect urlLabelRect;
-@property (nonatomic, readonly) NSRect urlFieldRect;
-@property (nonatomic, readonly) NSRect doneButtonRect;
-@property (nonatomic, readonly) NSRect cancelButtonRect;
+@property NSString *message;
+@property NSString *urlString;
+@property (readonly) NSPoint margin;
+@property (readonly) CGFloat labelWidth;
+@property (readonly) NSSize buttonSize;
+@property (readonly) CGFloat buttonMargin;
+@property (readonly) NSRect messageLabelRect;
+@property (readonly) NSRect urlLabelRect;
+@property (readonly) NSRect urlFieldRect;
+@property (readonly) NSRect doneButtonRect;
+@property (readonly) NSRect cancelButtonRect;
 
 // Construction
 - (void)constructMessageLabel;

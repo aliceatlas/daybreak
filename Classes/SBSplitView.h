@@ -35,14 +35,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat dividerThickness;
 	BOOL animating;
 }
-@property (nonatomic, strong) NSView *view;
-@property (nonatomic, strong) SBSidebar *sidebar;
-@property (nonatomic) SBSidebarPosition sidebarPosition;
-@property (nonatomic, readonly) BOOL visibleSidebar;
-@property (nonatomic) BOOL animating;
-@property (nonatomic) CGFloat sidebarWidth;
-@property (nonatomic, readonly) NSRect viewRect;
-@property (nonatomic, readonly) NSRect sidebarRect;
+@property (strong) NSView *view;
+@property (strong) SBSidebar *sidebar;
+@property SBSidebarPosition sidebarPosition;
+@property (readonly) BOOL visibleSidebar;
+@property BOOL animating;
+@property CGFloat sidebarWidth;
+@property (readonly) NSRect viewRect;
+@property (readonly) NSRect sidebarRect;
 
 // Destruction
 - (void)destructDividerAnimation;

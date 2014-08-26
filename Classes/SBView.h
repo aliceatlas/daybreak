@@ -34,16 +34,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SEL doneSelector;
 	SEL cancelSelector;
 }
-@property (nonatomic, strong) NSColor *frameColor;
-@property (nonatomic) CGFloat animationDuration;
-@property (nonatomic) BOOL keyView;
-@property (nonatomic) BOOL toolbarVisible;
-@property (nonatomic) CGFloat alphaValue;
-@property (nonatomic, readonly) NSView *subview;
-@property (nonatomic, unsafe_unretained) id target;
-@property (nonatomic, assign) SEL doneSelector;
-@property (nonatomic, assign) SEL cancelSelector;
-@property (nonatomic, readonly) NSString *description;
+@property (strong) NSColor *frameColor;
+@property CGFloat animationDuration;
+@property BOOL keyView;
+@property BOOL toolbarVisible;
+@property CGFloat alphaValue;
+@property (readonly) NSView *subview;
+@property (unsafe_unretained) id target;
+@property (assign) SEL doneSelector;
+@property (assign) SEL cancelSelector;
+@property (readonly) NSString *description;
 
 // Setter
 - (void)setFrame:(NSRect)frame animate:(BOOL)animate;

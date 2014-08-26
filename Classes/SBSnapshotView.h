@@ -67,15 +67,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *title;
 	NSData *data;
 }
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, readonly) NSString *filename;
-@property (nonatomic, strong) NSData *data;
-@property (nonatomic, readonly) NSPoint margin;
-@property (nonatomic, readonly) CGFloat labelWidth;
-@property (nonatomic, readonly) NSSize buttonSize;
-@property (nonatomic, readonly) CGFloat buttonMargin;
-@property (nonatomic, readonly) NSRect doneButtonRect;
-@property (nonatomic, readonly) NSRect cancelButtonRect;
+@property (strong) NSString *title;
+@property (readonly) NSString *filename;
+@property (strong) NSData *data;
+@property (readonly) NSPoint margin;
+@property (readonly) CGFloat labelWidth;
+@property (readonly) NSSize buttonSize;
+@property (readonly) CGFloat buttonMargin;
+@property (readonly) NSRect doneButtonRect;
+@property (readonly) NSRect cancelButtonRect;
 
 // Construction
 - (void)constructViews;

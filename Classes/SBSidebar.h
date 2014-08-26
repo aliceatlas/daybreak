@@ -54,17 +54,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSViewAnimation *_divideAnimation;
 	CGFloat drawerHeight;
 }
-@property (nonatomic) SBSidebarPosition position;
-@property (nonatomic, unsafe_unretained) id<SBSidebarDelegate> siderbarDelegate;
-@property (nonatomic, strong) NSView *view;
-@property (nonatomic, strong) SBDrawer *drawer;
-@property (nonatomic, strong, readonly) SBSideBottombar *bottombar;
-@property (nonatomic, readonly) BOOL visibleDrawer;
-@property (nonatomic, readonly) BOOL animating;
-@property (nonatomic) CGFloat drawerHeight;
-@property (nonatomic, readonly) NSRect viewRect;
-@property (nonatomic, readonly) NSRect drawerRect;
-@property (nonatomic, readonly) NSRect bottombarRect;
+@property SBSidebarPosition position;
+@property (unsafe_unretained) id<SBSidebarDelegate> siderbarDelegate;
+@property (strong) NSView *view;
+@property (strong) SBDrawer *drawer;
+@property (strong, readonly) SBSideBottombar *bottombar;
+@property (readonly) BOOL visibleDrawer;
+@property (readonly) BOOL animating;
+@property CGFloat drawerHeight;
+@property (readonly) NSRect viewRect;
+@property (readonly) NSRect drawerRect;
+@property (readonly) NSRect bottombarRect;
 
 - (instancetype)initWithFrame:(NSRect)frame;
 - (void)destructDrawer;
@@ -92,17 +92,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	id<SBSideBottombarDelegate> __unsafe_unretained delegate;
 	BOOL drawerVisibility;
 }
-@property (nonatomic, strong) SBBLKGUISlider *sizeSlider;
-@property (nonatomic) SBSidebarPosition position;
-@property (nonatomic, unsafe_unretained) id<SBSideBottombarDelegate> delegate;
-@property (nonatomic) BOOL drawerVisibility;
-@property (nonatomic, readonly) CGFloat buttonWidth;
-@property (nonatomic, readonly) CGFloat sliderWidth;
-@property (nonatomic, readonly) CGFloat sliderSideMargin;
-@property (nonatomic, readonly) NSRect resizableRect;
-@property (nonatomic, readonly) NSRect drawerButtonRect;
-@property (nonatomic, readonly) NSRect newFolderButtonRect;
-@property (nonatomic, readonly) NSRect sizeSliderRect;
+@property (strong) SBBLKGUISlider *sizeSlider;
+@property SBSidebarPosition position;
+@property (unsafe_unretained) id<SBSideBottombarDelegate> delegate;
+@property BOOL drawerVisibility;
+@property (readonly) CGFloat buttonWidth;
+@property (readonly) CGFloat sliderWidth;
+@property (readonly) CGFloat sliderSideMargin;
+@property (readonly) NSRect resizableRect;
+@property (readonly) NSRect drawerButtonRect;
+@property (readonly) NSRect newFolderButtonRect;
+@property (readonly) NSRect sizeSliderRect;
 
 - (instancetype)initWithFrame:(NSRect)frame;
 - (void)destructDrawerButton;

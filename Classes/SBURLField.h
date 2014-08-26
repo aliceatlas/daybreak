@@ -50,41 +50,41 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSMutableArray *items;
 	BOOL _isOpenSheet;
 }
-@property (nonatomic, strong) SBButton *backwardButton;
-@property (nonatomic, strong) SBButton *forwardButton;
-@property (nonatomic, strong) SBURLImageView *imageView;
-@property (nonatomic, strong) SBURLTextField *field;
-@property (nonatomic, strong) SBButton *goButton;
-@property (nonatomic, strong) SBURLFieldSheet *sheet;
-@property (nonatomic, strong) SBURLFieldContentView *contentView;
-@property (nonatomic, unsafe_unretained) id<SBURLFieldDatasource> dataSource;
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic, weak) NSImage *image;
-@property (nonatomic, weak) NSString *stringValue;
-@property (nonatomic, strong) NSMutableArray *gsItems;
-@property (nonatomic, strong) NSMutableArray *bmItems;
-@property (nonatomic, strong) NSMutableArray *hItems;
-@property (nonatomic, strong) NSMutableArray *items;
-@property (nonatomic) BOOL enabledBackward;
-@property (nonatomic) BOOL enabledForward;
-@property (nonatomic) BOOL enabledGo;
-@property (nonatomic) BOOL hiddenGo;
-@property (nonatomic, readonly) NSSize minimumSize;
-@property (nonatomic, readonly) NSFont *font;
-@property (nonatomic, readonly) CGFloat sheetHeight;
-@property (nonatomic, readonly) NSRect appearedSheetRect;
-@property (nonatomic, readonly) BOOL isOpenSheet;
-@property (nonatomic, getter=isEditing, readonly) BOOL editing;
-@property (nonatomic, readonly) BOOL isFirstResponder;
-@property (nonatomic, readonly) CGFloat buttonWidth;
-@property (nonatomic, readonly) CGFloat goButtonWidth;
-@property (nonatomic, readonly) CGFloat imageWidth;
-@property (nonatomic, readonly) NSRect backwardRect;
-@property (nonatomic, readonly) NSRect forwardRect;
-@property (nonatomic, readonly) NSRect imageRect;
-@property (nonatomic, readonly) NSRect fieldRect;
-@property (nonatomic) NSString *placeholderString;
-@property (nonatomic) NSArray *URLItems;
+@property (strong) SBButton *backwardButton;
+@property (strong) SBButton *forwardButton;
+@property (strong) SBURLImageView *imageView;
+@property (strong) SBURLTextField *field;
+@property (strong) SBButton *goButton;
+@property (strong) SBURLFieldSheet *sheet;
+@property (strong) SBURLFieldContentView *contentView;
+@property (unsafe_unretained) id<SBURLFieldDatasource> dataSource;
+@property (unsafe_unretained) id delegate;
+@property (weak) NSImage *image;
+@property (weak) NSString *stringValue;
+@property (strong) NSMutableArray *gsItems;
+@property (strong) NSMutableArray *bmItems;
+@property (strong) NSMutableArray *hItems;
+@property (strong) NSMutableArray *items;
+@property BOOL enabledBackward;
+@property BOOL enabledForward;
+@property BOOL enabledGo;
+@property BOOL hiddenGo;
+@property (readonly) NSSize minimumSize;
+@property (readonly) NSFont *font;
+@property (readonly) CGFloat sheetHeight;
+@property (readonly) NSRect appearedSheetRect;
+@property (readonly) BOOL isOpenSheet;
+@property (getter=isEditing, readonly) BOOL editing;
+@property (readonly) BOOL isFirstResponder;
+@property (readonly) CGFloat buttonWidth;
+@property (readonly) CGFloat goButtonWidth;
+@property (readonly) CGFloat imageWidth;
+@property (readonly) NSRect backwardRect;
+@property (readonly) NSRect forwardRect;
+@property (readonly) NSRect imageRect;
+@property (readonly) NSRect fieldRect;
+@property NSString *placeholderString;
+@property NSArray *URLItems;
 
 
 // Construction
@@ -122,12 +122,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @end
 
-@interface SBURLImageView : NSImageView
+@interface SBURLImageView : NSImageView <NSDraggingSource>
 
-@property (nonatomic, readonly) SBURLField *field;
-@property (nonatomic, readonly) NSURL *URL;
-@property (nonatomic, readonly) NSData *selectedWebViewImageDataForBookmark;
-@property (nonatomic, readonly) NSImage *dragImage;
+@property (readonly) SBURLField *field;
+@property (readonly) NSURL *URL;
+@property (readonly) NSData *selectedWebViewImageDataForBookmark;
+@property (readonly) NSImage *dragImage;
 
 - (void)mouseDraggedActionWithEvent:(NSEvent *)theEvent;
 - (void)mouseUpActionWithEvent:(NSEvent *)theEvent;
@@ -139,9 +139,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SEL commandAction;
 	SEL optionAction;
 }
-@property (nonatomic, readonly) SBURLField *field;
-@property (nonatomic) SEL commandAction;
-@property (nonatomic) SEL optionAction;
+@property (readonly) SBURLField *field;
+@property SEL commandAction;
+@property SEL optionAction;
 
 - (instancetype)initWithFrame:(NSRect)frame;
 
@@ -160,8 +160,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	id dataSource;
 	id delegate;
 }
-@property (nonatomic, readonly) SBURLField *field;
-@property (nonatomic, readonly) NSUInteger selectedRowIndex;
+@property (readonly) SBURLField *field;
+@property (readonly) NSUInteger selectedRowIndex;
 
 // Construction
 - (void)constructTable;
@@ -186,12 +186,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL sectionHeader;
 	BOOL drawsImage;
 }
-@property (nonatomic) BOOL separator;
-@property (nonatomic) BOOL sectionHeader;
-@property (nonatomic) BOOL drawsImage;
-@property (nonatomic, readonly) CGFloat side;
-@property (nonatomic, readonly) CGFloat leftMargin;
-@property (nonatomic, readonly) CGFloat imageWidth;
+@property BOOL separator;
+@property BOOL sectionHeader;
+@property BOOL drawsImage;
+@property (readonly) CGFloat side;
+@property (readonly) CGFloat leftMargin;
+@property (readonly) CGFloat imageWidth;
 
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 - (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;

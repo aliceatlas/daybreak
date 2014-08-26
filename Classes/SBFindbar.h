@@ -39,14 +39,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *wrapCheck;
 	NSString *searchedString;
 }
-@property (nonatomic, strong) NSString *searchedString;
-@property (nonatomic, readonly) NSRect contentRect;
-@property (nonatomic, readonly) NSRect closeRect;
-@property (nonatomic, readonly) NSRect searchRect;
-@property (nonatomic, readonly) NSRect backwardRect;
-@property (nonatomic, readonly) NSRect forwardRect;
-@property (nonatomic, readonly) NSRect caseSensitiveRect;
-@property (nonatomic, readonly) NSRect wrapRect;
+@property (strong) NSString *searchedString;
+@property (readonly) NSRect contentRect;
+@property (readonly) NSRect closeRect;
+@property (readonly) NSRect searchRect;
+@property (readonly) NSRect backwardRect;
+@property (readonly) NSRect forwardRect;
+@property (readonly) NSRect caseSensitiveRect;
+@property (readonly) NSRect wrapRect;
 
 + (CGFloat)minimumWidth;
 + (CGFloat)availableWidth;

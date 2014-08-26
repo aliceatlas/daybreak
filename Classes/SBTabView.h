@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	id<SBTabViewDelegate> __unsafe_unretained delegate;
 }
-@property (nonatomic, unsafe_unretained) id<SBTabViewDelegate> delegate;
-@property (nonatomic, readonly) SBTabViewItem *selectedTabViewItem;
+@property (unsafe_unretained) id<SBTabViewDelegate> delegate;
+@property (readonly) SBTabViewItem *selectedTabViewItem;
 
 - (instancetype)initWithFrame:(NSRect)frame;
 - (SBTabViewItem *)tabViewItemWithIdentifier:(NSNumber *)identifier;

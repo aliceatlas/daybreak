@@ -49,11 +49,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSButton *commitButton;
 	BOOL animating;
 }
-@property (nonatomic, strong) NSMutableArray *textSet;
-@property (nonatomic, strong) NSArray *fieldSet;
-@property (nonatomic, readonly) CGFloat margin;
-@property (nonatomic, readonly) CGFloat topMargin;
-@property (nonatomic, readonly) CGFloat bottomMargin;
+@property (strong) NSMutableArray *textSet;
+@property (strong) NSArray *fieldSet;
+@property (readonly) CGFloat margin;
+@property (readonly) CGFloat topMargin;
+@property (readonly) CGFloat bottomMargin;
 
 - (void)constructCommonViews;
 - (void)constructEditView;
@@ -77,6 +77,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	id context;
 }
-@property (nonatomic, strong) id context;
+@property (strong) id context;
 
 @end

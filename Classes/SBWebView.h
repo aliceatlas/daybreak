@@ -37,12 +37,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL _magnified;
 	NSString *textEncodingName;
 }
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic) BOOL showFindbar;
-@property (nonatomic, strong) NSString *textEncodingName;
-@property (nonatomic, readonly) NSString *documentString;
-@property (nonatomic, getter=isEmpty, readonly) BOOL empty;
-@property (nonatomic, readonly) id inspector;
+@property (unsafe_unretained) id delegate;
+@property BOOL showFindbar;
+@property (strong) NSString *textEncodingName;
+@property (readonly) NSString *documentString;
+@property (getter=isEmpty, readonly) BOOL empty;
+@property (readonly) id inspector;
 
 - (instancetype)initWithFrame:(NSRect)frameRect frameName:(NSString *)frameName groupName:(NSString *)groupName NS_DESIGNATED_INITIALIZER;
 

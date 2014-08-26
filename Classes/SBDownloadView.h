@@ -33,17 +33,17 @@
 	BOOL selected;
 	NSTrackingArea *area;
 }
-@property (nonatomic, weak) SBDownload *download;
-@property (nonatomic, strong) SBCircleProgressIndicator *progressIndicator;
-@property (nonatomic) BOOL selected;
-@property (nonatomic, readonly) NSFont *nameFont;
-@property (nonatomic, readonly) NSParagraphStyle *paragraphStyle;
-@property (nonatomic, readonly) BOOL isFirstResponder;
-@property (nonatomic, readonly) NSPoint padding;
-@property (nonatomic, readonly) CGFloat heights;
-@property (nonatomic, readonly) CGFloat titleHeight;
-@property (nonatomic, readonly) CGFloat bytesHeight;
-@property (nonatomic, readonly) NSRect progressRect;
+@property (weak) SBDownload *download;
+@property (strong) SBCircleProgressIndicator *progressIndicator;
+@property BOOL selected;
+@property (readonly) NSFont *nameFont;
+@property (readonly) NSParagraphStyle *paragraphStyle;
+@property (readonly) BOOL isFirstResponder;
+@property (readonly) NSPoint padding;
+@property (readonly) CGFloat heights;
+@property (readonly) CGFloat titleHeight;
+@property (readonly) CGFloat bytesHeight;
+@property (readonly) NSRect progressRect;
 
 // Getter
 - (NSRect)nameRect:(NSString *)title;

@@ -42,26 +42,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *doneButton;
 	NSInteger fillMode;
 }
-@property (nonatomic, strong) NSImage *image;
-@property (nonatomic, weak) NSString *message;
-@property (nonatomic, weak) NSString *title;
-@property (nonatomic, weak) NSString *urlString;
-@property (nonatomic) NSInteger fillMode;
-@property (nonatomic, readonly) NSDictionary *itemRepresentation;
-@property (nonatomic, readonly) NSPoint margin;
-@property (nonatomic, readonly) CGFloat labelWidth;
-@property (nonatomic, readonly) NSSize buttonSize;
-@property (nonatomic, readonly) CGFloat buttonMargin;
-@property (nonatomic, readonly) NSRect imageRect;
-@property (nonatomic, readonly) NSRect messageLabelRect;
-@property (nonatomic, readonly) NSRect titleLabelRect;
-@property (nonatomic, readonly) NSRect urlLabelRect;
-@property (nonatomic, readonly) NSRect colorLabelRect;
-@property (nonatomic, readonly) NSRect titleFieldRect;
-@property (nonatomic, readonly) NSRect urlFieldRect;
-@property (nonatomic, readonly) NSRect colorPopupRect;
-@property (nonatomic, readonly) NSRect doneButtonRect;
-@property (nonatomic, readonly) NSRect cancelButtonRect;
+@property (strong) NSImage *image;
+@property (weak) NSString *message;
+@property (weak) NSString *title;
+@property (weak) NSString *urlString;
+@property NSInteger fillMode;
+@property (readonly) NSDictionary *itemRepresentation;
+@property (readonly) NSPoint margin;
+@property (readonly) CGFloat labelWidth;
+@property (readonly) NSSize buttonSize;
+@property (readonly) CGFloat buttonMargin;
+@property (readonly) NSRect imageRect;
+@property (readonly) NSRect messageLabelRect;
+@property (readonly) NSRect titleLabelRect;
+@property (readonly) NSRect urlLabelRect;
+@property (readonly) NSRect colorLabelRect;
+@property (readonly) NSRect titleFieldRect;
+@property (readonly) NSRect urlFieldRect;
+@property (readonly) NSRect colorPopupRect;
+@property (readonly) NSRect doneButtonRect;
+@property (readonly) NSRect cancelButtonRect;
 
 // Destruction
 - (void)destructMessageLabel;
@@ -85,7 +85,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSUInteger index;
 }
-@property (nonatomic) NSUInteger index;
-@property (nonatomic, weak) NSString *labelName;
+@property NSUInteger index;
+@property (weak) NSString *labelName;
 
 @end

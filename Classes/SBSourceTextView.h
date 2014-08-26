@@ -35,8 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	id __unsafe_unretained delegate;
 	BOOL showFindbar;
 }
-@property (nonatomic, unsafe_unretained) id delegate;
-@property (nonatomic) BOOL showFindbar;
+@property (unsafe_unretained) id delegate;
+@property BOOL showFindbar;
 
 - (void)executeOpenFindbar;
 - (void)executeCloseFindbar;

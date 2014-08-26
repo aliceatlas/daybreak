@@ -59,21 +59,21 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger _animationIndex;
 	NSViewAnimation *searchAnimations;
 }
-@property (nonatomic, weak) SBBookmarksView *wrapperView;
-@property (nonatomic) SBBookmarkMode mode;
-@property (nonatomic) NSSize cellSize;
-@property (nonatomic, readonly) CGFloat width;
-@property (nonatomic) CGFloat cellWidth;
-@property (nonatomic, readonly) NSPoint block;
-@property (weak, nonatomic, readonly) NSMutableArray *items;
-@property (nonatomic, strong) NSArray *draggedItems;
-@property (nonatomic, unsafe_unretained) id<SBBookmarkListViewDelegate> delegate;
-@property (nonatomic, readonly) CGFloat minimumHeight;
-@property (nonatomic, readonly) NSPoint spacing;
-@property (nonatomic, readonly) NSIndexSet *selectedIndexes;
-@property (nonatomic, getter=getSelectedItems, readonly) NSArray *selectedItems;
-@property (nonatomic, readonly) BOOL canScrollToNext;
-@property (nonatomic, readonly) BOOL canScrollToPrevious;
+@property (weak) SBBookmarksView *wrapperView;
+@property SBBookmarkMode mode;
+@property NSSize cellSize;
+@property (readonly) CGFloat width;
+@property CGFloat cellWidth;
+@property (readonly) NSPoint block;
+@property (weak, readonly) NSMutableArray *items;
+@property (strong) NSArray *draggedItems;
+@property (unsafe_unretained) id<SBBookmarkListViewDelegate> delegate;
+@property (readonly) CGFloat minimumHeight;
+@property (readonly) NSPoint spacing;
+@property (readonly) NSIndexSet *selectedIndexes;
+@property (getter=getSelectedItems, readonly) NSArray *selectedItems;
+@property (readonly) BOOL canScrollToNext;
+@property (readonly) BOOL canScrollToPrevious;
 
 // Getter
 - (CGFloat)splitWidth:(CGFloat)proposedWidth;

@@ -46,8 +46,8 @@
 	id<SBWebResourcesViewDataSource> __unsafe_unretained dataSource;
 	id<SBWebResourcesViewDelegate> __unsafe_unretained delegate;
 }
-@property (nonatomic, unsafe_unretained) id<SBWebResourcesViewDataSource> dataSource;
-@property (nonatomic, unsafe_unretained) id<SBWebResourcesViewDelegate> delegate;
+@property (unsafe_unretained) id<SBWebResourcesViewDataSource> dataSource;
+@property (unsafe_unretained) id<SBWebResourcesViewDelegate> delegate;
 
 // Constructions
 - (void)constructTableView;
@@ -60,8 +60,8 @@
 {
 	NSImage *highlightedImage;
 }
-@property (nonatomic, strong) NSImage *highlightedImage;
-@property (nonatomic, readonly) CGFloat side;
+@property (strong) NSImage *highlightedImage;
+@property (readonly) CGFloat side;
 
 - (void)drawImageWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 

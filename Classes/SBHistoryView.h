@@ -41,19 +41,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *backButton;
 	NSMutableArray *items;
 }
-@property (nonatomic, weak) NSString *message;
-@property (nonatomic, strong) NSMutableArray *items;
-@property (nonatomic, readonly) NSPoint margin;
-@property (nonatomic, readonly) CGFloat labelWidth;
-@property (nonatomic, readonly) NSRect iconRect;
-@property (nonatomic, readonly) CGFloat buttonHeight;
-@property (nonatomic, readonly) CGFloat buttonMargin;
-@property (nonatomic, readonly) CGFloat searchFieldWidth;
-@property (nonatomic, readonly) NSRect messageLabelRect;
-@property (nonatomic, readonly) NSRect tableViewRect;
-@property (nonatomic, readonly) NSRect removeButtonRect;
-@property (nonatomic, readonly) NSRect removeAllButtonRect;
-@property (nonatomic, readonly) NSRect backButtonRect;
+@property (weak) NSString *message;
+@property (strong) NSMutableArray *items;
+@property (readonly) NSPoint margin;
+@property (readonly) CGFloat labelWidth;
+@property (readonly) NSRect iconRect;
+@property (readonly) CGFloat buttonHeight;
+@property (readonly) CGFloat buttonMargin;
+@property (readonly) CGFloat searchFieldWidth;
+@property (readonly) NSRect messageLabelRect;
+@property (readonly) NSRect tableViewRect;
+@property (readonly) NSRect removeButtonRect;
+@property (readonly) NSRect removeAllButtonRect;
+@property (readonly) NSRect backButtonRect;
 
 // Construction
 - (void)constructMessageLabel;
