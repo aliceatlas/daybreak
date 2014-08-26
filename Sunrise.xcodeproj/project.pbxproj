@@ -146,7 +146,6 @@
 		501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */; };
 		5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */; };
 		5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66819655AF00053CBF1 /* SBLoadButton.swift */; };
-		505E49EE1987AC0A001F5254 /* Sunrise3-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */; };
 		505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B6196916EF009219AF /* SBPopUpButton.swift */; };
 		505E49F4198A2645001F5254 /* SBButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49F3198A2645001F5254 /* SBButton.swift */; };
 		505E49F6198B7639001F5254 /* SBToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49F5198B7638001F5254 /* SBToolbar.swift */; };
@@ -156,7 +155,6 @@
 		506D2ADA19A23ACD007A8842 /* SBDownloaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */; };
 		506D2ADC19A2432E007A8842 /* SBWebResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D2ADB19A2432E007A8842 /* SBWebResourcesView.swift */; };
 		506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49EF19882F3B001F5254 /* SBSavePanel.swift */; };
-		506E44B4198E654800178D36 /* NSSavePanel-SBAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 506E44B2198E654800178D36 /* NSSavePanel-SBAdditions.h */; };
 		506E44B5198E654800178D36 /* NSSavePanel-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */; };
 		5072657219A0CA380099DA28 /* SBMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5072657119A0CA380099DA28 /* SBMessageView.swift */; };
 		5072657519A0D9530099DA28 /* SBUserAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5072657419A0D9530099DA28 /* SBUserAgentView.swift */; };
@@ -883,6 +881,16 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		508330B019981E7E0092AC95 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		8D15AC270486D014006FF6A4 /* Sunrise */ = {
 			isa = PBXNativeTarget;
@@ -891,6 +899,7 @@
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 				8D15AC300486D014006FF6A4 /* Sources */,
 				8D15AC330486D014006FF6A4 /* Frameworks */,
+				508330B019981E7E0092AC95 /* Headers */,
 			);
 			buildRules = (
 			);
