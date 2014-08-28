@@ -25,6 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBReportView.h"
 #include <mach/mach_host.h>
 
+#import "Sunrise3-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
+
 #define kSBMinFrameSizeWidth 600
 #define kSBMaxFrameSizeWidth 900
 #define kSBMinFrameSizeHeight 480

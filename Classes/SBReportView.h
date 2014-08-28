@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBBLKGUI.h"
 #import "SBView.h"
 
-
+@class SBBLKGUIPopUpButton;
 @interface SBReportView : SBView <NSTextFieldDelegate>
 {
 	NSImageView *iconImageView;
