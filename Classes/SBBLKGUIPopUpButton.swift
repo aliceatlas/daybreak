@@ -30,10 +30,6 @@ class SBBLKGUIPopUpButton: NSPopUpButton {
     override class func initialize() {
         SBBLKGUIPopUpButton.setCellClass(SBBLKGUIPopUpButtonCell.self)
     }
-    
-    override class func cellClass() -> AnyClass! {
-        return SBBLKGUIPopUpButtonCell.self
-    }
 }
 
 class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {

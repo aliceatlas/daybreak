@@ -48,8 +48,6 @@ class SBPopUpButton: NSPopUpButton {
         SBPopUpButton.setCellClass(SBPopUpButtonCell.self)
     }
     
-    override class func cellClass() -> AnyClass! { return SBPopUpButtonCell.self }
-    
     // MARK: Actions
     
     func executeAction(sender: AnyObject) {
