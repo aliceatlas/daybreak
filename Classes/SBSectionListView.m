@@ -355,7 +355,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		field = [[NSTextField alloc] initWithFrame:r];
         field.delegate = self;
         field.focusRingType = NSFocusRingTypeNone;
-		field.placeholderString = [item.context isKindOfClass:NSString.class] ? item.context : nil;
+		[field.cell setPlaceholderString:[item.context isKindOfClass:NSString.class] ? item.context : nil];
 		if (string)
             field.stringValue = string;
 		[self addSubview:field];
@@ -399,7 +399,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         field.selectable = NO;
         field.editable = NO;
         field.drawsBackground = NO;
-        field.placeholderString = [item.context isKindOfClass:NSString.class] ? item.context : nil;
+        [field.cell setPlaceholderString:[item.context isKindOfClass:NSString.class] ? item.context : nil];
 		if (path)
 		{
 			tpath = [path stringByAbbreviatingWithTildeInPath];
