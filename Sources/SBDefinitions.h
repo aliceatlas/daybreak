@@ -301,13 +301,6 @@ extern NSString *kSBDownloadsItems;
 extern NSString *SBBookmarkPboardType;
 
 // Delegates
-@class SBDocumentWindow;
-@protocol SBDocumentWindowDelegate <NSObject>
-- (BOOL)window:(SBDocumentWindow *)aWindow shouldClose:(id)sender;
-- (BOOL)window:(SBDocumentWindow *)aWindow shouldHandleKeyEvent:(NSEvent *)theEvent;
-- (void)windowDidFinishFlipping:(SBDocumentWindow *)aWindow;
-@end
-
 @class SBTabbar;
 @class SBTabbarItem;
 @protocol SBTabbarDelegate <NSObject>

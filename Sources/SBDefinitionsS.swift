@@ -289,6 +289,50 @@ NSString *SBSchemes[] = {
 @"feed://"
 };
 
+// Tags
+#define SBApplicationMenuTag 0
+#define SBFileMenuTag 1
+#define SBEditMenuTag 2
+#define SBViewMenuTag 3
+#define SBHistoryMenuTag 4
+#define SBBookmarksMenuTag 5
+#define SBWindowMenuTag 6
+#define SBHelpMenuTag 7
+
+// Values
+#define kSBTimeoutInterval 60.0
+#define kSBTabbarItemClosableInterval 0.2
+#define kSBBookmarkItemImageCompressionFactor 0.1
+#define kSBBookmarkLayoutInterval 0.7
+#define kSBBookmarkToolsInterval 0.7
+#define kSBDownloadsToolsInterval 0.7
+*/
+
+// Sizes
+let kSBDocumentWindowMinimumSizeWidth: CGFloat = 400.0
+let kSBDocumentWindowMinimumSizeHeight: CGFloat = 300.0
+let kSBTabbarHeight: CGFloat = 24.0
+/*
+#define kSBTabbarItemMaximumWidth 200.0
+#define kSBTabbarItemMinimumWidth 100.0
+#define kSBBottombarHeight 24.0
+#define kSBSidebarResizableWidth 24.0
+#define kSBSidebarNewFolderButtonWidth 100.0
+#define kSBSidebarClosedWidth 1.0
+#define kSBSidebarMinimumWidth 144.0
+#define kSBDownloadItemSize 128.0
+#define kSBDefaultSidebarWidth 550
+#define kSBDefaultBookmarkCellWidth 168
+#define kSBBookmarkFactorForImageWidth 4.0
+#define kSBBookmarkFactorForImageHeight 3.0
+#define kSBBookmarkCellPaddingPercentage 0.1
+#define kSBBookmarkCellMinWidth 60
+#define kSBBookmarkCellMaxWidth 256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2))
+#define SBFieldRoundedCurve 4
+
+// Counts
+#define kSBDocumentWarningNumberOfBookmarksForOpening 15
+
 // Notification names
 NSString *SBBookmarksDidUpdateNotification = @"SBBookmarksDidUpdateNotification";
 NSString *SBUpdaterShouldUpdateNotification = @"SBUpdaterShouldUpdateNotification";

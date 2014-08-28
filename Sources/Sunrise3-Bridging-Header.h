@@ -4,7 +4,6 @@
 
 #import "SBDefinitions.h"
 #import "SBDocument.h"
-#import "SBDocumentWindow.h"
 #import "SBUtil.h"
 
 #import "SBAdditions.h"
@@ -25,6 +24,9 @@
 #import "NSSavePanel-SBAdditions.h"
 
 #import "SBTableCell.h"
+
+#import "SBInnerView.h"
+#import "SBTabbar.h"
 
 @interface NSToolbar (Private)
 - (NSView *)_toolbarView;

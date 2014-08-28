@@ -218,7 +218,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         updateView!.doneSelector = "doneUpdate"
         updateView!.cancelSelector = "cancelUpdate"
         updateView!.loadRequest(NSURL(string: urlString))
-        window.showCoverWindow(updateView)
+        window.showCoverWindow(updateView!)
     }
     
     func doneUpdate() {
@@ -397,7 +397,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func writeViewStructure(AnyObject) {
         let document = SBGetSelectedDocument()
-        if let view = document.window.contentView {
+        if let view = document.window.contentView as? NSView {
             let panel = NSSavePanel()
             panel.nameFieldStringValue = "ViewStructure.plist"
             if panel.runModal() == NSFileHandlingPanelOKButton {
