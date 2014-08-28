@@ -82,13 +82,27 @@ class SBMessageView: SBView {
         }
     }
     
+    override var cancelSelector: Selector {
+        didSet {
+            if cancelSelector != nil {
+                addSubview(cancelButton)
+            }
+        }
+    }
+    
+    override var doneSelector: Selector {
+        didSet {
+            if doneSelector != nil {
+                addSubview(doneButton)
+            }
+        }
+    }
+    
     init(frame: NSRect, text: String) {
         super.init(frame: frame)
         self.text = text
         addSubview(textLabel)
         addSubview(messageLabel)
-        addSubview(cancelButton)
-        addSubview(doneButton)
         let viewsDictionary: [NSObject: AnyObject] = ["textLabel": textLabel, "messageLabel": messageLabel, "cancelButton": cancelButton, "doneButton": doneButton]
         autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
     }
