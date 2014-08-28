@@ -329,6 +329,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     scrollView.hasVerticalScroller = hasVerticalScroller;
     scrollView.drawsBackground = NO;
 	[coverWindow.contentView addSubview:scrollView];
+    coverWindow.releasedWhenClosed = NO;
     scrollView.documentView = view;
     self.showsToolbarButton = NO;
 	
@@ -457,6 +458,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	br.size.height -= 23.0;
 	backWindow = [[NSWindow alloc] initWithContentRect:br styleMask:(NSTitledWindowMask | NSClosableWindowMask) backing:NSBackingStoreBuffered defer:YES];
 	backWindow.backgroundColor = [NSColor colorWithCalibratedRed:SBWindowBackColors[0] green:SBWindowBackColors[1] blue:SBWindowBackColors[2] alpha:SBWindowBackColors[3]];
+    backWindow.releasedWhenClosed = NO;
 	view.frame = NSMakeRect((br.size.width - view.frame.size.width) / 2, (br.size.height - view.frame.size.height) / 2, view.frame.size.width, view.frame.size.height);
 	[backWindow.contentView addSubview:view];
 	[backWindow makeKeyAndOrderFront:nil];
