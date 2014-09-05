@@ -76,7 +76,6 @@
 		0896C1910FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C17F0FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Left.png */; };
 		0896C1920FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Center.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1800FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Center.png */; };
 		0896C1930FFF171400B97498 /* BLKGUI_Button-Active-Center.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1810FFF171400B97498 /* BLKGUI_Button-Active-Center.png */; };
-		0896C25D0FFF354800B97498 /* SBBookmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0896C25C0FFF354800B97498 /* SBBookmarkView.m */; };
 		089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089771BD10DD0B62004AF73B /* SBSearchbar.m */; };
 		08982EDB1182CF53002122F6 /* Icon_Bookmarks.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDA1182CF53002122F6 /* Icon_Bookmarks.png */; };
 		08982EDE1182CF5A002122F6 /* Icon_G.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDC1182CF5A002122F6 /* Icon_G.png */; };
@@ -135,6 +134,7 @@
 		08F5B05A100B63FC0011B603 /* NSURL-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F5B059100B63FC0011B603 /* NSURL-SBAdditions.m */; };
 		08F914C410352D020026ABD1 /* Source.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F914C310352D020026ABD1 /* Source.png */; };
 		08F914D1103531C50026ABD1 /* SBSnapshotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F914D0103531C50026ABD1 /* SBSnapshotView.m */; };
+		5008E34C19B9DB7500BED173 /* SBBookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5008E34B19B9DB7500BED173 /* SBBookmarkView.swift */; };
 		501D1F321963C9E500AEF4D1 /* SBDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D1F311963C9E500AEF4D1 /* SBDownload.swift */; };
 		501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */; };
 		5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */; };
@@ -297,8 +297,6 @@
 		0896C17F0FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Button-Active-Highlighted-Left.png"; path = "Resources/Images/BLKGUI_Button-Active-Highlighted-Left.png"; sourceTree = "<group>"; };
 		0896C1800FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Button-Active-Highlighted-Center.png"; path = "Resources/Images/BLKGUI_Button-Active-Highlighted-Center.png"; sourceTree = "<group>"; };
 		0896C1810FFF171400B97498 /* BLKGUI_Button-Active-Center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Button-Active-Center.png"; path = "Resources/Images/BLKGUI_Button-Active-Center.png"; sourceTree = "<group>"; };
-		0896C25B0FFF354800B97498 /* SBBookmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarkView.h; path = Classes/SBBookmarkView.h; sourceTree = "<group>"; };
-		0896C25C0FFF354800B97498 /* SBBookmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBookmarkView.m; path = Classes/SBBookmarkView.m; sourceTree = "<group>"; };
 		089771BC10DD0B62004AF73B /* SBSearchbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSearchbar.h; path = Classes/SBSearchbar.h; sourceTree = "<group>"; };
 		089771BD10DD0B62004AF73B /* SBSearchbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSearchbar.m; path = Classes/SBSearchbar.m; sourceTree = "<group>"; };
 		08982EDA1182CF53002122F6 /* Icon_Bookmarks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Bookmarks.png; path = Resources/Images/Icon_Bookmarks.png; sourceTree = "<group>"; };
@@ -391,6 +389,7 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32DBCF750370BD2300C91783 /* Sunrise_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sunrise_Prefix.pch; path = Sources/Sunrise_Prefix.pch; sourceTree = "<group>"; };
+		5008E34B19B9DB7500BED173 /* SBBookmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBookmarkView.swift; path = Classes/SBBookmarkView.swift; sourceTree = "<group>"; };
 		501D1F311963C9E500AEF4D1 /* SBDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownload.swift; path = Classes/SBDownload.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = "String-SBAdditions.swift"; path = "Classes/String-SBAdditions.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBRenderWindow.swift; path = Classes/SBRenderWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -724,8 +723,7 @@
 			children = (
 				08E310350FFE58B300760CEC /* SBAboutView.h */,
 				08E310360FFE58B300760CEC /* SBAboutView.m */,
-				0896C25B0FFF354800B97498 /* SBBookmarkView.h */,
-				0896C25C0FFF354800B97498 /* SBBookmarkView.m */,
+				5008E34B19B9DB7500BED173 /* SBBookmarkView.swift */,
 				506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */,
 				089F20A9104C0D9100549CAC /* SBReportView.h */,
 				089F20AA104C0D9100549CAC /* SBReportView.m */,
@@ -1062,7 +1060,6 @@
 				0890708E0FFE3F4E00B2B505 /* SBInnerView.m in Sources */,
 				08E310370FFE58B300760CEC /* SBAboutView.m in Sources */,
 				0896C1460FFF16B200B97498 /* SBBLKGUIButton.m in Sources */,
-				0896C25D0FFF354800B97498 /* SBBookmarkView.m in Sources */,
 				089960050FFF6EF8001093FA /* SBBLKGUITextField.m in Sources */,
 				50ACCDF91963E9EC00CE593E /* SBTextInputView.swift in Sources */,
 				50B2A9AD1961174700DA1B4A /* String-SBURLAdditions.swift in Sources */,
@@ -1099,6 +1096,7 @@
 				50B2A99D1960221D00DA1B4A /* SBApplicationDelegate.swift in Sources */,
 				50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */,
 				089F20AB104C0D9100549CAC /* SBReportView.m in Sources */,
+				5008E34C19B9DB7500BED173 /* SBBookmarkView.swift in Sources */,
 				08A73C331052C6CE00EBD683 /* NSScrollView-SBAdditions.m in Sources */,
 				08A73C391052C88800EBD683 /* NSColor-SBAdditions.m in Sources */,
 				08A73C5D1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m in Sources */,
