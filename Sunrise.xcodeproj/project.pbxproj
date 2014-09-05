@@ -255,8 +255,6 @@
 		0890708D0FFE3F4E00B2B505 /* SBInnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBInnerView.m; path = Classes/SBInnerView.m; sourceTree = "<group>"; };
 		0890E1730FE91DF4002DF339 /* SBTabbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTabbarItem.h; path = Classes/SBTabbarItem.h; sourceTree = "<group>"; };
 		0890E1740FE91DF4002DF339 /* SBTabbarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTabbarItem.m; path = Classes/SBTabbarItem.m; sourceTree = "<group>"; };
-		0891057A0FE4EC6400DFE290 /* SBTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTabView.h; path = Classes/SBTabView.h; sourceTree = "<group>"; };
-		0891057B0FE4EC6400DFE290 /* SBTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTabView.m; path = Classes/SBTabView.m; sourceTree = "<group>"; };
 		089106860FE520E100DFE290 /* Resizer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Resizer.png; path = Resources/Images/Resizer.png; sourceTree = "<group>"; };
 		08916C3010099ECC0012D4EA /* PaledApplicationIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaledApplicationIcon.png; path = Resources/Images/PaledApplicationIcon.png; sourceTree = "<group>"; };
 		08916C4E1009AFAF0012D4EA /* SBWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebView.h; path = Classes/SBWebView.h; sourceTree = "<group>"; };
@@ -619,8 +617,6 @@
 				089953880FE36E5100DED3BA /* SBTabbar.m */,
 				0890E1730FE91DF4002DF339 /* SBTabbarItem.h */,
 				0890E1740FE91DF4002DF339 /* SBTabbarItem.m */,
-				0891057A0FE4EC6400DFE290 /* SBTabView.h */,
-				0891057B0FE4EC6400DFE290 /* SBTabView.m */,
 				50782C8919AC835600CB8706 /* SBTabView.swift */,
 				505E49FC198CA577001F5254 /* SBTabViewItem.swift */,
 				50CE69DF19863F4C00C17D44 /* SBWebResourceIdentifier.swift */,
