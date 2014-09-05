@@ -33,7 +33,7 @@ protocol SBWebViewDelegate {
 }
 
 class SBWebView: WebView {
-    weak var delegate: AnyObject?
+    weak var delegate: SBWebViewDelegate?
     var showFindbar = false
 	private var magnified = false
     
