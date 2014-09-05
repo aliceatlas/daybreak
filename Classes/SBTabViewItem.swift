@@ -293,7 +293,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     func setShowFindbarInSource(showFindbar: Bool) {
         if showFindbar {
-            if sourceSplitView != nil {
+            if sourceSplitView == nil {
                 let findbar = SBFindbar(frame: NSMakeRect(0, 0, sourceView!.frame.size.width, 24.0))
                 findbar.target = sourceTextView
                 findbar.doneSelector = "executeCloseFindbar"

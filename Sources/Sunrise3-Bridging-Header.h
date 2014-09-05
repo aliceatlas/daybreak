@@ -18,7 +18,6 @@
 #import "SBDownloadsView.h"
 
 #import "SBTabbarItem.h"
-#import "SBSourceTextView.h"
 
 #import "NSSavePanel-SBAdditions.h"
 

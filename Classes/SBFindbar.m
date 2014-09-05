@@ -23,7 +23,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBFindbar.h"
-#import "SBSourceTextView.h"
 #import "SBUtil.h"
 
 #import "Sunrise3-Bridging-Header.h"
