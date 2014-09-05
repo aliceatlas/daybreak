@@ -91,7 +91,7 @@ func SBDefaultHomePageS() -> String? {
         if NSFileManager.defaultManager().fileExistsAtPath(path) {
             let internetConfig = NSDictionary(contentsOfFile: path)
             if internetConfig.count > 0 {
-                return SBValueForKey("WWWHomePage", internetConfig)! as String
+                return SBValueForKey("WWWHomePage", internetConfig) as? String
             }
         }
     }
