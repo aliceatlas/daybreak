@@ -31,8 +31,8 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     var image: NSImage? {
         get { return _image }
         set(image) {
-            if self.image != image {
-                self.image = image
+            if _image != image {
+                _image = image
                 needsDisplay = true
             }
         }
