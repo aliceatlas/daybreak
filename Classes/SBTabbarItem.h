@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBCircleProgressIndicator;
 @interface SBTabbarItem : SBView
 {
-	SBTabbar *__weak tabbar;
+	SBTabbar *__unsafe_unretained tabbar;
 	SBCircleProgressIndicator *progressIndicator;
 	NSNumber *identifier;
 	NSImage *image;
@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	BOOL _dragInClose;
 	NSTrackingArea *area;
 }
-@property (weak) SBTabbar *tabbar;
+@property (unsafe_unretained) SBTabbar *tabbar;
 @property (strong) SBCircleProgressIndicator *progressIndicator;
 @property (strong) NSNumber *identifier;
 @property (strong) NSImage *image;
@@ -55,6 +55,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (readonly) CGRect closableRect;
 @property (readonly) CGRect progressRect;
 
+- (instancetype)initWithFrame:(NSRect)frame tabbar:(SBTabbar *)inTabbar NS_DESIGNATED_INITIALIZER;
 // Destruction
 - (void)destructProgressIndicator;
 // Construction

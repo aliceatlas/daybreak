@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
-    weak var tabbarItem: SBTabbarItem! // assign
+    unowned var tabbarItem: SBTabbarItem
     private var sbTabView: SBTabView! {
         return tabView as SBTabView
     }
@@ -99,7 +99,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     var requestURLString: String? { return webView.mainFrame?.dataSource?.request.URL?.absoluteString }
     var documentSource: String? { return webView.mainFrame?.dataSource?.representation?.documentSource() }
     
-    override init(identifier: AnyObject) {
+    init(identifier: AnyObject, tabbarItem: SBTabbarItem) {
+        self.tabbarItem = tabbarItem
         super.init(identifier: identifier)
         view = NSView(frame: NSZeroRect)
         view.addSubview(splitView)

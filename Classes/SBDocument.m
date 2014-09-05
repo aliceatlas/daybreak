@@ -697,8 +697,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	tabbarItem = [self constructTabbarItemWithIdentifier:identifier];
 	tabbarItem.title = [self displayName];
 	tabbarItem.progress = -1;
-	tabViewItem = [self constructTabViewItemWithIdentifier:identifier];
-	tabViewItem.tabbarItem = tabbarItem;
+	tabViewItem = [self constructTabViewItemWithIdentifier:identifier tabbarItem:tabbarItem];
 	if (selection)
 	{
 		[tabView selectTabViewItem:tabViewItem];
@@ -728,10 +727,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return tabbarItem;
 }
 
-- (SBTabViewItem *)constructTabViewItemWithIdentifier:(NSNumber *)identifier
+- (SBTabViewItem *)constructTabViewItemWithIdentifier:(NSNumber *)identifier tabbarItem:(SBTabbarItem *)tabbarItem
 {
 	SBTabViewItem *tabViewItem = nil;
-	tabViewItem = [tabView addItemWithIdentifier:identifier];
+    tabViewItem = [tabView addItemWithIdentifier:identifier tabbarItem:tabbarItem];
 	return tabViewItem;
 }
 

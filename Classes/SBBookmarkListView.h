@@ -38,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBButton;
 @interface SBBookmarkListView : SBView <NSAnimationDelegate>
 {
-	SBBookmarksView *__weak wrapperView;
+	SBBookmarksView *__unsafe_unretained wrapperView;
 	SBBookmarkMode mode;
 	NSSize cellSize;
 	CGFloat cellWidth;
@@ -59,13 +59,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger _animationIndex;
 	NSViewAnimation *searchAnimations;
 }
-@property (weak) SBBookmarksView *wrapperView;
+@property (unsafe_unretained) SBBookmarksView *wrapperView;
 @property SBBookmarkMode mode;
 @property NSSize cellSize;
 @property (readonly) CGFloat width;
 @property CGFloat cellWidth;
 @property (readonly) NSPoint block;
-@property (weak, readonly) NSMutableArray *items;
+@property (readonly) NSMutableArray *items;
 @property (strong) NSArray *draggedItems;
 @property (unsafe_unretained) id<SBBookmarkListViewDelegate> delegate;
 @property (readonly) CGFloat minimumHeight;

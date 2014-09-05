@@ -25,8 +25,8 @@
 #import "SBDefinitions.h"
 #import "SBView.h"
 
-
-@interface SBBookmarkListItemView : SBView
+@protocol SBRenderWindowDelegate;
+@interface SBBookmarkListItemView : SBView <SBRenderWindowDelegate>
 {
 	NSProgressIndicator *progressIndicator;
 	SBBookmarkMode mode;

@@ -58,10 +58,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @protocol SBWebResourcesViewDelegate;
 @protocol SBWebResourcesViewDataSource;
 @protocol SBTabViewDelegate;
-@interface SBDocument : NSDocument <SBTabbarDelegate, SBDownloaderDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBBookmarksViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate, NSWindowDelegate>
+@protocol SBDocumentWindowDelegate;
+@interface SBDocument : NSDocument <SBTabbarDelegate, SBDownloaderDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBBookmarksViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate, SBDocumentWindowDelegate>
 {
-	SBDocumentWindow *__weak window;
-	NSWindowController *__weak windowController;
+	SBDocumentWindow *__unsafe_unretained window;
+	NSWindowController *__unsafe_unretained windowController;
 	SBToolbar *toolbar;
 	NSView *urlView;
 	SBURLField *urlField;
@@ -89,8 +90,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger _identifier;
 	NSInteger confirmed;
 }
-@property (weak) SBDocumentWindow *window;
-@property (weak) NSWindowController *windowController;
+@property (unsafe_unretained) SBDocumentWindow *window;
+@property (unsafe_unretained) NSWindowController *windowController;
 @property (strong) NSToolbar *toolbar;
 @property (strong) SBURLField *urlField;
 @property (strong) SBTabbar *tabbar;

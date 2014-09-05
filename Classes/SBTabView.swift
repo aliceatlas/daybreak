@@ -80,8 +80,8 @@ class SBTabView: NSTabView {
         SBDispatch { self.executeDidSelectTabViewItem(tabViewItem as SBTabViewItem) }
     }
     
-    func addItemWithIdentifier(identifier: NSNumber) -> SBTabViewItem {
-        let tabViewItem = SBTabViewItem(identifier: identifier)
+    func addItem(#identifier: NSNumber, tabbarItem: SBTabbarItem) -> SBTabViewItem {
+        let tabViewItem = SBTabViewItem(identifier: identifier, tabbarItem: tabbarItem)
         addTabViewItem(tabViewItem)
         return tabViewItem
     }

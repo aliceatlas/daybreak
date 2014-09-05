@@ -28,12 +28,12 @@
 @class SBCircleProgressIndicator;
 @interface SBDownloadView : SBView
 {
-	SBDownload *__weak download;
+	SBDownload *__unsafe_unretained download;
 	SBCircleProgressIndicator *progressIndicator;
 	BOOL selected;
 	NSTrackingArea *area;
 }
-@property (weak) SBDownload *download;
+@property (unsafe_unretained) SBDownload *download;
 @property (strong) SBCircleProgressIndicator *progressIndicator;
 @property BOOL selected;
 @property (readonly) NSFont *nameFont;

@@ -456,22 +456,24 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)performFindNext:(id)sender
 {
-	if (self.target && nextAction)
+    id target = self.target;
+	if (target && nextAction)
 	{
-		if ([self.target respondsToSelector:nextAction])
+		if ([target respondsToSelector:nextAction])
 		{
-			[self.target performSelector:nextAction withObject:self];
+			[target performSelector:nextAction withObject:self];
 		}
 	}
 }
 
 - (void)performFindPrevious:(id)sender
 {
-	if (self.target && previousAction)
+    id target = self.target;
+	if (target && previousAction)
 	{
-		if ([self.target respondsToSelector:previousAction])
+		if ([target respondsToSelector:previousAction])
 		{
-			[self.target performSelector:previousAction withObject:self];
+			[target performSelector:previousAction withObject:self];
 		}
 	}
 }

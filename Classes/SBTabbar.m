@@ -399,8 +399,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBTabbarItem *newItem = nil;
 	NSRect r = [self newItemRect];
-	newItem = [[SBTabbarItem alloc] initWithFrame:r];
-	newItem.tabbar = self;
+	newItem = [[SBTabbarItem alloc] initWithFrame:r tabbar:self];
 	newItem.identifier = identifier;
 	newItem.target = self;
 	newItem.closeSelector = @selector(closeItem:);

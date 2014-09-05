@@ -59,8 +59,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (strong) SBURLFieldContentView *contentView;
 @property (unsafe_unretained) id<SBURLFieldDatasource> dataSource;
 @property (unsafe_unretained) id delegate;
-@property (weak) NSImage *image;
-@property (weak) NSString *stringValue;
+@property NSImage *image;
+@property NSString *stringValue;
 @property (strong) NSMutableArray *gsItems;
 @property (strong) NSMutableArray *bmItems;
 @property (strong) NSMutableArray *hItems;

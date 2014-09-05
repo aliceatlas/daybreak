@@ -40,10 +40,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @synthesize selectSelector;
 @dynamic progress;
 
-- (instancetype)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame tabbar:(SBTabbar *)inTabbar
 {
     if (self = [super initWithFrame:frame])
 	{
+        tabbar = inTabbar;
 		[self constructProgressIndicator];
 		area = [[NSTrackingArea alloc] initWithRect:self.bounds options:(NSTrackingMouseEnteredAndExited | NSTrackingMouseMoved |NSTrackingActiveAlways | NSTrackingInVisibleRect) owner:self userInfo:nil];
 		[self addTrackingArea:area];

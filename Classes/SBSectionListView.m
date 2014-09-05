@@ -462,7 +462,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[panel orderOut:nil];
 		if (returnCode == NSOKButton)
 		{
-			if (self.currentImageView && self.currentField && item.keyName)
+			NSImageView *imageView = self.currentImageView;
+			NSTextField *field = self.currentField;
+			if (imageView && field && self->item.keyName)
 			{
                 NSWorkspace *space = NSWorkspace.sharedWorkspace;
 				NSString *path = panel.URL.path;
@@ -470,9 +472,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				NSImage *image = [space iconForFile:path];
 				if (image)
 					image.size = NSMakeSize(16.0, 16.0);
-				self.currentImageView.image = image;
-				self.currentField.stringValue = tpath;
-				[SBPreferences setObject:path forKey:item.keyName];
+				imageView.image = image;
+				field.stringValue = tpath;
+				[SBPreferences setObject:path forKey:self->item.keyName];
 			}
 		}
 	}];
