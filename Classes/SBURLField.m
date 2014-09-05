@@ -23,7 +23,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBURLField.h"
-#import "SBBLKGUI.h"
 #import "SBDocument.h"
 #import "SBTableCell.h"
 #import "SBUtil.h"

@@ -328,7 +328,9 @@ let kSBTabbarHeight: CGFloat = 24.0
 #define kSBBookmarkCellPaddingPercentage 0.1
 #define kSBBookmarkCellMinWidth 60
 #define kSBBookmarkCellMaxWidth 256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2))
-#define SBFieldRoundedCurve 4
+*/
+let SBFieldRoundedCurve: CGFloat = 4
+/*
 
 // Counts
 #define kSBDocumentWarningNumberOfBookmarksForOpening 15

@@ -23,7 +23,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBDefinitions.h"
-#import "SBBLKGUI.h"
 #import "SBBottombar.h"
 
 @class SBSidebar;

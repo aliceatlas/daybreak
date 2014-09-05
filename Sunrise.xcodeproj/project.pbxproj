@@ -82,7 +82,6 @@
 		0899556E0FE380D400DED3BA /* SBSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899556D0FE380D400DED3BA /* SBSplitView.m */; };
 		089956C80FE39C2500DED3BA /* SBSidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089956C70FE39C2500DED3BA /* SBSidebar.m */; };
 		089956CD0FE39C8200DED3BA /* SBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089956CC0FE39C8200DED3BA /* SBView.m */; };
-		089960050FFF6EF8001093FA /* SBBLKGUITextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 089960040FFF6EF8001093FA /* SBBLKGUITextField.m */; };
 		089C379C0FE7E07A00088B34 /* ResizerDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379B0FE7E07A00088B34 /* ResizerDown.png */; };
 		089C379E0FE7E08200088B34 /* ResizerUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379D0FE7E08200088B34 /* ResizerUp.png */; };
 		089F20AB104C0D9100549CAC /* SBReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089F20AA104C0D9100549CAC /* SBReportView.m */; };
@@ -151,6 +150,7 @@
 		5076918B19B9F47400F64734 /* SBWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918A19B9F47400F64734 /* SBWebView.swift */; };
 		5076918D19BA0DF400F64734 /* SBSourceTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918C19BA0DF400F64734 /* SBSourceTextView.swift */; };
 		5076918F19BA169600F64734 /* SBBLKGUISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918E19BA169600F64734 /* SBBLKGUISlider.swift */; };
+		5076919119BA1ACF00F64734 /* SBBLKGUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076919019BA1ACF00F64734 /* SBBLKGUITextField.swift */; };
 		50782C8619AC6EB400CB8706 /* SBHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */; };
 		50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8719AC77E400CB8706 /* SBUpdateView.swift */; };
 		50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8919AC835600CB8706 /* SBTabView.swift */; };
@@ -306,8 +306,6 @@
 		089956C70FE39C2500DED3BA /* SBSidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSidebar.m; path = Classes/SBSidebar.m; sourceTree = "<group>"; };
 		089956CB0FE39C8200DED3BA /* SBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBView.h; path = Classes/SBView.h; sourceTree = "<group>"; };
 		089956CC0FE39C8200DED3BA /* SBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBView.m; path = Classes/SBView.m; sourceTree = "<group>"; };
-		089960030FFF6EF8001093FA /* SBBLKGUITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBLKGUITextField.h; path = Classes/SBBLKGUITextField.h; sourceTree = "<group>"; };
-		089960040FFF6EF8001093FA /* SBBLKGUITextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBLKGUITextField.m; path = Classes/SBBLKGUITextField.m; sourceTree = "<group>"; };
 		089B71FE1072AEF3000D00B5 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		089B72151072AF30000D00B5 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C379B0FE7E07A00088B34 /* ResizerDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ResizerDown.png; path = Resources/Images/ResizerDown.png; sourceTree = "<group>"; };
@@ -405,6 +403,7 @@
 		5076918A19B9F47400F64734 /* SBWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBWebView.swift; path = Classes/SBWebView.swift; sourceTree = "<group>"; };
 		5076918C19BA0DF400F64734 /* SBSourceTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSourceTextView.swift; path = Classes/SBSourceTextView.swift; sourceTree = "<group>"; };
 		5076918E19BA169600F64734 /* SBBLKGUISlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUISlider.swift; path = Classes/SBBLKGUISlider.swift; sourceTree = "<group>"; };
+		5076919019BA1ACF00F64734 /* SBBLKGUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUITextField.swift; path = Classes/SBBLKGUITextField.swift; sourceTree = "<group>"; };
 		50782C8719AC77E400CB8706 /* SBUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBUpdateView.swift; path = Classes/SBUpdateView.swift; sourceTree = "<group>"; };
 		50782C8919AC835600CB8706 /* SBTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabView.swift; path = Classes/SBTabView.swift; sourceTree = "<group>"; };
 		50782C8B19AC939E00CB8706 /* SBLocalizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLocalizationWindowController.swift; path = Classes/SBLocalizationWindowController.swift; sourceTree = "<group>"; };
@@ -643,8 +642,7 @@
 				5093D20C19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift */,
 				50AC47B8196923B4009219AF /* SBBLKGUIScrollView.swift */,
 				5076918E19BA169600F64734 /* SBBLKGUISlider.swift */,
-				089960030FFF6EF8001093FA /* SBBLKGUITextField.h */,
-				089960040FFF6EF8001093FA /* SBBLKGUITextField.m */,
+				5076919019BA1ACF00F64734 /* SBBLKGUITextField.swift */,
 				08F1DEA21156653700712D67 /* SBBLKGUISearchField.h */,
 				08F1DEA31156653700712D67 /* SBBLKGUISearchField.m */,
 			);
@@ -1052,7 +1050,6 @@
 				50B2A9A91960E19A00DA1B4A /* Array-SBAdditions.swift in Sources */,
 				0890708E0FFE3F4E00B2B505 /* SBInnerView.m in Sources */,
 				0896C1460FFF16B200B97498 /* SBBLKGUIButton.m in Sources */,
-				089960050FFF6EF8001093FA /* SBBLKGUITextField.m in Sources */,
 				50ACCDF91963E9EC00CE593E /* SBTextInputView.swift in Sources */,
 				50B2A9AD1961174700DA1B4A /* String-SBURLAdditions.swift in Sources */,
 				50B2A9A51960BD5200DA1B4A /* SBUtilS.swift in Sources */,
@@ -1106,6 +1103,7 @@
 				50ACCDFD1964F14C00CE593E /* SBUpdater.swift in Sources */,
 				5093D20B19AD088D00733CC3 /* SBDocumentWindow.swift in Sources */,
 				5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */,
+				5076919119BA1ACF00F64734 /* SBBLKGUITextField.swift in Sources */,
 				50DF8A3019639D03005DAF26 /* SBDownloader.swift in Sources */,
 				501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */,
 				50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */,
