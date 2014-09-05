@@ -82,6 +82,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @end
 
 @class SBButton;
+@class SBBLKGUISlider;
 @interface SBSideBottombar : SBBottombar
 {
 	SBSidebarPosition position;

@@ -115,7 +115,6 @@
 		08AEC4D00FF73C49005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Vertical-Down.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEC4C00FF73C48005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Vertical-Down.png */; };
 		08AEC4D10FF73C49005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEC4C10FF73C48005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png */; };
 		08AEC4D20FF73C49005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEC4C20FF73C48005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png */; };
-		08AEC6C80FF7A107005A39DA /* SBBLKGUISlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 08AEC6C70FF7A107005A39DA /* SBBLKGUISlider.m */; };
 		08B00EE210AE5A33002277E5 /* UserAgent.png in Resources */ = {isa = PBXBuildFile; fileRef = 08B00EE110AE5A33002277E5 /* UserAgent.png */; };
 		08BD344E118DC08400E17E69 /* Cached.png in Resources */ = {isa = PBXBuildFile; fileRef = 08BD344D118DC08400E17E69 /* Cached.png */; };
 		08C1D4B70FF9092A005709D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08C1D4B60FF9092A005709D7 /* QuartzCore.framework */; };
@@ -151,6 +150,7 @@
 		5076918919B9EA8900F64734 /* SBAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918819B9EA8900F64734 /* SBAboutView.swift */; };
 		5076918B19B9F47400F64734 /* SBWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918A19B9F47400F64734 /* SBWebView.swift */; };
 		5076918D19BA0DF400F64734 /* SBSourceTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918C19BA0DF400F64734 /* SBSourceTextView.swift */; };
+		5076918F19BA169600F64734 /* SBBLKGUISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918E19BA169600F64734 /* SBBLKGUISlider.swift */; };
 		50782C8619AC6EB400CB8706 /* SBHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */; };
 		50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8719AC77E400CB8706 /* SBUpdateView.swift */; };
 		50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8919AC835600CB8706 /* SBTabView.swift */; };
@@ -348,8 +348,6 @@
 		08AEC4C10FF73C48005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png"; path = "Resources/Images/BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png"; sourceTree = "<group>"; };
 		08AEC4C20FF73C48005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png"; path = "Resources/Images/BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png"; sourceTree = "<group>"; };
 		08AEC4D60FF73C92005A39DA /* SBBLKGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBLKGUI.h; path = Classes/SBBLKGUI.h; sourceTree = "<group>"; };
-		08AEC6C60FF7A107005A39DA /* SBBLKGUISlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBLKGUISlider.h; path = Classes/SBBLKGUISlider.h; sourceTree = "<group>"; };
-		08AEC6C70FF7A107005A39DA /* SBBLKGUISlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBLKGUISlider.m; path = Classes/SBBLKGUISlider.m; sourceTree = "<group>"; };
 		08B00EE110AE5A33002277E5 /* UserAgent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UserAgent.png; path = Resources/Images/UserAgent.png; sourceTree = "<group>"; };
 		08BC84FF107F9158005C9030 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08BC851D107F9160005C9030 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -406,6 +404,7 @@
 		5076918819B9EA8900F64734 /* SBAboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBAboutView.swift; path = Classes/SBAboutView.swift; sourceTree = "<group>"; };
 		5076918A19B9F47400F64734 /* SBWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBWebView.swift; path = Classes/SBWebView.swift; sourceTree = "<group>"; };
 		5076918C19BA0DF400F64734 /* SBSourceTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSourceTextView.swift; path = Classes/SBSourceTextView.swift; sourceTree = "<group>"; };
+		5076918E19BA169600F64734 /* SBBLKGUISlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUISlider.swift; path = Classes/SBBLKGUISlider.swift; sourceTree = "<group>"; };
 		50782C8719AC77E400CB8706 /* SBUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBUpdateView.swift; path = Classes/SBUpdateView.swift; sourceTree = "<group>"; };
 		50782C8919AC835600CB8706 /* SBTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabView.swift; path = Classes/SBTabView.swift; sourceTree = "<group>"; };
 		50782C8B19AC939E00CB8706 /* SBLocalizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLocalizationWindowController.swift; path = Classes/SBLocalizationWindowController.swift; sourceTree = "<group>"; };
@@ -643,8 +642,7 @@
 				0896C1450FFF16B200B97498 /* SBBLKGUIButton.m */,
 				5093D20C19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift */,
 				50AC47B8196923B4009219AF /* SBBLKGUIScrollView.swift */,
-				08AEC6C60FF7A107005A39DA /* SBBLKGUISlider.h */,
-				08AEC6C70FF7A107005A39DA /* SBBLKGUISlider.m */,
+				5076918E19BA169600F64734 /* SBBLKGUISlider.swift */,
 				089960030FFF6EF8001093FA /* SBBLKGUITextField.h */,
 				089960040FFF6EF8001093FA /* SBBLKGUITextField.m */,
 				08F1DEA21156653700712D67 /* SBBLKGUISearchField.h */,
@@ -1047,10 +1045,10 @@
 				089956CD0FE39C8200DED3BA /* SBView.m in Sources */,
 				508FAC5319653AC400F4380F /* main.swift in Sources */,
 				50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */,
+				5076918F19BA169600F64734 /* SBBLKGUISlider.swift in Sources */,
 				0890E1750FE91DF4002DF339 /* SBTabbarItem.m in Sources */,
 				089FE2E90FEBED6C000D2436 /* SBCircleProgressIndicator.m in Sources */,
 				5076918D19BA0DF400F64734 /* SBSourceTextView.swift in Sources */,
-				08AEC6C80FF7A107005A39DA /* SBBLKGUISlider.m in Sources */,
 				50B2A9A91960E19A00DA1B4A /* Array-SBAdditions.swift in Sources */,
 				0890708E0FFE3F4E00B2B505 /* SBInnerView.m in Sources */,
 				0896C1460FFF16B200B97498 /* SBBLKGUIButton.m in Sources */,

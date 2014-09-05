@@ -25,6 +25,5 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #import "SBBLKGUIButton.h"
-#import "SBBLKGUISlider.h"
 #import "SBBLKGUITextField.h"
 #import "SBBLKGUISearchField.h"

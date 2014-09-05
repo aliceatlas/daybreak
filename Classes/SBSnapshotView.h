@@ -29,6 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBBLKGUIButton;
 @class SBBLKGUIScrollView;
 @class SBBLKGUIPopUpButton;
+@class SBBLKGUISlider;
 @interface SBSnapshotView : SBView <NSTextFieldDelegate>
 {
 	SBBLKGUIScrollView *scrollView;
