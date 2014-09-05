@@ -124,7 +124,6 @@
 		08C8D6A11036DEF4005540AF /* Icon_Unlock.png in Resources */ = {isa = PBXBuildFile; fileRef = 08C8D69F1036DEF4005540AF /* Icon_Unlock.png */; };
 		08C902CA100CC74600A46719 /* Plug-ins.html in Resources */ = {isa = PBXBuildFile; fileRef = 08C902C9100CC74600A46719 /* Plug-ins.html */; };
 		08DA3D251057D9BE00DD4D3E /* SBBookmarkListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA3D241057D9BE00DD4D3E /* SBBookmarkListItemView.m */; };
-		08F1DEA41156653700712D67 /* SBBLKGUISearchField.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F1DEA31156653700712D67 /* SBBLKGUISearchField.m */; };
 		08F1DEB01156695500712D67 /* Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F1DEAF1156695500712D67 /* Search.png */; };
 		08F5B05A100B63FC0011B603 /* NSURL-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F5B059100B63FC0011B603 /* NSURL-SBAdditions.m */; };
 		08F914C410352D020026ABD1 /* Source.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F914C310352D020026ABD1 /* Source.png */; };
@@ -151,6 +150,7 @@
 		5076918D19BA0DF400F64734 /* SBSourceTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918C19BA0DF400F64734 /* SBSourceTextView.swift */; };
 		5076918F19BA169600F64734 /* SBBLKGUISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918E19BA169600F64734 /* SBBLKGUISlider.swift */; };
 		5076919119BA1ACF00F64734 /* SBBLKGUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076919019BA1ACF00F64734 /* SBBLKGUITextField.swift */; };
+		5076919719BA2A0500F64734 /* SBBLKGUISearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076919619BA2A0500F64734 /* SBBLKGUISearchField.swift */; };
 		50782C8619AC6EB400CB8706 /* SBHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */; };
 		50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8719AC77E400CB8706 /* SBUpdateView.swift */; };
 		50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8919AC835600CB8706 /* SBTabView.swift */; };
@@ -345,7 +345,6 @@
 		08AEC4C00FF73C48005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Vertical-Down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerArrow-Highlighted-Vertical-Down.png"; path = "Resources/Images/BLKGUI_ScrollerArrow-Highlighted-Vertical-Down.png"; sourceTree = "<group>"; };
 		08AEC4C10FF73C48005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png"; path = "Resources/Images/BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png"; sourceTree = "<group>"; };
 		08AEC4C20FF73C48005A39DA /* BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png"; path = "Resources/Images/BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png"; sourceTree = "<group>"; };
-		08AEC4D60FF73C92005A39DA /* SBBLKGUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBLKGUI.h; path = Classes/SBBLKGUI.h; sourceTree = "<group>"; };
 		08B00EE110AE5A33002277E5 /* UserAgent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = UserAgent.png; path = Resources/Images/UserAgent.png; sourceTree = "<group>"; };
 		08BC84FF107F9158005C9030 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08BC851D107F9160005C9030 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = en; path = Resources/en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -364,8 +363,6 @@
 		08DA3D241057D9BE00DD4D3E /* SBBookmarkListItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBBookmarkListItemView.m; path = Classes/SBBookmarkListItemView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		08DE5E81107D8104006A1B94 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08DE5E93107D8112006A1B94 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		08F1DEA21156653700712D67 /* SBBLKGUISearchField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBLKGUISearchField.h; path = Classes/SBBLKGUISearchField.h; sourceTree = "<group>"; };
-		08F1DEA31156653700712D67 /* SBBLKGUISearchField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBLKGUISearchField.m; path = Classes/SBBLKGUISearchField.m; sourceTree = "<group>"; };
 		08F1DEAF1156695500712D67 /* Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Search.png; path = Resources/Images/Search.png; sourceTree = "<group>"; };
 		08F5B058100B63FC0011B603 /* NSURL-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL-SBAdditions.h"; path = "Classes/NSURL-SBAdditions.h"; sourceTree = "<group>"; };
 		08F5B059100B63FC0011B603 /* NSURL-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL-SBAdditions.m"; path = "Classes/NSURL-SBAdditions.m"; sourceTree = "<group>"; };
@@ -404,6 +401,7 @@
 		5076918C19BA0DF400F64734 /* SBSourceTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSourceTextView.swift; path = Classes/SBSourceTextView.swift; sourceTree = "<group>"; };
 		5076918E19BA169600F64734 /* SBBLKGUISlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUISlider.swift; path = Classes/SBBLKGUISlider.swift; sourceTree = "<group>"; };
 		5076919019BA1ACF00F64734 /* SBBLKGUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUITextField.swift; path = Classes/SBBLKGUITextField.swift; sourceTree = "<group>"; };
+		5076919619BA2A0500F64734 /* SBBLKGUISearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUISearchField.swift; path = Classes/SBBLKGUISearchField.swift; sourceTree = "<group>"; };
 		50782C8719AC77E400CB8706 /* SBUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBUpdateView.swift; path = Classes/SBUpdateView.swift; sourceTree = "<group>"; };
 		50782C8919AC835600CB8706 /* SBTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabView.swift; path = Classes/SBTabView.swift; sourceTree = "<group>"; };
 		50782C8B19AC939E00CB8706 /* SBLocalizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLocalizationWindowController.swift; path = Classes/SBLocalizationWindowController.swift; sourceTree = "<group>"; };
@@ -636,15 +634,13 @@
 		08AEC4AA0FF73BF8005A39DA /* BLKGUI */ = {
 			isa = PBXGroup;
 			children = (
-				08AEC4D60FF73C92005A39DA /* SBBLKGUI.h */,
 				0896C1440FFF16B200B97498 /* SBBLKGUIButton.h */,
 				0896C1450FFF16B200B97498 /* SBBLKGUIButton.m */,
 				5093D20C19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift */,
 				50AC47B8196923B4009219AF /* SBBLKGUIScrollView.swift */,
 				5076918E19BA169600F64734 /* SBBLKGUISlider.swift */,
 				5076919019BA1ACF00F64734 /* SBBLKGUITextField.swift */,
-				08F1DEA21156653700712D67 /* SBBLKGUISearchField.h */,
-				08F1DEA31156653700712D67 /* SBBLKGUISearchField.m */,
+				5076919619BA2A0500F64734 /* SBBLKGUISearchField.swift */,
 			);
 			name = BLKGUI;
 			sourceTree = "<group>";
@@ -1107,11 +1103,11 @@
 				50DF8A3019639D03005DAF26 /* SBDownloader.swift in Sources */,
 				501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */,
 				50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */,
+				5076919719BA2A0500F64734 /* SBBLKGUISearchField.swift in Sources */,
 				088EC9E31081FEE600F8BFCB /* SBDownloadsView.m in Sources */,
 				088EC9E41081FEE600F8BFCB /* SBDownloadView.m in Sources */,
 				506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */,
 				089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */,
-				08F1DEA41156653700712D67 /* SBBLKGUISearchField.m in Sources */,
 				081412BD1168671B002FDF25 /* SBTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
