@@ -57,7 +57,6 @@
 		08946ED31114731F00B09D17 /* Icon_Contribute.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946ED21114731F00B09D17 /* Icon_Contribute.png */; };
 		08946F0E111478F600B09D17 /* Icon_Checkout.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946F0D111478F600B09D17 /* Icon_Checkout.png */; };
 		08946FE51114861D00B09D17 /* Icon_Commit.png in Resources */ = {isa = PBXBuildFile; fileRef = 08946FE41114861D00B09D17 /* Icon_Commit.png */; };
-		0896C1460FFF16B200B97498 /* SBBLKGUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0896C1450FFF16B200B97498 /* SBBLKGUIButton.m */; };
 		0896C1820FFF171400B97498 /* BLKGUI_CheckBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1700FFF171400B97498 /* BLKGUI_CheckBox.png */; };
 		0896C1830FFF171400B97498 /* BLKGUI_CheckBox-Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1710FFF171400B97498 /* BLKGUI_CheckBox-Selected.png */; };
 		0896C1840FFF171400B97498 /* BLKGUI_CheckBox-Selected-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1720FFF171400B97498 /* BLKGUI_CheckBox-Selected-Highlighted.png */; };
@@ -151,6 +150,7 @@
 		5076918F19BA169600F64734 /* SBBLKGUISlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918E19BA169600F64734 /* SBBLKGUISlider.swift */; };
 		5076919119BA1ACF00F64734 /* SBBLKGUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076919019BA1ACF00F64734 /* SBBLKGUITextField.swift */; };
 		5076919719BA2A0500F64734 /* SBBLKGUISearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076919619BA2A0500F64734 /* SBBLKGUISearchField.swift */; };
+		5076919919BA2CB100F64734 /* SBBLKGUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076919819BA2CB100F64734 /* SBBLKGUIButton.swift */; };
 		50782C8619AC6EB400CB8706 /* SBHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */; };
 		50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8719AC77E400CB8706 /* SBUpdateView.swift */; };
 		50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8919AC835600CB8706 /* SBTabView.swift */; };
@@ -275,8 +275,6 @@
 		08946FE41114861D00B09D17 /* Icon_Commit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Commit.png; path = Resources/Images/Icon_Commit.png; sourceTree = "<group>"; };
 		0896C1290FFF136300B97498 /* ViewStructure.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = ViewStructure.plist; path = Resources/plists/ViewStructure.plist; sourceTree = "<group>"; };
 		0896C12A0FFF136300B97498 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/plists/Info.plist; sourceTree = "<group>"; };
-		0896C1440FFF16B200B97498 /* SBBLKGUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBLKGUIButton.h; path = Classes/SBBLKGUIButton.h; sourceTree = "<group>"; };
-		0896C1450FFF16B200B97498 /* SBBLKGUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBLKGUIButton.m; path = Classes/SBBLKGUIButton.m; sourceTree = "<group>"; };
 		0896C1700FFF171400B97498 /* BLKGUI_CheckBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BLKGUI_CheckBox.png; path = Resources/Images/BLKGUI_CheckBox.png; sourceTree = "<group>"; };
 		0896C1710FFF171400B97498 /* BLKGUI_CheckBox-Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_CheckBox-Selected.png"; path = "Resources/Images/BLKGUI_CheckBox-Selected.png"; sourceTree = "<group>"; };
 		0896C1720FFF171400B97498 /* BLKGUI_CheckBox-Selected-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_CheckBox-Selected-Highlighted.png"; path = "Resources/Images/BLKGUI_CheckBox-Selected-Highlighted.png"; sourceTree = "<group>"; };
@@ -402,6 +400,7 @@
 		5076918E19BA169600F64734 /* SBBLKGUISlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUISlider.swift; path = Classes/SBBLKGUISlider.swift; sourceTree = "<group>"; };
 		5076919019BA1ACF00F64734 /* SBBLKGUITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUITextField.swift; path = Classes/SBBLKGUITextField.swift; sourceTree = "<group>"; };
 		5076919619BA2A0500F64734 /* SBBLKGUISearchField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUISearchField.swift; path = Classes/SBBLKGUISearchField.swift; sourceTree = "<group>"; };
+		5076919819BA2CB100F64734 /* SBBLKGUIButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUIButton.swift; path = Classes/SBBLKGUIButton.swift; sourceTree = "<group>"; };
 		50782C8719AC77E400CB8706 /* SBUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBUpdateView.swift; path = Classes/SBUpdateView.swift; sourceTree = "<group>"; };
 		50782C8919AC835600CB8706 /* SBTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabView.swift; path = Classes/SBTabView.swift; sourceTree = "<group>"; };
 		50782C8B19AC939E00CB8706 /* SBLocalizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLocalizationWindowController.swift; path = Classes/SBLocalizationWindowController.swift; sourceTree = "<group>"; };
@@ -634,8 +633,7 @@
 		08AEC4AA0FF73BF8005A39DA /* BLKGUI */ = {
 			isa = PBXGroup;
 			children = (
-				0896C1440FFF16B200B97498 /* SBBLKGUIButton.h */,
-				0896C1450FFF16B200B97498 /* SBBLKGUIButton.m */,
+				5076919819BA2CB100F64734 /* SBBLKGUIButton.swift */,
 				5093D20C19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift */,
 				50AC47B8196923B4009219AF /* SBBLKGUIScrollView.swift */,
 				5076918E19BA169600F64734 /* SBBLKGUISlider.swift */,
@@ -1045,7 +1043,6 @@
 				5076918D19BA0DF400F64734 /* SBSourceTextView.swift in Sources */,
 				50B2A9A91960E19A00DA1B4A /* Array-SBAdditions.swift in Sources */,
 				0890708E0FFE3F4E00B2B505 /* SBInnerView.m in Sources */,
-				0896C1460FFF16B200B97498 /* SBBLKGUIButton.m in Sources */,
 				50ACCDF91963E9EC00CE593E /* SBTextInputView.swift in Sources */,
 				50B2A9AD1961174700DA1B4A /* String-SBURLAdditions.swift in Sources */,
 				50B2A9A51960BD5200DA1B4A /* SBUtilS.swift in Sources */,
@@ -1096,6 +1093,7 @@
 				50B2A9A3196068B700DA1B4A /* SBBookmarks.swift in Sources */,
 				507A8E23195FFF6700BF56AD /* SBDefinitions.m in Sources */,
 				50C8ED6519ACE4C700F7E17B /* SBWindowController.swift in Sources */,
+				5076919919BA2CB100F64734 /* SBBLKGUIButton.swift in Sources */,
 				50ACCDFD1964F14C00CE593E /* SBUpdater.swift in Sources */,
 				5093D20B19AD088D00733CC3 /* SBDocumentWindow.swift in Sources */,
 				5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */,

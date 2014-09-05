@@ -23,10 +23,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBDefinitions.h"
-#import "SBBLKGUIButton.h"
 #import "SBView.h"
 
 @class SBButton;
+@class SBBLKGUIButton;
 @class SBFindSearchField;
 @interface SBFindbar : SBView <NSTextFieldDelegate>
 {

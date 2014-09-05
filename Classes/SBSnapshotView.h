@@ -23,9 +23,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBDefinitions.h"
-#import "SBBLKGUIButton.h"
 #import "SBView.h"
 
+@class SBBLKGUIButton;
 @class SBBLKGUIScrollView;
 @class SBBLKGUIPopUpButton;
 @class SBBLKGUISlider;
