@@ -133,7 +133,7 @@ class SBBookmarks: NSObject {
             if error != nil {
                 DebugLogS("\(__FUNCTION__) error = \(error)")
             } else {
-                r = data.writeToFile(path, atomically: true)
+                r = data!.writeToFile(path, atomically: true)
             }
         }
         return r

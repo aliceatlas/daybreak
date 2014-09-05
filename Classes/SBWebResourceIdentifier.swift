@@ -29,13 +29,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Foundation
 
 class SBWebResourceIdentifier: NSObject /*, NSCoding */ {
-    var request: NSURLRequest?
+    var request: NSURLRequest
     var length: CLongLong = 0
     var received: CLongLong = 0
     var flag: Bool = true
-    var URL: NSURL? {
-        return request?.URL
-    }
+    var URL: NSURL { return request.URL }
     
     class func identifierWithURLRequest(aRequest: NSURLRequest) -> SBWebResourceIdentifier {
         return SBWebResourceIdentifier(URLRequest: aRequest)

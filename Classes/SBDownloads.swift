@@ -135,7 +135,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
             item.path = SBPreferences.objectForKey(kSBSaveDownloadedFilesTo) as String
             if NSFileManager.defaultManager().fileExistsAtPath(item.path!) {
                 item.path = item.path!.stringByAppendingPathComponent(filename)
-                item.download?.setDestination(item.path, allowOverwrite: false)
+                item.download?.setDestination(item.path!, allowOverwrite: false)
                 // Update views
                 executeDidUpdateItem(item)
             } else {

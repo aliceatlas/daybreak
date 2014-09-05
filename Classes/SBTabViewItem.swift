@@ -96,7 +96,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate {
     var canForward: Bool { return webView.canGoForward }
     var mainFrameURLString: String? { return webView.mainFrameURL? }
     var pageTitle: String? { return webView.mainFrame.dataSource?.pageTitle? }
-    var requestURLString: String? { return webView.mainFrame?.dataSource?.request.URL.absoluteString }
+    var requestURLString: String? { return webView.mainFrame?.dataSource?.request.URL?.absoluteString }
     var documentSource: String? { return webView.mainFrame?.dataSource?.representation?.documentSource() }
     
     override init(identifier: AnyObject) {
