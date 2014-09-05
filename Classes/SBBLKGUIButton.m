@@ -184,7 +184,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		}
 	}
 	
-	if ([self title] > 0)
+	if (self.title && self.title.length > 0)
 	{
 		NSDictionary *attributes = nil;
 		NSString *title = self.title;
