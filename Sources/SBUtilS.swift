@@ -118,6 +118,12 @@ func SBDispatch(block: dispatch_block_t) {
     dispatch_async(dispatch_get_main_queue(), block)
 }
 
+func SBDispatchDelay(delay: Double, block: dispatch_block_t) {
+    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * delay))
+    let queue = dispatch_get_main_queue()
+    dispatch_after(time, queue, block)
+}
+
 /*
 func SBCreateBookmarkItemS(title: String?, url: String?, imageData: NSData?, date: NSDate?, labelName: String?, offsetString: String?) -> BookmarkItem {
     var item = BookmarkItem()

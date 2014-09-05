@@ -17,7 +17,6 @@
 
 #import "SBDownloadsView.h"
 
-#import "SBWebView.h"
 #import "SBTabbarItem.h"
 #import "SBSourceTextView.h"
 

@@ -25,7 +25,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDefinitions.h"
 
 @class SBSourceTextView;
-@protocol SBSourceTextViewDelegate <NSObject>
+@protocol SBSourceTextViewDelegate <NSTextViewDelegate>
 - (void)textViewShouldOpenFindbar:(SBSourceTextView *)aTextView;
 - (void)textViewShouldCloseFindbar:(SBSourceTextView *)aTextView;
 @end

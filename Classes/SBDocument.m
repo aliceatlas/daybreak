@@ -33,7 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBTabbarItem.h"
 #import "SBURLField.h"
 #import "SBUtil.h"
-#import "SBWebView.h"
 
 #import "Sunrise3-Bridging-Header.h"
 #import "Sunrise3-Swift.h"

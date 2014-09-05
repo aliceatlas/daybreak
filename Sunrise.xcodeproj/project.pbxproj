@@ -41,7 +41,6 @@
 		0890E1750FE91DF4002DF339 /* SBTabbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0890E1740FE91DF4002DF339 /* SBTabbarItem.m */; };
 		089106870FE520E100DFE290 /* Resizer.png in Resources */ = {isa = PBXBuildFile; fileRef = 089106860FE520E100DFE290 /* Resizer.png */; };
 		08916C3110099ECC0012D4EA /* PaledApplicationIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 08916C3010099ECC0012D4EA /* PaledApplicationIcon.png */; };
-		08916C501009AFAF0012D4EA /* SBWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08916C4F1009AFAF0012D4EA /* SBWebView.m */; };
 		08916E721009D5220012D4EA /* NSString-SBURLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08916E711009D5220012D4EA /* NSString-SBURLAdditions.m */; };
 		0891D4201000436C000CE426 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0891D41E1000436C000CE426 /* Localizable.strings */; };
 		0891D51E100065B9000CE426 /* BLKGUI_PopUp-Center.png in Resources */ = {isa = PBXBuildFile; fileRef = 0891D518100065B9000CE426 /* BLKGUI_PopUp-Center.png */; };
@@ -151,6 +150,7 @@
 		5072657219A0CA380099DA28 /* SBMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5072657119A0CA380099DA28 /* SBMessageView.swift */; };
 		5072657519A0D9530099DA28 /* SBUserAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5072657419A0D9530099DA28 /* SBUserAgentView.swift */; };
 		5076918919B9EA8900F64734 /* SBAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918819B9EA8900F64734 /* SBAboutView.swift */; };
+		5076918B19B9F47400F64734 /* SBWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918A19B9F47400F64734 /* SBWebView.swift */; };
 		50782C8619AC6EB400CB8706 /* SBHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */; };
 		50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8719AC77E400CB8706 /* SBUpdateView.swift */; };
 		50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8919AC835600CB8706 /* SBTabView.swift */; };
@@ -257,8 +257,6 @@
 		0890E1740FE91DF4002DF339 /* SBTabbarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTabbarItem.m; path = Classes/SBTabbarItem.m; sourceTree = "<group>"; };
 		089106860FE520E100DFE290 /* Resizer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Resizer.png; path = Resources/Images/Resizer.png; sourceTree = "<group>"; };
 		08916C3010099ECC0012D4EA /* PaledApplicationIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PaledApplicationIcon.png; path = Resources/Images/PaledApplicationIcon.png; sourceTree = "<group>"; };
-		08916C4E1009AFAF0012D4EA /* SBWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBWebView.h; path = Classes/SBWebView.h; sourceTree = "<group>"; };
-		08916C4F1009AFAF0012D4EA /* SBWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBWebView.m; path = Classes/SBWebView.m; sourceTree = "<group>"; };
 		08916E701009D5220012D4EA /* NSString-SBURLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString-SBURLAdditions.h"; path = "Classes/NSString-SBURLAdditions.h"; sourceTree = "<group>"; };
 		08916E711009D5220012D4EA /* NSString-SBURLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString-SBURLAdditions.m"; path = "Classes/NSString-SBURLAdditions.m"; sourceTree = "<group>"; };
 		0891D518100065B9000CE426 /* BLKGUI_PopUp-Center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_PopUp-Center.png"; path = "Resources/Images/BLKGUI_PopUp-Center.png"; sourceTree = "<group>"; };
@@ -408,6 +406,7 @@
 		5072657119A0CA380099DA28 /* SBMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBMessageView.swift; path = Classes/SBMessageView.swift; sourceTree = "<group>"; };
 		5072657419A0D9530099DA28 /* SBUserAgentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBUserAgentView.swift; path = Classes/SBUserAgentView.swift; sourceTree = "<group>"; };
 		5076918819B9EA8900F64734 /* SBAboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBAboutView.swift; path = Classes/SBAboutView.swift; sourceTree = "<group>"; };
+		5076918A19B9F47400F64734 /* SBWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBWebView.swift; path = Classes/SBWebView.swift; sourceTree = "<group>"; };
 		50782C8719AC77E400CB8706 /* SBUpdateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBUpdateView.swift; path = Classes/SBUpdateView.swift; sourceTree = "<group>"; };
 		50782C8919AC835600CB8706 /* SBTabView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabView.swift; path = Classes/SBTabView.swift; sourceTree = "<group>"; };
 		50782C8B19AC939E00CB8706 /* SBLocalizationWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLocalizationWindowController.swift; path = Classes/SBLocalizationWindowController.swift; sourceTree = "<group>"; };
@@ -620,8 +619,7 @@
 				50CE69DF19863F4C00C17D44 /* SBWebResourceIdentifier.swift */,
 				089FE2E70FEBED6C000D2436 /* SBCircleProgressIndicator.h */,
 				089FE2E80FEBED6C000D2436 /* SBCircleProgressIndicator.m */,
-				08916C4E1009AFAF0012D4EA /* SBWebView.h */,
-				08916C4F1009AFAF0012D4EA /* SBWebView.m */,
+				5076918A19B9F47400F64734 /* SBWebView.swift */,
 				088E997D1008532C005FC4C0 /* SBSourceTextView.h */,
 				088E997E1008532C005FC4C0 /* SBSourceTextView.m */,
 			);
@@ -1066,10 +1064,10 @@
 				088E997F1008532C005FC4C0 /* SBSourceTextView.m in Sources */,
 				088E99B610086FD1005FC4C0 /* SBFixedSplitView.m in Sources */,
 				50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */,
+				5076918B19B9F47400F64734 /* SBWebView.swift in Sources */,
 				088DF2FB1008A3F100113786 /* SBFindbar.m in Sources */,
 				506D2ADA19A23ACD007A8842 /* SBDownloaderView.swift in Sources */,
 				505E49F9198C91A4001F5254 /* SBDrawer.swift in Sources */,
-				08916C501009AFAF0012D4EA /* SBWebView.m in Sources */,
 				50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */,
 				50782C8C19AC939E00CB8706 /* SBLocalizationWindowController.swift in Sources */,
 				08916E721009D5220012D4EA /* NSString-SBURLAdditions.m in Sources */,

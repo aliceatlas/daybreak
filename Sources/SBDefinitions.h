@@ -359,7 +359,12 @@ extern NSString *SBBookmarkPboardType;
 - (NSString *)_web_userVisibleString;
 @end
 
-@class WebInspector, DOMRange;
+@interface WebInspector: NSObject
+- (void)show:(id)sender;
+- (void)showConsole:(id)sender;
+@end
+
+@class DOMRange;
 typedef NSUInteger WebFindOptions;
 @interface WebView (WebPendingPublic)
 - (NSUInteger)markAllMatchesForText:(NSString *)string caseSensitive:(BOOL)caseFlag highlight:(BOOL)highlight limit:(NSUInteger)limit;
