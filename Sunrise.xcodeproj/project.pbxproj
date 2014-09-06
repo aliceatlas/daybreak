@@ -32,7 +32,6 @@
 		088D26E0101B3EC400691CEC /* SBBookmarkListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088D26DF101B3EC400691CEC /* SBBookmarkListView.m */; };
 		088D299E101B5F3B00691CEC /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 088D299D101B5F3B00691CEC /* Edit.png */; };
 		088DF2FB1008A3F100113786 /* SBFindbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 088DF2FA1008A3F100113786 /* SBFindbar.m */; };
-		088E985010082393005FC4C0 /* SBBottombar.m in Sources */ = {isa = PBXBuildFile; fileRef = 088E984F10082393005FC4C0 /* SBBottombar.m */; };
 		088E99B610086FD1005FC4C0 /* SBFixedSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088E99B510086FD1005FC4C0 /* SBFixedSplitView.m */; };
 		088EC9E31081FEE600F8BFCB /* SBDownloadsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088EC9E01081FEE600F8BFCB /* SBDownloadsView.m */; };
 		088EC9E41081FEE600F8BFCB /* SBDownloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088EC9E21081FEE600F8BFCB /* SBDownloadView.m */; };
@@ -181,6 +180,7 @@
 		50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF8A331963A5A5005DAF26 /* SBDownloads.swift */; };
 		50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F850621967FD4D00C28795 /* SBSegmentedButton.swift */; };
 		50FEEA9719BABFDD00962BB9 /* SBSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9619BABFDD00962BB9 /* SBSidebar.swift */; };
+		50FEEA9819BAE68E00962BB9 /* SBBottombar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9419BABDB900962BB9 /* SBBottombar.swift */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -241,8 +241,6 @@
 		088D299D101B5F3B00691CEC /* Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Edit.png; path = Resources/Images/Edit.png; sourceTree = "<group>"; };
 		088DF2F91008A3F100113786 /* SBFindbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBFindbar.h; path = Classes/SBFindbar.h; sourceTree = "<group>"; };
 		088DF2FA1008A3F100113786 /* SBFindbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFindbar.m; path = Classes/SBFindbar.m; sourceTree = "<group>"; };
-		088E984E10082393005FC4C0 /* SBBottombar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBottombar.h; path = Classes/SBBottombar.h; sourceTree = "<group>"; };
-		088E984F10082393005FC4C0 /* SBBottombar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBottombar.m; path = Classes/SBBottombar.m; sourceTree = "<group>"; };
 		088E99B410086FD1005FC4C0 /* SBFixedSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBFixedSplitView.h; path = Classes/SBFixedSplitView.h; sourceTree = "<group>"; };
 		088E99B510086FD1005FC4C0 /* SBFixedSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFixedSplitView.m; path = Classes/SBFixedSplitView.m; sourceTree = "<group>"; };
 		088EC9DF1081FEE600F8BFCB /* SBDownloadsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDownloadsView.h; path = Classes/SBDownloadsView.h; sourceTree = "<group>"; };
@@ -429,6 +427,7 @@
 		50DF8A331963A5A5005DAF26 /* SBDownloads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownloads.swift; path = Classes/SBDownloads.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBHistoryView.swift; path = Classes/SBHistoryView.swift; sourceTree = "<group>"; };
 		50F850621967FD4D00C28795 /* SBSegmentedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSegmentedButton.swift; path = Classes/SBSegmentedButton.swift; sourceTree = "<group>"; };
+		50FEEA9419BABDB900962BB9 /* SBBottombar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBottombar.swift; path = Classes/SBBottombar.swift; sourceTree = "<group>"; };
 		50FEEA9619BABFDD00962BB9 /* SBSidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSidebar.swift; path = Classes/SBSidebar.swift; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -505,8 +504,7 @@
 			children = (
 				089956CB0FE39C8200DED3BA /* SBView.h */,
 				089956CC0FE39C8200DED3BA /* SBView.m */,
-				088E984E10082393005FC4C0 /* SBBottombar.h */,
-				088E984F10082393005FC4C0 /* SBBottombar.m */,
+				50FEEA9419BABDB900962BB9 /* SBBottombar.swift */,
 				088DF2F91008A3F100113786 /* SBFindbar.h */,
 				088DF2FA1008A3F100113786 /* SBFindbar.m */,
 				089771BC10DD0B62004AF73B /* SBSearchbar.h */,
@@ -1045,7 +1043,7 @@
 				50B2A9AD1961174700DA1B4A /* String-SBURLAdditions.swift in Sources */,
 				50B2A9A51960BD5200DA1B4A /* SBUtilS.swift in Sources */,
 				50C904501963E62B000EC8FD /* SBDocument.m in Sources */,
-				088E985010082393005FC4C0 /* SBBottombar.m in Sources */,
+				50FEEA9819BAE68E00962BB9 /* SBBottombar.swift in Sources */,
 				088E99B610086FD1005FC4C0 /* SBFixedSplitView.m in Sources */,
 				50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */,
 				5076918B19B9F47400F64734 /* SBWebView.swift in Sources */,

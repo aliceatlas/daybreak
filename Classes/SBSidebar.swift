@@ -324,11 +324,7 @@ class SBSideBottombar: SBBottombar {
     	// buttons.append(newFolderButton)
         addSubview(sizeSlider)
     }
-    
-    required init(coder: NSCoder) {
-        fatalError("NSCoding not supported")
-    }
-    
+        
     // MARK: Rects
     
     var buttonWidth: CGFloat { return bounds.size.height }

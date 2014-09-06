@@ -26,8 +26,6 @@
 #import "SBInnerView.h"
 #import "SBTabbar.h"
 
-#import "SBBottombar.h"
-
 @interface NSToolbar (Private)
 - (NSView *)_toolbarView;
 @end
