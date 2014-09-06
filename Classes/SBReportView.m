@@ -49,7 +49,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (self = [super initWithFrame:r])
 	{
 		[self constructTitle];
-		[self constructSummery];
+		[self constructSummary];
 		[self constructUserAgent];
 		[self constructSwitch];
 		[self constructWay];
@@ -94,7 +94,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return r;
 }
 
-- (NSRect)summeryLabelRect
+- (NSRect)summaryLabelRect
 {
 	NSRect r = NSZeroRect;
 	NSRect iconRect = self.iconRect;
@@ -106,27 +106,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return r;
 }
 
-- (NSRect)summeryFieldRect
+- (NSRect)summaryFieldRect
 {
 	NSRect r = NSZeroRect;
-	NSRect summeryLabelRect = self.summeryLabelRect;
+	NSRect summaryLabelRect = self.summaryLabelRect;
 	NSPoint margin = self.margin;
-	r.origin.x = NSMaxX(summeryLabelRect) + 8.0;
+	r.origin.x = NSMaxX(summaryLabelRect) + 8.0;
 	r.size.width = self.bounds.size.width - r.origin.x - margin.x;
 	r.size.height = 58.0;
-	r.origin.y = NSMaxY(summeryLabelRect) - r.size.height + 2.0;
+	r.origin.y = NSMaxY(summaryLabelRect) - r.size.height + 2.0;
 	return r;
 }
 
 - (NSRect)userAgentLabelRect
 {
 	NSRect r = NSZeroRect;
-	NSRect summeryFieldRect = self.summeryFieldRect;
+	NSRect summaryFieldRect = self.summaryFieldRect;
 	NSPoint margin = self.margin;
 	r.origin.x = margin.x;
 	r.size.width = self.labelWidth - r.origin.x;
 	r.size.height = 19.0;
-	r.origin.y = summeryFieldRect.origin.y - 20.0 - r.size.height;
+	r.origin.y = summaryFieldRect.origin.y - 20.0 - r.size.height;
 	return r;
 }
 
@@ -237,25 +237,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self addSubview:titleLabel];
 }
 
-- (void)constructSummery
+- (void)constructSummary
 {
-	summeryLabel = [[NSTextField alloc] initWithFrame:self.summeryLabelRect];
-	summeryField = [[SBBLKGUITextField alloc] initWithFrame:self.summeryFieldRect];
-    summeryLabel.stringValue = NSLocalizedString(@"Summary", nil);
-    summeryLabel.alignment = NSRightTextAlignment;
-    summeryLabel.bordered = NO;
-    summeryLabel.editable = NO;
-    summeryLabel.selectable = NO;
-    summeryLabel.drawsBackground = NO;
-    summeryLabel.font = [NSFont systemFontOfSize:14.0];
-    summeryLabel.textColor = NSColor.whiteColor;
-    summeryField.alignment = NSLeftTextAlignment;
-    summeryField.font = [NSFont systemFontOfSize:14.0];
-    summeryField.textColor = NSColor.whiteColor;
-    summeryField.delegate = self;
-	[summeryField.cell setWraps:YES];
-	[self addSubview:summeryLabel];
-	[self addSubview:summeryField];
+	summaryLabel = [[NSTextField alloc] initWithFrame:self.summaryLabelRect];
+	summaryField = [[SBBLKGUITextField alloc] initWithFrame:self.summaryFieldRect];
+    summaryLabel.stringValue = NSLocalizedString(@"Summary", nil);
+    summaryLabel.alignment = NSRightTextAlignment;
+    summaryLabel.bordered = NO;
+    summaryLabel.editable = NO;
+    summaryLabel.selectable = NO;
+    summaryLabel.drawsBackground = NO;
+    summaryLabel.font = [NSFont systemFontOfSize:14.0];
+    summaryLabel.textColor = NSColor.whiteColor;
+    summaryField.alignment = NSLeftTextAlignment;
+    summaryField.font = [NSFont systemFontOfSize:14.0];
+    summaryField.textColor = NSColor.whiteColor;
+    summaryField.delegate = self;
+	[summaryField.cell setWraps:YES];
+	[self addSubview:summaryLabel];
+	[self addSubview:summaryField];
 }
 
 - (void)constructUserAgent
@@ -379,7 +379,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)validateDoneButton
 {
 	BOOL canDone = NO;
-	canDone = summeryField.stringValue.length > 0;
+	canDone = summaryField.stringValue.length > 0;
 	if (canDone && switchMatrix.selectedColumn == 0)
 	{
 		canDone = wayField.stringValue.length > 0;
@@ -436,7 +436,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSString *errorDescription = nil;
 	NSMutableString *message = nil;
-	NSString *summery = nil;
+	NSString *summary = nil;
 	NSString *userAgent = nil;
 	BOOL reproducibility = YES;
 	NSString *wayToReproduce = nil;
@@ -449,7 +449,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	
 	// Get properties
 	message = [NSMutableString stringWithCapacity:0];
-	summery = summeryField.stringValue;
+	summary = summaryField.stringValue;
 	userAgent = userAgentPopup.titleOfSelectedItem;
 	reproducibility = (switchMatrix.selectedColumn == 0);
 	wayToReproduce = wayField.stringValue;
@@ -471,9 +471,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	applicationVersion = NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"];
 	
 	// Make message
-	if (summery.length > 0)
+	if (summary.length > 0)
 	{
-		[message appendFormat:@"%@ : \n%@\n\n", NSLocalizedString(@"Summary", nil), summery];
+		[message appendFormat:@"%@ : \n%@\n\n", NSLocalizedString(@"Summary", nil), summary];
 	}
 	if (userAgent.length > 0)
 	{

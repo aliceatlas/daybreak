@@ -32,8 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	NSImageView *iconImageView;
 	NSTextField *titleLabel;
-	NSTextField *summeryLabel;
-	SBBLKGUITextField *summeryField;
+	NSTextField *summaryLabel;
+	SBBLKGUITextField *summaryField;
 	NSTextField *userAgentLabel;
 	SBBLKGUIPopUpButton *userAgentPopup;
 	NSTextField *switchLabel;
@@ -47,8 +47,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (readonly) CGFloat labelWidth;
 @property (readonly) NSRect iconRect;
 @property (readonly) NSRect titleRect;
-@property (readonly) NSRect summeryLabelRect;
-@property (readonly) NSRect summeryFieldRect;
+@property (readonly) NSRect summaryLabelRect;
+@property (readonly) NSRect summaryFieldRect;
 @property (readonly) NSRect switchLabelRect;
 @property (readonly) NSRect switchRect;
 @property (readonly) NSRect wayLabelRect;
@@ -58,7 +58,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Construction
 - (void)constructTitle;
-- (void)constructSummery;
+- (void)constructSummary;
 - (void)constructUserAgent;
 - (void)constructSwitch;
 - (void)constructWay;
