@@ -23,8 +23,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBDefinitions.h"
-#import "SBSidebar.h"
 
+@class SBSidebar;
+@protocol SBSidebarDelegate;
 @interface SBSplitView : NSSplitView <SBSidebarDelegate>
 {
 	NSView *view;

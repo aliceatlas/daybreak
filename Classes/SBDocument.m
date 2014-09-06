@@ -27,7 +27,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDownloadsView.h"
 #import "SBInnerView.h"
 #import "SBReportView.h"
-#import "SBSidebar.h"
 #import "SBSnapshotView.h"
 #import "SBTabbar.h"
 #import "SBTabbarItem.h"
@@ -649,7 +648,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		
 		sidebar = [[SBSidebar alloc] initWithFrame:[splitView sidebarRect]];
 		sidebar.delegate = self;
-		sidebar.siderbarDelegate = splitView;
+		sidebar.sidebarDelegate = splitView;
 		sidebar.position = splitView.sidebarPosition;
 		sidebar.drawerHeight = self.minimumDownloadsDrawerHeight;	// Set to default height
 		splitView.sidebar = sidebar;
@@ -661,7 +660,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		{
 			sidebar.drawer = drawer;
 		}
-		[sidebar constructBottombar];
         sidebar.bottombar.sizeSlider.floatValue = bookmarksView.cellWidth;
 		[sidebar closeDrawerWithAnimatedFlag:NO];
 	}

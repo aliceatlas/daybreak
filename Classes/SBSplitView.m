@@ -25,6 +25,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBSplitView.h"
 #import "SBUtil.h"
 
+#import "Sunrise3-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
+
 #define SBSplitViewDividerThickness 1.0
 
 @implementation SBSplitView

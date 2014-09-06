@@ -315,23 +315,25 @@ let kSBTabbarHeight: CGFloat = 24.0
 /*
 #define kSBTabbarItemMaximumWidth 200.0
 #define kSBTabbarItemMinimumWidth 100.0
-#define kSBBottombarHeight 24.0
-#define kSBSidebarResizableWidth 24.0
-#define kSBSidebarNewFolderButtonWidth 100.0
-#define kSBSidebarClosedWidth 1.0
-#define kSBSidebarMinimumWidth 144.0
+*/
+let kSBBottombarHeight: CGFloat = 24.0
+let kSBSidebarResizableWidth: CGFloat = 24.0
+let kSBSidebarNewFolderButtonWidth: CGFloat = 100.0
+let kSBSidebarClosedWidth: CGFloat = 1.0
+let kSBSidebarMinimumWidth: CGFloat = 144.0
+/*
 #define kSBDownloadItemSize 128.0
 #define kSBDefaultSidebarWidth 550
 #define kSBDefaultBookmarkCellWidth 168
 #define kSBBookmarkFactorForImageWidth 4.0
 #define kSBBookmarkFactorForImageHeight 3.0
-#define kSBBookmarkCellPaddingPercentage 0.1
-#define kSBBookmarkCellMinWidth 60
-#define kSBBookmarkCellMaxWidth 256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2))
 */
+let kSBBookmarkCellPaddingPercentage: CGFloat = 0.1
+let kSBBookmarkCellMinWidth: Double = 60
+let kSBBookmarkCellMaxWidth = Double(256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2)))
 let SBFieldRoundedCurve: CGFloat = 4
-/*
 
+/*
 // Counts
 #define kSBDocumentWarningNumberOfBookmarksForOpening 15
 

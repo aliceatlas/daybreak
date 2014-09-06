@@ -79,7 +79,6 @@
 		08982EDF1182CF5A002122F6 /* Icon_History.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDD1182CF5A002122F6 /* Icon_History.png */; };
 		089953890FE36E5100DED3BA /* SBTabbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089953880FE36E5100DED3BA /* SBTabbar.m */; };
 		0899556E0FE380D400DED3BA /* SBSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899556D0FE380D400DED3BA /* SBSplitView.m */; };
-		089956C80FE39C2500DED3BA /* SBSidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089956C70FE39C2500DED3BA /* SBSidebar.m */; };
 		089956CD0FE39C8200DED3BA /* SBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089956CC0FE39C8200DED3BA /* SBView.m */; };
 		089C379C0FE7E07A00088B34 /* ResizerDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379B0FE7E07A00088B34 /* ResizerDown.png */; };
 		089C379E0FE7E08200088B34 /* ResizerUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379D0FE7E08200088B34 /* ResizerUp.png */; };
@@ -181,6 +180,7 @@
 		50DF8A3019639D03005DAF26 /* SBDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF8A2F19639D03005DAF26 /* SBDownloader.swift */; };
 		50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF8A331963A5A5005DAF26 /* SBDownloads.swift */; };
 		50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F850621967FD4D00C28795 /* SBSegmentedButton.swift */; };
+		50FEEA9719BABFDD00962BB9 /* SBSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9619BABFDD00962BB9 /* SBSidebar.swift */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -300,8 +300,6 @@
 		089953880FE36E5100DED3BA /* SBTabbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTabbar.m; path = Classes/SBTabbar.m; sourceTree = "<group>"; };
 		0899556C0FE380D400DED3BA /* SBSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSplitView.h; path = Classes/SBSplitView.h; sourceTree = "<group>"; };
 		0899556D0FE380D400DED3BA /* SBSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSplitView.m; path = Classes/SBSplitView.m; sourceTree = "<group>"; };
-		089956C60FE39C2500DED3BA /* SBSidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSidebar.h; path = Classes/SBSidebar.h; sourceTree = "<group>"; };
-		089956C70FE39C2500DED3BA /* SBSidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSidebar.m; path = Classes/SBSidebar.m; sourceTree = "<group>"; };
 		089956CB0FE39C8200DED3BA /* SBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBView.h; path = Classes/SBView.h; sourceTree = "<group>"; };
 		089956CC0FE39C8200DED3BA /* SBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBView.m; path = Classes/SBView.m; sourceTree = "<group>"; };
 		089B71FE1072AEF3000D00B5 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -431,6 +429,7 @@
 		50DF8A331963A5A5005DAF26 /* SBDownloads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownloads.swift; path = Classes/SBDownloads.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBHistoryView.swift; path = Classes/SBHistoryView.swift; sourceTree = "<group>"; };
 		50F850621967FD4D00C28795 /* SBSegmentedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSegmentedButton.swift; path = Classes/SBSegmentedButton.swift; sourceTree = "<group>"; };
+		50FEEA9619BABFDD00962BB9 /* SBSidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSidebar.swift; path = Classes/SBSidebar.swift; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -725,8 +724,7 @@
 		08F6A68B0FF25A7700ED6E07 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
-				089956C60FE39C2500DED3BA /* SBSidebar.h */,
-				089956C70FE39C2500DED3BA /* SBSidebar.m */,
+				50FEEA9619BABFDD00962BB9 /* SBSidebar.swift */,
 				5044E66A19666D550053CBF1 /* SBBookmarksView.swift */,
 				506D2ADB19A2432E007A8842 /* SBWebResourcesView.swift */,
 				505E49F8198C91A3001F5254 /* SBDrawer.swift */,
@@ -1033,7 +1031,7 @@
 				505E49FD198CA577001F5254 /* SBTabViewItem.swift in Sources */,
 				089953890FE36E5100DED3BA /* SBTabbar.m in Sources */,
 				0899556E0FE380D400DED3BA /* SBSplitView.m in Sources */,
-				089956C80FE39C2500DED3BA /* SBSidebar.m in Sources */,
+				50FEEA9719BABFDD00962BB9 /* SBSidebar.swift in Sources */,
 				089956CD0FE39C8200DED3BA /* SBView.m in Sources */,
 				508FAC5319653AC400F4380F /* main.swift in Sources */,
 				50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */,
