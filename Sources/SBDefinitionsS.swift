@@ -262,7 +262,8 @@ CGFloat SBBookmarkLabelColorRGBA[] = {
 */
 
 // Bottombar
-var SBBottombarColors: [CGFloat] = [0.17, 0.19, 0.22, 1.0, 0.27, 0.3, 0.33, 1.0]
+var SBBottombarColors = [NSColor(deviceRed: 0.17, green: 0.19, blue: 0.22, alpha: 1.0),
+                         NSColor(deviceRed: 0.27, green: 0.3, blue: 0.33, alpha: 1.0)]
 
 // WebResourcesView
 let SBTableCellColor = NSColor(calibratedRed: 0.29, green: 0.31, blue: 0.33, alpha: 1.0)

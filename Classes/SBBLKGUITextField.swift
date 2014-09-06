@@ -80,29 +80,18 @@ class SBBLKGUITextFieldCell: NSTextFieldCell {
     }
     
     override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
-        let ctx = SBCurrentGraphicsPort
         let controlView = inView as? NSControl
-        let alpha: CGFloat = (controlView != nil) ? (controlView!.enabled ? 1.0 : 0.2) : 1.0
+        let alpha: CGFloat = (controlView?.enabled ?? true) ? 1.0 : 0.2
+        var r = cellFrame
+        var path = NSBezierPath(roundedRect: r, xRadius: SBFieldRoundedCurve, yRadius: SBFieldRoundedCurve)
+        NSColor(deviceWhite: 0.0, alpha: alpha * 0.1).set()
+        path.fill()
         
-        var r = NSRectToCGRect(cellFrame)
-        var path = SBRoundedPath(r, SBFieldRoundedCurve, 0, true, true)
-        CGContextSaveGState(ctx)
-        CGContextAddPath(ctx, path)
-        CGContextSetRGBFillColor(ctx, 0.0, 0.0, 0.0, alpha * 0.1)
-        CGContextFillPath(ctx)
-        CGContextRestoreGState(ctx)
-        
-        r.origin.x += 0.5
-        r.origin.y += 0.5
-        r.size.width -= 1.0
-        r.size.height -= 1.0
-        path = SBRoundedPath(r, SBFieldRoundedCurve, 0, true, true)
-        CGContextSaveGState(ctx)
-        CGContextAddPath(ctx, path)
-        CGContextSetLineWidth(ctx, 0.5)
-        CGContextSetRGBStrokeColor(ctx, 1.0, 1.0, 1.0, alpha)
-        CGContextStrokePath(ctx)
-        CGContextRestoreGState(ctx)
+        r = NSInsetRect(r, 0.5, 0.5)
+        path = NSBezierPath(roundedRect: r, xRadius: SBFieldRoundedCurve, yRadius: SBFieldRoundedCurve)
+        path.lineWidth = 0.5
+        NSColor(deviceWhite: 1.0, alpha: alpha).set()
+        path.stroke()
         
         drawInteriorWithFrame(cellFrame, inView: controlView)
     }

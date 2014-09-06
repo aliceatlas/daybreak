@@ -223,9 +223,9 @@ class SBAboutView: SBView {
         NSRectFillUsingOperation(rect, .CompositeSourceOver)
         
         if image != nil {
-            var imageRect = NSRectToCGRect(iconImageRect)
-            image!.size = NSSizeFromCGSize(iconImageRect.size)
-            image!.drawInRect(NSRectFromCGRect(imageRect), fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            var imageRect = iconImageRect
+            image!.size = imageRect.size
+            image!.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
             
             imageRect.origin.y = imageRect.size.height * 1.5 - bounds.size.height
             imageRect.size.height = imageRect.size.height * 0.5
@@ -233,7 +233,7 @@ class SBAboutView: SBView {
             CGContextTranslateCTM(ctx, 0.0, imageRect.size.height)
             CGContextScaleCTM(ctx, 1.0, -1.0)
             CGContextClipToMask(ctx, imageRect, maskImage)
-            image!.drawInRect(NSRectFromCGRect(imageRect), fromRect: NSMakeRect(0, 0, imageRect.size.width, imageRect.size.height), operation: .CompositeSourceOver, fraction: 1.0)
+            image!.drawInRect(imageRect, fromRect: NSMakeRect(0, 0, imageRect.size.width, imageRect.size.height), operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
 }

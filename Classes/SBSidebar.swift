@@ -441,27 +441,26 @@ class SBSideBottombar: SBBottombar {
     // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
-    	super.drawRect(rect)
+        super.drawRect(rect)
         
-    	var ctx = SBCurrentGraphicsPort
-    	var r = NSRectToCGRect(resizableRect)
-    	let resizerImage = NSImage(named: "Resizer.png")
-    	resizerImage.drawInRect(resizableRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-    	if position == .LeftPosition {
-    		r.origin.x = r.origin.x - 1
-    		r.size.width = 1
+        var r = resizableRect
+        let resizerImage = NSImage(named: "Resizer.png")
+        resizerImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+        if position == .LeftPosition {
+            r.origin.x = r.origin.x - 1
+            r.size.width = 1
         } else if position == .RightPosition {
-    		r.origin.x = CGRectGetMaxX(r) + 1
-    		r.size.width = 1
-    	}
-    	CGContextSetRGBFillColor(ctx, 0.0, 0.0, 0.0, 1.0)
-    	CGContextFillRect(ctx, r)
-    	if position == .LeftPosition {
-    		r.origin.x = r.origin.x + 1
+            r.origin.x = NSMaxX(r) + 1
+            r.size.width = 1
+        }
+        NSColor.blackColor().set()
+        NSRectFill(r)
+        if position == .LeftPosition {
+            r.origin.x = r.origin.x + 1
         } else if position == .RightPosition {
-    		r.origin.x = r.origin.x + 1
-    	}
-    	CGContextSetRGBFillColor(ctx, 0.3, 0.3, 0.3, 1.0)
-    	CGContextFillRect(ctx, r)
+            r.origin.x = r.origin.x + 1
+        }
+        NSColor(deviceWhite: 0.3, alpha: 1.0).set()
+        NSRectFill(r)
     }
 }

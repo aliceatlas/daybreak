@@ -30,16 +30,12 @@ class SBBottombar: SBView {
     // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
-        let ctx = SBCurrentGraphicsPort
-        let count: UInt = 2
-        let lh: CGFloat = 1.0
-        
         // Background
-        let locations: [CGFloat] = [0.0, 1.0]
-        let points = [CGPointZero, CGPointMake(0.0, bounds.size.height)]
-        SBDrawGradientInContext(ctx, count, UnsafeMutablePointer<CGFloat>(locations), UnsafeMutablePointer<CGFloat>(SBBottombarColors), UnsafeMutablePointer<CGPoint>(points))
+        let gradient = NSGradient(startingColor: SBBottombarColors[0], endingColor: SBBottombarColors[1])
+        gradient.drawInRect(bounds, angle: 90)
         
         // Lines
+        let lh: CGFloat = 1.0
         NSColor(calibratedWhite: 1.0, alpha: 0.45).set()
         NSRectFill(NSMakeRect(bounds.origin.x, NSMaxY(bounds) - lh, bounds.size.width, lh))
         NSColor(calibratedWhite: 1.0, alpha: 0.3).set()

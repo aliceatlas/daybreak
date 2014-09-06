@@ -34,29 +34,16 @@ class SBBLKGUISlider: NSSlider {
 
 class SBBLKGUISliderCell: NSSliderCell {
     override func drawKnob(knobRect: NSRect) {
-        let ctx = SBCurrentGraphicsPort
-        let count: UInt = 2
-        var r = CGRectInset(NSRectToCGRect(knobRect), 2, 2)
+        var r = NSInsetRect(knobRect, 2, 2)
         r.origin.y += 1
+        let path = NSBezierPath(ovalInRect: r)
+        let gradient = NSGradient(startingColor: NSColor(deviceWhite: 0.45, alpha: 1.0),
+                                  endingColor: NSColor(deviceWhite: 0.05, alpha: 1.0))
+        gradient.drawInBezierPath(path, angle: 90)
         
-        let locations: [CGFloat] = [0.0, 1.0]
-        let colors: [CGFloat] = [0.45, 0.45, 0.45, 1.0,
-                                 0.05, 0.05, 0.05, 1.0]
-        let points = [CGPointMake(0.0, r.origin.y), CGPointMake(0.0, CGRectGetMaxY(r))]
-        let path = CGPathCreateMutable()
-        CGContextSaveGState(ctx)
-        CGPathAddEllipseInRect(path, nil, r)
-        CGContextAddPath(ctx, path)
-        CGContextClip(ctx)
-        SBDrawGradientInContext(ctx, count, UnsafeMutablePointer<CGFloat>(locations), UnsafeMutablePointer<CGFloat>(colors), UnsafeMutablePointer<CGPoint>(points))
-        CGContextRestoreGState(ctx)
-        
-        CGContextSaveGState(ctx)
-        CGContextAddPath(ctx, path)
-        CGContextSetRGBStrokeColor(ctx, 0.75, 0.75, 0.75, 1.0)
-        CGContextSetLineWidth(ctx, 0.5)
-        CGContextStrokePath(ctx)
-        CGContextRestoreGState(ctx)
+        path.lineWidth = 0.5
+        NSColor(deviceWhite: 0.75, alpha: 1.0).set()
+        path.stroke()
     }
     
     /*override func drawWithFrame(cellFrame: NSRect, inView controlView: NSView) {
