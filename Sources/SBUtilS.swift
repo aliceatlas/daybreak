@@ -148,3 +148,5 @@ func SBCreateBookmarkItemS(title: String?, url: String?, imageData: NSData?, dat
     return item
 }
 */
+
+let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())

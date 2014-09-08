@@ -23,7 +23,6 @@
  */
 
 #import "SBDownloadsView.h"
-#import "SBDownloadView.h"
 #import "SBUtil.h"
 
 #import "Sunrise3-Bridging-Header.h"
@@ -145,9 +144,8 @@
 	{
 		NSUInteger count = downloadViews.count;
 		NSRect r = [self cellFrameAtIndex:count];
-		downloadView = [[SBDownloadView alloc] initWithFrame:r];
+        downloadView = [[SBDownloadView alloc] initWithFrame:r download:item];
         downloadView.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
-		downloadView.download = item;
 		[downloadView update];
 		[downloadViews addObject:downloadView];
 		[self addSubview:downloadView];
