@@ -27,18 +27,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBLoadButton: SBButton {
-    private var _images: [NSImage]?
     var images: [NSImage]? {
-        get { return _images }
-        set(inImages) {
-            if _images == nil || _images! != inImages! {
-                _images = inImages
-                if _images != nil && !(_images!.isEmpty) {
-                    image = _images![0] as NSImage
-                    needsDisplay = true
-                }
-                on = false
+        didSet {
+            if images != nil && !(images!.isEmpty) {
+                image = images![0] as NSImage
+                needsDisplay = true
             }
+            on = false
         }
     }
     
@@ -52,21 +47,16 @@ class SBLoadButton: SBButton {
         return indicator
     }()
     
-    var _on = false
-    var on: Bool {
-        get {
-            return _on
-        }
-        set(isOn) {
-            if isOn != _on {
-                _on = isOn
-                if isOn {
+    var on: Bool = false {
+        didSet {
+            if on != oldValue {
+                if on {
                     indicator.startAnimation(nil)
                 } else {
                     indicator.stopAnimation(nil)
                 }
-                switchImage()
             }
+            switchImage()
         }
     }
     

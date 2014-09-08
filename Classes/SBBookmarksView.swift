@@ -40,9 +40,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     }
     
     override var frame: NSRect {
-        get { return super.frame }
-        set(frame) {
-            super.frame = frame
+        didSet {
             listView!.layoutFrame()
             listView!.layoutItemViews()
         }

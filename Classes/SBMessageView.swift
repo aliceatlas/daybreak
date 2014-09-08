@@ -86,6 +86,8 @@ class SBMessageView: SBView {
         didSet {
             if cancelSelector != nil {
                 addSubview(cancelButton)
+            } else if cancelButton.superview != nil {
+                cancelButton.removeFromSuperview()
             }
         }
     }
@@ -94,6 +96,8 @@ class SBMessageView: SBView {
         didSet {
             if doneSelector != nil {
                 addSubview(doneButton)
+            } else if doneButton.superview != nil {
+                doneButton.removeFromSuperview()
             }
         }
     }

@@ -62,11 +62,8 @@ class SBBLKGUIButton: NSButton {
 
 
 class SBBLKGUIButtonCell: NSButtonCell {
-    private var _buttonType: NSButtonType = .MomentaryLightButton
-    var buttonType: NSButtonType {
-        get { return _buttonType }
-        set(buttonType) {
-            _buttonType = buttonType
+    var buttonType: NSButtonType = .MomentaryLightButton {
+        didSet {
             super.setButtonType(buttonType)
         }
     }
@@ -100,7 +97,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
             var rightImage: NSImage?
             var r = NSZeroRect
             var offset: CGFloat = 0
-            if _buttonType == .SwitchButton {
+            if buttonType == .SwitchButton {
                 var imageRect = NSZeroRect
                 
                 if state == NSOnState {
@@ -113,7 +110,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                 r.size = imageRect.size
                 r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
                 image!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: inView.flipped)
-            } else if _buttonType == .RadioButton {
+            } else if buttonType == .RadioButton {
                 var imageRect = NSZeroRect
                 
                 if state == NSOnState {
@@ -181,14 +178,14 @@ class SBBLKGUIButtonCell: NSButtonCell {
             let frame = NSMakeRect(cellFrame.origin.x + frameMargin, cellFrame.origin.y, cellFrame.size.width - frameMargin * 2, cellFrame.size.height)
             var r = frame
             var foregroundColor: NSColor!
-            if _buttonType == .SwitchButton || _buttonType == .RadioButton {
+            if buttonType == .SwitchButton || buttonType == .RadioButton {
                 foregroundColor = enabled ? NSColor.whiteColor() : NSColor.grayColor()
             } else {
                 foregroundColor = enabled ? (highlighted ? NSColor.grayColor() : NSColor.whiteColor()) : (isDone ? NSColor.grayColor() : NSColor.darkGrayColor())
             }
             let attributes = [NSFontAttributeName: font,
                               NSForegroundColorAttributeName: foregroundColor]
-            if _buttonType == .SwitchButton || _buttonType == .RadioButton {
+            if buttonType == .SwitchButton || buttonType == .RadioButton {
                 var i = 0
                 var l = 0
                 var h = 1
@@ -207,7 +204,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                 size = title.sizeWithAttributes(attributes)
             }
             r.size = size
-            if _buttonType == .SwitchButton || _buttonType == .RadioButton {
+            if buttonType == .SwitchButton || buttonType == .RadioButton {
                 r.origin.y = frame.origin.y + (cellFrame.size.height - r.size.height) / 2
                 r.origin.x = frame.origin.x + (image?.size.width ?? 0) + 3
             } else {

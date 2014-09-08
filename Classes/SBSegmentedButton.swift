@@ -29,12 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Cocoa
 
 class SBSegmentedButton: SBView {
-    private var _buttons: [SBButton] = []
-    var buttons: [SBButton] {
-        get { return _buttons }
-        set(buttons) {
-            if buttons != _buttons {
-                _buttons = buttons
+    var buttons: [SBButton] = [] {
+        didSet {
+            if buttons != oldValue {
                 for button in buttons {
                     addSubview(button)
                 }

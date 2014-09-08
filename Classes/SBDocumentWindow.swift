@@ -49,6 +49,7 @@ class SBDocumentWindow: NSWindow {
 	var coverWindow: SBCoverWindow?
     var tabbar: SBTabbar? {
         didSet {
+            oldValue?.removeFromSuperview()
             if tabbar != nil {
                 tabbar!.frame = tabbarRect
                 tabbar!.autoresizingMask = .ViewWidthSizable | .ViewMinYMargin
@@ -67,6 +68,7 @@ class SBDocumentWindow: NSWindow {
     }
     var splitView: SBSplitView? {
         didSet {
+            oldValue?.removeFromSuperview()
             if splitView != nil {
                 splitView!.frame = splitViewRect
                 splitView!.autoresizingMask = .ViewWidthSizable | .ViewMinYMargin

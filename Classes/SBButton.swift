@@ -38,40 +38,26 @@ class SBButton: SBView, NSCoding {
     var keyEquivalent: String?
     var keyEquivalentModifierMask: Int = 0
     
-    var enabled: Bool {
-        get { return _enabled }
-        set(isEnabled) {
-            if _enabled != isEnabled {
-                _enabled = isEnabled
-                needsDisplay = true
-            }
+    var enabled: Bool = true {
+        didSet {
+            if enabled != oldValue { needsDisplay = true }
         }
     }
-    var pressed: Bool {
-        get { return _pressed }
-        set(isPressed) {
-            if _pressed != isPressed {
-                _pressed = isPressed
-                needsDisplay = true
-            }
+    var pressed: Bool = false {
+        didSet {
+            if pressed != oldValue { needsDisplay = true }
         }
     }
     var title: NSString? {
-        get { return _title }
-        set(inTitle) {
-            if _title != inTitle {
-                _title = inTitle
+        didSet {
+            if title != oldValue {
                 setNeedsDisplayInRect(bounds)
             }
         }
     }
     override var toolbarVisible: Bool {
-        get { return super.toolbarVisible }
-        set(isToolbarVisible) {
-            if toolbarVisible != isToolbarVisible {
-                super.toolbarVisible = isToolbarVisible
-                needsDisplay = true
-            }
+        didSet {
+            if toolbarVisible != oldValue { needsDisplay = true }
         }
     }
     
@@ -93,7 +79,7 @@ class SBButton: SBView, NSCoding {
             }
             keyEquivalent = decoder.decodeObjectForKey("keyEquivalent") as? NSString
             if decoder.containsValueForKey("enabled") {
-                _enabled = decoder.decodeBoolForKey("enabled")
+                enabled = decoder.decodeBoolForKey("enabled")
             }
             if decoder.containsValueForKey("keyEquivalentModifierMask") {
                 keyEquivalentModifierMask = decoder.decodeIntegerForKey("keyEquivalentModifierMask")
@@ -104,23 +90,23 @@ class SBButton: SBView, NSCoding {
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
         if image != nil {
-            coder.encodeObject(image!, forKey:"image")
+            coder.encodeObject(image!, forKey: "image")
         }
         if disableImage != nil {
-            coder.encodeObject(disableImage!, forKey:"disableImage")
+            coder.encodeObject(disableImage!, forKey: "disableImage")
         }
         if backImage != nil {
-            coder.encodeObject(backImage!, forKey:"backImage")
+            coder.encodeObject(backImage!, forKey: "backImage")
         }
         if backDisableImage != nil {
-            coder.encodeObject(backDisableImage!, forKey:"backDisableImage")
+            coder.encodeObject(backDisableImage!, forKey: "backDisableImage")
         }
         //if action {
-        //    coder.encodeObject(String(_sel: action!), forKey:"action")
+        //    coder.encodeObject(String(_sel: action!), forKey: "action")
         //}
-        coder.encodeObject(String(_sel: action), forKey:"action")
+        coder.encodeObject(String(_sel: action!), forKey: "action")
         if keyEquivalent != nil {
-            coder.encodeObject(keyEquivalent!, forKey:"keyEquivalent")
+            coder.encodeObject(keyEquivalent!, forKey: "keyEquivalent")
         }
         coder.encodeBool(enabled, forKey: "enabled")
         coder.encodeInteger(keyEquivalentModifierMask, forKey: "keyEquivalentModifierMask")
@@ -130,12 +116,11 @@ class SBButton: SBView, NSCoding {
     
     func executeAction() {
         if let target = target as? NSObject {
-            //if let action = action {
-                //var sel = action
-                if target.respondsToSelector(action) {
-                    SBPerform(target, action, self)
+            if action != nil {
+                if target.respondsToSelector(action!) {
+                    SBPerform(target, action!, self)
                 }
-            //}
+            }
         }
     }
     
@@ -174,11 +159,9 @@ class SBButton: SBView, NSCoding {
         if keyView {
             anImage = (enabled || disableImage == nil) ? image : disableImage
         } else {
-            if (enabled)
-            {
+            if enabled {
                 anImage = backImage ?? image
-            }
-            else {
+            } else {
                 anImage = backDisableImage ?? backImage ?? image
             }
         }

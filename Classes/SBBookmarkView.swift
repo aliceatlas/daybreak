@@ -27,12 +27,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBBookmarkView: SBView, NSTextFieldDelegate {
-    private var _image: NSImage?
     var image: NSImage? {
-        get { return _image }
-        set(image) {
-            if _image != image {
-                _image = image
+        didSet {
+            if image != oldValue {
                 needsDisplay = true
             }
         }

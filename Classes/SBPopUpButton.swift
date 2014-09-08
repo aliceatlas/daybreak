@@ -32,11 +32,9 @@ class SBPopUpButton: NSPopUpButton {
     var backgroundImage: NSImage?
     var operation: ((NSMenuItem) -> Void)?
     override var menu: NSMenu? {
-        get { return super.menu }
-        set(inMenu) {
-            super.menu = inMenu
-            if inMenu != nil {
-                for item in inMenu!.itemArray as [NSMenuItem] {
+        didSet {
+            if menu != nil {
+                for item in menu!.itemArray as [NSMenuItem] {
                     item.target = self
                     item.action = "executeAction:"
                 }

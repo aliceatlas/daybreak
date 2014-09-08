@@ -137,12 +137,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         showSource = false
     }
     
-    var _showSource = false
-    var showSource: Bool {
-        get { return _showSource }
-        set(showSource) {
-            if _showSource != showSource {
-                _showSource = showSource
+    var showSource: Bool = false {
+        didSet {
+            if showSource != oldValue {
                 if showSource {
                     var r = view.bounds
                     var tr = view.bounds

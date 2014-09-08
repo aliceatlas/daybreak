@@ -135,23 +135,17 @@ class SBBLKGUIScrollView: NSScrollView {
 }
 
 class SBBLKGUIScroller: NSScroller {
-    private var _drawsBackground: Bool = false
-    var drawsBackground: Bool {
-        get { return _drawsBackground }
-        set(inDrawsBackground) {
-            if _drawsBackground != inDrawsBackground {
-                _drawsBackground = inDrawsBackground
+    var drawsBackground: Bool = false {
+        didSet {
+            if drawsBackground != oldValue {
                 needsDisplay = true
             }
         }
     }
     
-    private var _backgroundColor: NSColor?
     var backgroundColor: NSColor? {
-        get { return _backgroundColor }
-        set(inBackgroundColor) {
-            if _backgroundColor != inBackgroundColor {
-                _backgroundColor = inBackgroundColor
+        didSet {
+            if backgroundColor != oldValue {
                 needsDisplay = true
             }
         }

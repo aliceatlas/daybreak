@@ -41,8 +41,10 @@ class SBDrawer: SBView {
     }()
     var view: NSView? {
         didSet {
-            scrollView.documentView = view
-            scrollView.contentView.copiesOnScroll = true
+            if view != oldValue {
+                scrollView.documentView = view
+                scrollView.contentView.copiesOnScroll = true
+            }
         }
     }
     

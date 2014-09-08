@@ -8,11 +8,9 @@ protocol SBToolbarDelegate: NSToolbarDelegate {
 
 class SBToolbar: NSToolbar {
     override var visible: Bool {
-        get { return super.visible }
-        set(shown) {
-            if shown != super.visible {
-                super.visible = shown
-                if shown {
+        didSet {
+            if visible != oldValue {
+                if visible {
                     executeDidVisible()
                 } else {
                     executeDidInvisible()

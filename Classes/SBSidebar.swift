@@ -17,36 +17,30 @@ protocol SBSideBottombarDelegate {
 }
 
 class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, NSAnimationDelegate {
-    var _view: NSView?
     var view: NSView? {
-        get { return _view }
-        set(view) {
-        	if _view != view {
-                if let resourcesView = _view as? SBWebResourcesView {
+        didSet {
+            if view != oldValue {
+                if let resourcesView = oldValue as? SBWebResourcesView {
                     resourcesView.dataSource = nil
                 }
-    			_view?.removeFromSuperview()
-        		_view = view
+                oldValue?.removeFromSuperview()
                 if view != nil {
                     view!.frame = viewRect
-            		if subviews.count > 0 {
-            			addSubview(view!, positioned: .Below, relativeTo: subviews[0] as NSView)
-            		} else {
-            			addSubview(view!)
+                    if subviews.count > 0 {
+                        addSubview(view!, positioned: .Below, relativeTo: subviews[0] as NSView)
+                    } else {
+                        addSubview(view!)
                     }
                 }
-        	}
+            }
         }
     }
     
-    var _drawer: SBDrawer?
     var drawer: SBDrawer? {
-        get { return _drawer }
-        set(drawer) {
-            if _drawer != drawer {
-                _drawer?.removeFromSuperview()
+        didSet {
+            if drawer != oldValue {
+                oldValue?.removeFromSuperview()
                 bottombar.removeFromSuperview()
-                _drawer = drawer
                 if drawer != nil {
                     addSubview(drawer!)
                     drawer!.addSubview(bottombar)
@@ -56,10 +50,10 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
     }
     
     private lazy var _bottombar: SBSideBottombar = {
-    	let bottombar = SBSideBottombar(frame: self.bottombarRect)
-    	bottombar.delegate = self
-    	bottombar.position = self.position
-    	bottombar.drawerVisibility = self.visibleDrawer
+        let bottombar = SBSideBottombar(frame: self.bottombarRect)
+        bottombar.delegate = self
+        bottombar.position = self.position
+        bottombar.drawerVisibility = self.visibleDrawer
         bottombar.autoresizingMask = .ViewWidthSizable | .ViewMaxYMargin
         return bottombar
     }()
@@ -78,21 +72,21 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
     var drawerHeight: CGFloat = 0
     
     var visibleDrawer: Bool {
-    	return drawer != nil && drawer!.frame.size.height > kSBBottombarHeight
+        return drawer != nil && drawer!.frame.size.height > kSBBottombarHeight
     }
     
     var animating: Bool {
-    	return divideAnimation != nil
+        return divideAnimation != nil
     }
     
     override var description: String {
-    	return "<\(className): \(self) frame = \(self.frame)>"
+        return "<\(className): \(self) frame = \(self.frame)>"
     }
     
     // MARK: Construction
     
     override init(frame: NSRect) {
-    	super.init(frame: frame)
+        super.init(frame: frame)
         vertical = false
         dividerStyle = .Thin
     }
@@ -104,38 +98,38 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
     // MARK: Destruction
     
     deinit {
-    	destructDividerAnimation()
-    	sidebarDelegate = nil
+        destructDividerAnimation()
+        sidebarDelegate = nil
     }
     
     func destructDividerAnimation() {
-		divideAnimation = nil
+        divideAnimation = nil
     }
     
     // MARK: Rects
     
     var viewRect: NSRect {
-    	var r = bounds
-    	r.size.height -= drawerHeight
-    	return r
+        var r = bounds
+        r.size.height -= drawerHeight
+        return r
     }
     
     var drawerRect: NSRect {
-    	var r = bounds
-    	r.size.height = drawerHeight - kSBBottombarHeight
-    	return r
+        var r = bounds
+        r.size.height = drawerHeight - kSBBottombarHeight
+        return r
     }
     
     var bottombarRect: NSRect {
-    	var r = bounds
-    	r.size.height = kSBBottombarHeight
-    	return r
+        var r = bounds
+        r.size.height = kSBBottombarHeight
+        return r
     }
     
     // MARK: Delegate
     
     func downloadsViewDidRemoveAllItems(downloadsView: SBDownloadsView) {
-    	closeDrawer(nil)
+        closeDrawer(nil)
     }
     
     func bottombarDidSelectedOpen(inBottombar: SBSideBottombar) {
@@ -147,30 +141,30 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
     }
     
     func bottombarDidSelectedDrawerOpen(inBottombar: SBSideBottombar) {
-    	if !animating {
-    		openDrawer(nil)
+        if !animating {
+            openDrawer(nil)
         }
         
-    	sidebarDelegate?.sidebarDidOpenDrawer?(self)
+        sidebarDelegate?.sidebarDidOpenDrawer?(self)
     }
     
     func bottombarDidSelectedDrawerClose(inBottombar: SBSideBottombar) {
-    	if !animating {
-    		closeDrawer(nil)
+        if !animating {
+            closeDrawer(nil)
         }
     }
     
     func bottombar(inBottombar: SBSideBottombar, didChangeSize size: CGFloat) {
         if let view = view as? SBBookmarksView {
-    		view.cellWidth = size
-    	}
+            view.cellWidth = size
+        }
     }
     
     func animationDidEnd(animation: NSAnimation) {
-    	if animation == divideAnimation {
-    		destructDividerAnimation()
-    		adjustSubviews()
-    	}
+        if animation == divideAnimation {
+            destructDividerAnimation()
+            adjustSubviews()
+        }
     }
     
     // MARK: SplitView
@@ -178,53 +172,53 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
     override var dividerThickness: CGFloat { return 1.0 }
     
     override func drawDividerInRect(rect: NSRect) {
-    	NSColor(calibratedWhite: 0.0, alpha: 1.0).set()
-    	NSRectFill(rect)
+        NSColor(calibratedWhite: 0.0, alpha: 1.0).set()
+        NSRectFill(rect)
     }
     
     // MARK: Actions
     
     func setDividerPosition(pos: CGFloat, animate: Bool = false) {
-    	let subview0 = view!
-    	let subview1 = drawer!
-    	var r0 = subview0.frame
-    	var r1 = subview1.frame
-    	r0.size.height = pos
-    	r1.origin.y = r0.size.height
-    	r1.size.height = bounds.size.height - pos
-    	if animate {
-    		let duration: NSTimeInterval = 0.25
-    		let animations = [[NSViewAnimationTargetKey: subview0,
+        let subview0 = view!
+        let subview1 = drawer!
+        var r0 = subview0.frame
+        var r1 = subview1.frame
+        r0.size.height = pos
+        r1.origin.y = r0.size.height
+        r1.size.height = bounds.size.height - pos
+        if animate {
+            let duration: NSTimeInterval = 0.25
+            let animations = [[NSViewAnimationTargetKey: subview0,
                                NSViewAnimationEndFrameKey: NSValue(rect: r0)],
                               [NSViewAnimationTargetKey: subview1,
                                NSViewAnimationEndFrameKey: NSValue(rect: r1)]]
-    		destructDividerAnimation()
-    		divideAnimation = NSViewAnimation(viewAnimations: animations)
+            destructDividerAnimation()
+            divideAnimation = NSViewAnimation(viewAnimations: animations)
             divideAnimation!.duration = duration
             divideAnimation!.delegate = self
-    		divideAnimation!.startAnimation()
+            divideAnimation!.startAnimation()
         } else {
             subview0.frame = r0
             subview1.frame = r1
-    		adjustSubviews()
-    	}
+            adjustSubviews()
+        }
     }
     
     func openDrawer(sender: AnyObject?) {
-    	let pos = bounds.size.height - drawerHeight
-    	setDividerPosition(pos, animate: true)
-    	bottombar.drawerVisibility = true
+        let pos = bounds.size.height - drawerHeight
+        setDividerPosition(pos, animate: true)
+        bottombar.drawerVisibility = true
     }
     
     func closeDrawer(sender: AnyObject?) {
-    	closeDrawer(animatedFlag: true)
+        closeDrawer(animatedFlag: true)
     }
     
     @objc(closeDrawerWithAnimatedFlag:)
     func closeDrawer(animatedFlag animated: Bool) {
-    	let pos = bounds.size.height - kSBBottombarHeight
-    	setDividerPosition(pos, animate: animated)
-    	bottombar.drawerVisibility = false
+        let pos = bounds.size.height - kSBBottombarHeight
+        setDividerPosition(pos, animate: animated)
+        bottombar.drawerVisibility = false
     }
     
     func showBookmarkItemIndexes(indexes: NSIndexSet) {
@@ -234,24 +228,19 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
 
 class SBSideBottombar: SBBottombar {
     override var frame: NSRect {
-        get { return super.frame }
-        set(frame) {
-        	if !NSEqualRects(super.frame, frame) {
-        		super.frame = frame
-        		adjustButtons()
-        	}
+        didSet {
+            if frame != oldValue {
+                adjustButtons()
+            }
         }
     }
     
-    private var _position: SBSidebarPosition?
     var position: SBSidebarPosition? {
-        get { return _position }
-        set(position) {
-        	if _position != position {
-        		_position = position
-        		drawerButton.frame = drawerButtonRect
-        		newFolderButton.frame = newFolderButtonRect
-        		sizeSlider.frame = sizeSliderRect
+        didSet {
+            if position != oldValue {
+                drawerButton.frame = drawerButtonRect
+                newFolderButton.frame = newFolderButtonRect
+                sizeSlider.frame = sizeSliderRect
                 if position != nil {
                     if position! == .LeftPosition {
                         drawerButton.autoresizingMask = .ViewMinXMargin
@@ -261,67 +250,64 @@ class SBSideBottombar: SBBottombar {
                         newFolderButton.autoresizingMask = .ViewMaxXMargin
                     }
                 }
-        		adjustButtons()
-        		needsDisplay = true
-        	}
+                adjustButtons()
+                needsDisplay = true
+            }
         }
     }
     
     private var buttons: [SBButton] = []
     
     private lazy var drawerButton: SBButton = {
-    	let drawerButton = SBButton(frame: self.drawerButtonRect)
-    	if self.position == .LeftPosition {
-    		drawerButton.autoresizingMask = .ViewMinXMargin
-    	}
-    	drawerButton.target = self
-    	drawerButton.action = "toggleDrawer"
+        let drawerButton = SBButton(frame: self.drawerButtonRect)
+        if self.position == .LeftPosition {
+            drawerButton.autoresizingMask = .ViewMinXMargin
+        }
+        drawerButton.target = self
+        drawerButton.action = "toggleDrawer"
         return drawerButton
     }()
     
     private lazy var newFolderButton: SBButton = {
-    	let newFolderButton = SBButton(frame: self.newFolderButtonRect)
-    	if self.position == .LeftPosition {
-    		newFolderButton.autoresizingMask = .ViewMinXMargin
-    	}
-    	newFolderButton.title = NSLocalizedString("New Folder", comment: "")
-    	newFolderButton.target = self
-    	newFolderButton.action = "newFolder"
+        let newFolderButton = SBButton(frame: self.newFolderButtonRect)
+        if self.position == .LeftPosition {
+            newFolderButton.autoresizingMask = .ViewMinXMargin
+        }
+        newFolderButton.title = NSLocalizedString("New Folder", comment: "")
+        newFolderButton.target = self
+        newFolderButton.action = "newFolder"
         return newFolderButton
     }()
     
     lazy var sizeSlider: SBBLKGUISlider = {
-    	let sizeSlider = SBBLKGUISlider(frame: self.sizeSliderRect)
-    	(sizeSlider.cell() as NSCell).controlSize = .SmallControlSize
-    	sizeSlider.minValue = kSBBookmarkCellMinWidth
-    	sizeSlider.maxValue = kSBBookmarkCellMaxWidth
-    	sizeSlider.floatValue = Float(kSBBookmarkCellMinWidth)
-    	sizeSlider.target = self
-    	sizeSlider.action = "slide"
-    	sizeSlider.autoresizingMask = .ViewMinXMargin
-    	return sizeSlider
+        let sizeSlider = SBBLKGUISlider(frame: self.sizeSliderRect)
+        (sizeSlider.cell() as NSCell).controlSize = .SmallControlSize
+        sizeSlider.minValue = kSBBookmarkCellMinWidth
+        sizeSlider.maxValue = kSBBookmarkCellMaxWidth
+        sizeSlider.floatValue = Float(kSBBookmarkCellMinWidth)
+        sizeSlider.target = self
+        sizeSlider.action = "slide"
+        sizeSlider.autoresizingMask = .ViewMinXMargin
+        return sizeSlider
     }()
     
     weak var delegate: SBSideBottombarDelegate?
     
-    private var _drawerVisibility: Bool!
-    var drawerVisibility: Bool {
-        get { return _drawerVisibility }
-        set(drawerVisibility) {
-        	if _drawerVisibility != drawerVisibility {
-        		_drawerVisibility = drawerVisibility
+    var drawerVisibility: Bool = false {
+        didSet {
+            if drawerVisibility != oldValue || drawerButton.image == nil {
                 drawerButton.image = NSImage(named: (drawerVisibility ? "ResizerDown.png" : "ResizerUp.png"))
-        	}
+            }
         }
     }
     
     override init(frame: NSRect) {
         super.init(frame: frame)
         drawerVisibility = false
-    	addSubview(drawerButton)
-    	buttons.append(drawerButton)
-    	// addSubview(newFolderButton)
-    	// buttons.append(newFolderButton)
+        addSubview(drawerButton)
+        buttons.append(drawerButton)
+        // addSubview(newFolderButton)
+        // buttons.append(newFolderButton)
         addSubview(sizeSlider)
     }
         
@@ -330,77 +316,77 @@ class SBSideBottombar: SBBottombar {
     var buttonWidth: CGFloat { return bounds.size.height }
     
     var sliderWidth: CGFloat {
-    	let width = bounds.size.width - kSBSidebarResizableWidth * 2 - sliderSideMargin * 2
+        let width = bounds.size.width - kSBSidebarResizableWidth * 2 - sliderSideMargin * 2
         return min(width, 120.0)
     }
     
     let sliderSideMargin: CGFloat = 10.0
     
     var resizableRect: NSRect {
-    	var r = NSZeroRect
-    	r.size.width = kSBSidebarResizableWidth
-    	r.size.height = bounds.size.height
-    	if position == .LeftPosition {
-    		r.origin.x = bounds.size.width - r.size.width
-    	}
-    	return r
+        var r = NSZeroRect
+        r.size.width = kSBSidebarResizableWidth
+        r.size.height = bounds.size.height
+        if position == .LeftPosition {
+            r.origin.x = bounds.size.width - r.size.width
+        }
+        return r
     }
     
     var drawerButtonRect: NSRect {
-    	var r = NSZeroRect
-    	r.size.width = buttonWidth
+        var r = NSZeroRect
+        r.size.width = buttonWidth
         r.size.height = buttonWidth
-    	if position == .LeftPosition {
-    		r.origin.x = bounds.size.width - (r.size.width + kSBSidebarResizableWidth)
+        if position == .LeftPosition {
+            r.origin.x = bounds.size.width - (r.size.width + kSBSidebarResizableWidth)
         } else if position == .RightPosition {
-    		r.origin.x = kSBSidebarResizableWidth
-    	}
-    	return r
+            r.origin.x = kSBSidebarResizableWidth
+        }
+        return r
     }
     
     var newFolderButtonRect: NSRect {
-    	var r = NSZeroRect
-    	r.size.width = kSBSidebarNewFolderButtonWidth
-    	r.size.height = buttonWidth
-    	if position == .LeftPosition {
-    		r.origin.x = NSMaxX(drawerButtonRect) - kSBSidebarNewFolderButtonWidth
+        var r = NSZeroRect
+        r.size.width = kSBSidebarNewFolderButtonWidth
+        r.size.height = buttonWidth
+        if position == .LeftPosition {
+            r.origin.x = NSMaxX(drawerButtonRect) - kSBSidebarNewFolderButtonWidth
         } else if position == .RightPosition {
-    		r.origin.x = NSMaxX(drawerButtonRect)
-    	}
-    	return r
+            r.origin.x = NSMaxX(drawerButtonRect)
+        }
+        return r
     }
     
     var sizeSliderRect: NSRect {
-    	var r = NSZeroRect
-    	let leftMargin = sliderSideMargin
-    	let rightMargin = sliderSideMargin + kSBSidebarResizableWidth
-    	r.size.width = sliderWidth
-    	r.size.height = 21.0
-    	if position == .LeftPosition {
-    		r.origin.x = leftMargin
+        var r = NSZeroRect
+        let leftMargin = sliderSideMargin
+        let rightMargin = sliderSideMargin + kSBSidebarResizableWidth
+        r.size.width = sliderWidth
+        r.size.height = 21.0
+        if position == .LeftPosition {
+            r.origin.x = leftMargin
         } else if position == .RightPosition {
-    		r.origin.x = bounds.size.width - (r.size.width + rightMargin)
-    	}
-    	return r
+            r.origin.x = bounds.size.width - (r.size.width + rightMargin)
+        }
+        return r
     }
     
     // MARK: Actions
     
     func adjustButtons() {
-    	var validRect = NSZeroRect
-    	if position == .LeftPosition {
-    		validRect.origin.x = NSMaxX(sizeSliderRect)
-    		validRect.size.width = bounds.size.width - NSMaxX(sizeSliderRect) - kSBSidebarResizableWidth
-    		validRect.size.height = bounds.size.height
+        var validRect = NSZeroRect
+        if position == .LeftPosition {
+            validRect.origin.x = NSMaxX(sizeSliderRect)
+            validRect.size.width = bounds.size.width - NSMaxX(sizeSliderRect) - kSBSidebarResizableWidth
+            validRect.size.height = bounds.size.height
         } else if position == .RightPosition {
-    		validRect.origin.x = kSBSidebarResizableWidth
-    		validRect.size.width = sizeSliderRect.origin.x - kSBSidebarResizableWidth
-    		validRect.size.height = bounds.size.height
-    	}
-    	for button in buttons {
-    		button.hidden = !NSContainsRect(validRect, button.frame)
-    	}
-    	sizeSlider.frame = sizeSliderRect
+            validRect.origin.x = kSBSidebarResizableWidth
+            validRect.size.width = sizeSliderRect.origin.x - kSBSidebarResizableWidth
+            validRect.size.height = bounds.size.height
+        }
+        for button in buttons {
+            button.hidden = !NSContainsRect(validRect, button.frame)
+        }
+        sizeSlider.frame = sizeSliderRect
     }
     
     // MARK: Execute
@@ -410,16 +396,16 @@ class SBSideBottombar: SBBottombar {
     }
     
     func close() {
-		delegate?.bottombarDidSelectedClose?(self)
+        delegate?.bottombarDidSelectedClose?(self)
     }
     
     func toggleDrawer() {
-    	drawerVisibility = !drawerVisibility
-		if drawerVisibility {
+        drawerVisibility = !drawerVisibility
+        if drawerVisibility {
             delegate?.bottombarDidSelectedDrawerOpen?(self)
         } else {
             delegate?.bottombarDidSelectedDrawerClose?(self)
-		}
+        }
     }
     
     func newFolder() {
@@ -427,7 +413,7 @@ class SBSideBottombar: SBBottombar {
     
     func slide() {
         let f: ((SBSideBottombar, CGFloat) -> ())? = delegate?.bottombar // bottombar:didChangeSize:
-    	if f != nil {
+        if f != nil {
             var value = sizeSlider.doubleValue
             value = min(value, kSBBookmarkCellMaxWidth)
             value = max(value, kSBBookmarkCellMinWidth)
@@ -435,7 +421,7 @@ class SBSideBottombar: SBBottombar {
             if value != sizeSlider.doubleValue {
                 sizeSlider.doubleValue = value
             }
-    	}
+        }
     }
     
     // MARK: Drawing
