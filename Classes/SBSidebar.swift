@@ -26,7 +26,7 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
                 oldValue?.removeFromSuperview()
                 if view != nil {
                     view!.frame = viewRect
-                    if subviews.count > 0 {
+                    if !subviews.isEmpty {
                         addSubview(view!, positioned: .Below, relativeTo: subviews[0] as NSView)
                     } else {
                         addSubview(view!)

@@ -171,7 +171,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
             }
         }
         
-        if (title?.utf16Count ?? 0) > 0 {
+        if !(title?.isEmpty ?? true) {
             let title: NSString = self.title
             var size = NSZeroSize
             let frameMargin: CGFloat = 2.0

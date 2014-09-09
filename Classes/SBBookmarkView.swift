@@ -147,7 +147,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         get { return urlField.stringValue }
         set(urlString) {
             urlField.stringValue = urlString
-            doneButton.enabled = urlString.utf16Count > 0
+            doneButton.enabled = !urlString.isEmpty
         }
     }
     
@@ -287,7 +287,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     override func controlTextDidChange(notification: NSNotification) {
         if notification.object === urlField {
-            doneButton.enabled = urlField.stringValue.utf16Count > 0
+            doneButton.enabled = !urlField.stringValue.isEmpty
         }
     }
     

@@ -107,7 +107,7 @@ class SBDownloadView: SBView {
         var drawRect = bounds
         let margin: CGFloat = 8.0
         let availableWidth: CGFloat = bounds.size.width - titleHeight
-        if title.utf16Count > 0 {
+        if !title.isEmpty {
             let size = (title as NSString).sizeWithAttributes([NSFontAttributeName: nameFont, 
                                                      NSParagraphStyleAttributeName: paragraphStyle])
             if size.width <= availableWidth {
@@ -186,7 +186,7 @@ class SBDownloadView: SBView {
         super.drawRect(rect)
         
         // Icon
-        if (download.path?.utf16Count ?? 0) > 0 {
+        if !(download.path?.isEmpty ?? true) {
             let image: NSImage? = NSWorkspace.sharedWorkspace().iconForFile(download.path)
             if image != nil {
                 var r = NSZeroRect

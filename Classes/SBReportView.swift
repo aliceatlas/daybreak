@@ -104,7 +104,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let userAgentName: String? = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as? NSString
         names.append(name0)
         names.append(name1)
-        if userAgentName != name0 && userAgentName != name1 && (userAgentName?.utf16Count ?? 0) > 0 {
+        if userAgentName != name0 && userAgentName != name1 && !(userAgentName?.isEmpty ?? true) {
             names.append(userAgentName!)
         }
         let images = [icon0, icon1]
@@ -337,9 +337,9 @@ class SBReportView: SBView, NSTextFieldDelegate {
     // MARK: Actions
     
     func validateDoneButton() {
-        var canDone = summaryField.stringValue.utf16Count > 0
+        var canDone = !summaryField.stringValue.isEmpty
         if canDone && switchMatrix.selectedColumn == 0 {
-            canDone = wayField.stringValue.utf16Count > 0
+            canDone = !wayField.stringValue.isEmpty
         }
         doneButton.enabled = canDone
     }
@@ -354,7 +354,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     func sendMailWithMessage(message: String?, subject: String?, to addresses: [String]) -> String? {
         var errorString: String?
-        if addresses.count > 0 {
+        if !addresses.isEmpty {
             var urlString = "mailto:" + ", ".join(addresses)
             if subject != nil {
                 urlString += "?subject=" + subject!
@@ -394,22 +394,22 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let applicationVersion: String = NSBundle.mainBundle().infoDictionary["CFBundleVersion"] as NSString
         
         // Make message
-        if summary.utf16Count > 0 {
+        if !summary.isEmpty {
             message += NSLocalizedString("Summary", comment: "") + " : \n\(summary)\n\n"
         }
-        if userAgent.utf16Count > 0 {
+        if !userAgent.isEmpty {
             message += NSLocalizedString("User Agent", comment: "") + " : \n\(userAgent)\n\n"
         }
-        if reproducibility && wayToReproduce.utf16Count > 0 {
+        if reproducibility && !wayToReproduce.isEmpty {
             message += NSLocalizedString("A way to reproduce", comment: "") + " : \n\(wayToReproduce)\n\n"
         }
-        if osVersion.utf16Count > 0 {
+        if !osVersion.isEmpty {
             message += NSLocalizedString("OS", comment: "") + " : \(osVersion)\n"
         }
-        if (processor?.utf16Count ?? 0) > 0 {
+        if !(processor?.isEmpty ?? false) {
             message += NSLocalizedString("Processor", comment: "") + " : \(processor)\n"
         }
-        if applicationVersion.utf16Count > 0 {
+        if !applicationVersion.isEmpty {
             message += NSLocalizedString("Application Version", comment: "") + " : \(applicationVersion)\n"
         }
         

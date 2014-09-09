@@ -53,7 +53,7 @@ func SBGetLocalizableTextSetS(path: String) -> (([[String]])?, ([[NSTextField]])
                 fieldRect.origin.y = size.height - margin - (fieldSize.height * CGFloat(i + 1)) - (offset.y * CGFloat(i))
                 
                 for (j, component) in enumerate(components) {
-                    if component.utf16Count > 0 {
+                    if !component.isEmpty {
                         let isMenuItem = !component.hasPrefix("//")
                         let editable = isMenuItem && j == 1
                         var string = component

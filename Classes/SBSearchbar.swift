@@ -85,7 +85,7 @@ class SBSearchbar: SBFindbar {
     
     func executeDoneSelector(sender: AnyObject) {
         let text = searchField.stringValue
-        if text.utf16Count > 0 {
+        if !text.isEmpty {
             if target != nil && doneSelector != nil {
                 if target.respondsToSelector(doneSelector) {
                     SBPerform(target, doneSelector, text)

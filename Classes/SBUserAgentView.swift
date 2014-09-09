@@ -101,7 +101,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         let doneButton = SBBLKGUIButton(frame: self.doneRect)
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
-        doneButton.enabled = self.userAgentName.utf16Count > 0
+        doneButton.enabled = !self.userAgentName.isEmpty
         doneButton.action = "done"
         doneButton.keyEquivalent = "\r"
         return doneButton
@@ -191,7 +191,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
     // MARK: Delegate
     
     override func controlTextDidChange(notification: NSNotification) {
-        doneButton.enabled = userAgentName.utf16Count > 0
+        doneButton.enabled = !userAgentName.isEmpty
     }
     
     // MARK: Actions
@@ -204,7 +204,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         } else {
             field.hidden = true
         }
-        doneButton.enabled = userAgentName.utf16Count > 0
+        doneButton.enabled = !userAgentName.isEmpty
     }
     
     override func done() {

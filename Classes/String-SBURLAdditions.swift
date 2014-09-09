@@ -62,7 +62,7 @@ extension String {
             let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
             r = range.location == 0
             if r {
-                hasScheme = (URL.scheme != nil && URL.scheme!.utf16Count > 0) ? string.hasPrefix(URL.scheme!) : false
+                hasScheme = (URL.scheme != nil && !URL.scheme!.isEmpty) ? string.hasPrefix(URL.scheme!) : false
                 //hasScheme = URL.absoluteString == string;
             }
         }

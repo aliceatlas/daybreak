@@ -67,7 +67,7 @@ class SBUpdater: NSObject {
                     if range1.location != NSNotFound {
                         let range2 = NSMakeRange(NSMaxRange(range0), range1.location - NSMaxRange(range0))
                         let versionString = string.substringWithRange(range2)
-                        if versionString.utf16Count > 0 {
+                        if !versionString.isEmpty {
                             let comparisonResult = appVersionString!.compareAsVersionString(versionString)
                             threadDictionary[kSBUpdaterResult] = comparisonResult.toRaw()
                             threadDictionary[kSBUpdaterVersionString] = versionString

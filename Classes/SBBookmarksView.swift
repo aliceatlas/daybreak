@@ -146,7 +146,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     }
     
     func searchWithText(text: String) {
-        if text.utf16Count > 0 {
+        if !text.isEmpty {
             listView?.searchWithText(text)
         }
     }
