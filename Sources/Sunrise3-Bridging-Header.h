@@ -10,7 +10,6 @@
 
 #import "SBSectionListView.h"
 #import "SBBookmarkListView.h"
-#import "SBSearchbar.h"
 
 #import "NSColor-SBAdditions.h"
 
@@ -21,6 +20,8 @@
 #import "SBTableCell.h"
 
 #import "SBTabbar.h"
+
+#import "SBFindbar.h"
 
 @interface NSToolbar (Private)
 - (NSView *)_toolbarView;

@@ -31,6 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @implementation SBFindbar
 
 @synthesize searchedString;
+@synthesize contentView;
 
 - (instancetype)initWithFrame:(NSRect)frame
 {

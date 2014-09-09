@@ -68,7 +68,6 @@
 		0896C1910FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Left.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C17F0FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Left.png */; };
 		0896C1920FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Center.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1800FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Center.png */; };
 		0896C1930FFF171400B97498 /* BLKGUI_Button-Active-Center.png in Resources */ = {isa = PBXBuildFile; fileRef = 0896C1810FFF171400B97498 /* BLKGUI_Button-Active-Center.png */; };
-		089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089771BD10DD0B62004AF73B /* SBSearchbar.m */; };
 		08982EDB1182CF53002122F6 /* Icon_Bookmarks.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDA1182CF53002122F6 /* Icon_Bookmarks.png */; };
 		08982EDE1182CF5A002122F6 /* Icon_G.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDC1182CF5A002122F6 /* Icon_G.png */; };
 		08982EDF1182CF5A002122F6 /* Icon_History.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDD1182CF5A002122F6 /* Icon_History.png */; };
@@ -181,6 +180,7 @@
 		50FEEAA019BF1AA200962BB9 /* SBReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9F19BF1AA200962BB9 /* SBReportView.swift */; };
 		50FEEAA219BF2F1100962BB9 /* SBInnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */; };
 		50FEEAA419BF307400962BB9 /* SBFixedSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA319BF307400962BB9 /* SBFixedSplitView.swift */; };
+		50FEEAA619BF345C00962BB9 /* SBSearchbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -281,8 +281,6 @@
 		0896C17F0FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Button-Active-Highlighted-Left.png"; path = "Resources/Images/BLKGUI_Button-Active-Highlighted-Left.png"; sourceTree = "<group>"; };
 		0896C1800FFF171400B97498 /* BLKGUI_Button-Active-Highlighted-Center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Button-Active-Highlighted-Center.png"; path = "Resources/Images/BLKGUI_Button-Active-Highlighted-Center.png"; sourceTree = "<group>"; };
 		0896C1810FFF171400B97498 /* BLKGUI_Button-Active-Center.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_Button-Active-Center.png"; path = "Resources/Images/BLKGUI_Button-Active-Center.png"; sourceTree = "<group>"; };
-		089771BC10DD0B62004AF73B /* SBSearchbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSearchbar.h; path = Classes/SBSearchbar.h; sourceTree = "<group>"; };
-		089771BD10DD0B62004AF73B /* SBSearchbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSearchbar.m; path = Classes/SBSearchbar.m; sourceTree = "<group>"; };
 		08982EDA1182CF53002122F6 /* Icon_Bookmarks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Bookmarks.png; path = Resources/Images/Icon_Bookmarks.png; sourceTree = "<group>"; };
 		08982EDC1182CF5A002122F6 /* Icon_G.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_G.png; path = Resources/Images/Icon_G.png; sourceTree = "<group>"; };
 		08982EDD1182CF5A002122F6 /* Icon_History.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_History.png; path = Resources/Images/Icon_History.png; sourceTree = "<group>"; };
@@ -423,6 +421,7 @@
 		50FEEA9F19BF1AA200962BB9 /* SBReportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBReportView.swift; path = Classes/SBReportView.swift; sourceTree = "<group>"; };
 		50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBInnerView.swift; path = Classes/SBInnerView.swift; sourceTree = "<group>"; };
 		50FEEAA319BF307400962BB9 /* SBFixedSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBFixedSplitView.swift; path = Classes/SBFixedSplitView.swift; sourceTree = "<group>"; };
+		50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSearchbar.swift; path = Classes/SBSearchbar.swift; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -501,8 +500,7 @@
 				50FEEA9419BABDB900962BB9 /* SBBottombar.swift */,
 				088DF2F91008A3F100113786 /* SBFindbar.h */,
 				088DF2FA1008A3F100113786 /* SBFindbar.m */,
-				089771BC10DD0B62004AF73B /* SBSearchbar.h */,
-				089771BD10DD0B62004AF73B /* SBSearchbar.m */,
+				50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */,
 				50FEEAA319BF307400962BB9 /* SBFixedSplitView.swift */,
 				50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */,
 				088440641032950200AF4E2D /* SBSectionListView.h */,
@@ -1056,6 +1054,7 @@
 				5076918919B9EA8900F64734 /* SBAboutView.swift in Sources */,
 				50ACCDF71963E76700CE593E /* SBCoverWindow.swift in Sources */,
 				50B2A99F196028B700DA1B4A /* SBDocumentController.swift in Sources */,
+				50FEEAA619BF345C00962BB9 /* SBSearchbar.swift in Sources */,
 				505E49F6198B7639001F5254 /* SBToolbar.swift in Sources */,
 				088440661032950200AF4E2D /* SBSectionListView.m in Sources */,
 				08F914D1103531C50026ABD1 /* SBSnapshotView.m in Sources */,
@@ -1089,7 +1088,6 @@
 				50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */,
 				5076919719BA2A0500F64734 /* SBBLKGUISearchField.swift in Sources */,
 				506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */,
-				089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */,
 				081412BD1168671B002FDF25 /* SBTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

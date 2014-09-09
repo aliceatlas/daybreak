@@ -39,6 +39,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBLKGUIButton *wrapCheck;
 	NSString *searchedString;
 }
+@property (strong) NSView *contentView;
 @property (strong) NSString *searchedString;
 @property (readonly) NSRect contentRect;
 @property (readonly) NSRect closeRect;

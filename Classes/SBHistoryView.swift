@@ -56,8 +56,9 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         searchField.delegate = self
         searchField.target = self
         searchField.action = "search:"
-        (searchField.cell() as NSSearchFieldCell).sendsWholeSearchString = true
-        (searchField.cell() as NSSearchFieldCell).sendsSearchStringImmediately = true
+        let cell = searchField.cell() as NSSearchFieldCell
+        cell.sendsWholeSearchString = true
+        cell.sendsSearchStringImmediately = true
         return searchField
     }()
 	private lazy var scrollView: SBBLKGUIScrollView = {
