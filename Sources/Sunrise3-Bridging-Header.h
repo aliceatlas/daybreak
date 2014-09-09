@@ -13,7 +13,6 @@
 #import "SBSearchbar.h"
 
 #import "NSColor-SBAdditions.h"
-#import "SBFixedSplitView.h"
 
 #import "SBTabbarItem.h"
 
