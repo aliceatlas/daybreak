@@ -59,6 +59,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @protocol SBWebResourcesViewDataSource;
 @protocol SBTabViewDelegate;
 @protocol SBDocumentWindowDelegate;
+@protocol SBDownloaderDelegate;
 @interface SBDocument : NSDocument <SBTabbarDelegate, SBDownloaderDelegate, SBURLFieldDatasource, SBURLFieldDelegate, SBSplitViewDelegate, SBTabViewDelegate, SBBookmarksViewDelegate, SBWebResourcesViewDataSource, SBWebResourcesViewDelegate, SBToolbarDelegate, SBSplitViewDelegate, SBDocumentWindowDelegate>
 {
 	SBDocumentWindow *__unsafe_unretained window;

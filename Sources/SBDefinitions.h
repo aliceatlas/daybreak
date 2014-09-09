@@ -326,27 +326,6 @@ extern NSString *SBBookmarkPboardType;
 @protocol SBURLFieldDatasource <NSObject>
 @end
 
-@class SBBookmarksView;
-@protocol SBBookmarksViewDelegate <NSObject>
-@optional
-- (void)bookmarksView:(SBBookmarksView *)aBookmarksView didChangeMode:(SBBookmarkMode)mode;
-- (void)bookmarksView:(SBBookmarksView *)aBookmarksView shouldEditItemAtIndex:(NSUInteger)index;
-- (void)bookmarksView:(SBBookmarksView *)aBookmarksView didChangeCellWidth:(CGFloat)cellWidth;
-@end
-
-@class SBDownloadsView;
-@protocol SBDownloadsViewDelegate <NSObject>
-@optional
-- (void)downloadsViewDidRemoveAllItems:(SBDownloadsView *)aDownloadsView;
-@end
-
-@class SBDownloader;
-@protocol SBDownloaderDelegate
-- (void)downloader:(SBDownloader *)downloader didFinish:(NSData *)data;
-@optional
-- (void)downloader:(SBDownloader *)downloader didFail:(NSError *)error;
-@end
-
 
 // Un-documented methods
 @interface NSURL (WebNSURLExtras)

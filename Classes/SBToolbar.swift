@@ -19,16 +19,17 @@ class SBToolbar: NSToolbar {
         }
     }
     
+    var sbDelegate: SBToolbarDelegate? {
+        get { return delegate as? SBToolbarDelegate }
+        set(sbDelegate) { delegate = sbDelegate }
+    }
+    
     func executeDidVisible() {
-        if let delegate = delegate as? SBToolbarDelegate {
-            delegate.toolbarDidVisible(self)
-        }
+        delegate?.toolbarDidVisible(self)
     }
     
     func executeDidInvisible() {
-        if let delegate = delegate as? SBToolbarDelegate {
-            delegate.toolbarDidInvisible(self)
-        }
+        delegate?.toolbarDidInvisible(self)
     }
     
     // Returns whether the main toolbar contains item from item identifier

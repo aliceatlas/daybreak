@@ -28,6 +28,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Cocoa
 
+@objc
+protocol SBBookmarksViewDelegate {
+    optional func bookmarksView(SBBookmarksView, didChangeMode: SBBookmarkMode)
+    optional func bookmarksView(SBBookmarksView, shouldEditItemAtIndex: UInt)
+    optional func bookmarksView(SBBookmarksView, didChangeCellWidth: CGFloat)
+}
+
 class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     var splitView: SBFixedSplitView?
     var searchbar: SBSearchbar?

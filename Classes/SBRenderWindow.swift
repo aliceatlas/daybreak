@@ -34,7 +34,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class SBRenderWindow: NSWindow {
     var webView: WebView?
-    //var delegate: SBRenderWindowDelegate!
+    var sbDelegate: SBRenderWindowDelegate? {
+        get { return delegate as? SBRenderWindowDelegate }
+        set(sbDelegate) { delegate = sbDelegate }
+    }
     
     class func startRenderingWithSize(size: NSSize, delegate: SBRenderWindowDelegate?, url: NSURL) -> SBRenderWindow {
         let r = NSRect(origin: NSZeroPoint, size: size)
@@ -88,13 +91,11 @@ class SBRenderWindow: NSWindow {
     // MARK: Delegate
     
     override func webView(sender: WebView, didStartProvisionalLoadForFrame frame: WebFrame) {
-        if let delegate = delegate as? SBRenderWindowDelegate {
-            delegate.renderWindowDidStartRendering?(self)
-        }
+        sbDelegate?.renderWindowDidStartRendering?(self)
     }
     
     override func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
-        if let delegate = delegate as? SBRenderWindowDelegate {
+        if let delegate = sbDelegate {
             if delegate.respondsToSelector("renderWindow:didFinishRenderingImage:") {
                 if let webDocumentView = sender.mainFrame.frameView.documentView {
                     let image = NSImage(view: webDocumentView).insetWithSize(SBBookmarkImageMaxSize(), intersectRect: webDocumentView.bounds, offset: NSZeroPoint)
@@ -106,14 +107,10 @@ class SBRenderWindow: NSWindow {
     }
     
     override func webView(sender: WebView, didFailProvisionalLoadWithError error: NSError, forFrame frame: WebFrame) {
-        if let delegate = delegate as? SBRenderWindowDelegate {
-            delegate.renderWindow?(self, didFailWithError: error)
-        }
+        sbDelegate?.renderWindow?(self, didFailWithError: error)
     }
     
     override func webView(sender: WebView, didFailLoadWithError error: NSError, forFrame frame: WebFrame) {
-        if let delegate = delegate as? SBRenderWindowDelegate {
-            delegate.renderWindow?(self, didFailWithError: error)
-        }
+        sbDelegate?.renderWindow?(self, didFailWithError: error)
     }
 }
