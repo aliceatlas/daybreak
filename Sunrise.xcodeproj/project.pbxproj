@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		081412BD1168671B002FDF25 /* SBTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 081412BC1168671B002FDF25 /* SBTableCell.m */; };
 		083F27421053F4EE00346934 /* Update.png in Resources */ = {isa = PBXBuildFile; fileRef = 083F27411053F4EE00346934 /* Update.png */; };
 		084066FF0FE2B53900CC80E3 /* Snapshot.png in Resources */ = {isa = PBXBuildFile; fileRef = 084066FA0FE2B53900CC80E3 /* Snapshot.png */; };
 		084067000FE2B53900CC80E3 /* Home.png in Resources */ = {isa = PBXBuildFile; fileRef = 084066FB0FE2B53900CC80E3 /* Home.png */; };
@@ -150,6 +149,7 @@
 		5093D20B19AD088D00733CC3 /* SBDocumentWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5093D20A19AD088D00733CC3 /* SBDocumentWindow.swift */; };
 		5093D20D19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5093D20C19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift */; };
 		50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66A19666D550053CBF1 /* SBBookmarksView.swift */; };
+		50A8F02019BF4E08008DEFEC /* SBTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A8F01F19BF4E07008DEFEC /* SBTableCell.swift */; };
 		50ACCDF71963E76700CE593E /* SBCoverWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ACCDF61963E76700CE593E /* SBCoverWindow.swift */; };
 		50ACCDF91963E9EC00CE593E /* SBTextInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ACCDF81963E9EC00CE593E /* SBTextInputView.swift */; };
 		50ACCDFB196404FE00CE593E /* SBGoogleSuggestParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ACCDFA196404FE00CE593E /* SBGoogleSuggestParser.swift */; };
@@ -185,8 +185,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		081412BB1168671B002FDF25 /* SBTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTableCell.h; path = Classes/SBTableCell.h; sourceTree = "<group>"; };
-		081412BC1168671B002FDF25 /* SBTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTableCell.m; path = Classes/SBTableCell.m; sourceTree = "<group>"; };
 		0819483910FBE8D400CCBABF /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0819484810FBE8EF00CCBABF /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = de; path = Resources/de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		081DA8C5110DB6D000CF89D2 /* pt_PT */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = pt_PT; path = Resources/pt_PT.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -391,6 +389,7 @@
 		508FAC5219653AC400F4380F /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = main.swift; path = Sources/main.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5093D20A19AD088D00733CC3 /* SBDocumentWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDocumentWindow.swift; path = Classes/SBDocumentWindow.swift; sourceTree = "<group>"; };
 		5093D20C19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUIPopUpButton.swift; path = Classes/SBBLKGUIPopUpButton.swift; sourceTree = "<group>"; };
+		50A8F01F19BF4E07008DEFEC /* SBTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTableCell.swift; path = Classes/SBTableCell.swift; sourceTree = "<group>"; };
 		50AC47B6196916EF009219AF /* SBPopUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPopUpButton.swift; path = Classes/SBPopUpButton.swift; sourceTree = "<group>"; };
 		50AC47B8196923B4009219AF /* SBBLKGUIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUIScrollView.swift; path = Classes/SBBLKGUIScrollView.swift; sourceTree = "<group>"; };
 		50ACCDF61963E76700CE593E /* SBCoverWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBCoverWindow.swift; path = Classes/SBCoverWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -507,8 +506,7 @@
 				505E49FA198CA095001F5254 /* SBSectionGroup.swift */,
 				084067890FE2C11700CC80E3 /* SBURLField.h */,
 				0840678A0FE2C11700CC80E3 /* SBURLField.m */,
-				081412BB1168671B002FDF25 /* SBTableCell.h */,
-				081412BC1168671B002FDF25 /* SBTableCell.m */,
+				50A8F01F19BF4E07008DEFEC /* SBTableCell.swift */,
 				08E310380FFE58B800760CEC /* ModalViews */,
 				08A0048E0FEC8D4600AEB6DD /* Tab */,
 				08F6A68B0FF25A7700ED6E07 /* Sidebar */,
@@ -1049,6 +1047,7 @@
 				50CDD1D21984879B00C756F5 /* SBBLKGUIScrollView.swift in Sources */,
 				088BF5821023DD6100133BE0 /* NSMenu-SBAdditions.m in Sources */,
 				5076918919B9EA8900F64734 /* SBAboutView.swift in Sources */,
+				50A8F02019BF4E08008DEFEC /* SBTableCell.swift in Sources */,
 				50ACCDF71963E76700CE593E /* SBCoverWindow.swift in Sources */,
 				50B2A99F196028B700DA1B4A /* SBDocumentController.swift in Sources */,
 				50FEEAA619BF345C00962BB9 /* SBSearchbar.swift in Sources */,
@@ -1086,7 +1085,6 @@
 				50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */,
 				5076919719BA2A0500F64734 /* SBBLKGUISearchField.swift in Sources */,
 				506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */,
-				081412BD1168671B002FDF25 /* SBTableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

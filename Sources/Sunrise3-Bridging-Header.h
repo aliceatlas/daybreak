@@ -17,8 +17,6 @@
 
 #import "NSSavePanel-SBAdditions.h"
 
-#import "SBTableCell.h"
-
 #import "SBTabbar.h"
 
 @interface NSToolbar (Private)

@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBURLField.h"
 #import "SBDocument.h"
-#import "SBTableCell.h"
 #import "SBUtil.h"
 
 #import "Sunrise3-Bridging-Header.h"
