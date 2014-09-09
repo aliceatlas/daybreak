@@ -323,8 +323,8 @@ let kSBSidebarNewFolderButtonWidth: CGFloat = 100.0
 let kSBSidebarClosedWidth: CGFloat = 1.0
 let kSBSidebarMinimumWidth: CGFloat = 144.0
 let kSBDownloadItemSize: CGFloat = 128.0
+let kSBDefaultSidebarWidth: CGFloat = 550
 /*
-#define kSBDefaultSidebarWidth 550
 #define kSBDefaultBookmarkCellWidth 168
 #define kSBBookmarkFactorForImageWidth 4.0
 #define kSBBookmarkFactorForImageHeight 3.0

@@ -75,7 +75,6 @@
 		08982EDE1182CF5A002122F6 /* Icon_G.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDC1182CF5A002122F6 /* Icon_G.png */; };
 		08982EDF1182CF5A002122F6 /* Icon_History.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDD1182CF5A002122F6 /* Icon_History.png */; };
 		089953890FE36E5100DED3BA /* SBTabbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089953880FE36E5100DED3BA /* SBTabbar.m */; };
-		0899556E0FE380D400DED3BA /* SBSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0899556D0FE380D400DED3BA /* SBSplitView.m */; };
 		089956CD0FE39C8200DED3BA /* SBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089956CC0FE39C8200DED3BA /* SBView.m */; };
 		089C379C0FE7E07A00088B34 /* ResizerDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379B0FE7E07A00088B34 /* ResizerDown.png */; };
 		089C379E0FE7E08200088B34 /* ResizerUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379D0FE7E08200088B34 /* ResizerUp.png */; };
@@ -181,6 +180,7 @@
 		50FEEA9819BAE68E00962BB9 /* SBBottombar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9419BABDB900962BB9 /* SBBottombar.swift */; };
 		50FEEA9A19BB076E00962BB9 /* SBDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9919BB076E00962BB9 /* SBDownloadView.swift */; };
 		50FEEA9C19BDF28000962BB9 /* SBDownloadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9B19BDF28000962BB9 /* SBDownloadsView.swift */; };
+		50FEEA9E19BF06F400962BB9 /* SBSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -292,8 +292,6 @@
 		08982EDD1182CF5A002122F6 /* Icon_History.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_History.png; path = Resources/Images/Icon_History.png; sourceTree = "<group>"; };
 		089953870FE36E5100DED3BA /* SBTabbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTabbar.h; path = Classes/SBTabbar.h; sourceTree = "<group>"; };
 		089953880FE36E5100DED3BA /* SBTabbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTabbar.m; path = Classes/SBTabbar.m; sourceTree = "<group>"; };
-		0899556C0FE380D400DED3BA /* SBSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSplitView.h; path = Classes/SBSplitView.h; sourceTree = "<group>"; };
-		0899556D0FE380D400DED3BA /* SBSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSplitView.m; path = Classes/SBSplitView.m; sourceTree = "<group>"; };
 		089956CB0FE39C8200DED3BA /* SBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBView.h; path = Classes/SBView.h; sourceTree = "<group>"; };
 		089956CC0FE39C8200DED3BA /* SBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBView.m; path = Classes/SBView.m; sourceTree = "<group>"; };
 		089B71FE1072AEF3000D00B5 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -427,6 +425,7 @@
 		50FEEA9619BABFDD00962BB9 /* SBSidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSidebar.swift; path = Classes/SBSidebar.swift; sourceTree = "<group>"; };
 		50FEEA9919BB076E00962BB9 /* SBDownloadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloadView.swift; path = Classes/SBDownloadView.swift; sourceTree = "<group>"; };
 		50FEEA9B19BDF28000962BB9 /* SBDownloadsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloadsView.swift; path = Classes/SBDownloadsView.swift; sourceTree = "<group>"; };
+		50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSplitView.swift; path = Classes/SBSplitView.swift; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -513,8 +512,7 @@
 				0890708D0FFE3F4E00B2B505 /* SBInnerView.m */,
 				088440641032950200AF4E2D /* SBSectionListView.h */,
 				088440651032950200AF4E2D /* SBSectionListView.m */,
-				0899556C0FE380D400DED3BA /* SBSplitView.h */,
-				0899556D0FE380D400DED3BA /* SBSplitView.m */,
+				50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */,
 				505E49FA198CA095001F5254 /* SBSectionGroup.swift */,
 				084067890FE2C11700CC80E3 /* SBURLField.h */,
 				0840678A0FE2C11700CC80E3 /* SBURLField.m */,
@@ -1016,6 +1014,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50FEEA9E19BF06F400962BB9 /* SBSplitView.swift in Sources */,
 				506D2ADC19A2432E007A8842 /* SBWebResourcesView.swift in Sources */,
 				0840676C0FE2B95200CC80E3 /* SBUtil.m in Sources */,
 				0840678B0FE2C11700CC80E3 /* SBURLField.m in Sources */,
@@ -1024,7 +1023,6 @@
 				50ACCDFB196404FE00CE593E /* SBGoogleSuggestParser.swift in Sources */,
 				505E49FD198CA577001F5254 /* SBTabViewItem.swift in Sources */,
 				089953890FE36E5100DED3BA /* SBTabbar.m in Sources */,
-				0899556E0FE380D400DED3BA /* SBSplitView.m in Sources */,
 				50FEEA9719BABFDD00962BB9 /* SBSidebar.swift in Sources */,
 				089956CD0FE39C8200DED3BA /* SBView.m in Sources */,
 				508FAC5319653AC400F4380F /* main.swift in Sources */,

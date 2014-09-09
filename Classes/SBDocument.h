@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #import "SBDefinitions.h"
-#import "SBSplitView.h"
 
 @class SBBookmarkView;
 @class SBBookmarksView;
@@ -51,6 +50,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBToolbar;
 @class SBPopUpButton;
 @class SBWebResourcesView;
+@class SBSplitView;
 @protocol SBBookmarksViewDelegate;
 @protocol SBSplitViewDelegate;
 @protocol SBTabbarDelegate;

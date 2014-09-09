@@ -606,16 +606,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructSplitView];
 	if (window)
 	{
-		SBSidebarPosition position = [[NSUserDefaults standardUserDefaults] integerForKey:kSBSidebarPosition];
 		splitView = [[SBSplitView alloc] initWithFrame:[window splitViewRect]];
-		splitView.delegate = self;
-		splitView.sidebarPosition = position;
-		if (position == SBSidebarLeftPosition)
+		splitView.sbDelegate = self;
+		if (splitView.sidebarPosition == SBSidebarLeftPosition)
 		{
 			[self constructSidebar];
 			[self constructTabView];
 		}
-		else if (position == SBSidebarRightPosition)
+		else if (splitView.sidebarPosition == SBSidebarRightPosition)
 		{
 			[self constructTabView];
 			[self constructSidebar];

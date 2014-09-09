@@ -19,7 +19,7 @@ protocol SBSideBottombarDelegate {
 class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, NSAnimationDelegate {
     var view: NSView? {
         didSet {
-            if view != oldValue {
+            if view !== oldValue {
                 if let resourcesView = oldValue as? SBWebResourcesView {
                     resourcesView.dataSource = nil
                 }
@@ -38,7 +38,7 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
     
     var drawer: SBDrawer? {
         didSet {
-            if drawer != oldValue {
+            if drawer !== oldValue {
                 oldValue?.removeFromSuperview()
                 bottombar.removeFromSuperview()
                 if drawer != nil {

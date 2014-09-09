@@ -12,7 +12,7 @@ class SBPreferences: NSObject {
         var info: [String: AnyObject] = [:]
         
         // Common
-        info[kSBSidebarWidth] = NSNumber(int: kSBDefaultSidebarWidth)
+        info[kSBSidebarWidth] = NSNumber(float: Float(kSBDefaultSidebarWidth))
         info[kSBSidebarPosition] = SBSidebarPosition.RightPosition.toRaw() as NSNumber
         info[kSBSidebarVisibilityFlag] = true as NSNumber
         info[kSBTabbarVisibilityFlag] = true as NSNumber

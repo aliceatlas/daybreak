@@ -326,11 +326,6 @@ extern NSString *SBBookmarkPboardType;
 @protocol SBURLFieldDatasource <NSObject>
 @end
 
-@class SBSplitView;
-@protocol SBSplitViewDelegate <NSSplitViewDelegate>
-- (void)splitViewDidOpenDrawer:(SBSplitView *)aSplitView;
-@end
-
 @class SBBookmarksView;
 @protocol SBBookmarksViewDelegate <NSObject>
 @optional
