@@ -153,7 +153,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructNewTabWithString:(NSString *)string selection:(BOOL)selection;
 - (void)constructNewTabWithURL:(NSURL *)URL selection:(BOOL)selection;
 - (SBTabbarItem *)constructTabbarItemWithIdentifier:(NSNumber *)identifier;
-- (SBTabViewItem *)constructTabViewItemWithIdentifier:(NSNumber *)identifier;
+- (SBTabViewItem *)constructTabViewItemWithIdentifier:(NSNumber *)identifier tabbarItem:(SBTabbarItem *)tabbarItem;
 - (SBDownloadsView *)constructDownloadsViewInSidebar;
 - (void)addObserverNotifications;
 - (void)removeObserverNotifications;
