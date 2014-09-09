@@ -32,7 +32,7 @@ protocol SBWebViewDelegate {
     optional func webViewShouldCloseFindbar(SBWebView) -> Bool
 }
 
-class SBWebView: WebView {
+class SBWebView: WebView, SBFindbarTarget {
     weak var delegate: SBWebViewDelegate?
     var showFindbar = false
 	private var magnified = false

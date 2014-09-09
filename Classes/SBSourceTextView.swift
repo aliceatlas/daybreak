@@ -32,7 +32,7 @@ protocol SBSourceTextViewDelegate: NSTextViewDelegate {
     optional func textViewShouldCloseFindbar(SBSourceTextView)
 }
 
-class SBSourceTextView: NSTextView {
+class SBSourceTextView: NSTextView, SBFindbarTarget {
     var sbDelegate: SBSourceTextViewDelegate? {
         get { return delegate as? SBSourceTextViewDelegate }
         set(sbDelegate) { delegate = sbDelegate }

@@ -31,7 +31,6 @@
 		088BF5821023DD6100133BE0 /* NSMenu-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 088BF5811023DD6100133BE0 /* NSMenu-SBAdditions.m */; };
 		088D26E0101B3EC400691CEC /* SBBookmarkListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088D26DF101B3EC400691CEC /* SBBookmarkListView.m */; };
 		088D299E101B5F3B00691CEC /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 088D299D101B5F3B00691CEC /* Edit.png */; };
-		088DF2FB1008A3F100113786 /* SBFindbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 088DF2FA1008A3F100113786 /* SBFindbar.m */; };
 		0890E1750FE91DF4002DF339 /* SBTabbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0890E1740FE91DF4002DF339 /* SBTabbarItem.m */; };
 		089106870FE520E100DFE290 /* Resizer.png in Resources */ = {isa = PBXBuildFile; fileRef = 089106860FE520E100DFE290 /* Resizer.png */; };
 		08916C3110099ECC0012D4EA /* PaledApplicationIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 08916C3010099ECC0012D4EA /* PaledApplicationIcon.png */; };
@@ -181,6 +180,7 @@
 		50FEEAA219BF2F1100962BB9 /* SBInnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */; };
 		50FEEAA419BF307400962BB9 /* SBFixedSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA319BF307400962BB9 /* SBFixedSplitView.swift */; };
 		50FEEAA619BF345C00962BB9 /* SBSearchbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */; };
+		50FEEAA919BF453300962BB9 /* SBFindbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA719BF3A0200962BB9 /* SBFindbar.swift */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -239,8 +239,6 @@
 		088D26DE101B3EC400691CEC /* SBBookmarkListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarkListView.h; path = Classes/SBBookmarkListView.h; sourceTree = "<group>"; };
 		088D26DF101B3EC400691CEC /* SBBookmarkListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBBookmarkListView.m; path = Classes/SBBookmarkListView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		088D299D101B5F3B00691CEC /* Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Edit.png; path = Resources/Images/Edit.png; sourceTree = "<group>"; };
-		088DF2F91008A3F100113786 /* SBFindbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBFindbar.h; path = Classes/SBFindbar.h; sourceTree = "<group>"; };
-		088DF2FA1008A3F100113786 /* SBFindbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFindbar.m; path = Classes/SBFindbar.m; sourceTree = "<group>"; };
 		0890E1730FE91DF4002DF339 /* SBTabbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTabbarItem.h; path = Classes/SBTabbarItem.h; sourceTree = "<group>"; };
 		0890E1740FE91DF4002DF339 /* SBTabbarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTabbarItem.m; path = Classes/SBTabbarItem.m; sourceTree = "<group>"; };
 		089106860FE520E100DFE290 /* Resizer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Resizer.png; path = Resources/Images/Resizer.png; sourceTree = "<group>"; };
@@ -422,6 +420,7 @@
 		50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBInnerView.swift; path = Classes/SBInnerView.swift; sourceTree = "<group>"; };
 		50FEEAA319BF307400962BB9 /* SBFixedSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBFixedSplitView.swift; path = Classes/SBFixedSplitView.swift; sourceTree = "<group>"; };
 		50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSearchbar.swift; path = Classes/SBSearchbar.swift; sourceTree = "<group>"; };
+		50FEEAA719BF3A0200962BB9 /* SBFindbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBFindbar.swift; path = Classes/SBFindbar.swift; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -498,8 +497,7 @@
 				089956CB0FE39C8200DED3BA /* SBView.h */,
 				089956CC0FE39C8200DED3BA /* SBView.m */,
 				50FEEA9419BABDB900962BB9 /* SBBottombar.swift */,
-				088DF2F91008A3F100113786 /* SBFindbar.h */,
-				088DF2FA1008A3F100113786 /* SBFindbar.m */,
+				50FEEAA719BF3A0200962BB9 /* SBFindbar.swift */,
 				50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */,
 				50FEEAA319BF307400962BB9 /* SBFixedSplitView.swift */,
 				50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */,
@@ -1032,7 +1030,6 @@
 				50FEEA9819BAE68E00962BB9 /* SBBottombar.swift in Sources */,
 				50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */,
 				5076918B19B9F47400F64734 /* SBWebView.swift in Sources */,
-				088DF2FB1008A3F100113786 /* SBFindbar.m in Sources */,
 				506D2ADA19A23ACD007A8842 /* SBDownloaderView.swift in Sources */,
 				50FEEAA419BF307400962BB9 /* SBFixedSplitView.swift in Sources */,
 				505E49F9198C91A4001F5254 /* SBDrawer.swift in Sources */,
@@ -1069,6 +1066,7 @@
 				505E49F4198A2645001F5254 /* SBButton.swift in Sources */,
 				5072657519A0D9530099DA28 /* SBUserAgentView.swift in Sources */,
 				08DA3D251057D9BE00DD4D3E /* SBBookmarkListItemView.m in Sources */,
+				50FEEAA919BF453300962BB9 /* SBFindbar.swift in Sources */,
 				50B2A99B19601D9A00DA1B4A /* SBDefinitionsS.swift in Sources */,
 				50FEEA9A19BB076E00962BB9 /* SBDownloadView.swift in Sources */,
 				0888F3FB106E5BDF001A9789 /* NSArray-SBAdditions.m in Sources */,

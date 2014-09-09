@@ -27,35 +27,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBSearchbar: SBFindbar {
-    let minimumWidth: CGFloat = 200
-    let availableWidth: CGFloat = 200
-    private var searchField: SBFindSearchField!
-    
-    override init(frame: NSRect) {
-        super.init(frame: frame)
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("NSCoding not supported")
-    }
-    
-    // MARK: Rects
-    
-    override var searchRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = self.bounds.size.width - NSMaxX(closeRect)
-        r.size.height = 19.0
-        r.origin.x = NSMaxX(closeRect)
-        r.origin.y = (bounds.size.height - r.size.height) / 2
-        return r;
-    }
-    
-    // MARK: Construction
-    // (only until SBFindbar is converted to Swift)
-    
-    override func constructSearchField() {
-        destructSearchField()
-        searchField = SBFindSearchField(frame: searchRect)
+    override internal lazy var backwardButton: SBButton? = nil
+    override internal lazy var forwardButton: SBButton? = nil
+    override internal lazy var caseSensitiveCheck: SBBLKGUIButton? = nil
+    override internal lazy var wrapCheck: SBBLKGUIButton? = nil
+
+    override internal lazy var searchField: SBFindSearchField = {
+        let searchField = SBFindSearchField(frame: self.searchRect)
         searchField.autoresizingMask = .ViewWidthSizable
         searchField.delegate = self
         searchField.target = self
@@ -66,19 +44,32 @@ class SBSearchbar: SBFindbar {
         if let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) {
             searchField.stringValue = string
         }
-        contentView.addSubview(searchField)
+        return searchField
+    }()
+    
+    
+    override init(frame: NSRect) {
+        super.init(frame: frame)
     }
     
-    override func constructBackwardButton() {
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
     }
     
-    override func constructForwardButton() {
-    }
+    override class func minimumWidth() -> CGFloat { return 200 }
+    override class func availableWidth() -> CGFloat { return 200 }
+    override func minimumWidth() -> CGFloat { return SBSearchbar.minimumWidth() }
+    override func availableWidth() -> CGFloat { return SBSearchbar.availableWidth() }
     
-    override func constructCaseSensitiveCheck() {
-    }
+    // MARK: Rects
     
-    override func constructWrapCheck() {
+    override var searchRect: NSRect {
+        var r = NSZeroRect
+        r.size.width = self.bounds.size.width - NSMaxX(closeRect)
+        r.size.height = 19.0
+        r.origin.x = NSMaxX(closeRect)
+        r.origin.y = (bounds.size.height - r.size.height) / 2
+        return r
     }
     
     // MARK: Actions

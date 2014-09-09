@@ -21,8 +21,6 @@
 
 #import "SBTabbar.h"
 
-#import "SBFindbar.h"
-
 @interface NSToolbar (Private)
 - (NSView *)_toolbarView;
 @end
