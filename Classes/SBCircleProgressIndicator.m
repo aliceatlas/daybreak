@@ -24,7 +24,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBCircleProgressIndicator.h"
 #import "SBUtil.h"
-#import "SBDownloadsView.h"
+
+#import "Sunrise3-Bridging-Header.h"
+#import "Sunrise3-Swift.h"
 
 @implementation SBCircleProgressIndicator
 

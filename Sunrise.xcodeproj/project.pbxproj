@@ -33,7 +33,6 @@
 		088D299E101B5F3B00691CEC /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 088D299D101B5F3B00691CEC /* Edit.png */; };
 		088DF2FB1008A3F100113786 /* SBFindbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 088DF2FA1008A3F100113786 /* SBFindbar.m */; };
 		088E99B610086FD1005FC4C0 /* SBFixedSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088E99B510086FD1005FC4C0 /* SBFixedSplitView.m */; };
-		088EC9E31081FEE600F8BFCB /* SBDownloadsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088EC9E01081FEE600F8BFCB /* SBDownloadsView.m */; };
 		0890708E0FFE3F4E00B2B505 /* SBInnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0890708D0FFE3F4E00B2B505 /* SBInnerView.m */; };
 		0890E1750FE91DF4002DF339 /* SBTabbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0890E1740FE91DF4002DF339 /* SBTabbarItem.m */; };
 		089106870FE520E100DFE290 /* Resizer.png in Resources */ = {isa = PBXBuildFile; fileRef = 089106860FE520E100DFE290 /* Resizer.png */; };
@@ -181,6 +180,7 @@
 		50FEEA9719BABFDD00962BB9 /* SBSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9619BABFDD00962BB9 /* SBSidebar.swift */; };
 		50FEEA9819BAE68E00962BB9 /* SBBottombar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9419BABDB900962BB9 /* SBBottombar.swift */; };
 		50FEEA9A19BB076E00962BB9 /* SBDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9919BB076E00962BB9 /* SBDownloadView.swift */; };
+		50FEEA9C19BDF28000962BB9 /* SBDownloadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9B19BDF28000962BB9 /* SBDownloadsView.swift */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -243,8 +243,6 @@
 		088DF2FA1008A3F100113786 /* SBFindbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFindbar.m; path = Classes/SBFindbar.m; sourceTree = "<group>"; };
 		088E99B410086FD1005FC4C0 /* SBFixedSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBFixedSplitView.h; path = Classes/SBFixedSplitView.h; sourceTree = "<group>"; };
 		088E99B510086FD1005FC4C0 /* SBFixedSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFixedSplitView.m; path = Classes/SBFixedSplitView.m; sourceTree = "<group>"; };
-		088EC9DF1081FEE600F8BFCB /* SBDownloadsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDownloadsView.h; path = Classes/SBDownloadsView.h; sourceTree = "<group>"; };
-		088EC9E01081FEE600F8BFCB /* SBDownloadsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBDownloadsView.m; path = Classes/SBDownloadsView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0890708C0FFE3F4E00B2B505 /* SBInnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBInnerView.h; path = Classes/SBInnerView.h; sourceTree = "<group>"; };
 		0890708D0FFE3F4E00B2B505 /* SBInnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBInnerView.m; path = Classes/SBInnerView.m; sourceTree = "<group>"; };
 		0890E1730FE91DF4002DF339 /* SBTabbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTabbarItem.h; path = Classes/SBTabbarItem.h; sourceTree = "<group>"; };
@@ -428,6 +426,7 @@
 		50FEEA9419BABDB900962BB9 /* SBBottombar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBottombar.swift; path = Classes/SBBottombar.swift; sourceTree = "<group>"; };
 		50FEEA9619BABFDD00962BB9 /* SBSidebar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSidebar.swift; path = Classes/SBSidebar.swift; sourceTree = "<group>"; };
 		50FEEA9919BB076E00962BB9 /* SBDownloadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloadView.swift; path = Classes/SBDownloadView.swift; sourceTree = "<group>"; };
+		50FEEA9B19BDF28000962BB9 /* SBDownloadsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloadsView.swift; path = Classes/SBDownloadsView.swift; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -729,8 +728,7 @@
 				088D26DF101B3EC400691CEC /* SBBookmarkListView.m */,
 				08DA3D231057D9BE00DD4D3E /* SBBookmarkListItemView.h */,
 				08DA3D241057D9BE00DD4D3E /* SBBookmarkListItemView.m */,
-				088EC9DF1081FEE600F8BFCB /* SBDownloadsView.h */,
-				088EC9E01081FEE600F8BFCB /* SBDownloadsView.m */,
+				50FEEA9B19BDF28000962BB9 /* SBDownloadsView.swift */,
 				50FEEA9919BB076E00962BB9 /* SBDownloadView.swift */,
 			);
 			name = Sidebar;
@@ -1037,6 +1035,7 @@
 				5076918D19BA0DF400F64734 /* SBSourceTextView.swift in Sources */,
 				50B2A9A91960E19A00DA1B4A /* Array-SBAdditions.swift in Sources */,
 				0890708E0FFE3F4E00B2B505 /* SBInnerView.m in Sources */,
+				50FEEA9C19BDF28000962BB9 /* SBDownloadsView.swift in Sources */,
 				50ACCDF91963E9EC00CE593E /* SBTextInputView.swift in Sources */,
 				50B2A9AD1961174700DA1B4A /* String-SBURLAdditions.swift in Sources */,
 				50B2A9A51960BD5200DA1B4A /* SBUtilS.swift in Sources */,
@@ -1097,7 +1096,6 @@
 				501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */,
 				50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */,
 				5076919719BA2A0500F64734 /* SBBLKGUISearchField.swift in Sources */,
-				088EC9E31081FEE600F8BFCB /* SBDownloadsView.m in Sources */,
 				506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */,
 				089771BE10DD0B62004AF73B /* SBSearchbar.m in Sources */,
 				081412BD1168671B002FDF25 /* SBTableCell.m in Sources */,

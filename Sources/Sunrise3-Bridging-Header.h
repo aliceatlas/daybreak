@@ -15,8 +15,6 @@
 #import "NSColor-SBAdditions.h"
 #import "SBFixedSplitView.h"
 
-#import "SBDownloadsView.h"
-
 #import "SBTabbarItem.h"
 
 #import "NSSavePanel-SBAdditions.h"
