@@ -499,9 +499,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         toolbar.displayMode = NSToolbarDisplayModeIconOnly;
         toolbar.allowsUserCustomization = YES;
         toolbar.autosavesConfiguration = YES;
-		[toolbar setShowsBaselineSeparator:NO];
-		[toolbar setDelegate:self];
-		[window setToolbar:toolbar];
+        toolbar.showsBaselineSeparator = NO;
+        toolbar.sbDelegate = self;
+        window.toolbar = toolbar;
 	}
 }
 

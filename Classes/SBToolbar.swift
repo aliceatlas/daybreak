@@ -25,11 +25,11 @@ class SBToolbar: NSToolbar {
     }
     
     func executeDidVisible() {
-        delegate?.toolbarDidVisible(self)
+        sbDelegate?.toolbarDidVisible(self)
     }
     
     func executeDidInvisible() {
-        delegate?.toolbarDidInvisible(self)
+        sbDelegate?.toolbarDidInvisible(self)
     }
     
     // Returns whether the main toolbar contains item from item identifier
