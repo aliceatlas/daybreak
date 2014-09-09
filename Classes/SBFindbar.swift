@@ -152,9 +152,9 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     // MARK: Rects
     
     var contentRect: NSRect {
-    	var r = bounds
-    	r.size.width = max(r.size.width, minimumWidth())
-    	return r
+        var r = bounds
+        r.size.width = SBConstrain(r.size.width, min: minimumWidth())
+        return r
     }
     
     var closeRect: NSRect {

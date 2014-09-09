@@ -127,8 +127,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     
     override init(frame: NSRect) {
         var r = frame
-        r.size.width = min(max(r.size.width, kSBMinFrameSizeWidth), kSBMaxFrameSizeWidth)
-        r.size.width = min(max(r.size.height, kSBMinFrameSizeHeight), kSBMaxFrameSizeHeight)
+        r.size.width = SBConstrain(r.size.width, min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
+        r.size.height = SBConstrain(r.size.width, min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
         super.init(frame: r)
         addSubview(imageView)
         addSubview(titleLabel)

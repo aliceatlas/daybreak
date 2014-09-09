@@ -317,7 +317,7 @@ class SBSideBottombar: SBBottombar {
     
     var sliderWidth: CGFloat {
         let width = bounds.size.width - kSBSidebarResizableWidth * 2 - sliderSideMargin * 2
-        return min(width, 120.0)
+        return SBConstrain(width, max: 120.0)
     }
     
     let sliderSideMargin: CGFloat = 10.0
@@ -414,9 +414,7 @@ class SBSideBottombar: SBBottombar {
     func slide() {
         let f: ((SBSideBottombar, CGFloat) -> ())? = delegate?.bottombar // bottombar:didChangeSize:
         if f != nil {
-            var value = sizeSlider.doubleValue
-            value = min(value, kSBBookmarkCellMaxWidth)
-            value = max(value, kSBBookmarkCellMinWidth)
+            let value = SBConstrain(sizeSlider.doubleValue, min: kSBBookmarkCellMinWidth, max: kSBBookmarkCellMaxWidth)
             f!(self, CGFloat(value))
             if value != sizeSlider.doubleValue {
                 sizeSlider.doubleValue = value

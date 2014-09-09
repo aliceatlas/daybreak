@@ -112,7 +112,7 @@ class SBTableCell: NSCell {
             let attribute = [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle]
             let sAttribute = [NSFontAttributeName: font, NSForegroundColorAttributeName: sTextColor, NSParagraphStyleAttributeName: paragraphStyle]
             var size = nsTitle.sizeWithAttributes(attribute)
-            size.width = min(size.width, cellFrame.size.width - side * 2)
+            size.width = SBConstrain(size.width, max: cellFrame.size.width - side * 2)
             r.size = size
             if alignment == .LeftTextAlignment {
                 r.origin.x = cellFrame.origin.x + side

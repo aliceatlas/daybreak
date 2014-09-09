@@ -150,3 +150,14 @@ func SBCreateBookmarkItemS(title: String?, url: String?, imageData: NSData?, dat
 */
 
 let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+
+func SBConstrain<T: Comparable>(value: T, min minValue: T? = nil, max maxValue: T? = nil) -> T {
+    var v = value
+    if minValue != nil {
+        v = max(v, minValue!)
+    }
+    if maxValue != nil {
+        v = min(v, maxValue!)
+    }
+    return r
+}
