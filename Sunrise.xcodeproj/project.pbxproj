@@ -33,7 +33,6 @@
 		088D299E101B5F3B00691CEC /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 088D299D101B5F3B00691CEC /* Edit.png */; };
 		088DF2FB1008A3F100113786 /* SBFindbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 088DF2FA1008A3F100113786 /* SBFindbar.m */; };
 		088E99B610086FD1005FC4C0 /* SBFixedSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088E99B510086FD1005FC4C0 /* SBFixedSplitView.m */; };
-		0890708E0FFE3F4E00B2B505 /* SBInnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0890708D0FFE3F4E00B2B505 /* SBInnerView.m */; };
 		0890E1750FE91DF4002DF339 /* SBTabbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0890E1740FE91DF4002DF339 /* SBTabbarItem.m */; };
 		089106870FE520E100DFE290 /* Resizer.png in Resources */ = {isa = PBXBuildFile; fileRef = 089106860FE520E100DFE290 /* Resizer.png */; };
 		08916C3110099ECC0012D4EA /* PaledApplicationIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 08916C3010099ECC0012D4EA /* PaledApplicationIcon.png */; };
@@ -181,6 +180,7 @@
 		50FEEA9C19BDF28000962BB9 /* SBDownloadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9B19BDF28000962BB9 /* SBDownloadsView.swift */; };
 		50FEEA9E19BF06F400962BB9 /* SBSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */; };
 		50FEEAA019BF1AA200962BB9 /* SBReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9F19BF1AA200962BB9 /* SBReportView.swift */; };
+		50FEEAA219BF2F1100962BB9 /* SBInnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -243,8 +243,6 @@
 		088DF2FA1008A3F100113786 /* SBFindbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFindbar.m; path = Classes/SBFindbar.m; sourceTree = "<group>"; };
 		088E99B410086FD1005FC4C0 /* SBFixedSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBFixedSplitView.h; path = Classes/SBFixedSplitView.h; sourceTree = "<group>"; };
 		088E99B510086FD1005FC4C0 /* SBFixedSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBFixedSplitView.m; path = Classes/SBFixedSplitView.m; sourceTree = "<group>"; };
-		0890708C0FFE3F4E00B2B505 /* SBInnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBInnerView.h; path = Classes/SBInnerView.h; sourceTree = "<group>"; };
-		0890708D0FFE3F4E00B2B505 /* SBInnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBInnerView.m; path = Classes/SBInnerView.m; sourceTree = "<group>"; };
 		0890E1730FE91DF4002DF339 /* SBTabbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTabbarItem.h; path = Classes/SBTabbarItem.h; sourceTree = "<group>"; };
 		0890E1740FE91DF4002DF339 /* SBTabbarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTabbarItem.m; path = Classes/SBTabbarItem.m; sourceTree = "<group>"; };
 		089106860FE520E100DFE290 /* Resizer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Resizer.png; path = Resources/Images/Resizer.png; sourceTree = "<group>"; };
@@ -425,6 +423,7 @@
 		50FEEA9B19BDF28000962BB9 /* SBDownloadsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloadsView.swift; path = Classes/SBDownloadsView.swift; sourceTree = "<group>"; };
 		50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSplitView.swift; path = Classes/SBSplitView.swift; sourceTree = "<group>"; };
 		50FEEA9F19BF1AA200962BB9 /* SBReportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBReportView.swift; path = Classes/SBReportView.swift; sourceTree = "<group>"; };
+		50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBInnerView.swift; path = Classes/SBInnerView.swift; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -507,8 +506,7 @@
 				089771BD10DD0B62004AF73B /* SBSearchbar.m */,
 				088E99B410086FD1005FC4C0 /* SBFixedSplitView.h */,
 				088E99B510086FD1005FC4C0 /* SBFixedSplitView.m */,
-				0890708C0FFE3F4E00B2B505 /* SBInnerView.h */,
-				0890708D0FFE3F4E00B2B505 /* SBInnerView.m */,
+				50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */,
 				088440641032950200AF4E2D /* SBSectionListView.h */,
 				088440651032950200AF4E2D /* SBSectionListView.m */,
 				50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */,
@@ -1030,7 +1028,6 @@
 				089FE2E90FEBED6C000D2436 /* SBCircleProgressIndicator.m in Sources */,
 				5076918D19BA0DF400F64734 /* SBSourceTextView.swift in Sources */,
 				50B2A9A91960E19A00DA1B4A /* Array-SBAdditions.swift in Sources */,
-				0890708E0FFE3F4E00B2B505 /* SBInnerView.m in Sources */,
 				50FEEA9C19BDF28000962BB9 /* SBDownloadsView.swift in Sources */,
 				50ACCDF91963E9EC00CE593E /* SBTextInputView.swift in Sources */,
 				50B2A9AD1961174700DA1B4A /* String-SBURLAdditions.swift in Sources */,
@@ -1080,6 +1077,7 @@
 				0888F3FB106E5BDF001A9789 /* NSArray-SBAdditions.m in Sources */,
 				501D1F321963C9E500AEF4D1 /* SBDownload.swift in Sources */,
 				50CE69E21986441C00C17D44 /* SBPreferences.swift in Sources */,
+				50FEEAA219BF2F1100962BB9 /* SBInnerView.swift in Sources */,
 				50B2A9A3196068B700DA1B4A /* SBBookmarks.swift in Sources */,
 				507A8E23195FFF6700BF56AD /* SBDefinitions.m in Sources */,
 				50C8ED6519ACE4C700F7E17B /* SBWindowController.swift in Sources */,

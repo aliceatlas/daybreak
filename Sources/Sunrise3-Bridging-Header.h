@@ -21,7 +21,6 @@
 
 #import "SBTableCell.h"
 
-#import "SBInnerView.h"
 #import "SBTabbar.h"
 
 @interface NSToolbar (Private)
