@@ -26,6 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <WebKit/WebKit.h>
 #import "SBDocument.h"
 #import "SBFixedSplitView.h"
+#include <mach/mach_host.h>
 
 @class SBApplicationDelegate;
 @class SBDocumentController;
@@ -132,3 +133,4 @@ BOOL SBDebugWriteLayerStructure(CALayer *layer, NSString *path);
 BOOL SBDebugWriteMainMenu(NSString *path);
 
 void SBPerform(id target, SEL action, id object);
+kern_return_t SBCPUType(cpu_type_t *cpuType);

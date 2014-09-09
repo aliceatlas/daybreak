@@ -2267,3 +2267,13 @@ BOOL SBDebugWriteMainMenu(NSString *path)
 void SBPerform(id target, SEL action, id object) {
     [target performSelector:action withObject: object];
 }
+
+kern_return_t SBCPUType(cpu_type_t *cpuType) {
+    host_basic_info_data_t hostInfo;
+    mach_msg_type_number_t infoCount = HOST_BASIC_INFO_COUNT;
+    kern_return_t result = host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)&hostInfo, &infoCount);
+    if (result == KERN_SUCCESS) {
+        *cpuType = hostInfo.cpu_type;
+    }
+    return result;
+}

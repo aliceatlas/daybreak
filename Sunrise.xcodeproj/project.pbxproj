@@ -78,7 +78,6 @@
 		089956CD0FE39C8200DED3BA /* SBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089956CC0FE39C8200DED3BA /* SBView.m */; };
 		089C379C0FE7E07A00088B34 /* ResizerDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379B0FE7E07A00088B34 /* ResizerDown.png */; };
 		089C379E0FE7E08200088B34 /* ResizerUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379D0FE7E08200088B34 /* ResizerUp.png */; };
-		089F20AB104C0D9100549CAC /* SBReportView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089F20AA104C0D9100549CAC /* SBReportView.m */; };
 		089F94281033F60C00C48997 /* ZoomIn.png in Resources */ = {isa = PBXBuildFile; fileRef = 089F94261033F60C00C48997 /* ZoomIn.png */; };
 		089F94291033F60C00C48997 /* ZoomOut.png in Resources */ = {isa = PBXBuildFile; fileRef = 089F94271033F60C00C48997 /* ZoomOut.png */; };
 		089F942B1033F61500C48997 /* ActualSize.png in Resources */ = {isa = PBXBuildFile; fileRef = 089F942A1033F61500C48997 /* ActualSize.png */; };
@@ -181,6 +180,7 @@
 		50FEEA9A19BB076E00962BB9 /* SBDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9919BB076E00962BB9 /* SBDownloadView.swift */; };
 		50FEEA9C19BDF28000962BB9 /* SBDownloadsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9B19BDF28000962BB9 /* SBDownloadsView.swift */; };
 		50FEEA9E19BF06F400962BB9 /* SBSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */; };
+		50FEEAA019BF1AA200962BB9 /* SBReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEA9F19BF1AA200962BB9 /* SBReportView.swift */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -298,8 +298,6 @@
 		089B72151072AF30000D00B5 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		089C379B0FE7E07A00088B34 /* ResizerDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ResizerDown.png; path = Resources/Images/ResizerDown.png; sourceTree = "<group>"; };
 		089C379D0FE7E08200088B34 /* ResizerUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ResizerUp.png; path = Resources/Images/ResizerUp.png; sourceTree = "<group>"; };
-		089F20A9104C0D9100549CAC /* SBReportView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBReportView.h; path = Classes/SBReportView.h; sourceTree = "<group>"; };
-		089F20AA104C0D9100549CAC /* SBReportView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBReportView.m; path = Classes/SBReportView.m; sourceTree = "<group>"; };
 		089F94261033F60C00C48997 /* ZoomIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZoomIn.png; path = Resources/Images/ZoomIn.png; sourceTree = "<group>"; };
 		089F94271033F60C00C48997 /* ZoomOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZoomOut.png; path = Resources/Images/ZoomOut.png; sourceTree = "<group>"; };
 		089F942A1033F61500C48997 /* ActualSize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ActualSize.png; path = Resources/Images/ActualSize.png; sourceTree = "<group>"; };
@@ -426,6 +424,7 @@
 		50FEEA9919BB076E00962BB9 /* SBDownloadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloadView.swift; path = Classes/SBDownloadView.swift; sourceTree = "<group>"; };
 		50FEEA9B19BDF28000962BB9 /* SBDownloadsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloadsView.swift; path = Classes/SBDownloadsView.swift; sourceTree = "<group>"; };
 		50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSplitView.swift; path = Classes/SBSplitView.swift; sourceTree = "<group>"; };
+		50FEEA9F19BF1AA200962BB9 /* SBReportView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBReportView.swift; path = Classes/SBReportView.swift; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -702,8 +701,7 @@
 				5076918819B9EA8900F64734 /* SBAboutView.swift */,
 				5008E34B19B9DB7500BED173 /* SBBookmarkView.swift */,
 				506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */,
-				089F20A9104C0D9100549CAC /* SBReportView.h */,
-				089F20AA104C0D9100549CAC /* SBReportView.m */,
+				50FEEA9F19BF1AA200962BB9 /* SBReportView.swift */,
 				08F914CF103531C50026ABD1 /* SBSnapshotView.h */,
 				08F914D0103531C50026ABD1 /* SBSnapshotView.m */,
 				50782C8719AC77E400CB8706 /* SBUpdateView.swift */,
@@ -1055,6 +1053,7 @@
 				5072657219A0CA380099DA28 /* SBMessageView.swift in Sources */,
 				5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */,
 				088D26E0101B3EC400691CEC /* SBBookmarkListView.m in Sources */,
+				50FEEAA019BF1AA200962BB9 /* SBReportView.swift in Sources */,
 				50782C8619AC6EB400CB8706 /* SBHistoryView.swift in Sources */,
 				08742F4010233A60001F7EAF /* NSImage-SBAdditions.m in Sources */,
 				50CDD1D21984879B00C756F5 /* SBBLKGUIScrollView.swift in Sources */,
@@ -1068,7 +1067,6 @@
 				505E49FB198CA096001F5254 /* SBSectionGroup.swift in Sources */,
 				50B2A99D1960221D00DA1B4A /* SBApplicationDelegate.swift in Sources */,
 				50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */,
-				089F20AB104C0D9100549CAC /* SBReportView.m in Sources */,
 				5008E34C19B9DB7500BED173 /* SBBookmarkView.swift in Sources */,
 				08A73C331052C6CE00EBD683 /* NSScrollView-SBAdditions.m in Sources */,
 				08A73C391052C88800EBD683 /* NSColor-SBAdditions.m in Sources */,
