@@ -924,7 +924,7 @@ void SBCGPointApplyTransform3D(CGPoint *p, const CATransform3D *t)
 
 #pragma mark Drawing
 
-void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint points[])
+void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, const CGFloat locations[], const CGFloat colors[], const CGPoint points[])
 {
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, colors, locations, count);

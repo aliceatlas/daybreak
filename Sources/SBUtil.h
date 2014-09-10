@@ -75,7 +75,7 @@ void SBCGPointApplyTransform3D(CGPoint *p, const CATransform3D *t);
 CF_IMPLICIT_BRIDGING_DISABLED
 
 // Drawing
-void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint points[]);
+void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, const CGFloat locations[], const CGFloat colors[], const CGPoint points[]);
 void SBDrawRadialGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint centers[], CGFloat radiuses[]);
 void SBGetAlternateSelectedLightControlColorComponents(CGFloat colors[4]);
 void SBGetAlternateSelectedControlColorComponents(CGFloat colors[4]);
