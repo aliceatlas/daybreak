@@ -205,7 +205,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger count = 2;
 	CGFloat locations[count];
 	CGFloat colors[count * 4];
-	CGFloat storkeColor[4];
+	CGFloat strokeColor[4];
 	CGPoint points[count];
 	NSDictionary *attributes = nil;
 	
@@ -234,8 +234,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	colors[3] = 1.0;
 	colors[4] = colors[5] = colors[6] = 1.0;
 	colors[7] = 1.0;
-	storkeColor[0] = storkeColor[1] = storkeColor[2] = 0.2;
-	storkeColor[3] = 1.0;
+	strokeColor[0] = strokeColor[1] = strokeColor[2] = 0.2;
+	strokeColor[3] = 1.0;
 	locations[0] = 0.0;
 	locations[1] = 1.0;
 	points[0] = CGPointZero;
@@ -252,7 +252,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSaveGState(ctx);
 	CGContextAddPath(ctx, strokePath);
 	CGContextSetLineWidth(ctx, 0.5);
-	CGContextSetRGBStrokeColor(ctx, storkeColor[0], storkeColor[1], storkeColor[2], storkeColor[3]);
+	CGContextSetRGBStrokeColor(ctx, strokeColor[0], strokeColor[1], strokeColor[2], strokeColor[3]);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
 	

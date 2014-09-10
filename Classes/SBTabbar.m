@@ -1028,7 +1028,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger count = 2;
 	CGFloat locations[count];
 	CGFloat colors[count * 4];
-	CGFloat storkeColor[4];
+	CGFloat strokeColor[4];
 	CGPoint points[count];
 	CGRect r = CGRectZero;
 	locations[0] = 0.7;
@@ -1041,10 +1041,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	colors[5] = (keyView ? 135 : 207) / 255.0;
 	colors[6] = (keyView ? 135 : 207) / 255.0;
 	colors[7] = 1.0;
-	storkeColor[0] = 0.3;
-	storkeColor[1] = 0.3;
-	storkeColor[2] = 0.3;
-	storkeColor[3] = 1.0;
+	strokeColor[0] = 0.3;
+	strokeColor[1] = 0.3;
+	strokeColor[2] = 0.3;
+	strokeColor[3] = 1.0;
 	points[0] = CGPointZero;
 	points[1] = CGPointMake(0.0, rect.size.height);
 	CGContextSaveGState(ctx);
@@ -1058,7 +1058,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSaveGState(ctx);
 	CGContextAddPath(ctx, path);
 	CGContextSetLineWidth(ctx, 0.5);
-	CGContextSetRGBStrokeColor(ctx, storkeColor[0], storkeColor[1], storkeColor[2], storkeColor[3]);
+	CGContextSetRGBStrokeColor(ctx, strokeColor[0], strokeColor[1], strokeColor[2], strokeColor[3]);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
 	CGPathRelease(path);
@@ -1069,7 +1069,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGContextSaveGState(ctx);
 	CGContextAddPath(ctx, path);
 	CGContextSetLineWidth(ctx, 0.5);
-	CGContextSetRGBStrokeColor(ctx, storkeColor[0], storkeColor[1], storkeColor[2], storkeColor[3]);
+	CGContextSetRGBStrokeColor(ctx, strokeColor[0], strokeColor[1], strokeColor[2], strokeColor[3]);
 	CGContextStrokePath(ctx);
 	CGContextRestoreGState(ctx);
 	CGPathRelease(path);
