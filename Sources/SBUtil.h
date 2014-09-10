@@ -132,5 +132,4 @@ BOOL SBDebugWriteLayerStructure(CALayer *layer, NSString *path);
 BOOL SBDebugWriteMainMenu(NSString *path);
 
 void SBPerform(id target, SEL action, id object);
-void SBPerformNoArgs(id target, SEL action);
 kern_return_t SBCPUType(cpu_type_t *cpuType);

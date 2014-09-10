@@ -2268,8 +2268,6 @@ void SBPerform(id target, SEL action, id object) {
     [target performSelector:action withObject: object];
 }
 
-void SBPerformNoArgs(id target, SEL action) {
-    [target performSelector:action];
 }
 
 kern_return_t SBCPUType(cpu_type_t *cpuType) {

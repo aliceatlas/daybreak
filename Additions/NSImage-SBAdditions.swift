@@ -30,9 +30,7 @@ extension NSImage {
     convenience init(view: NSView) {
         //!!! change back to optional initializer in Xcode 6.1
         let bitmapImageRep = view.bitmapImageRepForCachingDisplayInRect(view.bounds)!
-        if view.respondsToSelector("layout") {
-            SBPerformNoArgs(view, "layout")
-        }
+        view.layout()
         view.cacheDisplayInRect(view.bounds, toBitmapImageRep: bitmapImageRep)
         self.init(size: view.bounds.size)
         addRepresentation(bitmapImageRep)
