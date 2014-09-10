@@ -40,7 +40,10 @@ extension String {
     }
     
     func isURLString(inout hasScheme: Bool) -> Bool {
-        return (self as NSString).isURLString(&hasScheme)
+        var objcHasScheme: ObjCBool = false
+        let val = (self as NSString).isURLString(&objcHasScheme)
+        hasScheme = Bool(objcHasScheme)
+        return val
     }
     
     var URLEncodedString: String {

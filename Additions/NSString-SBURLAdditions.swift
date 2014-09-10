@@ -1,5 +1,5 @@
 /*
-NSString-SBAdditions.swift
+NSString-SBURLAdditions.swift
 
 Copyright (c) 2014, Alice Atlas
 Copyright (c) 2010, Atsushi Jike
@@ -129,7 +129,7 @@ extension NSString {
 
 // URL additions
 extension NSString {
-    func isURLString(inout hasScheme: Bool) -> Bool {
+    func isURLString(hasScheme: UnsafeMutablePointer<ObjCBool>) -> Bool {
         var r = false
         if (rangeOfString(" ").location == NSNotFound && rangeOfString(".").location != NSNotFound) || hasPrefix("http://localhost") {
             let string = URLEncodedString
@@ -138,11 +138,8 @@ extension NSString {
             let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
             r = range.location == 0
             if r {
-                #if true
-                    hasScheme = (URL.scheme?.utf16Count ?? 0) > 0 ? string.hasPrefix(URL.scheme!) : false
-                #else
-                    hasScheme = URL.absoluteString == string
-                #endif
+                hasScheme.memory = ObjCBool((URL.scheme?.utf16Count ?? 0) > 0 ? string.hasPrefix(URL.scheme!) : false)
+                //hasScheme.memory = ObjCBool(URL.absoluteString == string)
             }
         }
         return r
@@ -170,7 +167,7 @@ extension NSString {
     
     var requestURLString: NSString {
         var stringValue: NSString = self
-        var hasScheme = false
+        var hasScheme: ObjCBool = false
         if stringValue.isURLString(&hasScheme) {
             if !hasScheme {
                 if stringValue.hasPrefix("/") {
