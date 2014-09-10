@@ -26,6 +26,5 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "NSColor-SBAdditions.h"
 #import "NSImage-SBAdditions.h"
 #import "NSMenu-SBAdditions.h"
-#import "NSScrollView-SBAdditions.h"
 #import "NSString-SBURLAdditions.h"
 #import "NSURL-SBAdditions.h"
