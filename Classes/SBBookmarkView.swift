@@ -334,7 +334,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         CGContextSaveGState(ctx)
         CGContextAddPath(ctx, path)
         CGContextClip(ctx)
-        SBDrawGradientInContext(ctx, count, UnsafeMutablePointer<CGFloat>(locations), UnsafeMutablePointer<CGFloat>(colors), UnsafeMutablePointer<CGPoint>(points))
+        SBDrawGradientInContext(ctx, count, locations, colors, points)
         CGContextRestoreGState(ctx)
         
         if image != nil {

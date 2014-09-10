@@ -132,7 +132,7 @@ class SBSavePanelContentView: SBView {
         let strokePath = SBRoundedPathS(rect: CGRectInset(bounds, 0.5, 0.5), 8.0, 0.0, false, true)
         
         // Frame
-        let gradient = NSGradient(colors: colors, atLocations: UnsafeMutablePointer<CGFloat>([0.0, 0.95, 1.0]), colorSpace: NSColorSpace.deviceRGBColorSpace())
+        let gradient = NSGradient(colors: colors, atLocations: [0.0, 0.95, 1.0], colorSpace: NSColorSpace.deviceRGBColorSpace())
         gradient.drawInRect(bounds, angle: 90)
         
         // Stroke
