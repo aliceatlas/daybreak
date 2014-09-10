@@ -139,7 +139,7 @@ class SBSplitView: NSSplitView, SBSidebarDelegate {
     // MARK: Actions
     
     func openSidebar(sender: AnyObject?) {
-        sidebarWidth = SBConstrain(sidebarWidth, min: kSBSidebarMinimumWidth)
+        SBConstrain(&sidebarWidth, min: kSBSidebarMinimumWidth)
         returnSidebarIfNeeded()
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: kSBSidebarVisibilityFlag)
     }
