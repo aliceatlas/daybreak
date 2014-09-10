@@ -161,3 +161,121 @@ func SBConstrain<T: Comparable>(value: T, min minValue: T? = nil, max maxValue: 
     }
     return v
 }
+
+// MARK: Paths
+
+func SBRoundedPathS(rect inRect: CGRect, curve: CGFloat, inner: CGFloat, top: Bool, bottom: Bool) -> NSBezierPath {
+    let path = NSBezierPath()
+    var rect = inRect
+    var point = CGPointZero
+    var cp1 = CGPointZero
+    var cp2 = CGPointZero
+    
+    rect.origin.x += inner / 2
+    rect.origin.y += inner / 2
+    rect.size.width -= inner
+    rect.size.height -= inner
+    
+    if top && bottom {
+        // Left-top to right
+        point.x = rect.origin.x + curve
+        point.y = rect.origin.y
+        path.moveToPoint(point)
+        point.x = rect.origin.x + rect.size.width - curve
+        path.lineToPoint(point)
+        point.x = rect.origin.x + rect.size.width
+        cp1.x = rect.origin.x + rect.size.width
+        cp1.y = rect.origin.y + curve / 2
+        cp2.x = rect.origin.x + rect.size.width - curve / 2
+        cp2.y = rect.origin.y
+        point.y = rect.origin.y + curve
+        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
+        // Right-top to bottom
+        point.y = rect.origin.y + rect.size.height - curve
+        path.lineToPoint(point)
+        point.y = rect.origin.y + rect.size.height
+        cp1.y = rect.origin.y + rect.size.height
+        cp1.x = rect.origin.x + rect.size.width - curve / 2
+        cp2.y = rect.origin.y + rect.size.height - curve / 2
+        cp2.x = rect.origin.x + rect.size.width
+        point.x = rect.origin.x + rect.size.width - curve
+        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
+        // Right-bottom to left
+        point.x = rect.origin.x + curve
+        path.lineToPoint(point)
+        point.x = rect.origin.x
+        cp1.x = rect.origin.x
+        cp1.y = rect.origin.y + rect.size.height - curve / 2;
+        cp2.x = rect.origin.x + curve / 2
+        cp2.y = rect.origin.y + rect.size.height
+        point.y = rect.origin.y + rect.size.height - curve
+        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
+        // Left-bottom to top
+        point.y = rect.origin.y + curve
+        path.lineToPoint(point)
+        point.y = rect.origin.y
+        cp1.y = rect.origin.y
+        cp1.x = rect.origin.x + curve / 2
+        cp2.y = rect.origin.y + curve / 2
+        cp2.x = rect.origin.x
+        point.x = rect.origin.x + curve
+        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
+        // add left edge and close
+        path.closePath()
+    } else if top {
+        point = rect.origin
+        point.x = rect.origin.x + rect.size.width
+        path.moveToPoint(point)
+        
+        point.y = rect.origin.y + rect.size.height - curve
+        path.lineToPoint(point)
+        point.y = rect.origin.y + rect.size.height
+        cp1.y = rect.origin.y + rect.size.height
+        cp1.x = rect.origin.x + rect.size.width - curve / 2
+        cp2.y = rect.origin.y + rect.size.height - curve / 2
+        cp2.x = rect.origin.x + rect.size.width
+        point.x = rect.origin.x + rect.size.width - curve
+        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
+        
+        point.x = rect.origin.x + curve
+        path.lineToPoint(point)
+        point.x = rect.origin.x
+        cp1.x = rect.origin.x
+        cp1.y = rect.origin.y + rect.size.height - curve / 2
+        cp2.x = rect.origin.x + curve / 2
+        cp2.y = rect.origin.y + rect.size.height
+        point.y = rect.origin.y + rect.size.height - curve
+        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
+        point = rect.origin
+        path.lineToPoint(point)
+    } else if bottom {
+        point.x = rect.origin.x
+        point.y = rect.origin.y + rect.size.height
+        path.moveToPoint(point)
+        
+        point.y = rect.origin.y + curve
+        path.lineToPoint(point)
+        point.y = rect.origin.y
+        cp1.y = rect.origin.y
+        cp1.x = rect.origin.x + curve / 2
+        cp2.y = rect.origin.y + curve / 2
+        cp2.x = rect.origin.x
+        point.x = rect.origin.x + curve
+        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
+        point.x = rect.origin.x + rect.size.width - curve
+        path.lineToPoint(point)
+        point.x = rect.origin.x + rect.size.width
+        cp1.x = rect.origin.x + rect.size.width
+        cp1.y = rect.origin.y + curve / 2
+        cp2.x = rect.origin.x + rect.size.width - curve / 2
+        cp2.y = rect.origin.y
+        point.y = rect.origin.y + curve
+        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
+        point.y = rect.origin.y + rect.size.height
+        path.lineToPoint(point)
+    } else {
+        path.appendBezierPathWithRect(rect)
+    }
+    
+    return path
+}
