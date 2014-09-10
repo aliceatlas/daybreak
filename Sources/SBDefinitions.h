@@ -234,7 +234,7 @@ typedef NS_ENUM(NSInteger, SBBookmarkMode) {
 
 // Circle progress styles
 typedef NS_ENUM(NSInteger, SBCircleProgressIndicatorStyle) {
-	SBCircleProgressIndicatorRegulerStyle, 
+	SBCircleProgressIndicatorRegularStyle,
 	SBCircleProgressIndicatorWhiteStyle
 };
 

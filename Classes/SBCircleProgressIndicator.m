@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		CGColorRef aBackgroundColor = nil;
 		CGColorRef aFillColor = nil;
-		style = SBCircleProgressIndicatorRegulerStyle;
+		style = SBCircleProgressIndicatorRegularStyle;
 		progress = 0.0;
 		selected = NO;
 		alwaysDrawing = NO;
