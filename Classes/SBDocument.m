@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDocument.h"
 #import "SBBookmarkListView.h"
-#import "SBSnapshotView.h"
 #import "SBTabbar.h"
 #import "SBURLField.h"
 #import "SBUtil.h"

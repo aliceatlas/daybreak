@@ -105,7 +105,6 @@
 		08DA3D251057D9BE00DD4D3E /* SBBookmarkListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA3D241057D9BE00DD4D3E /* SBBookmarkListItemView.m */; };
 		08F1DEB01156695500712D67 /* Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F1DEAF1156695500712D67 /* Search.png */; };
 		08F914C410352D020026ABD1 /* Source.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F914C310352D020026ABD1 /* Source.png */; };
-		08F914D1103531C50026ABD1 /* SBSnapshotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F914D0103531C50026ABD1 /* SBSnapshotView.m */; };
 		5008E34C19B9DB7500BED173 /* SBBookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5008E34B19B9DB7500BED173 /* SBBookmarkView.swift */; };
 		501D1F321963C9E500AEF4D1 /* SBDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D1F311963C9E500AEF4D1 /* SBDownload.swift */; };
 		501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */; };
@@ -119,6 +118,7 @@
 		502DEBB119C0855A006A68C3 /* NSColor-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */; };
 		502DEBB519C09517006A68C3 /* SBCircleProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBB219C089DC006A68C3 /* SBCircleProgressIndicator.swift */; };
 		502DEBB719C0A64A006A68C3 /* NSString-SBURLAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBB619C0A64A006A68C3 /* NSString-SBURLAdditions.swift */; };
+		502DEBB819C0C8A6006A68C3 /* SBSnapshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5000B70919BF5636003DD2D1 /* SBSnapshotView.swift */; };
 		5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */; };
 		5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66819655AF00053CBF1 /* SBLoadButton.swift */; };
 		505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B6196916EF009219AF /* SBPopUpButton.swift */; };
@@ -323,8 +323,6 @@
 		08DE5E93107D8112006A1B94 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08F1DEAF1156695500712D67 /* Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Search.png; path = Resources/Images/Search.png; sourceTree = "<group>"; };
 		08F914C310352D020026ABD1 /* Source.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Source.png; path = Resources/Images/Source.png; sourceTree = "<group>"; };
-		08F914CF103531C50026ABD1 /* SBSnapshotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSnapshotView.h; path = Classes/SBSnapshotView.h; sourceTree = "<group>"; };
-		08F914D0103531C50026ABD1 /* SBSnapshotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSnapshotView.m; path = Classes/SBSnapshotView.m; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		2A37F4ACFDCFA73011CA2CEA /* SBDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBDocument.m; path = Classes/SBDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -332,6 +330,7 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32DBCF750370BD2300C91783 /* Sunrise_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sunrise_Prefix.pch; path = Sources/Sunrise_Prefix.pch; sourceTree = "<group>"; };
+		5000B70919BF5636003DD2D1 /* SBSnapshotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSnapshotView.swift; path = Classes/SBSnapshotView.swift; sourceTree = "<group>"; };
 		5008E34B19B9DB7500BED173 /* SBBookmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBookmarkView.swift; path = Classes/SBBookmarkView.swift; sourceTree = "<group>"; };
 		501D1F311963C9E500AEF4D1 /* SBDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownload.swift; path = Classes/SBDownload.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = "String-SBAdditions.swift"; path = "Additions/String-SBAdditions.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -672,8 +671,7 @@
 				5008E34B19B9DB7500BED173 /* SBBookmarkView.swift */,
 				506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */,
 				50FEEA9F19BF1AA200962BB9 /* SBReportView.swift */,
-				08F914CF103531C50026ABD1 /* SBSnapshotView.h */,
-				08F914D0103531C50026ABD1 /* SBSnapshotView.m */,
+				5000B70919BF5636003DD2D1 /* SBSnapshotView.swift */,
 				50782C8719AC77E400CB8706 /* SBUpdateView.swift */,
 				50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */,
 				5072657419A0D9530099DA28 /* SBUserAgentView.swift */,
@@ -1011,6 +1009,7 @@
 				50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */,
 				5076918B19B9F47400F64734 /* SBWebView.swift in Sources */,
 				502DEBB519C09517006A68C3 /* SBCircleProgressIndicator.swift in Sources */,
+				502DEBB819C0C8A6006A68C3 /* SBSnapshotView.swift in Sources */,
 				506D2ADA19A23ACD007A8842 /* SBDownloaderView.swift in Sources */,
 				502DEBB119C0855A006A68C3 /* NSColor-SBAdditions.swift in Sources */,
 				50FEEAA419BF307400962BB9 /* SBFixedSplitView.swift in Sources */,
@@ -1034,7 +1033,6 @@
 				50FEEAA619BF345C00962BB9 /* SBSearchbar.swift in Sources */,
 				505E49F6198B7639001F5254 /* SBToolbar.swift in Sources */,
 				088440661032950200AF4E2D /* SBSectionListView.m in Sources */,
-				08F914D1103531C50026ABD1 /* SBSnapshotView.m in Sources */,
 				505E49FB198CA096001F5254 /* SBSectionGroup.swift in Sources */,
 				50B2A99D1960221D00DA1B4A /* SBApplicationDelegate.swift in Sources */,
 				50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */,

@@ -2268,6 +2268,8 @@ void SBPerform(id target, SEL action, id object) {
     [target performSelector:action withObject: object];
 }
 
+void SBPerformWithModes(id target, SEL action, id object, NSArray *modes) {
+    [target performSelector:action withObject:object afterDelay:0 inModes:modes];
 }
 
 kern_return_t SBCPUType(cpu_type_t *cpuType) {
