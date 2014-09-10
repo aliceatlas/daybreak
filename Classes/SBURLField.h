@@ -32,8 +32,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBURLFieldContentView;
 @protocol SBURLFieldDelegate;
 @protocol SBURLFieldDatasource;
-
-@interface SBURLField : SBView <NSTextFieldDelegate>
+@protocol SBAnswersIsFirstResponder;
+@interface SBURLField : SBView <NSTextFieldDelegate, SBAnswersIsFirstResponder>
 {
 	SBButton *backwardButton;
 	SBButton *forwardButton;

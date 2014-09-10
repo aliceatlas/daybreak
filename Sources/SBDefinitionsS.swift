@@ -350,3 +350,8 @@ NSString *kSBDownloadsItems = @"Items";
 // Pasteboard type names
 NSString *SBBookmarkPboardType = @"SBBookmarkPboardType";
 */
+
+@objc
+protocol SBAnswersIsFirstResponder {
+    var isFirstResponder: Bool { get }
+}

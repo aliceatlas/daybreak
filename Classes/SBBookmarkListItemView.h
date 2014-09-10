@@ -26,7 +26,8 @@
 #import "SBView.h"
 
 @protocol SBRenderWindowDelegate;
-@interface SBBookmarkListItemView : SBView <SBRenderWindowDelegate>
+@protocol SBAnswersIsFirstResponder;
+@interface SBBookmarkListItemView : SBView <SBRenderWindowDelegate, SBAnswersIsFirstResponder>
 {
 	NSProgressIndicator *progressIndicator;
 	SBBookmarkMode mode;

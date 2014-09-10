@@ -26,7 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-class SBDownloadView: SBView {
+class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     unowned var download: SBDownload
     private lazy var progressIndicator: SBCircleProgressIndicator? = {
         let progressIndicator = SBCircleProgressIndicator(frame: self.progressRect)

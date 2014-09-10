@@ -149,8 +149,6 @@ func SBCreateBookmarkItemS(title: String?, url: String?, imageData: NSData?, dat
 }
 */
 
-let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
-
 func SBConstrain<T: Comparable>(value: T, min minValue: T? = nil, max maxValue: T? = nil) -> T {
     var v = value
     if minValue != nil {
@@ -279,3 +277,18 @@ func SBRoundedPathS(rect inRect: CGRect, curve: CGFloat, inner: CGFloat, top: Bo
     
     return path
 }
+
+func SBCenteredSquare(inRect: NSRect) -> NSRect {
+    let side = min(inRect.size.width, inRect.size.height)
+    let size = NSMakeSize(side, side)
+    let origin = NSMakePoint(NSMidX(inRect) - side / 2, NSMidY(inRect) - side / 2)
+    return NSRect(origin: origin, size: size)
+}
+
+// MARK: Drawing
+
+let SBAlternateSelectedLightControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.whiteColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+
+let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+
+let SBAlternateSelectedDarkControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.blackColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
