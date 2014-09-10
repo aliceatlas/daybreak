@@ -11,8 +11,6 @@
 #import "SBSectionListView.h"
 #import "SBBookmarkListView.h"
 
-#import "NSColor-SBAdditions.h"
-
 #import "NSSavePanel-SBAdditions.h"
 
 #import "SBTabbar.h"

@@ -383,7 +383,7 @@
 		NSString *title = item[kSBBookmarkTitle];
 		NSString *urlString = item[kSBBookmarkURL];
 		NSString *labelColorName = item[kSBBookmarkLabelName];
-		NSColor *labelColor = labelColorName ? [NSColor colorWithLabelColorName:labelColorName] : nil;
+		NSColor *labelColor = labelColorName ? [[NSColor alloc] initWithLabelColorName:labelColorName] : nil;
 		NSPoint padding = self.padding;
 		NSMutableDictionary *attributes = nil;
 		NSSize size = NSZeroSize;

@@ -77,7 +77,6 @@
 		089F948510342E8000C48997 /* RightButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 089F948410342E8000C48997 /* RightButton.png */; };
 		089FE2E90FEBED6C000D2436 /* SBCircleProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 089FE2E80FEBED6C000D2436 /* SBCircleProgressIndicator.m */; };
 		08A004CC0FEC955E00AEB6DD /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A004CB0FEC955E00AEB6DD /* WebKit.framework */; };
-		08A73C391052C88800EBD683 /* NSColor-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A73C381052C88800EBD683 /* NSColor-SBAdditions.m */; };
 		08A9D837102477DA003C87E4 /* Bug.png in Resources */ = {isa = PBXBuildFile; fileRef = 08A9D836102477DA003C87E4 /* Bug.png */; };
 		08AA157C1029C98A000F2568 /* Bookmarks-List.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AA157B1029C98A000F2568 /* Bookmarks-List.png */; };
 		08AEC4C30FF73C49005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEC4B30FF73C48005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png */; };
@@ -119,6 +118,7 @@
 		502DEBAB19C06876006A68C3 /* NSMenu-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBAA19C06876006A68C3 /* NSMenu-SBAdditions.swift */; };
 		502DEBAD19C07197006A68C3 /* NSImage-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBAC19C07197006A68C3 /* NSImage-SBAdditions.swift */; };
 		502DEBAF19C07EE1006A68C3 /* NSArray-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBAE19C07EE1006A68C3 /* NSArray-SBAdditions.swift */; };
+		502DEBB119C0855A006A68C3 /* NSColor-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */; };
 		5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */; };
 		5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66819655AF00053CBF1 /* SBLoadButton.swift */; };
 		505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B6196916EF009219AF /* SBPopUpButton.swift */; };
@@ -289,8 +289,6 @@
 		089FE2E70FEBED6C000D2436 /* SBCircleProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBCircleProgressIndicator.h; path = Classes/SBCircleProgressIndicator.h; sourceTree = "<group>"; };
 		089FE2E80FEBED6C000D2436 /* SBCircleProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBCircleProgressIndicator.m; path = Classes/SBCircleProgressIndicator.m; sourceTree = "<group>"; };
 		08A004CB0FEC955E00AEB6DD /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		08A73C371052C88800EBD683 /* NSColor-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor-SBAdditions.h"; path = "Additions/NSColor-SBAdditions.h"; sourceTree = "<group>"; };
-		08A73C381052C88800EBD683 /* NSColor-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSColor-SBAdditions.m"; path = "Additions/NSColor-SBAdditions.m"; sourceTree = "<group>"; };
 		08A9D836102477DA003C87E4 /* Bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Bug.png; path = Resources/Images/Bug.png; sourceTree = "<group>"; };
 		08AA157B1029C98A000F2568 /* Bookmarks-List.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Bookmarks-List.png"; path = "Resources/Images/Bookmarks-List.png"; sourceTree = "<group>"; };
 		08AEC4B30FF73C48005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerSlot-Vertical-Top.png"; path = "Resources/Images/BLKGUI_ScrollerSlot-Vertical-Top.png"; sourceTree = "<group>"; };
@@ -348,6 +346,7 @@
 		502DEBAA19C06876006A68C3 /* NSMenu-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSMenu-SBAdditions.swift"; path = "Additions/NSMenu-SBAdditions.swift"; sourceTree = "<group>"; };
 		502DEBAC19C07197006A68C3 /* NSImage-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSImage-SBAdditions.swift"; path = "Additions/NSImage-SBAdditions.swift"; sourceTree = "<group>"; };
 		502DEBAE19C07EE1006A68C3 /* NSArray-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSArray-SBAdditions.swift"; path = "Additions/NSArray-SBAdditions.swift"; sourceTree = "<group>"; };
+		502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSColor-SBAdditions.swift"; path = "Additions/NSColor-SBAdditions.swift"; sourceTree = "<group>"; };
 		5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBRenderWindow.swift; path = Classes/SBRenderWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5044E66719654CB20053CBF1 /* SBAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SBAdditions.h; path = Additions/SBAdditions.h; sourceTree = "<group>"; };
 		5044E66819655AF00053CBF1 /* SBLoadButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLoadButton.swift; path = Classes/SBLoadButton.swift; sourceTree = "<group>"; };
@@ -553,8 +552,7 @@
 				5044E66719654CB20053CBF1 /* SBAdditions.h */,
 				502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */,
 				502DEBAE19C07EE1006A68C3 /* NSArray-SBAdditions.swift */,
-				08A73C371052C88800EBD683 /* NSColor-SBAdditions.h */,
-				08A73C381052C88800EBD683 /* NSColor-SBAdditions.m */,
+				502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */,
 				502DEBAC19C07197006A68C3 /* NSImage-SBAdditions.swift */,
 				502DEBAA19C06876006A68C3 /* NSMenu-SBAdditions.swift */,
 				506E44B2198E654800178D36 /* NSSavePanel-SBAdditions.h */,
@@ -1017,6 +1015,7 @@
 				50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */,
 				5076918B19B9F47400F64734 /* SBWebView.swift in Sources */,
 				506D2ADA19A23ACD007A8842 /* SBDownloaderView.swift in Sources */,
+				502DEBB119C0855A006A68C3 /* NSColor-SBAdditions.swift in Sources */,
 				50FEEAA419BF307400962BB9 /* SBFixedSplitView.swift in Sources */,
 				505E49F9198C91A4001F5254 /* SBDrawer.swift in Sources */,
 				50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */,
@@ -1044,7 +1043,6 @@
 				50B2A99D1960221D00DA1B4A /* SBApplicationDelegate.swift in Sources */,
 				50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */,
 				5008E34C19B9DB7500BED173 /* SBBookmarkView.swift in Sources */,
-				08A73C391052C88800EBD683 /* NSColor-SBAdditions.m in Sources */,
 				50ACCE011965380E00CE593E /* SBPreferencesWindowController.swift in Sources */,
 				505E49F4198A2645001F5254 /* SBButton.swift in Sources */,
 				5072657519A0D9530099DA28 /* SBUserAgentView.swift in Sources */,
