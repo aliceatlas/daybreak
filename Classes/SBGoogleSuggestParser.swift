@@ -28,13 +28,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-let kSBGSToplevelTagName = "toplevel"
-let kSBGSCompleteSuggestionTagName = "CompleteSuggestion"
-let kSBGSSuggestionTagName = "suggestion"
-let kSBGSNum_queriesTagName = "num_queries"
-let kSBGSSuggestionAttributeDataArgumentName = "data"
-
 class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
+    private let kSBGSToplevelTagName = "toplevel"
+    private let kSBGSCompleteSuggestionTagName = "CompleteSuggestion"
+    private let kSBGSSuggestionTagName = "suggestion"
+    private let kSBGSNum_queriesTagName = "num_queries"
+    private let kSBGSSuggestionAttributeDataArgumentName = "data"
+    
     var items: [NSMutableDictionary] = []
     private var inToplevel = false
     private var inCompleteSuggestion = false

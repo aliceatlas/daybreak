@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
-    let kSBLocalizationAvailableSubversionAccess = 0
+    private let kSBLocalizationAvailableSubversionAccess = 0
     
     var contentView: NSView { return self.window.contentView as NSView }
     

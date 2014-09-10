@@ -26,12 +26,12 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-let kSBMinFrameSizeWidth: CGFloat = 600
-let kSBMaxFrameSizeWidth: CGFloat = 900
-let kSBMinFrameSizeHeight: CGFloat = 480
-let kSBMaxFrameSizeHeight: CGFloat = 720
-
 class SBReportView: SBView, NSTextFieldDelegate {
+    private let kSBMinFrameSizeWidth: CGFloat = 600
+    private let kSBMaxFrameSizeWidth: CGFloat = 900
+    private let kSBMinFrameSizeHeight: CGFloat = 480
+    private let kSBMaxFrameSizeHeight: CGFloat = 720
+    
     private lazy var iconImageView: NSImageView = {
         let iconImageView = NSImageView(frame: self.iconRect)
         var image: NSImage? = NSImage(named: "Bug")

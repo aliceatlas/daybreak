@@ -34,10 +34,10 @@ protocol SBDocumentWindowDelegate: NSWindowDelegate {
 }
 
 class SBDocumentWindow: NSWindow {
-    let kSBFlipAnimationDuration: CGFloat = 0.8
-    let kSBFlipAnimationRectMargin: CGFloat = 100
-    let kSBBackWindowFrameWidth: CGFloat = 800.0
-    let kSBBackWindowFrameHeight: CGFloat = 600.0
+    private let kSBFlipAnimationDuration: CGFloat = 0.8
+    private let kSBFlipAnimationRectMargin: CGFloat = 100
+    private let kSBBackWindowFrameWidth: CGFloat = 800.0
+    private let kSBBackWindowFrameHeight: CGFloat = 600.0
 
 	var backWindow: NSWindow?
 	var keyView = false

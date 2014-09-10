@@ -27,8 +27,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource {
-    let kSBMinFrameSizeWidth: CGFloat = 480
-    let kSBMinFrameSizeHeight: CGFloat = 320
+    private let kSBMinFrameSizeWidth: CGFloat = 480
+    private let kSBMinFrameSizeHeight: CGFloat = 320
     
 	private lazy var iconImageView: NSImageView = {
         let image: NSImage? = NSImage(named: "History")

@@ -27,10 +27,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBUpdateView: SBView, SBDownloaderDelegate {
-    let kSBMinFrameSizeWidth: CGFloat = 600
-    let kSBMaxFrameSizeWidth: CGFloat = 900
-    let kSBMinFrameSizeHeight: CGFloat = 480
-    let kSBMaxFrameSizeHeight: CGFloat = 720
+    private let kSBMinFrameSizeWidth: CGFloat = 600
+    private let kSBMaxFrameSizeWidth: CGFloat = 900
+    private let kSBMinFrameSizeHeight: CGFloat = 480
+    private let kSBMaxFrameSizeHeight: CGFloat = 720
     
 	private lazy var imageView: NSImageView = {
         let imageView = NSImageView(frame: self.imageRect)
