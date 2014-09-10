@@ -33,7 +33,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <WebKit/WebKit.h>
-#import "SBAdditions.h"
 
 // Flags for Debug
 #define kSBFlagCreateTabItemWhenLaunched 1

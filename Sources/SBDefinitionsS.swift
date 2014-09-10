@@ -279,16 +279,16 @@ let SBUserAgentNames = [
     "Other"
 ]
 
-/*
 // Web schemes
-NSInteger SBCountOfSchemes = 3;
-NSString *SBSchemes[] = {
-@"http://", 
-@"https://", 
-@"file://", 
-@"feed://"
-};
+let SBCountOfSchemes = 3
+let SBSchemes = [
+    "http://",
+    "https://",
+    "file://",
+    "feed://"
+]
 
+/*
 // Tags
 #define SBApplicationMenuTag 0
 #define SBFileMenuTag 1

@@ -301,8 +301,8 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let title = NSLocalizedString("Are you sure you want to empty the cache?", comment: "")
         var message = NSLocalizedString("Sunrise saves the contents of webpages you open, and stores them in a cache, so the pages load faster when you visit them again.", comment: "")
         if cache.diskCapacity > 0 && cache.memoryCapacity > 0 {
-            let diskCapacityDescription = bytesString(cache.currentDiskUsage, cache.diskCapacity)
-            let memoryCapacityDescription = bytesString(cache.currentMemoryUsage, cache.memoryCapacity)
+            let diskCapacityDescription = bytesString(Int64(cache.currentDiskUsage), Int64(cache.diskCapacity))
+            let memoryCapacityDescription = bytesString(Int64(cache.currentMemoryUsage), Int64(cache.memoryCapacity))
             let onDisk = NSLocalizedString("On disk", comment: "")
             let inMemory = NSLocalizedString("In memory", comment: "")
             message = message + "\n\n\(onDisk): \(diskCapacityDescription)\n\(inMemory): \(memoryCapacityDescription)"

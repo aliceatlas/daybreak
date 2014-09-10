@@ -1052,7 +1052,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	// Change URL field values
 	urlField.enabledBackward = tabViewItem.canBackward;
 	urlField.enabledForward = tabViewItem.canForward;
-	urlField.stringValue = [tabViewItem.mainFrameURLString URLDencodedString];
+    urlField.stringValue = tabViewItem.mainFrameURLString.URLDecodedString;
 	urlField.image = tabViewItem.tabbarItem.image;
 	// Change state of the load button
 	loadButton.on = tabViewItem.webView.loading;
@@ -1332,7 +1332,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)tabView:(SBTabView *)aTabView selectedItemDidStartLoading:(SBTabViewItem *)aTabViewItem
 {
 	if (!urlField.isFirstResponder || urlField.stringValue.length == 0)
-		urlField.stringValue = [aTabViewItem.mainFrameURLString URLDencodedString];
+        urlField.stringValue = aTabViewItem.mainFrameURLString.URLDecodedString;
 	[self updateMenuWithTag:SBViewMenuTag];
 	[self updateResourcesViewIfNeeded];
 	loadButton.on = YES;
@@ -1344,7 +1344,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	urlField.enabledBackward = aTabViewItem.canBackward;
 	urlField.enabledForward = aTabViewItem.canForward;
 	if (!urlField.isFirstResponder || urlField.stringValue.length == 0)
-		urlField.stringValue = aTabViewItem.mainFrameURLString.URLDencodedString;
+		urlField.stringValue = aTabViewItem.mainFrameURLString.URLDecodedString;
 //	if (!urlField.isFirstResponder && webView)
 //	{
 //		[self.window makeFirstResponder:webView];
@@ -1359,7 +1359,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	urlField.enabledBackward = aTabViewItem.canBackward;
 	urlField.enabledForward = aTabViewItem.canForward;
     if (!urlField.isFirstResponder || urlField.stringValue.length == 0)
-		urlField.stringValue = aTabViewItem.mainFrameURLString.URLDencodedString;
+		urlField.stringValue = aTabViewItem.mainFrameURLString.URLDecodedString;
 	[self updateMenuWithTag:SBViewMenuTag];
 	[self updateResourcesViewIfNeeded];
 	loadButton.on = NO;
@@ -1381,7 +1381,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)tabView:(SBTabView *)aTabView selectedItemDidReceiveServerRedirect:(SBTabViewItem *)aTabViewItem
 {
 	if (!urlField.isFirstResponder || urlField.stringValue.length == 0)
-		urlField.stringValue = aTabViewItem.mainFrameURLString.URLDencodedString;
+		urlField.stringValue = aTabViewItem.mainFrameURLString.URLDecodedString;
 }
 
 - (void)tabView:(SBTabView *)aTabView shouldAddNewItemForURL:(NSURL *)url selection:(BOOL)selection

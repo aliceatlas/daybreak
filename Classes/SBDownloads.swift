@@ -124,7 +124,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     func download(download: NSURLDownload, didReceiveResponse response: NSURLResponse) {
         if let item = items.first({ $0.download === download }) {
             item.expectedLength = SBConstrain(Int(response.expectedContentLength), min: 0)
-            item.bytes = bytesString(item.receivedLength, item.expectedLength)
+            item.bytes = bytesString(Int64(item.receivedLength), Int64(item.expectedLength))
             // Update views
             executeDidUpdateItem(item)
         }
@@ -153,7 +153,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
             if item.expectedLength > 0 {
                 item.receivedLength += length
             }
-            item.bytes = bytesString(item.receivedLength, item.expectedLength)
+            item.bytes = bytesString(Int64(item.receivedLength), Int64(item.expectedLength))
             // Update views
             executeDidUpdateItem(item)
         }

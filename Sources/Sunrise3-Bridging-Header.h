@@ -6,8 +6,6 @@
 #import "SBDocument.h"
 #import "SBUtil.h"
 
-#import "SBAdditions.h"
-
 #import "SBSectionListView.h"
 #import "SBBookmarkListView.h"
 

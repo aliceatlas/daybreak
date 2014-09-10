@@ -85,7 +85,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     var URLString: String? {
         get { return URL?.absoluteString }
         set(URLString) {
-            URL = URLString != nil ? NSURL(string: URLString!.URLEncodedString()) : nil
+            URL = URLString != nil ? NSURL(string: URLString!.URLEncodedString) : nil
         }
     }
     var selected: Bool {
@@ -568,9 +568,10 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     case NSURLErrorFileDoesNotExist:
                         title = NSLocalizedString("File Does Not Exist", comment: "")
                     case NSURLErrorFileIsDirectory:
-                        if let url = NSURL.URLWithString(urlString) {
+                        let url: NSURL? = NSURL(string: urlString)
+                        if url != nil {
                             // Try to opening with other application
-                            if !NSWorkspace.sharedWorkspace().openURL(url) {
+                            if !NSWorkspace.sharedWorkspace().openURL(url!) {
                                 title = NSLocalizedString("File is Directory", comment: "")
                             }
                         }

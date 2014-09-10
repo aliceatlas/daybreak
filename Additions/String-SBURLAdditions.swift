@@ -36,101 +36,37 @@ let SBBytesUnitString = "bytes"
 
 extension String {
     var requestURLString: String {
-        var stringValue = self
-        var hasScheme = false
-        if stringValue.isURLString(&hasScheme) {
-            if !hasScheme {
-                if stringValue.hasPrefix("/") {
-                    stringValue = "file://" + stringValue
-                } else {
-                    stringValue = "http://" + stringValue
-                }
-            }
-            stringValue = stringValue.URLEncodedString
-        } else {
-            stringValue = searchURLString
-        }
-        return stringValue
+        return (self as NSString).requestURLString
     }
     
     func isURLString(inout hasScheme: Bool) -> Bool {
-        var r = false
-        if (find(self, " ") == nil && find(self, ".") == nil) || hasPrefix("http://localhost") {
-            let string = URLEncodedString
-            let attributedString = NSAttributedString(string: string)
-            var range = NSMakeRange(0, 0)
-            let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
-            r = range.location == 0
-            if r {
-                hasScheme = (URL.scheme != nil && !URL.scheme!.isEmpty) ? string.hasPrefix(URL.scheme!) : false
-                //hasScheme = URL.absoluteString == string;
-            }
-        }
-        return r
+        return (self as NSString).isURLString(&hasScheme)
     }
     
     var URLEncodedString: String {
-        let requestURL = NSURL._web_URLWithUserTypedString(self)
-        return requestURL.absoluteString!
+        return (self as NSString).URLEncodedString
     }
 
     var searchURLString: String {
-        var stringValue = self
-        
-        let info = NSBundle.mainBundle().localizedInfoDictionary
-        if let gSearchFormat = info["SBGSearchFormat"] as? NSString {
-            let str = NSString(format: gSearchFormat, stringValue)
-            stringValue = str.URLEncodedString()
-        }
-        return stringValue
+        return (self as NSString).searchURLString
     }
 }
 
-func bytesStringForLength(length: Int, unit hasUnit: Bool = true) -> String {
-    var string: String
-    var value: Float
-	let unitString = unitStringForLength(length)
-    if length > (1024 * 1024 * 1024) { // giga
-		value = length > 0 ? (Float(length) / (1024 * 1024 * 1024)) : 0
-        if value == Float(Int(value)) {
-            string = "\(Int(value))"
-            if hasUnit { string += " \(unitString)" }
-		} else {
-            string = NSString(format: "%.2f", value)
-            if hasUnit { string += NSString(format: " %@", unitString) }
-		}
-    } else if length > (1024 * 1024) { // mega
-		value = length > 0 ? (Float(length) / (1024 * 1024)) : 0
-		if value == Float(Int(value)) {
-            string = "\(Int(value))"
-            if hasUnit { string += " \(unitString)" }
-		} else {
-            string = NSString(format: "%.1f", value)
-            if hasUnit { string += NSString(format: " %@", unitString) }
-		}
-    } else if length > 1024 { // kilo
-		value = length > 0 ? (Float(length) / 1024) : 0
-        string = "\(Int(value))"
-        if hasUnit { string += NSString(format: " %@", unitString) }
-	} else {
-        string = "\(length)"
-        if hasUnit { string += NSString(format: " %@", unitString) }
-	}
-	return string
+func bytesStringForLength(length: Int64, unit hasUnit: Bool = true) -> String {
+    let formatter = NSByteCountFormatter()
+    formatter.countStyle = .Memory
+    formatter.includesUnit = hasUnit
+    return formatter.stringFromByteCount(length)
 }
 
-func unitStringForLength(length: Int) -> String {
-    if length > (1024 * 1024 * 1024) { // giga
-		return SBGigaByteUnitString
-    } else if length > (1024 * 1024) { // mega
-		return  SBMegaByteUnitString
-    } else if (length > 1024) { // kilo
-		return SBKiroByteUnitString
-	}
-    return NSLocalizedString((length <= 1) ? SBByteUnitString : SBBytesUnitString, comment: "")
+func unitStringForLength(length: Int64) -> String {
+    let formatter = NSByteCountFormatter()
+    formatter.countStyle = .Memory
+    formatter.includesCount = false
+    return formatter.stringFromByteCount(length)
 }
 
-func bytesString(receivedLegnth: Int, expectedLength: Int) -> String {
+func bytesString(receivedLegnth: Int64, expectedLength: Int64) -> String {
 	let expected = bytesStringForLength(expectedLength)
     let sameUnit = unitStringForLength(receivedLegnth) == unitStringForLength(expectedLength)
     let received = bytesStringForLength(receivedLegnth, unit: !sameUnit)
