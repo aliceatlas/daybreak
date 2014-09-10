@@ -464,7 +464,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect defaultFrame = SBDefaultDocumentWindowRect();
 	NSRect r = savedFrameString ? NSRectFromString(savedFrameString) : defaultFrame;
 	[self destructWindow];
-	SBDocumentWindow *newWindow = [[SBDocumentWindow alloc] initWithFrame:r delegate:self tabbarVisivility:YES];
+	SBDocumentWindow *newWindow = [[SBDocumentWindow alloc] initWithFrame:r delegate:self tabbarVisibility:YES];
 	if (newWindow)
 	{
 		NSButton *button = nil;
@@ -585,15 +585,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[self destructTabbar];
 	if (window)
 	{
-		BOOL tabbarVisivility = NO;
+		BOOL tabbarVisibility = NO;
 		tabbar = [[SBTabbar alloc] init];
 		tabbar.toolbarVisible = toolbar.visible;
 		tabbar.delegate = self;
         window.tabbar = tabbar;
 		[tabbar constructAddButton];	// Create add button after resizing
 		// Set visibility
-		tabbarVisivility = [[NSUserDefaults standardUserDefaults] boolForKey:kSBTabbarVisibilityFlag];
-		if (!tabbarVisivility)
+		tabbarVisibility = [[NSUserDefaults standardUserDefaults] boolForKey:kSBTabbarVisibilityFlag];
+		if (!tabbarVisibility)
 			[self hideTabbar];
 	}
 }
@@ -1791,14 +1791,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	else if (selector == @selector(toggleAllbars:))
 	{
 		BOOL toolbarVisibility = window.toolbar.visible;
-		BOOL tabbarVisibility = window.tabbarVisivility;
+		BOOL tabbarVisibility = window.tabbarVisibility;
 		BOOL shouldShow = !(toolbarVisibility && tabbarVisibility);
         menuItem.title = shouldShow ? NSLocalizedString(@"Show All Bars", nil) : NSLocalizedString(@"Hide All Bars", nil);
 		r = !window.coverWindow;
 	}
 	else if (selector == @selector(toggleTabbar:))
 	{
-        menuItem.title = window.tabbarVisivility ? NSLocalizedString(@"Hide Tabbar", nil) : NSLocalizedString(@"Show Tabbar", nil);
+        menuItem.title = window.tabbarVisibility ? NSLocalizedString(@"Hide Tabbar", nil) : NSLocalizedString(@"Show Tabbar", nil);
 		r = !window.coverWindow;
 	}
 	else if (selector == @selector(sidebarPositionToLeft:))
@@ -2318,7 +2318,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)createNewTab:(id)sender
 {
 	NSString *homepage = [SBPreferences.sharedPreferences homepage:NO];
-	if (!self.window.tabbarVisivility && tabbar.items.count > 0)
+	if (!self.window.tabbarVisibility && tabbar.items.count > 0)
 		[self showTabbar];
 	[self constructNewTabWithString:homepage selection:YES];
 }
@@ -2429,7 +2429,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)toggleAllbars:(id)sender
 {
 	BOOL toolbarVisibility = window.toolbar.visible;
-	BOOL tabbarVisibility = window.tabbarVisivility;
+	BOOL tabbarVisibility = window.tabbarVisibility;
 	BOOL shouldShow = !(toolbarVisibility && tabbarVisibility);
 	if (shouldShow)
 	{
@@ -2443,8 +2443,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)toggleTabbar:(NSMenuItem *)sender
 {
 	[self toggleTabbar];
-    sender.title = self.window.tabbarVisivility ? NSLocalizedString(@"Hide Tabbar", nil) : NSLocalizedString(@"Show Tabbar", nil);
-	[[NSUserDefaults standardUserDefaults] setBool:self.window.tabbarVisivility forKey:kSBTabbarVisibilityFlag];
+    sender.title = self.window.tabbarVisibility ? NSLocalizedString(@"Hide Tabbar", nil) : NSLocalizedString(@"Show Tabbar", nil);
+	[[NSUserDefaults standardUserDefaults] setBool:self.window.tabbarVisibility forKey:kSBTabbarVisibilityFlag];
 }
 
 - (void)sidebarPositionToLeft:(id)sender
@@ -2988,7 +2988,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)toggleAllbarsAndSidebar
 {
 	BOOL visibleToolbar = window.toolbar.visible;
-	BOOL visibleTabbar = window.tabbarVisivility;
+	BOOL visibleTabbar = window.tabbarVisibility;
 	BOOL visibleSidebar = splitView.visibleSidebar && sidebar;
 	if (visibleToolbar && visibleTabbar && visibleSidebar)
 	{
@@ -3025,7 +3025,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)toggleTabbar
 {
-	if (self.window.tabbarVisivility)
+	if (self.window.tabbarVisibility)
 	{
 		[self hideTabbar];
 	}

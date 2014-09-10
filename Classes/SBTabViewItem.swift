@@ -708,11 +708,11 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         toolbar.autosavesConfiguration = false
         toolbar.visible = visible
         if visible {
-            if !window.tabbarVisivility {
+            if !window.tabbarVisibility {
                 window.showTabbar()
             }
         } else {
-            if !window.tabbarVisivility {
+            if !window.tabbarVisibility {
                 window.hideTabbar()
             }
         }

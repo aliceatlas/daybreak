@@ -57,7 +57,7 @@ class SBDocumentWindow: NSWindow {
             }
         }
     }
-	var tabbarVisivility: Bool = false
+	var tabbarVisibility: Bool = false
     var sbToolbar: SBToolbar? {
         get { return super.toolbar as? SBToolbar }
         set(sbToolbar) { super.toolbar = sbToolbar }
@@ -83,7 +83,7 @@ class SBDocumentWindow: NSWindow {
         }
     }
 
-    init(frame: NSRect, delegate: SBDocumentWindowDelegate?, tabbarVisivility inTabbarVisivility: Bool) {
+    init(frame: NSRect, delegate: SBDocumentWindowDelegate?, tabbarVisibility inTabbarVisibility: Bool) {
         let styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask
         super.init(contentRect: frame, styleMask: styleMask, backing: .Buffered, defer: true)
         
@@ -96,7 +96,7 @@ class SBDocumentWindow: NSWindow {
         acceptsMouseMovedEvents = true
         collectionBehavior = .FullScreenPrimary | .FullScreenAuxiliary
         animationBehavior = .None
-        tabbarVisivility = inTabbarVisivility
+        tabbarVisibility = inTabbarVisibility
     }
     
     required init(coder: NSCoder) {
@@ -133,14 +133,14 @@ class SBDocumentWindow: NSWindow {
         var r = NSZeroRect
         r.size.width = innerRect.size.width
         r.size.height = tabbarHeight
-        r.origin.y = tabbarVisivility ? innerRect.size.height - r.size.height : innerRect.size.height
+        r.origin.y = tabbarVisibility ? innerRect.size.height - r.size.height : innerRect.size.height
         return r
     }
     
     var splitViewRect: NSRect {
         var r = NSZeroRect
         r.size.width = innerRect.size.width
-        r.size.height = tabbarVisivility ? innerRect.size.height - tabbarHeight : innerRect.size.height
+        r.size.height = tabbarVisibility ? innerRect.size.height - tabbarHeight : innerRect.size.height
         return r
     }
     
@@ -276,16 +276,16 @@ class SBDocumentWindow: NSWindow {
     }
     
     func hideTabbar() {
-        if tabbarVisivility {
-            tabbarVisivility = false
+        if tabbarVisibility {
+            tabbarVisibility = false
             tabbar!.frame = tabbarRect
             splitView!.frame = splitViewRect
         }
     }
 
     func showTabbar() {
-        if !tabbarVisivility {
-            tabbarVisivility = true
+        if !tabbarVisibility {
+            tabbarVisibility = true
             tabbar!.frame = tabbarRect
             splitView!.frame = splitViewRect
         }
