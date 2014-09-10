@@ -159,5 +159,5 @@ func SBConstrain<T: Comparable>(value: T, min minValue: T? = nil, max maxValue: 
     if maxValue != nil {
         v = min(v, maxValue!)
     }
-    return r
+    return v
 }
