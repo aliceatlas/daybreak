@@ -115,39 +115,29 @@ class SBSavePanelContentView: SBView {
     // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
-        let ctx = SBCurrentGraphicsPort
-        let r = NSRectToCGRect(bounds)
-        let count: UInt = 3
-        let locations: [CGFloat] = [0.0, 0.95, 1.0]
-        let extended = r.size.height < 350.0
-        let colors: [CGFloat] = (extended ? [0.6,  0.6,  0.6,  1.0,
-                                             0.9,  0.9,  0.9,  1.0,
-                                             0.75, 0.75, 0.75, 1.0]
-                                          : [0.7,  0.7,  0.7,  1.0,
-                                             0.75, 0.75, 0.75, 1.0,
-                                             0.6,  0.6,  0.6,  1.0])
-        let strokeColor: [CGFloat] = [0.2, 0.2, 0.2, 1.0]
-        let points: [CGPoint] = [CGPointZero, CGPointMake(0.0, r.size.height * 0.95), CGPointMake(0.0, r.size.height)]
+        let extended = bounds.size.height < 350.0
+        let colors = (extended ? [NSColor(deviceWhite: 0.6, alpha: 1.0),
+                                  NSColor(deviceWhite: 0.9, alpha: 1.0),
+                                  NSColor(deviceWhite: 0.75, alpha: 1.0)]
+                               : [NSColor(deviceWhite: 0.7, alpha: 1.0),
+                                  NSColor(deviceWhite: 0.75, alpha: 1.0),
+                                  NSColor(deviceWhite: 0.6, alpha: 1.0)])
+        let strokeColor = NSColor(deviceWhite: 0.2, alpha: 1.0)
         
         super.drawRect(rect)
         
         // Paths
         // Gray scales
-        let path = SBRoundedPath(CGRectInset(r, 0.0, 0.0), 8.0, 0.0, false, true)
-        let strokePath = SBRoundedPath(CGRectInset(r, 0.5, 0.5), 8.0, 0.0, false, true)
+        let path = SBRoundedPathS(rect: CGRectInset(bounds, 0.0, 0.0), 8.0, 0.0, false, true)
+        let strokePath = SBRoundedPathS(rect: CGRectInset(bounds, 0.5, 0.5), 8.0, 0.0, false, true)
+        
         // Frame
-        CGContextSaveGState(ctx)
-        CGContextAddPath(ctx, path)
-        CGContextClip(ctx)
-        SBDrawGradientInContext(ctx, count, UnsafeMutablePointer<CGFloat>(locations), UnsafeMutablePointer<CGFloat>(colors), UnsafeMutablePointer<CGPoint>(points))
-        CGContextRestoreGState(ctx)
+        let gradient = NSGradient(colors: colors, atLocations: UnsafeMutablePointer<CGFloat>([0.0, 0.95, 1.0]), colorSpace: NSColorSpace.deviceRGBColorSpace())
+        gradient.drawInRect(bounds, angle: 90)
         
         // Stroke
-        CGContextSaveGState(ctx)
-        CGContextAddPath(ctx, strokePath)
-        CGContextSetLineWidth(ctx, 0.5)
-        CGContextSetRGBStrokeColor(ctx, strokeColor[0], strokeColor[1], strokeColor[2], strokeColor[3])
-        CGContextStrokePath(ctx)
-        CGContextRestoreGState(ctx)
+        strokeColor.set()
+        strokePath.lineWidth = 0.5
+        strokePath.stroke()
     }
 }
