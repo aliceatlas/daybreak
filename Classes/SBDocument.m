@@ -2068,7 +2068,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                                  kSBType: @(kSBURLFieldItemNoneType)}
                                        atIndex:0];
 			}
-			urlField.items = [NSMutableArray mutableArrayWithArrays:@[urlField.gsItems, urlField.bmItems, urlField.hItems]];
+			urlField.items = [[NSMutableArray alloc] initWithArrays:@[urlField.gsItems, urlField.bmItems, urlField.hItems]];
 		}
 		else {
 			urlField.gsItems = nil;
@@ -2171,7 +2171,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 										kSBTitle: NSLocalizedString(@"History", nil), 
 										kSBType: @(kSBURLFieldItemNoneType)} atIndex:0];
 	}
-	urlField.items = [NSMutableArray mutableArrayWithArrays:@[urlField.bmItems, urlField.hItems]];
+	urlField.items = [[NSMutableArray alloc] initWithArrays:@[urlField.bmItems, urlField.hItems]];
 }
 
 #pragma mark Actions
