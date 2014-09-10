@@ -190,22 +190,14 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     
     // MARK: Drawing
     
-   override func drawRect(rect: NSRect) {
-        let ctx = SBCurrentGraphicsPort
-        let r = NSRectToCGRect(bounds)
-        let count: UInt = 2
-        let locations: [CGFloat] = [0.0, 1.0]
-        var colors: [CGFloat]
+    override func drawRect(rect: NSRect) {
+        var colors: [NSColor]!
         if keyView {
-            colors = [0.35, 0.35, 0.35, 1.0, 0.1, 0.1, 0.1, 1.0]
+            colors = [NSColor(deviceWhite: 0.35, alpha: 1.0), NSColor(deviceWhite: 0.1, alpha: 1.0)]
         } else {
-            colors = [0.75, 0.75, 0.75, 1.0, 0.6, 0.6, 0.6, 1.0]
+            colors = [NSColor(deviceWhite: 0.75, alpha: 1.0), NSColor(deviceWhite: 0.6, alpha: 1.0)]
         }
-        let points = [CGPointZero, CGPointMake(0.0, r.size.height)]
-        CGContextSaveGState(ctx)
-        CGContextAddRect(ctx, r)
-        CGContextClip(ctx)
-        SBDrawGradientInContext(ctx, count, UnsafeMutablePointer<CGFloat>(locations), UnsafeMutablePointer<CGFloat>(colors), UnsafeMutablePointer<CGPoint>(points))
-        CGContextRestoreGState(ctx)
+        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+        gradient.drawInRect(bounds, angle: 90)
     }
 }
