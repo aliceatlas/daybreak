@@ -23,7 +23,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "NSArray-SBAdditions.h"
-#import "NSBitmapImageRep-SBAdditions.h"
 #import "NSColor-SBAdditions.h"
 #import "NSImage-SBAdditions.h"
 #import "NSMenu-SBAdditions.h"

@@ -82,7 +82,6 @@
 		08A004CC0FEC955E00AEB6DD /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A004CB0FEC955E00AEB6DD /* WebKit.framework */; };
 		08A73C331052C6CE00EBD683 /* NSScrollView-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A73C321052C6CE00EBD683 /* NSScrollView-SBAdditions.m */; };
 		08A73C391052C88800EBD683 /* NSColor-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A73C381052C88800EBD683 /* NSColor-SBAdditions.m */; };
-		08A73C5D1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A73C5C1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m */; };
 		08A9D837102477DA003C87E4 /* Bug.png in Resources */ = {isa = PBXBuildFile; fileRef = 08A9D836102477DA003C87E4 /* Bug.png */; };
 		08AA157C1029C98A000F2568 /* Bookmarks-List.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AA157B1029C98A000F2568 /* Bookmarks-List.png */; };
 		08AEC4C30FF73C49005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png in Resources */ = {isa = PBXBuildFile; fileRef = 08AEC4B30FF73C48005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png */; };
@@ -119,6 +118,7 @@
 		501D1F321963C9E500AEF4D1 /* SBDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D1F311963C9E500AEF4D1 /* SBDownload.swift */; };
 		501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */; };
 		502DEBA319C03CF9006A68C3 /* SBTabbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA219C03CF9006A68C3 /* SBTabbarItem.swift */; };
+		502DEBA519C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */; };
 		5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */; };
 		5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66819655AF00053CBF1 /* SBLoadButton.swift */; };
 		505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B6196916EF009219AF /* SBPopUpButton.swift */; };
@@ -299,8 +299,6 @@
 		08A73C321052C6CE00EBD683 /* NSScrollView-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSScrollView-SBAdditions.m"; path = "Classes/NSScrollView-SBAdditions.m"; sourceTree = "<group>"; };
 		08A73C371052C88800EBD683 /* NSColor-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSColor-SBAdditions.h"; path = "Classes/NSColor-SBAdditions.h"; sourceTree = "<group>"; };
 		08A73C381052C88800EBD683 /* NSColor-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSColor-SBAdditions.m"; path = "Classes/NSColor-SBAdditions.m"; sourceTree = "<group>"; };
-		08A73C5B1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBitmapImageRep-SBAdditions.h"; path = "Classes/NSBitmapImageRep-SBAdditions.h"; sourceTree = "<group>"; };
-		08A73C5C1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBitmapImageRep-SBAdditions.m"; path = "Classes/NSBitmapImageRep-SBAdditions.m"; sourceTree = "<group>"; };
 		08A9D836102477DA003C87E4 /* Bug.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Bug.png; path = Resources/Images/Bug.png; sourceTree = "<group>"; };
 		08AA157B1029C98A000F2568 /* Bookmarks-List.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Bookmarks-List.png"; path = "Resources/Images/Bookmarks-List.png"; sourceTree = "<group>"; };
 		08AEC4B30FF73C48005A39DA /* BLKGUI_ScrollerSlot-Vertical-Top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "BLKGUI_ScrollerSlot-Vertical-Top.png"; path = "Resources/Images/BLKGUI_ScrollerSlot-Vertical-Top.png"; sourceTree = "<group>"; };
@@ -354,6 +352,7 @@
 		501D1F311963C9E500AEF4D1 /* SBDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownload.swift; path = Classes/SBDownload.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = "String-SBAdditions.swift"; path = "Classes/String-SBAdditions.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		502DEBA219C03CF9006A68C3 /* SBTabbarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabbarItem.swift; path = Classes/SBTabbarItem.swift; sourceTree = "<group>"; };
+		502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSBitmapImageRep-SBAdditions.swift"; path = "Classes/NSBitmapImageRep-SBAdditions.swift"; sourceTree = "<group>"; };
 		5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBRenderWindow.swift; path = Classes/SBRenderWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5044E66719654CB20053CBF1 /* SBAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SBAdditions.h; path = Classes/SBAdditions.h; sourceTree = "<group>"; };
 		5044E66819655AF00053CBF1 /* SBLoadButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLoadButton.swift; path = Classes/SBLoadButton.swift; sourceTree = "<group>"; };
@@ -557,8 +556,7 @@
 			isa = PBXGroup;
 			children = (
 				5044E66719654CB20053CBF1 /* SBAdditions.h */,
-				08A73C5B1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.h */,
-				08A73C5C1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m */,
+				502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */,
 				0888F3F9106E5BDF001A9789 /* NSArray-SBAdditions.h */,
 				0888F3FA106E5BDF001A9789 /* NSArray-SBAdditions.m */,
 				08A73C371052C88800EBD683 /* NSColor-SBAdditions.h */,
@@ -1058,7 +1056,6 @@
 				5008E34C19B9DB7500BED173 /* SBBookmarkView.swift in Sources */,
 				08A73C331052C6CE00EBD683 /* NSScrollView-SBAdditions.m in Sources */,
 				08A73C391052C88800EBD683 /* NSColor-SBAdditions.m in Sources */,
-				08A73C5D1052CA6800EBD683 /* NSBitmapImageRep-SBAdditions.m in Sources */,
 				50ACCE011965380E00CE593E /* SBPreferencesWindowController.swift in Sources */,
 				505E49F4198A2645001F5254 /* SBButton.swift in Sources */,
 				5072657519A0D9530099DA28 /* SBUserAgentView.swift in Sources */,
@@ -1082,6 +1079,7 @@
 				501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */,
 				50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */,
 				5076919719BA2A0500F64734 /* SBBLKGUISearchField.swift in Sources */,
+				502DEBA519C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift in Sources */,
 				506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
