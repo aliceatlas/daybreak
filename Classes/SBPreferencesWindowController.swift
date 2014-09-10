@@ -39,7 +39,7 @@ class SBPreferencesWindowController: SBWindowController {
         group0.addItem(SBSectionItem(title: NSLocalizedString("Save downloaded files to", comment: ""), keyName: kSBSaveDownloadedFilesTo, controlClass: NSOpenPanel.self, context: "~/Downloads"))
         let menu0 = NSMenu()
         for method in SBOpenMethods {
-            menu0.addItemWithTitle(NSLocalizedString(method, comment: ""), representedObject: method, target: nil, action: nil)
+            menu0.addItem(title: NSLocalizedString(method, comment: ""), representedObject: method, target: nil, action: nil)
         }
         group0.addItem(SBSectionItem(title: NSLocalizedString("Open URL from applications", comment: ""), keyName: kSBOpenURLFromApplications, controlClass: NSPopUpButton.self, context: menu0))
         group0.addItem(SBSectionItem(title: NSLocalizedString("Quit when the last window is closed", comment: ""), keyName: kSBQuitWhenTheLastWindowIsClosed, controlClass: NSButton.self, context: nil))

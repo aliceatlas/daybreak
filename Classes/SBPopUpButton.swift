@@ -50,7 +50,7 @@ class SBPopUpButton: NSPopUpButton {
     
     func executeAction(sender: AnyObject) {
         if let item = sender as? NSMenuItem {
-            selectItemWithRepresentedObject(item.representedObject?)
+            selectItem(representedObject: item.representedObject)
             setNeedsDisplayInRect(bounds)
             if let item = sender as? NSMenuItem {
                 operation?(item)
@@ -58,9 +58,9 @@ class SBPopUpButton: NSPopUpButton {
         }
     }
     
-    func selectItemWithRepresentedObject(representedObject: AnyObject?) {
+    func selectItem(#representedObject: AnyObject?) {
         if let menu = menu {
-            menu.selectItemWithRepresentedObject(representedObject)
+            menu.selectItem(representedObject: representedObject)
             setNeedsDisplayInRect(bounds)
         }
     }

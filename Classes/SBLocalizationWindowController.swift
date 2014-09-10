@@ -66,7 +66,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         (langPopup.cell() as NSPopUpButtonCell).arrowPosition = .ArrowAtBottom
         for lang in languages {
             let title = NSLocale.systemLocale().displayNameForKey(NSLocaleIdentifier, value: lang)
-            menu.addItemWithTitle(title, representedObject: lang, target: self, action: "selectLanguage:")
+            menu.addItem(title: title!, representedObject: lang, target: self, action: "selectLanguage:")
         }
         langPopup.menu = menu
         return langPopup
@@ -359,7 +359,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         }
         
         // Select lang
-        langPopup.menu.selectItemWithRepresentedObject(lang)
+        langPopup.menu.selectItem(representedObject: lang)
     }
     
     func showContribute() {
