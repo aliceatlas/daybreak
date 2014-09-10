@@ -309,7 +309,7 @@ extern NSString *SBBookmarkPboardType;
 - (void)tabbar:(SBTabbar *)aTabbar shouldAddNewItemForURLs:(NSArray *)urls;
 - (void)tabbar:(SBTabbar *)aTabbar shouldOpenURLs:(NSArray *)urls startInItem:(SBTabbarItem *)aTabbarItem;
 - (void)tabbar:(SBTabbar *)aTabbar shouldReload:(SBTabbarItem *)aTabbarItem;
-- (void)tabbar:(SBTabbar *)aTabbar didRemoveItem:(NSString *)identifier;
+- (void)tabbar:(SBTabbar *)aTabbar didRemoveItem:(NSInteger)tag;
 @end
 
 @class SBURLField;

@@ -24,7 +24,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBTabbar.h"
 #import "SBDefinitions.h"
-#import "SBTabbarItem.h"
 #import "SBUtil.h"
 
 #import "Sunrise3-Bridging-Header.h"
@@ -382,25 +381,25 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
-- (void)executeDidRemoveItem:(NSString *)identifier
+- (void)executeDidRemoveItem:(NSInteger)tag
 {
 	if (delegate)
 	{
-		if ([delegate respondsToSelector:@selector(tabbar:didChangeSelection:)])
+		if ([delegate respondsToSelector:@selector(tabbar:didRemoveItem:)])
 		{
-			[delegate tabbar:self didRemoveItem:identifier];
+			[delegate tabbar:self didRemoveItem:tag];
 		}
 	}
 }
 
 #pragma mark Actions
 
-- (SBTabbarItem *)addItemWithIdentifier:(NSNumber *)identifier
+- (SBTabbarItem *)addItemWithTag:(NSInteger)tag
 {
 	SBTabbarItem *newItem = nil;
 	NSRect r = [self newItemRect];
 	newItem = [[SBTabbarItem alloc] initWithFrame:r tabbar:self];
-	newItem.identifier = identifier;
+	newItem.tag = tag;
 	newItem.target = self;
 	newItem.closeSelector = @selector(closeItem:);
 	newItem.selectSelector = @selector(selectItem:);
@@ -547,7 +546,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (items.count > 0)
 	{
 		BOOL shouldSelect = item.selected;
-		NSString *itemIdentifier = [item.identifier copy];
+		NSInteger tag = item.tag;
 		NSUInteger index = [items indexOfObject:item];
 		if ([self removeItem:item])
 		{
@@ -556,7 +555,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			{
 				[self selectItemForIndex:index];
 			}
-			[self executeDidRemoveItem:itemIdentifier];
+			[self executeDidRemoveItem:tag];
 		}
 	}
 	else {

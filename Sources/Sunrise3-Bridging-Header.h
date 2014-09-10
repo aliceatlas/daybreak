@@ -13,8 +13,6 @@
 
 #import "NSColor-SBAdditions.h"
 
-#import "SBTabbarItem.h"
-
 #import "NSSavePanel-SBAdditions.h"
 
 #import "SBTabbar.h"

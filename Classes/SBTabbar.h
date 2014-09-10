@@ -82,9 +82,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)executeShouldReloadItem:(SBTabbarItem *)item;
 - (void)executeDidChangeSelection:(SBTabbarItem *)item;
 - (void)executeDidReselectItem:(SBTabbarItem *)item;
-- (void)executeDidRemoveItem:(NSString *)identifier;
+- (void)executeDidRemoveItem:(NSInteger)tag;
 // Actions
-- (SBTabbarItem *)addItemWithIdentifier:(NSNumber *)identifier;
+- (SBTabbarItem *)addItemWithTag:(NSInteger)tag;
 - (void)addItem:(SBTabbarItem *)item;
 - (BOOL)removeItem:(SBTabbarItem *)item;
 - (void)selectItem:(SBTabbarItem *)item;

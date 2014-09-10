@@ -88,7 +88,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBTextInputView *textInputView;
 	NSURL *initialURL;
 	BOOL sidebarVisibility;
-	NSUInteger _identifier;
+	NSInteger _identifier;
 	NSInteger confirmed;
 }
 @property (unsafe_unretained) SBDocumentWindow *window;
@@ -106,7 +106,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @property (readonly) NSImage *selectedWebViewImageForBookmark;
 @property (readonly) NSData *selectedWebViewImageDataForBookmark;
 @property (readonly) SBWebResourcesView *resourcesView;
-@property (readonly) NSNumber *createdIdentifier;
+@property (readonly) NSInteger createdTag;
 @property (readonly) NSInteger tabCount;
 @property (readonly) NSRect visibleRectOfSelectedWebDocumentView;
 @property (readonly) NSImage *selectedWebViewImage;
@@ -152,7 +152,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)constructSidebar;
 - (void)constructNewTabWithString:(NSString *)string selection:(BOOL)selection;
 - (void)constructNewTabWithURL:(NSURL *)URL selection:(BOOL)selection;
-- (SBTabbarItem *)constructTabbarItemWithIdentifier:(NSNumber *)identifier;
+- (SBTabbarItem *)constructTabbarItemWithTag:(NSInteger)tag;
 - (SBTabViewItem *)constructTabViewItemWithIdentifier:(NSNumber *)identifier tabbarItem:(SBTabbarItem *)tabbarItem;
 - (SBDownloadsView *)constructDownloadsViewInSidebar;
 - (void)addObserverNotifications;

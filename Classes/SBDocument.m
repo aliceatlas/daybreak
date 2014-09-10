@@ -26,7 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBBookmarkListView.h"
 #import "SBSnapshotView.h"
 #import "SBTabbar.h"
-#import "SBTabbarItem.h"
 #import "SBURLField.h"
 #import "SBUtil.h"
 
@@ -144,10 +143,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma mark Getter
 
-- (NSNumber *)createdIdentifier
+- (NSInteger)createdTag
 {
 	_identifier++;
-	return @(_identifier);
+	return _identifier;
 }
 
 - (NSInteger)tabCount
@@ -682,12 +681,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBTabbarItem *tabbarItem = nil;
 	SBTabViewItem *tabViewItem = nil;
-	NSNumber *identifier = nil;
-	identifier = [self createdIdentifier];
-	tabbarItem = [self constructTabbarItemWithIdentifier:identifier];
+	NSInteger tag = nil;
+	tag = [self createdTag];
+	tabbarItem = [self constructTabbarItemWithTag:tag];
 	tabbarItem.title = [self displayName];
 	tabbarItem.progress = -1;
-	tabViewItem = [self constructTabViewItemWithIdentifier:identifier tabbarItem:tabbarItem];
+	tabViewItem = [self constructTabViewItemWithIdentifier:@(tag) tabbarItem:tabbarItem];
 	if (selection)
 	{
 		[tabView selectTabViewItem:tabViewItem];
@@ -710,10 +709,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 }
 
-- (SBTabbarItem *)constructTabbarItemWithIdentifier:(NSNumber *)identifier
+- (SBTabbarItem *)constructTabbarItemWithTag:(NSInteger)tag
 {
 	SBTabbarItem *tabbarItem = nil;
-	tabbarItem = [tabbar addItemWithIdentifier:identifier];
+	tabbarItem = [tabbar addItemWithTag:tag];
 	return tabbarItem;
 }
 
@@ -1038,7 +1037,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)tabbar:(SBTabbar *)aTabbar shouldReload:(SBTabbarItem *)aTabbarItem
 {
 	SBTabViewItem *tabViewItem = nil;
-	tabViewItem = [tabView tabViewItemWithIdentifier:aTabbarItem.identifier];
+	tabViewItem = [tabView tabViewItemWithIdentifier:@(aTabbarItem.tag)];
 	[tabViewItem.webView reload:nil];
 }
 
@@ -1046,7 +1045,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBTabViewItem *tabViewItem = nil;
 	// Select tab
-	tabViewItem = [tabView selectTabViewItemWithItemIdentifier:aTabbarItem.identifier];
+	tabViewItem = [tabView selectTabViewItemWithItemIdentifier:@(aTabbarItem.tag)];
 	
 	// Change window values
 	self.window.title = tabViewItem.tabbarItem.title;
@@ -1067,9 +1066,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	[documentView scrollRectToVisible:NSZeroRect];
 }
 
-- (void)tabbar:(SBTabbar *)aTabbar didRemoveItem:(NSString *)identifier
+- (void)tabbar:(SBTabbar *)aTabbar didRemoveItem:(NSInteger)tag
 {
-	NSInteger index = [tabView indexOfTabViewItemWithIdentifier:identifier];
+	NSInteger index = [tabView indexOfTabViewItemWithIdentifier:@(tag)];
 	SBTabViewItem *tabViewItem = (SBTabViewItem *)[tabView tabViewItemAtIndex:index];
 	if (tabViewItem)
 	{
@@ -2213,7 +2212,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)openAndConstructTabWithURLs:(NSArray *)urls startInTabbarItem:(SBTabbarItem *)aTabbarItem
 {
 	NSInteger i = 0;
-	SBTabViewItem *tabViewItem = [tabView tabViewItemWithIdentifier:aTabbarItem.identifier];
+	SBTabViewItem *tabViewItem = [tabView tabViewItemWithIdentifier:@(aTabbarItem.tag)];
 	if (urlField.isFirstResponder)
 	{
 		[self.window makeFirstResponder:self.selectedWebView];
