@@ -98,7 +98,7 @@ class SBRenderWindow: NSWindow {
         if let delegate = sbDelegate {
             if delegate.respondsToSelector("renderWindow:didFinishRenderingImage:") {
                 if let webDocumentView = sender.mainFrame.frameView.documentView {
-                    let image = NSImage(view: webDocumentView).insetWithSize(SBBookmarkImageMaxSize(), intersectRect: webDocumentView.bounds, offset: NSZeroPoint)
+                    let image = NSImage(view: webDocumentView).inset(size: SBBookmarkImageMaxSize(), intersectRect: webDocumentView.bounds, offset: NSZeroPoint)
                     delegate.renderWindow!(self, didFinishRenderingImage: image)
                 }
             }

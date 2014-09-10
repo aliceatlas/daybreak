@@ -109,7 +109,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                 imageRect.size = image!.size
                 r.size = imageRect.size
                 r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
-                image!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: inView.flipped)
+                image!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: true)
             } else if buttonType == .RadioButton {
                 var imageRect = NSZeroRect
                 
@@ -124,7 +124,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                 r.size = imageRect.size
                 r.origin.x = cellFrame.origin.x
                 r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
-                image!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: inView.flipped)
+                image!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: true)
             } else {
                 if isDone {
                     if highlighted {
@@ -151,7 +151,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                 if leftImage != nil {
                     r.size = leftImage!.size
                     r.origin.y = (cellFrame.size.height - r.size.height) / 2
-                    leftImage!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: inView.flipped)
+                    leftImage!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: true)
                     offset = NSMaxX(r)
                 }
                 if centerImage != nil {
@@ -159,14 +159,14 @@ class SBBLKGUIButtonCell: NSButtonCell {
                     r.size.width = cellFrame.size.width - ((leftImage?.size.width ?? 0) + (rightImage?.size.width ?? 0))
                     r.size.height = centerImage!.size.height
                     r.origin.y = (cellFrame.size.height - r.size.height) / 2
-                    centerImage!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: inView.flipped)
+                    centerImage!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: true)
                     offset = NSMaxX(r)
                 }
                 if rightImage != nil {
                     r.origin.x = offset
                     r.size = rightImage!.size
                     r.origin.y = (cellFrame.size.height - r.size.height) / 2
-                    rightImage!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: inView.flipped)
+                    rightImage!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: true)
                 }
             }
         }
@@ -226,7 +226,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                         size.width = frame.size.width - r.origin.x
                     }
                     imageRect.origin.y = (frame.size.height - imageRect.size.height) / 2 - 1
-                    image.drawInRect(imageRect, operation: .CompositeSourceOver, fraction: (enabled ? (highlighted ? 0.5 : 1.0) : 0.5), respectFlipped: inView.flipped)
+                    image.drawInRect(imageRect, operation: .CompositeSourceOver, fraction: (enabled ? (highlighted ? 0.5 : 1.0) : 0.5), respectFlipped: true)
                 }
             }
             title.drawInRect(r, withAttributes: attributes)

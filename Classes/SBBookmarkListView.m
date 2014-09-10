@@ -457,12 +457,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	editButton = [[SBButton alloc] initWithFrame:editRect];
 	updateButton = [[SBButton alloc] initWithFrame:updateRect];
     removeButton.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
-	removeButton.image = [NSImage imageWithCGImage:SBIconImage(SBCloseIconImage(), SBButtonLeftShape, NSSizeToCGSize(removeRect.size))];
+	removeButton.image = [[NSImage alloc] initWithCGImage:SBIconImage(SBCloseIconImage(), SBButtonLeftShape, NSSizeToCGSize(removeRect.size))];
 	removeButton.action = @selector(remove);
     editButton.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
 	updateButton.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
-	editButton.image = [NSImage imageWithCGImage:SBIconImageWithName(@"Edit", SBButtonCenterShape, NSSizeToCGSize(editRect.size))];
-	updateButton.image = [NSImage imageWithCGImage:SBIconImageWithName(@"Update", SBButtonRightShape, NSSizeToCGSize(editRect.size))];
+	editButton.image = [[NSImage alloc] initWithCGImage:SBIconImageWithName(@"Edit", SBButtonCenterShape, NSSizeToCGSize(editRect.size))];
+	updateButton.image = [[NSImage alloc] initWithCGImage:SBIconImageWithName(@"Update", SBButtonRightShape, NSSizeToCGSize(editRect.size))];
 	editButton.action = @selector(edit);
 	updateButton.action = @selector(update);
 }
@@ -1111,7 +1111,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		// Drag
 		if (draggedItemView && draggedItems)
 		{
-			NSImage *image = [NSImage imageWithView:draggedItemView];
+			NSImage *image = [[NSImage alloc] initWithView:draggedItemView];
 			NSPoint dragLocation = NSMakePoint(point.x + _offset.width, point.y + (draggedItemView.frame.size.height - _offset.height));
 			NSPasteboard *pasteboard = [NSPasteboard pasteboardWithName:NSDragPboard];
 			NSString *title = draggedItemView.item[kSBBookmarkTitle];

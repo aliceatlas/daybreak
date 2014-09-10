@@ -190,10 +190,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		if (!NSEqualSizes(size, NSZeroSize) && !NSEqualSizes(size, intersectRect.size))
 		{
-			image = [[NSImage imageWithView:webDocumentView] insetWithSize:size intersectRect:intersectRect offset:NSZeroPoint];
+			image = [[[NSImage alloc] initWithView:webDocumentView] insetWithSize:size intersectRect:intersectRect offset:NSZeroPoint];
 		}
 		else {
-			image = [NSImage imageWithView:webDocumentView];
+			image = [[NSImage alloc] initWithView:webDocumentView];
 		}
 	}
 	return image;
@@ -573,9 +573,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	zoomButton0.action = @selector(zoomOutView:);
 	zoomButton1.action = @selector(scaleToActualSizeForView:);
 	zoomButton2.action = @selector(zoomInView:);
-	zoomButton0.image = [NSImage imageWithCGImage:SBZoomOutIconImage(NSSizeToCGSize(r0.size))];
-	zoomButton1.image = [NSImage imageWithCGImage:SBActualSizeIconImage(NSSizeToCGSize(r1.size))];
-	zoomButton2.image = [NSImage imageWithCGImage:SBZoomInIconImage(NSSizeToCGSize(r2.size))];
+	zoomButton0.image = [[NSImage alloc] initWithCGImage:SBZoomOutIconImage(NSSizeToCGSize(r0.size))];
+	zoomButton1.image = [[NSImage alloc] initWithCGImage:SBActualSizeIconImage(NSSizeToCGSize(r1.size))];
+	zoomButton2.image = [[NSImage alloc] initWithCGImage:SBZoomInIconImage(NSSizeToCGSize(r2.size))];
 	zoomButton.buttons = @[zoomButton0, zoomButton1, zoomButton2];
 	[zoomView addSubview:zoomButton];
 }

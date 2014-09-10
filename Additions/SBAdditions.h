@@ -24,5 +24,4 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "NSArray-SBAdditions.h"
 #import "NSColor-SBAdditions.h"
-#import "NSImage-SBAdditions.h"
 #import "NSString-SBURLAdditions.h"

@@ -54,20 +54,19 @@ class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
             drawRect.origin = cellFrame.origin
             drawRect.size = leftImage!.size
             drawRect.origin.y = (cellFrame.size.height - drawRect.size.height) / 2
-            let flup: Bool = controlView.flipped
-            leftImage!.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: fraction, respectFlipped: flup)
+            leftImage!.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: fraction, respectFlipped: true)
             
             // Center
             drawRect.origin.x = leftImage!.size.width
             drawRect.size.width = cellFrame.size.width - (leftImage!.size.width + rightImage!.size.width)
             drawRect.origin.y = (cellFrame.size.height - drawRect.size.height) / 2
-            centerImage!.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: fraction, respectFlipped: flup)
+            centerImage!.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: fraction, respectFlipped: true)
             
             // Right
             drawRect.size = rightImage!.size
             drawRect.origin.x = cellFrame.size.width - drawRect.size.width
             drawRect.origin.y = (cellFrame.size.height - drawRect.size.height) / 2
-            rightImage!.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: fraction, respectFlipped: flup)
+            rightImage!.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: fraction, respectFlipped: true)
         }
         
         if image != nil {

@@ -2268,6 +2268,10 @@ void SBPerform(id target, SEL action, id object) {
     [target performSelector:action withObject: object];
 }
 
+void SBPerformNoArgs(id target, SEL action) {
+    [target performSelector:action];
+}
+
 kern_return_t SBCPUType(cpu_type_t *cpuType) {
     host_basic_info_data_t hostInfo;
     mach_msg_type_number_t infoCount = HOST_BASIC_INFO_COUNT;

@@ -312,8 +312,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSRect r = self.addButtonRect;
 	[self destructAddButton];
 	addButton = [[SBButton alloc] initWithFrame:r];
-	addButton.image = [NSImage imageWithCGImage:SBAddIconImage(NSSizeToCGSize(r.size), NO)];
-	addButton.backImage = [NSImage imageWithCGImage:SBAddIconImage(NSSizeToCGSize(r.size), YES)];
+	addButton.image = [[NSImage alloc] initWithCGImage:SBAddIconImage(NSSizeToCGSize(r.size), NO)];
+	addButton.backImage = [[NSImage alloc] initWithCGImage:SBAddIconImage(NSSizeToCGSize(r.size), YES)];
 	addButton.target = self;
 	addButton.action = @selector(addNewItem:);
 	[contentView addSubview:addButton];
