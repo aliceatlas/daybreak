@@ -110,7 +110,6 @@
 		08C902CA100CC74600A46719 /* Plug-ins.html in Resources */ = {isa = PBXBuildFile; fileRef = 08C902C9100CC74600A46719 /* Plug-ins.html */; };
 		08DA3D251057D9BE00DD4D3E /* SBBookmarkListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08DA3D241057D9BE00DD4D3E /* SBBookmarkListItemView.m */; };
 		08F1DEB01156695500712D67 /* Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F1DEAF1156695500712D67 /* Search.png */; };
-		08F5B05A100B63FC0011B603 /* NSURL-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F5B059100B63FC0011B603 /* NSURL-SBAdditions.m */; };
 		08F914C410352D020026ABD1 /* Source.png in Resources */ = {isa = PBXBuildFile; fileRef = 08F914C310352D020026ABD1 /* Source.png */; };
 		08F914D1103531C50026ABD1 /* SBSnapshotView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F914D0103531C50026ABD1 /* SBSnapshotView.m */; };
 		5008E34C19B9DB7500BED173 /* SBBookmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5008E34B19B9DB7500BED173 /* SBBookmarkView.swift */; };
@@ -119,6 +118,7 @@
 		502DEBA319C03CF9006A68C3 /* SBTabbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA219C03CF9006A68C3 /* SBTabbarItem.swift */; };
 		502DEBA519C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */; };
 		502DEBA719C0667F006A68C3 /* NSScrollView-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */; };
+		502DEBA919C067C9006A68C3 /* NSURL-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA819C067C9006A68C3 /* NSURL-SBAdditions.swift */; };
 		5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */; };
 		5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66819655AF00053CBF1 /* SBLoadButton.swift */; };
 		505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B6196916EF009219AF /* SBPopUpButton.swift */; };
@@ -334,8 +334,6 @@
 		08DE5E81107D8104006A1B94 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08DE5E93107D8112006A1B94 /* es */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = es; path = Resources/es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08F1DEAF1156695500712D67 /* Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Search.png; path = Resources/Images/Search.png; sourceTree = "<group>"; };
-		08F5B058100B63FC0011B603 /* NSURL-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL-SBAdditions.h"; path = "Classes/NSURL-SBAdditions.h"; sourceTree = "<group>"; };
-		08F5B059100B63FC0011B603 /* NSURL-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL-SBAdditions.m"; path = "Classes/NSURL-SBAdditions.m"; sourceTree = "<group>"; };
 		08F914C310352D020026ABD1 /* Source.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Source.png; path = Resources/Images/Source.png; sourceTree = "<group>"; };
 		08F914CF103531C50026ABD1 /* SBSnapshotView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSnapshotView.h; path = Classes/SBSnapshotView.h; sourceTree = "<group>"; };
 		08F914D0103531C50026ABD1 /* SBSnapshotView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSnapshotView.m; path = Classes/SBSnapshotView.m; sourceTree = "<group>"; };
@@ -352,6 +350,7 @@
 		502DEBA219C03CF9006A68C3 /* SBTabbarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabbarItem.swift; path = Classes/SBTabbarItem.swift; sourceTree = "<group>"; };
 		502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSBitmapImageRep-SBAdditions.swift"; path = "Classes/NSBitmapImageRep-SBAdditions.swift"; sourceTree = "<group>"; };
 		502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScrollView-SBAdditions.swift"; path = "Classes/NSScrollView-SBAdditions.swift"; sourceTree = "<group>"; };
+		502DEBA819C067C9006A68C3 /* NSURL-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSURL-SBAdditions.swift"; path = "Classes/NSURL-SBAdditions.swift"; sourceTree = "<group>"; };
 		5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBRenderWindow.swift; path = Classes/SBRenderWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5044E66719654CB20053CBF1 /* SBAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SBAdditions.h; path = Classes/SBAdditions.h; sourceTree = "<group>"; };
 		5044E66819655AF00053CBF1 /* SBLoadButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLoadButton.swift; path = Classes/SBLoadButton.swift; sourceTree = "<group>"; };
@@ -569,11 +568,10 @@
 				502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */,
 				08916E701009D5220012D4EA /* NSString-SBURLAdditions.h */,
 				08916E711009D5220012D4EA /* NSString-SBURLAdditions.m */,
-				50B2A9AC1961174700DA1B4A /* String-SBURLAdditions.swift */,
-				08F5B058100B63FC0011B603 /* NSURL-SBAdditions.h */,
-				08F5B059100B63FC0011B603 /* NSURL-SBAdditions.m */,
+				502DEBA819C067C9006A68C3 /* NSURL-SBAdditions.swift */,
 				50B2A9A81960E19A00DA1B4A /* Array-SBAdditions.swift */,
 				501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */,
+				50B2A9AC1961174700DA1B4A /* String-SBURLAdditions.swift */,
 			);
 			name = Additions;
 			sourceTree = "<group>";
@@ -1032,7 +1030,6 @@
 				50CE69E019863F4C00C17D44 /* SBWebResourceIdentifier.swift in Sources */,
 				506E44B5198E654800178D36 /* NSSavePanel-SBAdditions.m in Sources */,
 				50B2A9A71960D74400DA1B4A /* SBHistory.swift in Sources */,
-				08F5B05A100B63FC0011B603 /* NSURL-SBAdditions.m in Sources */,
 				5072657219A0CA380099DA28 /* SBMessageView.swift in Sources */,
 				5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */,
 				088D26E0101B3EC400691CEC /* SBBookmarkListView.m in Sources */,
@@ -1067,6 +1064,7 @@
 				50FEEAA219BF2F1100962BB9 /* SBInnerView.swift in Sources */,
 				50B2A9A3196068B700DA1B4A /* SBBookmarks.swift in Sources */,
 				507A8E23195FFF6700BF56AD /* SBDefinitions.m in Sources */,
+				502DEBA919C067C9006A68C3 /* NSURL-SBAdditions.swift in Sources */,
 				50C8ED6519ACE4C700F7E17B /* SBWindowController.swift in Sources */,
 				5076919919BA2CB100F64734 /* SBBLKGUIButton.swift in Sources */,
 				50ACCDFD1964F14C00CE593E /* SBUpdater.swift in Sources */,
