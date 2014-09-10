@@ -160,6 +160,10 @@ func SBConstrain<T: Comparable>(value: T, min minValue: T? = nil, max maxValue: 
     return v
 }
 
+func SBConstrain<T: Comparable>(inout value: T, min minValue: T? = nil, max maxValue: T? = nil) {
+    value = SBConstrain(value, min: minValue, max: maxValue)
+}
+
 // MARK: Paths
 
 func SBRoundedPathS(rect inRect: CGRect, curve: CGFloat, inner: CGFloat, top: Bool, bottom: Bool) -> NSBezierPath {

@@ -149,8 +149,8 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     
     override init(frame: NSRect) {
         var r = frame
-        r.size.width = SBConstrain(r.size.width, min: kSBMinFrameSizeWidth)
-        r.size.height = SBConstrain(r.size.height, min: kSBMinFrameSizeWidth)
+        SBConstrain(&r.size.width, min: kSBMinFrameSizeWidth)
+        SBConstrain(&r.size.height, min: kSBMinFrameSizeWidth)
         items = SBHistory.sharedHistory.items
         super.init(frame: r)
         addSubview(iconImageView)
