@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @IBDesignable
 class SBCircleProgressIndicator: SBView {
     @IBInspectable var style: SBCircleProgressIndicatorStyle = .RegularStyle
-    @IBInspectable var backgroundColor: NSColor = NSColor(deviceWhite: 0.5, alpha: 1.0).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
-    @IBInspectable var fillColor: NSColor = NSColor(deviceWhite: 0.85, alpha: 1.0).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+    @IBInspectable var backgroundColor: NSColor = NSColor(calibratedWhite: 0.5, alpha: 1.0)
+    @IBInspectable var fillColor: NSColor = NSColor(calibratedWhite: 0.85, alpha: 1.0)
     @IBInspectable var alwaysDrawing: Bool = false
     @IBInspectable var showPercentage: Bool = false
     
@@ -114,29 +114,25 @@ class SBCircleProgressIndicator: SBView {
     // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
-        if alwaysDrawing || (!alwaysDrawing && progress < 1.0) {
+        if alwaysDrawing || progress < 1.0 {
             if progress >= 0 {
                 let r = bounds
-                var path: NSBezierPath!
-                var gradient: NSGradient!
-                var colors: [NSColor!] = [nil, nil]
                 
                 let cp = NSMakePoint(NSMidX(r), NSMidY(r))
                 let lw: CGFloat = 1.5
-                let radius: CGFloat = (r.size.width < r.size.height ? r.size.width / 2 : r.size.height / 2) - lw
                 let square = SBCenteredSquare(r)
-                let sa: CGFloat = 0
-                let ea: CGFloat = progress * 360
-                let startAngle: CGFloat = sa - 270
-                let endAngle: CGFloat = -ea - 270
+                let radius = (square.size.width / 2) - lw
                 
                 let isFirstResponder = (superview as? SBAnswersIsFirstResponder)?.isFirstResponder ?? false
                 
                 if selected && keyView {
-                    colors = [NSColor.whiteColor(), NSColor(deviceWhite: 0.15, alpha: 1.0)]
-                    path = NSBezierPath(ovalInRect: NSInsetRect(r, lw, lw))
-                    gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
-                    gradient.drawInBezierPath(path, angle: 90)
+                    let colors = [NSColor.whiteColor(), NSColor(deviceWhite: 0.15, alpha: 1.0)]
+                    let path = NSBezierPath(ovalInRect: NSInsetRect(square, lw, lw))
+                    let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+                    SBPreserveGraphicsState {
+                        path.setClip()
+                        gradient.drawInRect(r, angle: 90)
+                    }
                 }
                 
                 switch style {
@@ -146,34 +142,38 @@ class SBCircleProgressIndicator: SBView {
                         } else {
                             NSColor(deviceWhite: 1.0, alpha: 0.75).set()
                         }
-                        path = NSBezierPath(ovalInRect: NSInsetRect(square, lw + 1.0, lw + 1.0))
+                        let path = NSBezierPath(ovalInRect: NSInsetRect(square, lw + 1.0, lw + 1.0))
                         path.lineWidth = 1.0
                         path.stroke()
                     case .RegularStyle:
                         backgroundColor.colorWithAlphaComponent((selected && keyView) ? 1.0 : 0.5).set()
-                        path = NSBezierPath(ovalInRect: NSInsetRect(square, lw + 1.0, lw + 1.0))
+                        let path = NSBezierPath(ovalInRect: NSInsetRect(square, lw + 1.0, lw + 1.0))
                         path.fill()
                 }
                 
                 // Percentage(Arc)
-                path = NSBezierPath()
+                let sa: CGFloat = 0
+                let ea: CGFloat = progress * 360
+                let startAngle: CGFloat = sa - 270
+                let endAngle: CGFloat = -ea - 270
+                let path = NSBezierPath()
                 path.moveToPoint(cp)
                 path.appendBezierPathWithArcWithCenter(cp, radius: radius - 1.0, startAngle: startAngle, endAngle: endAngle, clockwise: true)
                 path.closePath()
+                var colors: [NSColor] = []
                 if highlighted && isFirstResponder {
-                    colors[0] = SBAlternateSelectedDarkControlColor
-                    colors[1] = SBAlternateSelectedControlColor
+                    colors = [SBAlternateSelectedDarkControlColor, SBAlternateSelectedControlColor]
                 } else {
                     switch style {
                         case .WhiteStyle:
-                            colors[0] = NSColor(deviceWhite: 1.0, alpha: 0.75)
-                            colors[1] = NSColor(deviceWhite: 1.0, alpha: 0.75)
+                            colors = [NSColor(deviceWhite: 1.0, alpha: 0.75),
+                                      NSColor(deviceWhite: 1.0, alpha: 0.75)]
                         case .RegularStyle:
-                            colors[0] = NSColor(deviceWhite: ((selected && keyView) ? 0.75 : 0.5), alpha: 1.0)
-                            colors[1] = NSColor(deviceWhite: ((selected && keyView) ? 1.0 : 0.75), alpha: 1.0)
+                            colors = [NSColor(deviceWhite: ((selected && keyView) ? 0.75 : 0.5), alpha: 1.0),
+                                      NSColor(deviceWhite: ((selected && keyView) ? 1.0 : 0.75), alpha: 1.0)]
                     }
                 }
-                gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+                let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
                 gradient.drawInBezierPath(path, angle: 90)
                 
                 if showPercentage {
