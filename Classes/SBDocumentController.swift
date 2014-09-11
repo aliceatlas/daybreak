@@ -33,9 +33,10 @@ class SBDocumentController: NSDocumentController {
         return kSBDocumentTypeName
     }
     
-    override func typeForContentsOfURL(inAbsoluteURL: NSURL?, error outError: NSErrorPointer) -> String! {
-        if inAbsoluteURL?.fileURL != nil {
-            return super.typeForContentsOfURL(inAbsoluteURL, error: outError)
+    override func typeForContentsOfURL(inAbsoluteURL: NSURL?, error outError: NSErrorPointer) -> String? {
+        if inAbsoluteURL?.fileURL ?? false {
+            let type: String? = super.typeForContentsOfURL(inAbsoluteURL, error: outError)
+            return type
         } else {
             return kSBDocumentTypeName
         }

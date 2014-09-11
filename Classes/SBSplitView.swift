@@ -34,7 +34,7 @@ protocol SBSplitViewDelegate: NSSplitViewDelegate {
 class SBSplitView: NSSplitView, SBSidebarDelegate {
     private var divideAnimation: NSViewAnimation?
     var animating: Bool { return divideAnimation != nil }
-    var visibleSidebar: Bool { return sidebar.superview != nil }
+    var visibleSidebar: Bool { return sidebar?.superview != nil }
     var sidebarWidth = CGFloat(NSUserDefaults.standardUserDefaults().floatForKey(kSBSidebarWidth))
     
     var view: NSView! {
