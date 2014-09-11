@@ -1507,7 +1507,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		separator = NO;
 		sectionHeader = NO;
 		drawsImage = YES;
-		[self setAlignment:NSLeftTextAlignment];
+        self.alignment = NSLeftTextAlignment;
 	}
 	return self;
 }

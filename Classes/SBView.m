@@ -156,7 +156,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		[animation startAnimation];
 	}
 	else {
-		[self setFrame:frame];
+		self.frame = frame;
 	}
 }
 
