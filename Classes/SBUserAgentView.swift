@@ -28,14 +28,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class SBUserAgentView: SBView, NSTextFieldDelegate {
     private lazy var iconImageView: NSImageView = {
-        let iconImageView = NSImageView(frame: self.iconRect)
         let image = NSImage(named: "UserAgent")
+        let iconImageView = NSImageView()
+        iconImageView.translatesAutoresizingMaskIntoConstraints = false
         image.size = iconImageView.frame.size
         iconImageView.image = image
         return iconImageView
     }()
+    
     private lazy var titleLabel: NSTextField = {
-        let titleLabel = NSTextField(frame: self.titleRect)
+        let titleLabel = NSTextField()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.stringValue = NSLocalizedString("Select User Agent", comment: "")
         titleLabel.bordered = false
         titleLabel.editable = false
@@ -46,18 +49,21 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         titleLabel.autoresizingMask = .ViewWidthSizable
         return titleLabel
     }()
+    
     private lazy var popup: SBBLKGUIPopUpButton = {
-        var selectedIndex: Int?
-        let popup = SBBLKGUIPopUpButton(frame: self.popupRect)
+        let popup = SBBLKGUIPopUpButton()
+        popup.translatesAutoresizingMaskIntoConstraints = false
         let count = SBUserAgentNames.count
-        if let userAgentName = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as? String {
+        var selectedIndex: Int?
+        let userAgentName = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as? String
+        if userAgentName != nil {
             if let index = SBUserAgentNames.firstIndex({ $0 == userAgentName }) {
                 selectedIndex = index + 1
             }
         }
         if selectedIndex == nil {
             selectedIndex = count
-            self.field.stringValue = self.userAgentName
+            self.field.stringValue = userAgentName
             self.field.hidden = false
         }
         let icon0: NSImage? = (SBUserAgentNames[0] == "Sunrise") ? NSImage(named: "Application.icns") : nil
@@ -79,8 +85,10 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         popup.selectItemAtIndex(selectedIndex!)
         return popup
     }()
+    
     private lazy var field: SBBLKGUITextField = {
-        let field = SBBLKGUITextField(frame: self.fieldRect)
+        let field = SBBLKGUITextField()
+        field.translatesAutoresizingMaskIntoConstraints = false
         field.alignment = .LeftTextAlignment
         field.font = NSFont.systemFontOfSize(14.0)
         field.textColor = NSColor.whiteColor()
@@ -89,16 +97,20 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         field.hidden = true
         return field
     }()
+    
     private lazy var cancelButton: SBBLKGUIButton = {
-        let cancelButton = SBBLKGUIButton(frame: self.cancelRect)
+        let cancelButton = SBBLKGUIButton()
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
         cancelButton.action = "cancel"
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()
+    
     private lazy var doneButton: SBBLKGUIButton = {
-        let doneButton = SBBLKGUIButton(frame: self.doneRect)
+        let doneButton = SBBLKGUIButton()
+        doneButton.translatesAutoresizingMaskIntoConstraints = false
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
         doneButton.enabled = !self.userAgentName.isEmpty
@@ -106,79 +118,6 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         doneButton.keyEquivalent = "\r"
         return doneButton
     }()
-
-    override init(frame: NSRect) {
-        super.init(frame: frame)
-        addSubview(cancelButton)
-        addSubview(doneButton)
-        addSubview(iconImageView)
-        addSubview(titleLabel)
-        addSubview(popup)
-        addSubview(field)
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("NSCoding not supported")
-    }
-    
-    // MARK: Rects
-    
-    let margin = NSMakePoint(20.0, 20.0);
-    let labelWidth: CGFloat = 60.0
-    var iconRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = 32.0
-        r.origin.x = labelWidth - r.size.width
-        r.size.height = 32.0
-        r.origin.y = bounds.size.height - margin.y - r.size.height
-        return r
-    }
-    
-    var titleRect: NSRect {
-        var r = NSZeroRect
-        r.origin.x = NSMaxX(iconRect) + 10.0;
-        r.size.width = bounds.size.width - r.origin.x - margin.x
-        r.size.height = 19.0
-        r.origin.y = bounds.size.height - margin.y - r.size.height - (32.0 - r.size.height) / 2
-        return r
-    }
-    
-    var popupRect: NSRect {
-        var r = NSZeroRect
-        r.origin.x = iconRect.origin.x
-        r.size.width = bounds.size.width - r.origin.x - margin.x
-        r.size.height = 26;
-        r.origin.y = iconRect.origin.y - 20.0 - r.size.height
-        return r
-    }
-    
-    var fieldRect: NSRect {
-        var r = NSZeroRect
-        r.origin.x = popupRect.origin.x
-        r.size.width = bounds.size.width - r.origin.x - margin.x
-        r.size.height = 58.0
-        r.origin.y = popupRect.origin.y - 20.0 - r.size.height
-        return r
-    }
-    
-    var cancelRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = 124.0
-        r.size.height = 32.0
-        r.origin.x = bounds.size.width - (margin.x + r.size.width * 2 + 8.0)
-        r.origin.y = margin.y
-        return r
-    }
-    
-    var doneRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = 124.0
-        r.size.height = 32.0
-        r.origin.x = bounds.size.width - (margin.x + r.size.width)
-        r.origin.y = margin.y
-        return r
-    }
     
     var userAgentName: String {
         let selectedIndex = popup.indexOfSelectedItem
@@ -186,6 +125,28 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
             return field.stringValue
         }
         return SBUserAgentNames[selectedIndex - 1]
+    }
+    
+    override init(frame: NSRect) {
+        super.init(frame: frame)
+        
+        addSubviewsAndConstraintStrings(
+            metrics: ["margin": 20.0, "submargin": 10.0],
+            views: ["done": doneButton, "cancel": cancelButton, "popup": popup, "icon": iconImageView, "title": titleLabel, "field": field],
+            constraints: ["[cancel(124)]-8-[done(124)]-margin-|",
+                          "V:[cancel(23)]-margin-|",
+                          "V:[done(23)]-margin-|",
+                          "|-margin-[popup]-margin-|",
+                          "|-margin-[field]-margin-|",
+                          "|-margin-[icon(32)]-submargin-[title]-margin-|",
+                          "V:|-margin-[icon(32)]-margin-[popup(26)]-submargin-[field]-margin-[done]",
+                          "V:|-\(20+7)-[title(19)]"])
+        
+        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
     }
     
     // MARK: Delegate

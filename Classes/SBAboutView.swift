@@ -128,7 +128,7 @@ class SBAboutView: SBView {
             metrics: ["margin": 10],
             views: ["name": self.nameLabel, "identifier": self.identifierLabel, "credits": self.creditScrollView, "copyright": self.copyrightLabel, "back": self.backButton],
             constraints: ["V:|[name(24)][identifier(16)]-margin-[credits]-margin-[copyright(16)]-40-[back(23)]|",
-             "|[name]|", "|[identifier]|", "|[credits]|", "|[copyright]|", "[back(105)]|"])
+                          "|[name]|", "|[identifier]|", "|[credits]|", "|[copyright]|", "[back(105)]|"])
         return rightColumn
     }()
     

@@ -39,8 +39,16 @@ class SBBLKGUIPopUpButton: NSPopUpButton {
         super.init(frame: frame)
     }
     
+    override init(frame: NSRect, pullsDown: Bool) {
+        super.init(frame: frame, pullsDown: pullsDown)
+    }
+    
     required init(coder: NSCoder) {
         fatalError("NSCoding not supported")
+    }
+    
+    override var alignmentRectInsets: NSEdgeInsets {
+        return NSEdgeInsetsMake(0, 0, 0, 0)
     }
 }
 
