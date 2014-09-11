@@ -106,7 +106,7 @@ class SBBookmarks: NSObject {
             for index in 0..<kSBCountOfDebugBookmarks {
                 let title = "Title \(index)"
                 let url = "http://\(index).com/"
-                let item = SBCreateBookmarkItem(title, url, SBEmptyBookmarkImageData(), NSDate.date(), nil, NSStringFromPoint(NSZeroPoint))
+                let item = SBCreateBookmarkItem(title, url, SBEmptyBookmarkImageData(), NSDate(), nil, NSStringFromPoint(NSZeroPoint))
                 items.append(NSMutableDictionary(dictionary: item))
             }
         } else {

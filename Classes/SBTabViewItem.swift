@@ -980,9 +980,10 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     func saveDocumentSource(sender: AnyObject) {
-        var name: NSString? = pageTitle
         let encodingName = webView.textEncodingName
-        name = ((name != nil && name! != "") ? name : NSLocalizedString("Untitled", comment: ""))!.stringByAppendingPathExtension("html")
+        var name: NSString? = pageTitle
+        if name == "" { name = nil }
+        name = (name ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")
         let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(!encodingName.isEmpty ? encodingName : kSBDefaultEncodingName))
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true

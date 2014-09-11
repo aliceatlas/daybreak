@@ -80,8 +80,9 @@ NSString *kSBHistoryFileName = @"History.plist";
 NSString *kSBLocalizationsDirectoryName = @"Localizations";
 
 // Default values
-NSString *kSBDefaultEncodingName = @"utf-8";
-const NSStringEncoding SBAvailableStringEncodings[] = {
+*/
+let kSBDefaultEncodingName = "utf-8"
+/*const NSStringEncoding SBAvailableStringEncodings[] = {
 	-2147481087,	// Japanese (Shift JIS)
 	21,				// Japanese (ISO 2022-JP)
 	3,				// Japanese (EUC)
