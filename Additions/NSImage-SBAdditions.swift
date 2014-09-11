@@ -27,13 +27,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 extension NSImage {
-    convenience init(view: NSView) {
-        //!!! change back to optional initializer in Xcode 6.1
-        let bitmapImageRep = view.bitmapImageRepForCachingDisplayInRect(view.bounds)!
+    convenience init?(view: NSView) {
+        let bitmapImageRep = view.bitmapImageRepForCachingDisplayInRect(view.bounds)
         view.layout()
-        view.cacheDisplayInRect(view.bounds, toBitmapImageRep: bitmapImageRep)
+        if bitmapImageRep == nil {
+            self.init()
+            return nil
+        }
+        view.cacheDisplayInRect(view.bounds, toBitmapImageRep: bitmapImageRep!)
         self.init(size: view.bounds.size)
-        addRepresentation(bitmapImageRep)
+        addRepresentation(bitmapImageRep!)
     }
     
     func stretchableImage(#size: NSSize, sideCapWidth: Int) -> NSImage {

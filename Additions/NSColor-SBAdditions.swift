@@ -27,12 +27,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 extension NSColor {
-    convenience init(labelColorName: String) {
+    convenience init?(labelColorName: String) {
         if let (red, green, blue, alpha) = SBBookmarkLabelColorRGB[labelColorName] {
             self.init(calibratedRed: red / 255.0, green: green / 255.0, blue: blue / 255.0, alpha: alpha / 255.0)
         } else {
-            //!!! return nil instead after switching to Xcode 6.1
             self.init()
+            return nil
         }
     }
 }
