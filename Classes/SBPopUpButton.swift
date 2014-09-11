@@ -77,13 +77,13 @@ class SBPopUpButtonCell: NSPopUpButtonCell {
     override func drawWithFrame(cellFrame: NSRect, inView controlView: NSView) {
         let view = controlView as SBPopUpButton
         if let image = view.backgroundImage {
-            NSGraphicsContext.saveGraphicsState()
-            let transform = NSAffineTransform()
-            transform.translateXBy(0.0, yBy: view.bounds.size.height)
-            transform.scaleXBy(1.0, yBy:-1.0)
-            transform.concat()
-            image.drawInRect(view.bounds, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-            NSGraphicsContext.restoreGraphicsState()
+            SBPreserveGraphicsState {
+                let transform = NSAffineTransform()
+                transform.translateXBy(0.0, yBy: view.bounds.size.height)
+                transform.scaleXBy(1.0, yBy:-1.0)
+                transform.concat()
+                image.drawInRect(view.bounds, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            }
         }
         if let menu = view.menu {
             if let item = menu.selectedItem {

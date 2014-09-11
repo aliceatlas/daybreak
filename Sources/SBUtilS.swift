@@ -296,3 +296,9 @@ let SBAlternateSelectedLightControlColor = NSColor.alternateSelectedControlColor
 let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
 
 let SBAlternateSelectedDarkControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.blackColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+
+func SBPreserveGraphicsState(block: () -> Void) {
+    NSGraphicsContext.saveGraphicsState()
+    block()
+    NSGraphicsContext.restoreGraphicsState()
+}
