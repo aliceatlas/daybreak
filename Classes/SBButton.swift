@@ -32,7 +32,7 @@ class SBButton: SBView, NSCoding {
     var disableImage: NSImage?
     var backImage: NSImage?
     var backDisableImage: NSImage?
-    var action = Selector() //!!! should be Selector? (= nil) but the swift compiler doesn't generate the objc property declaration in that case for now
+    var action: Selector = nil
     private var _enabled = true
     private var _pressed = false
     var keyEquivalent: String?
@@ -101,10 +101,9 @@ class SBButton: SBView, NSCoding {
         if backDisableImage != nil {
             coder.encodeObject(backDisableImage!, forKey: "backDisableImage")
         }
-        //if action {
-        //    coder.encodeObject(String(_sel: action!), forKey: "action")
-        //}
-        coder.encodeObject(String(_sel: action!), forKey: "action")
+        if action != nil {
+            coder.encodeObject(String(_sel: action), forKey: "action")
+        }
         if keyEquivalent != nil {
             coder.encodeObject(keyEquivalent!, forKey: "keyEquivalent")
         }
@@ -117,8 +116,8 @@ class SBButton: SBView, NSCoding {
     func executeAction() {
         if let target = target as? NSObject {
             if action != nil {
-                if target.respondsToSelector(action!) {
-                    SBPerform(target, action!, self)
+                if target.respondsToSelector(action) {
+                    SBPerform(target, action, self)
                 }
             }
         }

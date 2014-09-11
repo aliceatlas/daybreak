@@ -34,8 +34,8 @@ class SBTabbarItem: SBView {
         set(tag) { _tag = tag }
     }
     var image: NSImage?
-    var closeSelector = Selector()
-    var selectSelector = Selector()
+    var closeSelector: Selector = nil
+    var selectSelector: Selector = nil
     private var downInClose = false
     private var dragInClose = false
     private var area: NSTrackingArea!
