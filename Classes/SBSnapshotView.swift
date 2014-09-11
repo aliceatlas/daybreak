@@ -109,12 +109,14 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     private lazy var widthField: SBBLKGUITextField = {
         let widthField = SBBLKGUITextField(frame: NSMakeRect(6, self.imageViewSize.height - 130, 67, 24))
         widthField.delegate = self
+        widthField.formatter = self.numberFormatter
         return widthField
     }()
     
     private lazy var heightField: SBBLKGUITextField = {
         let heightField = SBBLKGUITextField(frame: NSMakeRect(6, self.imageViewSize.height - 162, 67, 24))
         heightField.delegate = self
+        heightField.formatter = self.numberFormatter
         return heightField
     }()
     
@@ -131,6 +133,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     private lazy var scaleField: SBBLKGUITextField = {
         let scaleField = SBBLKGUITextField(frame: NSMakeRect(6, self.imageViewSize.height - 216, 67, 24))
         scaleField.delegate = self
+        scaleField.formatter = self.numberFormatter
         return scaleField
     }()
     
@@ -307,6 +310,12 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return doneButton
     }()
     
+    private lazy var numberFormatter: NSNumberFormatter = {
+        let formatter = NSNumberFormatter()
+        formatter.numberStyle = .NoStyle
+        return formatter
+    }()
+    
     //private var progressBackgroundView: SBView
     //private var progressField: NSTextField
     //progressField.stringValue = NSLocalizedString("Updating...", comment: "")
@@ -436,11 +445,11 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                 updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "updateWithTimer:", userInfo: field, repeats: false)
             } else {
                 if field === widthField {
-                    widthField.stringValue = String(Int(successSize.width))
+                    widthField.integerValue = Int(successSize.width)
                 } else if field === heightField {
-                    heightField.stringValue = String(Int(successSize.height))
+                    heightField.integerValue = Int(successSize.height)
                 } else if field === scaleField {
-                    scaleField.stringValue = String(Int(successScale * 100))
+                    scaleField.integerValue = Int(successScale * 100)
                 }
             }
         } else {
@@ -526,9 +535,9 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                 onlyVisibleButton.state = NSUserDefaults.standardUserDefaults().boolForKey(kSBSnapshotOnlyVisiblePortion) ? NSOnState : NSOffState
             }
             // Set image to image view
-            widthField.stringValue = String(Int(r.size.width))
-            heightField.stringValue = String(Int(r.size.height))
-            scaleField.stringValue = String(100)
+            widthField.integerValue = Int(r.size.width)
+            heightField.integerValue = Int(r.size.height)
+            scaleField.integerValue = 100
             update(field: nil)
             successScale = 1.0
             
@@ -621,15 +630,15 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                 }
                 SBConstrain(&newSize.height, min: 1)
                 SBConstrain(&per, min: 0.01)
-                heightField.stringValue = String(Int(newSize.height))
-                scaleField.stringValue = String(Int(per * 100))
+                heightField.integerValue = Int(newSize.height)
+                scaleField.integerValue = Int(per * 100)
             }
             newSize.width = value
-            widthField.stringValue = String(Int(newSize.width))
+            widthField.integerValue = Int(newSize.width)
         } else if field === heightField {
             value = CGFloat(heightField.integerValue)
             if value < 1 {
-                heightField.stringValue = String(1)
+                heightField.integerValue = 1
                 value = 1
             }
             if locked {
@@ -642,16 +651,16 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                 }
                 SBConstrain(&newSize.width, min: 1)
                 SBConstrain(&per, min: 0.01)
-                widthField.stringValue = String(Int(newSize.width))
-                scaleField.stringValue = String(Int(per * 100))
+                widthField.integerValue = Int(newSize.width)
+                scaleField.integerValue = Int(per * 100)
             }
             newSize.height = value
-            heightField.stringValue = String(Int(newSize.height))
+            heightField.integerValue = Int(newSize.height)
         } else if field === scaleField {
             if locked {
                 per = CGFloat(scaleField.integerValue) / 100
                 if per < 0.01 {
-                    scaleField.stringValue = String(1)
+                    scaleField.integerValue = 1
                     per = 0.01
                 }
                 if onlyVisibleButton.state == NSOnState {
@@ -661,9 +670,9 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                     newSize.width = image!.size.width * per
                     newSize.height = image!.size.height * per
                 }
-                widthField.stringValue = String(Int(newSize.width))
-                heightField.stringValue = String(Int(newSize.height))
-                scaleField.stringValue = String(Int(per * 100))
+                widthField.integerValue = Int(newSize.width)
+                heightField.integerValue = Int(newSize.height)
+                scaleField.integerValue = Int(per * 100)
                 successScale = per
             }
         } else {
@@ -671,7 +680,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                 per = CGFloat(scaleField.integerValue) / 100
             }
             if per < 0.01 {
-                scaleField.stringValue = String(1)
+                scaleField.integerValue = 1
                 per = 0.01
             }
             if onlyVisibleButton.state == NSOnState {
@@ -681,9 +690,9 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                 newSize.width = image!.size.width * per
                 newSize.height = image!.size.height * per
             }
-            widthField.stringValue = String(Int(newSize.width))
-            heightField.stringValue = String(Int(newSize.height))
-            scaleField.stringValue = String(Int(per * 100))
+            widthField.integerValue = Int(newSize.width)
+            heightField.integerValue = Int(newSize.height)
+            scaleField.integerValue = Int(per * 100)
         }
         updatePreviewImage()
         r.size = newSize
