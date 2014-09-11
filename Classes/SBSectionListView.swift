@@ -158,7 +158,7 @@ class SBSectionGroupView: SBView {
         // Gray scales
         let path = NSBezierPath(roundedRect: r, xRadius: 8.0, yRadius: 8.0)
         let strokePath = NSBezierPath(roundedRect: NSInsetRect(r, 0.5, 0.5), xRadius: 8.0, yRadius: 8.0)
-        let shadowColor = NSColor(deviceWhite: 0.5, alpha: 1.0).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+        let shadowColor = NSColor(calibratedWhite: 0.5, alpha: 1.0)
         let shadow = NSShadow()
         shadow.shadowColor = shadowColor
         shadow.shadowBlurRadius = 5.0
