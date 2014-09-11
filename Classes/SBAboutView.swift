@@ -41,54 +41,52 @@ class SBAboutView: SBView {
         return iconImageView
     }()
     
-    private lazy var nameLabel: NSTextField? = {
+    private lazy var nameLabel: NSTextField = {
+        let nameLabel = NSTextField()
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.editable = false
+        nameLabel.bordered = false
+        nameLabel.drawsBackground = false
+        nameLabel.textColor = NSColor.whiteColor()
+        nameLabel.font = NSFont.boldSystemFontOfSize(20)
+        nameLabel.alignment = .LeftTextAlignment
         let bundle = NSBundle.mainBundle()
         let info = bundle.infoDictionary
         let localizedInfo = bundle.localizedInfoDictionary
-        let name: String? = localizedInfo["CFBundleName"] as? NSString
-        let version: String? = info["CFBundleVersion"] as? NSString
-        let string: String? = (name != nil) ? ((version != nil) ? "\(name) \(version)" : name) : nil
+        let name = localizedInfo["CFBundleName"] as? NSString
+        let version = info["CFBundleVersion"] as? NSString
+        let string: String? = (name != nil) ? ((version != nil) ? "\(name!) \(version!)" : name!) : nil
         if string != nil {
-            let nameLabel = NSTextField(frame: self.nameLabelRect)
-            nameLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
-            nameLabel.editable = false
-            nameLabel.bordered = false
-            nameLabel.drawsBackground = false
-            nameLabel.textColor = NSColor.whiteColor()
-            nameLabel.font = NSFont.boldSystemFontOfSize(20)
-            nameLabel.alignment = .LeftTextAlignment
             nameLabel.stringValue = string!
-            return nameLabel
         }
-        return nil
+        return nameLabel
     }()
     
-    private lazy var identifierLabel: NSTextField? = {
-        if let string: String = NSBundle.mainBundle().infoDictionary["CFBundleIdentifier"] as? NSString {
-            let identifierLabel = NSTextField(frame: self.identifierLabelRect)
-            identifierLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
-            identifierLabel.editable = false
-            identifierLabel.bordered = false
-            identifierLabel.drawsBackground = false
-            identifierLabel.textColor = NSColor(calibratedWhite: 0.8, alpha: 1.0)
-            identifierLabel.font = NSFont.systemFontOfSize(12.0)
-            identifierLabel.alignment = .LeftTextAlignment
+    private lazy var identifierLabel: NSTextField = {
+        let identifierLabel = NSTextField()
+        identifierLabel.translatesAutoresizingMaskIntoConstraints = false
+        identifierLabel.editable = false
+        identifierLabel.bordered = false
+        identifierLabel.drawsBackground = false
+        identifierLabel.textColor = NSColor(calibratedWhite: 0.8, alpha: 1.0)
+        identifierLabel.font = NSFont.systemFontOfSize(12.0)
+        identifierLabel.alignment = .LeftTextAlignment
+        if let string = NSBundle.mainBundle().infoDictionary["CFBundleIdentifier"] as? NSString {
             identifierLabel.stringValue = string
-            return identifierLabel
         }
-        return nil
+        return identifierLabel
     }()
     
     private lazy var creditScrollView: SBBLKGUIScrollView = {
-        let r = self.creditLabelRect
         let rtfdPath = NSBundle.mainBundle().pathForResource("Credits", ofType: "rtfd")
-        let creditLabel = NSTextView(frame: r)
-        creditLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        let creditLabel = NSTextView()
+        creditLabel.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         creditLabel.editable = false
         creditLabel.selectable = true
         creditLabel.drawsBackground = false
         creditLabel.readRTFDFromFile(rtfdPath)
-        let creditScrollView = SBBLKGUIScrollView(frame: r)
+        let creditScrollView = SBBLKGUIScrollView()
+        creditScrollView.translatesAutoresizingMaskIntoConstraints = false
         creditScrollView.autohidesScrollers = true
         creditScrollView.hasHorizontalScroller = false
         creditScrollView.hasVerticalScroller = true
@@ -98,29 +96,40 @@ class SBAboutView: SBView {
         return creditScrollView
     }()
     
-    private lazy var copyrightLabel: NSTextField? = {
-        if let string: String = NSBundle.mainBundle().localizedInfoDictionary["NSHumanReadableCopyright"] as? NSString {
-            let copyrightLabel = NSTextField(frame: self.copyrightLabelRect)
-            copyrightLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
-            copyrightLabel.editable = false
-            copyrightLabel.bordered = false
-            copyrightLabel.drawsBackground = false
-            copyrightLabel.textColor = NSColor.grayColor()
-            copyrightLabel.font = NSFont.systemFontOfSize(12.0)
-            copyrightLabel.alignment = .LeftTextAlignment
+    private lazy var copyrightLabel: NSTextField = {
+        let copyrightLabel = NSTextField()
+        copyrightLabel.translatesAutoresizingMaskIntoConstraints = false
+        copyrightLabel.editable = false
+        copyrightLabel.bordered = false
+        copyrightLabel.drawsBackground = false
+        copyrightLabel.textColor = NSColor.grayColor()
+        copyrightLabel.font = NSFont.systemFontOfSize(12.0)
+        copyrightLabel.alignment = .LeftTextAlignment
+        if let string = NSBundle.mainBundle().localizedInfoDictionary["NSHumanReadableCopyright"] as? NSString {
             copyrightLabel.stringValue = string
-            return copyrightLabel
         }
-        return nil
+        return copyrightLabel
     }()
     
     private lazy var backButton: SBBLKGUIButton = {
-        let backButton = SBBLKGUIButton(frame: self.backButtonRect)
+        let backButton = SBBLKGUIButton()
+        backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.title = NSLocalizedString("Back", comment: "")
         backButton.target = self
         backButton.action = "cancel"
         backButton.keyEquivalent = "\u{1B}"
         return backButton
+    }()
+    
+    private lazy var rightColumn: NSView = {
+        let rightColumn = NSView()
+        rightColumn.translatesAutoresizingMaskIntoConstraints = false
+        rightColumn.addSubviewsAndConstraintStrings(
+            metrics: ["margin": 10],
+            views: ["name": self.nameLabel, "identifier": self.identifierLabel, "credits": self.creditScrollView, "copyright": self.copyrightLabel, "back": self.backButton],
+            constraints: ["V:|[name(24)][identifier(16)]-margin-[credits]-margin-[copyright(16)]-40-[back(23)]|",
+             "|[name]|", "|[identifier]|", "|[credits]|", "|[copyright]|", "[back(105)]|"])
+        return rightColumn
     }()
     
     class var sharedView: SBAboutView {
@@ -131,17 +140,8 @@ class SBAboutView: SBView {
         super.init(frame: frame)
         animationDuration = 2.0
         // addSubview(iconImageView) //???
-        if nameLabel != nil {
-            addSubview(nameLabel!)
-        }
-        if identifierLabel != nil {
-            addSubview(identifierLabel!)
-        }
-        addSubview(creditScrollView)
-        if copyrightLabel != nil {
-            addSubview(copyrightLabel!)
-        }
-        addSubview(backButton)
+        addSubviewsAndConstraintStrings(metrics: [:], views: ["rightColumn": rightColumn],
+            constraints: ["V:|[rightColumn]|", "[rightColumn(336)]|"])
         autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
     }
     
@@ -157,50 +157,6 @@ class SBAboutView: SBView {
         r.size.height = r.size.width
         r.origin.x = 32.0
         r.origin.y = bounds.size.height - r.size.height
-        return r
-    }
-    
-    var nameLabelRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = 240.0
-        r.size.height = 24.0
-        r.origin.x = NSMaxX(iconImageRect) + iconImageRect.origin.x
-        r.origin.y = NSMaxY(iconImageRect) - r.size.height
-        return r
-    }
-    
-    var identifierLabelRect: NSRect {
-        var r = NSZeroRect
-        r.origin.x = nameLabelRect.origin.x
-        r.size.width = bounds.size.width - r.origin.x
-        r.size.height = 16.0
-        r.origin.y = nameLabelRect.origin.y - r.size.height
-        return r
-    }
-    
-    var creditLabelRect: NSRect {
-        var r = NSZeroRect
-        r.origin.x = identifierLabelRect.origin.x
-        r.size.width = bounds.size.width - r.origin.x
-        r.origin.y = NSMaxY(copyrightLabelRect) + 10.0
-        r.size.height = identifierLabelRect.origin.y - (r.origin.y + 10.0)
-        return r
-    }
-    
-    var copyrightLabelRect: NSRect {
-        var r = NSZeroRect
-        r.origin.x = NSMaxX(iconImageRect) + iconImageRect.origin.x
-        r.size.width = bounds.size.width - r.origin.x
-        r.size.height = 16.0
-        r.origin.y = 64.0
-        return r
-    }
-    
-    var backButtonRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = 105.0
-        r.size.height = 24.0
-        r.origin.x = bounds.size.width - r.size.width
         return r
     }
     

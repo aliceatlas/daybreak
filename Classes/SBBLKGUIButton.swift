@@ -31,6 +31,10 @@ class SBBLKGUIButton: NSButton {
         SBBLKGUIButton.setCellClass(SBBLKGUIButtonCell.self)
     }
     
+    convenience override init() {
+        self.init(frame: NSZeroRect)
+    }
+    
     override init(frame: NSRect) {
         super.init(frame: frame)
         buttonType = .MomentaryChangeButton
@@ -58,6 +62,10 @@ class SBBLKGUIButton: NSButton {
             (self.cell() as SBBLKGUIButtonCell).selected = selected
         }
     }*/
+    
+    override var alignmentRectInsets: NSEdgeInsets {
+        return NSEdgeInsetsMake(6, 0, 6, 0)
+    }
 }
 
 

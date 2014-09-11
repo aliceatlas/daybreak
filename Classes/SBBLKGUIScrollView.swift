@@ -42,6 +42,10 @@ class SBBLKGUIScrollView: NSScrollView {
         }
     }
 
+    convenience override init() {
+        self.init(frame: NSZeroRect)
+    }
+    
     override init(frame: NSRect) {
         super.init(frame: frame)
         initialize()

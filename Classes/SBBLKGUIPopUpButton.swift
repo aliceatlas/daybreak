@@ -30,6 +30,18 @@ class SBBLKGUIPopUpButton: NSPopUpButton {
     override class func initialize() {
         SBBLKGUIPopUpButton.setCellClass(SBBLKGUIPopUpButtonCell.self)
     }
+    
+    convenience override init() {
+        self.init(frame: NSZeroRect)
+    }
+    
+    override init(frame: NSRect) {
+        super.init(frame: frame)
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
 }
 
 class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
