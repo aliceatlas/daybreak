@@ -168,6 +168,7 @@
 		50CDD1D21984879B00C756F5 /* SBBLKGUIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B8196923B4009219AF /* SBBLKGUIScrollView.swift */; };
 		50CE69E019863F4C00C17D44 /* SBWebResourceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE69DF19863F4C00C17D44 /* SBWebResourceIdentifier.swift */; };
 		50CE69E21986441C00C17D44 /* SBPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE69E11986441C00C17D44 /* SBPreferences.swift */; };
+		50D7C34F19C22DE500B3F7C3 /* NSView-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D7C34E19C22DE500B3F7C3 /* NSView-SBAdditions.swift */; };
 		50DF8A3019639D03005DAF26 /* SBDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF8A2F19639D03005DAF26 /* SBDownloader.swift */; };
 		50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF8A331963A5A5005DAF26 /* SBDownloads.swift */; };
 		50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F850621967FD4D00C28795 /* SBSegmentedButton.swift */; };
@@ -394,6 +395,7 @@
 		50C8ED6419ACE4C700F7E17B /* SBWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBWindowController.swift; path = Classes/SBWindowController.swift; sourceTree = "<group>"; };
 		50CE69DF19863F4C00C17D44 /* SBWebResourceIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBWebResourceIdentifier.swift; path = Classes/SBWebResourceIdentifier.swift; sourceTree = "<group>"; };
 		50CE69E11986441C00C17D44 /* SBPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPreferences.swift; path = Classes/SBPreferences.swift; sourceTree = "<group>"; };
+		50D7C34E19C22DE500B3F7C3 /* NSView-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSView-SBAdditions.swift"; path = "Additions/NSView-SBAdditions.swift"; sourceTree = "<group>"; };
 		50DF8A2F19639D03005DAF26 /* SBDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownloader.swift; path = Classes/SBDownloader.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50DF8A331963A5A5005DAF26 /* SBDownloads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownloads.swift; path = Classes/SBDownloads.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		50E9F9A519AC48FC00B4E61E /* SBHistoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBHistoryView.swift; path = Classes/SBHistoryView.swift; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 				502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */,
 				502DEBB619C0A64A006A68C3 /* NSString-SBURLAdditions.swift */,
 				502DEBA819C067C9006A68C3 /* NSURL-SBAdditions.swift */,
+				50D7C34E19C22DE500B3F7C3 /* NSView-SBAdditions.swift */,
 				50B2A9A81960E19A00DA1B4A /* Array-SBAdditions.swift */,
 				501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */,
 				50B2A9AC1961174700DA1B4A /* String-SBURLAdditions.swift */,
@@ -1034,6 +1037,7 @@
 				505E49FB198CA096001F5254 /* SBSectionGroup.swift in Sources */,
 				50B2A99D1960221D00DA1B4A /* SBApplicationDelegate.swift in Sources */,
 				50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */,
+				50D7C34F19C22DE500B3F7C3 /* NSView-SBAdditions.swift in Sources */,
 				5008E34C19B9DB7500BED173 /* SBBookmarkView.swift in Sources */,
 				50ACCE011965380E00CE593E /* SBPreferencesWindowController.swift in Sources */,
 				505E49F4198A2645001F5254 /* SBButton.swift in Sources */,
