@@ -6,7 +6,6 @@
 #import "SBDocument.h"
 #import "SBUtil.h"
 
-#import "SBSectionListView.h"
 #import "SBBookmarkListView.h"
 
 #import "NSSavePanel-SBAdditions.h"

@@ -96,7 +96,7 @@ class SBPreferencesWindowController: SBWindowController {
     lazy var sectionListView: SBSectionListView = {
         let sectionListView = SBSectionListView(frame: self.sectionListViewRect)
         sectionListView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-        sectionListView.sections = NSMutableArray(array: self.sections)
+        sectionListView.sections = self.sections
         return sectionListView
     }()
     

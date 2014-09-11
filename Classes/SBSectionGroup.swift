@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Cocoa
 
 class SBSectionGroup: NSObject {
-    var title: String?
+    var title: String
     var items: [SBSectionItem] = []
     
     init(title: String) {
@@ -42,8 +42,8 @@ class SBSectionGroup: NSObject {
 }
 
 class SBSectionItem: NSObject {
-    var title: String?
-    var keyName: String?
+    var title: String
+    var keyName: String
     var controlClass: AnyClass = NSObject.self
     var context: AnyObject?
     

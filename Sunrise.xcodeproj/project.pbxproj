@@ -24,7 +24,6 @@
 		08742F5510234024001F7EAF /* Plain.png in Resources */ = {isa = PBXBuildFile; fileRef = 08742F5410234024001F7EAF /* Plain.png */; };
 		087BB8AD10174D2300B14EF6 /* Reload.png in Resources */ = {isa = PBXBuildFile; fileRef = 087BB8AC10174D2300B14EF6 /* Reload.png */; };
 		087BB8AF10174D2D00B14EF6 /* Stop.png in Resources */ = {isa = PBXBuildFile; fileRef = 087BB8AE10174D2D00B14EF6 /* Stop.png */; };
-		088440661032950200AF4E2D /* SBSectionListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088440651032950200AF4E2D /* SBSectionListView.m */; };
 		088D26E0101B3EC400691CEC /* SBBookmarkListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 088D26DF101B3EC400691CEC /* SBBookmarkListView.m */; };
 		088D299E101B5F3B00691CEC /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 088D299D101B5F3B00691CEC /* Edit.png */; };
 		089106870FE520E100DFE290 /* Resizer.png in Resources */ = {isa = PBXBuildFile; fileRef = 089106860FE520E100DFE290 /* Resizer.png */; };
@@ -119,6 +118,7 @@
 		502DEBB519C09517006A68C3 /* SBCircleProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBB219C089DC006A68C3 /* SBCircleProgressIndicator.swift */; };
 		502DEBB719C0A64A006A68C3 /* NSString-SBURLAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBB619C0A64A006A68C3 /* NSString-SBURLAdditions.swift */; };
 		502DEBB819C0C8A6006A68C3 /* SBSnapshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5000B70919BF5636003DD2D1 /* SBSnapshotView.swift */; };
+		502DEBBE19C1180F006A68C3 /* SBSectionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBBD19C1180F006A68C3 /* SBSectionListView.swift */; };
 		5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */; };
 		5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66819655AF00053CBF1 /* SBLoadButton.swift */; };
 		505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B6196916EF009219AF /* SBPopUpButton.swift */; };
@@ -226,8 +226,6 @@
 		08742F5410234024001F7EAF /* Plain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Plain.png; path = Resources/Images/Plain.png; sourceTree = "<group>"; };
 		087BB8AC10174D2300B14EF6 /* Reload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Reload.png; path = Resources/Images/Reload.png; sourceTree = "<group>"; };
 		087BB8AE10174D2D00B14EF6 /* Stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Stop.png; path = Resources/Images/Stop.png; sourceTree = "<group>"; };
-		088440641032950200AF4E2D /* SBSectionListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBSectionListView.h; path = Classes/SBSectionListView.h; sourceTree = "<group>"; };
-		088440651032950200AF4E2D /* SBSectionListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBSectionListView.m; path = Classes/SBSectionListView.m; sourceTree = "<group>"; };
 		088D26DE101B3EC400691CEC /* SBBookmarkListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBookmarkListView.h; path = Classes/SBBookmarkListView.h; sourceTree = "<group>"; };
 		088D26DF101B3EC400691CEC /* SBBookmarkListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = SBBookmarkListView.m; path = Classes/SBBookmarkListView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		088D299D101B5F3B00691CEC /* Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Edit.png; path = Resources/Images/Edit.png; sourceTree = "<group>"; };
@@ -344,6 +342,7 @@
 		502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSColor-SBAdditions.swift"; path = "Additions/NSColor-SBAdditions.swift"; sourceTree = "<group>"; };
 		502DEBB219C089DC006A68C3 /* SBCircleProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBCircleProgressIndicator.swift; path = Classes/SBCircleProgressIndicator.swift; sourceTree = "<group>"; };
 		502DEBB619C0A64A006A68C3 /* NSString-SBURLAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSString-SBURLAdditions.swift"; path = "Additions/NSString-SBURLAdditions.swift"; sourceTree = "<group>"; };
+		502DEBBD19C1180F006A68C3 /* SBSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSectionListView.swift; path = Classes/SBSectionListView.swift; sourceTree = "<group>"; };
 		5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBRenderWindow.swift; path = Classes/SBRenderWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5044E66719654CB20053CBF1 /* SBAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SBAdditions.h; path = Additions/SBAdditions.h; sourceTree = "<group>"; };
 		5044E66819655AF00053CBF1 /* SBLoadButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLoadButton.swift; path = Classes/SBLoadButton.swift; sourceTree = "<group>"; };
@@ -489,8 +488,7 @@
 				50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */,
 				50FEEAA319BF307400962BB9 /* SBFixedSplitView.swift */,
 				50FEEAA119BF2F1000962BB9 /* SBInnerView.swift */,
-				088440641032950200AF4E2D /* SBSectionListView.h */,
-				088440651032950200AF4E2D /* SBSectionListView.m */,
+				502DEBBD19C1180F006A68C3 /* SBSectionListView.swift */,
 				50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */,
 				505E49FA198CA095001F5254 /* SBSectionGroup.swift */,
 				084067890FE2C11700CC80E3 /* SBURLField.h */,
@@ -995,6 +993,7 @@
 				50FEEA9719BABFDD00962BB9 /* SBSidebar.swift in Sources */,
 				089956CD0FE39C8200DED3BA /* SBView.m in Sources */,
 				508FAC5319653AC400F4380F /* main.swift in Sources */,
+				502DEBBE19C1180F006A68C3 /* SBSectionListView.swift in Sources */,
 				50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */,
 				5076918F19BA169600F64734 /* SBBLKGUISlider.swift in Sources */,
 				5076918D19BA0DF400F64734 /* SBSourceTextView.swift in Sources */,
@@ -1032,7 +1031,6 @@
 				50B2A99F196028B700DA1B4A /* SBDocumentController.swift in Sources */,
 				50FEEAA619BF345C00962BB9 /* SBSearchbar.swift in Sources */,
 				505E49F6198B7639001F5254 /* SBToolbar.swift in Sources */,
-				088440661032950200AF4E2D /* SBSectionListView.m in Sources */,
 				505E49FB198CA096001F5254 /* SBSectionGroup.swift in Sources */,
 				50B2A99D1960221D00DA1B4A /* SBApplicationDelegate.swift in Sources */,
 				50DF8A351963BF0B005DAF26 /* SBDownloads.swift in Sources */,
