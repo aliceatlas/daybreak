@@ -135,10 +135,10 @@ extension NSString {
             let string = URLEncodedString
             let attributedString = NSAttributedString(string: string)
             var range = NSMakeRange(0, 0)
-            let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
+            let URL: NSURL? = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
             r = range.location == 0
             if r {
-                hasScheme.memory = ObjCBool((URL.scheme?.utf16Count ?? 0) > 0 ? string.hasPrefix(URL.scheme!) : false)
+                hasScheme.memory = ObjCBool((URL?.scheme?.utf16Count ?? 0) > 0 ? string.hasPrefix(URL!.scheme!) : false)
                 //hasScheme.memory = ObjCBool(URL.absoluteString == string)
             }
         }
