@@ -87,7 +87,7 @@ class SBWebView: WebView, SBFindbarTarget {
     func searchFor(searchString: String, direction forward: Bool, caseSensitive caseFlag: Bool, wrap wrapFlag: Bool, continuous: Bool) -> Bool {
         var r = false
         if continuous {
-            let range = rageOfStringInWebDocument(searchString, caseSensitive: caseFlag) // Flip case flag
+            let range = rangeOfStringInWebDocument(searchString, caseSensitive: caseFlag) // Flip case flag
             r = range.location != NSNotFound
         } else {
             r = searchFor(searchString, direction: forward, caseSensitive: !caseFlag, wrap: wrapFlag)
@@ -122,7 +122,7 @@ class SBWebView: WebView, SBFindbarTarget {
     }
     
     // Return range of string in web document
-    func rageOfStringInWebDocument(string: String, caseSensitive caseFlag: Bool) -> NSRange {
+    func rangeOfStringInWebDocument(string: String, caseSensitive caseFlag: Bool) -> NSRange {
         if !documentString.isEmpty {
             return (documentString as NSString).rangeOfString(string, options:(caseFlag ? .CaseInsensitiveSearch : nil))
         }
