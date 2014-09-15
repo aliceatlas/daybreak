@@ -128,8 +128,8 @@ class SBSavePanelContentView: SBView {
         
         // Paths
         // Gray scales
-        let path = SBRoundedPathS(rect: CGRectInset(bounds, 0.0, 0.0), 8.0, 0.0, false, true)
-        let strokePath = SBRoundedPathS(rect: CGRectInset(bounds, 0.5, 0.5), 8.0, 0.0, false, true)
+        let path = SBRoundedPathS(CGRectInset(bounds, 0.0, 0.0), 8.0, 0.0, false, true)
+        let strokePath = SBRoundedPathS(CGRectInset(bounds, 0.5, 0.5), 8.0, 0.0, false, true)
         
         // Frame
         let gradient = NSGradient(colors: colors, atLocations: [0.0, 0.95, 1.0], colorSpace: NSColorSpace.deviceRGBColorSpace())
