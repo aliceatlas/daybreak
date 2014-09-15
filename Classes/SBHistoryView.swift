@@ -252,9 +252,9 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
             items = []
             for item in allItems {
                 var string = ""
-                if item.originalURLString != nil { string += " \(item.originalURLString)" }
-                if item.URLString != nil { string += " \(item.URLString)" }
-                if item.title != nil { string += " \(item.title)" }
+                item.originalURLString !! { string += " \($0)" }
+                item.URLString !! { string += " \($0)" }
+                item.title !! { string += " \($0)" }
                 if !string.isEmpty {
                     var index = 0
                     for searchWord in searchWords {
@@ -324,7 +324,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         default:
             break
         }
-        if string != nil && !(string!.isEmpty) {
+        if !(string ?? "").isEmpty {
             let attributes = [NSFontAttributeName: NSFont.systemFontOfSize(14.0),
                               NSForegroundColorAttributeName: NSColor.whiteColor()]
             let attributedString = NSAttributedString(string: string!, attributes: attributes)
@@ -395,14 +395,13 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         for var index = indexes.lastIndex; index != NSNotFound; index = indexes.indexLessThanIndex(index) {
             let item: WebHistoryItem? = (index < items.count) ? items[index] : nil
             let URLString = item?.URLString
-            let url: NSURL? = URLString != nil ? NSURL(string: URLString!) : nil
-            if url != nil {
-                urls.append(url!)
+            if let URL = URLString !! {NSURL(string: $0)} {
+                urls.append(URL)
             }
         }
-        if target != nil && doneSelector != nil {
-            if target.respondsToSelector(doneSelector) {
-                SBPerform(target, doneSelector, urls as NSArray)
+        if (target !! doneSelector) != nil {
+            if target!.respondsToSelector(doneSelector) {
+                SBPerform(target!, doneSelector, urls as NSArray)
             }
         }
     }

@@ -151,12 +151,8 @@ func SBCreateBookmarkItemS(title: String?, url: String?, imageData: NSData?, dat
 
 func SBConstrain<T: Comparable>(value: T, min minValue: T? = nil, max maxValue: T? = nil) -> T {
     var v = value
-    if minValue != nil {
-        v = max(v, minValue!)
-    }
-    if maxValue != nil {
-        v = min(v, maxValue!)
-    }
+    minValue !! { v = max(v, $0) }
+    maxValue !! { v = min(v, $0) }
     return v
 }
 
@@ -164,9 +160,45 @@ func SBConstrain<T: Comparable>(inout value: T, min minValue: T? = nil, max maxV
     value = SBConstrain(value, min: minValue, max: maxValue)
 }
 
+infix operator !! {
+    associativity right
+    precedence 120
+}
+
+func !!<T, U>(optional: T?, nonNilValue: @autoclosure () -> U?) -> U? {
+    if optional != nil {
+        return nonNilValue()
+    }
+    return nil
+}
+
+func !!<T, U>(optional: T?, nonNilValue: @autoclosure () -> U) -> U? {
+    if optional != nil {
+        return nonNilValue()
+    }
+    return nil
+}
+
+func !!<T, U>(optional: T?, nonNilFunc: T -> U?) -> U? {
+    return optional !! nonNilFunc(optional!)
+}
+
+func !!<T, U>(optional: T?, nonNilFunc: T -> U) -> U? {
+    return optional !! nonNilFunc(optional!)
+}
+
+infix operator &! {
+    associativity right
+    precedence 120
+}
+
+func &!<T>(optional: T?, nonNilCond: T -> Bool) -> Bool {
+    return optional !! nonNilCond ?? false
+}
+
 // MARK: Paths
 
-func SBRoundedPathS(rect inRect: CGRect, curve: CGFloat, inner: CGFloat, top: Bool, bottom: Bool) -> NSBezierPath {
+func SBRoundedPathS(inRect: CGRect, curve: CGFloat, inner: CGFloat, top: Bool, bottom: Bool) -> NSBezierPath {
     let path = NSBezierPath()
     var rect = inRect
     var point = CGPointZero

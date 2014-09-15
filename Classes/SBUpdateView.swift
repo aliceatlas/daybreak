@@ -260,23 +260,18 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     }
     
     func skip() {
-        if versionString != nil {
-            NSUserDefaults.standardUserDefaults().setObject(versionString!, forKey: kSBUpdaterSkipVersion)
-        }
+        versionString !! { NSUserDefaults.standardUserDefaults().setObject($0, forKey: kSBUpdaterSkipVersion) }
         cancel()
     }
     
     // MARK: Functions
     
     func htmlString(#baseURL: NSURL, releaseNotesData data: NSData?) -> String? {
-        var htmlString: String?
         if data != nil {
             let baseHTML: NSString? = NSString(contentsOfURL: baseURL, encoding: NSUTF8StringEncoding, error: nil)
             let releaseNotes: NSString? = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            if baseHTML != nil {
-                htmlString = NSString(format: baseHTML!, releaseNotes ?? NSLocalizedString("No data", comment: ""))
-            }
+            return baseHTML !! { NSString(format: $0, releaseNotes ?? NSLocalizedString("No data", comment: "")) }
         }
-        return htmlString
+        return nil
     }
 }

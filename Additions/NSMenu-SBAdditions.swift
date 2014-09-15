@@ -42,7 +42,7 @@ extension NSMenu {
         for item in itemArray as [NSMenuItem] {
             let repObject = item.representedObject
             let equal = (repObject == nil && representedObject == nil) || repObject === representedObject
-            item.state = equal ? ((selectedItem != nil) ? NSOffState : NSOnState) : NSOffState
+            item.state = equal ? (selectedItem !! NSOffState ?? NSOnState) : NSOffState
             if equal && selectedItem == nil {
                 selectedItem = item
             }

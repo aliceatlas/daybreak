@@ -246,9 +246,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
                 animation.delegate = self
                 animation.startAnimation()
             }
-            if currentDownloadView != nil {
-                layoutToolsForItem(currentDownloadView!)
-            }
+            currentDownloadView !! { self.layoutToolsForItem($0) }
         }
     }
     

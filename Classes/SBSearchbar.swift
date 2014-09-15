@@ -77,18 +77,18 @@ class SBSearchbar: SBFindbar {
     func executeDoneSelector(sender: AnyObject) {
         let text = searchField.stringValue
         if !text.isEmpty {
-            if target != nil && doneSelector != nil {
-                if target.respondsToSelector(doneSelector) {
-                    SBPerform(target, doneSelector, text)
+            if (target !! doneSelector) != nil {
+                if target!.respondsToSelector(doneSelector) {
+                    SBPerform(target!, doneSelector, text)
                 }
             }
         }
     }
     
     override func executeClose() {
-        if target != nil && cancelSelector != nil {
-            if target.respondsToSelector(cancelSelector) {
-                SBPerform(target, cancelSelector, self)
+        if (target !! cancelSelector) != nil {
+            if target!.respondsToSelector(cancelSelector) {
+                SBPerform(target!, cancelSelector, self)
             }
         }
     }

@@ -337,9 +337,9 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         SBDrawGradientInContext(ctx, count, locations, colors, points)
         CGContextRestoreGState(ctx)
         
-        if image != nil {
-            var imageRect = NSRectToCGRect(self.imageRect)
-            image!.drawInRect(NSRectFromCGRect(imageRect), fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 0.85)
+        if let image = image {
+            var imageRect = self.imageRect
+            image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 0.85)
             
             imageRect.origin.y -= imageRect.size.height
             imageRect.size.height *= 0.5
@@ -347,7 +347,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
             CGContextTranslateCTM(ctx, 0.0, 0.0)
             CGContextScaleCTM(ctx, 1.0, -1.0)
             CGContextClipToMask(ctx, imageRect, maskImage)
-            image!.drawInRect(NSRectFromCGRect(imageRect), fromRect: NSMakeRect(0, 0, image!.size.width, image!.size.height * 0.5), operation: .CompositeSourceOver, fraction: 1.0)
+            image.drawInRect(imageRect, fromRect: NSMakeRect(0, 0, image.size.width, image.size.height * 0.5), operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
 }

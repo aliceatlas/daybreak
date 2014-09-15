@@ -248,14 +248,12 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func openStrings(#path: String, anotherPath: String? = nil) {
         let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSetS(path)
-        if textSet != nil && !(textSet!.isEmpty) {
+        if !(textSet ?? []).isEmpty {
             destructLocalizeWindowController()
             localizationWindowController = SBLocalizationWindowController(viewSize: viewSize!)
             localizationWindowController!.fieldSet = fieldSet!
             localizationWindowController!.textSet = textSet!
-            if anotherPath != nil {
-                localizationWindowController!.mergeFilePath(anotherPath!)
-            }
+            anotherPath !! { localizationWindowController!.mergeFilePath($0) }
             localizationWindowController!.showWindow(nil)
             
             /*if (floor(NSAppKitVersionNumber) < 1038)	// Resize window frame for auto-resizing (Call for 10.5. Strange bugs of Mac)
@@ -324,9 +322,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func newDocument(AnyObject) {
         var error: NSError?
         SBGetDocumentController().openUntitledDocumentAndDisplay(true, error: &error)
-        if error != nil {
-            DebugLogS("\(__FUNCTION__) \(error)")
-        }
+        error !! { DebugLogS("\(__FUNCTION__) \($0)") }
     }
     
     func openDocument(AnyObject) {

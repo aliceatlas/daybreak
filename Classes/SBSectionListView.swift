@@ -297,7 +297,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             
             let imageView = NSImageView(frame: ir)
             let space = NSWorkspace.sharedWorkspace()
-            let path = SBPreferences.objectForKey(item.keyName) as? String
+            let path = SBPreferences.objectForKey(item.keyName) as? NSString
             if let image = space.iconForFile(path) {
                 image.size = NSMakeSize(16.0, 16.0)
                 imageView.image = image
@@ -310,9 +310,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             field.editable = false
             field.drawsBackground = false
             (field.cell() as NSTextFieldCell).placeholderString = item.context as? String
-            if path != nil {
-                field.stringValue = (path! as NSString).stringByAbbreviatingWithTildeInPath
-            }
+            field.stringValue = path?.stringByAbbreviatingWithTildeInPath ?? ""
             
             addSubview(imageView)
             addSubview(field)
@@ -362,7 +360,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             if $0 == NSOKButton {
                 let imageView = self.currentImageView
                 let field = self.currentField
-                if (imageView != nil) && (field != nil) {
+                if (imageView !! field) != nil {
                     let space = NSWorkspace.sharedWorkspace()
                     let path = panel.URL.path
                     if let image = space.iconForFile(path) {

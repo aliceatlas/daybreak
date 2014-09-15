@@ -89,24 +89,12 @@ class SBButton: SBView, NSCoding {
     
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
-        if image != nil {
-            coder.encodeObject(image!, forKey: "image")
-        }
-        if disableImage != nil {
-            coder.encodeObject(disableImage!, forKey: "disableImage")
-        }
-        if backImage != nil {
-            coder.encodeObject(backImage!, forKey: "backImage")
-        }
-        if backDisableImage != nil {
-            coder.encodeObject(backDisableImage!, forKey: "backDisableImage")
-        }
-        if action != nil {
-            coder.encodeObject(String(_sel: action), forKey: "action")
-        }
-        if keyEquivalent != nil {
-            coder.encodeObject(keyEquivalent!, forKey: "keyEquivalent")
-        }
+        image !! { coder.encodeObject($0, forKey: "image") }
+        disableImage !! { coder.encodeObject($0, forKey: "disableImage") }
+        backImage !! { coder.encodeObject($0, forKey: "backImage") }
+        backDisableImage !! { coder.encodeObject($0, forKey: "backDisableImage") }
+        action !! { coder.encodeObject(String(_sel: $0), forKey: "action") }
+        keyEquivalent !! { coder.encodeObject($0, forKey: "keyEquivalent") }
         coder.encodeBool(enabled, forKey: "enabled")
         coder.encodeInteger(keyEquivalentModifierMask, forKey: "keyEquivalentModifierMask")
     }
@@ -115,10 +103,8 @@ class SBButton: SBView, NSCoding {
     
     func executeAction() {
         if let target = target as? NSObject {
-            if action != nil {
-                if target.respondsToSelector(action) {
-                    SBPerform(target, action, self)
-                }
+            if action &! {target.respondsToSelector($0)} {
+                SBPerform(target, action, self)
             }
         }
     }

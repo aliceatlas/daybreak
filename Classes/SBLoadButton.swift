@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 class SBLoadButton: SBButton {
     var images: [NSImage]? {
         didSet {
-            if images != nil && !(images!.isEmpty) {
+            if !(images ?? []).isEmpty {
                 image = images![0] as NSImage
                 needsDisplay = true
             }

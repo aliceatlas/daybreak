@@ -71,7 +71,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     // MARK: Getter
     
     var isFirstResponder: Bool {
-        return window != nil && window!.firstResponder == superview
+        return window &! {$0.firstResponder === self.superview}
     }
     
     var padding: NSPoint {
@@ -150,14 +150,14 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     }
     
     func finder() {
-        if download.path != nil && NSFileManager.defaultManager().fileExistsAtPath(download.path!) {
+        if download.path &! {NSFileManager.defaultManager().fileExistsAtPath($0)} {
             NSWorkspace.sharedWorkspace().selectFile(download.path!, inFileViewerRootedAtPath: nil)
             (superview as SBDownloadsView).layoutToolsHidden()
         }
     }
     
     func open() {
-        if download.path != nil && NSFileManager.defaultManager().fileExistsAtPath(download.path!) {
+        if download.path &! {NSFileManager.defaultManager().fileExistsAtPath($0)} {
             NSWorkspace.sharedWorkspace().openFile(download.path!)
         }
     }

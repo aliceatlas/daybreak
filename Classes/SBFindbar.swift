@@ -66,9 +66,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         let cell = searchField.cell() as NSSearchFieldCell
         cell.sendsWholeSearchString = true
         cell.sendsSearchStringImmediately = false
-    	if string != nil {
-            searchField.stringValue = string
-        }
+        string !! { searchField.stringValue = $0 }
         return searchField
     }()
     
@@ -126,18 +124,10 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     	addSubview(contentView)
     	contentView.addSubview(searchField)
     	contentView.addSubview(closeButton)
-        if backwardButton != nil {
-            contentView.addSubview(backwardButton!)
-        }
-        if forwardButton != nil {
-            contentView.addSubview(forwardButton!)
-        }
-        if caseSensitiveCheck != nil {
-            contentView.addSubview(caseSensitiveCheck!)
-        }
-        if wrapCheck != nil {
-            contentView.addSubview(wrapCheck!)
-        }
+        backwardButton !! contentView.addSubview
+        forwardButton !! contentView.addSubview
+        caseSensitiveCheck !! contentView.addSubview
+        wrapCheck !! contentView.addSubview
     }
     
     required init(coder: NSCoder) {
@@ -265,7 +255,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     }
     
     func executeClose() {
-        if target != nil && doneSelector != nil {
+        if (target !! doneSelector) != nil {
             if target.respondsToSelector(doneSelector) {
                 SBPerform(target, doneSelector, self)
             }
@@ -310,7 +300,7 @@ class SBFindSearchField: NSSearchField {
     var previousAction: Selector?
     
     func performFindNext(sender: AnyObject?) {
-        if target != nil && nextAction != nil {
+        if (target !! nextAction) != nil {
             if target.respondsToSelector(nextAction!) {
                 SBPerform(target, nextAction!, self)
             }
@@ -318,7 +308,7 @@ class SBFindSearchField: NSSearchField {
     }
     
     func performFindPrevious(sender: AnyObject?) {
-        if target != nil && previousAction != nil {
+        if (target !! previousAction) != nil {
             if target.respondsToSelector(previousAction!) {
                 SBPerform(target, previousAction!, self)
             }

@@ -78,8 +78,7 @@ class SBDocumentWindow: NSWindow {
     }
     override var title: String! {
         didSet {
-            let title: String? = self.title
-            super.title = (title ?? "") as String
+            super.title = (self.title as String?) ?? ""
         }
     }
 
@@ -249,9 +248,7 @@ class SBDocumentWindow: NSWindow {
         }
     #else
         func animationDidStop(animation: NSAnimation) {
-            if coverWindow?.contentView != nil {
-                coverWindow!.contentView!.hidden = false
-            }
+            coverWindow?.contentView !! { $0.hidden = false }
         }
         
         func coverWindowDidEnd(window: NSWindow, returnCode: Int, contextInfo: AnyObject?) {

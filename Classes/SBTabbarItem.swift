@@ -120,7 +120,7 @@ class SBTabbarItem: SBView {
     // MARK: Exec
     
     func executeShouldClose() {
-        if target != nil && closeSelector != nil {
+        if (target !! closeSelector) != nil {
             if target.respondsToSelector(closeSelector) {
                 SBPerform(target, closeSelector, self)
             }
@@ -128,7 +128,7 @@ class SBTabbarItem: SBView {
     }
     
     func executeShouldSelect() {
-        if target != nil && selectSelector != nil {
+        if (target !! selectSelector) != nil {
             if target.respondsToSelector(selectSelector) {
                 SBPerform(target, selectSelector, self)
             }

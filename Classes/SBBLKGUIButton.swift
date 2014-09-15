@@ -97,8 +97,8 @@ class SBBLKGUIButtonCell: NSButtonCell {
     override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
         var image: NSImage?
         let controlView = inView as? NSButton
-        let alpha: CGFloat = (controlView != nil) ? (controlView!.enabled ? 1.0 : 0.2) : 1.0
-        let isDone = (controlView != nil) ? (controlView!.keyEquivalent == "\r") : false
+        let alpha: CGFloat = controlView !! {$0.enabled ? 1.0 : 0.2} ?? 1.0
+        let isDone = controlView &! {$0.keyEquivalent == "\r"}
         if /*NSEqualRects(cellFrame, controlView.bounds)*/ true {
             var leftImage: NSImage?
             var centerImage: NSImage?

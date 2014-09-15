@@ -72,7 +72,7 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
     var drawerHeight: CGFloat = 0
     
     var visibleDrawer: Bool {
-        return drawer != nil && drawer!.frame.size.height > kSBBottombarHeight
+        return drawer &! {$0.frame.size.height > kSBBottombarHeight}
     }
     
     var animating: Bool {

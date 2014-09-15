@@ -356,13 +356,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         var errorString: String?
         if !addresses.isEmpty {
             var urlString = "mailto:" + ", ".join(addresses)
-            if subject != nil {
-                urlString += "?subject=" + subject!
-            }
-            if message != nil {
-                urlString += (subject != nil ? "&" : "?")
-                urlString += "body=" + message!
-            }
+            subject !! { urlString += "?subject=\($0)" }
+            message !! { urlString += (subject !! "&" ?? "?") + "body=\($0)" }
             urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
             NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString))
         } else {

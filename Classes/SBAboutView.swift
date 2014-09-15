@@ -55,10 +55,8 @@ class SBAboutView: SBView {
         let localizedInfo = bundle.localizedInfoDictionary
         let name = localizedInfo["CFBundleName"] as? NSString
         let version = info["CFBundleVersion"] as? NSString
-        let string: String? = (name != nil) ? ((version != nil) ? "\(name!) \(version!)" : name!) : nil
-        if string != nil {
-            nameLabel.stringValue = string!
-        }
+        let string: String? = name !! {$0 + (version !! {" \($0)"} ?? "")}
+        string !! { nameLabel.stringValue = $0 }
         return nameLabel
     }()
     
@@ -178,10 +176,10 @@ class SBAboutView: SBView {
         SBWindowBackColor.set()
         NSRectFillUsingOperation(rect, .CompositeSourceOver)
         
-        if image != nil {
+        if let image = image {
             var imageRect = iconImageRect
-            image!.size = imageRect.size
-            image!.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            image.size = imageRect.size
+            image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
             
             imageRect.origin.y = imageRect.size.height * 1.5 - bounds.size.height
             imageRect.size.height = imageRect.size.height * 0.5
@@ -189,7 +187,7 @@ class SBAboutView: SBView {
             CGContextTranslateCTM(ctx, 0.0, imageRect.size.height)
             CGContextScaleCTM(ctx, 1.0, -1.0)
             CGContextClipToMask(ctx, imageRect, maskImage)
-            image!.drawInRect(imageRect, fromRect: NSMakeRect(0, 0, imageRect.size.width, imageRect.size.height), operation: .CompositeSourceOver, fraction: 1.0)
+            image.drawInRect(imageRect, fromRect: NSMakeRect(0, 0, imageRect.size.width, imageRect.size.height), operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
 }

@@ -187,9 +187,8 @@ extension NSString {
         var stringValue = self
         
         let info = NSBundle.mainBundle().localizedInfoDictionary
-        let gSearchFormat = info["SBGSearchFormat"] as? NSString
-        if gSearchFormat != nil {
-            let str = NSString(format: gSearchFormat!, stringValue)
+        if let gSearchFormat = info["SBGSearchFormat"] as? NSString {
+            let str = NSString(format: gSearchFormat, stringValue)
             let requestURL = NSURL._web_URLWithUserTypedString(str)
             stringValue = requestURL.absoluteString!
         }

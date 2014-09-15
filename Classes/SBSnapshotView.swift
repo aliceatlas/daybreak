@@ -588,11 +588,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     func updatePreviewImage() {
         let width = CGFloat(widthField.integerValue)
         let height = CGFloat(heightField.integerValue)
-        var compressedImage: NSImage?
         data = imageData(filetype, size: NSMakeSize(width, height))
-        if data != nil {
-            compressedImage = NSImage(data: data!)
-        }
+        let compressedImage: NSImage? = data !! {NSImage(data: $0)}
         if compressedImage != nil {
             // Set image to image view
             imageView.image = compressedImage
@@ -713,10 +710,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     func update(sender: AnyObject) {
         if let target = target as? SBDocument {
             visibleRect = target.visibleRectOfSelectedWebDocumentView
-            var selectedWebViewImage: NSImage? = target.selectedWebViewImage
-            if selectedWebViewImage != nil {
-                image = selectedWebViewImage
-            }
+            let selectedWebViewImage: NSImage? = target.selectedWebViewImage
+            selectedWebViewImage !! { self.image = $0 }
         }
     }
     

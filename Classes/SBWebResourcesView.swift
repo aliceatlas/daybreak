@@ -191,7 +191,7 @@ class SBWebResourceButtonCell: NSButtonCell {
         var fraction: CGFloat = 1.0
         var image: NSImage? = self.image
         if highlighted {
-            fraction = highlightedImage != nil ? 1.0 : 0.5
+            fraction = highlightedImage !! 1.0 ?? 0.5
             image = highlightedImage ?? image
         }
         if image != nil {

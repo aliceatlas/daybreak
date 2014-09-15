@@ -33,9 +33,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     var URL: NSURL? {
         didSet {
-            if URL != nil {
-                webView.mainFrame.loadRequest(NSURLRequest(URL: URL!, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval))
-            }
+            URL !! { self.webView.mainFrame.loadRequest(NSURLRequest(URL: $0, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)) }
         }
     }
     lazy var splitView: SBTabSplitView = {
@@ -85,7 +83,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     var URLString: String? {
         get { return URL?.absoluteString }
         set(URLString) {
-            URL = URLString != nil ? NSURL(string: URLString!.URLEncodedString) : nil
+            URL = URLString !! {NSURL(string: $0.URLEncodedString)}
         }
     }
     var selected: Bool {
@@ -173,9 +171,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         #if true
                     let horizontalScroller = scrollView.horizontalScroller as? SBBLKGUIScroller
                     let verticalScroller = scrollView.verticalScroller as? SBBLKGUIScroller
-                    if verticalScroller != nil {
-                        r.size.width = r.size.width - verticalScroller!.frame.size.width
-                    }
+                    verticalScroller !! { r.size.width = r.size.width - $0.frame.size.width }
         #endif
                     sourceTextView = SBSourceTextView(frame: tr)
                     scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
@@ -351,30 +347,23 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             let bundle = NSBundle.mainBundle()
             let infoDictionary = bundle.infoDictionary
             let localizedInfoDictionary = bundle.localizedInfoDictionary
-            var applicationName: String? = localizedInfoDictionary["CFBundleName"] as? NSString
-            applicationName = applicationName ?? infoDictionary["CFBundleName"] as? NSString
-            var version: String? = infoDictionary["CFBundleVersion"] as? NSString
-            if version != nil {
-                version = (version! as NSString).stringByDeletingSpaces()
-            }
-            var safariVersion = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString as? String
-            safariVersion = (safariVersion != nil) ? suffix(safariVersion!, safariVersion!.utf16Count - 1) : "0"
+            let applicationName: String? = (localizedInfoDictionary["CFBundleName"] ?? infoDictionary["CFBundleName"]) as? NSString
+            let version: String? = (infoDictionary["CFBundleVersion"] as? NSString)?.stringByDeletingSpaces
+            var safariVersion: String? = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString
+            safariVersion = safariVersion !! {suffix($0, $0.utf16Count - 1)} ?? "0"
             if applicationName != nil {
                 webView.applicationNameForUserAgent = applicationName!
-                if version != nil {
-                    webView.applicationNameForUserAgent = "\(webView.applicationNameForUserAgent)/\(version!) Safari/\(safariVersion!)"
-                }
+                version !! { webView.applicationNameForUserAgent = "\(webView.applicationNameForUserAgent)/\($0) Safari/\(safariVersion!)" }
                 webView.customUserAgent = nil
             }
         } else if userAgentName == SBUserAgentNames[1] {
             let applicationName = SBUserAgentNames[1]
             let bundle = NSBundle(path: "/Applications/\(applicationName).app")
             let infoDictionary = bundle.infoDictionary
-            var version: String? = infoDictionary["CFBundleShortVersionString"] as? NSString
-            version = version ?? infoDictionary["CFBundleVersion"] as? NSString
-            var safariVersion = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString as? String
-            safariVersion = (safariVersion != nil) ? suffix(safariVersion!, safariVersion!.utf16Count - 1) : "0"
-            if version != nil && safariVersion != nil {
+            let version: String? = (infoDictionary["CFBundleShortVersionString"] ?? infoDictionary["CFBundleVersion"]) as? NSString
+            var safariVersion: String? = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString
+            safariVersion = safariVersion !! {suffix($0, $0.utf16Count - 1)} ?? "0"
+            if (version !! safariVersion) != nil {
                 webView.applicationNameForUserAgent = "Version/\(version!) \(applicationName)/\(safariVersion!)"
                 webView.customUserAgent = nil
             }
@@ -611,9 +600,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     default:
                         break
                 }
-                if title != nil {
-                    showErrorPageWithTitle(title!, urlString: urlString, frame: frame)
-                }
+                title !! { self.showErrorPageWithTitle($0, urlString: urlString, frame: frame) }
             }
         }
     }
@@ -767,10 +754,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         let frameURL: NSURL? = frame.dataSource.request.URL
         let applicationBundleIdentifier: String? = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenApplicationBundleIdentifier)
         var appName: String?
-        if let applicationPath = applicationBundleIdentifier != nil ? NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier(applicationBundleIdentifier) : nil {
+        if let applicationPath = applicationBundleIdentifier !! {NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier($0)} {
             let bundle = NSBundle(path: applicationPath)
-            appName = bundle.localizedInfoDictionary["CFBundleDisplayName"] as? NSString
-            appName = appName ?? bundle.infoDictionary["CFBundleName"] as? NSString
+            appName = (bundle.localizedInfoDictionary["CFBundleDisplayName"] ?? bundle.infoDictionary["CFBundleName"]) as? String
         }
         
         menuItems.extend(defaultMenuItems as [NSMenuItem])
@@ -1061,7 +1047,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     func openURL(url: NSURL?, inBundleIdentifier bundleIdentifier: String?) -> Bool {
-        if url != nil && bundleIdentifier != nil {
+        if (url !! bundleIdentifier) != nil {
             return NSWorkspace.sharedWorkspace().openURLs([url!], withAppBundleIdentifier: bundleIdentifier!, options: .Default, additionalEventParamDescriptor:nil, launchIdentifiers: nil)
         }
         return false
