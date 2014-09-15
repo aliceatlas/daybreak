@@ -23,7 +23,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 #import "SBBookmarkListView.h"
-#import "SBBookmarkListItemView.h"
 #import "SBUtil.h"
 
 #import "Sunrise3-Bridging-Header.h"
@@ -552,7 +551,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	SBBookmarkListItemView *itemView = nil;
 	NSRect r = [self itemRectAtIndex:index];
-	itemView = [SBBookmarkListItemView viewWithFrame:r item:item];
+	itemView = [[SBBookmarkListItemView alloc] initWithFrame:r item:item];
 	itemView.target = self;
 	itemView.mode = mode;
 	[itemViews insertObject:itemView atIndex:index];
