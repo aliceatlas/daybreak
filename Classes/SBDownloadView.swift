@@ -75,7 +75,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     }
     
     var padding: NSPoint {
-        return NSMakePoint(bounds.size.width * 0.1, self.bounds.size.width * 0.1)
+        return NSMakePoint(bounds.size.width * 0.1, bounds.size.width * 0.1)
     }
     
     var heights: CGFloat {

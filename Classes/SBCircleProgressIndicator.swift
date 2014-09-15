@@ -70,14 +70,14 @@ class SBCircleProgressIndicator: SBView {
     required init(coder: NSCoder) {
         super.init(coder: coder)
         if coder.allowsKeyedCoding {
-            self.style = SBCircleProgressIndicatorStyle.fromRaw(coder.decodeIntegerForKey("style")) ?? .RegularStyle
-            self.backgroundColor = coder.decodeObjectForKey("backgroundColor") as NSColor
-            self.fillColor = coder.decodeObjectForKey("fillColor") as NSColor
-            self.progress = CGFloat(coder.decodeDoubleForKey("progress"))
-            self.selected = coder.decodeBoolForKey("selected")
-            self.highlighted = coder.decodeBoolForKey("highlighted")
-            self.alwaysDrawing = coder.decodeBoolForKey("alwaysDrawing")
-            self.showPercentage = coder.decodeBoolForKey("showPercentage")
+            style = SBCircleProgressIndicatorStyle.fromRaw(coder.decodeIntegerForKey("style")) ?? .RegularStyle
+            backgroundColor = coder.decodeObjectForKey("backgroundColor") as NSColor
+            fillColor = coder.decodeObjectForKey("fillColor") as NSColor
+            progress = CGFloat(coder.decodeDoubleForKey("progress"))
+            selected = coder.decodeBoolForKey("selected")
+            highlighted = coder.decodeBoolForKey("highlighted")
+            alwaysDrawing = coder.decodeBoolForKey("alwaysDrawing")
+            showPercentage = coder.decodeBoolForKey("showPercentage")
         }
     }
     

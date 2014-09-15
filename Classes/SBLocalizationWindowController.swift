@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     private let kSBLocalizationAvailableSubversionAccess = 0
     
-    var contentView: NSView { return self.window.contentView as NSView }
+    var contentView: NSView { return window.contentView as NSView }
     
     private lazy var langField: NSTextField = {
         let contentRect = self.contentView.bounds

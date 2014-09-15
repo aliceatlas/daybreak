@@ -219,7 +219,7 @@ class SBDocumentWindow: NSWindow {
         coverWindow!.contentView.addSubview(scrollView)
         coverWindow!.releasedWhenClosed = false
         scrollView.documentView = view
-        self.showsToolbarButton = false
+        showsToolbarButton = false
         
         #if true
             addChildWindow(coverWindow, ordered: .Above)

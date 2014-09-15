@@ -47,19 +47,19 @@ class SBBLKGUIButton: NSButton {
     
     var buttonType: NSButtonType {
         get {
-            return (self.cell() as SBBLKGUIButtonCell).buttonType
+            return (cell() as SBBLKGUIButtonCell).buttonType
         }
         set(buttonType) {
-            (self.cell() as SBBLKGUIButtonCell).buttonType = buttonType
+            (cell() as SBBLKGUIButtonCell).buttonType = buttonType
         }
     }
     
     /*var selected: NSButtonType {
         get {
-            return (self.cell() as SBBLKGUIButtonCell).selected
+            return (cell() as SBBLKGUIButtonCell).selected
         }
         set(selected) {
-            (self.cell() as SBBLKGUIButtonCell).selected = selected
+            (cell() as SBBLKGUIButtonCell).selected = selected
         }
     }*/
     

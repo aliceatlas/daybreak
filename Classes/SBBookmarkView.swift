@@ -279,7 +279,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         var r = NSZeroRect
         r.size = buttonSize
         r.origin.y = margin.y
-        r.origin.x = (self.bounds.size.width - (r.size.width * 2 + buttonMargin)) / 2
+        r.origin.x = (bounds.size.width - (r.size.width * 2 + buttonMargin)) / 2
         return r
     }
     

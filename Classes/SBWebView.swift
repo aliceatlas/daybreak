@@ -44,12 +44,12 @@ class SBWebView: WebView, SBFindbarTarget {
     }
     
     var documentString: String {
-        return (self.mainFrame.frameView.documentView as WebDocumentText).string()
+        return (mainFrame.frameView.documentView as WebDocumentText).string()
     }
     
     var isEmpty: Bool {
-        let URLString = self.mainFrame.dataSource?.request.URL?.absoluteString
-        return URLString == nil || URLString! == ""
+        let URLString = mainFrame.dataSource?.request.URL?.absoluteString
+        return (URLString ?? "") == ""
     }
     
     // MARK: Menu Actions
