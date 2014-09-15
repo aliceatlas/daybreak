@@ -337,14 +337,11 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     }
     
     func mergeFilePath(path: String) {
-        var tSet: ([[String]])?
-        var fSet: ([[NSTextField]])?
         var vSize: NSSize?
         let lang = path.lastPathComponent.stringByDeletingPathExtension
-        (tSet, fSet, vSize) = SBGetLocalizableTextSetS(path)
         
         // Replace text
-        if let tSet = tSet {
+        if let (tSet, _, _) = SBGetLocalizableTextSetS(path) {
             for texts in tSet {
                 if texts.count == 2 {
                     let text0 = texts[0]

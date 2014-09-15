@@ -247,22 +247,23 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func openStrings(#path: String, anotherPath: String? = nil) {
-        let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSetS(path)
-        if !(textSet ?? []).isEmpty {
-            destructLocalizeWindowController()
-            localizationWindowController = SBLocalizationWindowController(viewSize: viewSize!)
-            localizationWindowController!.fieldSet = fieldSet!
-            localizationWindowController!.textSet = textSet!
-            anotherPath !! { localizationWindowController!.mergeFilePath($0) }
-            localizationWindowController!.showWindow(nil)
+        if let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSetS(path) {
+            if !textSet.isEmpty {
+                destructLocalizeWindowController()
+                localizationWindowController = SBLocalizationWindowController(viewSize: viewSize)
+                localizationWindowController!.fieldSet = fieldSet
+                localizationWindowController!.textSet = textSet
+                anotherPath !! { self.localizationWindowController!.mergeFilePath($0) }
+                localizationWindowController!.showWindow(nil)
             
-            /*if (floor(NSAppKitVersionNumber) < 1038)	// Resize window frame for auto-resizing (Call for 10.5. Strange bugs of Mac)
-            {
-                NSWindow *window = [localizationWindowController window];
-                NSRect r = [window frame];
-                [window setFrame:NSMakeRect(r.origin.x, r.origin.y, r.size.width, r.size.height - 1) display:YES];
-                [window setFrame:r display:YES];
-            }*/
+                /*if (floor(NSAppKitVersionNumber) < 1038)	// Resize window frame for auto-resizing (Call for 10.5. Strange bugs of Mac)
+                {
+                    NSWindow *window = [localizationWindowController window];
+                    NSRect r = [window frame];
+                    [window setFrame:NSMakeRect(r.origin.x, r.origin.y, r.size.width, r.size.height - 1) display:YES];
+                    [window setFrame:r display:YES];
+                }*/
+            }
         }
     }
     
@@ -415,11 +416,10 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         panel.allowedFileTypes = ["strings"]
         panel.directoryURL = NSBundle.mainBundle().resourceURL
         if panel.runModal() == NSFileHandlingPanelOKButton {
-            let (textSet, _, _) = SBGetLocalizableTextSetS(panel.URL.path!)
-            if textSet != nil {
-                for (index, texts) in enumerate(textSet!) {
+            if let (textSet, _, _) = SBGetLocalizableTextSetS(panel.URL.path!) {
+                for (index, texts) in enumerate(textSet) {
                     let text0 = texts[0]
-                    for (i, ts) in enumerate(textSet!) {
+                    for (i, ts) in enumerate(textSet) {
                         let t0 = ts[0]
                         if text0 == t0 && index != i {
                             NSLog("Same keys \(i): \(t0)")

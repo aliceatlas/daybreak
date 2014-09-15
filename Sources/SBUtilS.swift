@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-func SBGetLocalizableTextSetS(path: String) -> (([[String]])?, ([[NSTextField]])?, NSSize?) {
+func SBGetLocalizableTextSetS(path: String) -> ([[String]], [[NSTextField]], NSSize)? {
     let localizableString = NSString.stringWithContentsOfFile(path, encoding: NSUTF16StringEncoding, error: nil)
     if localizableString.length > 0 {
         let fieldSize = NSSize(width: 300, height: 22)
@@ -82,7 +82,7 @@ func SBGetLocalizableTextSetS(path: String) -> (([[String]])?, ([[NSTextField]])
             return (textSet, fieldSet, size)
         }
     }
-    return (nil, nil, nil)
+    return nil
 }
 
 // Return value for key in "com.apple.internetconfig.plist"
