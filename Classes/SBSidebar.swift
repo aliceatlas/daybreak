@@ -412,10 +412,9 @@ class SBSideBottombar: SBBottombar {
     }
     
     func slide() {
-        let f: ((SBSideBottombar, CGFloat) -> ())? = delegate?.bottombar // bottombar:didChangeSize:
-        if f != nil {
+        if let f: (SBSideBottombar, didChangeSize: CGFloat) -> Void = delegate?.bottombar {
             let value = SBConstrain(sizeSlider.doubleValue, min: kSBBookmarkCellMinWidth, max: kSBBookmarkCellMaxWidth)
-            f!(self, CGFloat(value))
+            f(self, didChangeSize: CGFloat(value))
             if value != sizeSlider.doubleValue {
                 sizeSlider.doubleValue = value
             }
