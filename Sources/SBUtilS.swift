@@ -66,7 +66,7 @@ func SBGetLocalizableTextSetS(path: String) -> ([[String]], [[NSTextField]], NSS
                         field.bezeled = editable
                         (field.cell() as NSCell).scrollable = isMenuItem
                         if isMenuItem {
-                            string = (component as NSString).stringByDeletingQuotations()
+                            string = (component as NSString).stringByDeletingQuotations
                         }
                         texts.append(string)
                         fields.append(field)

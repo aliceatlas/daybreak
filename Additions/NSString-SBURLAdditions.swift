@@ -99,11 +99,11 @@ extension NSString {
         return "\(received)/\(expected)"
     }
     
-    func stringByDeletingQuotations() -> NSString {
+    var stringByDeletingQuotations: NSString {
         return stringByDeletingCharacter("\"")
     }
     
-    func stringByDeletingSpaces() -> NSString {
+    var stringByDeletingSpaces: NSString {
         return stringByDeletingCharacter(" ")
     }
     
