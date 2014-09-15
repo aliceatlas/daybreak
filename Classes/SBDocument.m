@@ -235,7 +235,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat maxWidth = 0.0;
 	CGFloat width = 0;
 	maxWidth = splitView.bounds.size.width;
-	if (splitView.sidebarPosition == SBSidebarRightPosition)
+	if (splitView.sidebarPosition == SBSidebarPositionRight)
 	{
 		proposedWidth = maxWidth - pos;
 	}
@@ -243,7 +243,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		proposedWidth = pos;
 	}
 	width = [bookmarksView splitWidth:proposedWidth];
-	if (splitView.sidebarPosition == SBSidebarRightPosition)
+	if (splitView.sidebarPosition == SBSidebarPositionRight)
 	{
 		pos = maxWidth - width;
 	}
@@ -604,12 +604,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		splitView = [[SBSplitView alloc] initWithFrame:[window splitViewRect]];
 		splitView.sbDelegate = self;
-		if (splitView.sidebarPosition == SBSidebarLeftPosition)
+		if (splitView.sidebarPosition == SBSidebarPositionLeft)
 		{
 			[self constructSidebar];
 			[self constructTabView];
 		}
-		else if (splitView.sidebarPosition == SBSidebarRightPosition)
+		else if (splitView.sidebarPosition == SBSidebarPositionRight)
 		{
 			[self constructTabView];
 			[self constructSidebar];
@@ -1192,7 +1192,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		NSPoint center = NSZeroPoint;
 		center.y = splitView.bounds.size.height - kSBBottombarHeight;
-		if (splitView.sidebarPosition == SBSidebarRightPosition)
+		if (splitView.sidebarPosition == SBSidebarPositionRight)
 		{
 			center.x = splitView.bounds.size.width - splitView.sidebarWidth;
 		}
@@ -1235,7 +1235,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat maxWidth = proposedMax;
 	if (aSplitView == splitView)
 	{
-		if (splitView.sidebarPosition == SBSidebarRightPosition)
+		if (splitView.sidebarPosition == SBSidebarPositionRight)
 		{
 			maxWidth = splitView.bounds.size.width - kSBSidebarMinimumWidth;
 		}
@@ -1252,7 +1252,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	CGFloat minWidth = proposedMin;
 	if (aSplitView == splitView)
 	{
-		if (splitView.sidebarPosition == SBSidebarLeftPosition)
+		if (splitView.sidebarPosition == SBSidebarPositionLeft)
 		{
 			minWidth = kSBSidebarMinimumWidth;
 		}
@@ -1802,11 +1802,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	}
 	else if (selector == @selector(sidebarPositionToLeft:))
 	{
-        menuItem.state = splitView.sidebarPosition == SBSidebarLeftPosition ? NSOnState : NSOffState;
+        menuItem.state = splitView.sidebarPosition == SBSidebarPositionLeft ? NSOnState : NSOffState;
 	}
 	else if (selector == @selector(sidebarPositionToRight:))
 	{
-        menuItem.state = splitView.sidebarPosition == SBSidebarRightPosition ? NSOnState : NSOffState;
+        menuItem.state = splitView.sidebarPosition == SBSidebarPositionRight ? NSOnState : NSOffState;
 	}
 	else if (selector == @selector(reload:))
 	{
@@ -1948,19 +1948,19 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:SBBookmarksView.class] ? (SBBookmarksView *)sidebar.view : nil;
 		r = splitView.visibleSidebar && sidebar && bookmarksView;
-        menuItem.state = bookmarksView.mode == SBBookmarkIconMode ? NSOnState : NSOffState;
+        menuItem.state = bookmarksView.mode == SBBookmarkModeIcon ? NSOnState : NSOffState;
 	}
 	else if (selector == @selector(switchToListMode:))
 	{
 		SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:SBBookmarksView.class] ? (SBBookmarksView *)sidebar.view : nil;
 		r = splitView.visibleSidebar && sidebar && bookmarksView;
-        menuItem.state = bookmarksView.mode == SBBookmarkListMode ? NSOnState : NSOffState;
+        menuItem.state = bookmarksView.mode == SBBookmarkModeList ? NSOnState : NSOffState;
 	}
 	else if (selector == @selector(switchToTileMode:))
 	{
 		SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:SBBookmarksView.class] ? (SBBookmarksView *)sidebar.view : nil;
 		r = splitView.visibleSidebar && sidebar && bookmarksView;
-        menuItem.state = bookmarksView.mode == SBBookmarkTileMode ? NSOnState : NSOffState;
+        menuItem.state = bookmarksView.mode == SBBookmarkModeTile ? NSOnState : NSOffState;
 	}
 	else if (selector == @selector(selectPreviousTab:))
 	{
@@ -1994,8 +1994,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	else if ([itemIdentifier isEqualToString:kSBToolbarBookmarksItemIdentifier])
 	{
 		SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:SBBookmarksView.class] ? (SBBookmarksView *)sidebar.view : nil;
-		SBBookmarkMode mode = bookmarksView ? bookmarksView.mode : SBBookmarkIconMode;
-		item.image = [NSImage imageNamed:(mode == SBBookmarkIconMode || mode == SBBookmarkTileMode) ? @"Bookmarks-Icon" : @"Bookmarks-List"];
+		SBBookmarkMode mode = bookmarksView ? bookmarksView.mode : SBBookmarkModeIcon;
+		item.image = [NSImage imageNamed:(mode == SBBookmarkModeIcon || mode == SBBookmarkModeTile) ? @"Bookmarks-Icon" : @"Bookmarks-List"];
 	}
 	else if ([itemIdentifier isEqualToString:kSBToolbarSnapshotItemIdentifier])
 	{
@@ -2064,7 +2064,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			{
 				[urlField.gsItems insertObject:@{kSBImage: [[NSImage imageNamed:@"Icon_G.png"] TIFFRepresentation], 
                                                  kSBTitle: NSLocalizedString(@"Suggestions", nil),
-                                                 kSBType: @(kSBURLFieldItemNoneType)}
+                                                 kSBType: @(SBURLFieldItemTypeNone)}
                                        atIndex:0];
 			}
 			urlField.items = [[NSMutableArray alloc] initWithArrays:@[urlField.gsItems, urlField.bmItems, urlField.hItems]];
@@ -2118,7 +2118,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 				{
 					item[kSBImage] = bookmarkItem[kSBBookmarkImage];
 				}
-				item[kSBType] = @(kSBURLFieldItemBookmarkType);
+				item[kSBType] = @(SBURLFieldItemTypeBookmark);
 				[bmItems addObject:[item copy]];
 				[urlStrings addObject:urlString];
 			}
@@ -2148,7 +2148,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 					{
 						item[kSBImage] = iconData;
 					}
-					item[kSBType] = @(kSBURLFieldItemHistoryType);
+					item[kSBType] = @(SBURLFieldItemTypeHistory);
 					[hItems addObject:[item copy]];
 				}
 			}
@@ -2161,14 +2161,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		[urlField.bmItems insertObject:@{kSBImage: [[NSImage imageNamed:@"Icon_Bookmarks.png"] TIFFRepresentation], 
                                          kSBTitle: NSLocalizedString(@"Bookmarks", nil),
-                                         kSBType: @(kSBURLFieldItemNoneType)}
+                                         kSBType: @(SBURLFieldItemTypeNone)}
                                atIndex:0];
 	}
 	if (urlField.hItems.count > 0)
 	{
 		[urlField.hItems insertObject:@{kSBImage: [[NSImage imageNamed:@"Icon_History.png"] TIFFRepresentation], 
 										kSBTitle: NSLocalizedString(@"History", nil), 
-										kSBType: @(kSBURLFieldItemNoneType)} atIndex:0];
+										kSBType: @(SBURLFieldItemTypeNone)} atIndex:0];
 	}
 	urlField.items = [[NSMutableArray alloc] initWithArrays:@[urlField.bmItems, urlField.hItems]];
 }
@@ -2268,7 +2268,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)adjustSplitViewIfNeeded
 {
 	SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:SBBookmarksView.class] ? (SBBookmarksView *)sidebar.view : nil;
-	if (bookmarksView.mode == SBBookmarkTileMode)
+	if (bookmarksView.mode == SBBookmarkModeTile)
 	{
 		NSRect viewRect = splitView.view.frame;
 		CGFloat pos = [self adjustedSplitPositon:viewRect.size.width];
@@ -2448,7 +2448,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)sidebarPositionToLeft:(id)sender
 {
-	SBSidebarPosition position = SBSidebarLeftPosition;
+	SBSidebarPosition position = SBSidebarPositionLeft;
 	if (splitView.sidebarPosition != position)
 	{
 		splitView.sidebarPosition = position;
@@ -2458,7 +2458,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 - (void)sidebarPositionToRight:(id)sender
 {
-	SBSidebarPosition position = SBSidebarRightPosition;
+	SBSidebarPosition position = SBSidebarPositionRight;
 	if (splitView.sidebarPosition != position)
 	{
 		splitView.sidebarPosition = position;
@@ -2784,7 +2784,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:SBBookmarksView.class] ? (SBBookmarksView *)sidebar.view : nil;
 	if (bookmarksView)
 	{
-		bookmarksView.mode = SBBookmarkIconMode;
+		bookmarksView.mode = SBBookmarkModeIcon;
 	}
 }
 
@@ -2793,7 +2793,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:SBBookmarksView.class] ? (SBBookmarksView *)sidebar.view : nil;
 	if (bookmarksView)
 	{
-		bookmarksView.mode = SBBookmarkListMode;
+		bookmarksView.mode = SBBookmarkModeList;
 	}
 }
 
@@ -2802,7 +2802,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	SBBookmarksView *bookmarksView = [sidebar.view isKindOfClass:SBBookmarksView.class] ? (SBBookmarksView *)sidebar.view : nil;
 	if (bookmarksView)
 	{
-		bookmarksView.mode = SBBookmarkTileMode;
+		bookmarksView.mode = SBBookmarkModeTile;
 		[self adjustSplitViewIfNeeded];
 	}
 }

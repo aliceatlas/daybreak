@@ -48,7 +48,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         let r = self.closeRect
     	let closeButton = SBButton(frame: r)
         closeButton.autoresizingMask = .ViewMaxXMargin
-    	closeButton.image = NSImage(CGImage: SBIconImage(SBCloseIconImage(), .ExclusiveShape, r.size))
+    	closeButton.image = NSImage(CGImage: SBIconImage(SBCloseIconImage(), .Exclusive, r.size))
     	closeButton.target = self
     	closeButton.action = "executeClose"
         return closeButton

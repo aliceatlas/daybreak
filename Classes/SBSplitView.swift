@@ -153,9 +153,9 @@ class SBSplitView: NSSplitView, SBSidebarDelegate {
         var switching = false
         let subview0: NSView? = (subviews.count > 0) ? (subviews[0] as NSView) : nil
         let subview1: NSView? = (subviews.count > 1) ? (subviews[1] as NSView) : nil
-        if position == .LeftPosition && subview0 === view && subview1 === sidebar {
+        if position == .Left && subview0 === view && subview1 === sidebar {
             switching = true
-        } else if position == .RightPosition && subview0 === sidebar && subview1 === view {
+        } else if position == .Right && subview0 === sidebar && subview1 === view {
             switching = true
         }
         if switching {
@@ -191,11 +191,11 @@ class SBSplitView: NSSplitView, SBSidebarDelegate {
     }
     
     func returnSidebar() {
-        if sidebarPosition == .LeftPosition {
+        if sidebarPosition == .Left {
             view.removeFromSuperview()
             addSubview(sidebar)
             addSubview(view)
-        } else if sidebarPosition == .RightPosition {
+        } else if sidebarPosition == .Right {
             addSubview(sidebar)
         }
     }

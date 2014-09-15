@@ -59,7 +59,7 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
     }()
     var bottombar: SBSideBottombar { return _bottombar }
     
-    var position: SBSidebarPosition = .LeftPosition {
+    var position: SBSidebarPosition = .Left {
         didSet {
             bottombar.position = position
         }
@@ -242,13 +242,8 @@ class SBSideBottombar: SBBottombar {
                 newFolderButton.frame = newFolderButtonRect
                 sizeSlider.frame = sizeSliderRect
                 if position != nil {
-                    if position! == .LeftPosition {
-                        drawerButton.autoresizingMask = .ViewMinXMargin
-                        newFolderButton.autoresizingMask = .ViewMinXMargin
-                    } else if position! == .RightPosition {
-                        drawerButton.autoresizingMask = .ViewMaxXMargin
-                        newFolderButton.autoresizingMask = .ViewMaxXMargin
-                    }
+                    drawerButton.autoresizingMask = (position! == .Left) ? .ViewMinXMargin : .ViewMaxXMargin
+                    newFolderButton.autoresizingMask = drawerButton.autoresizingMask
                 }
                 adjustButtons()
                 needsDisplay = true
@@ -260,7 +255,7 @@ class SBSideBottombar: SBBottombar {
     
     private lazy var drawerButton: SBButton = {
         let drawerButton = SBButton(frame: self.drawerButtonRect)
-        if self.position == .LeftPosition {
+        if self.position == .Left {
             drawerButton.autoresizingMask = .ViewMinXMargin
         }
         drawerButton.target = self
@@ -270,7 +265,7 @@ class SBSideBottombar: SBBottombar {
     
     private lazy var newFolderButton: SBButton = {
         let newFolderButton = SBButton(frame: self.newFolderButtonRect)
-        if self.position == .LeftPosition {
+        if self.position == .Left {
             newFolderButton.autoresizingMask = .ViewMinXMargin
         }
         newFolderButton.title = NSLocalizedString("New Folder", comment: "")
@@ -326,7 +321,7 @@ class SBSideBottombar: SBBottombar {
         var r = NSZeroRect
         r.size.width = kSBSidebarResizableWidth
         r.size.height = bounds.size.height
-        if position == .LeftPosition {
+        if position == .Left {
             r.origin.x = bounds.size.width - r.size.width
         }
         return r
@@ -336,9 +331,9 @@ class SBSideBottombar: SBBottombar {
         var r = NSZeroRect
         r.size.width = buttonWidth
         r.size.height = buttonWidth
-        if position == .LeftPosition {
+        if position == .Left {
             r.origin.x = bounds.size.width - (r.size.width + kSBSidebarResizableWidth)
-        } else if position == .RightPosition {
+        } else if position == .Right {
             r.origin.x = kSBSidebarResizableWidth
         }
         return r
@@ -348,9 +343,9 @@ class SBSideBottombar: SBBottombar {
         var r = NSZeroRect
         r.size.width = kSBSidebarNewFolderButtonWidth
         r.size.height = buttonWidth
-        if position == .LeftPosition {
+        if position == .Left {
             r.origin.x = NSMaxX(drawerButtonRect) - kSBSidebarNewFolderButtonWidth
-        } else if position == .RightPosition {
+        } else if position == .Right {
             r.origin.x = NSMaxX(drawerButtonRect)
         }
         return r
@@ -362,9 +357,9 @@ class SBSideBottombar: SBBottombar {
         let rightMargin = sliderSideMargin + kSBSidebarResizableWidth
         r.size.width = sliderWidth
         r.size.height = 21.0
-        if position == .LeftPosition {
+        if position == .Left {
             r.origin.x = leftMargin
-        } else if position == .RightPosition {
+        } else if position == .Right {
             r.origin.x = bounds.size.width - (r.size.width + rightMargin)
         }
         return r
@@ -374,11 +369,11 @@ class SBSideBottombar: SBBottombar {
     
     func adjustButtons() {
         var validRect = NSZeroRect
-        if position == .LeftPosition {
+        if position == .Left {
             validRect.origin.x = NSMaxX(sizeSliderRect)
             validRect.size.width = bounds.size.width - NSMaxX(sizeSliderRect) - kSBSidebarResizableWidth
             validRect.size.height = bounds.size.height
-        } else if position == .RightPosition {
+        } else if position == .Right {
             validRect.origin.x = kSBSidebarResizableWidth
             validRect.size.width = sizeSliderRect.origin.x - kSBSidebarResizableWidth
             validRect.size.height = bounds.size.height
@@ -429,18 +424,18 @@ class SBSideBottombar: SBBottombar {
         var r = resizableRect
         let resizerImage = NSImage(named: "Resizer.png")
         resizerImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-        if position == .LeftPosition {
+        if position == .Left {
             r.origin.x = r.origin.x - 1
             r.size.width = 1
-        } else if position == .RightPosition {
+        } else if position == .Right {
             r.origin.x = NSMaxX(r) + 1
             r.size.width = 1
         }
         NSColor.blackColor().set()
         NSRectFill(r)
-        if position == .LeftPosition {
+        if position == .Left {
             r.origin.x = r.origin.x + 1
-        } else if position == .RightPosition {
+        } else if position == .Right {
             r.origin.x = r.origin.x + 1
         }
         NSColor(deviceWhite: 0.3, alpha: 1.0).set()

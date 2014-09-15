@@ -1498,12 +1498,12 @@ CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size)
 		insetRect = CGRectMake(0.0, 0.0, size.width, size.height);
 		switch (shape)
 		{
-			case SBButtonExclusiveShape:
+			case SBButtonShapeExclusive:
 				insetMargin = 4.0;
 				insetRect = CGRectInset(insetRect, insetMargin, insetMargin);
 				CGPathAddEllipseInRect(path, nil, insetRect);
 				break;
-			case SBButtonLeftShape:
+			case SBButtonShapeLeft:
 			{
 				CGPoint p = CGPointZero;
 				CGPoint cp1 = CGPointZero;
@@ -1546,14 +1546,14 @@ CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size)
 				imageRect.origin.x += insetMargin;
 				break;
 			}
-			case SBButtonCenterShape:
+			case SBButtonShapeCenter:
 			{
 				insetRect.origin.y += insetMargin;
 				insetRect.size.height -= insetMargin * 2;
 				CGPathAddRect(path, nil, insetRect);
 				break;
 			}
-			case SBButtonRightShape:
+			case SBButtonShapeRight:
 			{
 				CGPoint p = CGPointZero;
 				CGPoint cp1 = CGPointZero;

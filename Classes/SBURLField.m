@@ -506,16 +506,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		NSInteger type = [item[kSBType] integerValue];
 		NSString *title = item ? item[kSBTitle] : nil;
-		if (type == kSBURLFieldItemNoneType)
+		if (type == SBURLFieldItemTypeNone)
 		{
 			object = title;
 		}
-		else if (type == kSBURLFieldItemGoogleSuggestType)
+		else if (type == SBURLFieldItemTypeGoogleSuggest)
 		{
 			object = title;
 		}
-		else if (type == kSBURLFieldItemBookmarkType || 
-				 type == kSBURLFieldItemHistoryType)
+		else if (type == SBURLFieldItemTypeBookmark ||
+				 type == SBURLFieldItemTypeHistory)
 		{
 			object = item ? item[kSBURL] : nil;
 			if (title)
@@ -539,7 +539,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		BOOL separator = NO;
 		BOOL sectionHeader = NO;
 		BOOL drawsImage = YES;
-		if (type == kSBURLFieldItemNoneType)
+		if (type == SBURLFieldItemTypeNone)
 		{
 			data = item ? item[kSBImage] : nil;
 			if (data)
@@ -551,13 +551,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			separator = rowIndex > 0;
 			sectionHeader = YES;
 		}
-		else if (type == kSBURLFieldItemGoogleSuggestType)
+		else if (type == SBURLFieldItemTypeGoogleSuggest)
 		{
 			string = title;
 			drawsImage = NO;
 		}
-		else if (type == kSBURLFieldItemBookmarkType || 
-				 type == kSBURLFieldItemHistoryType)
+		else if (type == SBURLFieldItemTypeBookmark ||
+				 type == SBURLFieldItemTypeHistory)
 		{
 			data = item ? item[kSBImage] : nil;
 			if (data)
@@ -1414,7 +1414,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	{
 		NSDictionary *selectedItem = field.items[index];
 		NSInteger type = [selectedItem[kSBType] integerValue];
-		if (type == kSBURLFieldItemGoogleSuggestType)
+		if (type == SBURLFieldItemTypeGoogleSuggest)
 		{
 			NSString *title = selectedItem[kSBTitle];
             field.URLString = title;

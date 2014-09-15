@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (self = [super initWithFrame:frame])
 	{
-		mode = SBBookmarkIconMode;
+		mode = SBBookmarkModeIcon;
 		_block = NSZeroPoint;
 		_point = NSZeroPoint;
 		selectionView = nil;
@@ -98,7 +98,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (CGFloat)splitWidth:(CGFloat)proposedWidth
 {
 	CGFloat width = proposedWidth;
-	if (mode == SBBookmarkTileMode)
+	if (mode == SBBookmarkModeTile)
 	{
 #if 1
 		CGFloat scrollerWidth = 0;
@@ -156,7 +156,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSPoint spacing = NSZeroPoint;
 	NSPoint pos = NSZeroPoint;
 	r.size = cellSize;
-	spacing = mode == SBBookmarkIconMode ? self.spacing : spacing;
+	spacing = mode == SBBookmarkModeIcon ? self.spacing : spacing;
 	pos.y = (NSInteger)(index / (NSInteger)_block.x);
 	pos.x = SBRemainder(index, (NSInteger)_block.x);
 	r.origin.x = pos.x * cellSize.width + spacing.x * pos.x;
@@ -172,7 +172,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger count = self.items.count;
 	NSPoint loc = NSZeroPoint;
 	CGFloat location = 0;
-	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
+	if (mode == SBBookmarkModeIcon || mode == SBBookmarkModeTile)
 	{
 		NSPoint spacing = self.spacing;
 		loc.y = (NSInteger)(point.y / cellSize.height);
@@ -185,7 +185,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			index = _block.x * loc.y + loc.x;
 		}
 	}
-	else if (mode == SBBookmarkListMode)
+	else if (mode == SBBookmarkModeList)
 	{
 		loc.y = (NSInteger)(point.y / 22.0);
 		location = (point.y - loc.y * 22.0);
@@ -217,7 +217,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger count = self.items.count;
 	NSPoint loc = NSZeroPoint;
 	CGFloat location = 0;
-	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
+	if (mode == SBBookmarkModeIcon || mode == SBBookmarkModeTile)
 	{
 		NSPoint spacing = self.spacing;
 		loc.y = (NSInteger)(point.y / cellSize.height);
@@ -239,7 +239,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			index = _block.x * loc.y + loc.x;
 		}
 	}
-	else if (mode == SBBookmarkListMode)
+	else if (mode == SBBookmarkModeList)
 	{
 		loc.y = (NSInteger)(point.y / 22.0);
 		location = (point.y - loc.y * 22.0);
@@ -274,7 +274,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSUInteger count = self.items.count;
 	NSPoint loc = NSZeroPoint;
 	CGFloat location = 0;
-	if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
+	if (mode == SBBookmarkModeIcon || mode == SBBookmarkModeTile)
 	{
 		NSPoint spacing = self.spacing;
 		CGFloat spacingX = 0;
@@ -301,7 +301,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		r.origin.x = loc.x * cellSize.width - r.size.width / 2 + spacingX;
 		r.origin.y = loc.y * cellSize.height;
 	}
-	else if (mode == SBBookmarkListMode)
+	else if (mode == SBBookmarkModeList)
 	{
 		loc.y = (NSInteger)(point.y / 22.0);
 		location = (point.y - loc.y * 22.0);
@@ -456,12 +456,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	editButton = [[SBButton alloc] initWithFrame:editRect];
 	updateButton = [[SBButton alloc] initWithFrame:updateRect];
     removeButton.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
-	removeButton.image = [[NSImage alloc] initWithCGImage:SBIconImage(SBCloseIconImage(), SBButtonLeftShape, NSSizeToCGSize(removeRect.size))];
+	removeButton.image = [[NSImage alloc] initWithCGImage:SBIconImage(SBCloseIconImage(), SBButtonShapeLeft, NSSizeToCGSize(removeRect.size))];
 	removeButton.action = @selector(remove);
     editButton.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
 	updateButton.autoresizingMask = NSViewMaxXMargin | NSViewMinYMargin;
-	editButton.image = [[NSImage alloc] initWithCGImage:SBIconImageWithName(@"Edit", SBButtonCenterShape, NSSizeToCGSize(editRect.size))];
-	updateButton.image = [[NSImage alloc] initWithCGImage:SBIconImageWithName(@"Update", SBButtonRightShape, NSSizeToCGSize(editRect.size))];
+	editButton.image = [[NSImage alloc] initWithCGImage:SBIconImageWithName(@"Edit", SBButtonShapeCenter, NSSizeToCGSize(editRect.size))];
+	updateButton.image = [[NSImage alloc] initWithCGImage:SBIconImageWithName(@"Update", SBButtonShapeRight, NSSizeToCGSize(editRect.size))];
 	editButton.action = @selector(edit);
 	updateButton.action = @selector(update);
 }
@@ -471,15 +471,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)setCellSizeForMode:(SBBookmarkMode)inMode
 {
 	mode = inMode;
-	if (mode == SBBookmarkIconMode)
+	if (mode == SBBookmarkModeIcon)
 	{
 		cellSize = NSMakeSize(cellWidth, cellWidth);
 	}
-	else if (mode == SBBookmarkListMode)
+	else if (mode == SBBookmarkModeList)
 	{
 		cellSize = NSMakeSize(self.width, 22.0);
 	}
-	else if (mode == SBBookmarkTileMode)
+	else if (mode == SBBookmarkModeTile)
 	{
 		cellSize = NSMakeSize(cellWidth / kSBBookmarkFactorForImageHeight * kSBBookmarkFactorForImageWidth, cellWidth);
 	}
@@ -499,15 +499,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	if (cellWidth != inCellWidth)
 	{
 		cellWidth = inCellWidth;
-		if (mode == SBBookmarkIconMode)
+		if (mode == SBBookmarkModeIcon)
 		{
 			cellSize = NSMakeSize(cellWidth, cellWidth);
 		}
-		else if (mode == SBBookmarkListMode)
+		else if (mode == SBBookmarkModeList)
 		{
 			cellSize = NSMakeSize(self.width, 22.0);
 		}
-		else if (mode == SBBookmarkTileMode)
+		else if (mode == SBBookmarkModeTile)
 		{
 			cellSize = NSMakeSize(cellWidth / kSBBookmarkFactorForImageHeight * kSBBookmarkFactorForImageWidth, cellWidth);
 		}
@@ -677,7 +677,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (void)layoutItemViews
 {
 	NSInteger index = 0;
-	if (mode == SBBookmarkListMode)
+	if (mode == SBBookmarkModeList)
 	{
 		cellSize.width = self.width;
 	}
@@ -950,12 +950,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 			NSRect endRect = NSZeroRect;
 			endRect = [self itemRectAtIndex:firstIndex];
 			startRect = endRect;
-			if (mode == SBBookmarkIconMode || mode == SBBookmarkTileMode)
+			if (mode == SBBookmarkModeIcon || mode == SBBookmarkModeTile)
 			{
 				startRect.size.width = startRect.size.width * 1.5;
 				startRect.size.height = startRect.size.height * 1.5;
 			}
-			else if (mode == SBBookmarkListMode)
+			else if (mode == SBBookmarkModeList)
 			{
 				startRect.size.width = startRect.size.width * 1.2;
 				startRect.size.height = startRect.size.height * 2.0;

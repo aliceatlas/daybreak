@@ -38,7 +38,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
         progressIndicator.controlSize = .RegularControlSize
         return progressIndicator
     }()
-    var mode: SBBookmarkMode = .IconMode
+    var mode = SBBookmarkMode.Icon
     var item: NSDictionary
     
     var selected: Bool = false {
@@ -64,20 +64,20 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     var titleFont: NSFont {
-        return NSFont.boldSystemFontOfSize((mode == .IconMode || mode == .ListMode) ? 10.0 : 11.0)
+        return NSFont.boldSystemFontOfSize((mode == .Icon || mode == .List) ? 10.0 : 11.0)
     }
     
     var urlFont: NSFont {
-        return NSFont.systemFontOfSize((mode == .IconMode || mode == .ListMode) ? 9.0 : 11.0)
+        return NSFont.systemFontOfSize((mode == .Icon || mode == .List) ? 9.0 : 11.0)
     }
     
     var paragraphStyle: NSParagraphStyle {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineBreakMode = .ByTruncatingTail
-        if mode == .IconMode || mode == .ListMode {
+        if mode == .Icon || mode == .List {
             paragraphStyle.alignment = .CenterTextAlignment
         }
-        if mode == .ListMode {
+        if mode == .List {
             paragraphStyle.alignment = .LeftTextAlignment
         }
         return paragraphStyle.copy() as NSParagraphStyle
@@ -117,9 +117,9 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     
     var imageRect: NSRect {
         var r = NSZeroRect
-        let padding = mode == .IconMode ? self.padding : NSZeroPoint
-        let titleHeight /*: CGFloat */ = mode == .IconMode ? self.titleHeight : 0.0
-        let bytesHeight = mode == .IconMode ? self.bytesHeight : 0.0
+        let padding = (mode == .Icon) ? self.padding : NSZeroPoint
+        let titleHeight /*: CGFloat */ = (mode == .Icon) ? self.titleHeight : 0.0
+        let bytesHeight = (mode == .Icon) ? self.bytesHeight : 0.0
         let imageData = item[kSBBookmarkImage] as? NSData
         let image = imageData !! {NSImage(data: $0)}
         let imageSize = image?.size ?? NSZeroSize
@@ -131,7 +131,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
         r.size.height = bounds.size.height - r.origin.y - padding.y
         p.x = r.size.width / imageSize.width
         p.y = r.size.height / imageSize.height
-        if mode == .IconMode ? p.x > p.y : p.x < p.y {
+        if (mode == .Icon) ? (p.x > p.y) : (p.x < p.y) {
             s = imageSize.width * p.y
             r.origin.x += (r.size.width - s) / 2
             r.size.width = s
@@ -209,9 +209,9 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     
     func hitToPoint(point: NSPoint) -> Bool {
         var r = false
-        if mode == .IconMode || mode == .TileMode {
+        if mode == .Icon || mode == .Tile {
             r = NSPointInRect(point, imageRect) | NSPointInRect(point, titleRect) | NSPointInRect(point, bytesRect)
-        } else if mode == .ListMode {
+        } else if mode == .List {
             r = NSPointInRect(point, bounds)
         }
         return r
@@ -219,9 +219,9 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     
     func hitToRect(rect: NSRect) -> Bool {
         var r = false
-        if mode == .IconMode || mode == .TileMode {
+        if mode == .Icon || mode == .Tile {
             r = NSIntersectsRect(rect, imageRect) | NSIntersectsRect(rect, titleRect) | NSIntersectsRect(rect, bytesRect)
-        } else if mode == .ListMode {
+        } else if mode == .List {
             r = NSIntersectsRect(rect, bounds)
         }
         return r;
@@ -278,7 +278,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
             let labelColor = labelColorName !! {NSColor(labelColorName: $0)}
             var size = NSZeroSize //???
             
-            if mode == .IconMode {
+            if mode == .Icon {
                 // image
                 if let image = imageData !! {NSImage(data: $0)} {
                     r = imageRect
@@ -371,7 +371,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                     r.size.height = size.height
                     urlString.drawInRect(r, withAttributes: attributes)
                 }
-            } else if mode == .TileMode {
+            } else if mode == .Tile {
                 var path: NSBezierPath!
                 
                 // image

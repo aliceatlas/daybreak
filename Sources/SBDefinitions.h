@@ -203,38 +203,38 @@ extern NSInteger SBCountOfSchemes;
 extern NSString *SBSchemes[];
 
 // Type definitions for an URL field completion list item
-enum {
-	kSBURLFieldItemNoneType = 0, 
-	kSBURLFieldItemBookmarkType = 1, 
-	kSBURLFieldItemHistoryType = 2, 
-	kSBURLFieldItemGoogleSuggestType = 3
+typedef NS_ENUM(NSInteger, SBURLFieldItemType) {
+	SBURLFieldItemTypeNone = 0,
+	SBURLFieldItemTypeBookmark = 1,
+	SBURLFieldItemTypeHistory = 2,
+	SBURLFieldItemTypeGoogleSuggest = 3
 };
 
 // Button shapes
 typedef NS_ENUM(NSInteger, SBButtonShape) {
-	SBButtonExclusiveShape,
-	SBButtonLeftShape,
-	SBButtonCenterShape,
-	SBButtonRightShape
+	SBButtonShapeExclusive,
+	SBButtonShapeLeft,
+	SBButtonShapeCenter,
+	SBButtonShapeRight
 };
 
 // Sidebar positions
 typedef NS_ENUM(NSInteger, SBSidebarPosition) {
-	SBSidebarLeftPosition,
-	SBSidebarRightPosition
+	SBSidebarPositionLeft,
+	SBSidebarPositionRight
 };
 
 // Bookmark display modes
 typedef NS_ENUM(NSInteger, SBBookmarkMode) {
-	SBBookmarkIconMode, 
-	SBBookmarkListMode, 
-	SBBookmarkTileMode
+	SBBookmarkModeIcon,
+	SBBookmarkModeList,
+	SBBookmarkModeTile
 };
 
 // Circle progress styles
 typedef NS_ENUM(NSInteger, SBCircleProgressIndicatorStyle) {
-	SBCircleProgressIndicatorRegularStyle,
-	SBCircleProgressIndicatorWhiteStyle
+	SBCircleProgressIndicatorStyleRegular,
+	SBCircleProgressIndicatorStyleWhite
 };
 
 // Status code

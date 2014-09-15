@@ -27,12 +27,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 enum SBTableCellStyle {
-    case GrayStyle
-    case WhiteStyle
+    case Gray
+    case White
 }
 
 class SBTableCell: NSCell {
-    var style: SBTableCellStyle = .GrayStyle
+    var style: SBTableCellStyle = .Gray
     var showSelection = true
     var showRoundedPath: Bool = false
     
@@ -57,11 +57,11 @@ class SBTableCell: NSCell {
         var backgroundColor: NSColor!
         var cellColor: NSColor!
         var selectedCellColor: NSColor!
-        if style == .GrayStyle {
+        if style == .Gray {
             backgroundColor = SBBackgroundColor
             cellColor = SBTableCellColor
             selectedCellColor = SBSidebarSelectedCellColor
-        } else if style == .WhiteStyle {
+        } else if style == .White {
             backgroundColor = SBBackgroundLightGrayColor
             cellColor = SBTableLightGrayCellColor
             selectedCellColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
@@ -92,10 +92,10 @@ class SBTableCell: NSCell {
         var textColor: NSColor!
         var sTextColor: NSColor!
         
-        if style == .GrayStyle {
+        if style == .Gray {
             textColor = SBSidebarTextColor
             sTextColor = NSColor.blackColor()
-        } else if style == .WhiteStyle {
+        } else if style == .White {
             textColor = (enabled ? NSColor.blackColor() : NSColor.grayColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
             sTextColor = highlighted ? NSColor.clearColor() : NSColor.whiteColor()
         }
@@ -123,9 +123,9 @@ class SBTableCell: NSCell {
             }
             r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
             sr = r
-            if style == .GrayStyle {
+            if style == .Gray {
                 sr.origin.y -= 1.0
-            } else if style == .WhiteStyle {
+            } else if style == .White {
                 sr.origin.y += 1.0
             }
             nsTitle.drawInRect(sr, withAttributes: sAttribute)

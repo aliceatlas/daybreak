@@ -63,7 +63,7 @@ class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
         } else if elementName == kSBGSCompleteSuggestionTagName {
             let item = NSMutableDictionary()
             inCompleteSuggestion = true
-            item[kSBType] = kSBURLFieldItemGoogleSuggestType
+            item[kSBType] = SBURLFieldItemType.GoogleSuggest.toRaw()
             items.append(item)
         } else {
             if inToplevel && inCompleteSuggestion {

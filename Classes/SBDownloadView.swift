@@ -30,7 +30,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     unowned var download: SBDownload
     private lazy var progressIndicator: SBCircleProgressIndicator? = {
         let progressIndicator = SBCircleProgressIndicator(frame: self.progressRect)
-        progressIndicator.style = .WhiteStyle
+        progressIndicator.style = .White
         progressIndicator.autoresizingMask = .ViewMinXMargin
         progressIndicator.selected = self.selected
         progressIndicator.alwaysDrawing = true

@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @IBDesignable
 class SBCircleProgressIndicator: SBView {
-    @IBInspectable var style: SBCircleProgressIndicatorStyle = .RegularStyle
+    @IBInspectable var style: SBCircleProgressIndicatorStyle = .Regular
     @IBInspectable var backgroundColor: NSColor = NSColor(calibratedWhite: 0.5, alpha: 1.0)
     @IBInspectable var fillColor: NSColor = NSColor(calibratedWhite: 0.85, alpha: 1.0)
     @IBInspectable var alwaysDrawing: Bool = false
@@ -70,7 +70,7 @@ class SBCircleProgressIndicator: SBView {
     required init(coder: NSCoder) {
         super.init(coder: coder)
         if coder.allowsKeyedCoding {
-            style = SBCircleProgressIndicatorStyle.fromRaw(coder.decodeIntegerForKey("style")) ?? .RegularStyle
+            style = SBCircleProgressIndicatorStyle.fromRaw(coder.decodeIntegerForKey("style")) ?? .Regular
             backgroundColor = coder.decodeObjectForKey("backgroundColor") as NSColor
             fillColor = coder.decodeObjectForKey("fillColor") as NSColor
             progress = CGFloat(coder.decodeDoubleForKey("progress"))
@@ -136,7 +136,7 @@ class SBCircleProgressIndicator: SBView {
                 }
                 
                 switch style {
-                    case .WhiteStyle:
+                    case .White:
                         if highlighted && isFirstResponder {
                             SBAlternateSelectedDarkControlColor.set()
                         } else {
@@ -145,7 +145,7 @@ class SBCircleProgressIndicator: SBView {
                         let path = NSBezierPath(ovalInRect: NSInsetRect(square, lw + 1.0, lw + 1.0))
                         path.lineWidth = 1.0
                         path.stroke()
-                    case .RegularStyle:
+                    case .Regular:
                         backgroundColor.colorWithAlphaComponent((selected && keyView) ? 1.0 : 0.5).set()
                         let path = NSBezierPath(ovalInRect: NSInsetRect(square, lw + 1.0, lw + 1.0))
                         path.fill()
@@ -165,10 +165,10 @@ class SBCircleProgressIndicator: SBView {
                     colors = [SBAlternateSelectedDarkControlColor, SBAlternateSelectedControlColor]
                 } else {
                     switch style {
-                        case .WhiteStyle:
+                        case .White:
                             colors = [NSColor(deviceWhite: 1.0, alpha: 0.75),
                                       NSColor(deviceWhite: 1.0, alpha: 0.75)]
-                        case .RegularStyle:
+                        case .Regular:
                             colors = [NSColor(deviceWhite: ((selected && keyView) ? 0.75 : 0.5), alpha: 1.0),
                                       NSColor(deviceWhite: ((selected && keyView) ? 1.0 : 0.75), alpha: 1.0)]
                     }
