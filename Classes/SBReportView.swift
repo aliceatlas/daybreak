@@ -97,8 +97,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         var names: [String] = []
         let name0: String = SBUserAgentNames[0]
         let name1: String = SBUserAgentNames[1]
-        let icon0: NSImage? = (name0 == "Sunrise") ? NSImage(named: "Application.icns") : nil
-        let icon1: NSImage? = (name1 == "Safari") ? NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns") : nil
+        let icon0 = (name0 == "Sunrise") &? NSImage(named: "Application.icns")
+        let icon1 = (name1 == "Safari") &? NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns")
         icon0?.size = NSMakeSize(24.0, 24.0)
         icon1?.size = NSMakeSize(24.0, 24.0)
         let userAgentName: String? = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as? NSString

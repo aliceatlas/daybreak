@@ -45,7 +45,7 @@ class SBDocumentController: NSDocumentController {
     override func openUntitledDocumentAndDisplay(displayDocument: Bool, error outError: NSErrorPointer) -> AnyObject! {
         let sidebarVisibility = NSUserDefaults.standardUserDefaults().boolForKey(kSBSidebarVisibilityFlag)
         if let homepage = SBPreferences.sharedPreferences.homepage(true) {
-            let url: NSURL? = (countElements(homepage) > 0) ? NSURL(string: homepage.requestURLString) : nil
+            let url = (countElements(homepage) > 0) &? NSURL(string: homepage.requestURLString)
             return openUntitledDocumentAndDisplay(displayDocument, sidebarVisibility: sidebarVisibility, initialURL: url, error: outError)
         }
         return nil

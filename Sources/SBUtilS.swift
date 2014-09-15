@@ -196,6 +196,15 @@ func &!<T>(optional: T?, nonNilCond: T -> Bool) -> Bool {
     return optional !! nonNilCond ?? false
 }
 
+infix operator &? {
+    associativity right
+    precedence 120
+}
+
+func &?<T>(cond: Bool, trueFunc: @autoclosure () -> T?) -> T? {
+    return cond ? trueFunc() : nil
+}
+
 // MARK: Paths
 
 func SBRoundedPathS(inRect: CGRect, curve: CGFloat, inner: CGFloat, top: Bool, bottom: Bool) -> NSBezierPath {

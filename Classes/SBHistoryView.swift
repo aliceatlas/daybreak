@@ -283,7 +283,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     
     func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row rowIndex: Int) -> AnyObject? {
         let identifier = tableColumn.identifier
-        let item: WebHistoryItem? = (rowIndex < items.count) ? items[rowIndex] : nil
+        let item = (rowIndex < items.count) &? items[rowIndex]
         switch identifier {
         case kSBTitle:
             return item?.title
@@ -299,7 +299,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     
     func tableView(tableView: NSTableView, willDisplayCell cell: NSCell, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
         let identifier = tableColumn.identifier
-        let item: WebHistoryItem? = (rowIndex < items.count) ? items[rowIndex] : nil
+        let item = (rowIndex < items.count) &? items[rowIndex]
         var string: String?
         switch identifier {
         case kSBImage:
@@ -393,7 +393,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         var urls: [NSURL] = []
         let indexes = tableView.selectedRowIndexes
         for var index = indexes.lastIndex; index != NSNotFound; index = indexes.indexLessThanIndex(index) {
-            let item: WebHistoryItem? = (index < items.count) ? items[index] : nil
+            let item = (index < items.count) &? items[index]
             let URLString = item?.URLString
             if let URL = URLString !! {NSURL(string: $0)} {
                 urls.append(URL)

@@ -128,7 +128,7 @@ class SBWebView: WebView, SBFindbarTarget {
         }
         return NSMakeRange(NSNotFound, 0)
     }
-
+    
     override func keyDown(event: NSEvent) {
         let character = (event.characters as NSString).characterAtIndex(0)
         if character == 0x1B {
