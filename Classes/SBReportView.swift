@@ -34,10 +34,9 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     private lazy var iconImageView: NSImageView = {
         let iconImageView = NSImageView(frame: self.iconRect)
-        var image: NSImage? = NSImage(named: "Bug")
-        if image != nil {
-            image!.size = iconImageView.frame.size
-            iconImageView.image = image!
+        if let image = NSImage(named: "Bug") {
+            image.size = iconImageView.frame.size
+            iconImageView.image = image
         }
         return iconImageView
     }()
@@ -101,7 +100,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let icon1 = (name1 == "Safari") &? NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns")
         icon0?.size = NSMakeSize(24.0, 24.0)
         icon1?.size = NSMakeSize(24.0, 24.0)
-        let userAgentName: String? = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as? NSString
+        let userAgentName = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as? NSString as? String
         names.append(name0)
         names.append(name1)
         if userAgentName != name0 && userAgentName != name1 && !(userAgentName?.isEmpty ?? true) {

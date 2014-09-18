@@ -70,7 +70,7 @@ class SBCircleProgressIndicator: SBView {
     required init(coder: NSCoder) {
         super.init(coder: coder)
         if coder.allowsKeyedCoding {
-            style = SBCircleProgressIndicatorStyle.fromRaw(coder.decodeIntegerForKey("style")) ?? .Regular
+            style = SBCircleProgressIndicatorStyle(rawValue: coder.decodeIntegerForKey("style")) ?? .Regular
             backgroundColor = coder.decodeObjectForKey("backgroundColor") as NSColor
             fillColor = coder.decodeObjectForKey("fillColor") as NSColor
             progress = CGFloat(coder.decodeDoubleForKey("progress"))
@@ -83,7 +83,7 @@ class SBCircleProgressIndicator: SBView {
     
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
-        coder.encodeInteger(style.toRaw(), forKey: "style")
+        coder.encodeInteger(style.rawValue, forKey: "style")
         coder.encodeObject(backgroundColor, forKey: "backgroundColor")
         coder.encodeObject(fillColor, forKey: "fillColor")
         coder.encodeDouble(Double(progress), forKey: "progress")

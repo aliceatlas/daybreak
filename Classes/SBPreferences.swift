@@ -13,11 +13,11 @@ class SBPreferences: NSObject {
         
         // Common
         info[kSBSidebarWidth] = NSNumber(float: Float(kSBDefaultSidebarWidth))
-        info[kSBSidebarPosition] = SBSidebarPosition.Right.toRaw() as NSNumber
+        info[kSBSidebarPosition] = SBSidebarPosition.Right.rawValue as NSNumber
         info[kSBSidebarVisibilityFlag] = true as NSNumber
         info[kSBTabbarVisibilityFlag] = true as NSNumber
         info[kSBBookmarkCellWidth] = NSNumber(int: kSBDefaultBookmarkCellWidth)
-        info[kSBBookmarkMode] = SBBookmarkMode.Icon.toRaw() as NSNumber
+        info[kSBBookmarkMode] = SBBookmarkMode.Icon.rawValue as NSNumber
         info[kSBUserAgentName] = SBUserAgentNames[0]
         // General
         info[kSBOpenNewWindowsWithHomePage] = true as NSNumber

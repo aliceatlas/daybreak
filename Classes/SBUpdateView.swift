@@ -34,10 +34,9 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     
 	private lazy var imageView: NSImageView = {
         let imageView = NSImageView(frame: self.imageRect)
-        let image: NSImage? = NSImage(named: "Application.icns")
-        if image != nil {
-            image!.size = imageView.frame.size
-            imageView.image = image!
+        if let image = NSImage(named: "Application.icns") {
+            image.size = imageView.frame.size
+            imageView.image = image
         }
         return imageView
     }()
@@ -268,8 +267,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     
     func htmlString(#baseURL: NSURL, releaseNotesData data: NSData?) -> String? {
         if data != nil {
-            let baseHTML: NSString? = NSString(contentsOfURL: baseURL, encoding: NSUTF8StringEncoding, error: nil)
-            let releaseNotes: NSString? = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            let baseHTML = NSString(contentsOfURL: baseURL, encoding: NSUTF8StringEncoding, error: nil)
+            let releaseNotes = NSString(data: data!, encoding: NSUTF8StringEncoding)
             return baseHTML !! { NSString(format: $0, releaseNotes ?? NSLocalizedString("No data", comment: "")) }
         }
         return nil

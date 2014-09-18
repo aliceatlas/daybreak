@@ -29,12 +29,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Foundation
 
 func SBGetLocalizableTextSetS(path: String) -> ([[String]], [[NSTextField]], NSSize)? {
-    let localizableString = NSString.stringWithContentsOfFile(path, encoding: NSUTF16StringEncoding, error: nil)
-    if localizableString.length > 0 {
+    let localizableString = NSString(contentsOfFile: path, encoding: NSUTF16StringEncoding, error: nil)
+    if localizableString &! {$0.length > 0} {
         let fieldSize = NSSize(width: 300, height: 22)
         let offset = NSPoint(x: 45, y: 12)
         let margin = CGFloat(20)
-        let lines = localizableString.componentsSeparatedByString("\n") as [String]
+        let lines = localizableString!.componentsSeparatedByString("\n") as [String]
         let count = CGFloat(lines.count)
         var size = NSSize(
             width: offset.x + (fieldSize.width * 2) + margin * 2,
@@ -47,7 +47,7 @@ func SBGetLocalizableTextSetS(path: String) -> ([[String]], [[NSTextField]], NSS
                 var fieldRect = NSRect()
                 var texts: [String] = []
                 var fields: [NSTextField] = []
-                let components = line.componentsSeparatedByString(" = ")
+                let components = line.componentsSeparatedByString(" = ") as [NSString] as [String]
                 
                 fieldRect.size = fieldSize
                 fieldRect.origin.y = size.height - margin - (fieldSize.height * CGFloat(i + 1)) - (offset.y * CGFloat(i))
@@ -89,9 +89,10 @@ func SBGetLocalizableTextSetS(path: String) -> ([[String]], [[NSTextField]], NSS
 func SBDefaultHomePageS() -> String? {
     if let path = SBSearchFileInDirectory("com.apple.internetconfig", SBLibraryDirectory("Preferences")) {
         if NSFileManager.defaultManager().fileExistsAtPath(path) {
-            let internetConfig = NSDictionary(contentsOfFile: path)
-            if internetConfig.count > 0 {
-                return SBValueForKey("WWWHomePage", internetConfig) as? String
+            if let internetConfig = NSDictionary(contentsOfFile: path) {
+                if internetConfig.count > 0 {
+                    return SBValueForKey("WWWHomePage", internetConfig) as? String
+                }
             }
         }
     }
@@ -165,7 +166,7 @@ infix operator !! {
     precedence 120
 }
 
-func !!<T, U>(optional: T?, nonNilValue: @autoclosure () -> U?) -> U? {
+func !!<T, U>(optional: T?, nonNilValue: @autoclosure () -> U!) -> U? {
     if optional != nil {
         return nonNilValue()
     }
@@ -179,7 +180,7 @@ func !!<T, U>(optional: T?, nonNilValue: @autoclosure () -> U) -> U? {
     return nil
 }
 
-func !!<T, U>(optional: T?, nonNilFunc: T -> U?) -> U? {
+func !!<T, U>(optional: T?, nonNilFunc: T -> U!) -> U? {
     return optional !! nonNilFunc(optional!)
 }
 

@@ -24,12 +24,12 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
                     resourcesView.dataSource = nil
                 }
                 oldValue?.removeFromSuperview()
-                if view != nil {
-                    view!.frame = viewRect
+                if let view = view {
+                    view.frame = viewRect
                     if !subviews.isEmpty {
-                        addSubview(view!, positioned: .Below, relativeTo: subviews[0] as NSView)
+                        addSubview(view, positioned: .Below, relativeTo: subviews[0] as NSView)
                     } else {
-                        addSubview(view!)
+                        addSubview(view)
                     }
                 }
             }

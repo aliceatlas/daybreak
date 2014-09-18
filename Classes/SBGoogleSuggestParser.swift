@@ -39,20 +39,18 @@ class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
     private var inToplevel = false
     private var inCompleteSuggestion = false
     
-    class func parser() -> SBGoogleSuggestParser {
-        return SBGoogleSuggestParser()
-    }
-    
     func parseData(data: NSData) -> NSError? {
         inToplevel = false
         inCompleteSuggestion = false
-        let parser = NSXMLParser(data: data)
-        parser.delegate = self
-        parser.shouldProcessNamespaces = false
-        parser.shouldReportNamespacePrefixes = false
-        parser.shouldResolveExternalEntities = false
-        items = []
-        return parser.parse() ? nil : parser.parserError
+        if let parser = NSXMLParser(data: data) {
+            parser.delegate = self
+            parser.shouldProcessNamespaces = false
+            parser.shouldReportNamespacePrefixes = false
+            parser.shouldResolveExternalEntities = false
+            items = []
+            return parser.parse() ? nil : parser.parserError
+        }
+        return NSError(domain: "Sunrise", code: 420, userInfo: nil) //!!!
     }
     
     // MARK: Delegate
@@ -63,7 +61,7 @@ class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
         } else if elementName == kSBGSCompleteSuggestionTagName {
             let item = NSMutableDictionary()
             inCompleteSuggestion = true
-            item[kSBType] = SBURLFieldItemType.GoogleSuggest.toRaw()
+            item[kSBType] = SBURLFieldItemType.GoogleSuggest.rawValue
             items.append(item)
         } else {
             if inToplevel && inCompleteSuggestion {

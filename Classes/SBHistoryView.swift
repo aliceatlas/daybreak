@@ -31,11 +31,10 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     private let kSBMinFrameSizeHeight: CGFloat = 320
     
 	private lazy var iconImageView: NSImageView = {
-        let image: NSImage? = NSImage(named: "History")
         let iconImageView = NSImageView(frame: self.iconRect)
-        if image != nil {
-            image!.size = iconImageView.frame.size
-            iconImageView.image = image!
+        if let image = NSImage(named: "History") {
+            image.size = iconImageView.frame.size
+            iconImageView.image = image
         }
         return iconImageView
     }()

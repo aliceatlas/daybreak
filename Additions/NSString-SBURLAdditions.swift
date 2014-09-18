@@ -130,19 +130,17 @@ extension NSString {
 // URL additions
 extension NSString {
     func isURLString(hasScheme: UnsafeMutablePointer<ObjCBool>) -> Bool {
-        var r = false
         if (rangeOfString(" ").location == NSNotFound && rangeOfString(".").location != NSNotFound) || hasPrefix("http://localhost") {
             let string = URLEncodedString
             let attributedString = NSAttributedString(string: string)
             var range = NSMakeRange(0, 0)
-            let URL: NSURL? = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
-            r = range.location == 0
-            if r {
-                hasScheme.memory = ObjCBool((URL?.scheme?.utf16Count ?? 0) > 0 ? string.hasPrefix(URL!.scheme!) : false)
-                //hasScheme.memory = ObjCBool(URL.absoluteString == string)
+            let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
+            if range.location == 0 {
+                hasScheme.memory = ObjCBool(!(URL?.scheme ?? "").isEmpty ? string.hasPrefix(URL.scheme!) : false)
+                return true
             }
         }
-        return r
+        return false
     }
     
     var stringByDeletingScheme: NSString? {
@@ -161,8 +159,8 @@ extension NSString {
         return requestURL.absoluteString!
     }
     
-    var URLDecodedString: NSString {
-        return NSURL(string: self)._web_userVisibleString()
+    var URLDecodedString: NSString? {
+        return NSURL(string: self)?._web_userVisibleString()
     }
     
     var requestURLString: NSString {

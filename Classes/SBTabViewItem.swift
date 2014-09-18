@@ -347,9 +347,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             let bundle = NSBundle.mainBundle()
             let infoDictionary = bundle.infoDictionary
             let localizedInfoDictionary = bundle.localizedInfoDictionary
-            let applicationName: String? = (localizedInfoDictionary["CFBundleName"] ?? infoDictionary["CFBundleName"]) as? NSString
+            let applicationName = (localizedInfoDictionary["CFBundleName"] ?? infoDictionary["CFBundleName"]) as? NSString as? String
             let version: String? = (infoDictionary["CFBundleVersion"] as? NSString)?.stringByDeletingSpaces
-            var safariVersion: String? = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString
+            var safariVersion = NSBundle(path: "/Applications/Safari.app")?.infoDictionary["CFBundleVersion"] as? NSString as? String
             safariVersion = safariVersion !! {suffix($0, $0.utf16Count - 1)} ?? "0"
             if applicationName != nil {
                 webView.applicationNameForUserAgent = applicationName!
@@ -359,9 +359,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         } else if userAgentName == SBUserAgentNames[1] {
             let applicationName = SBUserAgentNames[1]
             let bundle = NSBundle(path: "/Applications/\(applicationName).app")
-            let infoDictionary = bundle.infoDictionary
-            let version: String? = (infoDictionary["CFBundleShortVersionString"] ?? infoDictionary["CFBundleVersion"]) as? NSString
-            var safariVersion: String? = NSBundle(path: "/Applications/Safari.app").infoDictionary["CFBundleVersion"] as? NSString
+            let infoDictionary = bundle?.infoDictionary
+            let version = (infoDictionary?["CFBundleShortVersionString"] ?? infoDictionary?["CFBundleVersion"]) as? NSString as? String
+            var safariVersion = NSBundle(path: "/Applications/Safari.app")?.infoDictionary["CFBundleVersion"] as? NSString as? String
             safariVersion = safariVersion !! {suffix($0, $0.utf16Count - 1)} ?? "0"
             if (version !! safariVersion) != nil {
                 webView.applicationNameForUserAgent = "Version/\(version!) \(applicationName)/\(safariVersion!)"
@@ -557,10 +557,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     case NSURLErrorFileDoesNotExist:
                         title = NSLocalizedString("File Does Not Exist", comment: "")
                     case NSURLErrorFileIsDirectory:
-                        let url: NSURL? = NSURL(string: urlString)
-                        if url != nil {
+                        if let url = NSURL(string: urlString) {
                             // Try to opening with other application
-                            if !NSWorkspace.sharedWorkspace().openURL(url!) {
+                            if !NSWorkspace.sharedWorkspace().openURL(url) {
                                 title = NSLocalizedString("File is Directory", comment: "")
                             }
                         }
@@ -573,7 +572,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     case NSURLErrorServerCertificateHasBadDate:
                         title = NSLocalizedString("Server Certificate Has BadDate", comment: "")
                     case NSURLErrorServerCertificateUntrusted:
-                        let url = NSURL(string: urlString)
+                        let url = NSURL(string: urlString)!
                         let aTitle = NSLocalizedString("Server Certificate Untrusted", comment: "")
                         var alert = NSAlert()
                         alert.messageText = aTitle
@@ -638,7 +637,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     override func webView(sender: WebView, resource identifier: AnyObject?, didReceiveResponse response: NSURLResponse, fromDataSource dataSource: WebDataSource) {
         let length = response.expectedContentLength
-        if identifier != nil && length > 0 {
+        if length > 0 {
             if let resourceID = identifier as? SBWebResourceIdentifier {
                 resourceID.length = length
                 if selected {
@@ -655,7 +654,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     override func webView(sender: WebView, resource identifier: AnyObject?, didReceiveContentLength length: Int, fromDataSource dataSource: WebDataSource) {
-        if identifier != nil && length > 0 {
+        if length > 0 {
             if let resourceID = identifier as? SBWebResourceIdentifier {
                 resourceID.received += length
                 if selected {
@@ -751,12 +750,13 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
         let linkURL = element[WebElementLinkURLKey] as? NSURL
         let frame = element[WebElementFrameKey] as WebFrame
-        let frameURL: NSURL? = frame.dataSource.request.URL
-        let applicationBundleIdentifier: String? = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenApplicationBundleIdentifier)
+        let frameURL = frame.dataSource.request.URL
+        let applicationBundleIdentifier = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenApplicationBundleIdentifier)
         var appName: String?
         if let applicationPath = applicationBundleIdentifier !! {NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier($0)} {
-            let bundle = NSBundle(path: applicationPath)
-            appName = (bundle.localizedInfoDictionary["CFBundleDisplayName"] ?? bundle.infoDictionary["CFBundleName"]) as? String
+            if let bundle = NSBundle(path: applicationPath) {
+                appName = (bundle.localizedInfoDictionary["CFBundleDisplayName"] ?? bundle.infoDictionary["CFBundleName"]) as? String
+            }
         }
         
         menuItems.extend(defaultMenuItems as [NSMenuItem])
@@ -855,7 +855,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     override func webView(webView: WebView, decidePolicyForNavigationAction actionInformation: [NSObject: AnyObject], request: NSURLRequest, frame: WebFrame, decisionListener listener: WebPolicyDecisionListener) {
         let url = request.URL
         let modifierFlags = NSEventModifierFlags(actionInformation[WebActionModifierFlagsKey as String] as NSNumber)
-        let navigationType = WebNavigationType.fromRaw(actionInformation[WebActionNavigationTypeKey as String] as NSNumber)!
+        let navigationType = WebNavigationType(rawValue: actionInformation[WebActionNavigationTypeKey as String] as NSNumber)!
         switch navigationType {
             case .LinkClicked:
                 if url.hasWebScheme { // 'http', 'https', 'file'
@@ -903,7 +903,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     override func webView(webView: WebView, unableToImplementPolicyWithError error: NSError, frame: WebFrame) {
         if let string: String = error.userInfo?["NSErrorFailingURLStringKey"] as? NSString {
             let url = NSURL(string: string)
-            if url.hasWebScheme { // 'http', 'https', 'file'
+            if url &! {$0.hasWebScheme} { // 'http', 'https', 'file'
                 // Error
             } else {
                 // open URL with other applications
@@ -949,8 +949,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         if openPanel.runModal() == NSFileHandlingPanelOKButton {
             let encodingName = webView.textEncodingName
             var error: NSError?
-            var name: NSString? = pageTitle
-            if name == "" { name = nil }
+            var name = (pageTitle != "") &? pageTitle
             name = (name ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")
             let filePath = NSTemporaryDirectory().stringByAppendingPathComponent(name!)
             let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(!encodingName.isEmpty ? encodingName : kSBDefaultEncodingName))
@@ -967,8 +966,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     func saveDocumentSource(sender: AnyObject) {
         let encodingName = webView.textEncodingName
-        var name: NSString? = pageTitle
-        if name == "" { name = nil }
+        var name = (pageTitle != "") &? pageTitle
         name = (name ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")
         let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(!encodingName.isEmpty ? encodingName : kSBDefaultEncodingName))
         let savePanel = NSSavePanel()
@@ -996,10 +994,11 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         message = "\(message)<br /><br />\(searchMessage)<br /><a href=\"\(searchURLString)\">\(urlString)</a>"
         let path = bundle.pathForResource("Error", ofType: "html")!
         if NSFileManager.defaultManager().fileExistsAtPath(path) {
-            var htmlString = NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)
-            htmlString = NSString(format: htmlString, title, message)
-            // Load
-            frame.loadHTMLString(htmlString, baseURL: NSURL.fileURLWithPath(path))
+            if let htmlString = NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
+                let formattedHTML = NSString(format: htmlString, title, message)
+                // Load
+                frame.loadHTMLString(formattedHTML, baseURL: NSURL.fileURLWithPath(path))
+            }
         }
     }
     
@@ -1035,8 +1034,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             panel.allowsMultipleSelection = false
             panel.directoryURL = NSURL.fileURLWithPath("/Applications")
             if panel.runModal() == NSFileHandlingPanelOKButton {
-                let bundle = NSBundle(URL: panel.URL)
-                bundleIdentifier = bundle.bundleIdentifier
+                if let bundle = NSBundle(URL: panel.URL) {
+                    bundleIdentifier = bundle.bundleIdentifier
+                }
             }
             if bundleIdentifier != nil {
                 if openURL(url, inBundleIdentifier: bundleIdentifier!) {

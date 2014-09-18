@@ -55,20 +55,17 @@ class SBBLKGUIPopUpButton: NSPopUpButton {
 class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
     override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
         let controlView = inView as SBBLKGUIPopUpButton
+        
         var leftImage: NSImage?
         var centerImage: NSImage?
         var rightImage: NSImage?
-        
-        let image: NSImage? = controlView.selectedItem.image
-        let attributedTitle = NSAttributedString(string: controlView.titleOfSelectedItem)
-        
         if bordered {
             var drawRect = NSZeroRect
             let fraction: CGFloat = enabled ? 1.0 : 0.5
             
-            leftImage = NSImage(named: highlighted ? "BLKGUI_PopUp-Highlighted-Left.png" : "BLKGUI_PopUp-Left.png")
+            leftImage = NSImage(named:   highlighted ? "BLKGUI_PopUp-Highlighted-Left.png" :   "BLKGUI_PopUp-Left.png")
             centerImage = NSImage(named: highlighted ? "BLKGUI_PopUp-Highlighted-Center.png" : "BLKGUI_PopUp-Center.png")
-            rightImage = NSImage(named: highlighted ? "BLKGUI_PopUp-Highlighted-Right.png" : "BLKGUI_PopUp-Right.png")
+            rightImage = NSImage(named:  highlighted ? "BLKGUI_PopUp-Highlighted-Right.png" :  "BLKGUI_PopUp-Right.png")
             
             // Left
             drawRect.origin = cellFrame.origin
@@ -89,19 +86,21 @@ class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
             rightImage!.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: fraction, respectFlipped: true)
         }
         
-        if image != nil {
+        let image = controlView.selectedItem.image
+        if let image = image {
             let ctx = SBCurrentGraphicsPort
             var imageRect = NSZeroRect
-            imageRect.size = image!.size
+            imageRect.size = image.size
             imageRect.origin.x = cellFrame.origin.x + 5.0
             imageRect.origin.y = cellFrame.origin.y + ((cellFrame.size.height - imageRect.size.height) / 2)
             CGContextSaveGState(ctx)
             CGContextTranslateCTM(ctx, 0.0, cellFrame.size.height)
             CGContextScaleCTM(ctx, 1.0, -1.0)
-            image!.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
             CGContextRestoreGState(ctx)
         }
         
+        let attributedTitle = NSAttributedString(string: controlView.titleOfSelectedItem)
         if attributedTitle.length > 0 {
             var titleRect = NSZeroRect
             let mutableTitle = NSMutableAttributedString(attributedString: attributedTitle)

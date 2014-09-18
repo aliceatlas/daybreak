@@ -56,7 +56,7 @@ class SBSplitView: NSSplitView, SBSidebarDelegate {
         }
     }
     
-    var sidebarPosition: SBSidebarPosition = SBSidebarPosition.fromRaw(NSUserDefaults.standardUserDefaults().integerForKey(kSBSidebarPosition))! {
+    var sidebarPosition: SBSidebarPosition = SBSidebarPosition(rawValue: NSUserDefaults.standardUserDefaults().integerForKey(kSBSidebarPosition))! {
         didSet {
             if sidebarPosition != oldValue {
                 switchView(sidebarPosition)

@@ -99,10 +99,9 @@ extension NSImage {
     
     class func colorImage(size: NSSize, colorName: String) -> NSImage {
         let image = NSImage(size: size)
-        let color: NSColor? = NSColor(labelColorName: colorName)
         image.lockFocus()
-        if color != nil {
-            color!.set()
+        if let color = NSColor(labelColorName: colorName) {
+            color.set()
             NSRectFill(NSMakeRect(0, 0, size.width, size.height))
         } else {
             NSColor.grayColor().set()

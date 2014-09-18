@@ -171,12 +171,11 @@ class SBAboutView: SBView {
     // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
-        let image: NSImage? = NSImage(named: "Application.icns")
         let ctx = SBCurrentGraphicsPort
         SBWindowBackColor.set()
         NSRectFillUsingOperation(rect, .CompositeSourceOver)
         
-        if let image = image {
+        if let image = NSImage(named: "Application.icns") {
             var imageRect = iconImageRect
             image.size = imageRect.size
             image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)

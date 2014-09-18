@@ -217,7 +217,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         updateView!.target = self
         updateView!.doneSelector = "doneUpdate"
         updateView!.cancelSelector = "cancelUpdate"
-        updateView!.loadRequest(NSURL(string: urlString))
+        updateView!.loadRequest(NSURL(string: urlString)!)
         window.showCoverWindow(updateView!)
     }
     

@@ -91,7 +91,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         updateButton.image = NSImage(named: "Icon_Camera.png")
         updateButton.title = NSLocalizedString("Update", comment: "")
         updateButton.font = NSFont.systemFontOfSize(11.0)
-        updateButton.keyEquivalentModifierMask = Int(NSEventModifierFlags.CommandKeyMask.toRaw())
+        updateButton.keyEquivalentModifierMask = Int(NSEventModifierFlags.CommandKeyMask.rawValue)
         updateButton.keyEquivalent = "r"
         return updateButton
     }()
@@ -168,7 +168,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         for i in 0..<fileTypeNames.count {
             let item = NSMenuItem(title: fileTypeNames[i], action: "selectFiletype:", keyEquivalent: "")
             item.target = self
-            item.tag = Int(filetypes[i].toRaw())
+            item.tag = Int(filetypes[i].rawValue)
             item.state = (self.filetype == filetypes[i]) ? NSOnState : NSOffState
             if self.filetype == filetypes[i] {
                 selectedIndex = i + 1
@@ -184,10 +184,10 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let optionTabView = NSTabView(frame: NSMakeRect(6, self.imageViewSize.height - 321, 114, 45))
         optionTabView.tabViewType = .NoTabsNoBorder
         optionTabView.drawsBackground = false
-        let tabViewItem0 = NSTabViewItem(identifier: NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.toRaw()))
+        let tabViewItem0 = NSTabViewItem(identifier: NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.rawValue))
         tabViewItem0.view.addSubview(self.tiffOptionLabel)
         tabViewItem0.view.addSubview(self.tiffOptionPopup)
-        let tabViewItem1 = NSTabViewItem(identifier: NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.toRaw()))
+        let tabViewItem1 = NSTabViewItem(identifier: NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.rawValue))
         tabViewItem1.view.addSubview(self.jpgOptionLabel)
         tabViewItem1.view.addSubview(self.jpgOptionSlider)
         tabViewItem1.view.addSubview(self.jpgOptionField)
@@ -195,10 +195,10 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         optionTabView.addTabViewItem(tabViewItem1)
         switch self.filetype {
             case NSBitmapImageFileType.NSTIFFFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.toRaw()))
+                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.rawValue))
                 optionTabView.hidden = false
             case NSBitmapImageFileType.NSJPEGFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.toRaw()))
+                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.rawValue))
                 optionTabView.hidden = false
             default:
                 optionTabView.hidden = true
@@ -225,7 +225,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         menu.addItemWithTitle("", action: nil, keyEquivalent: "")
         for i in 0..<compressionNames.count {
             let item = NSMenuItem(title: compressionNames[i], action: "selectTiffOption:", keyEquivalent: "")
-            item.tag = Int(compressions[i].toRaw())
+            item.tag = Int(compressions[i].rawValue)
             item.state = (self.tiffCompression == compressions[i]) ? NSOnState : NSOffState
             if self.tiffCompression == compressions[i] {
                 selectedIndex = i + 1
@@ -331,7 +331,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     private lazy var filetype: NSBitmapImageFileType = {
         if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotFileType) as? NSNumber {
-            return NSBitmapImageFileType.fromRaw(UInt(value.intValue))!
+            return NSBitmapImageFileType(rawValue: UInt(value.intValue))!
         } else {
             return NSBitmapImageFileType.NSTIFFFileType
         }
@@ -339,7 +339,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     private lazy var tiffCompression: NSTIFFCompression = {
         if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotTIFFCompression) as? NSNumber {
-            return NSTIFFCompression.fromRaw(UInt(value.intValue))!
+            return NSTIFFCompression(rawValue: UInt(value.intValue))!
         } else {
             return .None
         }
@@ -432,7 +432,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     }
     
     override func controlTextDidChange(notification: NSNotification) {
-        let field = notification.object!
+        let field: AnyObject = notification.object!
         destructUpdateTimer()
         if shouldShowSizeWarning(field) {
             let title = NSLocalizedString("The application may not respond if the processing is continued. Are you sure you want to continue?", comment: "")
@@ -538,7 +538,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             widthField.integerValue = Int(r.size.width)
             heightField.integerValue = Int(r.size.height)
             scaleField.integerValue = 100
-            update(field: nil)
+            update(forField: nil)
             successScale = 1.0
             
             return true
@@ -564,13 +564,12 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     @objc(updateWithTimer:)
     func update(#timer: NSTimer) {
-        let field = timer.userInfo
+        let field: AnyObject? = timer.userInfo
         destructUpdateTimer()
-        update(field: field)
+        update(forField: field)
     }
     
-    @objc(updateForField:)
-    func update(#field: AnyObject?) {
+    func update(forField field: AnyObject?) {
         // Show Progress
         showProgress()
         // Perform update
@@ -578,8 +577,9 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         SBPerformWithModes(self, "updatingForField:", field, modes)
     }
     
-    func updatingForField(field: AnyObject) {
-        updateFields(field: field)
+    @objc(updatingForField:)
+    func updating(forField field: AnyObject) {
+        updateFields(forField: field)
         updatePreviewImage()
         // Hide Progress
         hideProgress()
@@ -589,8 +589,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let width = CGFloat(widthField.integerValue)
         let height = CGFloat(heightField.integerValue)
         data = imageData(filetype, size: NSMakeSize(width, height))
-        let compressedImage: NSImage? = data !! {NSImage(data: $0)}
-        if compressedImage != nil {
+        if let compressedImage = data !! {NSImage(data: $0)} {
             // Set image to image view
             imageView.image = compressedImage
             // Get length of image data
@@ -603,8 +602,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         }
     }
     
-    @objc(updateFieldsForField:)
-    func updateFields(#field: AnyObject) {
+    func updateFields(forField field: AnyObject) {
         let locked = lockButton.state == NSOffState
         var newSize = NSZeroSize
         var r = imageView.frame
@@ -704,43 +702,42 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     func checkOnlyVisible(sender: AnyObject) {
         NSUserDefaults.standardUserDefaults().setBool(onlyVisibleButton.state == NSOnState, forKey: kSBSnapshotOnlyVisiblePortion)
-        update(field: nil)
+        update(forField: nil)
     }
     
     func update(sender: AnyObject) {
         if let target = target as? SBDocument {
             visibleRect = target.visibleRectOfSelectedWebDocumentView
-            let selectedWebViewImage: NSImage? = target.selectedWebViewImage
-            selectedWebViewImage !! { self.image = $0 }
+            target.selectedWebViewImage !! { self.image = $0 }
         }
     }
     
     func lock(sender: AnyObject) {
         let locked = lockButton.state == NSOffState
         if locked {
-            update(field: widthField)
+            update(forField: widthField)
         }
         scaleField.enabled = locked
     }
     
     func selectFiletype(sender: NSMenuItem) {
         let tag = sender.tag
-        if Int(filetype.toRaw()) != tag {
-            filetype = NSBitmapImageFileType.fromRaw(UInt(tag))!
+        if Int(filetype.rawValue) != tag {
+            filetype = NSBitmapImageFileType(rawValue: UInt(tag))!
             for item in filetypePopup.menu.itemArray as [NSMenuItem] {
-                item.state = (Int(filetype.toRaw()) == item.tag) ? NSOnState : NSOffState
+                item.state = (Int(filetype.rawValue) == item.tag) ? NSOnState : NSOffState
             }
             // Update image
-            update(field: nil)
+            update(forField: nil)
             // Save to defaults
-            NSUserDefaults.standardUserDefaults().setInteger(Int(filetype.toRaw()), forKey: kSBSnapshotFileType)
+            NSUserDefaults.standardUserDefaults().setInteger(Int(filetype.rawValue), forKey: kSBSnapshotFileType)
         }
         switch filetype {
             case NSBitmapImageFileType.NSTIFFFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.toRaw()))
+                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.rawValue))
                 optionTabView.hidden = false
             case NSBitmapImageFileType.NSJPEGFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.toRaw()))
+                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.rawValue))
                 optionTabView.hidden = false
             default:
                 optionTabView.hidden = true
@@ -749,15 +746,15 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     func selectTiffOption(sender: NSMenuItem) {
         let tag = sender.tag
-        if Int(tiffCompression.toRaw()) != tag {
-            tiffCompression = NSTIFFCompression.fromRaw(UInt(tag))!
+        if Int(tiffCompression.rawValue) != tag {
+            tiffCompression = NSTIFFCompression(rawValue: UInt(tag))!
             for item in tiffOptionPopup.menu.itemArray as [NSMenuItem] {
-                item.state = (Int(tiffCompression.toRaw()) == item.tag) ? NSOnState : NSOffState
+                item.state = (Int(tiffCompression.rawValue) == item.tag) ? NSOnState : NSOffState
             }
             // Update image
-            update(field: nil)
+            update(forField: nil)
             // Save to defaults
-            NSUserDefaults.standardUserDefaults().setInteger(Int(tiffCompression.toRaw()), forKey: kSBSnapshotTIFFCompression)
+            NSUserDefaults.standardUserDefaults().setInteger(Int(tiffCompression.rawValue), forKey: kSBSnapshotTIFFCompression)
         }
     }
     

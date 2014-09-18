@@ -37,7 +37,7 @@ class SBWebView: WebView, SBFindbarTarget {
     var showFindbar = false
 	private var magnified = false
     
-    var _textEncodingName: String? = nil
+    var _textEncodingName: String?
     var textEncodingName: String {
         get { return _textEncodingName ?? preferences.defaultTextEncodingName }
         set(textEncodingName) { _textEncodingName = textEncodingName }

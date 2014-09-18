@@ -44,10 +44,6 @@ class SBDownloader: NSObject {
         self.url = url
     }
     
-    class func downloadWithURL(url: NSURL?) -> SBDownloader {
-        return SBDownloader(URL: url)
-    }
-    
     // MARK: Delegate
     
     func connection(connection: NSURLConnection, willCacheResponse cachedResponse: NSCachedURLResponse) -> NSCachedURLResponse? {

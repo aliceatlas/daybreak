@@ -187,18 +187,17 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
         
         // Icon
         if !(download.path?.isEmpty ?? true) {
-            let image: NSImage? = NSWorkspace.sharedWorkspace().iconForFile(download.path)
-            if image != nil {
+            if let image = NSWorkspace.sharedWorkspace().iconForFile(download.path) {
                 var r = NSZeroRect
                 var b = bounds
-                let size = image!.size
+                let size = image.size
                 var fraction: CGFloat = 1.0
                 r.size.height = bounds.size.height - heights - padding.y * 3
                 r.size.width = size.width * (r.size.height / size.height)
                 r.origin.x = (bounds.size.width - r.size.width) / 2
                 r.origin.y = heights + padding.y * 2
                 fraction = (download.status == .Done) ? 1.0 : 0.5
-                image!.drawInRect(r, fromRect: NSRect(origin: NSZeroPoint, size: size), operation: .CompositeSourceOver, fraction: fraction)
+                image.drawInRect(r, fromRect: NSRect(origin: NSZeroPoint, size: size), operation: .CompositeSourceOver, fraction: fraction)
             }
         }
         

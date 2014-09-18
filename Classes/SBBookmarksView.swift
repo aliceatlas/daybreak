@@ -117,7 +117,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         get { return listView!.mode }
         set(mode) {
             listView!.mode = mode
-            NSUserDefaults.standardUserDefaults().setInteger(mode.toRaw(), forKey: kSBBookmarkMode)
+            NSUserDefaults.standardUserDefaults().setInteger(mode.rawValue, forKey: kSBBookmarkMode)
         }
     }
     
