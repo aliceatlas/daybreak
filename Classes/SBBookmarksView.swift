@@ -58,6 +58,14 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         listView!.layoutItemViews()
     }*/
     
+    override init(frame: NSRect) {
+        super.init(frame: frame)
+    }
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
+    
     // MARK: Delegate
     
     func bookmarkListViewShouldOpenSearchbar(bookmarkListView: SBBookmarkListView) {

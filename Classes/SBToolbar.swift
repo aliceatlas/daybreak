@@ -52,6 +52,10 @@ class SBToolbar: NSToolbar {
         set(sbDelegate) { delegate = sbDelegate }
     }
     
+    override init(identifier: String) {
+        super.init(identifier: identifier)
+    }
+    
     func executeDidVisible() {
         sbDelegate?.toolbarDidVisible(self)
     }
