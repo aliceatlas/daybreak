@@ -60,12 +60,8 @@ class SBBookmarks: NSObject {
             (item1[kSBBookmarkImage] as NSData) == (item2[kSBBookmarkImage] as NSData)
     }
     
-    func itemAtIndex(index: UInt) -> BookmarkItem? {
-        let i = Int(index)
-        if i < items.count {
-            return items[i]
-        }
-        return nil
+    func itemAtIndex(index: Int) -> BookmarkItem? {
+        return index < items.count &? items[index]
     }
     
     func containsItem(bookmarkItem: BookmarkItem) -> Int {
@@ -152,8 +148,8 @@ class SBBookmarks: NSObject {
         }
     }
     
-    func replaceItem(item: BookmarkItem, atIndex index: UInt) {
-        items[Int(index)] = NSMutableDictionary(dictionary: item)
+    func replaceItem(item: BookmarkItem, atIndex index: Int) {
+        items[index] = NSMutableDictionary(dictionary: item)
         writeToFile()
         SBDispatch(notifyDidUpdate)
     }
@@ -167,11 +163,11 @@ class SBBookmarks: NSObject {
         }
     }
     
-    func addItems(inItems: [BookmarkItem], toIndex: UInt) {
-        if !inItems.isEmpty && Int(toIndex) <= items.count {
+    func addItems(inItems: [BookmarkItem], toIndex: Int) {
+        if !inItems.isEmpty && toIndex <= items.count {
     		//[items insertObjects:inItems atIndexes:[NSIndexSet indexSetWithIndex:toIndex]];
             for (i, item) in enumerate(inItems) {
-                items.insert(NSMutableDictionary(dictionary: item), atIndex: i + Int(toIndex))
+                items.insert(NSMutableDictionary(dictionary: item), atIndex: i + toIndex)
             }
             writeToFile()
             SBDispatch(notifyDidUpdate)
