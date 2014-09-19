@@ -299,22 +299,6 @@ extern NSString *kSBDownloadsItems;
 // Pasteboard type names
 extern NSString *SBBookmarkPboardType;
 
-// Delegates
-@class SBURLField;
-@protocol SBURLFieldDelegate <NSObject>
-@optional
-- (void)urlFieldDidSelectBackward:(SBURLField *)aUrlField;
-- (void)urlFieldDidSelectForward:(SBURLField *)aUrlField;
-- (void)urlFieldShouldOpenURL:(SBURLField *)aUrlField;
-- (void)urlFieldShouldOpenURLInNewTab:(SBURLField *)aUrlField;
-- (void)urlFieldShouldDownloadURL:(SBURLField *)aUrlField;
-- (void)urlFieldTextDidChange:(SBURLField *)aUrlField;
-- (void)urlFieldWillResignFirstResponder:(SBURLField *)aUrlField;
-@end
-@protocol SBURLFieldDatasource <NSObject>
-@end
-
-
 // Un-documented methods
 @interface NSURL (WebNSURLExtras)
 + (NSURL *)_web_URLWithUserTypedString:(NSString *)string;
