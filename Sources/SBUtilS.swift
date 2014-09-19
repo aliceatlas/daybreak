@@ -197,6 +197,10 @@ func &!<T>(optional: T?, nonNilCond: T -> Bool) -> Bool {
     return optional !! nonNilCond ?? false
 }
 
+func &!<T>(optional: T?, nonNilCond: @autoclosure () -> Bool) -> Bool {
+    return optional !! nonNilCond ?? false
+}
+
 infix operator &? {
     associativity right
     precedence 120
