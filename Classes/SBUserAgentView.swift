@@ -55,9 +55,9 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         popup.translatesAutoresizingMaskIntoConstraints = false
         let count = SBUserAgentNames.count
         var selectedIndex: Int?
-        let userAgentName = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as? String
+        let userAgentName = NSUserDefaults.standardUserDefaults().stringForKey(kSBUserAgentName)
         if userAgentName != nil {
-            if let index = SBUserAgentNames.firstIndex({ $0 == userAgentName }) {
+            if let index = SBUserAgentNames.firstIndex({ $0 == userAgentName! }) {
                 selectedIndex = index + 1
             }
         }

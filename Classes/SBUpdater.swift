@@ -93,7 +93,7 @@ class SBUpdater: NSObject {
                     var shouldSkip = false
                     if checkSkipVersion {
                         let versionString = userInfo[kSBUpdaterVersionString] as String
-                        let skipVersion = NSUserDefaults.standardUserDefaults().objectForKey(kSBUpdaterSkipVersion) as String
+                        let skipVersion = NSUserDefaults.standardUserDefaults().stringForKey(kSBUpdaterSkipVersion)
                         shouldSkip = versionString == skipVersion
                     }
                     if !shouldSkip {

@@ -138,7 +138,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func openURL(event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
         if let URLString = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
-            if let method = NSUserDefaults.standardUserDefaults().objectForKey(kSBOpenURLFromApplications) as? NSString {
+            if let method = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenURLFromApplications) {
                 switch method {
                     case "in a new window":
                     var error: NSError?

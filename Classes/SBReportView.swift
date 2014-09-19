@@ -100,10 +100,10 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let icon1 = (name1 == "Safari") &? NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns")
         icon0?.size = NSMakeSize(24.0, 24.0)
         icon1?.size = NSMakeSize(24.0, 24.0)
-        let userAgentName = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as? NSString as? String
+        let userAgentName = NSUserDefaults.standardUserDefaults().stringForKey(kSBUserAgentName)
         names.append(name0)
         names.append(name1)
-        if userAgentName != name0 && userAgentName != name1 && !(userAgentName?.isEmpty ?? true) {
+        if userAgentName &! {!$0.isEmpty && $0 != name0 && $0 != name1} {
             names.append(userAgentName!)
         }
         let images = [icon0, icon1]

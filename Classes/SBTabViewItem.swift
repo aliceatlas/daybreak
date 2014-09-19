@@ -341,7 +341,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     private func setUserAgent(inView: SBWebView?) {
         let webView = inView ?? self.webView
-        var userAgentName = NSUserDefaults.standardUserDefaults().objectForKey(kSBUserAgentName) as String
+        var userAgentName = NSUserDefaults.standardUserDefaults().stringForKey(kSBUserAgentName)
         // Set custom user agent
         if userAgentName == SBUserAgentNames[0] {
             let bundle = NSBundle.mainBundle()
@@ -1018,7 +1018,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     func openURLInApplicationFromMenu(menuItem: NSMenuItem) {
         if let url = menuItem.representedObject as? NSURL {
-            if let savedBundleIdentifier: String = NSUserDefaults.standardUserDefaults().objectForKey(kSBOpenApplicationBundleIdentifier) as? NSString {
+            if let savedBundleIdentifier = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenApplicationBundleIdentifier) {
                 openURL(url, inBundleIdentifier: savedBundleIdentifier)
             }
         }
