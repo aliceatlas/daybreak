@@ -352,7 +352,6 @@ NSString *kSBDownloadsItems = @"Items";
 NSString *SBBookmarkPboardType = @"SBBookmarkPboardType";
 */
 
-@objc
-protocol SBAnswersIsFirstResponder {
+@objc protocol SBAnswersIsFirstResponder {
     var isFirstResponder: Bool { get }
 }

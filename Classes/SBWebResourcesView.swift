@@ -26,17 +26,15 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-@objc
-protocol SBWebResourcesViewDataSource {
-    func numberOfRowsInWebResourcesView(resourcesView: SBWebResourcesView) -> Int
-    func webResourcesView(webResourcesView: SBWebResourcesView, objectValueForTableColumn: NSTableColumn, row: Int) -> AnyObject?
-    func webResourcesView(webResourcesView: SBWebResourcesView, willDisplayCell: AnyObject?, forTableColumn: NSTableColumn, row: Int)
+@objc protocol SBWebResourcesViewDataSource {
+    func numberOfRowsInWebResourcesView(SBWebResourcesView) -> Int
+    func webResourcesView(SBWebResourcesView, objectValueForTableColumn: NSTableColumn, row: Int) -> AnyObject?
+    func webResourcesView(SBWebResourcesView, willDisplayCell: AnyObject?, forTableColumn: NSTableColumn, row: Int)
 }
 
-@objc
-protocol SBWebResourcesViewDelegate {
-    optional func webResourcesView(webResourcesView: SBWebResourcesView, shouldSaveAtRow: Int)
-    optional func webResourcesView(webResourcesView: SBWebResourcesView, shouldDownloadAtRow: Int)
+@objc protocol SBWebResourcesViewDelegate {
+    optional func webResourcesView(SBWebResourcesView, shouldSaveAtRow: Int)
+    optional func webResourcesView(SBWebResourcesView, shouldDownloadAtRow: Int)
 }
 
 class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {

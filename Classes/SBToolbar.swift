@@ -28,10 +28,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Cocoa
 
-@objc
-protocol SBToolbarDelegate: NSToolbarDelegate {
-    func toolbarDidVisible(toolbar: SBToolbar)
-    func toolbarDidInvisible(toolbar: SBToolbar)
+@objc protocol SBToolbarDelegate: NSToolbarDelegate {
+    func toolbarDidVisible(SBToolbar)
+    func toolbarDidInvisible(SBToolbar)
 }
 
 class SBToolbar: NSToolbar {

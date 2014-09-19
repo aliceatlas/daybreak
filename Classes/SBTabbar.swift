@@ -26,8 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-@objc
-protocol SBTabbarDelegate {
+@objc protocol SBTabbarDelegate {
     optional func tabbar(SBTabbar, didChangeSelection: SBTabbarItem)
     optional func tabbar(SBTabbar, didReselection: SBTabbarItem)
     optional func tabbar(SBTabbar, shouldAddNewItemForURLs: [NSURL])

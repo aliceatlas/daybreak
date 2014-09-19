@@ -26,8 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-@objc
-protocol SBDocumentWindowDelegate: NSWindowDelegate {
+@objc protocol SBDocumentWindowDelegate: NSWindowDelegate {
     optional func window(window: SBDocumentWindow, shouldClose: AnyObject?) -> Bool
     optional func window(window: SBDocumentWindow, shouldHandleKeyEvent: NSEvent) -> Bool
     optional func windowDidFinishFlipping(window: SBDocumentWindow)

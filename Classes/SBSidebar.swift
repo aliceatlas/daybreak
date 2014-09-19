@@ -1,13 +1,11 @@
-@objc
-protocol SBSidebarDelegate: NSSplitViewDelegate {
+@objc protocol SBSidebarDelegate: NSSplitViewDelegate {
     optional func sidebarShouldOpen(SBSidebar)
     optional func sidebarShouldClose(SBSidebar)
     optional func sidebarDidOpenDrawer(SBSidebar)
     // func sidebar(SBSidebar, didDraggedResizer deltaX: CGFloat) -> CGFloat
 }
 
-@objc
-protocol SBSideBottombarDelegate {
+@objc protocol SBSideBottombarDelegate {
     optional func bottombarDidSelectedOpen(SBSideBottombar)
     optional func bottombarDidSelectedClose(SBSideBottombar)
     optional func bottombarDidSelectedDrawerOpen(SBSideBottombar)

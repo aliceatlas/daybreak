@@ -26,8 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-@objc
-protocol SBSourceTextViewDelegate: NSTextViewDelegate {
+@objc protocol SBSourceTextViewDelegate: NSTextViewDelegate {
     optional func textViewShouldOpenFindbar(SBSourceTextView)
     optional func textViewShouldCloseFindbar(SBSourceTextView)
 }
