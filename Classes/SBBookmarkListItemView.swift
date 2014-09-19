@@ -269,7 +269,6 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     
     override func drawRect(rect: NSRect) {
         if visible {
-            let ctx = SBCurrentGraphicsPort
             var r = NSZeroRect
             let imageData = item[kSBBookmarkImage] as? NSData
             let title = item[kSBBookmarkTitle] as? NSString
@@ -307,7 +306,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         path.fill()
                     }
                     SBPreserveGraphicsState {
-                        path.setClip()
+                        path.addClip()
                         image.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
                     }
                 }
@@ -379,7 +378,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                     r = imageRect
                     path = SBRoundedPathS(r, 0.0, 0.0, false, false)
                     SBPreserveGraphicsState {
-                        path.setClip()
+                        path.addClip()
                         image.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
                     }
                 }

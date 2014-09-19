@@ -1118,7 +1118,7 @@ class SBURLFieldDataCell: NSCell {
             let gradient = NSGradient(startingColor: SBAlternateSelectedLightControlColor,
                                       endingColor:   SBAlternateSelectedControlColor)
             SBPreserveGraphicsState {
-                path.setClip()
+                path.addClip()
                 gradient.drawInRect(r, angle: 90)
             }
         }
