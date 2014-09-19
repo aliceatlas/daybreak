@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @objc protocol SBTabbarDelegate {
     optional func tabbar(SBTabbar, didChangeSelection: SBTabbarItem)
     optional func tabbar(SBTabbar, didReselection: SBTabbarItem)
-    optional func tabbar(SBTabbar, shouldAddNewItemForURLs: [NSURL])
+    optional func tabbar(SBTabbar, shouldAddNewItemForURLs: [NSURL]?)
     optional func tabbar(SBTabbar, shouldOpenURLs: [NSURL], startInItem: SBTabbarItem)
     optional func tabbar(SBTabbar, shouldReload: SBTabbarItem)
     optional func tabbar(SBTabbar, didRemoveItem tag: NSInteger)
