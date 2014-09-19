@@ -35,10 +35,6 @@ class SBWebResourceIdentifier: NSObject /*, NSCoding */ {
     var flag: Bool = true
     var URL: NSURL { return request.URL }
     
-    class func identifierWithURLRequest(aRequest: NSURLRequest) -> SBWebResourceIdentifier {
-        return SBWebResourceIdentifier(URLRequest: aRequest)
-    }
-    
     init(URLRequest request: NSURLRequest) {
         self.request = request
     }
