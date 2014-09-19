@@ -130,7 +130,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
     func removeForItem(item: SBDownload) -> Bool {
         if let downloadView = downloadViews.first({ $0.download.identifier == item.identifier }) {
             downloadView.removeFromSuperview()
-            removeObject(&downloadViews, downloadView)
+            removeItem(&downloadViews, downloadView)
             if !downloadViews.isEmpty {
                 layoutItems(true)
             } else {

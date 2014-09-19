@@ -72,14 +72,14 @@ extension Array {
     }
 }
 
-func removeObject<T: Equatable>(inout array: [T], toRemove: T) {
+func removeItem<T: Equatable>(inout array: [T], toRemove: T) {
     if let index = array.firstIndex({ $0 == toRemove }) {
         array.removeAtIndex(index)
     }
 }
 
-func removeObjects<T: Equatable>(inout array: [T], toRemove: [T]) {
+func removeItems<T: Equatable>(inout array: [T], toRemove: [T]) {
     for item in array {
-        removeObject(&array, item)
+        removeItem(&array, item)
     }
 }
