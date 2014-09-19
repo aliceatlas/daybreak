@@ -91,8 +91,8 @@ class SBTabbarItem: SBView {
         }
     }
     
-    init(frame: NSRect, tabbar inTabbar: SBTabbar) {
-        tabbar = inTabbar
+    init(frame: NSRect, tabbar: SBTabbar) {
+        self.tabbar = tabbar
         super.init(frame: frame)
         area = NSTrackingArea(rect: bounds, options: (.MouseEnteredAndExited | .MouseMoved | .ActiveAlways | .InVisibleRect), owner: self, userInfo: nil)
         addSubview(progressIndicator)

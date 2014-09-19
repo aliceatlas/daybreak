@@ -51,16 +51,12 @@ class SBTabView: NSTabView {
         set(sbDelegate) { delegate = sbDelegate }
     }
     
-    var sbTabViewItems: [SBTabViewItem] {
+    private var sbTabViewItems: [SBTabViewItem] {
         return tabViewItems as [SBTabViewItem]
     }
-
+    
     override var selectedTabViewItem: SBTabViewItem? {
         return super.selectedTabViewItem as? SBTabViewItem
-    }
-    
-    deinit {
-        delegate = nil
     }
     
     override var description: String {
@@ -68,8 +64,8 @@ class SBTabView: NSTabView {
         return prefix(desc, desc.utf16Count - 1) + " frame = \(frame)>"
     }
     
-    func tabViewItem(#identifier: NSNumber) -> SBTabViewItem? {
-        return sbTabViewItems.first { $0.identifier as NSObject == identifier }
+    func tabViewItem(#identifier: Int) -> SBTabViewItem? {
+        return sbTabViewItems.first { $0.identifier as NSNumber == identifier }
     }
     
     // MARK: Actions
@@ -79,13 +75,14 @@ class SBTabView: NSTabView {
         SBDispatch { self.executeDidSelectTabViewItem(tabViewItem as SBTabViewItem) }
     }
     
-    func addItem(#identifier: NSNumber, tabbarItem: SBTabbarItem) -> SBTabViewItem {
+    func addItem(#identifier: Int, tabbarItem: SBTabbarItem) -> SBTabViewItem {
         let tabViewItem = SBTabViewItem(identifier: identifier, tabbarItem: tabbarItem)
         addTabViewItem(tabViewItem)
         return tabViewItem
     }
     
-    func selectTabViewItemWithItemIdentifier(identifier: NSNumber) -> SBTabViewItem? {
+    @objc(selectTabViewItemWithIdentifier:)
+    func selectTabViewItem(#identifier: Int) -> SBTabViewItem? {
         super.selectTabViewItemWithIdentifier(identifier)
         return selectedTabViewItem
     }

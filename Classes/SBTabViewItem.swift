@@ -87,8 +87,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     var selected: Bool {
-        get { return tabView.selectedTabViewItem === self }
-        set(selected) { tabView.selectTabViewItem(self) }
+        get { return sbTabView.selectedTabViewItem! === self }
+        set(selected) { sbTabView.selectTabViewItem(self) }
     }
     var canBackward: Bool { return webView.canGoBack }
     var canForward: Bool { return webView.canGoForward }
@@ -97,9 +97,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     var requestURLString: String? { return webView.mainFrame?.dataSource?.request.URL?.absoluteString }
     var documentSource: String? { return webView.mainFrame?.dataSource?.representation?.documentSource() }
     
-    init(identifier: AnyObject, tabbarItem: SBTabbarItem) {
+    init(identifier: Int, tabbarItem: SBView) {
         self.tabbarItem = tabbarItem
-        super.init(identifier: identifier)
+        super.init(identifier: identifier as NSNumber)
         view = NSView(frame: NSZeroRect)
         view.addSubview(splitView)
     }
@@ -930,19 +930,19 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         resourceIdentifiers.removeAll()
     }
     
-    func backward(sender: AnyObject) {
+    func backward(sender: AnyObject?) {
         if webView.canGoBack {
             webView.goBack(nil)
         }
     }
     
-    func forward(sender: AnyObject) {
+    func forward(sender: AnyObject?) {
         if webView.canGoForward {
             webView.goForward(nil)
         }
     }
     
-    func openDocumentSource(sender: AnyObject) {
+    func openDocumentSource(sender: AnyObject?) {
         let openPanel = SBOpenPanel.sbOpenPanel()
         openPanel.canChooseDirectories = false
         openPanel.allowedFileTypes = ["app"]
@@ -964,7 +964,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    func saveDocumentSource(sender: AnyObject) {
+    func saveDocumentSource(sender: AnyObject?) {
         let encodingName = webView.textEncodingName
         var name = (pageTitle != "") &? pageTitle
         name = (name ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")
