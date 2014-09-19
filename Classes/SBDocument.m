@@ -2044,7 +2044,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	NSString *string = urlField.stringValue;
 	NSString *URLString = string.length > 0 ? [[NSString stringWithFormat:kSBGoogleSuggestURL, string] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] : nil;
 	NSURL *url = URLString ? [NSURL URLWithString:URLString] : nil;
-	SBDownloader *downloader = [SBDownloader downloadWithURL:url];
+	SBDownloader *downloader = [[SBDownloader alloc] initWithURL:url];
 	downloader.delegate = self;
 	[downloader start];
 }
@@ -2053,7 +2053,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (data && urlField.isFirstResponder)
 	{
-		SBGoogleSuggestParser *parser = [SBGoogleSuggestParser parser];
+		SBGoogleSuggestParser *parser = [[SBGoogleSuggestParser alloc] init];
 		NSError *error = [parser parseData:data];
 		NSMutableArray *items = !error ? [parser.items mutableCopy] : nil;
 		// Parse XML
