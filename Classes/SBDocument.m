@@ -25,7 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "SBDocument.h"
 #import "SBBookmarkListView.h"
 #import "SBTabbar.h"
-#import "SBURLField.h"
 #import "SBUtil.h"
 
 #import "Sunrise3-Bridging-Header.h"
@@ -509,7 +508,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	urlView = [[NSView alloc] initWithFrame:r];
     urlView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
 	urlField = [[SBURLField alloc] initWithFrame:urlView.bounds];
-	[urlField constructViews];
     urlField.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
 	urlField.delegate = self;
 	urlField.dataSource = self;

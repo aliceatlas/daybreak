@@ -15,7 +15,6 @@
 		0840673F0FE2B57300CC80E3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0840673D0FE2B57300CC80E3 /* InfoPlist.strings */; };
 		0840676C0FE2B95200CC80E3 /* SBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840676B0FE2B95200CC80E3 /* SBUtil.m */; };
 		0840677D0FE2BF8D00CC80E3 /* Application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0840677C0FE2BF8D00CC80E3 /* Application.icns */; };
-		0840678B0FE2C11700CC80E3 /* SBURLField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840678A0FE2C11700CC80E3 /* SBURLField.m */; };
 		084A01A8102C6A46009BA913 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 084A01A7102C6A46009BA913 /* style.css */; };
 		084A01AA102C6B3A009BA913 /* Error.html in Resources */ = {isa = PBXBuildFile; fileRef = 084A01A9102C6B3A009BA913 /* Error.html */; };
 		0853D16B106724E200DB577C /* Releasenotes.html in Resources */ = {isa = PBXBuildFile; fileRef = 0853D16A106724E200DB577C /* Releasenotes.html */; };
@@ -207,8 +206,6 @@
 		0840676A0FE2B95200CC80E3 /* SBUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SBUtil.h; path = Sources/SBUtil.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		0840676B0FE2B95200CC80E3 /* SBUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBUtil.m; path = Sources/SBUtil.m; sourceTree = "<group>"; };
 		0840677C0FE2BF8D00CC80E3 /* Application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Application.icns; path = Resources/Icons/Application.icns; sourceTree = "<group>"; };
-		084067890FE2C11700CC80E3 /* SBURLField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBURLField.h; path = Classes/SBURLField.h; sourceTree = "<group>"; };
-		0840678A0FE2C11700CC80E3 /* SBURLField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBURLField.m; path = Classes/SBURLField.m; sourceTree = "<group>"; };
 		084A01A7102C6A46009BA913 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = Resources/htmls/style.css; sourceTree = "<group>"; };
 		084A01A9102C6B3A009BA913 /* Error.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Error.html; path = Resources/htmls/Error.html; sourceTree = "<group>"; };
 		0853D16A106724E200DB577C /* Releasenotes.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Releasenotes.html; path = Resources/htmls/Releasenotes.html; sourceTree = "<group>"; };
@@ -496,8 +493,6 @@
 				502DEBBD19C1180F006A68C3 /* SBSectionListView.swift */,
 				50FEEA9D19BF06F300962BB9 /* SBSplitView.swift */,
 				505E49FA198CA095001F5254 /* SBSectionGroup.swift */,
-				084067890FE2C11700CC80E3 /* SBURLField.h */,
-				0840678A0FE2C11700CC80E3 /* SBURLField.m */,
 				50D89EC719C70EFB00ECA176 /* SBURLField.swift */,
 				50A8F01F19BF4E07008DEFEC /* SBTableCell.swift */,
 				08E310380FFE58B800760CEC /* ModalViews */,
@@ -991,7 +986,6 @@
 				50D89ECB19C777B300ECA176 /* SBURLField.swift in Sources */,
 				0840676C0FE2B95200CC80E3 /* SBUtil.m in Sources */,
 				502DEBB719C0A64A006A68C3 /* NSString-SBURLAdditions.swift in Sources */,
-				0840678B0FE2C11700CC80E3 /* SBURLField.m in Sources */,
 				5093D20D19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift in Sources */,
 				505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */,
 				50ACCDFB196404FE00CE593E /* SBGoogleSuggestParser.swift in Sources */,
