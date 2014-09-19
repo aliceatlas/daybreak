@@ -83,3 +83,7 @@ func removeItems<T: Equatable>(inout array: [T], toRemove: [T]) {
         removeItem(&array, item)
     }
 }
+
+func containsItem<T: Equatable>(array: [T], value: T) -> Bool {
+    return array.first({ $0 == value }) != nil
+}
