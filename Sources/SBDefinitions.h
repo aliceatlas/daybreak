@@ -329,17 +329,18 @@ extern NSString *SBBookmarkPboardType;
 @class DOMRange;
 typedef NSUInteger WebFindOptions;
 @interface WebView (WebPendingPublic)
+@property (readonly) BOOL canZoomPageIn;
+@property (readonly) BOOL canZoomPageOut;
+@property (readonly) BOOL canResetPageZoom;
+@property (readonly) WebInspector *inspector;
+
 - (NSUInteger)markAllMatchesForText:(NSString *)string caseSensitive:(BOOL)caseFlag highlight:(BOOL)highlight limit:(NSUInteger)limit;
 - (NSUInteger)countMatchesForText:(NSString *)string options:(WebFindOptions)options highlight:(BOOL)highlight limit:(NSUInteger)limit markMatches:(BOOL)markMatches;
 - (NSUInteger)countMatchesForText:(NSString *)string inDOMRange:(DOMRange *)range options:(WebFindOptions)options highlight:(BOOL)highlight limit:(NSUInteger)limit markMatches:(BOOL)markMatches;
 - (void)unmarkAllTextMatches;
-- (BOOL)canZoomPageIn;
 - (IBAction)zoomPageIn:(id)sender;
-- (BOOL)canZoomPageOut;
 - (IBAction)zoomPageOut:(id)sender;
-- (BOOL)canResetPageZoom;
 - (IBAction)resetPageZoom:(id)sender;
-- (WebInspector *)inspector;
 // WebInspector
 - (void)show:(id)arg1;
 - (void)showConsole:(id)arg1;

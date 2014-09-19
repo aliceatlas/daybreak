@@ -187,16 +187,14 @@ class SBWebView: WebView, SBFindbarTarget {
     
     // MARK: Private API
     
-    func showWebInspector(sender: AnyObject) {
-        inspector().show(nil)
+    func showWebInspector(sender: AnyObject?) {
+        inspector.show(nil)
     }
     
-    override func showConsole(sender: AnyObject) {
-        let inspector = self.inspector()
+    override func showConsole(sender: AnyObject?) {
         inspector.show(nil)
-        func showConsole() {
-            inspector.showConsole(nil)
+        SBDispatchDelay(0.25) {
+            self.inspector.showConsole(nil)
         }
-        SBDispatchDelay(0.25, showConsole)
     }
 }
