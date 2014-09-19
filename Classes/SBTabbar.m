@@ -325,7 +325,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (delegate)
 	{
-		if ([delegate respondsToSelector:@selector(tabbar:shouldAddNewItemForURLs:)])
+		if ([(NSObject *)delegate respondsToSelector:@selector(tabbar:shouldAddNewItemForURLs:)])
 		{
 			[delegate tabbar:self shouldAddNewItemForURLs:urls];
 		}
@@ -336,7 +336,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (delegate)
 	{
-		if ([delegate respondsToSelector:@selector(tabbar:shouldOpenURLs:startInItem:)])
+		if ([(NSObject *)delegate respondsToSelector:@selector(tabbar:shouldOpenURLs:startInItem:)])
 		{
 			[delegate tabbar:self shouldOpenURLs:urls startInItem:item];
 		}
@@ -347,7 +347,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (delegate)
 	{
-		if ([delegate respondsToSelector:@selector(tabbar:shouldReload:)])
+		if ([(NSObject *)delegate respondsToSelector:@selector(tabbar:shouldReload:)])
 		{
 			[delegate tabbar:self shouldReload:item];
 		}
@@ -363,7 +363,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (delegate)
 	{
-		if ([delegate respondsToSelector:@selector(tabbar:didChangeSelection:)])
+		if ([(NSObject *)delegate respondsToSelector:@selector(tabbar:didChangeSelection:)])
 		{
 			[delegate tabbar:self didChangeSelection:item];
 		}
@@ -374,7 +374,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (delegate)
 	{
-		if ([delegate respondsToSelector:@selector(tabbar:didReselection:)])
+		if ([(NSObject *)delegate respondsToSelector:@selector(tabbar:didReselection:)])
 		{
 			[delegate tabbar:self didReselection:item];
 		}
@@ -385,7 +385,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 {
 	if (delegate)
 	{
-		if ([delegate respondsToSelector:@selector(tabbar:didRemoveItem:)])
+		if ([(NSObject *)delegate respondsToSelector:@selector(tabbar:didRemoveItem:)])
 		{
 			[delegate tabbar:self didRemoveItem:tag];
 		}

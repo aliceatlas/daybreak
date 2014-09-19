@@ -300,17 +300,6 @@ extern NSString *kSBDownloadsItems;
 extern NSString *SBBookmarkPboardType;
 
 // Delegates
-@class SBTabbar;
-@class SBTabbarItem;
-@protocol SBTabbarDelegate <NSObject>
-- (void)tabbar:(SBTabbar *)aTabbar didChangeSelection:(SBTabbarItem *)aTabbarItem;
-- (void)tabbar:(SBTabbar *)aTabbar didReselection:(SBTabbarItem *)aTabbarItem;
-- (void)tabbar:(SBTabbar *)aTabbar shouldAddNewItemForURLs:(NSArray *)urls;
-- (void)tabbar:(SBTabbar *)aTabbar shouldOpenURLs:(NSArray *)urls startInItem:(SBTabbarItem *)aTabbarItem;
-- (void)tabbar:(SBTabbar *)aTabbar shouldReload:(SBTabbarItem *)aTabbarItem;
-- (void)tabbar:(SBTabbar *)aTabbar didRemoveItem:(NSInteger)tag;
-@end
-
 @class SBURLField;
 @protocol SBURLFieldDelegate <NSObject>
 @optional
