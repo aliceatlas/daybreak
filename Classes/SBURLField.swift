@@ -342,7 +342,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         if rowIndex > -1 && canSelectIndex(rowIndex) {
             contentView.pushSelectedItem()
             disappearSheet()
-            SBPerform(field.target, field.action, field)
+            NSApp.sendAction(field.action, to: field.target, from: field)
         }
     }
     

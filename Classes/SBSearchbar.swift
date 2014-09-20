@@ -79,7 +79,7 @@ class SBSearchbar: SBFindbar {
         if !text.isEmpty {
             if (target !! doneSelector) != nil {
                 if target!.respondsToSelector(doneSelector) {
-                    SBPerform(target!, doneSelector, text)
+                    NSApp.sendAction(doneSelector, to: target!, from: text as NSString)
                 }
             }
         }
@@ -88,7 +88,7 @@ class SBSearchbar: SBFindbar {
     override func executeClose() {
         if (target !! cancelSelector) != nil {
             if target!.respondsToSelector(cancelSelector) {
-                SBPerform(target!, cancelSelector, self)
+                NSApp.sendAction(cancelSelector, to: target!, from: self)
             }
         }
     }

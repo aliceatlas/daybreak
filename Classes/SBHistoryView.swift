@@ -400,7 +400,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         }
         if (target !! doneSelector) != nil {
             if target!.respondsToSelector(doneSelector) {
-                SBPerform(target!, doneSelector, urls as NSArray)
+                NSApp.sendAction(doneSelector, to: target, from: urls as NSArray)
             }
         }
     }

@@ -104,7 +104,7 @@ class SBButton: SBView, NSCoding {
     func executeAction() {
         if let target = target as? NSObject {
             if action &! {target.respondsToSelector($0)} {
-                SBPerform(target, action, self)
+                NSApp.sendAction(action, to: target, from: self)
             }
         }
     }
