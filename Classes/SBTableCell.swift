@@ -27,8 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 enum SBTableCellStyle {
-    case Gray
-    case White
+    case Gray, White
 }
 
 class SBTableCell: NSCell {

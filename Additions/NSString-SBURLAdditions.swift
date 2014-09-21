@@ -144,14 +144,7 @@ extension NSString {
     }
     
     var stringByDeletingScheme: NSString? {
-        var string = self
-        for index in 0..<SBCountOfSchemes {
-            let scheme = SBSchemes[index]
-            if string.hasPrefix(scheme) {
-                return string.substringFromIndex(scheme.utf16Count)
-            }
-        }
-        return nil
+        return SBSchemes.first(self.hasPrefix) !! {self.substringFromIndex($0.utf16Count)}
     }
     
     var URLEncodedString: NSString {

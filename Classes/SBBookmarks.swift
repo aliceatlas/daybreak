@@ -107,7 +107,7 @@ class SBBookmarks: NSObject {
             }
         } else {
             let info = NSDictionary(contentsOfFile: SBBookmarksFilePath())
-            if let bookmarkItems = info?[kSBBookmarkItems!] as? NSArray as? [BookmarkItem] {
+            if let bookmarkItems = info?[kSBBookmarkItems] as? NSArray as? [BookmarkItem] {
                 if !bookmarkItems.isEmpty {
                     items = bookmarkItems.map { NSMutableDictionary(dictionary: $0) }
                     return true

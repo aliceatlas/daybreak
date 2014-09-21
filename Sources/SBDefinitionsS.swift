@@ -32,57 +32,63 @@ let DebugLogS = NSLog
 func DebugLogS(format: String, args: AnyObject...) {}
 #endif
 
+// Flags for Debug
+let kSBFlagCreateTabItemWhenLaunched = true
+let kSBFlagShowRenderWindow = false
+let kSBCountOfDebugBookmarks = 0	/* If more than 0, the bookmarks creates bookmark items for the count. */
+let kSBURLFieldShowsGoogleSuggest = true
+let kSBFlagShowAllStringEncodings = false
+
 let SBDownloadsDidAddItemNotification = "SBDownloadsDidAddItemNotification"
 let SBDownloadsWillRemoveItemNotification = "SBDownloadsWillRemoveItemNotification"
 let SBDownloadsDidUpdateItemNotification = "SBDownloadsDidUpdateItemNotification"
 let SBDownloadsDidFinishItemNotification = "SBDownloadsDidFinishItemNotification"
 let SBDownloadsDidFailItemNotification = "SBDownloadsDidFailItemNotification"
 
-/*
 // Versions
-NSString *SBBookmarkVersion = @"1.0";
-NSString *SBVersionFileURL = @"http://www.sunrisebrowser.com/script.js";
+let SBBookmarkVersion = "1.0"
+let SBVersionFileURL = "http://www.sunrisebrowser.com/script.js"
 
 // Identifiers
-NSString *kSBDocumentToolbarIdentifier = @"Document";
-NSString *kSBToolbarURLFieldItemIdentifier = @"URLField";
-NSString *kSBToolbarLoadItemIdentifier = @"Load";
-NSString *kSBToolbarBookmarksItemIdentifier = @"Bookmarks";
-NSString *kSBToolbarBookmarkItemIdentifier = @"Bookmark";
-NSString *kSBToolbarHistoryItemIdentifier = @"History";
-NSString *kSBToolbarSnapshotItemIdentifier = @"Snapshot";
-NSString *kSBToolbarTextEncodingItemIdentifier = @"TextEncoding";
-NSString *kSBToolbarMediaVolumeItemIdentifier = @"MediaVolume";
-NSString *kSBToolbarHomeItemIdentifier = @"Home";
-NSString *kSBToolbarBugsItemIdentifier = @"Bugs";
-NSString *kSBToolbarUserAgentItemIdentifier = @"UserAgent";
-NSString *kSBToolbarZoomItemIdentifier = @"Zoom";
-NSString *kSBToolbarSourceItemIdentifier = @"Source";
-NSString *kSBWebPreferencesIdentifier = @"Sunrise";
+let kSBDocumentToolbarIdentifier = "Document"
+let kSBToolbarURLFieldItemIdentifier = "URLField"
+let kSBToolbarLoadItemIdentifier = "Load"
+let kSBToolbarBookmarksItemIdentifier = "Bookmarks"
+let kSBToolbarBookmarkItemIdentifier = "Bookmark"
+let kSBToolbarHistoryItemIdentifier = "History"
+let kSBToolbarSnapshotItemIdentifier = "Snapshot"
+let kSBToolbarTextEncodingItemIdentifier = "TextEncoding"
+let kSBToolbarMediaVolumeItemIdentifier = "MediaVolume"
+let kSBToolbarHomeItemIdentifier = "Home"
+let kSBToolbarBugsItemIdentifier = "Bugs"
+let kSBToolbarUserAgentItemIdentifier = "UserAgent"
+let kSBToolbarZoomItemIdentifier = "Zoom"
+let kSBToolbarSourceItemIdentifier = "Source"
+let kSBWebPreferencesIdentifier = "Sunrise"
 
 // Document type names
-NSString *kSBDocumentTypeName = @"HTML Document Type";
-NSString *kSBStringsDocumentTypeName = @"Strings Document Type";
+let kSBDocumentTypeName = "HTML Document Type"
+let kSBStringsDocumentTypeName = "Strings Document Type"
 
 // URLs
-NSString *kSBUpdaterNewVersionURL = @"http://www.sunrisebrowser.com/Sunrise%@.dmg";
-NSString *kSBGoogleSuggestURL = @"http://google.com/complete/search?output=toolbar&q=%@";
+let kSBUpdaterNewVersionURL = "http://www.sunrisebrowser.com/Sunrise%@.dmg"
+let kSBGoogleSuggestURL = "http://google.com/complete/search?output=toolbar&q=%@"
 
 // Mail Addresses
-NSString *kSBFeedbackMailAddress = @"feedback@sunrisebrowser.com";
-NSString *kSBBugReportMailAddress = @"bugreport@sunrisebrowser.com";
+let kSBFeedbackMailAddress = "feedback@sunrisebrowser.com"
+let kSBBugReportMailAddress = "bugreport@sunrisebrowser.com"
 
 // Path components
-NSString *kSBApplicationSupportDirectoryName = @"Sunrise3";
-NSString *kSBApplicationSupportDirectoryName_Version1 = @"Sunrise";
-NSString *kSBBookmarksFileName = @"Bookmarks.plist";
-NSString *kSBHistoryFileName = @"History.plist";
-NSString *kSBLocalizationsDirectoryName = @"Localizations";
+let kSBApplicationSupportDirectoryName = "Sunrise3"
+let kSBApplicationSupportDirectoryName_Version1 = "Sunrise"
+let kSBBookmarksFileName = "Bookmarks.plist"
+let kSBHistoryFileName = "History.plist"
+let kSBLocalizationsDirectoryName = "Localizations"
 
 // Default values
-*/
 let kSBDefaultEncodingName = "utf-8"
-/*const NSStringEncoding SBAvailableStringEncodings[] = {
+let SBDefaultHistorySaveSeconds = 604800
+let SBAvailableStringEncodings = [
 	-2147481087,	// Japanese (Shift JIS)
 	21,				// Japanese (ISO 2022-JP)
 	3,				// Japanese (EUC)
@@ -132,61 +138,59 @@ let kSBDefaultEncodingName = "utf-8"
 	14,				// Turkish (Windows Latin 5)
 	NSNotFound, 
 	-2147483132,	// Central European (ISO Latin 4)
-	-2147482361,	// Baltic (Windows)
-	0
-};
+	-2147482361 	// Baltic (Windows)
+].map({NSStringEncoding($0)})
 
 // UserDefault keys
-NSString *kSBDocumentWindowAutosaveName = @"Document";
-NSString *kSBSidebarPosition = @"SidebarPosition";
-NSString *kSBSidebarWidth = @"SidebarWidth";
-NSString *kSBSidebarVisibilityFlag = @"SidebarVisibilityFlag";
-NSString *kSBTabbarVisibilityFlag = @"TabbarVisibilityFlag";
-NSString *kSBBookmarkCellWidth = @"BookmarkCellWidth";
-NSString *kSBBookmarkMode = @"BookmarkMode";
-NSString *kSBUpdaterSkipVersion = @"SkipVersion";
-NSString *kSBFindCaseFlag = @"FindCaseFlag";
-NSString *kSBFindWrapFlag = @"FindWrapFlag";
-NSString *kSBSnapshotOnlyVisiblePortion = @"SnapshotOnlyVisiblePortion";
-NSString *kSBSnapshotFileType = @"SnapshotFileType";
-NSString *kSBSnapshotTIFFCompression = @"SnapshotTIFFCompression";
-NSString *kSBSnapshotJPGFactor = @"SnapshotJPGFactor";
-NSString *kSBUserAgentName = @"UserAgent";
-NSString *kSBOpenApplicationBundleIdentifier = @"OpenApplicationBundleIdentifier";
+let kSBDocumentWindowAutosaveName = "Document"                             // String
+let kSBSidebarPosition = "SidebarPosition"                                 // Integer
+let kSBSidebarWidth = "SidebarWidth"                                       // Float
+let kSBSidebarVisibilityFlag = "SidebarVisibilityFlag"                     // Bool
+let kSBTabbarVisibilityFlag = "TabbarVisibilityFlag"                       // Int
+let kSBBookmarkCellWidth = "BookmarkCellWidth"                             // Int
+let kSBBookmarkMode = "BookmarkMode"                                       // String
+let kSBUpdaterSkipVersion = "SkipVersion"                                  // Bool
+let kSBFindCaseFlag = "FindCaseFlag"                                       // Bool
+let kSBFindWrapFlag = "FindWrapFlag"                                       // Bool
+let kSBSnapshotOnlyVisiblePortion = "SnapshotOnlyVisiblePortion"           // Int
+let kSBSnapshotFileType = "SnapshotFileType"                               // Int
+let kSBSnapshotTIFFCompression = "SnapshotTIFFCompression"                 // Float
+let kSBSnapshotJPGFactor = "SnapshotJPGFactor"                             // String
+let kSBUserAgentName = "UserAgent"                                         // String
+let kSBOpenApplicationBundleIdentifier = "OpenApplicationBundleIdentifier" // String
 // General
-NSString *kSBOpenNewWindowsWithHomePage = @"OpenNewWindowsWithHomePage";
-NSString *kSBOpenNewTabsWithHomePage = @"OpenNewTabsWithHomePage";
-NSString *kSBHomePage = @"HomePage";
-NSString *kSBSaveDownloadedFilesTo = @"SaveDownloadedFilesTo";
-NSString *kSBOpenURLFromApplications = @"OpenURLFromApplications";
-NSString *kSBQuitWhenTheLastWindowIsClosed = @"QuitWhenTheLastWindowIsClosed";
-NSString *kSBConfirmBeforeClosingMultipleTabs = @"ConfirmBeforeClosingMultipleTabs";
-NSString *kSBCheckTheNewVersionAfterLaunching = @"CheckTheNewVersionAfterLaunching";
-NSString *kSBClearsAllCachesAfterLaunching = @"ClearsAllCachesAfterLaunching";
+let kSBOpenNewWindowsWithHomePage = "OpenNewWindowsWithHomePage"             // Bool
+let kSBOpenNewTabsWithHomePage = "OpenNewTabsWithHomePage"                   // Bool
+let kSBHomePage = "HomePage"                                                 // String (URL)
+let kSBSaveDownloadedFilesTo = "SaveDownloadedFilesTo"                       // String (Path)
+let kSBOpenURLFromApplications = "OpenURLFromApplications"                   // String (SBOpenMethod)
+let kSBQuitWhenTheLastWindowIsClosed = "QuitWhenTheLastWindowIsClosed"       // Bool
+let kSBConfirmBeforeClosingMultipleTabs = "ConfirmBeforeClosingMultipleTabs" // Bool
+let kSBCheckTheNewVersionAfterLaunching = "CheckTheNewVersionAfterLaunching" // Bool
+let kSBClearsAllCachesAfterLaunching = "ClearsAllCachesAfterLaunching"       // Bool
 // Appearance
-NSString *kSBAllowsAnimatedImageToLoop = @"AllowsAnimatedImageToLoop";
-NSString *kSBAllowsAnimatedImages = @"AllowsAnimatedImages";
-NSString *kSBLoadsImagesAutomatically = @"LoadsImagesAutomatically";
-NSString *kSBDefaultEncoding = @"DefaultEncoding";
-NSString *kSBIncludeBackgroundsWhenPrinting = @"IncludeBackgroundsWhenPrinting";
+let kSBAllowsAnimatedImageToLoop = "AllowsAnimatedImageToLoop"           // Bool
+let kSBAllowsAnimatedImages = "AllowsAnimatedImages"                     // Bool
+let kSBLoadsImagesAutomatically = "LoadsImagesAutomatically"             // Bool
+let kSBDefaultEncoding = "DefaultEncoding"                               // String (iana name)
+let kSBIncludeBackgroundsWhenPrinting = "IncludeBackgroundsWhenPrinting" // Bool
 // Bookmarks
-NSString *kSBShowBookmarksWhenWindowOpens = @"ShowBookmarksWhenWindowOpens";
-NSString *kSBShowAlertWhenRemovingBookmark = @"ShowAlertWhenRemovingBookmark";
-NSString *kSBUpdatesImageWhenAccessingBookmarkURL = @"UpdatesImageWhenAccessingBookmarkURL";
+let kSBShowBookmarksWhenWindowOpens = "ShowBookmarksWhenWindowOpens"                 // Bool
+let kSBShowAlertWhenRemovingBookmark = "ShowAlertWhenRemovingBookmark"               // Bool
+let kSBUpdatesImageWhenAccessingBookmarkURL = "UpdatesImageWhenAccessingBookmarkURL" // Bool
 // Security
-NSString *kSBEnablePlugIns = @"EnablePlugIns";
-NSString *kSBEnableJava = @"EnableJava";
-NSString *kSBEnableJavaScript = @"EnableJavaScript";
-NSString *kSBBlockPopUpWindows = @"BlockPopUpWindows";
-NSString *kSBURLFieldShowsIDNAsASCII = @"URLFieldShowsIDNAsASCII";
-NSString *kSBAcceptCookies = @"AcceptCookies";
+let kSBEnablePlugIns = "EnablePlugIns"                     // Bool
+let kSBEnableJava = "EnableJava"                           // Bool
+let kSBEnableJavaScript = "EnableJavaScript"               // Bool
+let kSBBlockPopUpWindows = "BlockPopUpWindows"             // Bool
+let kSBURLFieldShowsIDNAsASCII = "URLFieldShowsIDNAsASCII" // Bool
+let kSBAcceptCookies = "AcceptCookies"                     // String (SBCookieMethod)
 // History
-NSString *kSBHistorySaveDays = @"HistorySaveDays";
+let kSBHistorySaveDays = "HistorySaveDays" // Double (seconds)
 // Advanced
 // WebKitDeveloper
-NSString *kWebKitDeveloperExtras = @"WebKitDeveloperExtras";
-NSString *kSBWhenNewTabOpensMakeActiveFlag = @"WhenNewTabOpensMakeActive";
-*/
+let kWebKitDeveloperExtras = "WebKitDeveloperExtras"               // Bool
+let kSBWhenNewTabOpensMakeActiveFlag = "WhenNewTabOpensMakeActive" // Bool
 
 // Method values
 let SBOpenMethods = [
@@ -200,34 +204,32 @@ let SBCookieMethods = [
     "Only visited sites"
 ]
 
-/*
 // Key names
-NSString *kSBTitle = @"title";
-NSString *kSBURL = @"url";
-NSString *kSBDate = @"date";
-NSString *kSBImage = @"image";
-NSString *kSBType = @"type";
+let kSBTitle = "title"
+let kSBURL = "url"
+let kSBDate = "date"
+let kSBImage = "image"
+let kSBType = "type"
 
 // Bookmark Key names
-NSString *kSBBookmarkVersion = @"Version";
-NSString *kSBBookmarkItems = @"Items";
-NSString *kSBBookmarkTitle = @"title";
-NSString *kSBBookmarkURL = @"url";
-NSString *kSBBookmarkImage = @"image";
-NSString *kSBBookmarkDate = @"date";
-NSString *kSBBookmarkLabelName = @"label";
-NSString *kSBBookmarkOffset = @"offset";
-NSString *kSBBookmarkIsDirectory = @"isDirectory";
+let kSBBookmarkVersion = "Version"
+let kSBBookmarkItems = "Items"
+let kSBBookmarkTitle = "title"              // String
+let kSBBookmarkURL = "url"                  // String
+let kSBBookmarkImage = "image"              // Data
+let kSBBookmarkDate = "date"                // Data
+let kSBBookmarkLabelName = "label"          // String
+let kSBBookmarkOffset = "offset"            // Point
+let kSBBookmarkIsDirectory = "isDirectory"  // Bool
 
 // Updater key names
-NSString *kSBUpdaterResult = @"Result";
-NSString *kSBUpdaterVersionString = @"VersionString";
-NSString *kSBUpdaterErrorDescription = @"ErrorDescription";
+let kSBUpdaterResult = "Result"                     // Int (NSComparisonResult)
+let kSBUpdaterVersionString = "VersionString"       // String
+let kSBUpdaterErrorDescription = "ErrorDescription" // String
 
 // Pasteboard type
-NSString *SBTabbarItemPboardType = @"SBTabbarItemPboardType";
-NSString *SBSafariBookmarkDictionaryListPboardType = @"BookmarkDictionaryListPboardType";
-*/
+let SBTabbarItemPboardType = "SBTabbarItemPboardType"
+let SBSafariBookmarkDictionaryListPboardType = "BookmarkDictionaryListPboardType"
 
 // Window
 let SBWindowBackColor = NSColor(calibratedRed: 0.2, green: 0.22, blue: 0.24, alpha: 1.0)
@@ -281,42 +283,37 @@ let SBUserAgentNames = [
 ]
 
 // Web schemes
-let SBCountOfSchemes = 3
 let SBSchemes = [
     "http://",
     "https://",
-    "file://",
-    "feed://"
+    "file://"
+    //"feed://"
 ]
 
-/*
 // Tags
-#define SBApplicationMenuTag 0
-#define SBFileMenuTag 1
-#define SBEditMenuTag 2
-#define SBViewMenuTag 3
-#define SBHistoryMenuTag 4
-#define SBBookmarksMenuTag 5
-#define SBWindowMenuTag 6
-#define SBHelpMenuTag 7
+let SBApplicationMenuTag = 0
+let SBFileMenuTag = 1
+let SBEditMenuTag = 2
+let SBViewMenuTag = 3
+let SBHistoryMenuTag = 4
+let SBBookmarksMenuTag = 5
+let SBWindowMenuTag = 6
+let SBHelpMenuTag = 7
 
 // Values
-#define kSBTimeoutInterval 60.0
-#define kSBTabbarItemClosableInterval 0.2
-#define kSBBookmarkItemImageCompressionFactor 0.1
-#define kSBBookmarkLayoutInterval 0.7
-#define kSBBookmarkToolsInterval 0.7
-#define kSBDownloadsToolsInterval 0.7
-*/
+let kSBTimeoutInterval = 60.0
+let kSBTabbarItemClosableInterval = 0.2
+let kSBBookmarkItemImageCompressionFactor = 0.1
+let kSBBookmarkLayoutInterval = 0.7
+let kSBBookmarkToolsInterval = 0.7
+let kSBDownloadsToolsInterval = 0.7
 
 // Sizes
 let kSBDocumentWindowMinimumSizeWidth: CGFloat = 400.0
 let kSBDocumentWindowMinimumSizeHeight: CGFloat = 300.0
 let kSBTabbarHeight: CGFloat = 24.0
-/*
-#define kSBTabbarItemMaximumWidth 200.0
-#define kSBTabbarItemMinimumWidth 100.0
-*/
+let kSBTabbarItemMaximumWidth: CGFloat = 200.0
+let kSBTabbarItemMinimumWidth: CGFloat = 100.0
 let kSBBottombarHeight: CGFloat = 24.0
 let kSBSidebarResizableWidth: CGFloat = 24.0
 let kSBSidebarNewFolderButtonWidth: CGFloat = 100.0
@@ -324,33 +321,29 @@ let kSBSidebarClosedWidth: CGFloat = 1.0
 let kSBSidebarMinimumWidth: CGFloat = 144.0
 let kSBDownloadItemSize: CGFloat = 128.0
 let kSBDefaultSidebarWidth: CGFloat = 550
-/*
-#define kSBDefaultBookmarkCellWidth 168
-#define kSBBookmarkFactorForImageWidth 4.0
-#define kSBBookmarkFactorForImageHeight 3.0
-*/
+let kSBDefaultBookmarkCellWidth: Int = 168
+let kSBBookmarkFactorForImageWidth: CGFloat = 4.0
+let kSBBookmarkFactorForImageHeight: CGFloat = 3.0
 let kSBBookmarkCellPaddingPercentage: CGFloat = 0.1
 let kSBBookmarkCellMinWidth: Double = 60
 let kSBBookmarkCellMaxWidth = Double(256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2)))
 let SBFieldRoundedCurve: CGFloat = 4
 
-/*
 // Counts
-#define kSBDocumentWarningNumberOfBookmarksForOpening 15
+let kSBDocumentWarningNumberOfBookmarksForOpening = 15
 
 // Notification names
-NSString *SBBookmarksDidUpdateNotification = @"SBBookmarksDidUpdateNotification";
-NSString *SBUpdaterShouldUpdateNotification = @"SBUpdaterShouldUpdateNotification";
-NSString *SBUpdaterNotNeedUpdateNotification = @"SBUpdaterNotNeedUpdateNotification";
-NSString *SBUpdaterDidFailCheckingNotification = @"SBUpdaterDidFailCheckingNotification";
+let SBBookmarksDidUpdateNotification = "SBBookmarksDidUpdateNotification"
+let SBUpdaterShouldUpdateNotification = "SBUpdaterShouldUpdateNotification"
+let SBUpdaterNotNeedUpdateNotification = "SBUpdaterNotNeedUpdateNotification"
+let SBUpdaterDidFailCheckingNotification = "SBUpdaterDidFailCheckingNotification"
 
 // Notification key names
-NSString *kSBDownloadsItem = @"Item";
-NSString *kSBDownloadsItems = @"Items";
+let kSBDownloadsItem = "Item"
+let kSBDownloadsItems = "Items"
 
 // Pasteboard type names
-NSString *SBBookmarkPboardType = @"SBBookmarkPboardType";
-*/
+let SBBookmarkPboardType = "SBBookmarkPboardType"
 
 @objc protocol SBAnswersIsFirstResponder {
     var isFirstResponder: Bool { get }

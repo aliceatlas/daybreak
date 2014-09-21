@@ -16,7 +16,7 @@ class SBPreferences: NSObject {
         info[kSBSidebarPosition] = SBSidebarPosition.Right.rawValue as NSNumber
         info[kSBSidebarVisibilityFlag] = true as NSNumber
         info[kSBTabbarVisibilityFlag] = true as NSNumber
-        info[kSBBookmarkCellWidth] = NSNumber(int: kSBDefaultBookmarkCellWidth)
+        info[kSBBookmarkCellWidth] = kSBDefaultBookmarkCellWidth as NSNumber
         info[kSBBookmarkMode] = SBBookmarkMode.Icon.rawValue as NSNumber
         info[kSBUserAgentName] = SBUserAgentNames[0]
         // General
@@ -51,7 +51,7 @@ class SBPreferences: NSObject {
         info[kSBURLFieldShowsIDNAsASCII] = false as NSNumber
         info[kSBAcceptCookies] = "Only visited sites"
         // History
-        info[kSBHistorySaveDays] = NSNumber(int: SBDefaultHistorySaveSeconds)
+        info[kSBHistorySaveDays] = SBDefaultHistorySaveSeconds as NSNumber
         // Advanced
         // WebKitDeveloper
         info[kWebKitDeveloperExtras] = true as NSNumber

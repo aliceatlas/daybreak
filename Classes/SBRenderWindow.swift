@@ -44,7 +44,7 @@ class SBRenderWindow: NSWindow {
         let window = SBRenderWindow(contentRect: r)
         window.delegate = delegate
         window.webView!.mainFrame.loadRequest(NSURLRequest(URL: url))
-        if kSBFlagShowRenderWindow != 0 {
+        if kSBFlagShowRenderWindow {
             window.orderFront(nil)
         }
         return window

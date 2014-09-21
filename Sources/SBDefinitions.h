@@ -28,16 +28,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define DebugLog(format, ...)
 #endif
 
-#define kSBFlagIsSnowLepard NSAppKitVersionNumber >= 1038
-
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <WebKit/WebKit.h>
 
 // Flags for Debug
 #define kSBFlagCreateTabItemWhenLaunched 1
-#define kSBFlagShowRenderWindow 0
-#define kSBCountOfDebugBookmarks 0	/* If more than 0, the bookmarks creates bookmark items for the count. */
 #define kSBURLFieldShowsGoogleSuggest 1
 #define kSBFlagShowAllStringEncodings 0
 
@@ -49,7 +45,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Versions
 extern NSString *SBBookmarkVersion;
-extern NSString *SBVersionFileURL;
 
 // Identifiers
 extern NSString *kSBDocumentToolbarIdentifier;
@@ -67,89 +62,33 @@ extern NSString *kSBToolbarZoomItemIdentifier;
 extern NSString *kSBToolbarSourceItemIdentifier;
 extern NSString *kSBWebPreferencesIdentifier;
 
-// Document type names
-extern NSString *kSBDocumentTypeName;
-extern NSString *kSBStringsDocumentTypeName;
-
 // URLs
-extern NSString *kSBUpdaterNewVersionURL;
 extern NSString *kSBGoogleSuggestURL;
-
-// Mail Addresses
-extern NSString *kSBFeedbackMailAddress;
-extern NSString *kSBBugReportMailAddress;
 
 // Path components
 extern NSString *kSBApplicationSupportDirectoryName;
 extern NSString *kSBApplicationSupportDirectoryName_Version1;
 extern NSString *kSBBookmarksFileName;
 extern NSString *kSBHistoryFileName;
-extern NSString *kSBLocalizationsDirectoryName;
 
 // Default values
-extern NSString *kSBDefaultEncodingName;
-#define SBDefaultHistorySaveSeconds 604800
 extern const NSStringEncoding SBAvailableStringEncodings[];
 
 // UserDefault keys
 extern NSString *kSBDocumentWindowAutosaveName;			// String
 extern NSString *kSBSidebarPosition;					// Integer
 extern NSString *kSBSidebarWidth;						// Float
-extern NSString *kSBSidebarVisibilityFlag;				// BOOL
 extern NSString *kSBTabbarVisibilityFlag;				// BOOL
-extern NSString *kSBBookmarkCellWidth;					// Integer
 extern NSString *kSBBookmarkMode;						// Integer
-extern NSString *kSBUpdaterSkipVersion;					// String
-extern NSString *kSBFindCaseFlag;						// BOOL
-extern NSString *kSBFindWrapFlag;						// BOOL
-extern NSString *kSBSnapshotOnlyVisiblePortion;			// BOOL
-extern NSString *kSBSnapshotFileType;					// Integer
-extern NSString *kSBSnapshotTIFFCompression;			// Integer
-extern NSString *kSBSnapshotJPGFactor;					// Float
-extern NSString *kSBUserAgentName;						// String
-extern NSString *kSBOpenApplicationBundleIdentifier;	// String
 // General
-extern NSString *kSBOpenNewWindowsWithHomePage;			// BOOL
-extern NSString *kSBOpenNewTabsWithHomePage;			// BOOL
 extern NSString *kSBHomePage;							// String (URL)
-extern NSString *kSBSaveDownloadedFilesTo;				// String (Path)
-extern NSString *kSBOpenURLFromApplications;			// String (SBOpenMethod)
-extern NSString *kSBQuitWhenTheLastWindowIsClosed;		// BOOL
-extern NSString *kSBConfirmBeforeClosingMultipleTabs;	// BOOL
-extern NSString *kSBCheckTheNewVersionAfterLaunching;	// BOOL
-extern NSString *kSBClearsAllCachesAfterLaunching;		// BOOL
-// Appearance
-extern NSString *kSBAllowsAnimatedImageToLoop;		// BOOL
-extern NSString *kSBAllowsAnimatedImages;			// BOOL
-extern NSString *kSBLoadsImagesAutomatically;		// BOOL
-extern NSString *kSBDefaultEncoding;				// String (iana name)
-extern NSString *kSBIncludeBackgroundsWhenPrinting;	// BOOL
-// Bookmarks
-extern NSString *kSBShowBookmarksWhenWindowOpens;			// BOOL
-extern NSString *kSBShowAlertWhenRemovingBookmark;			// BOOL
-extern NSString *kSBUpdatesImageWhenAccessingBookmarkURL;	// BOOL
-// Security
-extern NSString *kSBEnablePlugIns;			// BOOL
-extern NSString *kSBEnableJava;				// BOOL
-extern NSString *kSBEnableJavaScript;		// BOOL
-extern NSString *kSBBlockPopUpWindows;		// BOOL
-extern NSString *kSBURLFieldShowsIDNAsASCII;// BOOL
-extern NSString *kSBAcceptCookies;			// String (SBCookieMethod)
-// History
-extern NSString *kSBHistorySaveDays;	// Double (seconds)
 // Advanced
 // WebKitDeveloper
 extern NSString *kWebKitDeveloperExtras;			// BOOL
-extern NSString *kSBWhenNewTabOpensMakeActiveFlag;	// BOOL
-
-// Method values
-extern NSInteger SBCountOfCookieMethods;
-extern NSString *SBCookieMethods[];
 
 // Key names
 extern NSString *kSBTitle;
 extern NSString *kSBURL;
-extern NSString *kSBDate;
 extern NSString *kSBImage;
 extern NSString *kSBType;
 
@@ -162,45 +101,13 @@ extern NSString *kSBBookmarkImage;		// Data
 extern NSString *kSBBookmarkDate;		// Date
 extern NSString *kSBBookmarkLabelName;	// String
 extern NSString *kSBBookmarkOffset;		// Point
-extern NSString *kSBBookmarkIsDirectory;// BOOL
-
-// Updater key names
-extern NSString *kSBUpdaterResult;			// Integer (NSComparisonResult)
-extern NSString *kSBUpdaterVersionString;	// String
-extern NSString *kSBUpdaterErrorDescription;// String
 
 // Pasteboard type
-extern NSString *SBTabbarItemPboardType;
 extern NSString *SBSafariBookmarkDictionaryListPboardType;
 
-// Window
-extern CGFloat SBWindowBackColors[4];
-
 // Bookmark color names
-extern CGFloat SBBackgroundColors[4];
-extern CGFloat SBBackgroundLightGrayColors[4];
 extern NSInteger SBBookmarkCountOfLabelColors;
 extern NSString *SBBookmarkLabelColorNames[];
-extern CGFloat SBBookmarkLabelColorRGBA[];
-
-// Bottombar
-extern CGFloat SBBottombarColors[8];
-
-// WebResourcesView
-extern CGFloat SBTableCellColors[4];
-extern CGFloat SBTableGrayCellColors[4];
-extern CGFloat SBTableLightGrayCellColors[4];
-extern CGFloat SBTableDarkGrayCellColors[4];
-extern CGFloat SBSidebarSelectedCellColors[4];
-extern CGFloat SBSidebarTextColors[4];
-
-// User agent names
-extern NSInteger SBCountOfUserAgentNames;
-extern NSString *SBUserAgentNames[];
-
-// Web schemes
-extern NSInteger SBCountOfSchemes;
-extern NSString *SBSchemes[];
 
 // Type definitions for an URL field completion list item
 typedef NS_ENUM(NSInteger, SBURLFieldItemType) {
@@ -231,12 +138,6 @@ typedef NS_ENUM(NSInteger, SBBookmarkMode) {
 	SBBookmarkModeTile
 };
 
-// Circle progress styles
-typedef NS_ENUM(NSInteger, SBCircleProgressIndicatorStyle) {
-	SBCircleProgressIndicatorStyleRegular,
-	SBCircleProgressIndicatorStyleWhite
-};
-
 // Status code
 typedef NS_ENUM(NSInteger, SBStatus) {
 	SBStatusUndone,
@@ -245,52 +146,28 @@ typedef NS_ENUM(NSInteger, SBStatus) {
 };
 
 // Tags
-#define SBApplicationMenuTag 0
-#define SBFileMenuTag 1
-#define SBEditMenuTag 2
 #define SBViewMenuTag 3
-#define SBHistoryMenuTag 4
-#define SBBookmarksMenuTag 5
-#define SBWindowMenuTag 6
-#define SBHelpMenuTag 7
 
 // Values
-#define kSBTimeoutInterval 60.0
 #define kSBTabbarItemClosableInterval 0.2
-#define kSBBookmarkItemImageCompressionFactor 0.1
-#define kSBBookmarkLayoutInterval 0.7
 #define kSBBookmarkToolsInterval 0.7
-#define kSBDownloadsToolsInterval 0.7
 
 // Sizes
-#define kSBDocumentWindowMinimumSizeWidth 400.0
-#define kSBDocumentWindowMinimumSizeHeight 300.0
-#define kSBTabbarHeight 24.0
 #define kSBTabbarItemMaximumWidth 200.0
 #define kSBTabbarItemMinimumWidth 100.0
 #define kSBBottombarHeight 24.0
-#define kSBSidebarResizableWidth 24.0
-#define kSBSidebarNewFolderButtonWidth 100.0
-#define kSBSidebarClosedWidth 1.0
 #define kSBSidebarMinimumWidth 144.0
 #define kSBDownloadItemSize 128.0
-#define kSBDefaultSidebarWidth 550
-#define kSBDefaultBookmarkCellWidth 168
 #define kSBBookmarkFactorForImageWidth 4.0
 #define kSBBookmarkFactorForImageHeight 3.0
 #define kSBBookmarkCellPaddingPercentage 0.1
-#define kSBBookmarkCellMinWidth 60
 #define kSBBookmarkCellMaxWidth 256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2))
-#define SBFieldRoundedCurve 4
 
 // Counts
 #define kSBDocumentWarningNumberOfBookmarksForOpening 15
 
 // Notification names
 extern NSString *SBBookmarksDidUpdateNotification;
-extern NSString *SBUpdaterShouldUpdateNotification;
-extern NSString *SBUpdaterNotNeedUpdateNotification;
-extern NSString *SBUpdaterDidFailCheckingNotification;
 
 // Notification key names
 extern NSString *kSBDownloadsItem;

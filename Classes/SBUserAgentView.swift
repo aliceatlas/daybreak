@@ -121,7 +121,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
     
     var userAgentName: String {
         let selectedIndex = popup.indexOfSelectedItem
-        if selectedIndex == SBCountOfUserAgentNames {
+        if selectedIndex == SBUserAgentNames.count {
             return field.stringValue
         }
         return SBUserAgentNames[selectedIndex - 1]

@@ -273,7 +273,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func provideFeedback(AnyObject) {
         let title = NSLocalizedString("Sunrise Feedback", comment: "")
-        if kSBFeedbackMailAddress.length > 0 {
+        if !kSBFeedbackMailAddress.isEmpty {
             var urlString: NSString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
             urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
             NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString))

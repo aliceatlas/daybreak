@@ -357,17 +357,14 @@ class SBEditBookmarkView: SBBookmarkView {
     
     var labelName: String? {
         get {
-        	let itemIndex = colorPopup.indexOfSelectedItem - 1
-        	if itemIndex < SBBookmarkCountOfLabelColors {
-        		return SBBookmarkLabelColorNames[itemIndex]
-        	}
-        	return nil
+            let itemIndex = colorPopup.indexOfSelectedItem - 1
+            return itemIndex < SBBookmarkLabelColorNames.count &? SBBookmarkLabelColorNames[itemIndex]
         }
         
         set(labelName) {
-        	if let itemIndex = SBBookmarkLabelColorNames.firstIndex({$0 == labelName}) {
-        		colorPopup.selectItemAtIndex(itemIndex + 1)
-        	}
+            if let itemIndex = SBBookmarkLabelColorNames.firstIndex({$0 == labelName}) {
+                colorPopup.selectItemAtIndex(itemIndex + 1)
+            }
         }
     }
     
