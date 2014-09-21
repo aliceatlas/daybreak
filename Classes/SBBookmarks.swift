@@ -174,7 +174,7 @@ class SBBookmarks: NSObject {
         }
     }
     
-    func moveItemsAtIndexes(indexes: NSIndexSet, toIndex: UInt) {
+    func moveItemsAtIndexes(indexes: NSIndexSet, toIndex: Int) {
         /*
         NSArray *bookmarkItems = [items objectsAtIndexes:indexes];
         if ([bookmarkItems count] > 0 && toIndex <= [items count])

@@ -30,7 +30,7 @@ import Cocoa
 
 @objc protocol SBBookmarksViewDelegate {
     optional func bookmarksView(SBBookmarksView, didChangeMode: SBBookmarkMode)
-    optional func bookmarksView(SBBookmarksView, shouldEditItemAtIndex: UInt)
+    optional func bookmarksView(SBBookmarksView, shouldEditItemAtIndex: Int)
     optional func bookmarksView(SBBookmarksView, didChangeCellWidth: CGFloat)
 }
 
@@ -168,7 +168,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         delegate?.bookmarksView?(self, didChangeMode: listView!.mode)
     }
     
-    func executeShouldEditItemAtIndex(index: UInt) {
+    func executeShouldEditItemAtIndex(index: Int) {
         delegate?.bookmarksView?(self, shouldEditItemAtIndex: index)
     }
     
