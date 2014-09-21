@@ -32,38 +32,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <QuartzCore/QuartzCore.h>
 #import <WebKit/WebKit.h>
 
-// Flags for Debug
-#define kSBFlagCreateTabItemWhenLaunched 1
-#define kSBURLFieldShowsGoogleSuggest 1
-#define kSBFlagShowAllStringEncodings 0
-
-#define SBDownloadsDidAddItemNotification @"SBDownloadsDidAddItemNotification"
-#define SBDownloadsWillRemoveItemNotification @"SBDownloadsWillRemoveItemNotification"
-#define SBDownloadsDidUpdateItemNotification @"SBDownloadsDidUpdateItemNotification"
-#define SBDownloadsDidFinishItemNotification @"SBDownloadsDidFinishItemNotification"
-#define SBDownloadsDidFailItemNotification @"SBDownloadsDidFailItemNotification"
-
 // Versions
 extern NSString *SBBookmarkVersion;
 
 // Identifiers
-extern NSString *kSBDocumentToolbarIdentifier;
-extern NSString *kSBToolbarURLFieldItemIdentifier;
-extern NSString *kSBToolbarLoadItemIdentifier;
-extern NSString *kSBToolbarBookmarksItemIdentifier;
-extern NSString *kSBToolbarBookmarkItemIdentifier;
-extern NSString *kSBToolbarHistoryItemIdentifier;
-extern NSString *kSBToolbarSnapshotItemIdentifier;
-extern NSString *kSBToolbarTextEncodingItemIdentifier;
-extern NSString *kSBToolbarHomeItemIdentifier;
-extern NSString *kSBToolbarBugsItemIdentifier;
-extern NSString *kSBToolbarUserAgentItemIdentifier;
-extern NSString *kSBToolbarZoomItemIdentifier;
-extern NSString *kSBToolbarSourceItemIdentifier;
 extern NSString *kSBWebPreferencesIdentifier;
-
-// URLs
-extern NSString *kSBGoogleSuggestURL;
 
 // Path components
 extern NSString *kSBApplicationSupportDirectoryName;
@@ -73,24 +46,6 @@ extern NSString *kSBHistoryFileName;
 
 // Default values
 extern const NSStringEncoding SBAvailableStringEncodings[];
-
-// UserDefault keys
-extern NSString *kSBDocumentWindowAutosaveName;			// String
-extern NSString *kSBSidebarPosition;					// Integer
-extern NSString *kSBSidebarWidth;						// Float
-extern NSString *kSBTabbarVisibilityFlag;				// BOOL
-extern NSString *kSBBookmarkMode;						// Integer
-// General
-extern NSString *kSBHomePage;							// String (URL)
-// Advanced
-// WebKitDeveloper
-extern NSString *kWebKitDeveloperExtras;			// BOOL
-
-// Key names
-extern NSString *kSBTitle;
-extern NSString *kSBURL;
-extern NSString *kSBImage;
-extern NSString *kSBType;
 
 // Bookmark Key names
 extern NSString *kSBBookmarkVersion;
@@ -109,26 +64,12 @@ extern NSString *SBSafariBookmarkDictionaryListPboardType;
 extern NSInteger SBBookmarkCountOfLabelColors;
 extern NSString *SBBookmarkLabelColorNames[];
 
-// Type definitions for an URL field completion list item
-typedef NS_ENUM(NSInteger, SBURLFieldItemType) {
-	SBURLFieldItemTypeNone = 0,
-	SBURLFieldItemTypeBookmark = 1,
-	SBURLFieldItemTypeHistory = 2,
-	SBURLFieldItemTypeGoogleSuggest = 3
-};
-
 // Button shapes
 typedef NS_ENUM(NSInteger, SBButtonShape) {
 	SBButtonShapeExclusive,
 	SBButtonShapeLeft,
 	SBButtonShapeCenter,
 	SBButtonShapeRight
-};
-
-// Sidebar positions
-typedef NS_ENUM(NSInteger, SBSidebarPosition) {
-	SBSidebarPositionLeft,
-	SBSidebarPositionRight
 };
 
 // Bookmark display modes
@@ -138,16 +79,6 @@ typedef NS_ENUM(NSInteger, SBBookmarkMode) {
 	SBBookmarkModeTile
 };
 
-// Status code
-typedef NS_ENUM(NSInteger, SBStatus) {
-	SBStatusUndone,
-	SBStatusProcessing,
-	SBStatusDone
-};
-
-// Tags
-#define SBViewMenuTag 3
-
 // Values
 #define kSBTabbarItemClosableInterval 0.2
 #define kSBBookmarkToolsInterval 0.7
@@ -155,23 +86,10 @@ typedef NS_ENUM(NSInteger, SBStatus) {
 // Sizes
 #define kSBTabbarItemMaximumWidth 200.0
 #define kSBTabbarItemMinimumWidth 100.0
-#define kSBBottombarHeight 24.0
-#define kSBSidebarMinimumWidth 144.0
-#define kSBDownloadItemSize 128.0
 #define kSBBookmarkFactorForImageWidth 4.0
 #define kSBBookmarkFactorForImageHeight 3.0
 #define kSBBookmarkCellPaddingPercentage 0.1
 #define kSBBookmarkCellMaxWidth 256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2))
-
-// Counts
-#define kSBDocumentWarningNumberOfBookmarksForOpening 15
-
-// Notification names
-extern NSString *SBBookmarksDidUpdateNotification;
-
-// Notification key names
-extern NSString *kSBDownloadsItem;
-extern NSString *kSBDownloadsItems;
 
 // Pasteboard type names
 extern NSString *SBBookmarkPboardType;

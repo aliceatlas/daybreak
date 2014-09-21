@@ -3,7 +3,6 @@
 //
 
 #import "SBDefinitions.h"
-#import "SBDocument.h"
 #import "SBUtil.h"
 
 #import "SBBookmarkListView.h"

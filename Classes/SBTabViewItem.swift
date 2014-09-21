@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSourceTextViewDelegate {
-    unowned var tabbarItem: SBTabbarItem
+    unowned var tabbarItem: SBView //!!! workaround
     private var sbTabView: SBTabView! {
         return tabView as SBTabView
     }
@@ -439,19 +439,19 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     func webViewProgressStarted(notification: NSNotification) {
         if notification.object === webView {
-            tabbarItem.progress = 0.0
+            (tabbarItem as SBTabbarItem).progress = 0.0
         }
     }
     
     func webViewProgressEstimateChanged(notification: NSNotification) {
         if notification.object === webView {
-            tabbarItem.progress = CGFloat(webView.estimatedProgress)
+            (tabbarItem as SBTabbarItem).progress = CGFloat(webView.estimatedProgress)
         }
     }
     
     func webViewProgressFinished(notification: NSNotification) {
         if notification.object === webView {
-            tabbarItem.progress = 1.0
+            (tabbarItem as SBTabbarItem).progress = 1.0
         }
     }
     
@@ -492,7 +492,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
 
     override func webView(sender: WebView, didReceiveTitle title: String, forFrame frame: WebFrame) {
         if sender.mainFrame === frame {
-            tabbarItem.title = title
+            (tabbarItem as SBTabbarItem).title = title
             if selected {
                 sbTabView.executeSelectedItemDidReceiveTitle(self)
             }
@@ -501,7 +501,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     override func webView(sender: WebView, didReceiveIcon image: NSImage, forFrame frame: WebFrame) {
         if sender.mainFrame === frame {
-            tabbarItem.image = image
+            (tabbarItem as SBTabbarItem).image = image
             if selected {
                 sbTabView.executeSelectedItemDidReceiveIcon(self)
             }
@@ -711,7 +711,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     override func webView(sender: WebView, createWebViewWithRequest request: NSURLRequest) -> WebView {
         var error: NSError?
         let document = SBGetDocumentController().openUntitledDocumentAndDisplay(false, sidebarVisibility: false, initialURL: request.URL, error: &error) as SBDocument
-        return document.selectedWebView
+        return document.selectedWebView!
     }
     
     override func webView(sender: WebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WebFrame) -> Bool {

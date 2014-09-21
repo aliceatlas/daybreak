@@ -24,11 +24,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "SBDefinitions.h"
 #import <WebKit/WebKit.h>
-#import "SBDocument.h"
 #include <mach/mach_host.h>
 
 @class SBApplicationDelegate;
 @class SBDocumentController;
+@class SBDocument;
 
 // Get objects
 SBApplicationDelegate *SBGetApplicationDelegate();

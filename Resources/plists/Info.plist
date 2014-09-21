@@ -31,7 +31,7 @@
 			<key>LSIsAppleDefaultForType</key>
 			<true/>
 			<key>NSDocumentClass</key>
-			<string>SBDocument</string>
+			<string>Sunrise3.SBDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>

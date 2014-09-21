@@ -28,24 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 NSString *SBBookmarkVersion = @"1.0";
 
 // Identifiers
-NSString *kSBDocumentToolbarIdentifier = @"Document";
-NSString *kSBToolbarURLFieldItemIdentifier = @"URLField";
-NSString *kSBToolbarLoadItemIdentifier = @"Load";
-NSString *kSBToolbarBookmarksItemIdentifier = @"Bookmarks";
-NSString *kSBToolbarBookmarkItemIdentifier = @"Bookmark";
-NSString *kSBToolbarHistoryItemIdentifier = @"History";
-NSString *kSBToolbarSnapshotItemIdentifier = @"Snapshot";
-NSString *kSBToolbarTextEncodingItemIdentifier = @"TextEncoding";
-NSString *kSBToolbarMediaVolumeItemIdentifier = @"MediaVolume";
-NSString *kSBToolbarHomeItemIdentifier = @"Home";
-NSString *kSBToolbarBugsItemIdentifier = @"Bugs";
-NSString *kSBToolbarUserAgentItemIdentifier = @"UserAgent";
-NSString *kSBToolbarZoomItemIdentifier = @"Zoom";
-NSString *kSBToolbarSourceItemIdentifier = @"Source";
 NSString *kSBWebPreferencesIdentifier = @"Sunrise";
-
-// URLs
-NSString *kSBGoogleSuggestURL = @"http://google.com/complete/search?output=toolbar&q=%@";
 
 // Path components
 NSString *kSBApplicationSupportDirectoryName = @"Sunrise3";
@@ -108,24 +91,6 @@ const NSStringEncoding SBAvailableStringEncodings[] = {
 	0
 };
 
-// UserDefault keys
-NSString *kSBDocumentWindowAutosaveName = @"Document";
-NSString *kSBSidebarPosition = @"SidebarPosition";
-NSString *kSBSidebarWidth = @"SidebarWidth";
-NSString *kSBTabbarVisibilityFlag = @"TabbarVisibilityFlag";
-NSString *kSBBookmarkMode = @"BookmarkMode";
-// General
-NSString *kSBHomePage = @"HomePage";
-// Advanced
-// WebKitDeveloper
-NSString *kWebKitDeveloperExtras = @"WebKitDeveloperExtras";
-
-// Key names
-NSString *kSBTitle = @"title";
-NSString *kSBURL = @"url";
-NSString *kSBImage = @"image";
-NSString *kSBType = @"type";
-
 // Bookmark Key names
 NSString *kSBBookmarkVersion = @"Version";
 NSString *kSBBookmarkItems = @"Items";
@@ -153,14 +118,6 @@ NSString *SBBookmarkLabelColorNames[] = {
 @"Gray",
 @"Black"
 };
-
-// Notification names
-NSString *SBBookmarksDidUpdateNotification = @"SBBookmarksDidUpdateNotification";
-NSString *SBUpdaterDidFailCheckingNotification = @"SBUpdaterDidFailCheckingNotification";
-
-// Notification key names
-NSString *kSBDownloadsItem = @"Item";
-NSString *kSBDownloadsItems = @"Items";
 
 // Pasteboard type names
 NSString *SBBookmarkPboardType = @"SBBookmarkPboardType";

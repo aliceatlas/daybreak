@@ -59,7 +59,7 @@ class SBDownload: NSObject {
     }
     
     var progress: Float {
-        return (status == SBStatus.Done) ? 1.0 : ((expectedLength == 0) ? 0 : Float(receivedLength) / Float(expectedLength))
+        return (status == .Done) ? 1.0 : ((expectedLength == 0) ? 0 : Float(receivedLength) / Float(expectedLength))
     }
     
     // MARK: Actions

@@ -75,8 +75,9 @@ class SBTabView: NSTabView {
         SBDispatch { self.executeDidSelectTabViewItem(tabViewItem as SBTabViewItem) }
     }
     
-    func addItem(#identifier: Int, tabbarItem: SBTabbarItem) -> SBTabViewItem {
-        let tabViewItem = SBTabViewItem(identifier: identifier, tabbarItem: tabbarItem)
+    //!!! workaround
+    func addItem(#identifier: Int, tabbarItem: AnyObject) -> SBTabViewItem {
+        let tabViewItem = SBTabViewItem(identifier: identifier, tabbarItem: tabbarItem as SBTabbarItem)
         addTabViewItem(tabViewItem)
         return tabViewItem
     }

@@ -708,7 +708,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     func update(sender: AnyObject) {
         if let target = target as? SBDocument {
             visibleRect = target.visibleRectOfSelectedWebDocumentView
-            target.selectedWebViewImage !! { self.image = $0 }
+            target.selectedWebViewImage() !! { self.image = $0 }
         }
     }
     

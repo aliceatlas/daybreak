@@ -87,7 +87,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
                         let path = NSBundle.mainBundle().pathForResource("Localizable", ofType:"strings")
                         openStrings(path: path!, anotherPath:url.path!)
                     } else if type == kSBDocumentTypeName {
-                        document.constructNewTabWithURL(url, selection: (index == filenames.count - 1))
+                        document.constructNewTab(URL: url, selection: (index == filenames.count - 1))
                         index++
                     }
                 }
@@ -148,7 +148,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
 
                     case "in a new tab":
                     if let document = SBGetSelectedDocument() {
-                        document.constructNewTabWithURL(NSURL(string: URLString), selection: true)
+                        document.constructNewTab(URL: NSURL(string: URLString), selection: true)
                     }
 
                     case "in the current tab":
@@ -239,7 +239,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let url = NSURL(string: NSString(format: kSBUpdaterNewVersionURL, versionString))
         window.hideCoverWindow()
         destructUpdateView()
-        document.startDownloadingForURL(url)
+        document.startDownloading(forURL: url)
     }
     
     func cancelUpdate() {
@@ -335,7 +335,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
             if let document = SBGetSelectedDocument() {
                 let urls = panel.URLs as [NSURL]
                 for (index, file) in enumerate(urls) {
-                    document.constructNewTabWithURL(file, selection:(index == urls.count - 1))
+                    document.constructNewTab(URL: file, selection:(index == urls.count - 1))
                 }
             }
         }
@@ -355,7 +355,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func plugins(sender: AnyObject) {
         if let path = SBFilePathInApplicationBundle("Plug-ins", "html") {
             if let document = SBGetSelectedDocument() {
-                document.constructNewTabWithURL(NSURL.fileURLWithPath(path), selection: true)
+                document.constructNewTab(URL: NSURL.fileURLWithPath(path), selection: true)
             }
         }
     }
@@ -365,7 +365,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         if let string: String = info["SBHomePageURL"] as? NSString {
             if let document = SBGetSelectedDocument() {
                 if document.selectedWebDataSource != nil {
-                    document.constructNewTabWithURL(NSURL(string: string), selection: true)
+                    document.constructNewTab(URL: NSURL(string: string), selection: true)
                 } else {
                     document.openURLStringInSelectedTabViewItem(string)
                 }

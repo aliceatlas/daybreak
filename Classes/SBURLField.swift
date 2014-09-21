@@ -33,6 +33,10 @@ let SBURLFieldRoundedCurve: CGFloat = SBFieldRoundedCurve
 let SBURLFieldSheetPadding: CGFloat = 10
 let kSBURLFieldSectionHeight: CGFloat = 18.0
 
+enum SBURLFieldItemType: Int {
+	case None, Bookmark, History, GoogleSuggest
+}
+
 @objc protocol SBURLFieldDelegate {
     optional func urlFieldDidSelectBackward(SBURLField)
     optional func urlFieldDidSelectForward(SBURLField)
