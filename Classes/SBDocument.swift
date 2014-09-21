@@ -1012,7 +1012,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         var object: String?
         if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers {
             let identifier = tableColumn.identifier
-            if let resourceIdentifier = rowIndex < resourceIdentifiers.count &? resourceIdentifiers[rowIndex] {
+            if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
                 if identifier == kSBURL {
                     object = resourceIdentifier.URL.absoluteString
                 } else if identifier == "Length" {
@@ -1048,7 +1048,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         let cell = aCell as NSCell
         if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers {
             let identifier = tableColumn.identifier
-            if let resourceIdentifier = rowIndex < resourceIdentifiers.count &? resourceIdentifiers[rowIndex] {
+            if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
                 if identifier == kSBURL {
                     cell.title = resourceIdentifier.URL.absoluteString
                 } else if identifier == "Length" {
@@ -1091,7 +1091,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func webResourcesView(webResourcesView: SBWebResourcesView, shouldSaveAtRow rowIndex: Int) {
         if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers {
-            if let resourceIdentifier = rowIndex < resourceIdentifiers.count &? resourceIdentifiers[rowIndex] {
+            if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
                 let response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceIdentifier.request)
                 if let data = response?.data {
                     let filename = resourceIdentifier.URL.absoluteString?.lastPathComponent ?? "UntitledData"
@@ -1110,7 +1110,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func webResourcesView(webResourcesView: SBWebResourcesView, shouldDownloadAtRow rowIndex: Int) {
         if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers {
-            if let resourceIdentifier = rowIndex < resourceIdentifiers.count &? resourceIdentifiers[rowIndex] {
+            if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
                 resourceIdentifier.URL !! startDownloading
             }
         }

@@ -28,8 +28,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class SBFixedSplitView: NSSplitView {
     init(embedViews: [NSView], frameRect: NSRect) {
-        let view1 = (embedViews.count > 0) &? embedViews[0]
-        let view2 = (embedViews.count > 1) &? embedViews[1]
+        let view1 = embedViews.get(0)
+        let view2 = embedViews.get(1)
         let superview = view1?.superview ?? view2?.superview
         super.init(frame: frameRect)
         if superview != nil {
@@ -55,8 +55,8 @@ class SBFixedSplitView: NSSplitView {
     func resizeSubviews(#oldSize: NSSize) {
         if !vertical {
             let subviews = self.subviews as [NSView]
-            let subview1 = (subviews.count > 0) &? subviews[0]
-            let subview2 = (subviews.count > 1) &? subviews[1]
+            let subview1 = subviews.get(0)
+            let subview2 = subviews.get(1)
             if subview1 != nil && subview2 != nil {
                 var r1 = subview1!.frame
                 var r2 = subview2!.frame

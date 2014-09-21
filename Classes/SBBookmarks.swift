@@ -61,7 +61,7 @@ class SBBookmarks: NSObject {
     }
     
     func itemAtIndex(index: Int) -> BookmarkItem? {
-        return index < items.count &? items[index]
+        return items.get(index)
     }
     
     func containsItem(bookmarkItem: BookmarkItem) -> Int {

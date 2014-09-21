@@ -358,7 +358,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     var labelName: String? {
         get {
             let itemIndex = colorPopup.indexOfSelectedItem - 1
-            return itemIndex < SBBookmarkLabelColorNames.count &? SBBookmarkLabelColorNames[itemIndex]
+            return SBBookmarkLabelColorNames.get(itemIndex)
         }
         
         set(labelName) {

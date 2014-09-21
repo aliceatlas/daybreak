@@ -112,8 +112,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
             // Apply to fields
             for (i, fields) in enumerate(fieldSet) {
                 for (j, field) in enumerate(fields) {
-                    if i < textSet.count && j < textSet[i].count {
-                        let text = textSet[i][j]
+                    if let text = textSet.get(i)?.get(j) {
                         field.stringValue = text
                     }
                 }

@@ -475,7 +475,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row rowIndex: Int) -> AnyObject? {
-        if let item = (rowIndex < items.count) &? items[rowIndex] {
+        if let item = items.get(rowIndex) {
             if tableColumn.identifier == kSBURL {
                 let type = SBURLFieldItemType(rawValue: (item[kSBType] as? NSNumber) ?? -1)
                 if type == nil {
@@ -497,7 +497,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     
     func tableView(tableView: NSTableView, willDisplayCell cell: SBURLFieldDataCell, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
         if tableColumn.identifier != kSBURL { return }
-        if let item = (rowIndex < items.count) &? items[rowIndex] {
+        if let item = items.get(rowIndex) {
             let title = item[kSBTitle] as? NSString as? String
             var string: String?
             var image: NSImage?

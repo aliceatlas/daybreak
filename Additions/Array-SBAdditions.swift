@@ -70,6 +70,10 @@ extension Array {
         }
         return false
     }
+    
+    func get(index: Int) -> Element? {
+        return index < count &? self[index]
+    }
 }
 
 func removeItem<T: Equatable>(inout array: [T], toRemove: T) {

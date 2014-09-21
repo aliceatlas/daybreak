@@ -282,7 +282,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     
     func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row rowIndex: Int) -> AnyObject? {
         let identifier = tableColumn.identifier
-        let item = (rowIndex < items.count) &? items[rowIndex]
+        let item = items.get(rowIndex)
         switch identifier {
         case kSBTitle:
             return item?.title
@@ -298,7 +298,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     
     func tableView(tableView: NSTableView, willDisplayCell cell: NSCell, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
         let identifier = tableColumn.identifier
-        let item = (rowIndex < items.count) &? items[rowIndex]
+        let item = items.get(rowIndex)
         var string: String?
         switch identifier {
         case kSBImage:
@@ -392,7 +392,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         var urls: [NSURL] = []
         let indexes = tableView.selectedRowIndexes
         for var index = indexes.lastIndex; index != NSNotFound; index = indexes.indexLessThanIndex(index) {
-            let item = (index < items.count) &? items[index]
+            let item = items.get(index)
             let URLString = item?.URLString
             if let URL = URLString !! {NSURL(string: $0)} {
                 urls.append(URL)
