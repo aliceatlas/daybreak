@@ -267,7 +267,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	return [indexes copy];
 }
 
-- (NSRect)dragginLineRectAtPoint:(NSPoint)point
+- (NSRect)draggingLineRectAtPoint:(NSPoint)point
 {
 	NSRect r = NSZeroRect;
 	NSInteger index = NSNotFound;
@@ -790,7 +790,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		draggingLineView.frameColor = NSColor.alternateSelectedControlColor;
 		[self addSubview:draggingLineView];
 	}
-	r = [self dragginLineRectAtPoint:point];
+	r = [self draggingLineRectAtPoint:point];
 	draggingLineView.frame = r;
 }
 

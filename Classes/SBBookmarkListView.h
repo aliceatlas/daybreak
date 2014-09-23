@@ -78,7 +78,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 - (NSRect)itemRectAtIndex:(NSInteger)index;
 - (SBBookmarkListItemView *)itemViewAtPoint:(NSPoint)point;
 - (NSUInteger)indexAtPoint:(NSPoint)point;
-- (NSRect)dragginLineRectAtPoint:(NSPoint)point;
+- (NSRect)draggingLineRectAtPoint:(NSPoint)point;
 - (NSRect)removeButtonRect:(SBBookmarkListItemView *)itemView;
 - (NSRect)editButtonRect:(SBBookmarkListItemView *)itemView;
 - (NSRect)updateButtonRect:(SBBookmarkListItemView *)itemView;
