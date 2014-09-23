@@ -72,7 +72,7 @@ extension Array {
     }
     
     func get(index: Int) -> Element? {
-        return index < count &? self[index]
+        return (index >= 0 && index < count) &? self[index]
     }
 }
 
@@ -90,4 +90,8 @@ func removeItems<T: Equatable>(inout array: [T], toRemove: [T]) {
 
 func containsItem<T: Equatable>(array: [T], value: T) -> Bool {
     return array.first({ $0 == value }) != nil
+}
+
+func indexOfItem<T: Equatable>(array: [T], value: T) -> Int? {
+    return array.firstIndex { $0 == value }
 }

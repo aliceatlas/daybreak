@@ -55,7 +55,7 @@ extension NSMenu {
             item.state = NSOffState
         }
     }
-        
+    
     func addItem(#title: String, target: AnyObject?, action: Selector, tag: Int) -> NSMenuItem {
         let item = NSMenuItem()
         item.title = title

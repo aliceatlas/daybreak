@@ -1775,7 +1775,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func doneHistory(URLs: NSArray) {
         if URLs.count > 0 {
-            openAndConstructTab(URLs: URLs as [NSURL], startInTabbarItem: tabbar.selectedTabbarItem)
+            openAndConstructTab(URLs: URLs as [NSURL], startInTabbarItem: tabbar.selectedTabbarItem!)
         }
         window.hideCoverWindow()
         historyView = nil

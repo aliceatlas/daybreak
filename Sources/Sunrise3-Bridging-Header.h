@@ -9,8 +9,6 @@
 
 #import "NSSavePanel-SBAdditions.h"
 
-#import "SBTabbar.h"
-
 @interface NSToolbar (Private)
 - (NSView *)_toolbarView;
 @end

@@ -62,7 +62,6 @@
 		08982EDB1182CF53002122F6 /* Icon_Bookmarks.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDA1182CF53002122F6 /* Icon_Bookmarks.png */; };
 		08982EDE1182CF5A002122F6 /* Icon_G.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDC1182CF5A002122F6 /* Icon_G.png */; };
 		08982EDF1182CF5A002122F6 /* Icon_History.png in Resources */ = {isa = PBXBuildFile; fileRef = 08982EDD1182CF5A002122F6 /* Icon_History.png */; };
-		089953890FE36E5100DED3BA /* SBTabbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 089953880FE36E5100DED3BA /* SBTabbar.m */; };
 		089956CD0FE39C8200DED3BA /* SBView.m in Sources */ = {isa = PBXBuildFile; fileRef = 089956CC0FE39C8200DED3BA /* SBView.m */; };
 		089C379C0FE7E07A00088B34 /* ResizerDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379B0FE7E07A00088B34 /* ResizerDown.png */; };
 		089C379E0FE7E08200088B34 /* ResizerUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 089C379D0FE7E08200088B34 /* ResizerUp.png */; };
@@ -161,7 +160,7 @@
 		50B2A9A71960D74400DA1B4A /* SBHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B2A9A61960D74400DA1B4A /* SBHistory.swift */; };
 		50B2A9A91960E19A00DA1B4A /* Array-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B2A9A81960E19A00DA1B4A /* Array-SBAdditions.swift */; };
 		50B2A9AD1961174700DA1B4A /* String-SBURLAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B2A9AC1961174700DA1B4A /* String-SBURLAdditions.swift */; };
-		50BE761419CCB82B00B8215A /* SBTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE761319CCB82A00B8215A /* SBTabbar.swift */; };
+		50BE761519D1EC1A00B8215A /* SBTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BE761319CCB82A00B8215A /* SBTabbar.swift */; };
 		50C8ED6519ACE4C700F7E17B /* SBWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8ED6419ACE4C700F7E17B /* SBWindowController.swift */; };
 		50CDD1D21984879B00C756F5 /* SBBLKGUIScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AC47B8196923B4009219AF /* SBBLKGUIScrollView.swift */; };
 		50CE69E019863F4C00C17D44 /* SBWebResourceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE69DF19863F4C00C17D44 /* SBWebResourceIdentifier.swift */; };
@@ -268,8 +267,6 @@
 		08982EDA1182CF53002122F6 /* Icon_Bookmarks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_Bookmarks.png; path = Resources/Images/Icon_Bookmarks.png; sourceTree = "<group>"; };
 		08982EDC1182CF5A002122F6 /* Icon_G.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_G.png; path = Resources/Images/Icon_G.png; sourceTree = "<group>"; };
 		08982EDD1182CF5A002122F6 /* Icon_History.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon_History.png; path = Resources/Images/Icon_History.png; sourceTree = "<group>"; };
-		089953870FE36E5100DED3BA /* SBTabbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBTabbar.h; path = Classes/SBTabbar.h; sourceTree = "<group>"; };
-		089953880FE36E5100DED3BA /* SBTabbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBTabbar.m; path = Classes/SBTabbar.m; sourceTree = "<group>"; };
 		089956CB0FE39C8200DED3BA /* SBView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBView.h; path = Classes/SBView.h; sourceTree = "<group>"; };
 		089956CC0FE39C8200DED3BA /* SBView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBView.m; path = Classes/SBView.m; sourceTree = "<group>"; };
 		089B71FE1072AEF3000D00B5 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fr; path = Resources/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -565,8 +562,6 @@
 		08A0048E0FEC8D4600AEB6DD /* Tab */ = {
 			isa = PBXGroup;
 			children = (
-				089953870FE36E5100DED3BA /* SBTabbar.h */,
-				089953880FE36E5100DED3BA /* SBTabbar.m */,
 				50BE761319CCB82A00B8215A /* SBTabbar.swift */,
 				502DEBA219C03CF9006A68C3 /* SBTabbarItem.swift */,
 				50782C8919AC835600CB8706 /* SBTabView.swift */,
@@ -988,12 +983,10 @@
 				505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */,
 				50ACCDFB196404FE00CE593E /* SBGoogleSuggestParser.swift in Sources */,
 				505E49FD198CA577001F5254 /* SBTabViewItem.swift in Sources */,
-				089953890FE36E5100DED3BA /* SBTabbar.m in Sources */,
 				502DEBA719C0667F006A68C3 /* NSScrollView-SBAdditions.swift in Sources */,
 				50D7C35119C29FE300B3F7C3 /* SBBookmarkListItemView.swift in Sources */,
 				50FEEA9719BABFDD00962BB9 /* SBSidebar.swift in Sources */,
 				089956CD0FE39C8200DED3BA /* SBView.m in Sources */,
-				50BE761419CCB82B00B8215A /* SBTabbar.swift in Sources */,
 				508FAC5319653AC400F4380F /* main.swift in Sources */,
 				502DEBBE19C1180F006A68C3 /* SBSectionListView.swift in Sources */,
 				50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */,
@@ -1030,6 +1023,7 @@
 				502DEBAF19C07EE1006A68C3 /* NSArray-SBAdditions.swift in Sources */,
 				50ACCDF71963E76700CE593E /* SBCoverWindow.swift in Sources */,
 				50B2A99F196028B700DA1B4A /* SBDocumentController.swift in Sources */,
+				50BE761519D1EC1A00B8215A /* SBTabbar.swift in Sources */,
 				50FEEAA619BF345C00962BB9 /* SBSearchbar.swift in Sources */,
 				505E49F6198B7639001F5254 /* SBToolbar.swift in Sources */,
 				505E49FB198CA096001F5254 /* SBSectionGroup.swift in Sources */,
