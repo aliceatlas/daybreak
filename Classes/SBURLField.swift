@@ -795,12 +795,13 @@ class SBURLImageView: NSImageView, NSDraggingSource {
     
     func mouseDraggedActionWithEvent(event: NSEvent) {
         var item = NSDraggingItem(pasteboardWriter: URL)
-        item.setDraggingFrame(bounds, contents: dragImage)
+        let imageFrame = NSRect(origin: bounds.origin, size: dragImage.size)
+        item.setDraggingFrame(imageFrame, contents: dragImage)
         
         let session = beginDraggingSessionWithItems([item], event: event, source: self)
         session.animatesToStartingPositionsOnCancelOrFail = true
         session.draggingFormation = .None
-        //
+        
         window!.title !! { session.draggingPasteboard.setString($0, forType: NSPasteboardTypeString) }
         selectedWebViewImageForBookmark !! { session.draggingPasteboard.setData($0.TIFFRepresentation, forType: NSPasteboardTypeTIFF) }
     }
@@ -808,14 +809,6 @@ class SBURLImageView: NSImageView, NSDraggingSource {
     func draggingSession(session: NSDraggingSession, sourceOperationMaskForDraggingContext context: NSDraggingContext) -> NSDragOperation {
         return .Copy
     }
-    
-    /*func pasteboard(sender: NSPasteboard, item: NSPasteboardItem, provideDataForType type: String) {
-        if type == NSPasteboardTypeTIFF {
-            selectedWebViewImageForBookmark !! { sender.setData($0.TIFFRepresentation, forType: NSPasteboardTypeTIFF) }
-        } else if type == NSPasteboardTypeString {
-            sender.setString(window!.title!, forType: NSPasteboardTypeString)
-        }
-    }*/
     
     func mouseUpActionWithEvent(event: NSEvent) {
         field.selectText(self)

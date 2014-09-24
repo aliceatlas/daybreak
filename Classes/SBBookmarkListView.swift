@@ -993,14 +993,14 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             if let URL = NSURL(fromPasteboard: pasteboard).absoluteString {
                 var title: String!
                 var data: NSData?
-                if containsItem(types, NSStringPboardType) {
-                    title = pasteboard.stringForType(NSStringPboardType)
+                if containsItem(types, NSPasteboardTypeString) {
+                    title = pasteboard.stringForType(NSPasteboardTypeString)
                 } else {
                     title = NSLocalizedString("Untitled", comment: "")
                 }
-                if containsItem(types, NSTIFFPboardType) {
+                if containsItem(types, NSPasteboardTypeTIFF) {
                     var shouldInset = true
-                    data = pasteboard.dataForType(NSTIFFPboardType)
+                    data = pasteboard.dataForType(NSPasteboardTypeTIFF)
                     if let image = NSImage(data: data) {
                         shouldInset = image.size != SBBookmarkImageMaxSize
                     }

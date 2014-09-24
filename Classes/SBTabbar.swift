@@ -529,13 +529,13 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         return .Copy
     }
     
-    override func performDragOperation(sender: NSDraggingInfo) -> Bool{
+    override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         var r = true
         let pasteboard = sender.draggingPasteboard()
         let types = pasteboard.types as [NSString] as [String]
-        let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as NSArray as [NSDictionary]
         let point = contentView.convertPoint(sender.draggingLocation(), fromView: nil)
-        if containsItem(types, SBBookmarkPboardType) && !pbItems.isEmpty {
+        if containsItem(types, SBBookmarkPboardType) {
+            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as NSArray as [NSDictionary]
             let URLStrings = pbItems.map({ $0[kSBBookmarkURL] as NSString as String }).filter({ !$0.isEmpty })
             let URLs = URLStrings.map({ NSURL(string: $0) }).filter({ $0 != nil }).map({ $0! })
             if !URLs.isEmpty {
