@@ -707,12 +707,12 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         let tabViewItem = tabView.selectTabViewItem(identifier: aTabbarItem.tag)!
         
         // Change window values
-        window.title = (tabViewItem.tabbarItem as SBTabbarItem).title
+        window.title = tabViewItem.tabbarItem.title
         // Change URL field values
         urlField.enabledBackward = tabViewItem.canBackward
         urlField.enabledForward = tabViewItem.canForward
         urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
-        urlField.image = (tabViewItem.tabbarItem as SBTabbarItem).image
+        urlField.image = tabViewItem.tabbarItem.image
         // Change state of the load button
         loadButton.on = tabViewItem.webView.loading
         // Change resources
@@ -947,14 +947,14 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
 
     func tabView(aTabView: SBTabView, selectedItemDidReceiveTitle tabViewItem: SBTabViewItem) {
-        let title = (tabViewItem.tabbarItem as SBTabbarItem).title
+        let title = tabViewItem.tabbarItem.title
         let URLString = tabViewItem.mainFrameURLString!
         window.title = title
         SBHistory.sharedHistory.addNewItem(URLString: URLString, title: title)
     }
     
     func tabView(aTabView: SBTabView, selectedItemDidReceiveIcon tabViewItem: SBTabViewItem) {
-        urlField.image = (tabViewItem.tabbarItem as SBTabbarItem).image
+        urlField.image = tabViewItem.tabbarItem.image
     }
     
     func tabView(aTabView: SBTabView, selectedItemDidReceiveServerRedirect tabViewItem: SBTabViewItem) {
