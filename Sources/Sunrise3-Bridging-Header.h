@@ -5,7 +5,7 @@
 #import "SBDefinitions.h"
 #import "SBUtil.h"
 
-#import "SBView.h"
+#import "SBBaseView.h"
 
 #import "NSSavePanel-SBAdditions.h"
 

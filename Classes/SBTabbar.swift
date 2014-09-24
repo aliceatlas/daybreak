@@ -249,7 +249,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         newItem.target = self
         newItem.closeSelector = "closeItem:"
         newItem.selectSelector = "selectItem:"
-        newItem.keyView = keyView
+        (newItem as SBView).keyView = keyView //!!!
         addItem(newItem)
         updateItems()
         return newItem

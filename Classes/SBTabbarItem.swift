@@ -120,18 +120,14 @@ class SBTabbarItem: SBView {
     // MARK: Exec
     
     func executeShouldClose() {
-        if (target !! closeSelector) != nil {
-            if target.respondsToSelector(closeSelector) {
-                NSApp.sendAction(closeSelector, to: target, from: self)
-            }
+        if target?.respondsToSelector(closeSelector) ?? false {
+            NSApp.sendAction(closeSelector, to: target, from: self)
         }
     }
     
     func executeShouldSelect() {
-        if (target !! selectSelector) != nil {
-            if target.respondsToSelector(selectSelector) {
-                NSApp.sendAction(selectSelector, to: target, from: self)
-            }
+        if target?.respondsToSelector(selectSelector) ?? false {
+            NSApp.sendAction(selectSelector, to: target, from: self)
         }
     }
     

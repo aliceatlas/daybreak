@@ -398,10 +398,8 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
                 urls.append(URL)
             }
         }
-        if (target !! doneSelector) != nil {
-            if target!.respondsToSelector(doneSelector) {
-                NSApp.sendAction(doneSelector, to: target, from: urls as NSArray)
-            }
+        if target?.respondsToSelector(doneSelector) ?? false {
+            NSApp.sendAction(doneSelector, to: target, from: urls as NSArray)
         }
     }
 }

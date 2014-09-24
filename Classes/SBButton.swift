@@ -43,11 +43,13 @@ class SBButton: SBView, NSCoding {
             if enabled != oldValue { needsDisplay = true }
         }
     }
+    
     var pressed: Bool = false {
         didSet {
             if pressed != oldValue { needsDisplay = true }
         }
     }
+    
     var title: NSString? {
         didSet {
             if title != oldValue {
@@ -55,6 +57,7 @@ class SBButton: SBView, NSCoding {
             }
         }
     }
+    
     override var toolbarVisible: Bool {
         didSet {
             if toolbarVisible != oldValue { needsDisplay = true }
@@ -102,10 +105,8 @@ class SBButton: SBView, NSCoding {
     // MARK: Exec
     
     func executeAction() {
-        if let target = target as? NSObject {
-            if action &! {target.respondsToSelector($0)} {
-                NSApp.sendAction(action, to: target, from: self)
-            }
+        if target?.respondsToSelector(action) ?? false {
+            NSApp.sendAction(action, to: target, from: self)
         }
     }
     

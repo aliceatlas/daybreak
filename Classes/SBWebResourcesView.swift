@@ -38,6 +38,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 }
 
 class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
+    weak var dataSource: SBWebResourcesViewDataSource?
+    weak var delegate: SBWebResourcesViewDelegate?
+    
     lazy var scrollView: NSScrollView = {
         let scrollView = SBBLKGUIScrollView(frame: self.bounds)
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
@@ -50,6 +53,7 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         scrollView.documentView = self.tableView
         return scrollView
     }()
+    
     lazy var tableView: NSTableView = {
         var tableRect = NSZeroRect
         let lengthWidth: CGFloat = 110.0
@@ -114,8 +118,10 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         tableView.intercellSpacing = NSZeroSize
         return tableView
     }()
-    weak var dataSource: SBWebResourcesViewDataSource?
-    weak var delegate: SBWebResourcesViewDelegate?
+    
+    override init() {
+        super.init()
+    }
     
     override init(frame: NSRect) {
         super.init(frame: frame)

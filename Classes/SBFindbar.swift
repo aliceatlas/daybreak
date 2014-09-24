@@ -254,10 +254,8 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     }
     
     func executeClose() {
-        if (target !! doneSelector) != nil {
-            if target.respondsToSelector(doneSelector) {
-                NSApp.sendAction(doneSelector, to: target, from: self)
-            }
+        if target?.respondsToSelector(doneSelector) ?? false {
+            NSApp.sendAction(doneSelector, to: target, from: self)
         }
     }
     
@@ -295,22 +293,18 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
 
 
 class SBFindSearchField: NSSearchField {
-    var nextAction: Selector?
-    var previousAction: Selector?
+    var nextAction: Selector = nil
+    var previousAction: Selector = nil
     
     func performFindNext(sender: AnyObject?) {
-        if (target !! nextAction) != nil {
-            if target.respondsToSelector(nextAction!) {
-                NSApp.sendAction(nextAction!, to: target, from: self)
-            }
+        if target?.respondsToSelector(nextAction) ?? false {
+            NSApp.sendAction(nextAction, to: target, from: self)
         }
     }
     
     func performFindPrevious(sender: AnyObject?) {
-        if (target !! previousAction) != nil {
-            if target.respondsToSelector(previousAction!) {
-                NSApp.sendAction(previousAction!, to: target, from: self)
-            }
+        if target?.respondsToSelector(previousAction) ?? false {
+            NSApp.sendAction(previousAction, to: target, from: self)
         }
     }
 }

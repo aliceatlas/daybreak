@@ -145,7 +145,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     lazy var tabbar: SBTabbar = {
         let tabbar = SBTabbar()
-        tabbar.toolbarVisible = self.toolbar.visible
+        (tabbar as SBView).toolbarVisible = self.toolbar.visible //!!!
         tabbar.delegate = self
         return tabbar
     }()
@@ -672,11 +672,11 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     // MARK: Toolbar Delegate
     
     func toolbarDidVisible(aToolbar: SBToolbar) {
-        tabbar.toolbarVisible = true
+        (tabbar as SBView).toolbarVisible = true //!!!
     }
     
     func toolbarDidInvisible(aToolbar: SBToolbar) {
-        tabbar.toolbarVisible = false
+        (tabbar as SBView).toolbarVisible = false //!!!
     }
     
     // MARK: Tabbar Delegate
@@ -2125,7 +2125,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if window.coverWindow == nil {
             messageView = SBMessageView(frame: NSMakeRect(0, 0, 800, 240), text: message)
             messageView!.target = self
-            messageView!.doneSelector = "doneShowMessageView"
+            (messageView! as SBView).doneSelector = "doneShowMessageView" //!!!
             window.showCoverWindow(messageView!)
         } else {
             window.coverWindow!.makeKeyWindow()
@@ -2143,8 +2143,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             confirmed = -1
             messageView = SBMessageView(frame: NSMakeRect(0, 0, 800, 240), text: message)
             messageView!.target = self
-            messageView!.doneSelector = "doneConfirmMessageView"
-            messageView!.cancelSelector = "cancelConfirmMessageView"
+            (messageView! as SBView).doneSelector = "doneConfirmMessageView" //!!!
+            (messageView! as SBView).cancelSelector = "cancelConfirmMessageView"
             window.showCoverWindow(messageView!)
             while confirmed == -1 {
                 // Wait event...
