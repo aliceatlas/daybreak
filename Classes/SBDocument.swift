@@ -358,7 +358,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         window = newWindow
         windowController = newWindowController
         if kSBFlagCreateTabItemWhenLaunched {
-            constructNewTab(string: initialURL!.absoluteString!, selection: true)
+            constructNewTab(string: initialURL?.absoluteString, selection: true)
         }
         addWindowController(windowController)
         addObserverNotifications()
@@ -415,7 +415,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         return newWindowController
     }
     
-    func constructNewTab(#string: String, selection: Bool) {
+    func constructNewTab(string inString: String?, selection: Bool) {
+        let string = inString ?? ""
         let requestURLString = !string.isEmpty &? string.requestURLString
         let URL = requestURLString !! {!$0.isEmpty &? NSURL(string: $0)}
         constructNewTab(URL: URL, selection: selection)
@@ -1564,7 +1565,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     // File menu
     
     func createNewTab(sender: AnyObject?) {
-        let homepage = SBPreferences.sharedPreferences.homepage(false)!
+        let homepage = SBPreferences.sharedPreferences.homepage(false)
         if !window.tabbarVisibility && tabbar.items.count > 0 {
             showTabbar()
         }
