@@ -873,14 +873,13 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     override func rightMouseDown(event: NSEvent) {
         mouseDown(event)
-        menu = menuForEvent(event) //!!!
         point = NSZeroPoint
         draggedItemView?.dragged = false
         draggedItemView = nil
         draggedItems = nil
         selectionView = nil
         draggingLineView = nil
-        if menu != nil {
+        if let menu = menuForEvent(event) {
             NSMenu.popUpContextMenu(menu, withEvent: event, forView: self)
         }
     }
