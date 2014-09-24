@@ -27,15 +27,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Versions
 NSString *SBBookmarkVersion = @"1.0";
 
-// Identifiers
-NSString *kSBWebPreferencesIdentifier = @"Sunrise";
-
-// Path components
-NSString *kSBApplicationSupportDirectoryName = @"Sunrise3";
-NSString *kSBApplicationSupportDirectoryName_Version1 = @"Sunrise";
-NSString *kSBBookmarksFileName = @"Bookmarks.plist";
-NSString *kSBHistoryFileName = @"History.plist";
-
 // Default values
 const NSStringEncoding SBAvailableStringEncodings[] = {
 	-2147481087,	// Japanese (Shift JIS)
@@ -100,18 +91,3 @@ NSString *kSBBookmarkImage = @"image";
 NSString *kSBBookmarkDate = @"date";
 NSString *kSBBookmarkLabelName = @"label";
 NSString *kSBBookmarkOffset = @"offset";
-
-// Bookmark color names
-NSInteger SBBookmarkCountOfLabelColors = 10;
-NSString *SBBookmarkLabelColorNames[] = {
-@"None",
-@"Red",
-@"Orange",
-@"Yellow",
-@"Green",
-@"Blue",
-@"Purple",
-@"Magenta",
-@"Gray",
-@"Black"
-};

@@ -222,6 +222,11 @@ let kSBBookmarkLabelName = "label"          // String
 let kSBBookmarkOffset = "offset"            // Point
 let kSBBookmarkIsDirectory = "isDirectory"  // Bool
 
+// Button shapes
+enum SBButtonShape {
+    case Exclusive, Left, Center, Right
+}
+
 // Updater key names
 let kSBUpdaterResult = "Result"                     // Int (NSComparisonResult)
 let kSBUpdaterVersionString = "VersionString"       // String

@@ -35,15 +35,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // Versions
 extern NSString *SBBookmarkVersion;
 
-// Identifiers
-extern NSString *kSBWebPreferencesIdentifier;
-
-// Path components
-extern NSString *kSBApplicationSupportDirectoryName;
-extern NSString *kSBApplicationSupportDirectoryName_Version1;
-extern NSString *kSBBookmarksFileName;
-extern NSString *kSBHistoryFileName;
-
 // Default values
 extern const NSStringEncoding SBAvailableStringEncodings[];
 
@@ -56,18 +47,6 @@ extern NSString *kSBBookmarkImage;		// Data
 extern NSString *kSBBookmarkDate;		// Date
 extern NSString *kSBBookmarkLabelName;	// String
 extern NSString *kSBBookmarkOffset;		// Point
-
-// Bookmark color names
-extern NSInteger SBBookmarkCountOfLabelColors;
-extern NSString *SBBookmarkLabelColorNames[];
-
-// Button shapes
-typedef NS_ENUM(NSInteger, SBButtonShape) {
-	SBButtonShapeExclusive,
-	SBButtonShapeLeft,
-	SBButtonShapeCenter,
-	SBButtonShapeRight
-};
 
 // Bookmark display modes
 typedef NS_ENUM(NSInteger, SBBookmarkMode) {
