@@ -26,47 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <WebKit/WebKit.h>
 #include <mach/mach_host.h>
 
-@class SBApplicationDelegate;
-@class SBDocumentController;
-@class SBDocument;
-
-// Paths
-
-CF_IMPLICIT_BRIDGING_ENABLED
-
-CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform);
-CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform);
-
-CF_IMPLICIT_BRIDGING_DISABLED
-
-// Math
-
-CF_IMPLICIT_BRIDGING_ENABLED
-
-NSInteger SBRemainder(NSInteger value1, NSInteger value2);
-BOOL SBRemainderIsZero(NSInteger value1, NSInteger value2);
-NSInteger SBGreatestCommonDivisor(NSInteger a, NSInteger b);
-
-CF_IMPLICIT_BRIDGING_DISABLED
-
-// Others
-
-NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault);
-NSComparisonResult SBStringEncodingSortFunction(id num1, id num2, void *context);
-NSInteger SBUnsignedIntegerSortFunction(id num1, id num2, void *context);
-NSData *SBLocalizableStringsData(NSArray *fieldSet);
-
-// Debug
-
-id SBValueForKey(NSString *keyName, NSDictionary *dictionary);
-NSDictionary *SBDebugViewStructure(NSView *view);
-NSDictionary *SBDebugLayerStructure(CALayer *layer);
-NSDictionary *SBDebugDumpMainMenu();
-NSArray *SBDebugDumpMenu(NSMenu *menu);
-BOOL SBDebugWriteViewStructure(NSView *view, NSString *path);
-BOOL SBDebugWriteLayerStructure(CALayer *layer, NSString *path);
-BOOL SBDebugWriteMainMenu(NSString *path);
-
 void SBPerform(id target, SEL action, id object);
 void SBPerformWithModes(id target, SEL action, id object, NSArray *modes);
 kern_return_t SBCPUType(cpu_type_t *cpuType);

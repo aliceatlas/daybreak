@@ -22,31 +22,8 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifdef __debug__
-#define DebugLog(format, ...)  NSLog(format, __VA_ARGS__)
-#else
-#define DebugLog(format, ...)
-#endif
-
 #import <Cocoa/Cocoa.h>
-#import <QuartzCore/QuartzCore.h>
 #import <WebKit/WebKit.h>
-
-// Versions
-extern NSString *SBBookmarkVersion;
-
-// Default values
-extern const NSStringEncoding SBAvailableStringEncodings[];
-
-// Bookmark Key names
-extern NSString *kSBBookmarkVersion;
-extern NSString *kSBBookmarkItems;
-extern NSString *kSBBookmarkTitle;		// String
-extern NSString *kSBBookmarkURL;		// String
-extern NSString *kSBBookmarkImage;		// Data
-extern NSString *kSBBookmarkDate;		// Date
-extern NSString *kSBBookmarkLabelName;	// String
-extern NSString *kSBBookmarkOffset;		// Point
 
 // Bookmark display modes
 typedef NS_ENUM(NSInteger, SBBookmarkMode) {
@@ -54,12 +31,6 @@ typedef NS_ENUM(NSInteger, SBBookmarkMode) {
 	SBBookmarkModeList,
 	SBBookmarkModeTile
 };
-
-// Sizes
-#define kSBBookmarkFactorForImageWidth 4.0
-#define kSBBookmarkFactorForImageHeight 3.0
-#define kSBBookmarkCellPaddingPercentage 0.1
-#define kSBBookmarkCellMaxWidth 256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2))
 
 // Un-documented methods
 @interface NSURL (WebNSURLExtras)
@@ -90,4 +61,12 @@ typedef NSUInteger WebFindOptions;
 // WebInspector
 - (void)show:(id)arg1;
 - (void)showConsole:(id)arg1;
+@end
+
+@interface NSToolbar (Private)
+- (NSView *)_toolbarView;
+@end
+
+@interface NSURLRequest (Private)
++ (void)setAllowsAnyHTTPSCertificate:(BOOL)allow forHost:(NSString*)host;
 @end

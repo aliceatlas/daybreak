@@ -4,15 +4,5 @@
 
 #import "SBDefinitions.h"
 #import "SBUtil.h"
-
 #import "SBBaseView.h"
-
 #import "NSSavePanel-SBAdditions.h"
-
-@interface NSToolbar (Private)
-- (NSView *)_toolbarView;
-@end
-
-@interface NSURLRequest (Private)
-+ (void)setAllowsAnyHTTPSCertificate:(BOOL)allow forHost:(NSString*)host;
-@end

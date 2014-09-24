@@ -307,12 +307,11 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
                       NSColor.blackColor()]
         let locations: [CGFloat] = [0.0, 0.6]
         let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: NSColorSpace.genericGrayColorSpace())
-        var path: CGPathRef?
         var mPath: NSBezierPath!
         if fillMode == 0 {
             let r = NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.width)
             let transform = CATransform3DRotate(CATransform3DIdentity, CGFloat(-70 * M_PI / 180), 1.0, 0.0, 0.0)
-            path = SBEllipsePath3D(r, transform)
+            mPath = SBEllipsePath3D(r, transform)
         } else {
             var p = CGPointZero
             let behind: CGFloat = 0.7
@@ -329,12 +328,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
             mPath.lineToPoint(p)
         }
         SBPreserveGraphicsState {
-            if path != nil {
-                CGContextAddPath(ctx, path!)
-                CGContextClip(ctx)
-            } else {
-                mPath.addClip()
-            }
+            mPath.addClip()
             gradient.drawInRect(self.bounds, angle: 90)
         }
         

@@ -559,146 +559,133 @@ func SBTrianglePath(rect: NSRect, direction: SBTriangleDirection) -> NSBezierPat
     return path
 }
 
-/*CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
-{
-    CGPathRef copiedPath = nil;
-    CGMutablePathRef path = nil;
-    CGPoint p = CGPointZero;
-    CGPoint cp1 = CGPointZero;
-    CGPoint cp2 = CGPointZero;
+func SBEllipsePath3D(r: NSRect, transform: CATransform3D) -> NSBezierPath {
+    let path = NSBezierPath()
+    var p = NSZeroPoint
+    var cp1 = NSZeroPoint
+    var cp2 = NSZeroPoint
     
-    path = CGPathCreateMutable();
-    p.x = CGRectGetMidX(r);
-    p.y = r.origin.y;
-    SBCGPointApplyTransform3D(&p, &transform);
-    CGPathMoveToPoint(path, nil, p.x, p.y);
-    p.x = r.origin.x;
-    p.y = CGRectGetMidY(r);
-    cp1.x = r.origin.x + r.size.width / 4;
-    cp1.y = r.origin.y;
-    cp2.x = r.origin.x;
-    cp2.y = r.origin.y + r.size.height / 4;
-    SBCGPointApplyTransform3D(&p, &transform);
-    SBCGPointApplyTransform3D(&cp1, &transform);
-    SBCGPointApplyTransform3D(&cp2, &transform);
-    CGPathAddCurveToPoint(path, nil, cp1.x, cp1.y, cp2.x, cp2.y, p.x, p.y);
-    p.x = CGRectGetMidX(r);
-    p.y = CGRectGetMaxY(r);
-    cp1.x = r.origin.x;
-    cp1.y = r.origin.y + r.size.height / 4 * 3;
-    cp2.x = r.origin.x + r.size.width / 4;
-    cp2.y = CGRectGetMaxY(r);
-    SBCGPointApplyTransform3D(&p, &transform);
-    SBCGPointApplyTransform3D(&cp1, &transform);
-    SBCGPointApplyTransform3D(&cp2, &transform);
-    CGPathAddCurveToPoint(path, nil, cp1.x, cp1.y, cp2.x, cp2.y, p.x, p.y);
-    p.x = CGRectGetMaxX(r);
-    p.y = CGRectGetMidY(r);
-    cp1.x = r.origin.x + r.size.width / 4 * 3;
-    cp1.y = CGRectGetMaxY(r);
-    cp2.x = CGRectGetMaxX(r);
-    cp2.y = r.origin.y + r.size.height / 4 * 3;
-    SBCGPointApplyTransform3D(&p, &transform);
-    SBCGPointApplyTransform3D(&cp1, &transform);
-    SBCGPointApplyTransform3D(&cp2, &transform);
-    CGPathAddCurveToPoint(path, nil, cp1.x, cp1.y, cp2.x, cp2.y, p.x, p.y);
-    p.x = CGRectGetMidX(r);
-    p.y = r.origin.y;
-    cp1.x = CGRectGetMaxX(r);
-    cp1.y = r.origin.y + r.size.height / 4;
-    cp2.x = r.origin.x + r.size.width / 4 * 3;
-    cp2.y = r.origin.y;
-    SBCGPointApplyTransform3D(&p, &transform);
-    SBCGPointApplyTransform3D(&cp1, &transform);
-    SBCGPointApplyTransform3D(&cp2, &transform);
-    CGPathAddCurveToPoint(path, nil, cp1.x, cp1.y, cp2.x, cp2.y, p.x, p.y);
+    p.x = NSMidX(r)
+    p.y = r.origin.y
+    SBCGPointApplyTransform3D(&p, transform)
+    path.moveToPoint(p)
+    p.x = r.origin.x
+    p.y = NSMidY(r)
+    cp1.x = r.origin.x + r.size.width / 4
+    cp1.y = r.origin.y
+    cp2.x = r.origin.x
+    cp2.y = r.origin.y + r.size.height / 4
+    SBCGPointApplyTransform3D(&p, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    path.curveToPoint(p, controlPoint1: cp1, controlPoint2: cp2)
+    p.x = NSMidX(r)
+    p.y = NSMaxY(r)
+    cp1.x = r.origin.x
+    cp1.y = r.origin.y + r.size.height / 4 * 3
+    cp2.x = r.origin.x + r.size.width / 4
+    cp2.y = NSMaxY(r)
+    SBCGPointApplyTransform3D(&p, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    path.curveToPoint(p, controlPoint1: cp1, controlPoint2: cp2)
+    p.x = NSMaxX(r)
+    p.y = NSMidY(r)
+    cp1.x = r.origin.x + r.size.width / 4 * 3
+    cp1.y = NSMaxY(r)
+    cp2.x = NSMaxX(r)
+    cp2.y = r.origin.y + r.size.height / 4 * 3
+    SBCGPointApplyTransform3D(&p, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    path.curveToPoint(p, controlPoint1: cp1, controlPoint2: cp2)
+    p.x = NSMidX(r)
+    p.y = r.origin.y
+    cp1.x = NSMaxX(r)
+    cp1.y = r.origin.y + r.size.height / 4
+    cp2.x = r.origin.x + r.size.width / 4 * 3
+    cp2.y = r.origin.y
+    SBCGPointApplyTransform3D(&p, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    path.curveToPoint(p, controlPoint1: cp1, controlPoint2: cp2)
     
-    copiedPath = CGPathCreateCopy(path);
-    CGPathRelease(path);
-    
-    return CFAutorelease(copiedPath);
+    return path
 }
 
-CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
-{
-    CGPathRef copiedPath = nil;
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPoint p = CGPointZero;
-    CGPoint cp1 = CGPointZero;
-    CGPoint cp2 = CGPointZero;
-    CGAffineTransform t = CGAffineTransformIdentity;
+func SBRoundedPath3D(rect: NSRect, curve: CGFloat, transform: CATransform3D) -> NSBezierPath {
+    let path = NSBezierPath()
+    var p = NSZeroPoint
+    var cp1 = NSZeroPoint
+    var cp2 = NSZeroPoint
     
     // line left-top to right-top
-    p.x = (rect.origin.x + curve);
+    p.x = rect.origin.x + curve
     p.y = rect.origin.y;
-    SBCGPointApplyTransform3D(&p, &transform);
-    CGPathMoveToPoint(path, &t, p.x,p.y);
-    p.x = (rect.origin.x + rect.size.width - curve);
-    p.y = rect.origin.y;
-    SBCGPointApplyTransform3D(&p, &transform);
-    CGPathAddLineToPoint(path, &t, p.x,p.y);
-    p.x = (rect.origin.x + rect.size.width);
-    cp1.x = (rect.origin.x + rect.size.width);
-    cp1.y = rect.origin.y + curve / 2;
-    cp2.x = (rect.origin.x + rect.size.width) - curve / 2;
-    cp2.y = rect.origin.y;
-    p.y = (rect.origin.y + curve);
-    SBCGPointApplyTransform3D(&p, &transform);
-    SBCGPointApplyTransform3D(&cp1, &transform);
-    SBCGPointApplyTransform3D(&cp2, &transform);
-    CGPathAddCurveToPoint(path, &t, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
+    SBCGPointApplyTransform3D(&p, transform)
+    path.moveToPoint(p)
+    p.x = (rect.origin.x + rect.size.width - curve)
+    p.y = rect.origin.y
+    SBCGPointApplyTransform3D(&p, transform)
+    path.lineToPoint(p)
+    p.x = rect.origin.x + rect.size.width
+    cp1.x = rect.origin.x + rect.size.width
+    cp1.y = rect.origin.y + curve / 2
+    cp2.x = (rect.origin.x + rect.size.width) - curve / 2
+    cp2.y = rect.origin.y
+    p.y = rect.origin.y + curve
+    SBCGPointApplyTransform3D(&p, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    SBCGPointApplyTransform3D(&cp2, transform)
+    path.curveToPoint(p, controlPoint1: cp2, controlPoint2: cp1)
     
-    p.x = (rect.origin.x + rect.size.width);
-    p.y = (rect.origin.y + rect.size.height - curve);
-    SBCGPointApplyTransform3D(&p, &transform);
-    CGPathAddLineToPoint(path, &t, p.x,p.y);
-    p.x = (rect.origin.x + rect.size.width - curve);
-    p.y = (rect.origin.y + rect.size.height);
-    cp1.y = (rect.origin.y + rect.size.height);
-    cp1.x = (rect.origin.x + rect.size.width) - curve / 2;
-    cp2.y = (rect.origin.y + rect.size.height) - curve / 2;
-    cp2.x = (rect.origin.x + rect.size.width);
-    SBCGPointApplyTransform3D(&p, &transform);
-    SBCGPointApplyTransform3D(&cp1, &transform);
-    SBCGPointApplyTransform3D(&cp2, &transform);
-    CGPathAddCurveToPoint(path, &t, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
+    p.x = rect.origin.x + rect.size.width
+    p.y = rect.origin.y + rect.size.height - curve
+    SBCGPointApplyTransform3D(&p, transform)
+    path.lineToPoint(p)
+    p.x = rect.origin.x + rect.size.width - curve
+    p.y = rect.origin.y + rect.size.height
+    cp1.y = rect.origin.y + rect.size.height
+    cp1.x = (rect.origin.x + rect.size.width) - curve / 2
+    cp2.y = (rect.origin.y + rect.size.height) - curve / 2
+    cp2.x = rect.origin.x + rect.size.width
+    SBCGPointApplyTransform3D(&p, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    SBCGPointApplyTransform3D(&cp2, transform)
+    path.curveToPoint(p, controlPoint1: cp2, controlPoint2: cp1)
     
-    p.x = (rect.origin.x + curve);
-    p.y = (rect.origin.y + rect.size.height);
-    SBCGPointApplyTransform3D(&p, &transform);
-    CGPathAddLineToPoint(path, &t, p.x,p.y);
-    p.x = rect.origin.x;
-    cp1.x = rect.origin.x;
-    cp1.y = (rect.origin.y + rect.size.height) - curve / 2;
-    cp2.x = rect.origin.x + curve / 2;
-    cp2.y = (rect.origin.y + rect.size.height);
-    p.y = (rect.origin.y + rect.size.height - curve);
-    SBCGPointApplyTransform3D(&p, &transform);
-    SBCGPointApplyTransform3D(&cp1, &transform);
-    SBCGPointApplyTransform3D(&cp2, &transform);
-    CGPathAddCurveToPoint(path, &t, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
+    p.x = rect.origin.x + curve
+    p.y = rect.origin.y + rect.size.height
+    SBCGPointApplyTransform3D(&p, transform)
+    path.lineToPoint(p)
+    p.x = rect.origin.x
+    cp1.x = rect.origin.x
+    cp1.y = (rect.origin.y + rect.size.height) - curve / 2
+    cp2.x = rect.origin.x + curve / 2
+    cp2.y = (rect.origin.y + rect.size.height)
+    p.y = rect.origin.y + rect.size.height - curve
+    SBCGPointApplyTransform3D(&p, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    SBCGPointApplyTransform3D(&cp2, transform)
+    path.curveToPoint(p, controlPoint1: cp2, controlPoint2: cp1)
     
-    p.x = rect.origin.x;
-    p.y = (rect.origin.y + curve);
-    SBCGPointApplyTransform3D(&p, &transform);
-    CGPathAddLineToPoint(path, &t, p.x,p.y);
-    p.y = rect.origin.y;
-    cp1.y = rect.origin.y;
-    cp1.x = rect.origin.x + curve / 2;
-    cp2.y = rect.origin.y + curve / 2;
-    cp2.x = rect.origin.x;
-    p.x = (rect.origin.x + curve);
-    SBCGPointApplyTransform3D(&p, &transform);
-    SBCGPointApplyTransform3D(&cp1, &transform);
-    SBCGPointApplyTransform3D(&cp2, &transform);
-    CGPathAddCurveToPoint(path, &t, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
+    p.x = rect.origin.x
+    p.y = rect.origin.y + curve
+    SBCGPointApplyTransform3D(&p, transform)
+    path.lineToPoint(p)
+    p.y = rect.origin.y
+    cp1.y = rect.origin.y
+    cp1.x = rect.origin.x + curve / 2
+    cp2.y = rect.origin.y + curve / 2
+    cp2.x = rect.origin.x
+    p.x = rect.origin.x + curve
+    SBCGPointApplyTransform3D(&p, transform)
+    SBCGPointApplyTransform3D(&cp1, transform)
+    SBCGPointApplyTransform3D(&cp2, transform)
+    path.curveToPoint(p, controlPoint1: cp2, controlPoint2: cp1)
     
-    CGPathCloseSubpath(path);
-    copiedPath = CGPathCreateCopy(path);
-    CGPathRelease(path);
-    
-    return CFAutorelease(copiedPath);
-}*/
+    return path
+}
 
 func SBCGPointApplyTransform3D(inout p: NSPoint, t: CATransform3D) {
     let px = p.x
@@ -1356,155 +1343,100 @@ func SBBookmarkReflectionMaskImage(size: NSSize) -> NSImage {
     return image
 }
 
-/*#pragma mark Math
+// MARK: Math
 
-NSInteger SBRemainder(NSInteger value1, NSInteger value2)
-{
-    return value1 - (value1 / value2) * value2;
+func SBRemainder(value1: Int, value2: Int) -> Int {
+    return value1 - (value1 / value2) * value2
 }
 
-BOOL SBRemainderIsZero(NSInteger value1, NSInteger value2)
-{
-    return SBRemainder(value1, value2) == 0;
+func SBRemainderIsZero(value1: Int, value2: Int) -> Bool {
+    return SBRemainder(value1, value2) == 0
 }
 
-NSInteger SBGreatestCommonDivisor(NSInteger a, NSInteger b)
-{
-    NSInteger v = 0;
-    if (a == 0 || b == 0)
-    {
-        v = 0;
-    }
-    else {
+func SBGreatestCommonDivisor(a: Int, b: Int) -> Int {
+    //!!!
+    var v = 0
+    if a == 0 || b == 0 {
+        v = 0
+    } else {
         // Euclidean
-        while(a != b)
-        {
-            if (a > b)
-            {
-                a = a - b;
-            }
-            else {
-                b = b - a;
+        var (x, y) = (a, b)
+        while x != y {
+            if x > y {
+                x -= y
+            } else {
+                y -= x
             }
         }
     }
-    return v;
+    return v
 }
 
-#pragma mark Others
+// MARK: Others
 
-id SBValueForKey(NSString *keyName, NSDictionary *dictionary)
-{
-    id value = nil;
-    
-    value = dictionary[keyName];
-    if (value == nil) {
-        for (id object in dictionary.allValues)
-        {
-            if ([object isKindOfClass:NSDictionary.class]) {
-                value = SBValueForKey(keyName, object);
+func SBValueForKey(keyName: String, dictionary: [NSObject: AnyObject]) -> AnyObject? {
+    var value: AnyObject? = dictionary[keyName]
+    if value == nil  {
+        for object in dictionary.values {
+            if let object = object as? NSDictionary as? [NSObject: AnyObject] {
+                value = SBValueForKey(keyName, object)
             }
         }
+    } else if let dict = value as? NSDictionary as? [NSObject: AnyObject] {
+        value = dict.values.first
     }
-    else if ([value isKindOfClass:NSDictionary.class])
-    {
-        value = ((NSDictionary *)value).allValues[0];
-    }
-    return value;
+    return value
 }
 
-NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault)
-{
-    NSMenu *menu = [[NSMenu alloc] init];
-    NSArray *encs = nil;
-    NSMutableArray *mencs = [NSMutableArray arrayWithCapacity:0];
-#if kSBFlagShowAllStringEncodings
-    const NSStringEncoding *encoding = NSString.availableStringEncodings;
-    NSData *hint = nil;
-    
-    // Get available encodings
-    while (*encoding)
-    {
-        [mencs addObject:@(*encoding)];
-        encoding++;
+func SBEncodingMenu(target: AnyObject?, selector: Selector, showDefault: Bool) -> NSMenu {
+    let menu = NSMenu()
+    var encs: [NSStringEncoding]!
+    if kSBFlagShowAllStringEncodings {
+        let encPtr = NSString.availableStringEncodings()
+        for var enc = encPtr; enc.memory != 0; enc = enc.successor() {
+            encs.append(enc.memory)
+        }
+        encs.sort(SBStringEncodingSortFunction)
+    } else {
+        encs = SBAvailableStringEncodings
     }
-    
-    // Sort
-    hint = [mencs sortedArrayHint];
-    encs = [mencs sortedArrayUsingFunction:SBStringEncodingSortFunction context:nil hint:hint];
-#else
-    const NSStringEncoding *encoding = SBAvailableStringEncodings;
-    // Get available encodings
-    while (*encoding)   // Continue while encoding is NULL
-    {
-        [mencs addObject:@(*encoding)];
-        encoding++;
-    }
-    encs = [mencs copy];
-#endif
     
     // Create menu items
-    for (NSNumber *enc in encs)
-    {
-        NSStringEncoding stringEncoding = enc.unsignedIntegerValue;
-        if (stringEncoding == NSNotFound)
-        {
-            [menu addItem:NSMenuItem.separatorItem];
-        }
-        else {
-            NSString *encodingName = nil;
-            NSString *ianaName = nil;
-            encodingName = [NSString localizedNameOfStringEncoding:stringEncoding];
-            ianaName = (NSString *)CFStringConvertEncodingToIANACharSetName(CFStringConvertNSStringEncodingToEncoding(enc.unsignedIntegerValue));
-            DebugLog(@"%d\t%lu\t%@\t%@\t%@", CFStringIsEncodingAvailable(CFStringConvertNSStringEncodingToEncoding(enc.unsignedIntegerValue)), (unsigned long)stringEncoding, encodingName, (NSString *)CFStringGetNameOfEncoding(CFStringConvertNSStringEncodingToEncoding(enc.unsignedIntegerValue)), ianaName);
-            if (encodingName)
-            {
-                NSMenuItem *item = nil;
-                item = [[NSMenuItem alloc] initWithTitle:encodingName action:selector keyEquivalent:@""];
-                if (target)
-                    item.target = target;
-                item.representedObject = ianaName;
-                [menu addItem:item];
+    for enc in encs {
+        if Int(enc) == NSNotFound {
+            menu.addItem(NSMenuItem.separatorItem())
+        } else {
+            let encodingName = NSString.localizedNameOfStringEncoding(enc)
+            let cfEncoding = CFStringConvertNSStringEncodingToEncoding(enc)
+            let ianaName = CFStringConvertEncodingToIANACharSetName(cfEncoding) as NSString
+            let available = CFStringIsEncodingAvailable(cfEncoding)
+            let cfEncodingName = CFStringGetNameOfEncoding(cfEncoding)
+            DebugLogS("\(available)\t\(enc)\t\(encodingName)\t\(cfEncodingName)\t\(ianaName)")
+            if encodingName != "" {
+                let item = NSMenuItem(title: encodingName, action: selector, keyEquivalent: "")
+                target !! { item.target = $0 }
+                item.representedObject = ianaName
+                menu.addItem(item)
             }
         }
     }
-    if (showDefault)
-    {
-        NSMenuItem *defaultItem = nil;
-        defaultItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Default", nil) action:selector keyEquivalent:@""];
-        if (target)
-            defaultItem.target = target;
-        defaultItem.representedObject = nil;
-        [menu insertItem:NSMenuItem.separatorItem atIndex:0];
-        [menu insertItem:defaultItem atIndex:0];
+    
+    if showDefault {
+        let defaultItem = NSMenuItem(title: NSLocalizedString("Default", comment: ""), action: selector, keyEquivalent: "")
+        target !! { defaultItem.target = $0 }
+        defaultItem.representedObject = nil
+        menu.insertItem(NSMenuItem.separatorItem(), atIndex: 0)
+        menu.insertItem(defaultItem, atIndex: 0)
     }
-    return menu;
+    
+    return menu
 }
 
-NSComparisonResult SBStringEncodingSortFunction(id num1, id num2, void *context)
-{
-    NSComparisonResult r = NSOrderedSame;
-    NSString *enc1 = [NSString localizedNameOfStringEncoding:[num1 unsignedIntegerValue]];
-    NSString *enc2 = [NSString localizedNameOfStringEncoding:[num2 unsignedIntegerValue]];
-    r = [enc1 compare:enc2];
-    return r;
+func SBStringEncodingSortFunction(num1: NSStringEncoding, num2: NSStringEncoding) -> Bool {
+    let enc1 = NSString.localizedNameOfStringEncoding(num1)
+    let enc2 = NSString.localizedNameOfStringEncoding(num2)
+    return enc1 < enc2
 }
-
-NSInteger SBUnsignedIntegerSortFunction(id num1, id num2, void *context)
-{
-    NSInteger r = NSOrderedSame;
-    NSUInteger v1 = [num1 unsignedIntegerValue];
-    NSUInteger v2 = [num2 unsignedIntegerValue];
-    if (v1 < v2)
-    {
-        r = NSOrderedAscending;
-    }
-    else if (v1 > v2)
-    {
-        r = NSOrderedDescending;
-    }
-    return r;
-}*/
 
 func SBRunAlertWithMessage(message: String) {
     let alert = NSAlert()
@@ -1599,175 +1531,23 @@ func SBGetLocalizableTextSet(path: String) -> ([[String]], [[NSTextField]], NSSi
     return nil
 }
 
-/*NSData *SBLocalizableStringsData(NSArray *fieldSet)
-{
-    NSData *data = nil;
-    NSMutableString *string = [NSMutableString stringWithCapacity:0];
-    [string appendString:[NSString string]];
-    for (NSArray *fields in fieldSet)
-    {
-        NSTextField *field0 = nil;
-        NSTextField *field1 = nil;
-        NSString *text0 = nil;
-        NSString *text1 = nil;
-        if ([fields count] == 1)
-        {
-            field0 = fields[0];
-            text0 = field0 ? field0.stringValue : nil;
-            if (text0)
-            {
-                [string appendFormat:@"\n%@\n", text0];
-            }
-        }
-        else if ([fields count] == 2)
-        {
-            field0 = fields[0];
-            field1 = fields[1];
-            text0 = field0 ? field0.stringValue : nil;
-            text1 = field1 ? field1.stringValue : nil;
-            if (text0 && text1)
-            {
-                [string appendFormat:@"\"%@\" = \"%@\";\n", text0, text1];
-            }
+func SBLocalizableStringsData(fieldSet: [[NSTextField]]) -> NSData? {
+    var string = ""
+    for fields in fieldSet {
+        if fields.count == 1 {
+            let text = fields[0].stringValue
+            string += "\n\(text)\n"
+        } else if fields.count == 2 {
+            let text0 = fields[0].stringValue
+            let text1 = fields[1].stringValue
+            string += "\"\(text0)\" = \"\(text1)\";\n"
         }
     }
-    if ([string length] > 0)
-    {
-        data = [string dataUsingEncoding:NSUTF16StringEncoding];
+    if !string.isEmpty {
+        return string.dataUsingEncoding(NSUTF16StringEncoding)
     }
-    return data;
+    return nil
 }
-
-#pragma mark Debug
-
-NSDictionary *SBDebugViewStructure(NSView *view)
-{
-    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-    NSArray *subviews = view.subviews;
-    NSString *description = nil;
-    if ([view isKindOfClass:SBView.class])
-        description = view.description;
-    else
-        description = [NSString stringWithFormat:@"%@ %@", view, NSStringFromRect(view.frame)];
-    info[@"Description"] = description;
-    if (subviews.count > 0)
-    {
-        NSMutableArray *children = [NSMutableArray arrayWithCapacity:0];
-        for (id subview in subviews)
-        {
-            [children addObject:SBDebugViewStructure(subview)];
-        }
-        info[@"Children"] = [children copy];
-    }
-    return [info copy];
-}
-
-NSDictionary *SBDebugLayerStructure(CALayer *layer)
-{
-    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-    NSArray *sublayers = layer.sublayers;
-    NSString *description = nil;
-    description = [NSString stringWithFormat:@"%@ %@", layer, NSStringFromRect(NSRectFromCGRect([layer frame]))];
-    info[@"Description"] = description;
-    if (sublayers.count > 0)
-    {
-        NSMutableArray *children = [NSMutableArray arrayWithCapacity:0];
-        for (id sublayer in sublayers)
-        {
-            [children addObject:SBDebugLayerStructure(sublayer)];
-        }
-        info[@"Children"] = [children copy];
-    }
-    return [info copy];
-}
-
-NSDictionary *SBDebugDumpMainMenu()
-{
-    return @{@"MenuItems": SBDebugDumpMenu(NSApplication.sharedApplication.mainMenu)};
-}
-
-NSArray *SBDebugDumpMenu(NSMenu *menu)
-{
-    NSMutableArray *items = [NSMutableArray arrayWithCapacity:0];
-    for (NSMenuItem *item in menu.itemArray)
-    {
-        NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:0];
-        NSMenu *submenu = item.submenu;
-        NSString *title = item.title;
-        id target = item.target;
-        SEL action = item.action;
-        NSInteger tag = item.tag;
-        NSInteger state = item.state;
-        NSImage *image = item.image;
-        NSString *keyEquivalent = item.keyEquivalent;
-        NSUInteger keyEquivalentModifierMask = item.keyEquivalentModifierMask;
-        NSString *toolTip = item.toolTip;
-        if (title)
-            info[@"Title"] = title;
-        if (target)
-            info[@"Target"] = [NSString stringWithFormat:@"%@", target];
-        if (action)
-            info[@"Action"] = NSStringFromSelector(action);
-        info[@"Tag"] = @(tag);
-        info[@"State"] = @(state);
-        if (image)
-            info[@"Image"] = image.TIFFRepresentation;
-        if (keyEquivalent)
-            info[@"KeyEquivalent"] = keyEquivalent;
-        info[@"KeyEquivalentModifierMask"] = @(keyEquivalentModifierMask);
-        if (toolTip)
-            info[@"ToolTip"] = toolTip;
-        if (submenu)
-        {
-            info[@"MenuItems"] = SBDebugDumpMenu(submenu);
-        }
-        [items addObject:[info copy]];
-    }
-    return [items copy];
-}
-
-BOOL SBDebugWriteViewStructure(NSView *view, NSString *path)
-{
-    BOOL r = NO;
-    NSDictionary *info = SBDebugViewStructure(view);
-    r = [info writeToFile:path atomically:YES];
-    return r;
-}
-
-BOOL SBDebugWriteLayerStructure(CALayer *layer, NSString *path)
-{
-    BOOL r = NO;
-    NSDictionary *info = SBDebugLayerStructure(layer);
-    r = [info writeToFile:path atomically:YES];
-    return r;
-}
-
-BOOL SBDebugWriteMainMenu(NSString *path)
-{
-    BOOL r = NO;
-    NSDictionary *info = SBDebugDumpMainMenu();
-    r = [info writeToFile:path atomically:YES];
-    return r;
-}
-
-void SBPerform(id target, SEL action, id object) {
-    [target performSelector:action withObject: object];
-}
-
-void SBPerformWithModes(id target, SEL action, id object, NSArray *modes) {
-    [target performSelector:action withObject:object afterDelay:0 inModes:modes];
-}
-
-kern_return_t SBCPUType(cpu_type_t *cpuType) {
-    host_basic_info_data_t hostInfo;
-    mach_msg_type_number_t infoCount = HOST_BASIC_INFO_COUNT;
-    kern_return_t result = host_info(mach_host_self(), HOST_BASIC_INFO, (host_info_t)&hostInfo, &infoCount);
-    if (result == KERN_SUCCESS) {
-        *cpuType = hostInfo.cpu_type;
-    }
-    return result;
-}
-*/
 
 func SBDispatch(block: dispatch_block_t) {
     dispatch_async(dispatch_get_main_queue(), block)
@@ -1788,4 +1568,83 @@ func SBConstrain<T: Comparable>(value: T, min minValue: T? = nil, max maxValue: 
 
 func SBConstrain<T: Comparable>(inout value: T, min minValue: T? = nil, max maxValue: T? = nil) {
     value = SBConstrain(value, min: minValue, max: maxValue)
+}
+
+// MARK: Debug
+
+func SBDebugViewStructure(view: NSView) -> [NSObject: AnyObject] {
+    var info: [NSObject: AnyObject] = [:]
+    let subviews = view.subviews as [NSView]
+    var description: String!
+    if let view = view as? SBView {
+        description = view.description
+    } else {
+        description = "\(view) \(NSStringFromRect(view.frame))"
+    }
+    info["Description"] = description as NSString
+    if !subviews.isEmpty {
+        let children = subviews.map(SBDebugViewStructure)
+        info["Children"] = children
+    }
+    return info
+}
+
+func SBDebugLayerStructure(layer: CALayer) -> [NSObject: AnyObject] {
+    var info: [NSObject: AnyObject] = [:]
+    let sublayers = (layer.sublayers ?? []) as [CALayer]
+    let description = "\(layer) \(NSStringFromRect(layer.frame))"
+    info["Description"] = description as NSString
+    if !sublayers.isEmpty {
+        let children = sublayers.map(SBDebugLayerStructure)
+        info["Children"] = children
+    }
+    return info
+}
+
+func SBDebugDumpMainMenu() -> [NSObject: AnyObject] {
+    return ["MenuItems": SBDebugDumpMenu(NSApplication.sharedApplication().mainMenu)]
+}
+
+func SBDebugDumpMenu(menu: NSMenu) -> [[NSObject: AnyObject]] {
+    var items: [[NSObject: AnyObject]] = []
+    for item in menu.itemArray as [NSMenuItem] {
+        var info: [NSObject: AnyObject] = [:]
+        let submenu = item.submenu
+        let title = item.title
+        let target: AnyObject? = item.target
+        let action = item.action
+        let tag = item.tag
+        let state = item.state
+        let image = item.image
+        let keyEquivalent = item.keyEquivalent
+        let keyEquivalentModifierMask = item.keyEquivalentModifierMask
+        let toolTip = item.toolTip
+        title !! { info["Title"] = $0 as NSString }
+        target !! { info["Target"] = "\($0)" as NSString }
+        action !! { info["Action"] = NSStringFromSelector($0) }
+        info["Tag"] = tag as NSNumber
+        info["State"] = state
+        image !! { info["Image"] = $0.TIFFRepresentation }
+        keyEquivalent !! { info["KeyEquivalent"] = $0 as NSString }
+        info["KeyEquivalentModifierMask"] = keyEquivalentModifierMask
+        toolTip !! { info["ToolTip"] = $0 as NSString }
+        submenu !! { info["MenuItems"] = SBDebugDumpMenu($0) }
+        items.append(info)
+    }
+    return items
+}
+
+func SBDebugWriteViewStructure(view: NSView, path: String) -> Bool {
+    let info = SBDebugViewStructure(view) as NSDictionary
+    return info.writeToFile(path, atomically: true)
+}
+
+func SBDebugWriteLayerStructure(layer: CALayer, path: String) -> Bool {
+    let info = SBDebugLayerStructure(layer) as NSDictionary
+    return info.writeToFile(path, atomically: true)
+}
+
+func SBDebugWriteMainMenu(path: String) -> Bool {
+    let info = SBDebugDumpMainMenu() as NSDictionary
+    return info.writeToFile(path, atomically: true)
 }
