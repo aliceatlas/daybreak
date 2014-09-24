@@ -171,7 +171,6 @@ class SBAboutView: SBView {
     // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
-        let ctx = SBCurrentGraphicsPort
         SBWindowBackColor.set()
         NSRectFillUsingOperation(rect, .CompositeSourceOver)
         
@@ -183,6 +182,7 @@ class SBAboutView: SBView {
             imageRect.origin.y = imageRect.size.height * 1.5 - bounds.size.height
             imageRect.size.height = imageRect.size.height * 0.5
             let maskImage = SBBookmarkReflectionMaskImage(imageRect.size)
+            let ctx = SBCurrentGraphicsPort
             CGContextTranslateCTM(ctx, 0.0, imageRect.size.height)
             CGContextScaleCTM(ctx, 1.0, -1.0)
             CGContextClipToMask(ctx, imageRect, maskImage)

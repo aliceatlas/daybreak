@@ -301,41 +301,42 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     override func drawRect(rect: NSRect) {
         let ctx = SBCurrentGraphicsPort
-        let count: UInt = 2
-        let transform = CATransform3DIdentity
-        var path: CGPathRef?
         
         // Background
+        let colors = [NSColor(deviceWhite: 0.4, alpha: 0.9),
+                      NSColor.blackColor()]
         let locations: [CGFloat] = [0.0, 0.6]
-        let colors: [CGFloat] = [0.4, 0.4, 0.4, 0.9,
-                                 0.0, 0.0, 0.0, 0.0]
-        let points: [CGPoint] = [CGPointZero, CGPointMake(0.0, bounds.size.height)]
-        
+        let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: NSColorSpace.genericGrayColorSpace())
+        var path: CGPathRef?
+        var mPath: NSBezierPath!
         if fillMode == 0 {
-            let r = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.width)
-            let transform = CATransform3DRotate(transform, CGFloat(-70 * M_PI / 180), 1.0, 0.0, 0.0)
+            let r = NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.width)
+            let transform = CATransform3DRotate(CATransform3DIdentity, CGFloat(-70 * M_PI / 180), 1.0, 0.0, 0.0)
             path = SBEllipsePath3D(r, transform)
         } else {
-            let mpath = CGPathCreateMutable()
             var p = CGPointZero
             let behind: CGFloat = 0.7
-            CGPathMoveToPoint(mpath, nil, p.x, p.y)
+            mPath = NSBezierPath()
+            mPath.moveToPoint(p)
             p.x = bounds.size.width
-            CGPathAddLineToPoint(mpath, nil, p.x, p.y)
+            mPath.lineToPoint(p)
             p.x = bounds.size.width - ((bounds.size.width * (1.0 - behind)) / 2)
             p.y = bounds.size.height * locations[1]
-            CGPathAddLineToPoint(mpath, nil, p.x, p.y)
+            mPath.lineToPoint(p)
             p.x = (bounds.size.width * (1.0 - behind)) / 2
-            CGPathAddLineToPoint(mpath, nil, p.x, p.y)
+            mPath.lineToPoint(p)
             p = CGPointZero
-            CGPathAddLineToPoint(mpath, nil, p.x, p.y)
-            path = CGPathCreateCopy(mpath)
+            mPath.lineToPoint(p)
         }
-        CGContextSaveGState(ctx)
-        CGContextAddPath(ctx, path)
-        CGContextClip(ctx)
-        SBDrawGradientInContext(ctx, count, locations, colors, points)
-        CGContextRestoreGState(ctx)
+        SBPreserveGraphicsState {
+            if path != nil {
+                CGContextAddPath(ctx, path!)
+                CGContextClip(ctx)
+            } else {
+                mPath.addClip()
+            }
+            gradient.drawInRect(self.bounds, angle: 90)
+        }
         
         if let image = image {
             var imageRect = self.imageRect
