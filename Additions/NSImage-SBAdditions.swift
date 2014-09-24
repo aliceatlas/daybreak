@@ -64,9 +64,6 @@ extension NSImage {
         var offsetSize = NSZeroSize
         var per: CGFloat!
         
-        let transform = NSAffineTransform()
-        let image = NSImage(size: size)
-        
         perSize.width = inRect.size.width / 4
         perSize.height = inRect.size.height / 3
         resizedSize = inRect.size
@@ -87,7 +84,9 @@ extension NSImage {
         translate.y += offsetSize.height
         
         // Draw in image
+        let image = NSImage(size: size)
         image.withFocus {
+            let transform = NSAffineTransform()
             transform.scaleBy(per)
             transform.translateXBy(translate.x, yBy: translate.y)
             transform.concat()
