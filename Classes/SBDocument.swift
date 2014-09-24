@@ -117,7 +117,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         encodingButton.operation = { (item: NSMenuItem) in
             zelf.changeEncodingFromMenuItem(item)
         }
-        let encodingName = SBGetWebPreferences().defaultTextEncodingName
+        let encodingName = SBGetWebPreferences.defaultTextEncodingName
         encodingButton.selectItem(representedObject: encodingName)
         return encodingButton
     }()
@@ -280,7 +280,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         return selectedWebView?.mainFrame.dataSource
     }
     var selectedWebViewImageForBookmark: NSImage? {
-        return selectedWebViewImage(size: SBBookmarkImageMaxSize())
+        return selectedWebViewImage(size: SBBookmarkImageMaxSize)
     }
     var selectedWebViewImageDataForBookmark: NSData? {
         return selectedWebViewImageForBookmark?.bitmapImageRep.data
@@ -400,7 +400,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func constructWindow() -> SBDocumentWindow {
         let savedFrameString = NSUserDefaults.standardUserDefaults().stringForKey("NSWindow Frame " + kSBDocumentWindowAutosaveName)
-        let defaultFrame = SBDefaultDocumentWindowRect()
+        let defaultFrame = SBDefaultDocumentWindowRect
         let r: NSRect = savedFrameString !! NSRectFromString ?? defaultFrame
         let newWindow = SBDocumentWindow(frame: r, delegate: self, tabbarVisibility: true)
         let button = newWindow.standardWindowButton(.CloseButton)

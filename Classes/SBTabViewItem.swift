@@ -57,7 +57,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         view.UIDelegate = self
         view.policyDelegate = self
         view.downloadDelegate = SBDownloads.sharedDownloads
-        view.preferences = SBGetWebPreferences()
+        view.preferences = SBGetWebPreferences
         view.textEncodingName = view.preferences.defaultTextEncodingName
         self.setUserAgent(view)
         
@@ -710,7 +710,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     override func webView(sender: WebView, createWebViewWithRequest request: NSURLRequest) -> WebView {
         var error: NSError?
-        let document = SBGetDocumentController().openUntitledDocumentAndDisplay(false, sidebarVisibility: false, initialURL: request.URL, error: &error) as SBDocument
+        let document = SBGetDocumentController.openUntitledDocumentAndDisplay(false, sidebarVisibility: false, initialURL: request.URL, error: &error) as SBDocument
         return document.selectedWebView!
     }
     

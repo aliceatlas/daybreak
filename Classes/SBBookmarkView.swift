@@ -197,7 +197,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     var imageRect: NSRect {
         var r = NSZeroRect
         var margin = NSZeroPoint
-        r.size = SBBookmarkImageMaxSize()
+        r.size = SBBookmarkImageMaxSize
         margin.x = (bounds.size.height - r.size.height) / 2
         margin.y = r.size.height * 0.5
         r.origin = margin

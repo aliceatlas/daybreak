@@ -41,16 +41,16 @@ extension NSImage {
     
     func stretchableImage(#size: NSSize, sideCapWidth: Int) -> NSImage {
         let image = NSImage(size: size)
-        image.lockFocus()
-        let cgSideCapWidth = CGFloat(sideCapWidth)
-        let imageSize = self.size
-        let leftPoint = NSZeroPoint
-        let rightPoint = NSMakePoint(size.width - imageSize.width, 0)
-        let fillRect = NSMakeRect(cgSideCapWidth, CGFloat(0), size.width - cgSideCapWidth * 2, size.height)
-        drawAtPoint(leftPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-        drawAtPoint(rightPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-        drawInRect(fillRect, fromRect: NSMakeRect(cgSideCapWidth, 0, imageSize.width - cgSideCapWidth * 2, imageSize.height), operation: .CompositeSourceOver, fraction: 1.0)
-        image.unlockFocus()
+        image.withFocus {
+            let cgSideCapWidth = CGFloat(sideCapWidth)
+            let imageSize = self.size
+            let leftPoint = NSZeroPoint
+            let rightPoint = NSMakePoint(size.width - imageSize.width, 0)
+            let fillRect = NSMakeRect(cgSideCapWidth, CGFloat(0), size.width - cgSideCapWidth * 2, size.height)
+            self.drawAtPoint(leftPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            self.drawAtPoint(rightPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            self.drawInRect(fillRect, fromRect: NSMakeRect(cgSideCapWidth, 0, imageSize.width - cgSideCapWidth * 2, imageSize.height), operation: .CompositeSourceOver, fraction: 1.0)
+        }
         return image
     }
     
@@ -87,12 +87,12 @@ extension NSImage {
         translate.y += offsetSize.height
         
         // Draw in image
-        image.lockFocus()
-        transform.scaleBy(per)
-        transform.translateXBy(translate.x, yBy: translate.y)
-        transform.concat()
-        drawAtPoint(NSZeroPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-        image.unlockFocus()
+        image.withFocus {
+            transform.scaleBy(per)
+            transform.translateXBy(translate.x, yBy: translate.y)
+            transform.concat()
+            self.drawAtPoint(NSZeroPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+        }
         
         return image
     }
@@ -131,5 +131,11 @@ extension NSImage {
     
     func drawInRect(rect: NSRect, operation op: NSCompositingOperation, fraction requestedAlpha: CGFloat, respectFlipped: Bool) {
         drawInRect(rect, fromRect: NSZeroRect, operation: op, fraction: requestedAlpha, respectFlipped: respectFlipped, hints: [:])
+    }
+    
+    func withFocus(block: () -> Void) {
+        lockFocus()
+        block()
+        unlockFocus()
     }
 }

@@ -234,14 +234,14 @@ class SBTabbarItem: SBView {
         // Paths
         // Gray scales
         if selected {
-            path = SBRoundedPathS(CGRectInset(bounds, 0.0, 0.0), 4.0, 0.0, false, true)
-            strokePath = SBRoundedPathS(CGRectInset(bounds, 0.5, 0.5), 4.0, 0.0, false, true)
+            path = SBRoundedPath(CGRectInset(bounds, 0.0, 0.0), 4.0, 0.0, false, true)
+            strokePath = SBRoundedPath(CGRectInset(bounds, 0.5, 0.5), 4.0, 0.0, false, true)
             grayScaleDown = CGFloat(keyView ? 140 : 207) / CGFloat(255.0)
             grayScaleUp = CGFloat(keyView ? 175 : 222) / CGFloat(255.0)
             strokeGrayScale = 0.2
         } else {
-            path = SBRoundedPathS(CGRectInset(bounds, 0.0, 1.0), 4.0, 0.0, true, false)
-            strokePath = SBRoundedPathS(CGRectInset(bounds, 0.5, 1.0), 4.0, 0.0, true, false)
+            path = SBRoundedPath(CGRectInset(bounds, 0.0, 1.0), 4.0, 0.0, true, false)
+            strokePath = SBRoundedPath(CGRectInset(bounds, 0.5, 1.0), 4.0, 0.0, true, false)
             grayScaleDown = (keyView ? 130 : 207) / CGFloat(255.0)
             grayScaleUp = (keyView ? 140 : 207) / CGFloat(255.0)
             strokeGrayScale = 0.4

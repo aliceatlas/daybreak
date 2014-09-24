@@ -60,7 +60,7 @@ class SBRenderWindow: NSWindow {
         r.origin = NSZeroPoint
         webView = WebView(frame: r, frameName: nil, groupName: nil)
         webView!.frameLoadDelegate = self
-        webView!.preferences = SBGetWebPreferences()
+        webView!.preferences = SBGetWebPreferences
         webView!.hostWindow = self
         contentView.addSubview(webView!)
         releasedWhenClosed = true
@@ -97,7 +97,7 @@ class SBRenderWindow: NSWindow {
     override func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
         if let f: (SBRenderWindow, didFinishRenderingImage: NSImage) -> Void = sbDelegate?.renderWindow {
             if let webDocumentView = sender.mainFrame.frameView.documentView {
-                if let image = NSImage(view: webDocumentView)?.inset(size: SBBookmarkImageMaxSize(), intersectRect: webDocumentView.bounds, offset: NSZeroPoint) {
+                if let image = NSImage(view: webDocumentView)?.inset(size: SBBookmarkImageMaxSize, intersectRect: webDocumentView.bounds, offset: NSZeroPoint) {
                     f(self, didFinishRenderingImage: image)
                 }
             }

@@ -286,7 +286,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                     if isFirstResponder && selected {
                         let color = SBAlternateSelectedControlColor
                         let fr = CGRectInset(r, -padding.x / 1.5, -padding.y / 1.5)
-                        let path = SBRoundedPathS(fr, 6.0, 0.0, true, true)
+                        let path = SBRoundedPath(fr, 6.0, 0.0, true, true)
                         SBPreserveGraphicsState {
                             color.colorWithAlphaComponent(0.25).set()
                             path.fill()
@@ -295,7 +295,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                             path.stroke()
                         }
                     }
-                    let path = SBRoundedPathS(r, 6.0, 0.0, true, true)
+                    let path = SBRoundedPath(r, 6.0, 0.0, true, true)
                     let shadow = NSShadow()
                     shadow.shadowColor = NSColor(calibratedWhite: 0.0, alpha: 0.6)
                     shadow.shadowBlurRadius = 5.0
@@ -323,7 +323,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         sr.origin.x -= tmargin
                         sr.size.width += tmargin * 2
                         //sr = NSInsetRect(sr, 2.0, 2.0)
-                        let path = SBRoundedPathS(sr, sr.size.height / 2, 0.0, true, true)
+                        let path = SBRoundedPath(sr, sr.size.height / 2, 0.0, true, true)
                         labelColor!.set()
                         path.fill()
                     }
@@ -338,7 +338,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         if labelColor != nil {
                             sr = NSInsetRect(sr, 2.0, 2.0)
                         }
-                        let path = SBRoundedPathS(sr, sr.size.height / 2, 0.0, true, true)
+                        let path = SBRoundedPath(sr, sr.size.height / 2, 0.0, true, true)
                         color.set()
                         path.fill()
                     }
@@ -376,7 +376,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 // image
                 if let image = imageData !! {NSImage(data: $0)} {
                     r = imageRect
-                    path = SBRoundedPathS(r, 0.0, 0.0, false, false)
+                    path = SBRoundedPath(r, 0.0, 0.0, false, false)
                     SBPreserveGraphicsState {
                         path.addClip()
                         image.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
@@ -384,7 +384,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 }
                 
                 // Gradient
-                path = SBRoundedPathS(bounds, 0.0, 0.0, false, false) //???
+                path = SBRoundedPath(bounds, 0.0, 0.0, false, false) //???
                 let colors = [0.0, 0.65].map { NSColor(calibratedWhite: 0.0, alpha: $0) }
                 let center = NSMakePoint(r.size.width/2, r.size.height * 0.8)
                 let outerRadius = r.size.width * 1.5
@@ -421,7 +421,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 
                 // Frame
                 NSColor(calibratedWhite: 0.0, alpha: 0.4).set()
-                path = SBRoundedPathS(bounds, 1.0, 0.0, false, false) //???
+                path = SBRoundedPath(bounds, 1.0, 0.0, false, false) //???
                 path.lineWidth = 1.0
                 path.stroke()
                 
@@ -457,7 +457,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         sr.origin.x -= tmargin
                         sr.size.width += tmargin * 2
                         //sr = NSInsetRect(sr, 2.0, 2.0)
-                        let path = SBRoundedPathS(sr, sr.size.height / 2, 0.0, true, true)
+                        let path = SBRoundedPath(sr, sr.size.height / 2, 0.0, true, true)
                         labelColor!.set()
                         path.fill()
                     }

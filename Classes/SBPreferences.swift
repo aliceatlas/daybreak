@@ -79,7 +79,7 @@ class SBPreferences: NSObject {
     }
     
     class func objectForKey(keyName: String) -> AnyObject? {
-        let preferences = SBGetWebPreferences()
+        let preferences = SBGetWebPreferences
         switch keyName {
         case kSBAllowsAnimatedImageToLoop:
             return NSNumber(bool: preferences.allowsAnimatedImageLooping)
@@ -109,7 +109,7 @@ class SBPreferences: NSObject {
     }
     
     class func setObject(object: AnyObject, forKey keyName: String) {
-        let preferences = SBGetWebPreferences()
+        let preferences = SBGetWebPreferences
         switch keyName {
         case kSBAllowsAnimatedImageToLoop:
             preferences.allowsAnimatedImageLooping = object.boolValue

@@ -102,11 +102,11 @@ class SBBookmarks: NSObject {
             for index in 0..<kSBCountOfDebugBookmarks {
                 let title = "Title \(index)"
                 let url = "http://\(index).com/"
-                let item = SBCreateBookmarkItem(title, url, SBEmptyBookmarkImageData(), NSDate(), nil, NSStringFromPoint(NSZeroPoint))
+                let item = SBCreateBookmarkItem(title, url, SBEmptyBookmarkImageData, NSDate(), nil, NSStringFromPoint(NSZeroPoint))
                 items.append(NSMutableDictionary(dictionary: item))
             }
         } else {
-            let info = NSDictionary(contentsOfFile: SBBookmarksFilePath())
+            let info = NSDictionary(contentsOfFile: SBBookmarksFilePath!)
             if let bookmarkItems = info?[kSBBookmarkItems] as? NSArray as? [BookmarkItem] {
                 if !bookmarkItems.isEmpty {
                     items = bookmarkItems.map { NSMutableDictionary(dictionary: $0) }
@@ -120,7 +120,7 @@ class SBBookmarks: NSObject {
     func writeToFile() -> Bool {
         var r = false
         if !items.isEmpty {
-            let path = SBBookmarksFilePath()
+            let path = SBBookmarksFilePath!
             var error: NSError?
             let data = NSPropertyListSerialization.dataWithPropertyList(
                 SBBookmarksWithItems(items), format: NSPropertyListFormat.BinaryFormat_v1_0, options: 0, error: &error)
@@ -233,7 +233,7 @@ class SBBookmarks: NSObject {
     }
     
     func openItemsInSelectedDocument(inItems: [BookmarkItem]) {
-        if let selectedDocument = SBGetSelectedDocument() {
+        if let selectedDocument = SBGetSelectedDocument {
             if selectedDocument.respondsToSelector("openAndConstructTabWithBookmarkItems:") {
                 selectedDocument.openAndConstructTab(bookmarkItems: inItems)
             }

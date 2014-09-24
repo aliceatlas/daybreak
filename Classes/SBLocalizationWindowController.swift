@@ -325,7 +325,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     
     func open() {
         let panel = SBOpenPanel.sbOpenPanel()
-        let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))
+        let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))!
         panel.allowedFileTypes = ["strings"]
         panel.directoryURL = NSURL.fileURLWithPath(directoryPath)
         panel.beginSheet(window) {
@@ -340,7 +340,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         let lang = path.lastPathComponent.stringByDeletingPathExtension
         
         // Replace text
-        if let (tSet, _, _) = SBGetLocalizableTextSetS(path) {
+        if let (tSet, _, _) = SBGetLocalizableTextSet(path) {
             for texts in tSet {
                 if texts.count == 2 {
                     let text0 = texts[0]
@@ -450,7 +450,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     func done() {
         var success = false
         if let data = SBLocalizableStringsData(fieldSet) {
-            let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))
+            let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))!
             let langCode = langPopup.selectedItem.representedObject as? NSString
             if let name = langCode?.stringByAppendingPathExtension("strings") {
                 // Create strings into application support folder

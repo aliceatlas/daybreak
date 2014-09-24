@@ -679,7 +679,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     
     override func drawRect(rect: NSRect) {
         var r = bounds
-        var path = SBRoundedPathS(r, SBURLFieldRoundedCurve, 0, true, true)
+        var path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, true, true)
         NSColor.whiteColor().set()
         path.fill()
         
@@ -691,7 +691,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         if r.size.height >= 4.5 {
             r.size.height -= 4.5
         }
-        path = SBRoundedPathS(r, SBURLFieldRoundedCurve, 0, true, false)
+        path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, true, false)
         path.lineWidth = 1.0
         NSColor(calibratedWhite: 0.75, alpha: 1.0).set()
         path.stroke()
@@ -701,7 +701,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         r.origin.y += 0.5
         r.size.width -= 1.0
         r.size.height -= 1.0
-        path = SBRoundedPathS(r, SBURLFieldRoundedCurve, 0, true, true)
+        path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, true, true)
         path.lineWidth = 0.5
         NSColor.blackColor().set()
         path.stroke()
@@ -752,10 +752,10 @@ class SBURLImageView: NSImageView, NSDraggingSource {
         textRect.origin.x = margin + NSMaxX(imageRect)
         
         let image = NSImage(size: size)
-        image.lockFocus()
-        self.image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-        urlString.drawInRect(textRect, withAttributes: attribute)
-        image.unlockFocus()
+        image.withFocus {
+            self.image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            urlString.drawInRect(textRect, withAttributes: attribute)
+        }
         
         return image
     }
@@ -1053,7 +1053,7 @@ class SBURLFieldContentView: NSView {
     
     override func drawRect(rect: NSRect) {
         let b = bounds
-        var path = SBRoundedPathS(b, SBURLFieldRoundedCurve, 0, false, true)
+        var path = SBRoundedPath(b, SBURLFieldRoundedCurve, 0, false, true)
         let locations: [CGFloat] = [0.0,
                                     SBURLFieldSheetPadding / b.size.height,
                                     (b.size.height - SBURLFieldSheetPadding) / b.size.height,
@@ -1070,7 +1070,7 @@ class SBURLFieldContentView: NSView {
         if r.size.width >= 1.0 {
             r.size.width -= 1.0
         }
-        path = SBRoundedPathS(r, SBURLFieldRoundedCurve, 0, false, true)
+        path = SBRoundedPath(r, SBURLFieldRoundedCurve, 0, false, true)
         path.lineWidth = 0.5
         NSColor.blackColor().set()
         path.stroke()
@@ -1118,7 +1118,7 @@ class SBURLFieldDataCell: NSCell {
         
         if highlighted {
             let r = cellFrame
-            let path = SBRoundedPathS(NSInsetRect(r, 1.0, 1.0), (r.size.height - 1.0 * 2) / 2, 0.0, true, true)
+            let path = SBRoundedPath(NSInsetRect(r, 1.0, 1.0), (r.size.height - 1.0 * 2) / 2, 0.0, true, true)
             let gradient = NSGradient(startingColor: SBAlternateSelectedLightControlColor,
                                       endingColor:   SBAlternateSelectedControlColor)
             SBPreserveGraphicsState {

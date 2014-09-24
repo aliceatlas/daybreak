@@ -76,9 +76,9 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
 
     func application(sender: NSApplication, openFiles filenames: [String]) {
         var index = 0
-        let documentController = SBDocumentController.sharedDocumentController()! as SBDocumentController
+        let documentController = SBGetDocumentController
         
-        if let document = SBGetSelectedDocument() {
+        if let document = SBGetSelectedDocument {
             for filename in filenames {
                 var error: NSError?
                 let url = NSURL.fileURLWithPath(filename)!
@@ -117,7 +117,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let message = ""
         let okTitle = NSLocalizedString("Quit", comment: "")
         let otherTitle = NSLocalizedString("Don't Quit", comment: "")
-        let doc = SBGetSelectedDocument()
+        let doc = SBGetSelectedDocument
         let window = doc?.window
         let alert = NSAlert()
         alert.messageText = title
@@ -142,17 +142,17 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
                 switch method {
                     case "in a new window":
                     var error: NSError?
-                    if let document = SBGetDocumentController().openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument {
+                    if let document = SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument {
                         document.openURLStringInSelectedTabViewItem(URLString)
                     }
 
                     case "in a new tab":
-                    if let document = SBGetSelectedDocument() {
+                    if let document = SBGetSelectedDocument {
                         document.constructNewTab(URL: NSURL(string: URLString), selection: true)
                     }
 
                     case "in the current tab":
-                    if let document = SBGetSelectedDocument() {
+                    if let document = SBGetSelectedDocument {
                         document.openURLStringInSelectedTabViewItem(URLString)
                     }
                     
@@ -206,7 +206,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func update(versionString: String) {
-        let window = SBGetSelectedDocument().window
+        let window = SBGetSelectedDocument!.window
         let info = NSBundle.mainBundle().localizedInfoDictionary
         let urlString: String = info["SBReleaseNotesURL"] as NSString
         destructUpdateView()
@@ -222,7 +222,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func doneUpdate() {
-        let document = SBGetSelectedDocument()
+        let document = SBGetSelectedDocument!
         let window = document.window
         var versionString: NSString = updateView!.versionString!
         let mutableVString = versionString.mutableCopy() as NSMutableString
@@ -243,11 +243,11 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func cancelUpdate() {
-        SBGetSelectedDocument().window.hideCoverWindow()
+        SBGetSelectedDocument!.window.hideCoverWindow()
     }
     
     func openStrings(#path: String, anotherPath: String? = nil) {
-        if let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSetS(path) {
+        if let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSet(path) {
             if !textSet.isEmpty {
                 destructLocalizeWindowController()
                 localizationWindowController = SBLocalizationWindowController(viewSize: viewSize)
@@ -322,7 +322,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func newDocument(AnyObject) {
         var error: NSError?
-        SBGetDocumentController().openUntitledDocumentAndDisplay(true, error: &error)
+        SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error)
         error !! { DebugLogS("\(__FUNCTION__) \($0)") }
     }
     
@@ -332,7 +332,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         panel.allowsMultipleSelection = true
         let result = panel.runModal()
         if result == NSOKButton {
-            if let document = SBGetSelectedDocument() {
+            if let document = SBGetSelectedDocument {
                 let urls = panel.URLs as [NSURL]
                 for (index, file) in enumerate(urls) {
                     document.constructNewTab(URL: file, selection:(index == urls.count - 1))
@@ -354,7 +354,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func plugins(sender: AnyObject) {
         if let path = SBFilePathInApplicationBundle("Plug-ins", "html") {
-            if let document = SBGetSelectedDocument() {
+            if let document = SBGetSelectedDocument {
                 document.constructNewTab(URL: NSURL.fileURLWithPath(path), selection: true)
             }
         }
@@ -363,7 +363,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func sunrisepage(sender: AnyObject) {
         let info = NSBundle.mainBundle().localizedInfoDictionary
         if let string: String = info["SBHomePageURL"] as? NSString {
-            if let document = SBGetSelectedDocument() {
+            if let document = SBGetSelectedDocument {
                 if document.selectedWebDataSource != nil {
                     document.constructNewTab(URL: NSURL(string: string), selection: true)
                 } else {
@@ -393,7 +393,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func writeViewStructure(AnyObject) {
-        let document = SBGetSelectedDocument()
+        let document = SBGetSelectedDocument!
         if let view = document.window.contentView as? NSView {
             let panel = NSSavePanel()
             panel.nameFieldStringValue = "ViewStructure.plist"
@@ -416,7 +416,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         panel.allowedFileTypes = ["strings"]
         panel.directoryURL = NSBundle.mainBundle().resourceURL
         if panel.runModal() == NSFileHandlingPanelOKButton {
-            if let (textSet, _, _) = SBGetLocalizableTextSetS(panel.URL.path!) {
+            if let (textSet, _, _) = SBGetLocalizableTextSet(panel.URL.path!) {
                 for (index, texts) in enumerate(textSet) {
                     let text0 = texts[0]
                     for (i, ts) in enumerate(textSet) {

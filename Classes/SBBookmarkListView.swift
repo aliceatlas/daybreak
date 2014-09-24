@@ -981,7 +981,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         } else if containsItem(types, SBSafariBookmarkDictionaryListPboardType) {
             // Safari bookmarks
             let pbItems = pasteboard.propertyListForType(SBSafariBookmarkDictionaryListPboardType) as NSArray as [NSDictionary]
-            let bookmarkItems = SBBookmarkItemsFromBookmarkDictionaryList(pbItems) as [BookmarkItem]
+            let bookmarkItems = SBBookmarkItemsFromBookmarkDictionaryList(pbItems)
             if !bookmarkItems.isEmpty {
                 let bookmarks = SBBookmarks.sharedBookmarks
                 let toIndex = indexAtPoint(point)
@@ -1003,15 +1003,15 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                     var shouldInset = true
                     data = pasteboard.dataForType(NSTIFFPboardType)
                     if let image = NSImage(data: data) {
-                        shouldInset = image.size != SBBookmarkImageMaxSize()
+                        shouldInset = image.size != SBBookmarkImageMaxSize
                     }
                     if shouldInset {
-                        if let insetImage = NSImage(data: data)?.inset(size: SBBookmarkImageMaxSize(), intersectRect: NSZeroRect, offset: NSZeroPoint) {
+                        if let insetImage = NSImage(data: data)?.inset(size: SBBookmarkImageMaxSize, intersectRect: NSZeroRect, offset: NSZeroPoint) {
                             insetImage.bitmapImageRep !! { data = $0.data }
                         }
                     }
                 } else {
-                    data = SBEmptyBookmarkImageData()
+                    data = SBEmptyBookmarkImageData
                 }
                 
                 let bookmarks = SBBookmarks.sharedBookmarks

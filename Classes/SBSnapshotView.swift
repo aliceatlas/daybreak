@@ -805,9 +805,9 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         } else {
             fromRect.size = image!.size
         }
-        anImage.lockFocus()
-        image!.drawInRect(NSMakeRect(0, 0, size.width, size.height), fromRect: fromRect, operation: .CompositeSourceOver, fraction: 1.0)
-        anImage.unlockFocus()
+        anImage.withFocus {
+            self.image!.drawInRect(NSMakeRect(0, 0, size.width, size.height), fromRect: fromRect, operation: .CompositeSourceOver, fraction: 1.0)
+        }
         
         // Change filetype
         aData = anImage.TIFFRepresentation

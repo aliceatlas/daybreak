@@ -28,118 +28,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import "Sunrise3-Bridging-Header.h"
 #import "Sunrise3-Swift.h"
 
-#pragma mark Get objects
-
-SBApplicationDelegate *SBGetApplicationDelegate()
-{
-	return (SBApplicationDelegate *)NSApplication.sharedApplication.delegate;
-}
-
-SBDocumentController *SBGetDocumentController()
-{
-	return (SBDocumentController *)SBDocumentController.sharedDocumentController;
-}
-
-SBDocument *SBGetSelectedDocument()
-{
-	SBDocument *document = nil;
-	NSArray *documents = NSApplication.sharedApplication.orderedDocuments;
-	if (documents.count == 0)
-	{
-		if (!document)
-		{
-			NSError *error = nil;
-			document = [SBGetDocumentController() openUntitledDocumentAndDisplay:YES error:&error];
-		}
-	}
-	else {
-		if ([documents[0] isKindOfClass:SBDocument.class])
-		{
-			document = documents[0];
-		}
-	}
-	return document;
-}
-
-WebPreferences *SBGetWebPreferences()
-{
-	WebPreferences *preferences = nil;
-	preferences = [[WebPreferences alloc] initWithIdentifier:kSBWebPreferencesIdentifier];
-    preferences.autosaves = YES;
-	return preferences;
-}
-
-NSMenu *SBMenuWithTag(NSInteger tag)
-{
-	NSMenu *menu = nil;
-	for (NSMenuItem *menuItem in NSApplication.sharedApplication.mainMenu.itemArray)
-	{
-		if (menuItem.tag == tag)
-		{
-			menu = menuItem.submenu;
-			break;
-		}
-	}
-	return menu;
-}
-
-NSMenuItem *SBMenuItemWithTag(NSInteger tag)
-{
-	NSMenuItem *item = nil;
-	for (NSMenuItem *menuItem in NSApplication.sharedApplication.mainMenu.itemArray)
-	{
-		NSMenu *menu = menuItem.submenu;
-		item = [menu itemWithTag:tag];
-		if (item)
-		{
-			break;
-		}
-	}
-	return item;
-}
+NSDictionary *SBCreateBookmarkItemO(NSString *title, NSString *url, NSData *imageData, NSDate *date, NSString *labelName, NSString *offsetString);
+NSDictionary *SBDefaultBookmarksO();
+NSData *SBEmptyBookmarkImageDataO();
+NSDictionary *SBBookmarksWithItemsO(NSArray *items);
+NSSize SBBookmarkImageMaxSizeO();
+NSString *SBApplicationSupportDirectoryO(NSString *subdirectory);
+NSString *SBSearchPathO(NSSearchPathDirectory searchPathDirectory, NSString *subdirectory);
+NSString *SBBookmarksVersion1FilePathO();
 
 #pragma mark Default values
 
-NSRect SBDefaultDocumentWindowRect()
-{
-	NSRect r = NSZeroRect;
-	NSArray *screens = NSScreen.screens;
-	NSScreen *screen = screens.count > 0 ? screens[0] : nil;
-	r = screen ? screen.visibleFrame : NSZeroRect;
-	return r;
-}
-
-// Return value for key in "com.apple.internetconfig.plist"
-NSString *SBDefaultHomePage()
-{
-	id value = nil;
-	NSDictionary *internetConfig = nil;
-	NSString *path = nil;
-	
-	path = SBSearchFileInDirectory(@"com.apple.internetconfig", SBLibraryDirectory(@"Preferences"));
-	if (path)
-	{
-		if ([NSFileManager.defaultManager fileExistsAtPath:path])
-		{
-			internetConfig = [NSDictionary dictionaryWithContentsOfFile:path];
-			if (internetConfig)
-			{
-				value = SBValueForKey(@"WWWHomePage", internetConfig);
-			}
-		}
-	}
-	return value;
-}
-
-NSString *SBDefaultSaveDownloadedFilesToPath()
-{
-	NSString *path = SBSearchPath(NSDownloadsDirectory, nil);
-	if (path)
-		path = path.stringByExpandingTildeInPath;
-	return path;
-}
-
-NSDictionary *SBDefaultBookmarks()
+NSDictionary *SBDefaultBookmarksO()
 {
 	NSArray *items = nil;
 	NSDictionary *defaultItem = nil;
@@ -151,13 +51,13 @@ NSDictionary *SBDefaultBookmarks()
 		NSString *URLString = defaultItem[kSBBookmarkURL];
 		if (!title) title = NSLocalizedString(@"Untitled", nil);
 		if (!URLString) URLString = @"http://www.example.com/";
-		if (!imageData) imageData = SBEmptyBookmarkImageData();
-		items = @[SBCreateBookmarkItem(title, URLString, imageData, [NSDate date], nil, NSStringFromPoint(NSZeroPoint))];
+		if (!imageData) imageData = SBEmptyBookmarkImageDataO();
+		items = @[SBCreateBookmarkItemO(title, URLString, imageData, [NSDate date], nil, NSStringFromPoint(NSZeroPoint))];
 	}
-	return items.count > 0 ? SBBookmarksWithItems(items) : nil;
+	return items.count > 0 ? SBBookmarksWithItemsO(items) : nil;
 }
 
-NSData *SBEmptyBookmarkImageData()
+NSData *SBEmptyBookmarkImageDataO()
 {
 	NSData *data = nil;
 	NSBitmapImageRep *bitmapImageRep = nil;
@@ -172,7 +72,7 @@ NSData *SBEmptyBookmarkImageData()
 	CGFloat colors[count * 4];
 	CGPoint points[count];
 	
-	size = NSSizeToCGSize(SBBookmarkImageMaxSize());
+	size = NSSizeToCGSize(SBBookmarkImageMaxSizeO());
 	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
 	CGColorSpaceRelease(colorSpace);
 	
@@ -237,7 +137,7 @@ NSData *SBEmptyBookmarkImageData()
 
 #pragma mark Bookmarks
 
-NSDictionary *SBBookmarksWithItems(NSArray *items)
+NSDictionary *SBBookmarksWithItemsO(NSArray *items)
 {
 	NSDictionary *info = nil;
 	info = @{kSBBookmarkVersion: SBBookmarkVersion, 
@@ -245,7 +145,7 @@ NSDictionary *SBBookmarksWithItems(NSArray *items)
 	return info;
 }
 
-NSDictionary *SBCreateBookmarkItem(NSString *title, NSString *url, NSData *imageData, NSDate *date, NSString *labelName, NSString *offsetString)
+NSDictionary *SBCreateBookmarkItemO(NSString *title, NSString *url, NSData *imageData, NSDate *date, NSString *labelName, NSString *offsetString)
 {
 	NSMutableDictionary *item = nil;
 	item = [NSMutableDictionary dictionaryWithCapacity:0];
@@ -264,117 +164,21 @@ NSDictionary *SBCreateBookmarkItem(NSString *title, NSString *url, NSData *image
 	return [item copy];
 }
 
-NSMenu *SBBookmarkLabelColorMenu(BOOL pullsDown, id target, SEL action, id representedObject)
-{
-	NSMenu *menu = [[NSMenu alloc] init];
-	NSInteger i = 0;
-	if (pullsDown)
-		[menu addItemWithTitle:[NSString string] action:nil keyEquivalent:@""];
-	for (i = 0; i < SBBookmarkCountOfLabelColors; i++)
-	{
-		NSString *labelName = SBBookmarkLabelColorNames[i];
-		NSImage *image = [NSImage colorImage:NSMakeSize(24.0, 16.0) colorName:labelName];
-		NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(labelName, nil) action:action keyEquivalent:@""];
-		if (target)
-            item.target = target;
-		if (representedObject)
-            item.representedObject = representedObject;
-        item.image = image;
-		[menu addItem:item];
-	}
-	return menu;
-}
-
-NSArray *SBBookmarkItemsFromBookmarkDictionaryList(NSArray *bookmarkDictionaryList)
-{
-	NSMutableArray *items = nil;
-	if (bookmarkDictionaryList.count > 0)
-	{
-		NSData *emptyImageData = SBEmptyBookmarkImageData();
-		items = [NSMutableArray arrayWithCapacity:0];
-		for (NSDictionary *dictionary in bookmarkDictionaryList)
-		{
-			NSString *type = dictionary[@"WebBookmarkType"];
-			NSString *URLString = dictionary[@"URLString"];
-			NSDictionary *uriDictionary = dictionary[@"URIDictionary"];
-			NSString *title = uriDictionary ? uriDictionary[@"title"] : nil;
-			BOOL hasScheme = NO;
-			if ([type isEqualToString:@"WebBookmarkTypeLeaf"] && [URLString isURLString:&hasScheme])
-			{
-				NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:0];
-				if (!hasScheme)
-				{
-					URLString = [@"http://" stringByAppendingString:URLString.stringByDeletingScheme];
-				}
-				if (title)
-					item[kSBBookmarkTitle] = title;
-				if (emptyImageData)
-					item[kSBBookmarkImage] = emptyImageData;
-				item[kSBBookmarkURL] = URLString;
-				[items addObject:[item copy]];
-			}
-		}
-	}
-	return items.count > 0 ? [items copy] : nil;
-}
-
 #pragma mark Rects
 
-NSSize SBBookmarkImageMaxSize()
+NSSize SBBookmarkImageMaxSizeO()
 {
 	return NSMakeSize(kSBBookmarkCellMaxWidth, kSBBookmarkCellMaxWidth / kSBBookmarkFactorForImageWidth * kSBBookmarkFactorForImageHeight);
 }
 
 #pragma mark File paths
 
-NSString *SBFilePathInApplicationBundle(NSString *name, NSString *ext)
+NSString *SBApplicationSupportDirectoryO(NSString *subdirectory)
 {
-	NSString *path = nil;
-	NSFileManager *manager = nil;
-	manager = NSFileManager.defaultManager;
-	path = [NSBundle.mainBundle pathForResource:name ofType:ext];
-	if (![manager fileExistsAtPath:path])
-	{
-		path = nil;
-	}
-	return path;
+	return SBSearchPathO(NSApplicationSupportDirectory, subdirectory);
 }
 
-NSString *SBApplicationSupportDirectory(NSString *subdirectory)
-{
-	return SBSearchPath(NSApplicationSupportDirectory, subdirectory);
-}
-
-NSString *SBLibraryDirectory(NSString *subdirectory)
-{
-	return SBSearchPath(NSLibraryDirectory, subdirectory);
-}
-
-NSString *SBSearchFileInDirectory(NSString *filename, NSString *directoryPath)
-{
-	NSString *path = nil;
-	if (directoryPath)
-	{
-		NSString *findFileName = nil;
-		NSFileManager *manager = NSFileManager.defaultManager;
-		NSArray *contents = [manager contentsOfDirectoryAtPath:directoryPath error:nil];
-		for (NSString *file in contents)
-		{
-			if ([file hasPrefix:filename])
-			{
-				findFileName = file;
-				break;
-			}
-		}
-		if (findFileName)
-		{
-			path = [directoryPath stringByAppendingPathComponent:findFileName];
-		}
-	}
-	return path;
-}
-
-NSString *SBSearchPath(NSSearchPathDirectory searchPathDirectory, NSString *subdirectory)
+NSString *SBSearchPathO(NSSearchPathDirectory searchPathDirectory, NSString *subdirectory)
 {
 	NSString *path = nil;
     NSArray *paths = nil;
@@ -408,205 +212,20 @@ NSString *SBSearchPath(NSSearchPathDirectory searchPathDirectory, NSString *subd
 	return path;
 }
 
-NSString *SBBookmarksFilePath()
+NSString *SBBookmarksVersion1FilePathO()
 {
 	NSString *path = nil;
 	NSFileManager *manager = nil;
 	manager = NSFileManager.defaultManager;
-	path = [SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName) stringByAppendingPathComponent:kSBBookmarksFileName];
-	if ([manager fileExistsAtPath:path])
-	{
-		// Exist current bookmarks
-	}
-	else {
-		NSData *plistData = nil;
-		NSString *errorString = nil;
-		NSString *version1Path = SBBookmarksVersion1FilePath();
-		
-		if ([manager fileExistsAtPath:version1Path])
-		{
-			NSArray *items = nil;
-			// Exist version1 bookmarks
-			plistData = [[NSData alloc] initWithContentsOfFile:version1Path];
-			items = [NSPropertyListSerialization propertyListFromData:plistData mutabilityOption:NSPropertyListImmutable format:nil errorDescription:&errorString];
-			if (items)
-			{
-				plistData = [NSPropertyListSerialization dataFromPropertyList:SBBookmarksWithItems(items) format:NSPropertyListBinaryFormat_v1_0 errorDescription:&errorString];
-				if ([plistData writeToFile:path atomically:YES])
-				{
-					
-				}
-				else {
-					path = nil;
-				}
-			}
-		}
-		else {
-			// Create default bookmarks
-			plistData = [NSPropertyListSerialization dataFromPropertyList:SBDefaultBookmarks() format:NSPropertyListBinaryFormat_v1_0 errorDescription:&errorString];
-			if (plistData)
-			{
-				if ([plistData writeToFile:path atomically:YES])
-				{
-					
-				}
-				else {
-					path = nil;
-				}
-			}
-			else {
-				path = nil;
-			}
-			DebugLog(@"%s error = %@", __func__, errorString);
-		}
-	}
-	return path;
-}
-
-NSString *SBBookmarksVersion1FilePath()
-{
-	NSString *path = nil;
-	NSFileManager *manager = nil;
-	manager = NSFileManager.defaultManager;
-	path = [SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName_Version1) stringByAppendingPathComponent:kSBBookmarksFileName];
+	path = [SBApplicationSupportDirectoryO(kSBApplicationSupportDirectoryName_Version1) stringByAppendingPathComponent:kSBBookmarksFileName];
 	if ([manager fileExistsAtPath:path])
 	{
 		// Exist current bookmarks
 	}
 	return path;
-}
-
-NSString *SBHistoryFilePath()
-{
-	return [SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName) stringByAppendingPathComponent:kSBHistoryFileName];
 }
 
 #pragma mark Paths
-
-CGPathRef SBRoundedPath(CGRect rect, CGFloat curve, CGFloat inner, BOOL top, BOOL bottom)
-{
-	CGPathRef copiedPath = nil;
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGPoint point, cp1, cp2;
-	point = cp1 = cp2 = CGPointZero;
-	
-	rect.origin.x += inner / 2;
-	rect.origin.y += inner / 2;
-	rect.size.width -= inner;
-	rect.size.height -= inner;
-	
-	if (top && bottom)
-	{
-		// Left-top to right
-		point.x = (rect.origin.x + curve);
-		point.y = rect.origin.y;
-		CGPathMoveToPoint(path, nil, point.x,point.y);
-		point.x = (rect.origin.x + rect.size.width - curve);
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-		point.x = (rect.origin.x + rect.size.width);
-		cp1.x = (rect.origin.x + rect.size.width);
-		cp1.y = rect.origin.y + curve / 2;
-		cp2.x = (rect.origin.x + rect.size.width) - curve / 2;
-		cp2.y = rect.origin.y;
-		point.y = (rect.origin.y + curve);
-		CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,point.x,point.y);
-		// Right-top to bottom
-		point.y = (rect.origin.y + rect.size.height - curve);
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-		point.y = (rect.origin.y + rect.size.height);
-		cp1.y = (rect.origin.y + rect.size.height);
-		cp1.x = (rect.origin.x + rect.size.width) - curve / 2;
-		cp2.y = (rect.origin.y + rect.size.height) - curve / 2;
-		cp2.x = (rect.origin.x + rect.size.width);
-		point.x = (rect.origin.x + rect.size.width - curve);
-		CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,point.x,point.y);
-		// Right-bottom to left
-		point.x = (rect.origin.x + curve);
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-		point.x = rect.origin.x;
-		cp1.x = rect.origin.x;
-		cp1.y = (rect.origin.y + rect.size.height) - curve / 2;
-		cp2.x = rect.origin.x + curve / 2;
-		cp2.y = (rect.origin.y + rect.size.height);
-		point.y = (rect.origin.y + rect.size.height - curve);
-		CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,point.x,point.y);
-		// Left-bottom to top
-		point.y = (rect.origin.y + curve);
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-		point.y = rect.origin.y;
-		cp1.y = rect.origin.y;
-		cp1.x = rect.origin.x + curve / 2;
-		cp2.y = rect.origin.y + curve / 2;
-		cp2.x = rect.origin.x;
-		point.x = (rect.origin.x + curve);
-		CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,point.x,point.y);
-		// add left edge and close 
-		CGPathCloseSubpath(path);
-	}
-	else if (top)
-	{
-		point = rect.origin;
-		point.x = rect.origin.x + rect.size.width;
-		CGPathMoveToPoint(path, nil, point.x,point.y);
-		
-		point.y = (rect.origin.y + rect.size.height - curve);
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-		point.y = (rect.origin.y + rect.size.height);
-		cp1.y = (rect.origin.y + rect.size.height);
-		cp1.x = (rect.origin.x + rect.size.width) - curve / 2;
-		cp2.y = (rect.origin.y + rect.size.height) - curve / 2;
-		cp2.x = (rect.origin.x + rect.size.width);
-		point.x = (rect.origin.x + rect.size.width - curve);
-		CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,point.x,point.y);
-		
-		point.x = (rect.origin.x + curve);
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-		point.x = rect.origin.x;
-		cp1.x = rect.origin.x;
-		cp1.y = (rect.origin.y + rect.size.height) - curve / 2;
-		cp2.x = rect.origin.x + curve / 2;
-		cp2.y = (rect.origin.y + rect.size.height);
-		point.y = (rect.origin.y + rect.size.height - curve);
-		CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,point.x,point.y);
-		point = rect.origin;
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-	}
-	else if (bottom)
-	{
-		point.x = rect.origin.x;
-		point.y = (rect.origin.y + rect.size.height);
-		CGPathMoveToPoint(path, nil, point.x,point.y);
-		
-		point.y = rect.origin.y + curve;
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-		point.y = rect.origin.y;
-		cp1.y = rect.origin.y;
-		cp1.x = rect.origin.x + curve / 2;
-		cp2.y = rect.origin.y + curve / 2;
-		cp2.x = rect.origin.x;
-		point.x = (rect.origin.x + curve);
-		CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,point.x,point.y);
-		point.x = (rect.origin.x + rect.size.width - curve);
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-		point.x = (rect.origin.x + rect.size.width);
-		cp1.x = (rect.origin.x + rect.size.width);
-		cp1.y = rect.origin.y + curve / 2;
-		cp2.x = (rect.origin.x + rect.size.width) - curve / 2;
-		cp2.y = rect.origin.y;
-		point.y = (rect.origin.y + curve);
-		CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,point.x,point.y);
-		point.y = (rect.origin.y + rect.size.height);
-		CGPathAddLineToPoint(path, nil, point.x,point.y);
-	}
-	else {
-		CGPathAddRect(path, nil, rect);
-	}
-	
-	copiedPath = CGPathCreateCopy(path);
-	CGPathRelease(path);
-	
-    return CFAutorelease(copiedPath);
-}
 
 CGPathRef SBLeftButtonPath(CGSize size)
 {
@@ -2030,85 +1649,6 @@ void SBLocalizeTitlesInMenu(NSMenu *menu)
 		if (submenu)
 		{
 			SBLocalizeTitlesInMenu(submenu);
-		}
-	}
-}
-
-void SBGetLocalizableTextSet(NSString *path, NSMutableArray **tSet, NSArray **fSet, NSSize *viewSize)
-{
-	NSMutableArray *textSet = nil;
-	NSMutableArray *fieldSet = nil;
-	NSSize size = NSZeroSize;
-	NSError *error = nil;
-	NSString *localizableString = nil;
-	
-	localizableString = [NSString stringWithContentsOfFile:path encoding:NSUTF16StringEncoding error:&error];
-	
-	if (localizableString.length > 0)
-	{
-		NSSize fieldSize = NSMakeSize(300, 22);
-		NSPoint offset = NSMakePoint(45, 12);
-		CGFloat margin = 20;
-		NSArray *lines = [localizableString componentsSeparatedByString:@"\n"];
-		NSInteger count = lines.count;
-		
-		size.width = offset.x + fieldSize.width * 2 + margin * 2;
-		size.height = (fieldSize.height + offset.y) * count + offset.y + margin * 2;
-		
-		if (count > 1)
-		{
-			NSInteger i = 0;
-			textSet = [NSMutableArray arrayWithCapacity:0];
-			fieldSet = [NSMutableArray arrayWithCapacity:0];
-			for (NSString *line in lines)
-			{
-				NSInteger j = 0;
-				NSRect fieldRect = NSZeroRect;
-				NSMutableArray *texts = [NSMutableArray arrayWithCapacity:0];
-				NSMutableArray *fields = [NSMutableArray arrayWithCapacity:0];
-				NSArray *components = [line componentsSeparatedByString:@" = "];
-				
-				fieldRect.size = fieldSize;
-				fieldRect.origin.y = size.height - margin - (fieldSize.height * (i + 1)) - (offset.y * i);
-				
-				for (NSString *component in components)
-				{
-					if (component.length > 0)
-					{
-						NSTextField *field = nil;
-						BOOL isMenuitem = ![component hasPrefix:@"//"];
-						BOOL editable = isMenuitem && j == 1;
-						NSString *string = component;
-						fieldRect.origin.x = j * (fieldSize.width + offset.x);
-						field = [[NSTextField alloc] initWithFrame:fieldRect];
-                        field.editable = editable;
-                        field.selectable = isMenuitem;
-                        field.bordered = isMenuitem;
-                        field.drawsBackground = isMenuitem;
-                        field.bezeled = editable;
-						[field.cell setScrollable:isMenuitem];
-						if (isMenuitem)
-						{
-							string = [component stringByDeletingQuotations];
-						}
-						[texts addObject:string];
-						[fields addObject:field];
-					}
-					j++;
-				}
-				if (texts.count >= 1)
-				{
-					[textSet addObject:texts];
-				}
-				if (fields.count >= 1)
-				{
-					[fieldSet addObject:fields];
-				}
-				i++;
-			}
-			*viewSize = size;
-			*tSet = textSet;
-			*fSet = [fieldSet copy];
 		}
 	}
 }

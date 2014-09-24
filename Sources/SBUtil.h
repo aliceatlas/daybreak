@@ -30,40 +30,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @class SBDocumentController;
 @class SBDocument;
 
-// Get objects
-SBApplicationDelegate *SBGetApplicationDelegate();
-SBDocumentController *SBGetDocumentController();
-SBDocument *SBGetSelectedDocument();
-WebPreferences *SBGetWebPreferences();
-NSMenu *SBMenuWithTag(NSInteger tag);
-NSMenuItem *SBMenuItemWithTag(NSInteger tag);
-// Default values
-NSRect SBDefaultDocumentWindowRect();
-NSString *SBDefaultHomePage();
-NSString *SBDefaultSaveDownloadedFilesToPath();
-NSDictionary *SBDefaultBookmarks();
-NSData *SBEmptyBookmarkImageData();
-// Bookmarks
-NSDictionary *SBBookmarksWithItems(NSArray *items);
-NSDictionary *SBCreateBookmarkItem(NSString *title, NSString *url, NSData *imageData, NSDate *date, NSString *labelName, NSString *offsetString);
-NSMenu *SBBookmarkLabelColorMenu(BOOL pullsDown, id target, SEL action, id representedObject);
-NSArray *SBBookmarkItemsFromBookmarkDictionaryList(NSArray *bookmarkDictionaryList);
-// Rects
-NSSize SBBookmarkImageMaxSize();
-// File paths
-NSString *SBFilePathInApplicationBundle(NSString *name, NSString *ext);
-NSString *SBApplicationSupportDirectory(NSString *subdirectory);
-NSString *SBLibraryDirectory(NSString *subdirectory);
-NSString *SBSearchFileInDirectory(NSString *filename, NSString *directoryPath);
-NSString *SBSearchPath(NSSearchPathDirectory searchPathDirectory, NSString *subdirectory);
-NSString *SBBookmarksFilePath();
-NSString *SBBookmarksVersion1FilePath();
-NSString *SBHistoryFilePath();
 // Paths
 
 CF_IMPLICIT_BRIDGING_ENABLED
 
-CGPathRef SBRoundedPath(CGRect rect, CGFloat curve, CGFloat inner, BOOL top, BOOL bottom);
 CGPathRef SBLeftButtonPath(CGSize size);
 CGPathRef SBCenterButtonPath(CGSize size);
 CGPathRef SBRightButtonPath(CGSize size);
@@ -77,9 +47,6 @@ CF_IMPLICIT_BRIDGING_DISABLED
 // Drawing
 void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, const CGFloat locations[], const CGFloat colors[], const CGPoint points[]);
 void SBDrawRadialGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint centers[], CGFloat radiuses[]);
-void SBGetAlternateSelectedLightControlColorComponents(CGFloat colors[4]);
-void SBGetAlternateSelectedControlColorComponents(CGFloat colors[4]);
-void SBGetAlternateSelectedDarkControlColorComponents(CGFloat colors[4]);
 // Image
 
 CF_IMPLICIT_BRIDGING_ENABLED
@@ -119,7 +86,6 @@ void SBDisembedViewInSplitView(NSView *view, NSSplitView *splitView);
 CGFloat SBDistancePoints(NSPoint p1, NSPoint p2);
 BOOL SBAllowsDrag(NSPoint downPoint, NSPoint dragPoint);
 void SBLocalizeTitlesInMenu(NSMenu *menu);
-void SBGetLocalizableTextSet(NSString *path, NSMutableArray **tSet, NSArray **fSet, NSSize *viewSize);
 NSData *SBLocalizableStringsData(NSArray *fieldSet);
 // Debug
 id SBValueForKey(NSString *keyName, NSDictionary *dictionary);
