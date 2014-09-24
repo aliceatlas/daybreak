@@ -335,7 +335,6 @@
 		502DEBB619C0A64A006A68C3 /* NSString-SBURLAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSString-SBURLAdditions.swift"; path = "Additions/NSString-SBURLAdditions.swift"; sourceTree = "<group>"; };
 		502DEBBD19C1180F006A68C3 /* SBSectionListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSectionListView.swift; path = Classes/SBSectionListView.swift; sourceTree = "<group>"; };
 		5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBRenderWindow.swift; path = Classes/SBRenderWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		5044E66719654CB20053CBF1 /* SBAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SBAdditions.h; path = Additions/SBAdditions.h; sourceTree = "<group>"; };
 		5044E66819655AF00053CBF1 /* SBLoadButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLoadButton.swift; path = Classes/SBLoadButton.swift; sourceTree = "<group>"; };
 		5044E66A19666D550053CBF1 /* SBBookmarksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBookmarksView.swift; path = Classes/SBBookmarksView.swift; sourceTree = "<group>"; };
 		505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Sunrise3-Bridging-Header.h"; path = "Sources/Sunrise3-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -539,7 +538,6 @@
 		08916E731009D52A0012D4EA /* Additions */ = {
 			isa = PBXGroup;
 			children = (
-				5044E66719654CB20053CBF1 /* SBAdditions.h */,
 				502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */,
 				502DEBAE19C07EE1006A68C3 /* NSArray-SBAdditions.swift */,
 				502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */,
