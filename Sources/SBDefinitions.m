@@ -101,9 +101,6 @@ NSString *kSBBookmarkDate = @"date";
 NSString *kSBBookmarkLabelName = @"label";
 NSString *kSBBookmarkOffset = @"offset";
 
-// Pasteboard type
-NSString *SBSafariBookmarkDictionaryListPboardType = @"BookmarkDictionaryListPboardType";
-
 // Bookmark color names
 NSInteger SBBookmarkCountOfLabelColors = 10;
 NSString *SBBookmarkLabelColorNames[] = {
@@ -118,6 +115,3 @@ NSString *SBBookmarkLabelColorNames[] = {
 @"Gray",
 @"Black"
 };
-
-// Pasteboard type names
-NSString *SBBookmarkPboardType = @"SBBookmarkPboardType";

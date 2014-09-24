@@ -57,9 +57,6 @@ extern NSString *kSBBookmarkDate;		// Date
 extern NSString *kSBBookmarkLabelName;	// String
 extern NSString *kSBBookmarkOffset;		// Point
 
-// Pasteboard type
-extern NSString *SBSafariBookmarkDictionaryListPboardType;
-
 // Bookmark color names
 extern NSInteger SBBookmarkCountOfLabelColors;
 extern NSString *SBBookmarkLabelColorNames[];
@@ -79,20 +76,11 @@ typedef NS_ENUM(NSInteger, SBBookmarkMode) {
 	SBBookmarkModeTile
 };
 
-// Values
-#define kSBTabbarItemClosableInterval 0.2
-#define kSBBookmarkToolsInterval 0.7
-
 // Sizes
-#define kSBTabbarItemMaximumWidth 200.0
-#define kSBTabbarItemMinimumWidth 100.0
 #define kSBBookmarkFactorForImageWidth 4.0
 #define kSBBookmarkFactorForImageHeight 3.0
 #define kSBBookmarkCellPaddingPercentage 0.1
 #define kSBBookmarkCellMaxWidth 256 * (1.0 + (kSBBookmarkCellPaddingPercentage * 2))
-
-// Pasteboard type names
-extern NSString *SBBookmarkPboardType;
 
 // Un-documented methods
 @interface NSURL (WebNSURLExtras)
