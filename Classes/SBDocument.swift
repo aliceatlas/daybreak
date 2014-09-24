@@ -1976,7 +1976,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func changeEncodingFromMenuItem(sender: NSMenuItem) {
-        let ianaName = sender.representedObject as NSString
+        let ianaName = sender.representedObject as? NSString
         selectedWebView!.customTextEncodingName = ianaName
     }
     
