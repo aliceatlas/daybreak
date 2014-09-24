@@ -37,7 +37,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         let removeRect = self.removeButtonRect(nil)
         let removeButton = SBButton(frame: removeRect)
         removeButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
-        removeButton.image = NSImage(CGImage: SBIconImage(SBCloseIconImage(), .Left, removeRect.size))
+        removeButton.image = SBIconImage(SBCloseIconImage(), .Left, removeRect.size)
         removeButton.action = "remove"
         return removeButton
     }()
@@ -45,7 +45,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         let finderRect = self.finderButtonRect(nil)
         let finderButton = SBButton(frame: finderRect)
         finderButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin;
-        finderButton.image = NSImage(CGImage: SBIconImageWithName("Finder", .Right, finderRect.size))
+        finderButton.image = SBIconImageWithName("Finder", .Right, finderRect.size)
         finderButton.action = "finder"
         return finderButton
     }()

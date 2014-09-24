@@ -32,9 +32,8 @@ NSDictionary *SBDefaultBookmarksO();
 NSData *SBEmptyBookmarkImageDataO();
 NSDictionary *SBBookmarksWithItemsO(NSArray *items);
 NSSize SBBookmarkImageMaxSizeO();
-NSString *SBApplicationSupportDirectoryO(NSString *subdirectory);
-NSString *SBSearchPathO(NSSearchPathDirectory searchPathDirectory, NSString *subdirectory);
-NSString *SBBookmarksVersion1FilePathO();
+void SBDrawGradientInContextO(CGContextRef ctx, NSUInteger count, const CGFloat locations[], const CGFloat colors[], const CGPoint points[]);
+void SBCGPointApplyTransform3DO(CGPoint *p, const CATransform3D *t);
 
 #pragma mark Default values
 
@@ -89,7 +88,7 @@ NSData *SBEmptyBookmarkImageDataO()
 	CGPathAddRect(path, nil, CGRectMake(0, 0, size.width, size.height));
 	CGContextAddPath(ctx, path);
 	CGContextClip(ctx);
-	SBDrawGradientInContext(ctx, count, locations, colors, points);
+	SBDrawGradientInContextO(ctx, count, locations, colors, points);
 	CGContextRestoreGState(ctx);
 	CGPathRelease(path);
 	
@@ -106,7 +105,7 @@ NSData *SBEmptyBookmarkImageDataO()
 	CGPathAddRect(path, nil, CGRectInset(CGRectMake(0, 0, size.width, size.height), 0.5, 0.5));
 	CGContextAddPath(ctx, path);
 	CGContextClip(ctx);
-	SBDrawGradientInContext(ctx, count, locations, colors, points);
+	SBDrawGradientInContextO(ctx, count, locations, colors, points);
 	CGContextRestoreGState(ctx);
 	CGPathRelease(path);
 	
@@ -170,225 +169,7 @@ NSSize SBBookmarkImageMaxSizeO()
 	return NSMakeSize(kSBBookmarkCellMaxWidth, kSBBookmarkCellMaxWidth / kSBBookmarkFactorForImageWidth * kSBBookmarkFactorForImageHeight);
 }
 
-#pragma mark File paths
-
-NSString *SBApplicationSupportDirectoryO(NSString *subdirectory)
-{
-	return SBSearchPathO(NSApplicationSupportDirectory, subdirectory);
-}
-
-NSString *SBSearchPathO(NSSearchPathDirectory searchPathDirectory, NSString *subdirectory)
-{
-	NSString *path = nil;
-    NSArray *paths = nil;
-	NSFileManager *manager = nil;
-	manager = NSFileManager.defaultManager;
-	paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, NSUserDomainMask, YES);
-    path = paths.count > 0 ? paths[0] : nil;
-	if ([manager fileExistsAtPath:path])
-	{
-		if (subdirectory)
-		{
-			path = [path stringByAppendingPathComponent:subdirectory];
-			if ([manager fileExistsAtPath:path])
-			{
-				
-			}
-			else {
-				if ([manager createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil])
-				{
-					
-				}
-				else {
-					path = nil;
-				}
-			}
-		}
-	}
-	else {
-		path = nil;
-	}
-	return path;
-}
-
-NSString *SBBookmarksVersion1FilePathO()
-{
-	NSString *path = nil;
-	NSFileManager *manager = nil;
-	manager = NSFileManager.defaultManager;
-	path = [SBApplicationSupportDirectoryO(kSBApplicationSupportDirectoryName_Version1) stringByAppendingPathComponent:kSBBookmarksFileName];
-	if ([manager fileExistsAtPath:path])
-	{
-		// Exist current bookmarks
-	}
-	return path;
-}
-
 #pragma mark Paths
-
-CGPathRef SBLeftButtonPath(CGSize size)
-{
-	CGPathRef copiedPath = nil;
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGPoint p = CGPointZero;
-	CGPoint cp1 = CGPointZero;
-	CGPoint cp2 = CGPointZero;
-	CGFloat curve = 4.0;
-	
-	p.x = size.width;
-	p.y = 0.5;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.x = curve + 1.0;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.x = 0.5;
-	cp1.x = 0.5;
-	cp1.y = 0.5 + curve / 2;
-	cp2.x = curve / 2 + 0.5;
-	cp2.y = 0.5;
-	p.y = curve + 0.5;
-	CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-	p.y = size.height - curve - 0.5;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.x = curve + 0.5;
-	cp2.x = 0.5;
-	cp2.y = size.height - curve / 2 - 0.5;
-	cp1.x = curve / 2 + 0.5;
-	cp1.y = size.height - 0.5;
-	p.y = size.height - 0.5;
-	CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-	p.x = size.width;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.y = 0.5;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	
-	copiedPath = CGPathCreateCopy(path);
-	CGPathRelease(path);
-    
-    return CFAutorelease(copiedPath);
-}
-
-CGPathRef SBCenterButtonPath(CGSize size)
-{
-	CGPathRef copiedPath = nil;
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGPathAddRect(path, nil, CGRectMake(0.5, 0.5, size.width - 1.0, size.height - 1.0));
-	
-	copiedPath = CGPathCreateCopy(path);
-	CGPathRelease(path);
-    
-    return CFAutorelease(copiedPath);
-}
-
-CGPathRef SBRightButtonPath(CGSize size)
-{
-	CGPathRef copiedPath = nil;
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGPoint p = CGPointZero;
-	CGPoint cp1 = CGPointZero;
-	CGPoint cp2 = CGPointZero;
-	CGFloat curve = 4.0;
-	
-	p.x = 0.5;
-	p.y = 0.5;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.x = size.width - curve - 1.0;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.x = size.width - 1.0;
-	cp1.x = size.width - 0.5;
-	cp1.y = 0.5 + curve / 2;
-	cp2.x = size.width - curve / 2 - 1.0;
-	cp2.y = 0.5;
-	p.y = curve + 0.5;
-	CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-	p.y = size.height - curve - 1.0;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.x = size.width - curve - 1.0;
-	cp2.x = size.width - 1.0;
-	cp2.y = size.height - curve / 2 - 1.0;
-	cp1.x = size.width - curve / 2 - 1.0;
-	cp1.y = size.height - 0.5;
-	p.y = size.height - 0.5;
-	CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-	p.x = 0.5;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.y = 0.5;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	
-	copiedPath = CGPathCreateCopy(path);
-	CGPathRelease(path);
-    
-    return CFAutorelease(copiedPath);
-}
-
-// direction: 0 = left, 1 = top, 2 = right, 3 = bottom
-CGPathRef SBTrianglePath(CGRect rect, NSInteger direction)
-{
-	CGPathRef copiedPath = nil;
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGPoint p = CGPointZero;
-	
-	if (direction == 0)	// Left
-	{
-		p.x = CGRectGetMaxX(rect);
-		p.y = CGRectGetMinY(rect);
-		CGPathMoveToPoint(path, nil, p.x, p.y);
-		p.y = CGRectGetMaxY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMinX(rect);
-		p.y = CGRectGetMidY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMaxX(rect);
-		p.y = CGRectGetMinY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-	}
-	if (direction == 1)	// Top
-	{
-		p.x = CGRectGetMinX(rect);
-		p.y = CGRectGetMaxY(rect);
-		CGPathMoveToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMaxX(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMidX(rect);
-		p.y = CGRectGetMinY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMinX(rect);
-		p.y = CGRectGetMaxY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-	}
-	else if (direction == 2)	// Right
-	{
-		p.x = CGRectGetMinX(rect);
-		p.y = CGRectGetMinY(rect);
-		CGPathMoveToPoint(path, nil, p.x, p.y);
-		p.y = CGRectGetMaxY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMaxX(rect);
-		p.y = CGRectGetMidY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMinX(rect);
-		p.y = CGRectGetMinY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-	}
-	else if (direction == 3)	// Bottom
-	{
-		p.x = CGRectGetMinX(rect);
-		p.y = CGRectGetMinY(rect);
-		CGPathMoveToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMaxX(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMidX(rect);
-		p.y = CGRectGetMaxY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-		p.x = CGRectGetMinX(rect);
-		p.y = CGRectGetMinY(rect);
-		CGPathAddLineToPoint(path, nil, p.x, p.y);
-	}
-	
-	copiedPath = CGPathCreateCopy(path);
-	CGPathRelease(path);
-    
-    return CFAutorelease(copiedPath);
-}
 
 CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
 {
@@ -401,7 +182,7 @@ CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
 	path = CGPathCreateMutable();
 	p.x = CGRectGetMidX(r);
 	p.y = r.origin.y;
-	SBCGPointApplyTransform3D(&p, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
 	CGPathMoveToPoint(path, nil, p.x, p.y);
 	p.x = r.origin.x;
 	p.y = CGRectGetMidY(r);
@@ -409,9 +190,9 @@ CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
 	cp1.y = r.origin.y;
 	cp2.x = r.origin.x;
 	cp2.y = r.origin.y + r.size.height / 4;
-	SBCGPointApplyTransform3D(&p, &transform);
-	SBCGPointApplyTransform3D(&cp1, &transform);
-	SBCGPointApplyTransform3D(&cp2, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
+	SBCGPointApplyTransform3DO(&cp1, &transform);
+	SBCGPointApplyTransform3DO(&cp2, &transform);
 	CGPathAddCurveToPoint(path, nil, cp1.x, cp1.y, cp2.x, cp2.y, p.x, p.y);
 	p.x = CGRectGetMidX(r);
 	p.y = CGRectGetMaxY(r);
@@ -419,9 +200,9 @@ CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
 	cp1.y = r.origin.y + r.size.height / 4 * 3;
 	cp2.x = r.origin.x + r.size.width / 4;
 	cp2.y = CGRectGetMaxY(r);
-	SBCGPointApplyTransform3D(&p, &transform);
-	SBCGPointApplyTransform3D(&cp1, &transform);
-	SBCGPointApplyTransform3D(&cp2, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
+	SBCGPointApplyTransform3DO(&cp1, &transform);
+	SBCGPointApplyTransform3DO(&cp2, &transform);
 	CGPathAddCurveToPoint(path, nil, cp1.x, cp1.y, cp2.x, cp2.y, p.x, p.y);
 	p.x = CGRectGetMaxX(r);
 	p.y = CGRectGetMidY(r);
@@ -429,9 +210,9 @@ CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
 	cp1.y = CGRectGetMaxY(r);
 	cp2.x = CGRectGetMaxX(r);
 	cp2.y = r.origin.y + r.size.height / 4 * 3;
-	SBCGPointApplyTransform3D(&p, &transform);
-	SBCGPointApplyTransform3D(&cp1, &transform);
-	SBCGPointApplyTransform3D(&cp2, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
+	SBCGPointApplyTransform3DO(&cp1, &transform);
+	SBCGPointApplyTransform3DO(&cp2, &transform);
 	CGPathAddCurveToPoint(path, nil, cp1.x, cp1.y, cp2.x, cp2.y, p.x, p.y);
 	p.x = CGRectGetMidX(r);
 	p.y = r.origin.y;
@@ -439,9 +220,9 @@ CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform)
 	cp1.y = r.origin.y + r.size.height / 4;
 	cp2.x = r.origin.x + r.size.width / 4 * 3;
 	cp2.y = r.origin.y;
-	SBCGPointApplyTransform3D(&p, &transform);
-	SBCGPointApplyTransform3D(&cp1, &transform);
-	SBCGPointApplyTransform3D(&cp2, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
+	SBCGPointApplyTransform3DO(&cp1, &transform);
+	SBCGPointApplyTransform3DO(&cp2, &transform);
 	CGPathAddCurveToPoint(path, nil, cp1.x, cp1.y, cp2.x, cp2.y, p.x, p.y);
 	
 	copiedPath = CGPathCreateCopy(path);
@@ -462,11 +243,11 @@ CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
 	// line left-top to right-top
 	p.x = (rect.origin.x + curve);
 	p.y = rect.origin.y;
-	SBCGPointApplyTransform3D(&p, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
 	CGPathMoveToPoint(path, &t, p.x,p.y);
 	p.x = (rect.origin.x + rect.size.width - curve);
 	p.y = rect.origin.y;
-	SBCGPointApplyTransform3D(&p, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
 	CGPathAddLineToPoint(path, &t, p.x,p.y);
 	p.x = (rect.origin.x + rect.size.width);
 	cp1.x = (rect.origin.x + rect.size.width);
@@ -474,14 +255,14 @@ CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
 	cp2.x = (rect.origin.x + rect.size.width) - curve / 2;
 	cp2.y = rect.origin.y;
 	p.y = (rect.origin.y + curve);
-	SBCGPointApplyTransform3D(&p, &transform);
-	SBCGPointApplyTransform3D(&cp1, &transform);
-	SBCGPointApplyTransform3D(&cp2, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
+	SBCGPointApplyTransform3DO(&cp1, &transform);
+	SBCGPointApplyTransform3DO(&cp2, &transform);
 	CGPathAddCurveToPoint(path, &t, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
 	
 	p.x = (rect.origin.x + rect.size.width);
 	p.y = (rect.origin.y + rect.size.height - curve);
-	SBCGPointApplyTransform3D(&p, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
 	CGPathAddLineToPoint(path, &t, p.x,p.y);
 	p.x = (rect.origin.x + rect.size.width - curve);
 	p.y = (rect.origin.y + rect.size.height);
@@ -489,14 +270,14 @@ CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
 	cp1.x = (rect.origin.x + rect.size.width) - curve / 2;
 	cp2.y = (rect.origin.y + rect.size.height) - curve / 2;
 	cp2.x = (rect.origin.x + rect.size.width);
-	SBCGPointApplyTransform3D(&p, &transform);
-	SBCGPointApplyTransform3D(&cp1, &transform);
-	SBCGPointApplyTransform3D(&cp2, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
+	SBCGPointApplyTransform3DO(&cp1, &transform);
+	SBCGPointApplyTransform3DO(&cp2, &transform);
 	CGPathAddCurveToPoint(path, &t, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
 	
 	p.x = (rect.origin.x + curve);
 	p.y = (rect.origin.y + rect.size.height);
-	SBCGPointApplyTransform3D(&p, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
 	CGPathAddLineToPoint(path, &t, p.x,p.y);
 	p.x = rect.origin.x;
 	cp1.x = rect.origin.x;
@@ -504,14 +285,14 @@ CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
 	cp2.x = rect.origin.x + curve / 2;
 	cp2.y = (rect.origin.y + rect.size.height);
 	p.y = (rect.origin.y + rect.size.height - curve);
-	SBCGPointApplyTransform3D(&p, &transform);
-	SBCGPointApplyTransform3D(&cp1, &transform);
-	SBCGPointApplyTransform3D(&cp2, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
+	SBCGPointApplyTransform3DO(&cp1, &transform);
+	SBCGPointApplyTransform3DO(&cp2, &transform);
 	CGPathAddCurveToPoint(path, &t, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
 	
 	p.x = rect.origin.x;
 	p.y = (rect.origin.y + curve);
-	SBCGPointApplyTransform3D(&p, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
 	CGPathAddLineToPoint(path, &t, p.x,p.y);
 	p.y = rect.origin.y;
 	cp1.y = rect.origin.y;
@@ -519,9 +300,9 @@ CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
 	cp2.y = rect.origin.y + curve / 2;
 	cp2.x = rect.origin.x;
 	p.x = (rect.origin.x + curve);
-	SBCGPointApplyTransform3D(&p, &transform);
-	SBCGPointApplyTransform3D(&cp1, &transform);
-	SBCGPointApplyTransform3D(&cp2, &transform);
+	SBCGPointApplyTransform3DO(&p, &transform);
+	SBCGPointApplyTransform3DO(&cp1, &transform);
+	SBCGPointApplyTransform3DO(&cp2, &transform);
 	CGPathAddCurveToPoint(path, &t, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
 	
 	CGPathCloseSubpath(path);
@@ -531,7 +312,7 @@ CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform)
     return CFAutorelease(copiedPath);
 }
 
-void SBCGPointApplyTransform3D(CGPoint *p, const CATransform3D *t)
+void SBCGPointApplyTransform3DO(CGPoint *p, const CATransform3D *t)
 {
 	double px = p->x;
 	double py = p->y, w;
@@ -542,7 +323,7 @@ void SBCGPointApplyTransform3D(CGPoint *p, const CATransform3D *t)
 
 #pragma mark Drawing
 
-void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, const CGFloat locations[], const CGFloat colors[], const CGPoint points[])
+void SBDrawGradientInContextO(CGContextRef ctx, NSUInteger count, const CGFloat locations[], const CGFloat colors[], const CGPoint points[])
 {
 	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, colors, locations, count);
@@ -552,15 +333,6 @@ void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, const CGFloat l
 	CGColorSpaceRelease(colorSpace);
 //	if (CFGetRetainCount(gradientFunction) > 0)
 //		CGFunctionRelease(gradientFunction);
-}
-
-void SBDrawRadialGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint centers[], CGFloat radiuses[])
-{
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, colors, locations, count);
-	CGContextDrawRadialGradient(ctx, gradient, centers[0], radiuses[0], centers[1], radiuses[1], kCGGradientDrawsAfterEndLocation);
-	CGGradientRelease(gradient);
-	CGColorSpaceRelease(colorSpace);
 }
 
 void SBGetAlternateSelectedLightControlColorComponents(CGFloat colors[4])
@@ -579,875 +351,6 @@ void SBGetAlternateSelectedDarkControlColorComponents(CGFloat colors[4])
 {
 	NSColor *selectedDarkColor = [[NSColor.alternateSelectedControlColor blendedColorWithFraction:0.3 ofColor:NSColor.blackColor] colorUsingColorSpace:NSColorSpace.genericRGBColorSpace];
 	[selectedDarkColor getComponents:colors];
-}
-
-#pragma mark Image
-
-CGImageRef SBBackwardIconImage(CGSize size, BOOL enabled, BOOL backing)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGPathRef path = nil;
-	CGPathRef tpath = SBTrianglePath(CGRectMake(9.0, 7.0, size.width - 9.0 * 2, size.height - 7.0 * 2), 0);
-	NSUInteger count = 2;
-	CGFloat locations[count];
-	CGFloat colors[count * 4];
-	CGPoint points[count];
-	CGFloat tgrayScale = enabled ? 0.2 : 0.5;
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	CGColorSpaceRelease(colorSpace);
-	CGContextSaveGState(ctx);
-	CGContextTranslateCTM(ctx, 0.0, size.height);
-	CGContextScaleCTM(ctx, 1.0, -1.0);
-	
-	path = SBLeftButtonPath(size);
-	
-	// Background
-	locations[0] = 0.0;
-	locations[1] = 1.0;
-	colors[0] = colors[1] = colors[2] = backing ? 0.95 : 0.8;
-	colors[3] = 1.0;
-	colors[4] = colors[5] = colors[6] = backing ? 0.65 : 0.5;
-	colors[7] = 1.0;
-	points[0] = CGPointZero;
-	points[1] = CGPointMake(0.0, size.height);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextClip(ctx);
-	SBDrawGradientInContext(ctx, count, locations, colors, points);
-	CGContextRestoreGState(ctx);
-	
-	// Frame
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.2, 0.2, 0.2, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	
-	// Triangle
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, tpath);
-	CGContextSetRGBFillColor(ctx, tgrayScale, tgrayScale, tgrayScale, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextFillPath(ctx);
-	CGContextRestoreGState(ctx);
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBForwardIconImage(CGSize size, BOOL enabled, BOOL backing)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGPathRef path = nil;
-	CGPathRef tpath = SBTrianglePath(CGRectMake(9.0, 7.0, size.width - 9.0 * 2, size.height - 7.0 * 2), 2);
-	NSUInteger count = 2;
-	CGFloat locations[count];
-	CGFloat colors[count * 4];
-	CGPoint points[count];
-	CGFloat tgrayScale = enabled ? 0.2 : 0.5;
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	CGColorSpaceRelease(colorSpace);
-	CGContextSaveGState(ctx);
-	CGContextTranslateCTM(ctx, 0.0, size.height);
-	CGContextScaleCTM(ctx, 1.0, -1.0);
-	
-	path = SBCenterButtonPath(size);
-	
-	// Background
-	locations[0] = 0.0;
-	locations[1] = 1.0;
-	colors[0] = colors[1] = colors[2] = backing ? 0.95 : 0.8;
-	colors[3] = 1.0;
-	colors[4] = colors[5] = colors[6] = backing ? 0.65 : 0.5;
-	colors[7] = 1.0;
-	points[0] = CGPointZero;
-	points[1] = CGPointMake(0.0, size.height);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextClip(ctx);
-	SBDrawGradientInContext(ctx, count, locations, colors, points);
-	CGContextRestoreGState(ctx);
-	
-	// Frame
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.2, 0.2, 0.2, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	
-	// Triangle
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, tpath);
-	CGContextSetRGBFillColor(ctx, tgrayScale, tgrayScale, tgrayScale, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextFillPath(ctx);
-	CGContextRestoreGState(ctx);
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBGoIconImage(CGSize size, BOOL enabled, BOOL backing)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGPathRef path = nil;
-	CGFloat components1[4];
-	CGFloat components2[4];
-	NSUInteger count = 2;
-	CGFloat locations[count];
-	CGFloat colors[count * 4];
-	CGPoint points[count];
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	CGColorSpaceRelease(colorSpace);
-	CGContextSaveGState(ctx);
-	CGContextTranslateCTM(ctx, 0.0, size.height);
-	CGContextScaleCTM(ctx, 1.0, -1.0);
-	
-	path = SBRightButtonPath(size);
-	
-	// Background
-	if (!backing)
-	{
-		SBGetAlternateSelectedLightControlColorComponents(components1);
-		SBGetAlternateSelectedControlColorComponents(components2);
-	}
-	else {
-		components1[0] = components1[1] = components1[2] = 0.95;
-		components2[0] = components2[1] = components2[2] = 0.65;
-	}
-	locations[0] = 0.0;
-	locations[1] = 1.0;
-	colors[0] = components1[0];
-	colors[1] = components1[1];
-	colors[2] = components1[2];
-	colors[3] = enabled ? 1.0 : 0.5;
-	colors[4] = components2[0];
-	colors[5] = components2[1];
-	colors[6] = components2[2];
-	colors[7] = enabled ? 1.0 : 0.5;
-	points[0] = CGPointZero;
-	points[1] = CGPointMake(0.0, size.height);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextClip(ctx);
-	SBDrawGradientInContext(ctx, count, locations, colors, points);
-	CGContextRestoreGState(ctx);
-	
-	// Frame
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.2, 0.2, 0.2, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBZoomOutIconImage(CGSize size)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	NSGraphicsContext *bctx = nil;
-	NSImage *frameImage = [NSImage imageNamed:@"LeftButton"];
-	NSImage *iconImage = [NSImage imageNamed:@"ZoomOut"];
-	NSRect r = NSZeroRect;
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	bctx = [NSGraphicsContext graphicsContextWithGraphicsPort:ctx flipped:NO];
-	CGColorSpaceRelease(colorSpace);
-	
-	[NSGraphicsContext saveGraphicsState];
-    NSGraphicsContext.currentContext = bctx;
-	
-	// Frame
-	if (frameImage)
-	{
-		r.size = frameImage.size;
-		r.origin.x = (size.width - r.size.width) / 2;
-		r.origin.y = (size.height - r.size.height) / 2;
-		[frameImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-	}
-	
-	// Image
-	if (iconImage)
-	{
-		r.size = iconImage.size;
-		r.origin.x = (size.width - r.size.width) / 2;
-		r.origin.y = (size.height - r.size.height) / 2;
-		[iconImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-	}
-	[NSGraphicsContext restoreGraphicsState];
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBActualSizeIconImage(CGSize size)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	NSGraphicsContext *bctx = nil;
-	NSImage *frameImage = [NSImage imageNamed:@"CenterButton"];
-	NSImage *iconImage = [NSImage imageNamed:@"ActualSize"];
-	NSRect r = NSZeroRect;
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	bctx = [NSGraphicsContext graphicsContextWithGraphicsPort:ctx flipped:NO];
-	CGColorSpaceRelease(colorSpace);
-	
-	[NSGraphicsContext saveGraphicsState];
-    NSGraphicsContext.currentContext = bctx;
-	
-	// Frame
-	if (frameImage)
-	{
-		r.size = frameImage.size;
-		r.origin.x = (size.width - r.size.width) / 2;
-		r.origin.y = (size.height - r.size.height) / 2;
-		[frameImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-	}
-	
-	// Image
-	if (iconImage)
-	{
-		r.size = iconImage.size;
-		r.origin.x = (size.width - r.size.width) / 2;
-		r.origin.y = (size.height - r.size.height) / 2;
-		[NSGraphicsContext saveGraphicsState];
-        NSGraphicsContext.currentContext = bctx;
-		[iconImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-	}
-	[NSGraphicsContext restoreGraphicsState];
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBZoomInIconImage(CGSize size)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	NSGraphicsContext *bctx = nil;
-	NSImage *frameImage = [NSImage imageNamed:@"RightButton"];
-	NSImage *iconImage = [NSImage imageNamed:@"ZoomIn"];
-	NSRect r = NSZeroRect;
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	bctx = [NSGraphicsContext graphicsContextWithGraphicsPort:ctx flipped:NO];
-	CGColorSpaceRelease(colorSpace);
-	
-	[NSGraphicsContext saveGraphicsState];
-    NSGraphicsContext.currentContext = bctx;
-	
-	// Frame
-	if (frameImage)
-	{
-		r.size = frameImage.size;
-		r.origin.x = (size.width - r.size.width) / 2;
-		r.origin.y = (size.height - r.size.height) / 2;
-		[frameImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-	}
-	
-	// Image
-	if (iconImage)
-	{
-		r.size = iconImage.size;
-		r.origin.x = (size.width - r.size.width) / 2;
-		r.origin.y = (size.height - r.size.height) / 2;
-		[NSGraphicsContext saveGraphicsState];
-        NSGraphicsContext.currentContext = bctx;
-		[iconImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-	}
-	[NSGraphicsContext restoreGraphicsState];
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBAddIconImage(CGSize size, BOOL backing)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGMutablePathRef path = nil;
-	CGPoint p = CGPointZero;
-	CGPoint cp1 = CGPointZero;
-	CGPoint cp2 = CGPointZero;
-	CGFloat curve = 4.0;
-	CGFloat margin = 7.0;
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	CGColorSpaceRelease(colorSpace);
-	CGContextSaveGState(ctx);
-	CGContextTranslateCTM(ctx, 0.0, size.height);
-	CGContextScaleCTM(ctx, 1.0, -1.0);
-	
-	path = CGPathCreateMutable();
-	p.y = 1.0;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.x = size.width - curve;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.x = size.width;
-	cp1.x = size.width;
-	cp1.y = 1.0 + curve / 2;
-	cp2.x = size.width - curve / 2;
-	cp2.y = 1.0;
-	p.y = 1.0 + curve;
-	CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-	p.y = size.height;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.x = 0.0;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	
-	if (!backing)
-	{
-		// Background
-		NSUInteger count = 2;
-		CGFloat locations[count];
-		CGFloat colors[count * 4];
-		CGPoint points[count];
-		locations[0] = 0.0;
-		locations[1] = 1.0;
-		colors[0] = colors[1] = colors[2] = 0.6;
-		colors[3] = 1.0;
-		colors[4] = colors[5] = colors[6] = 0.55;
-		colors[7] = 1.0;
-		points[0] = CGPointZero;
-		points[1] = CGPointMake(0.0, size.height);
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextClip(ctx);
-		SBDrawGradientInContext(ctx, count, locations, colors, points);
-		CGContextRestoreGState(ctx);
-	}
-	
-	// Frame
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.2, 0.2, 0.2, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
-	
-	// Cross
-	path = CGPathCreateMutable();
-	p.x = size.width / 2;
-	p.y = margin - 1.0;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.y = size.height / 2;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.3, 0.3, 0.3, 1.0);
-	CGContextSetLineWidth(ctx, 3.0);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
-	
-	path = CGPathCreateMutable();
-	p.x = margin - 1.0;
-	p.y = size.height / 2 - 1.0;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.x = size.width - margin + 1.0;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.3, 0.3, 0.3, 1.0);
-	CGContextSetLineWidth(ctx, 2.0);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
-	
-	path = CGPathCreateMutable();
-	p.x = size.width / 2;
-	p.y = size.height / 2;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.y = size.height - margin + 1.0;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.75, 0.75, 0.75, 1.0);
-	CGContextSetLineWidth(ctx, 3.0);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
-	
-	path = CGPathCreateMutable();
-	p.x = margin - 1.0;
-	p.y = size.height / 2 + 1.0;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.x = size.width - margin + 1.0;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.75, 0.75, 0.75, 1.0);
-	CGContextSetLineWidth(ctx, 2.0);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
-	
-	path = CGPathCreateMutable();
-	p.x = size.width / 2;
-	p.y = margin;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.y = size.height - margin;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.x = margin;
-	p.y = size.height / 2;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.x = size.width - margin;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	if (backing)
-		CGContextSetRGBStrokeColor(ctx, 0.7, 0.7, 0.7, 1.0);
-	else
-		CGContextSetRGBStrokeColor(ctx, 0.5, 0.5, 0.5, 1.0);
-	CGContextSetLineWidth(ctx, 3.0);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBCloseIconImage()
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGSize size = CGSizeMake(17.0, 17.0);
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	CGColorSpaceRelease(colorSpace);
-	CGContextSaveGState(ctx);
-	CGContextTranslateCTM(ctx, 0.0, size.height);
-	CGContextScaleCTM(ctx, 1.0, -1.0);
-	
-	CGFloat side = size.width;
-	CGRect r = CGRectMake((size.width - side) / 2, (size.height - side) / 2, side, side);
-	CGMutablePathRef xPath = CGPathCreateMutable();
-	CGPoint p = CGPointZero;
-	CGFloat across = r.size.width;
-	CGFloat length = 11.0;
-	CGFloat margin = r.origin.x;
-	CGFloat lineWidth = 2;
-	CGFloat center = margin + across / 2;
-	CGFloat grayScaleUp = 1.0;
-	CGAffineTransform t = CGAffineTransformIdentity;
-	t = CGAffineTransformTranslate(t, center, center);
-	t = CGAffineTransformRotate(t, -45 * M_PI / 180);
-	p.x = -length / 2;
-	CGPathMoveToPoint(xPath, &t, p.x, p.y);
-	p.x = length / 2;
-	CGPathAddLineToPoint(xPath, &t, p.x, p.y);
-	p.x = 0;
-	p.y = -length / 2;
-	CGPathMoveToPoint(xPath, &t, p.x, p.y);
-	p.y = length / 2;
-	CGPathAddLineToPoint(xPath, &t, p.x, p.y);
-	
-	// Close
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, xPath);
-	CGContextSetLineWidth(ctx, lineWidth);
-	CGContextSetRGBStrokeColor(ctx, grayScaleUp, grayScaleUp, grayScaleUp, 1.0);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGPathRelease(xPath);
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBIconImageWithName(NSString *imageName, SBButtonShape shape, CGSize size)
-{
-	return SBIconImage([NSImage imageNamed:imageName].CGImage, shape, size);
-}
-
-CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGSize imageSize = CGSizeMake(CGImageGetWidth(iconImage), CGImageGetHeight(iconImage));
-	CGRect imageRect = CGRectMake((size.width - imageSize.width) / 2, (size.height - imageSize.height) / 2, imageSize.width, imageSize.height);
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	CGColorSpaceRelease(colorSpace);
-	CGContextSaveGState(ctx);
-	CGContextTranslateCTM(ctx, 0.0, size.height);
-	CGContextScaleCTM(ctx, 1.0, -1.0);
-	
-	// Frame
-	{
-		CGMutablePathRef path = nil;
-		CGRect insetRect = CGRectZero;
-		CGColorRef shadowColor = nil;
-		CGFloat insetMargin = 3.0;
-		CGFloat lineWidth = 2.0;
-		path = CGPathCreateMutable();
-		insetRect = CGRectMake(0.0, 0.0, size.width, size.height);
-		switch (shape)
-		{
-			case SBButtonShapeExclusive:
-				insetMargin = 4.0;
-				insetRect = CGRectInset(insetRect, insetMargin, insetMargin);
-				CGPathAddEllipseInRect(path, nil, insetRect);
-				break;
-			case SBButtonShapeLeft:
-			{
-				CGPoint p = CGPointZero;
-				CGPoint cp1 = CGPointZero;
-				CGPoint cp2 = CGPointZero;
-				CGFloat rad = 0;
-				
-				insetRect.origin.x += insetMargin;
-				insetRect.origin.y += insetMargin;
-				insetRect.size.width -= insetMargin;
-				insetRect.size.height -= insetMargin * 2;
-				rad = insetRect.size.height / 2;
-				
-				p.x = CGRectGetMaxX(insetRect) + lineWidth / 4;
-				p.y = insetRect.origin.y;
-				CGPathMoveToPoint(path, nil, p.x, p.y);
-				p.x = insetRect.origin.x + rad;
-				CGPathAddLineToPoint(path, nil, p.x, p.y);
-				
-				p.x = insetRect.origin.x;
-				cp1.x = insetRect.origin.x;
-				cp1.y = insetRect.origin.y + rad / 2;
-				cp2.x = insetRect.origin.x + rad / 2;
-				cp2.y = insetRect.origin.y;
-				p.y = insetRect.origin.y + rad;
-				CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-				
-				p.x = insetRect.origin.x + rad;
-				cp2.x = insetRect.origin.x;
-				cp2.y = CGRectGetMaxY(insetRect) - rad / 2;
-				cp1.x = insetRect.origin.x + rad / 2;
-				cp1.y = CGRectGetMaxY(insetRect);
-				p.y = CGRectGetMaxY(insetRect);
-				CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-				
-				p.x = CGRectGetMaxX(insetRect) + lineWidth / 4;
-				CGPathAddLineToPoint(path, nil, p.x, p.y);
-				
-				CGPathCloseSubpath(path);
-				
-				imageRect.origin.x += insetMargin;
-				break;
-			}
-			case SBButtonShapeCenter:
-			{
-				insetRect.origin.y += insetMargin;
-				insetRect.size.height -= insetMargin * 2;
-				CGPathAddRect(path, nil, insetRect);
-				break;
-			}
-			case SBButtonShapeRight:
-			{
-				CGPoint p = CGPointZero;
-				CGPoint cp1 = CGPointZero;
-				CGPoint cp2 = CGPointZero;
-				CGFloat rad = 0;
-				
-				insetRect.origin.y += insetMargin;
-				insetRect.size.width -= insetMargin;
-				insetRect.size.height -= insetMargin * 2;
-				rad = insetRect.size.height / 2;
-				
-				p.x = insetRect.origin.x - lineWidth / 4;
-				p.y = insetRect.origin.y;
-				CGPathMoveToPoint(path, nil, p.x, p.y);
-				p.x = CGRectGetMaxX(insetRect) - rad;
-				CGPathAddLineToPoint(path, nil, p.x, p.y);
-				
-				p.x = CGRectGetMaxX(insetRect);
-				cp1.x = CGRectGetMaxX(insetRect);
-				cp1.y = CGRectGetMinY(insetRect) + rad / 2;
-				cp2.x = CGRectGetMaxX(insetRect) - rad / 2;
-				cp2.y = CGRectGetMinY(insetRect);
-				p.y = CGRectGetMinY(insetRect) + rad;
-				CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-				
-				p.x = CGRectGetMaxX(insetRect) - rad;
-				cp2.x = CGRectGetMaxX(insetRect);
-				cp2.y = CGRectGetMaxY(insetRect) - rad / 2;
-				cp1.x = CGRectGetMaxX(insetRect) - rad / 2;
-				cp1.y = CGRectGetMaxY(insetRect);
-				p.y = CGRectGetMaxY(insetRect);
-				CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-				
-				p.x = insetRect.origin.x - lineWidth / 4;
-				CGPathAddLineToPoint(path, nil, p.x, p.y);
-				
-				CGPathCloseSubpath(path);
-				
-				imageRect.origin.x -= insetMargin / 2;
-				break;
-			}
-		}
-		shadowColor = CGColorCreateGenericGray(0.0, 1.0);
-		
-		// Fill
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetShadowWithColor(ctx, CGSizeZero, insetMargin, shadowColor);
-		CGContextSetRGBFillColor(ctx, 0.0, 0.0, 0.0, 1.0);
-		CGContextFillPath(ctx);
-		CGContextRestoreGState(ctx);
-		CGColorRelease(shadowColor);
-		
-		// Stroke
-		CGContextSaveGState(ctx);
-		CGContextAddPath(ctx, path);
-		CGContextSetLineWidth(ctx, lineWidth);
-		CGContextSetRGBStrokeColor(ctx, 0.9, 0.9, 0.9, 1.0);
-		CGContextStrokePath(ctx);
-		CGContextRestoreGState(ctx);
-		CGPathRelease(path);
-	}
-	
-	// Icon
-	if (iconImage)
-	{
-		CGContextSaveGState(ctx);
-		CGContextTranslateCTM(ctx, 0.0, size.height);
-		CGContextScaleCTM(ctx, 1.0, -1.0);
-		CGContextDrawImage(ctx, imageRect, iconImage);
-		CGContextRestoreGState(ctx);
-	}
-	
-	CGContextRestoreGState(ctx);
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBFindBackwardIconImage(CGSize size, BOOL enabled)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGMutablePathRef path = nil;
-	CGPathRef tpath = SBTrianglePath(CGRectMake(9.0, 5.0, size.width - 9.0 * 2, size.height - 5.0 * 2), 0);
-	CGPoint p = CGPointZero;
-	CGPoint cp1 = CGPointZero;
-	CGPoint cp2 = CGPointZero;
-	CGFloat curve = size.height / 2;
-	NSUInteger count = 2;
-	CGFloat locations[count];
-	CGFloat colors[count * 4];
-	CGPoint points[count];
-	CGFloat tgrayScale = enabled ? 0.9 : 0.5;
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	CGColorSpaceRelease(colorSpace);
-	CGContextSaveGState(ctx);
-	CGContextTranslateCTM(ctx, 0.0, size.height);
-	CGContextScaleCTM(ctx, 1.0, -1.0);
-	
-	path = CGPathCreateMutable();
-	p.x = size.width;
-	p.y = 0.5;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.x = curve + 1.0;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.x = 0.5;
-	cp1.x = 0.5;
-	cp1.y = 0.5 + curve / 2;
-	cp2.x = curve / 2 + 0.5;
-	cp2.y = 0.5;
-	p.y = curve + 0.5;
-	CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-	p.x = curve + 0.5;
-	cp2.x = 0.5;
-	cp2.y = size.height - curve / 2 - 0.5;
-	cp1.x = curve / 2 + 0.5;
-	cp1.y = size.height - 0.5;
-	p.y = size.height - 0.5;
-	CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-	p.x = size.width;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.y = 0.5;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	
-	// Background
-	locations[0] = 0.0;
-	locations[1] = 1.0;
-	colors[0] = colors[1] = colors[2] = 0.5;
-	colors[3] = 1.0;
-	colors[4] = colors[5] = colors[6] = 0.0;
-	colors[7] = 1.0;
-	points[0] = CGPointZero;
-	points[1] = CGPointMake(0.0, size.height);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextClip(ctx);
-	SBDrawGradientInContext(ctx, count, locations, colors, points);
-	CGContextRestoreGState(ctx);
-	
-	// Frame
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
-	
-	// Triangle
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, tpath);
-	CGContextSetRGBFillColor(ctx, tgrayScale, tgrayScale, tgrayScale, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextFillPath(ctx);
-	CGContextRestoreGState(ctx);
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBFindForwardIconImage(CGSize size, BOOL enabled)
-{
-	CGImageRef image = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGMutablePathRef path = nil;
-	CGPathRef tpath = SBTrianglePath(CGRectMake(9.0, 5.0, size.width - 9.0 * 2, size.height - 5.0 * 2), 2);
-	CGPoint p = CGPointZero;
-	CGPoint cp1 = CGPointZero;
-	CGPoint cp2 = CGPointZero;
-	CGFloat curve = size.height / 2;
-	NSUInteger count = 2;
-	CGFloat locations[count];
-	CGFloat colors[count * 4];
-	CGPoint points[count];
-	CGFloat tgrayScale = enabled ? 0.9 : 0.5;
-	
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	CGColorSpaceRelease(colorSpace);
-	CGContextSaveGState(ctx);
-	CGContextTranslateCTM(ctx, 0.0, size.height);
-	CGContextScaleCTM(ctx, 1.0, -1.0);
-	
-	path = CGPathCreateMutable();
-	p.x = 0.0;
-	p.y = 0.5;
-	CGPathMoveToPoint(path, nil, p.x, p.y);
-	p.x = size.width - (curve + 1.0);
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.x = size.width;
-	cp1.x = size.width;
-	cp1.y = 0.5 + curve / 2;
-	cp2.x = size.width - curve / 2;
-	cp2.y = 0.5;
-	p.y = curve + 0.5;
-	CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-	p.x = size.width - curve;
-	cp2.x = size.width;
-	cp2.y = size.height - curve / 2 - 0.5;
-	cp1.x = size.width - curve / 2;
-	cp1.y = size.height - 0.5;
-	p.y = size.height - 0.5;
-	CGPathAddCurveToPoint(path, nil, cp2.x,cp2.y,cp1.x,cp1.y,p.x,p.y);
-	p.x = 0.0;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	p.y = 0.5;
-	CGPathAddLineToPoint(path, nil, p.x, p.y);
-	
-	// Background
-	locations[0] = 0.0;
-	locations[1] = 1.0;
-	colors[0] = colors[1] = colors[2] = 0.5;
-	colors[3] = 1.0;
-	colors[4] = colors[5] = colors[6] = 0.0;
-	colors[7] = 1.0;
-	points[0] = CGPointZero;
-	points[1] = CGPointMake(0.0, size.height);
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextClip(ctx);
-	SBDrawGradientInContext(ctx, count, locations, colors, points);
-	CGContextRestoreGState(ctx);
-	
-	// Frame
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, path);
-	CGContextSetRGBStrokeColor(ctx, 0.0, 0.0, 0.0, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextStrokePath(ctx);
-	CGContextRestoreGState(ctx);
-	CGPathRelease(path);
-	
-	// Triangle
-	CGContextSaveGState(ctx);
-	CGContextAddPath(ctx, tpath);
-	CGContextSetRGBFillColor(ctx, tgrayScale, tgrayScale, tgrayScale, 1.0);
-	CGContextSetLineWidth(ctx, 0.5);
-	CGContextFillPath(ctx);
-	CGContextRestoreGState(ctx);
-	
-	image = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(image);
-}
-
-CGImageRef SBBookmarkReflectionMaskImage(CGSize size)
-{
-	CGImageRef maskImage = nil;
-	CGContextRef ctx = nil;
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	NSUInteger count = 2;
-	CGFloat locations[count];
-	CGFloat colors[count * 4];
-	CGPoint points[count];
-	ctx = CGBitmapContextCreate(NULL, size.width, size.height, 8, 0, colorSpace, (kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedLast));
-	CGColorSpaceRelease(colorSpace);
-	locations[0] = 0.0;
-	locations[1] = 1.0;
-	colors[0] = colors[1] = colors[2] = 1.0;
-	colors[3] = 0.2;
-	colors[4] = colors[5] = colors[6] = 1.0;
-	colors[7] = 0.0;
-	points[0] = CGPointZero;
-	points[1] = CGPointMake(0.0, size.height);
-	CGContextSaveGState(ctx);
-	CGContextAddRect(ctx, CGRectMake(0, 0, size.width, size.height));
-	CGContextClip(ctx);
-	SBDrawGradientInContext(ctx, count, locations, colors, points);
-	CGContextRestoreGState(ctx);
-	maskImage = CGBitmapContextCreateImage(ctx);
-    CGContextRelease(ctx);
-    return (CGImageRef)CFAutorelease(maskImage);
 }
 
 #pragma mark Math
@@ -1598,58 +501,6 @@ NSInteger SBUnsignedIntegerSortFunction(id num1, id num2, void *context)
 		r = NSOrderedDescending;
 	}
 	return r;
-}
-
-void SBRunAlertWithMessage(NSString *message)
-{
-	NSRunAlertPanel(NSLocalizedString(@"Error", nil), message, NSLocalizedString(@"OK", nil), nil, nil);
-}
-
-void SBDisembedViewInSplitView(NSView *view, NSSplitView *splitView)
-{
-	NSRect r = splitView.frame;
-	id superview = splitView.superview;
-	if (superview)
-	{
-		view.frame = r;
-		[view removeFromSuperview];
-		[superview addSubview:view];
-		[splitView removeFromSuperview];
-	}
-}
-
-CGFloat SBDistancePoints(NSPoint p1, NSPoint p2)
-{
-	return sqrtf((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
-}
-
-BOOL SBAllowsDrag(NSPoint downPoint, NSPoint dragPoint)
-{
-	return SBDistancePoints(downPoint, dragPoint) > 10;
-}
-
-void SBLocalizeTitlesInMenu(NSMenu *menu)
-{
-	NSString *mtitle = menu.title;
-	NSString *mlocalizedTitle = NSLocalizedString(mtitle, nil);
-	if (![mtitle isEqualToString:mlocalizedTitle])
-	{
-        menu.title = mlocalizedTitle;
-	}
-	for (NSMenuItem *item in menu.itemArray)
-	{
-		NSMenu *submenu = item.submenu;
-		NSString *title = item.title;
-		NSString *localizedTitle = NSLocalizedString(title, nil);
-		if (![title isEqualToString:localizedTitle])
-		{
-            item.title = localizedTitle;
-		}
-		if (submenu)
-		{
-			SBLocalizeTitlesInMenu(submenu);
-		}
-	}
 }
 
 NSData *SBLocalizableStringsData(NSArray *fieldSet)

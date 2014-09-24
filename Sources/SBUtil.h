@@ -34,43 +34,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 CF_IMPLICIT_BRIDGING_ENABLED
 
-CGPathRef SBLeftButtonPath(CGSize size);
-CGPathRef SBCenterButtonPath(CGSize size);
-CGPathRef SBRightButtonPath(CGSize size);
-CGPathRef SBTrianglePath(CGRect rect, NSInteger direction);
 CGPathRef SBEllipsePath3D(CGRect r, CATransform3D transform);
 CGPathRef SBRoundedPath3D(CGRect rect, CGFloat curve, CATransform3D transform);
-void SBCGPointApplyTransform3D(CGPoint *p, const CATransform3D *t);
 
 CF_IMPLICIT_BRIDGING_DISABLED
 
-// Drawing
-void SBDrawGradientInContext(CGContextRef ctx, NSUInteger count, const CGFloat locations[], const CGFloat colors[], const CGPoint points[]);
-void SBDrawRadialGradientInContext(CGContextRef ctx, NSUInteger count, CGFloat locations[], CGFloat colors[], CGPoint centers[], CGFloat radiuses[]);
-// Image
-
-CF_IMPLICIT_BRIDGING_ENABLED
-
-CGImageRef SBBackwardIconImage(CGSize size, BOOL enabled, BOOL backing);
-CGImageRef SBForwardIconImage(CGSize size, BOOL enabled, BOOL backing);
-CGImageRef SBGoIconImage(CGSize size, BOOL enabled, BOOL backing);
-CGImageRef SBZoomOutIconImage(CGSize size);
-CGImageRef SBActualSizeIconImage(CGSize size);
-CGImageRef SBZoomInIconImage(CGSize size);
-CGImageRef SBAddIconImage(CGSize size, BOOL backing);
-CGImageRef SBCloseIconImage();
-
-CF_IMPLICIT_BRIDGING_DISABLED
-
-CGImageRef SBIconImageWithName(NSString *imageName, SBButtonShape shape, CGSize size) CF_RETURNS_NOT_RETAINED;
-CGImageRef SBIconImage(CGImageRef iconImage, SBButtonShape shape, CGSize size) CF_RETURNS_NOT_RETAINED;
-
-CF_IMPLICIT_BRIDGING_ENABLED
-
-CGImageRef SBFindBackwardIconImage(CGSize size, BOOL enabled);
-CGImageRef SBFindForwardIconImage(CGSize size, BOOL enabled);
-CGImageRef SBBookmarkReflectionMaskImage(CGSize size);
 // Math
+
+CF_IMPLICIT_BRIDGING_ENABLED
+
 NSInteger SBRemainder(NSInteger value1, NSInteger value2);
 BOOL SBRemainderIsZero(NSInteger value1, NSInteger value2);
 NSInteger SBGreatestCommonDivisor(NSInteger a, NSInteger b);
@@ -78,16 +50,14 @@ NSInteger SBGreatestCommonDivisor(NSInteger a, NSInteger b);
 CF_IMPLICIT_BRIDGING_DISABLED
 
 // Others
+
 NSMenu *SBEncodingMenu(id target, SEL selector, BOOL showDefault);
 NSComparisonResult SBStringEncodingSortFunction(id num1, id num2, void *context);
 NSInteger SBUnsignedIntegerSortFunction(id num1, id num2, void *context);
-void SBRunAlertWithMessage(NSString *message);
-void SBDisembedViewInSplitView(NSView *view, NSSplitView *splitView);
-CGFloat SBDistancePoints(NSPoint p1, NSPoint p2);
-BOOL SBAllowsDrag(NSPoint downPoint, NSPoint dragPoint);
-void SBLocalizeTitlesInMenu(NSMenu *menu);
 NSData *SBLocalizableStringsData(NSArray *fieldSet);
+
 // Debug
+
 id SBValueForKey(NSString *keyName, NSDictionary *dictionary);
 NSDictionary *SBDebugViewStructure(NSView *view);
 NSDictionary *SBDebugLayerStructure(CALayer *layer);

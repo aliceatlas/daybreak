@@ -347,7 +347,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
             let maskImage = SBBookmarkReflectionMaskImage(imageRect.size)
             CGContextTranslateCTM(ctx, 0.0, 0.0)
             CGContextScaleCTM(ctx, 1.0, -1.0)
-            CGContextClipToMask(ctx, imageRect, maskImage)
+            CGContextClipToMask(ctx, imageRect, maskImage.CGImage)
             image.drawInRect(imageRect, fromRect: NSMakeRect(0, 0, image.size.width, image.size.height * 0.5), operation: .CompositeSourceOver, fraction: 1.0)
         }
     }

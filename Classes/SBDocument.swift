@@ -136,9 +136,9 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         zoomButton0.action = "zoomOutView:"
         zoomButton1.action = "scaleToActualSizeForView:"
         zoomButton2.action = "zoomInView:"
-        zoomButton0.image = NSImage(CGImage: SBZoomOutIconImage(r0.size))
-        zoomButton1.image = NSImage(CGImage: SBActualSizeIconImage(r1.size))
-        zoomButton2.image = NSImage(CGImage: SBZoomInIconImage(r2.size))
+        zoomButton0.image = SBZoomOutIconImage(r0.size)
+        zoomButton1.image = SBActualSizeIconImage(r1.size)
+        zoomButton2.image = SBZoomInIconImage(r2.size)
         zoomButton.buttons = [zoomButton0, zoomButton1, zoomButton2]
         return zoomButton
     }()

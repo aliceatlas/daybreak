@@ -185,7 +185,7 @@ class SBAboutView: SBView {
             let ctx = SBCurrentGraphicsPort
             CGContextTranslateCTM(ctx, 0.0, imageRect.size.height)
             CGContextScaleCTM(ctx, 1.0, -1.0)
-            CGContextClipToMask(ctx, imageRect, maskImage)
+            CGContextClipToMask(ctx, imageRect, maskImage.CGImage)
             image.drawInRect(imageRect, fromRect: NSMakeRect(0, 0, imageRect.size.width, imageRect.size.height), operation: .CompositeSourceOver, fraction: 1.0)
         }
     }

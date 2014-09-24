@@ -101,7 +101,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         let removeRect = self.removeButtonRect(nil)
         let removeButton = SBButton(frame: removeRect)
         removeButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
-        removeButton.image = NSImage(CGImage: SBIconImage(SBCloseIconImage(), .Left, removeRect.size))
+        removeButton.image = SBIconImage(SBCloseIconImage(), .Left, removeRect.size)
         removeButton.action = "remove"
         return removeButton
     }()
@@ -110,7 +110,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         let editRect = self.editButtonRect(nil)
         let editButton = SBButton(frame: editRect)
         editButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
-        editButton.image = NSImage(CGImage: SBIconImageWithName("Edit", .Center, editRect.size))
+        editButton.image = SBIconImageWithName("Edit", .Center, editRect.size)
         editButton.action = "edit"
         return editButton
     }()
@@ -119,7 +119,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         let updateRect = self.updateButtonRect(nil)
         let updateButton = SBButton(frame: updateRect)
         updateButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
-        updateButton.image = NSImage(CGImage: SBIconImageWithName("Update", .Right, updateRect.size)) // !!! editRect.size?
+        updateButton.image = SBIconImageWithName("Update", .Right, updateRect.size) // !!! editRect.size?
         updateButton.action = "update"
         return updateButton
     }()

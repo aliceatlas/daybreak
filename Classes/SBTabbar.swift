@@ -204,8 +204,8 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     func constructAddButton() {
         let r = addButtonRect
         addButton = SBButton(frame: r)
-        addButton!.image = NSImage(CGImage: SBAddIconImage(r.size, false))
-        addButton!.backImage = NSImage(CGImage: SBAddIconImage(r.size, true))
+        addButton!.image = SBAddIconImage(r.size, false)
+        addButton!.backImage = SBAddIconImage(r.size, true)
         addButton!.target = self
         addButton!.action = "addNewItem:"
         contentView.addSubview(addButton!)

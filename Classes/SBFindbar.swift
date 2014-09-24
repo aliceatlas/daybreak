@@ -40,22 +40,22 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     }
     
     internal lazy var contentView: NSView = {
-    	return NSView(frame: self.contentRect)
+        return NSView(frame: self.contentRect)
     }()
     
     private lazy var closeButton: SBButton = {
         let r = self.closeRect
-    	let closeButton = SBButton(frame: r)
+        let closeButton = SBButton(frame: r)
         closeButton.autoresizingMask = .ViewMaxXMargin
-    	closeButton.image = NSImage(CGImage: SBIconImage(SBCloseIconImage(), .Exclusive, r.size))
-    	closeButton.target = self
-    	closeButton.action = "executeClose"
+        closeButton.image = SBIconImage(SBCloseIconImage(), .Exclusive, r.size)
+        closeButton.target = self
+        closeButton.action = "executeClose"
         return closeButton
     }()
     
     internal lazy var searchField: SBFindSearchField = {
-    	let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)
-    	let searchField = SBFindSearchField(frame: self.searchRect)
+        let string: String? = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)
+        let searchField = SBFindSearchField(frame: self.searchRect)
         searchField.autoresizingMask = .ViewWidthSizable
         searchField.delegate = self
         searchField.target = self
@@ -71,30 +71,30 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     
     internal lazy var backwardButton: SBButton? = {
         let r = self.backwardRect
-    	let backwardButton = SBButton(frame: r)
+        let backwardButton = SBButton(frame: r)
         backwardButton.autoresizingMask = .ViewMinXMargin
-    	backwardButton.image = NSImage(CGImage: SBFindBackwardIconImage(r.size, true))
-    	backwardButton.disableImage = NSImage(CGImage: SBFindBackwardIconImage(r.size, false))
-    	backwardButton.target = self
-    	backwardButton.action = "searchBackward:"
+        backwardButton.image = SBFindBackwardIconImage(r.size, true)
+        backwardButton.disableImage = SBFindBackwardIconImage(r.size, false)
+        backwardButton.target = self
+        backwardButton.action = "searchBackward:"
         return backwardButton
     }()
     
     internal lazy var forwardButton: SBButton? = {
         let r = self.forwardRect
-    	let forwardButton = SBButton(frame: r)
+        let forwardButton = SBButton(frame: r)
         forwardButton.autoresizingMask = .ViewMinXMargin
-    	forwardButton.image = NSImage(CGImage: SBFindForwardIconImage(r.size, true))
-    	forwardButton.disableImage = NSImage(CGImage: SBFindForwardIconImage(r.size, false))
-    	forwardButton.target = self
-    	forwardButton.action = "searchForward:"
-    	forwardButton.keyEquivalent = "g"
+        forwardButton.image = SBFindForwardIconImage(r.size, true)
+        forwardButton.disableImage = SBFindForwardIconImage(r.size, false)
+        forwardButton.target = self
+        forwardButton.action = "searchForward:"
+        forwardButton.keyEquivalent = "g"
         return forwardButton
     }()
     
     internal lazy var caseSensitiveCheck: SBBLKGUIButton? = {
-    	let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
-    	let caseSensitiveCheck = SBBLKGUIButton(frame: self.caseSensitiveRect)
+        let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
+        let caseSensitiveCheck = SBBLKGUIButton(frame: self.caseSensitiveRect)
         caseSensitiveCheck.autoresizingMask = .ViewMinXMargin
         caseSensitiveCheck.buttonType = .SwitchButton
         caseSensitiveCheck.font = NSFont.systemFontOfSize(10.0)
@@ -106,8 +106,8 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     }()
     
     internal lazy var wrapCheck: SBBLKGUIButton? = {
-    	let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
-    	let wrapCheck = SBBLKGUIButton(frame: self.wrapRect)
+        let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
+        let wrapCheck = SBBLKGUIButton(frame: self.wrapRect)
         wrapCheck.autoresizingMask = .ViewMinXMargin
         wrapCheck.buttonType = .SwitchButton
         wrapCheck.font = NSFont.systemFontOfSize(10.0)
@@ -120,9 +120,9 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     
     override init(frame: NSRect) {
         super.init(frame: frame)
-    	addSubview(contentView)
-    	contentView.addSubview(searchField)
-    	contentView.addSubview(closeButton)
+        addSubview(contentView)
+        contentView.addSubview(searchField)
+        contentView.addSubview(closeButton)
         backwardButton !! contentView.addSubview
         forwardButton !! contentView.addSubview
         caseSensitiveCheck !! contentView.addSubview
@@ -147,110 +147,110 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     }
     
     var closeRect: NSRect {
-    	var r = NSZeroRect
-    	r.size.width = bounds.size.height
+        var r = NSZeroRect
+        r.size.width = bounds.size.height
         r.size.height = bounds.size.height
-    	return r
+        return r
     }
     
     var searchRect: NSRect {
-    	var r = NSZeroRect
-    	let marginNextToCase: CGFloat = 150.0;
-    	r.size.width = caseSensitiveRect.origin.x - NSMaxX(closeRect) - marginNextToCase - 24.0 * 2
-    	r.size.height = 19.0
-    	r.origin.x = NSMaxX(closeRect)
-    	r.origin.y = (bounds.size.height - r.size.height) / 2
-    	return r
+        var r = NSZeroRect
+        let marginNextToCase: CGFloat = 150.0;
+        r.size.width = caseSensitiveRect.origin.x - NSMaxX(closeRect) - marginNextToCase - 24.0 * 2
+        r.size.height = 19.0
+        r.origin.x = NSMaxX(closeRect)
+        r.origin.y = (bounds.size.height - r.size.height) / 2
+        return r
     }
     
     var backwardRect: NSRect {
-    	var r = NSZeroRect
-    	r.size.width = 24.0
-    	r.size.height = 18.0
-    	r.origin.y = (bounds.size.height - r.size.height) / 2
-    	r.origin.x = NSMaxX(searchRect)
-    	return r
+        var r = NSZeroRect
+        r.size.width = 24.0
+        r.size.height = 18.0
+        r.origin.y = (bounds.size.height - r.size.height) / 2
+        r.origin.x = NSMaxX(searchRect)
+        return r
     }
     
     var forwardRect: NSRect {
-    	var r = NSZeroRect
-    	r.size.width = 24.0
-    	r.size.height = 18.0
-    	r.origin.y = (bounds.size.height - r.size.height) / 2
-    	r.origin.x = NSMaxX(backwardRect)
-    	return r
+        var r = NSZeroRect
+        r.size.width = 24.0
+        r.size.height = 18.0
+        r.origin.y = (bounds.size.height - r.size.height) / 2
+        r.origin.x = NSMaxX(backwardRect)
+        return r
     }
     
     var caseSensitiveRect: NSRect {
-    	var r = NSZeroRect
-    	r.size.width = 150.0
-    	r.size.height = bounds.size.height
-    	r.origin.x = wrapRect.origin.x - r.size.width
-    	return r
+        var r = NSZeroRect
+        r.size.width = 150.0
+        r.size.height = bounds.size.height
+        r.origin.x = wrapRect.origin.x - r.size.width
+        return r
     }
     
     var wrapRect: NSRect {
-    	var r = NSZeroRect
-    	r.size.width = 150.0
-    	r.size.height = bounds.size.height
-    	r.origin.x = contentRect.size.width - r.size.width
-    	return r
+        var r = NSZeroRect
+        r.size.width = 150.0
+        r.size.height = bounds.size.height
+        r.origin.x = contentRect.size.width - r.size.width
+        return r
     }
     
     // MARK: Delegate
     
     override func controlTextDidChange(notification: NSNotification) {
-    	let string = searchField.stringValue
-    	if !string.isEmpty {
-    		searchContinuous(nil)
-    	}
+        let string = searchField.stringValue
+        if !string.isEmpty {
+            searchContinuous(nil)
+        }
     }
     
     func control(control: NSControl, textView: NSTextView, doCommandBySelector command: Selector) -> Bool {
-    	if control === searchField {
-    		if command == "cancelOperation:" {
-    			if searchField.stringValue.isEmpty {
-    				executeClose()
-    				return true
-    			}
-    		}
-    	}
-    	return false
+        if control === searchField {
+            if command == "cancelOperation:" {
+                if searchField.stringValue.isEmpty {
+                    executeClose()
+                    return true
+                }
+            }
+        }
+        return false
     }
     
     // MARK: Actions
     
     func selectText(sender: AnyObject?) {
-    	searchField.selectText(nil)
+        searchField.selectText(nil)
     }
     
     func searchContinuous(sender: AnyObject?) {
-    	executeSearch(true, continuous: true)
+        executeSearch(true, continuous: true)
     }
     
     func search(sender: AnyObject?) {
-    	if !searchField.stringValue.isEmpty {
-    		executeSearch(true, continuous: false)
-    		executeClose()
-    	}
+        if !searchField.stringValue.isEmpty {
+            executeSearch(true, continuous: false)
+            executeClose()
+        }
     }
     
     func searchBackward(sender: AnyObject?) {
-    	executeSearch(false, continuous: false)
+        executeSearch(false, continuous: false)
     }
 
     func searchForward(sender: AnyObject?) {
-    	executeSearch(true, continuous: false)
+        executeSearch(true, continuous: false)
     }
     
     func checkCaseSensitive(sender: AnyObject?) {
-    	let caseFlag = caseSensitiveCheck!.state == NSOnState
-    	NSUserDefaults.standardUserDefaults().setBool(caseFlag, forKey: kSBFindCaseFlag)
+        let caseFlag = caseSensitiveCheck!.state == NSOnState
+        NSUserDefaults.standardUserDefaults().setBool(caseFlag, forKey: kSBFindCaseFlag)
     }
 
     func checkWrap(sender: AnyObject?) {
-    	let wrapFlag = wrapCheck!.state == NSOnState
-    	NSUserDefaults.standardUserDefaults().setBool(wrapFlag, forKey: kSBFindWrapFlag)
+        let wrapFlag = wrapCheck!.state == NSOnState
+        NSUserDefaults.standardUserDefaults().setBool(wrapFlag, forKey: kSBFindWrapFlag)
     }
     
     func executeClose() {
@@ -260,34 +260,34 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     }
     
     func executeSearch(forward: Bool, continuous: Bool) -> Bool {
-    	var r = false
-    	let string = searchField.stringValue
-    	let pasteboard = NSPasteboard(name: NSFindPboard)
-    	pasteboard.declareTypes([NSStringPboardType], owner: self)
-    	pasteboard.setString(string, forType: NSStringPboardType)
-    	if let target = target as? SBFindbarTarget {
-    		let caseFlag = caseSensitiveCheck!.state == NSOnState
-    		let wrap = wrapCheck!.state == NSOnState
+        var r = false
+        let string = searchField.stringValue
+        let pasteboard = NSPasteboard(name: NSFindPboard)
+        pasteboard.declareTypes([NSStringPboardType], owner: self)
+        pasteboard.setString(string, forType: NSStringPboardType)
+        if let target = target as? SBFindbarTarget {
+            let caseFlag = caseSensitiveCheck!.state == NSOnState
+            let wrap = wrapCheck!.state == NSOnState
             r = target.searchFor(string, direction: forward, caseSensitive: caseFlag, wrap: wrap, continuous: continuous)
-    	}
-    	searchedString = string
-    	return r
+        }
+        searchedString = string
+        return r
     }
     
     // MARK: Drawing
     
     override func drawRect(rect: NSRect) {
-    	let lh: CGFloat = 1.0
-	
-    	// Background
+        let lh: CGFloat = 1.0
+    
+        // Background
         let gradient = NSGradient(startingColor: NSColor.blackColor(),
                                   endingColor: NSColor(deviceWhite: 0.50, alpha: 1.0))
         gradient.drawInRect(bounds, angle: 90)
-	    
-    	// Lines
-    	NSColor.blackColor().set()
-    	NSRectFill(NSMakeRect(bounds.origin.x, NSMaxY(bounds) - lh, bounds.size.width, lh))
-    	NSRectFill(NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, lh))
+        
+        // Lines
+        NSColor.blackColor().set()
+        NSRectFill(NSMakeRect(bounds.origin.x, NSMaxY(bounds) - lh, bounds.size.width, lh))
+        NSRectFill(NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, lh))
     }
 }
 

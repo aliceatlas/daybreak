@@ -270,7 +270,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                 } else if sourceView != nil {
                     sourceView!.removeFromSuperview()
                 }
-                SBDisembedViewInSplitView(webView, webSplitView)
+                SBDisembedViewInSplitView(webView, webSplitView!)
                 if sourceSplitView != nil {
                     splitView.addSubview(sourceSplitView!)
                 } else if sourceView != nil {
@@ -298,7 +298,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         } else {
             sourceSaveButton!.keyEquivalent = "\r"
             sourceCloseButton!.keyEquivalent = "\u{1B}"
-            SBDisembedViewInSplitView(sourceView, sourceSplitView)
+            SBDisembedViewInSplitView(sourceView!, sourceSplitView!)
             sourceSplitView = nil
             sourceTextView!.window!.makeFirstResponder(sourceTextView)
         }

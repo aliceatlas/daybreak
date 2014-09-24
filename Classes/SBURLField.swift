@@ -54,10 +54,10 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     private lazy var backwardButton: SBButton = {
         let backwardRect = self.backwardRect
         let backwardButton = SBButton(frame: backwardRect)
-        backwardButton.image = NSImage(CGImage: SBBackwardIconImage(backwardRect.size, true, false))
-        backwardButton.disableImage = NSImage(CGImage: SBBackwardIconImage(backwardRect.size, false, false))
-        backwardButton.backImage = NSImage(CGImage: SBBackwardIconImage(backwardRect.size, true, true))
-        backwardButton.backDisableImage = NSImage(CGImage: SBBackwardIconImage(backwardRect.size, false, true))
+        backwardButton.image = SBBackwardIconImage(backwardRect.size, true, false)
+        backwardButton.disableImage = SBBackwardIconImage(backwardRect.size, false, false)
+        backwardButton.backImage = SBBackwardIconImage(backwardRect.size, true, true)
+        backwardButton.backDisableImage = SBBackwardIconImage(backwardRect.size, false, true)
         backwardButton.target = self
         backwardButton.action = "executeDidSelectBackward"
         return backwardButton
@@ -66,10 +66,10 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     private lazy var forwardButton: SBButton = {
         let forwardRect = self.forwardRect
         let forwardButton = SBButton(frame: forwardRect)
-        forwardButton.image = NSImage(CGImage: SBForwardIconImage(forwardRect.size, true, false))
-        forwardButton.disableImage = NSImage(CGImage: SBForwardIconImage(forwardRect.size, false, false))
-        forwardButton.backImage = NSImage(CGImage: SBForwardIconImage(forwardRect.size, true, true))
-        forwardButton.backDisableImage = NSImage(CGImage: SBForwardIconImage(forwardRect.size, false, true))
+        forwardButton.image = SBForwardIconImage(forwardRect.size, true, false)
+        forwardButton.disableImage = SBForwardIconImage(forwardRect.size, false, false)
+        forwardButton.backImage = SBForwardIconImage(forwardRect.size, true, true)
+        forwardButton.backDisableImage = SBForwardIconImage(forwardRect.size, false, true)
         forwardButton.target = self
         forwardButton.action = "executeDidSelectForward"
         return forwardButton
@@ -104,10 +104,10 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         let goRect = self.goRect
         let goButton = SBButton(frame: goRect)
         goButton.autoresizingMask = .ViewMinXMargin
-        goButton.image = NSImage(CGImage: SBGoIconImage(goRect.size, true, false))
-        goButton.disableImage = NSImage(CGImage: SBGoIconImage(goRect.size, false, false))
-        goButton.backImage = NSImage(CGImage: SBGoIconImage(goRect.size, true, true))
-        goButton.backDisableImage = NSImage(CGImage: SBGoIconImage(goRect.size, false, true))
+        goButton.image = SBGoIconImage(goRect.size, true, false)
+        goButton.disableImage = SBGoIconImage(goRect.size, false, false)
+        goButton.backImage = SBGoIconImage(goRect.size, true, true)
+        goButton.backDisableImage = SBGoIconImage(goRect.size, false, true)
         goButton.target = self
         goButton.action = "go"
         goButton.enabled = false
