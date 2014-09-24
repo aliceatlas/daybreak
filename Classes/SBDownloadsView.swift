@@ -61,7 +61,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         needsDisplaySelectedItemViews()
         return true
     }
-
+    
     override func resignFirstResponder() -> Bool {
         needsDisplaySelectedItemViews()
         return true

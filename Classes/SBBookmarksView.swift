@@ -91,19 +91,18 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     func constructListView(inMode: SBBookmarkMode) {
         destructListView()
         scrollView = SBBLKGUIScrollView(frame: bounds)
-        listView = SBBookmarkListView(frame: bounds)
         scrollView!.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView!.autohidesScrollers = true
         scrollView!.hasHorizontalScroller = false
         scrollView!.hasVerticalScroller = true
         scrollView!.backgroundColor = SBBackgroundColor
         scrollView!.drawsBackground = true
-        listView!.wrapperView = self
+        listView = SBBookmarkListView(frame: bounds, wrapperView: self)
         listView!.cellWidth = CGFloat(NSUserDefaults.standardUserDefaults().integerForKey(kSBBookmarkCellWidth as NSString) as Int)
         scrollView!.documentView = listView
         scrollView!.contentView.copiesOnScroll = true
         addSubview(scrollView!)
-        listView!.setCellSizeForMode(inMode)
+        listView!.mode = inMode
         listView!.createItemViews()
         listView!.delegate = self
     }

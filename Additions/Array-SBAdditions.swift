@@ -29,6 +29,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Foundation
 
 extension Array {
+    func containsIndexes(indexes: NSIndexSet) -> Bool {
+        var r = true
+        for var i = indexes.lastIndex; i != NSNotFound; i = indexes.indexLessThanIndex(i) {
+            if i >= count {
+                r = false
+            }
+        }
+        return r
+    }
+    
+    mutating func insertItems(items: [Element], atIndexes indexes: NSIndexSet) {
+        var currentIndex = indexes.firstIndex
+        if items.count != indexes.count {
+            fatalError("inconsistent number of items")
+        }
+        for item in items {
+            insert(item, atIndex: currentIndex)
+            currentIndex = indexes.indexGreaterThanIndex(currentIndex)
+        }
+    }
+    
     func objectsAtIndexes(indexes: NSIndexSet) -> [Element] {
         var objs: [Element] = []
         indexes.enumerateIndexesUsingBlock {
@@ -39,7 +60,7 @@ extension Array {
     }
     
     mutating func removeObjectsAtIndexes(indexes: NSIndexSet) {
-        indexes.enumerateIndexesWithOptions(NSEnumerationOptions.Reverse) {
+        indexes.enumerateIndexesWithOptions(.Reverse) {
             (index: Int, _) in
             self.removeAtIndex(index)
             return

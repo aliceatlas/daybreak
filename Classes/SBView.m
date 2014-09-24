@@ -61,6 +61,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	cancelSelector = nil;
 }
 
+- (void)tempDragImage:(NSImage *)image at:(NSPoint)imageLoc offset:(NSSize)mouseOffset event:(NSEvent *)event pasteboard:(NSPasteboard *)pboard source:(id)sourceObject slideBack:(BOOL)slideBack {
+    [self dragImage:image at:imageLoc offset:mouseOffset event:event pasteboard:pboard source:sourceObject slideBack:slideBack];
+}
+
 #pragma mark NSCoding Protocol
 
 - (instancetype)initWithCoder:(NSCoder *)decoder
