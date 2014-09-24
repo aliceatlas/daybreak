@@ -88,16 +88,17 @@ class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
         
         let image = controlView.selectedItem.image
         if let image = image {
-            let ctx = SBCurrentGraphicsPort
             var imageRect = NSZeroRect
             imageRect.size = image.size
             imageRect.origin.x = cellFrame.origin.x + 5.0
             imageRect.origin.y = cellFrame.origin.y + ((cellFrame.size.height - imageRect.size.height) / 2)
-            CGContextSaveGState(ctx)
-            CGContextTranslateCTM(ctx, 0.0, cellFrame.size.height)
-            CGContextScaleCTM(ctx, 1.0, -1.0)
-            image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-            CGContextRestoreGState(ctx)
+            SBPreserveGraphicsState {
+                let transform = NSAffineTransform()
+                transform.translateXBy(0.0, yBy: cellFrame.size.height)
+                transform.scaleXBy(1.0, yBy: -1.0)
+                transform.concat()
+                image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            }
         }
         
         let attributedTitle = NSAttributedString(string: controlView.titleOfSelectedItem)
