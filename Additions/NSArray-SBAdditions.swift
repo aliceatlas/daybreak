@@ -48,10 +48,9 @@ extension NSArray {
     	return indexes.copy() as NSIndexSet
     }
     
-    //!!! uncomment when this stops mysteriously complaining about an extra argument
-    /*convenience init(arrays: [NSArray]) {
+    convenience init(arrays: [NSArray]) {
         self.init(array: NSMutableArray(arrays: arrays))
-    }*/
+    }
 }
 
 extension NSMutableArray {
