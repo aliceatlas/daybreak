@@ -26,7 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-class SBButton: SBView, NSCoding {
+class SBButton: SBView {
     private var _title: NSString?
     var image: NSImage?
     var disableImage: NSImage?
@@ -70,17 +70,17 @@ class SBButton: SBView, NSCoding {
 
     // MARK: NSCoding Protocol
     
-    required init(coder decoder: NSCoder) {
+    required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             image = decoder.decodeObjectForKey("image") as? NSImage
             disableImage = decoder.decodeObjectForKey("disableImage") as? NSImage
             backImage = decoder.decodeObjectForKey("backImage") as? NSImage
             backDisableImage = decoder.decodeObjectForKey("backDisableImage") as? NSImage
-            if let action = decoder.decodeObjectForKey("action") as? NSString {
+            if let action = decoder.decodeObjectForKey("action") as? String {
                 self.action = Selector(action)
             }
-            keyEquivalent = decoder.decodeObjectForKey("keyEquivalent") as? NSString
+            keyEquivalent = decoder.decodeObjectForKey("keyEquivalent") as? String
             if decoder.containsValueForKey("enabled") {
                 enabled = decoder.decodeBoolForKey("enabled")
             }
@@ -122,7 +122,7 @@ class SBButton: SBView, NSCoding {
         if enabled {
             let location = event.locationInWindow
             let point = convertPoint(location, fromView: nil)
-            pressed = NSPointInRect(point, bounds)
+            pressed = bounds.contains(point)
         }
     }
     
@@ -130,7 +130,7 @@ class SBButton: SBView, NSCoding {
         if enabled {
             let location = event.locationInWindow
             let point = convertPoint(location, fromView: nil)
-            if NSPointInRect(point, bounds) {
+            if bounds.contains(point) {
                 pressed = false
                 executeAction()
             }

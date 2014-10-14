@@ -40,8 +40,8 @@ class SBBLKGUIButton: NSButton {
         buttonType = .MomentaryChangeButton
         bezelStyle = .RoundedBezelStyle
     }
-
-    required init(coder: NSCoder) {
+    
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
@@ -74,24 +74,6 @@ class SBBLKGUIButtonCell: NSButtonCell {
         didSet {
             super.setButtonType(buttonType)
         }
-    }
-    
-    override init() {
-        super.init()
-    }
-    
-    @objc(initTextCell:)
-    override init(textCell string: String) {
-        super.init(textCell: string)
-    }
-    
-    @objc(initImageCell:)
-    override init(imageCell image: NSImage) {
-        super.init(imageCell: image)
-    }
-    
-    required init(coder: NSCoder) {
-        super.init(coder: coder)
     }
     
     override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
@@ -160,7 +142,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                     r.size = leftImage!.size
                     r.origin.y = (cellFrame.size.height - r.size.height) / 2
                     leftImage!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: true)
-                    offset = NSMaxX(r)
+                    offset = r.maxX
                 }
                 if centerImage != nil {
                     r.origin.x = leftImage?.size.width ?? 0.0
@@ -168,7 +150,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                     r.size.height = centerImage!.size.height
                     r.origin.y = (cellFrame.size.height - r.size.height) / 2
                     centerImage!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: true)
-                    offset = NSMaxX(r)
+                    offset = r.maxX
                 }
                 if rightImage != nil {
                     r.origin.x = offset
@@ -191,14 +173,14 @@ class SBBLKGUIButtonCell: NSButtonCell {
             } else {
                 foregroundColor = enabled ? (highlighted ? NSColor.grayColor() : NSColor.whiteColor()) : (isDone ? NSColor.grayColor() : NSColor.darkGrayColor())
             }
-            let attributes = [NSFontAttributeName: font,
+            let attributes = [NSFontAttributeName: font!,
                               NSForegroundColorAttributeName: foregroundColor]
             if buttonType == .SwitchButton || buttonType == .RadioButton {
                 var i = 0
                 var l = 0
                 var h = 1
                 size.width = frame.size.width - (image?.size.width ?? 0) + 2
-                size.height = font.pointSize + 2.0
+                size.height = font!.pointSize + 2.0
                 for i = 1; i <= title.length; i++ {
                     let t = title.substringWithRange(NSMakeRange(l, i - l))
                     let s = t.sizeWithAttributes(attributes)
@@ -219,18 +201,17 @@ class SBBLKGUIButtonCell: NSButtonCell {
                 r.origin.x = (frame.size.width - r.size.width) / 2
                 r.origin.y = (frame.size.height - r.size.height) / 2
                 r.origin.y -= 2.0
-                if image != nil {
-                    let image = self.image
+                if let image = self.image {
                     var imageRect = NSZeroRect
                     let margin: CGFloat = 3.0
-                    imageRect.size = image?.size ?? NSZeroSize
+                    imageRect.size = image.size ?? NSZeroSize
                     if r.origin.x > (imageRect.size.width + margin) {
                         let width = imageRect.size.width + r.size.width + margin
                         imageRect.origin.x = (frame.size.width - width) / 3
                         r.origin.x = imageRect.origin.x + imageRect.size.width + margin
                     } else {
                         imageRect.origin.x = frame.origin.x
-                        r.origin.x = NSMaxX(imageRect) + margin
+                        r.origin.x = imageRect.maxX + margin
                         size.width = frame.size.width - r.origin.x
                     }
                     imageRect.origin.y = (frame.size.height - imageRect.size.height) / 2 - 1

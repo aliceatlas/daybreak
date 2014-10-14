@@ -52,8 +52,8 @@ class SBDrawer: SBView {
         var r = bounds
         if subview != nil {
             var sr = subview!.frame
-            r.size.height -= NSMaxY(sr)
-            r.origin.y = NSMaxY(sr)
+            r.size.height -= sr.maxY
+            r.origin.y = sr.maxY
         }
         return r
     }

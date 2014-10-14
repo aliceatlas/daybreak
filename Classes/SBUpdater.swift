@@ -44,7 +44,7 @@ class SBUpdater: NSObject {
     
     func checking() {
         let result = NSComparisonResult.OrderedSame;
-        let appVersionString = NSBundle.mainBundle().infoDictionary["CFBundleVersion"] as? NSString
+        let appVersionString = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? NSString
         let url = NSURL(string: SBVersionFileURL)!
         let request = NSURLRequest(URL: url, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
         var response: NSURLResponse?
@@ -85,7 +85,7 @@ class SBUpdater: NSObject {
     func threadWillExit(notification: NSNotification) {
         let currentThread = notification.object as NSThread
         let threadDictionary = currentThread.threadDictionary!
-        let userInfo = threadDictionary.copy() as NSDictionary
+        let userInfo = threadDictionary.copy() as [NSObject: AnyObject]
         if let errorDescription = threadDictionary[kSBUpdaterErrorDescription] as? String {
             if let result = NSComparisonResult(rawValue: userInfo[kSBUpdaterResult] as Int) {
                 switch result {

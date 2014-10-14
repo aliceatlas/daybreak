@@ -39,17 +39,16 @@ extension NSImage {
         addRepresentation(bitmapImageRep!)
     }
     
-    func stretchableImage(#size: NSSize, sideCapWidth: Int) -> NSImage {
+    func stretchableImage(#size: NSSize, sideCapWidth: CGFloat) -> NSImage {
         let image = NSImage(size: size)
         image.withFocus {
-            let cgSideCapWidth = CGFloat(sideCapWidth)
             let imageSize = self.size
             let leftPoint = NSZeroPoint
             let rightPoint = NSMakePoint(size.width - imageSize.width, 0)
-            let fillRect = NSMakeRect(cgSideCapWidth, CGFloat(0), size.width - cgSideCapWidth * 2, size.height)
+            let fillRect = NSMakeRect(sideCapWidth, CGFloat(0), size.width - sideCapWidth * 2, size.height)
             self.drawAtPoint(leftPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
             self.drawAtPoint(rightPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-            self.drawInRect(fillRect, fromRect: NSMakeRect(cgSideCapWidth, 0, imageSize.width - cgSideCapWidth * 2, imageSize.height), operation: .CompositeSourceOver, fraction: 1.0)
+            self.drawInRect(fillRect, fromRect: NSMakeRect(sideCapWidth, 0, imageSize.width - sideCapWidth * 2, imageSize.height), operation: .CompositeSourceOver, fraction: 1.0)
         }
         return image
     }
@@ -110,22 +109,26 @@ extension NSImage {
         return image
     }
     
-    convenience init(CGImage srcImage: CGImageRef) {
+    convenience init?(CGImage srcImage: CGImageRef) {
         self.init()
-        addRepresentation(NSBitmapImageRep(CGImage: srcImage))
+        if let imageRep = NSBitmapImageRep(CGImage: srcImage) {
+            addRepresentation(imageRep)
+        } else {
+            return nil
+        }
     }
     
-    var CGImage: CGImageRef {
-        return bitmapImageRep.CGImage
+    var CGImage: CGImageRef? {
+        return bitmapImageRep?.CGImage
     }
     
-    var bitmapImageRep: NSBitmapImageRep {
+    var bitmapImageRep: NSBitmapImageRep? {
         //let imageRep = bestRepresentationForDevice(nil)
         let imageRep = bestRepresentationForRect(NSRect(origin: NSZeroPoint, size: size), context: nil, hints: [:])
         if let imageRep = imageRep as? NSBitmapImageRep {
             return imageRep
         }
-        return NSBitmapImageRep(data: TIFFRepresentation)
+        return TIFFRepresentation !! {NSBitmapImageRep(data: $0)}
     }
     
     func drawInRect(rect: NSRect, operation op: NSCompositingOperation, fraction requestedAlpha: CGFloat, respectFlipped: Bool) {

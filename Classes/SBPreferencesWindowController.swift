@@ -102,8 +102,8 @@ class SBPreferencesWindowController: SBWindowController {
     
     override init(viewSize: NSSize) {
         super.init(viewSize: viewSize)
-        window.maxSize = NSMakeSize(window.frame.size.width, CGFloat.infinity)
-        window.minSize = NSMakeSize(window.frame.size.width, 100.0)
+        window!.maxSize = NSMakeSize(window!.frame.size.width, CGFloat.infinity)
+        window!.minSize = NSMakeSize(window!.frame.size.width, 100.0)
         prepare()
     }
     
@@ -112,7 +112,7 @@ class SBPreferencesWindowController: SBWindowController {
     }
     
     var sectionListViewRect: NSRect {
-        var r = window.contentRectForFrameRect(window.frame)
+        var r = window!.contentRectForFrameRect(window!.frame)
         r.origin = NSZeroPoint
         // r.origin.x = 20
         // r.origin.y = 20
@@ -122,6 +122,6 @@ class SBPreferencesWindowController: SBWindowController {
     }
     
     func prepare() {
-        window.contentView.addSubview(sectionListView)
+        (window!.contentView as NSView).addSubview(sectionListView)
     }
 }

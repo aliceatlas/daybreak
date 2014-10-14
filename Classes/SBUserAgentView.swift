@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 class SBUserAgentView: SBView, NSTextFieldDelegate {
     private lazy var iconImageView: NSImageView = {
-        let image = NSImage(named: "UserAgent")
+        let image = NSImage(named: "UserAgent")!
         let iconImageView = NSImageView()
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         image.size = iconImageView.frame.size
@@ -63,7 +63,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         }
         if selectedIndex == nil {
             selectedIndex = count
-            self.field.stringValue = userAgentName
+            self.field.stringValue = userAgentName!
             self.field.hidden = false
         }
         let icon0 = (SBUserAgentNames[0] == "Sunrise") &? NSImage(named: "Application.icns")
@@ -71,7 +71,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         icon0?.size = NSMakeSize(24.0, 24.0)
         icon1?.size = NSMakeSize(24.0, 24.0)
         let images = [icon0, icon1]
-        popup.menu.addItemWithTitle("", action: nil, keyEquivalent: "")
+        popup.menu!.addItemWithTitle("", action: nil, keyEquivalent: "")
         for i in 0..<count {
             let item = NSMenuItem(title: NSLocalizedString(SBUserAgentNames[i], comment: ""), action: "selectApp:", keyEquivalent: "")
             item.target = self
@@ -79,7 +79,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
                 item.image = images[i]
             }
             item.tag = i
-            popup.menu.addItem(item)
+            popup.menu!.addItem(item)
         }
         popup.pullsDown = true
         popup.selectItemAtIndex(selectedIndex!)

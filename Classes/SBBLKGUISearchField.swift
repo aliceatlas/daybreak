@@ -36,7 +36,7 @@ class SBBLKGUISearchField: NSSearchField {
         setDefaultValues()
     }
     
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
@@ -66,8 +66,8 @@ class SBBLKGUISearchFieldCell: NSSearchFieldCell {
         wraps = false
         scrollable = true
         focusRingType = .Exterior
-        searchButtonCell.image = NSImage(named: "Search.png")
-        searchButtonCell.alternateImage = searchButtonCell.image
+        searchButtonCell!.image = NSImage(named: "Search.png")!
+        searchButtonCell!.alternateImage = searchButtonCell!.image
 
     }
     
@@ -91,13 +91,13 @@ class SBBLKGUISearchFieldCell: NSSearchFieldCell {
         NSColor(deviceWhite: 0.0, alpha: alpha * 0.1).set()
         path.fill()
         
-        r = NSInsetRect(r, 0.5, 0.5)
+        r.inset(dx: 0.5, dy: 0.5)
         radius = r.size.height / 2
         path = NSBezierPath(roundedRect: r, xRadius: radius, yRadius: radius)
         path.lineWidth = 0.5
         NSColor(deviceWhite: 1.0, alpha: alpha).set()
         path.stroke()
         
-        drawInteriorWithFrame(cellFrame, inView: controlView)
+        drawInteriorWithFrame(cellFrame, inView: inView)
     }
 }

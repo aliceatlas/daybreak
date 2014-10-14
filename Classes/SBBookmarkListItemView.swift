@@ -60,7 +60,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     var visible: Bool {
-        return NSIntersectsRect(superview?.visibleRect ?? NSZeroRect, frame)
+        return frame.intersects(superview?.visibleRect ?? NSZeroRect)
     }
     
     var titleFont: NSFont {
@@ -144,7 +144,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     var titleRect: NSRect {
-        return (item[kSBBookmarkTitle] as? NSString) !! {self.titleRect($0)} ?? NSZeroRect
+        return (item[kSBBookmarkTitle] as? String) !! {self.titleRect($0)} ?? NSZeroRect
     }
     
     func titleRect(title: String) -> NSRect {
@@ -152,7 +152,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
         let margin = titleHeight / 2
         let availableWidth = bounds.size.width - titleHeight
         if title.utf16Count > 0 {
-            let size = (title as NSString).sizeWithAttributes([NSFontAttributeName: titleFont, 
+            let size = (title as NSString).sizeWithAttributes([NSFontAttributeName: titleFont,
                                                                NSParagraphStyleAttributeName: paragraphStyle])
             if size.width <= availableWidth {
                 drawRect.origin.x = (availableWidth - size.width) / 2
@@ -200,9 +200,9 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     func update() {
-        let urlString = item[kSBBookmarkURL] as? NSString
-        if let url = urlString !! {NSURL(string: $0)} {
-            let window = SBRenderWindow.startRenderingWithSize(NSMakeSize(800, 600), delegate: self, url: url)
+        let URLString = item[kSBBookmarkURL] as? String
+        if let URL = URLString !! {NSURL(string: $0)} {
+            let window = SBRenderWindow.startRenderingWithSize(NSMakeSize(800, 600), delegate: self, URL: URL)
             window.releasedWhenClosed = false
         }
     }
@@ -210,9 +210,9 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     func hitToPoint(point: NSPoint) -> Bool {
         var r = false
         if mode == .Icon || mode == .Tile {
-            r = NSPointInRect(point, imageRect) | NSPointInRect(point, titleRect) | NSPointInRect(point, bytesRect)
+            r = imageRect.contains(point) | titleRect.contains(point) | bytesRect.contains(point)
         } else if mode == .List {
-            r = NSPointInRect(point, bounds)
+            r = bounds.contains(point)
         }
         return r
     }
@@ -220,11 +220,11 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     func hitToRect(rect: NSRect) -> Bool {
         var r = false
         if mode == .Icon || mode == .Tile {
-            r = NSIntersectsRect(rect, imageRect) | NSIntersectsRect(rect, titleRect) | NSIntersectsRect(rect, bytesRect)
+            r = rect.intersects(imageRect) | rect.intersects(titleRect) | rect.intersects(bytesRect)
         } else if mode == .List {
-            r = NSIntersectsRect(rect, bounds)
+            r = rect.intersects(bounds)
         }
-        return r;
+        return r
     }
     
     // MARK: Delegate
@@ -234,9 +234,9 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     func renderWindow(renderWindow: SBRenderWindow, didFinishRenderingImage image: NSImage) {
-        let data = image.bitmapImageRep.data
+        let data = image.bitmapImageRep!.data
         var mItem: [NSObject: AnyObject] = item
-        mItem[kSBBookmarkImage as NSString] = data
+        mItem[kSBBookmarkImage] = data
         SBBookmarks.sharedBookmarks.replaceItem(item, withItem: mItem)
         hideProgress()
         renderWindow.close()
@@ -256,7 +256,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     override func mouseMoved(event: NSEvent) {
         let location = event.locationInWindow
         let point = convertPoint(location, fromView: nil)
-        if NSPointInRect(point, bounds) {
+        if bounds.contains(point) {
             (superview as SBBookmarkListView).layoutToolsForItem(self)
         }
     }
@@ -273,7 +273,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
             let imageData = item[kSBBookmarkImage] as? NSData
             let title = item[kSBBookmarkTitle] as? NSString
             let urlString = item[kSBBookmarkURL] as? NSString
-            let labelColorName = item[kSBBookmarkLabelName] as? NSString
+            let labelColorName = item[kSBBookmarkLabelName] as? String
             let labelColor = labelColorName !! {NSColor(labelColorName: $0)}
             var size = NSZeroSize //???
             
@@ -322,7 +322,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         let tmargin = margin - 1.0
                         sr.origin.x -= tmargin
                         sr.size.width += tmargin * 2
-                        //sr = NSInsetRect(sr, 2.0, 2.0)
+                        //sr.inset(dx: 2.0, dy: 2.0)
                         let path = SBRoundedPath(sr, sr.size.height / 2, 0.0, true, true)
                         labelColor!.set()
                         path.fill()
@@ -336,7 +336,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         sr.origin.x -= tmargin
                         sr.size.width += tmargin * 2
                         if labelColor != nil {
-                            sr = NSInsetRect(sr, 2.0, 2.0)
+                            sr.inset(dx: 2.0, dy: 2.0)
                         }
                         let path = SBRoundedPath(sr, sr.size.height / 2, 0.0, true, true)
                         color.set()
@@ -431,16 +431,16 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 
                 // Highlight
                 NSColor(calibratedWhite: 1.0, alpha: 0.45).set()
-                NSRectFill(NSMakeRect(bounds.origin.x + 1.0, NSMaxY(bounds) - 1.0, bounds.size.width - 1.0 * 2, 1.0))
+                NSRectFill(NSMakeRect(bounds.origin.x + 1.0, bounds.maxY - 1.0, bounds.size.width - 1.0 * 2, 1.0))
             } else {
                 // Rects
                 let imageRect = NSMakeRect(0, 0, 60, bounds.size.height)
-                var titleRect = NSMakeRect((NSMaxX(imageRect) + padding.x), 0, (bounds.size.width - (NSMaxX(imageRect) + padding.x)) * 0.5, bounds.size.height)
-                var urlRect = NSMakeRect((NSMaxX(titleRect) + padding.x), 0, (bounds.size.width - (NSMaxX(titleRect) + padding.x)), bounds.size.height)
+                var titleRect = NSMakeRect((imageRect.maxX + padding.x), 0, (bounds.size.width - (imageRect.maxX + padding.x)) * 0.5, bounds.size.height)
+                var urlRect = NSMakeRect((titleRect.maxX + padding.x), 0, (bounds.size.width - (titleRect.maxX + padding.x)), bounds.size.height)
                 
                 // line
                 NSColor.darkGrayColor().set()
-                NSRectFill(NSMakeRect(bounds.origin.x, NSMaxY(bounds) - 1.0, bounds.size.width, 1.0))
+                NSRectFill(NSMakeRect(bounds.origin.x, bounds.maxY - 1.0, bounds.size.width, 1.0))
                 
                 // image
                 if imageData != nil {}
@@ -456,7 +456,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         let tmargin = margin - 1.0
                         sr.origin.x -= tmargin
                         sr.size.width += tmargin * 2
-                        //sr = NSInsetRect(sr, 2.0, 2.0)
+                        //sr.inset(dx: 2.0, dy: 2.0)
                         let path = SBRoundedPath(sr, sr.size.height / 2, 0.0, true, true)
                         labelColor!.set()
                         path.fill()
@@ -469,9 +469,9 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         sr.origin.x -= tmargin
                         sr.size.width += tmargin * 2
                         if labelColor != nil {
-                            sr = CGRectInset(sr, 2.0, 2.0)
+                            sr.inset(dx: 2.0, dy: 2.0)
                         }
-                        let darkerColor = color.shadowWithLevel(0.2)
+                        let darkerColor = color.shadowWithLevel(0.2)!
                         let gradient = NSGradient(startingColor: darkerColor, endingColor: color)
                         gradient.drawInRect(sr, angle: 90)
                     }

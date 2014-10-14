@@ -236,12 +236,12 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         return window!.firstResponder === field.currentEditor()
     }
     
-    var placeholderString: String {
+    var placeholderString: String? {
         get { return (field.cell() as NSTextFieldCell).placeholderString }
         set(placeholderString) { (field.cell() as NSTextFieldCell).placeholderString = placeholderString }
     }
     
-    var textColor: NSColor {
+    var textColor: NSColor? {
         get { return field.textColor }
         set(textColor) { field.textColor = textColor }
     }
@@ -269,7 +269,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     let minimumSize = NSMakeSize(100.0, 22.0)
-    var font: NSFont { return field.font }
+    var font: NSFont? { return field.font }
     
     var sheetHeight: CGFloat {
         let rowCount = SBConstrain(items.count, max: SBURLFieldMaxRowCount)
@@ -409,8 +409,8 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     override func controlTextDidChange(notification: NSNotification) {
-        let currentEvent = NSApplication.sharedApplication().currentEvent
-        let characters: NSString = currentEvent.characters
+        let currentEvent = NSApplication.sharedApplication().currentEvent!
+        let characters: NSString = currentEvent.characters!
         let character = Int(characters.characterAtIndex(0))
         let stringValue = field.stringValue
         var hasScheme = false
@@ -444,9 +444,9 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
             disappearSheet()
         }
         
-        let currentEvent = window!.currentEvent
+        let currentEvent = window!.currentEvent!
         if currentEvent.type == .KeyDown {
-            let characters: NSString = currentEvent.characters
+            let characters: NSString = currentEvent.characters!
             let character = Int(characters.characterAtIndex(0))
             if character == NSTabCharacter { // Tab
                 // If the user push Tab key, make first responder to next responder
@@ -475,20 +475,18 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row rowIndex: Int) -> AnyObject? {
-        if let item = items.get(rowIndex) {
-            if tableColumn.identifier == kSBURL {
-                let type = SBURLFieldItemType(rawValue: (item[kSBType] as? NSNumber) ?? -1)
-                if type == nil {
-                    return nil
-                }
-                let title = item[kSBTitle] as? NSString as? String
-                switch type! {
-                    case .None:
-                        return title
-                    case .GoogleSuggest:
-                        return title
-                    case .Bookmark, .History:
-                        return title ?? (item[kSBURL] as? NSString)
+        if tableColumn.identifier == kSBURL {
+            if let item = items.get(rowIndex) {
+                if let type = (item[kSBType] as? Int) !! {SBURLFieldItemType(rawValue: $0)} {
+                    let title = item[kSBTitle] as? String
+                    switch type {
+                        case .None:
+                            return title
+                        case .GoogleSuggest:
+                            return title
+                        case .Bookmark, .History:
+                            return title ?? (item[kSBURL] as? String)
+                    }
                 }
             }
         }
@@ -498,13 +496,13 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     func tableView(tableView: NSTableView, willDisplayCell cell: SBURLFieldDataCell, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
         if tableColumn.identifier != kSBURL { return }
         if let item = items.get(rowIndex) {
-            let title = item[kSBTitle] as? NSString as? String
+            let title = item[kSBTitle] as? String
             var string: String?
             var image: NSImage?
             var separator = false
             var sectionHeader = false
             var drawsImage = true
-            if let type = SBURLFieldItemType(rawValue: (item[kSBType] as? NSNumber) ?? -1) {
+            if let type = (item[kSBType] as? Int) !! {SBURLFieldItemType(rawValue: $0)} {
                 switch type {
                     case .None:
                         if let data = item[kSBImage] as? NSData {
@@ -522,14 +520,14 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
                             image = NSImage(data: data)
                             image!.size = NSMakeSize(16.0, 16.0)
                         }
-                        string = title ?? (item[kSBURL] as? NSString)
+                        string = title ?? (item[kSBURL] as? String)
                 }
             }
             cell.separator = separator
             cell.sectionHeader = sectionHeader
             cell.drawsImage = drawsImage
             cell.image = image
-            string !! { cell.objectValue = $0 as NSString }
+            string !! { cell.objectValue = $0 }
         }
     }
     
@@ -538,7 +536,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     func endEditing() {
         disappearSheet()
         hiddenGo = true
-        (field.cell() as NSTextFieldCell).endEditing(window!.fieldEditor(false, forObject: field))
+        (field.cell() as NSTextFieldCell).endEditing(window!.fieldEditor(false, forObject: field)!)
     }
     
     func adjustSheet() {
@@ -737,7 +735,7 @@ class SBURLImageView: NSImageView, NSDraggingSource {
     var dragImage: NSImage {
         let urlString: NSString = URL.absoluteString!
         let margin: CGFloat = 5.0
-        let attribute: [NSObject: AnyObject] = [NSFontAttributeName: field.font]
+        let attribute: [NSObject: AnyObject] = [NSFontAttributeName: field.font!]
         let textSize = urlString.sizeWithAttributes(attribute)
         var size = NSZeroSize
         size.height = bounds.size.height
@@ -749,11 +747,11 @@ class SBURLImageView: NSImageView, NSDraggingSource {
         var textRect = NSZeroRect
         textRect.size.height = size.height
         textRect.size.width = textSize.width
-        textRect.origin.x = margin + NSMaxX(imageRect)
+        textRect.origin.x = margin + imageRect.maxX
         
         let image = NSImage(size: size)
         image.withFocus {
-            self.image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            self.image?.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
             urlString.drawInRect(textRect, withAttributes: attribute)
         }
         
@@ -766,10 +764,10 @@ class SBURLImageView: NSImageView, NSDraggingSource {
         
         while true {
             let mask: NSEventMask = .LeftMouseDraggedMask | .LeftMouseUpMask
-            let newEvent = window!.nextEventMatchingMask(Int(mask.rawValue))
+            let newEvent = window!.nextEventMatchingMask(Int(mask.rawValue))!
             let newPoint = convertPoint(newEvent.locationInWindow, fromView: nil)
             var isDragging = false
-            if NSPointInRect(newPoint, bounds) {
+            if bounds.contains(newPoint) {
                 if newEvent.type == .LeftMouseUp {
                     mouseUpActionWithEvent(event)
                     break
@@ -803,7 +801,7 @@ class SBURLImageView: NSImageView, NSDraggingSource {
         session.draggingFormation = .None
         
         window!.title !! { session.draggingPasteboard.setString($0, forType: NSPasteboardTypeString) }
-        selectedWebViewImageForBookmark !! { session.draggingPasteboard.setData($0.TIFFRepresentation, forType: NSPasteboardTypeTIFF) }
+        selectedWebViewImageForBookmark?.TIFFRepresentation !! { session.draggingPasteboard.setData($0, forType: NSPasteboardTypeTIFF) }
     }
     
     func draggingSession(session: NSDraggingSession, sourceOperationMaskForDraggingContext context: NSDraggingContext) -> NSDragOperation {
@@ -850,7 +848,7 @@ class SBURLTextField: NSTextField {
     
     override func performKeyEquivalent(event: NSEvent) -> Bool {
         let center = NSNotificationCenter.defaultCenter()
-        let character = Int((event.characters as NSString).characterAtIndex(0))
+        let character = (event.characters as NSString?)?.characterAtIndex(0) !! {Int($0)}
         if character == NSCarriageReturnCharacter || character == NSEnterCharacter {
             let modifierFlags = event.modifierFlags
             if modifierFlags & .CommandKeyMask != nil {
@@ -1022,13 +1020,13 @@ class SBURLFieldContentView: NSView {
         if let field = field {
             if index < field.items.count {
                 let selectedItem = field.items[index]
-                let type = SBURLFieldItemType(rawValue: (selectedItem[kSBType] as? NSNumber) ?? -1)
+                let type = (selectedItem[kSBType] as? Int) !! {SBURLFieldItemType(rawValue: $0)}
                 if type &! {$0 == .GoogleSuggest} {
-                    let title: String = selectedItem[kSBTitle]! as NSString
+                    let title = selectedItem[kSBTitle]! as String
                     field.URLString = title
                     return true
                 } else {
-                    let URLString: String = selectedItem[kSBURL]! as NSString
+                    let URLString = selectedItem[kSBURL]! as String
                     if URLString != field.stringValue {
                         let data = selectedItem[kSBImage] as NSData
                         let icon = NSImage(data: data)
@@ -1113,7 +1111,7 @@ class SBURLFieldDataCell: NSCell {
             let r = cellFrame
             let path = SBRoundedPath(NSInsetRect(r, 1.0, 1.0), (r.size.height - 1.0 * 2) / 2, 0.0, true, true)
             let gradient = NSGradient(startingColor: SBAlternateSelectedLightControlColor,
-                                      endingColor:   SBAlternateSelectedControlColor)
+                                        endingColor: SBAlternateSelectedControlColor)
             SBPreserveGraphicsState {
                 path.addClip()
                 gradient.drawInRect(r, angle: 90)
@@ -1137,7 +1135,7 @@ class SBURLFieldDataCell: NSCell {
             let nsTitle: NSString = title!
             let imageWidth = self.imageWidth + side + leftMargin
             let titleRect = NSMakeRect(cellFrame.origin.x + imageWidth, cellFrame.origin.y, cellFrame.size.width - imageWidth, cellFrame.size.height)
-            let textColor = (sectionHeader ? SBTableDarkGrayCellColor : NSColor.blackColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+            let textColor = (sectionHeader ? SBTableDarkGrayCellColor : NSColor.blackColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
             let sTextColor = highlighted ? NSColor.clearColor() : NSColor.whiteColor()
             let color = highlighted ? NSColor.whiteColor() : textColor
             let font = NSFont.systemFontOfSize(sectionHeader ? 11.0 : 12.0)
@@ -1165,10 +1163,10 @@ class SBURLFieldDataCell: NSCell {
             nsTitle.drawInRect(sr, withAttributes: sAttribute)
             nsTitle.drawInRect(r, withAttributes: attribute)
             if separator {
-                let leftMargin = NSMaxX(r) + 10.0
+                let leftMargin = r.maxX + 10.0
                 var separatorRect = NSZeroRect
                 separatorRect.origin.x = cellFrame.origin.x + leftMargin
-                separatorRect.origin.y = NSMidY(r)
+                separatorRect.origin.y = r.midY
                 separatorRect.size.width = cellFrame.size.width - leftMargin
                 separatorRect.size.height = 1.0
                 NSColor.whiteColor().set()

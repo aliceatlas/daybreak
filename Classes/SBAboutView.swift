@@ -30,7 +30,7 @@ private var _sharedAboutView = SBAboutView(frame: NSMakeRect(0, 0, 640, 360))
 
 class SBAboutView: SBView {
     private lazy var iconImageView: NSImageView = {
-        let image = NSImage(named: "Application.icns")
+        let image = NSImage(named: "Application.icns")!
         let r = self.iconImageRect
         let iconImageView = NSImageView(frame: r)
         iconImageView.imageFrameStyle = .None
@@ -53,8 +53,8 @@ class SBAboutView: SBView {
         let bundle = NSBundle.mainBundle()
         let info = bundle.infoDictionary
         let localizedInfo = bundle.localizedInfoDictionary
-        let name = localizedInfo["CFBundleName"] as? NSString
-        let version = info["CFBundleVersion"] as? NSString
+        let name = localizedInfo?["CFBundleName"] as? String
+        let version = info?["CFBundleVersion"] as? String
         let string: String? = name !! {$0 + (version !! {" \($0)"} ?? "")}
         string !! { nameLabel.stringValue = $0 }
         return nameLabel
@@ -69,14 +69,14 @@ class SBAboutView: SBView {
         identifierLabel.textColor = NSColor(calibratedWhite: 0.8, alpha: 1.0)
         identifierLabel.font = NSFont.systemFontOfSize(12.0)
         identifierLabel.alignment = .LeftTextAlignment
-        if let string = NSBundle.mainBundle().infoDictionary["CFBundleIdentifier"] as? NSString {
+        if let string = NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String {
             identifierLabel.stringValue = string
         }
         return identifierLabel
     }()
     
     private lazy var creditScrollView: SBBLKGUIScrollView = {
-        let rtfdPath = NSBundle.mainBundle().pathForResource("Credits", ofType: "rtfd")
+        let rtfdPath = NSBundle.mainBundle().pathForResource("Credits", ofType: "rtfd")!
         let creditLabel = NSTextView()
         creditLabel.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         creditLabel.editable = false
@@ -103,7 +103,7 @@ class SBAboutView: SBView {
         copyrightLabel.textColor = NSColor.grayColor()
         copyrightLabel.font = NSFont.systemFontOfSize(12.0)
         copyrightLabel.alignment = .LeftTextAlignment
-        if let string = NSBundle.mainBundle().localizedInfoDictionary["NSHumanReadableCopyright"] as? NSString {
+        if let string = NSBundle.mainBundle().localizedInfoDictionary?["NSHumanReadableCopyright"] as? String {
             copyrightLabel.stringValue = string
         }
         return copyrightLabel
@@ -161,7 +161,7 @@ class SBAboutView: SBView {
     // MARK: Responder
     
     override func performKeyEquivalent(event: NSEvent) -> Bool {
-        let character = Int((event.characters as NSString).characterAtIndex(0))
+        let character = Int((event.characters! as NSString).characterAtIndex(0))
         if character == NSDeleteCharacter || character == NSCarriageReturnCharacter || character == NSEnterCharacter {
             cancel()
         }

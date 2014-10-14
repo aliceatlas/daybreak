@@ -86,7 +86,7 @@ class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
             rightImage!.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: fraction, respectFlipped: true)
         }
         
-        let image = controlView.selectedItem.image
+        let image = controlView.selectedItem?.image
         if let image = image {
             var imageRect = NSZeroRect
             imageRect.size = image.size
@@ -101,20 +101,20 @@ class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
             }
         }
         
-        let attributedTitle = NSAttributedString(string: controlView.titleOfSelectedItem)
+        let attributedTitle = NSAttributedString(string: controlView.titleOfSelectedItem ?? "")
         if attributedTitle.length > 0 {
             var titleRect = NSZeroRect
             let mutableTitle = NSMutableAttributedString(attributedString: attributedTitle)
             let range = NSMakeRange(0, attributedTitle.length)
             let style = NSMutableParagraphStyle()
-            let font = NSFont(name: self.font.fontName, size: NSFont.systemFontSizeForControlSize(controlSize))
+            let font = NSFont(name: self.font!.fontName, size: NSFont.systemFontSizeForControlSize(controlSize))
             let foregroundColor = enabled ? (highlighted ? NSColor.lightGrayColor() : NSColor.whiteColor()) : NSColor.grayColor()
             
             style.alignment = .CenterTextAlignment
             style.lineBreakMode = .ByTruncatingTail
             mutableTitle.beginEditing()
             mutableTitle.addAttribute(NSForegroundColorAttributeName, value: foregroundColor, range:range)
-            mutableTitle.addAttribute(NSFontAttributeName, value: font, range: range)
+            mutableTitle.addAttribute(NSFontAttributeName, value: font!, range: range)
             mutableTitle.addAttribute(NSParagraphStyleAttributeName, value: style, range: range)
             mutableTitle.endEditing()
             

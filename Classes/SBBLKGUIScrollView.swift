@@ -51,7 +51,7 @@ class SBBLKGUIScrollView: NSScrollView {
         initialize()
     }
 
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         initialize()
     }
@@ -179,7 +179,7 @@ class SBBLKGUIScroller: NSScroller {
         // Up
         if isVertical {
             image = NSImage(named: (part == 1) ? "BLKGUI_ScrollerArrow-Highlighted-Vertical-Up.png" : "BLKGUI_ScrollerArrow-Vertical-Up.png")
-            let downImage = NSImage(named: "BLKGUI_ScrollerArrow-Vertical-Down.png")
+            let downImage = NSImage(named: "BLKGUI_ScrollerArrow-Vertical-Down.png")!
             drawRect.size = image.size
             drawRect.origin.y = arrowRect.origin.y + (arrowRect.size.height - (image.size.height + downImage.size.height))
         }
@@ -204,7 +204,7 @@ class SBBLKGUIScroller: NSScroller {
         // Left
         else {
             image = NSImage(named: (part == 1) ? "BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png" : "BLKGUI_ScrollerArrow-Horizontal-Left.png")
-            let rightImage = NSImage(named: "BLKGUI_ScrollerArrow-Horizontal-Right.png")
+            let rightImage = NSImage(named: "BLKGUI_ScrollerArrow-Horizontal-Right.png")!
             drawRect.size = image.size
             drawRect.origin.x = (arrowRect.origin.x + arrowRect.size.width) - (drawRect.size.width + rightImage.size.width)
         }
@@ -238,7 +238,7 @@ class SBBLKGUIScroller: NSScroller {
         NSFrameRect(r)
         
         // Draw top image
-        let image = NSImage(named: isVertical ? "BLKGUI_ScrollerSlot-Vertical-Top.png" : "BLKGUI_ScrollerSlot-Horizontal-Left.png")
+        let image = NSImage(named: isVertical ? "BLKGUI_ScrollerSlot-Vertical-Top.png" : "BLKGUI_ScrollerSlot-Horizontal-Left.png")!
         drawRect.size = image.size
         image.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
     }
@@ -252,21 +252,21 @@ class SBBLKGUIScroller: NSScroller {
         
         if isVertical {
             // Bottom
-            let bottomImage = NSImage(named: "BLKGUI_ScrollerKnob-Vertical-Bottom.png")
+            let bottomImage = NSImage(named: "BLKGUI_ScrollerKnob-Vertical-Bottom.png")!
             drawRect.size = bottomImage.size
             drawRect.origin.x = knobRect.origin.x + (knobRect.size.width - drawRect.size.width) / 2
             drawRect.origin.y = (knobRect.origin.y + knobRect.size.height) - bottomImage.size.height - m
             bottomImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
             
             // Top
-            let topImage = NSImage(named: "BLKGUI_ScrollerKnob-Vertical-Top.png")
+            let topImage = NSImage(named: "BLKGUI_ScrollerKnob-Vertical-Top.png")!
             drawRect.size = topImage.size
             drawRect.origin.x = knobRect.origin.x + (knobRect.size.width - drawRect.size.width) / 2
             drawRect.origin.y = knobRect.origin.y + m
             topImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
             
             // Middle
-            let middleImage = NSImage(named: "BLKGUI_ScrollerKnob-Vertical-Middle.png")
+            let middleImage = NSImage(named: "BLKGUI_ScrollerKnob-Vertical-Middle.png")!
             drawRect.size.width = middleImage.size.width
             drawRect.origin.x = knobRect.origin.x + (knobRect.size.width - drawRect.size.width) / 2
             drawRect.origin.y = knobRect.origin.y + bottomImage.size.height + m
@@ -274,21 +274,21 @@ class SBBLKGUIScroller: NSScroller {
             middleImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
         } else {
             // Left
-            let leftImage = NSImage(named: "BLKGUI_ScrollerKnob-Horizontal-Left.png")
+            let leftImage = NSImage(named: "BLKGUI_ScrollerKnob-Horizontal-Left.png")!
             drawRect.size = leftImage.size
             drawRect.origin.x = knobRect.origin.x + m
             drawRect.origin.y = knobRect.origin.y + (knobRect.size.height - drawRect.size.height) / 2
             leftImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
             
             // Right
-            let rightImage = NSImage(named: "BLKGUI_ScrollerKnob-Horizontal-Right.png")
+            let rightImage = NSImage(named: "BLKGUI_ScrollerKnob-Horizontal-Right.png")!
             drawRect.size = rightImage.size
             drawRect.origin.y = knobRect.origin.y + (knobRect.size.height - drawRect.size.height) / 2
             drawRect.origin.x = knobRect.origin.x + knobRect.size.width - (leftImage.size.width + m)
             rightImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
             
             // Center
-            let centerImage = NSImage(named: "BLKGUI_ScrollerKnob-Horizontal-Center.png")
+            let centerImage = NSImage(named: "BLKGUI_ScrollerKnob-Horizontal-Center.png")!
             drawRect.size.height = centerImage.size.height
             drawRect.origin.y = knobRect.origin.y + (knobRect.size.height - drawRect.size.height) / 2
             drawRect.origin.x = knobRect.origin.x + leftImage.size.width + m

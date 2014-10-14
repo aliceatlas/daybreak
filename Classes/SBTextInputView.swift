@@ -69,7 +69,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     var message: String {
         get { return messageLabel.stringValue }
         set(message) {
-            let size = (message as NSString).sizeWithAttributes([NSFontAttributeName: messageLabel.font])
+            let size = (message as NSString).sizeWithAttributes([NSFontAttributeName: messageLabel.font!])
             messageLabel.alignment = size.width > (messageLabelRect.size.width - 20.0) ? .LeftTextAlignment : .CenterTextAlignment
             messageLabel.stringValue = message
         }

@@ -27,10 +27,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBLoadButton: SBButton {
-    var images: [NSImage]? {
+    var images: [NSImage] = [] {
         didSet {
-            if !(images ?? []).isEmpty {
-                image = images![0] as NSImage
+            if !images.isEmpty {
+                image = images[0] as NSImage
                 needsDisplay = true
             }
             on = false
@@ -80,11 +80,11 @@ class SBLoadButton: SBButton {
     
     // MARK: NSCoding Protocol
     
-    required init(coder decoder: NSCoder) {
+    required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             if decoder.containsValueForKey("images") {
-                images = decoder.decodeObjectOfClass(NSArray.self, forKey: "images") as? [NSImage]
+                images = decoder.decodeObjectOfClass(NSArray.self, forKey: "images") as [NSImage]
             }
             if decoder.containsValueForKey("on") {
                 on = decoder.decodeBoolForKey("on")
@@ -94,25 +94,21 @@ class SBLoadButton: SBButton {
     
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
-        if let images = images {
-            coder.encodeObject(images, forKey: "images")
-        }
+        coder.encodeObject(images, forKey: "images")
         coder.encodeBool(on, forKey: "on")
     }
     
     func switchImage() {
-        if let images = images {
-            if images.count == 2 {
-                if on {
-                    if image === images[0] {
-                        image = images[1] as NSImage
-                        needsDisplay = true
-                    }
-                } else {
-                    if image === images[1] {
-                        image = images[0] as NSImage
-                        needsDisplay = true
-                    }
+        if images.count == 2 {
+            if on {
+                if image === images[0] {
+                    image = images[1] as NSImage
+                    needsDisplay = true
+                }
+            } else {
+                if image === images[1] {
+                    image = images[0] as NSImage
+                    needsDisplay = true
                 }
             }
         }
@@ -124,7 +120,7 @@ class SBLoadButton: SBButton {
         if enabled {
             let location = event.locationInWindow
             let point = convertPoint(location, fromView: nil)
-            if NSPointInRect(point, bounds) {
+            if bounds.contains(point) {
                 pressed = false
                 on = !on
                 executeAction()

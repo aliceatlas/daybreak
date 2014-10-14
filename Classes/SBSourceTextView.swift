@@ -40,7 +40,7 @@ class SBSourceTextView: NSTextView, SBFindbarTarget {
     
     func performFind(sender: AnyObject) {
         // performFindPanelAction: of WebView is broken
-        if bounds.size.width >= SBFindbar.availableWidth() {
+        if bounds.size.width >= SBFindbar.availableWidth {
             executeOpenFindbar()
         } else {
             NSBeep()
@@ -48,7 +48,7 @@ class SBSourceTextView: NSTextView, SBFindbarTarget {
     }
     
     func performFindNext(sender: AnyObject) {
-        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)
+        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) ?? ""
         if !string.isEmpty {
             let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
             let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
@@ -59,7 +59,7 @@ class SBSourceTextView: NSTextView, SBFindbarTarget {
     }
     
     func performFindPrevious(sender: AnyObject) {
-        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)
+        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) ?? ""
         if !string.isEmpty {
             let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
             let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
@@ -72,21 +72,21 @@ class SBSourceTextView: NSTextView, SBFindbarTarget {
     func searchFor(searchString: String, direction forward: Bool, caseSensitive caseFlag: Bool, wrap wrapFlag: Bool, continuous: Bool) -> Bool {
         var r = false
         var selectedRange = self.selectedRange
-        let allRange = NSMakeRange(0, string.utf16Count)
+        let allRange = NSMakeRange(0, string!.utf16Count)
         var options: NSStringCompareOptions = nil
         if selectedRange.location == NSNotFound { selectedRange = NSMakeRange(0, 0) }
         let invalidLength = continuous ? selectedRange.location : (selectedRange.location + selectedRange.length)
         if forward { options |= .BackwardsSearch }
         if caseFlag { options |= .CaseInsensitiveSearch }
         var searchRange = forward ? NSMakeRange(invalidLength, allRange.length - invalidLength) : NSMakeRange(0, selectedRange.location)
-        var range = (string as NSString).rangeOfString(searchString, options: options, range: searchRange)
+        var range = (string! as NSString).rangeOfString(searchString, options: options, range: searchRange)
         if range.location != NSNotFound {
             selectRange(range)
             r = true
         } else {
             if wrapFlag {
                 searchRange = forward ? NSMakeRange(0, selectedRange.location) : NSMakeRange(invalidLength, allRange.length - invalidLength)
-                range = (string as NSString).rangeOfString(searchString, options: options, range: searchRange)
+                range = (string! as NSString).rangeOfString(searchString, options: options, range: searchRange)
                 if range.location != NSNotFound {
                     selectRange(range)
                     r = true

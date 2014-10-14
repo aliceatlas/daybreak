@@ -46,7 +46,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         // Handle AppleScript (Open URL from other application)
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(self, andSelector: "openURL:withReplyEvent:", forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         // Localize menu
-        SBLocalizeTitlesInMenu(NSApp.mainMenu)
+        SBLocalizeTitlesInMenu(NSApplication.sharedApplication().mainMenu!)
         // Register defaults
         SBPreferences.sharedPreferences.registerDefaults()
     }
@@ -124,7 +124,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         alert.addButtonWithTitle(okTitle)
         alert.addButtonWithTitle(otherTitle)
         //alert.informativeText = ""
-        alert.beginSheetModalForWindow(window) {
+        alert.beginSheetModalForWindow(window!) {
             NSApp.replyToApplicationShouldTerminate($0 != NSAlertOtherReturn)
         }
         return .TerminateLater
@@ -166,11 +166,11 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Notifications
     
     func updaterShouldUpdate(notification: NSNotification) {
-        update(notification.userInfo![kSBUpdaterVersionString as NSString] as NSString)
+        update(notification.userInfo![kSBUpdaterVersionString] as String)
     }
     
     func updaterNotNeedUpdate(notification: NSNotification) {
-        let versionString = notification.userInfo![kSBUpdaterVersionString as NSString] as NSString
+        let versionString = notification.userInfo![kSBUpdaterVersionString] as String
         let title = NSString(format: NSLocalizedString("Sunrise %@ is currently the newest version available.", comment: ""), versionString)
         let alert = NSAlert()
         alert.messageText = title
@@ -179,7 +179,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updaterDidFailChecking(notification: NSNotification) {
-        let errorDescription = notification.userInfo![kSBUpdaterErrorDescription as NSString] as NSString
+        let errorDescription = notification.userInfo![kSBUpdaterErrorDescription] as String
         let alert = NSAlert()
         alert.messageText = errorDescription
         alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
@@ -207,8 +207,8 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func update(versionString: String) {
         let window = SBGetSelectedDocument!.window
-        let info = NSBundle.mainBundle().localizedInfoDictionary
-        let urlString: String = info["SBReleaseNotesURL"] as NSString
+        let info = NSBundle.mainBundle().localizedInfoDictionary!
+        let urlString = info["SBReleaseNotesURL"] as String
         destructUpdateView()
         updateView = SBUpdateView(frame: window.splitViewRect)
         updateView!.title = NSString(format: NSLocalizedString("A new version of Sunrise %@ is available.", comment: ""), versionString)
@@ -234,7 +234,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
             }
         } while r.location != NSNotFound && r.length > 0
         if versionString.length != mutableVString.length {
-            versionString = mutableVString.copy() as NSString
+            versionString = mutableVString.copy() as String
         }
         let url = NSURL(string: NSString(format: kSBUpdaterNewVersionURL, versionString))
         window.hideCoverWindow()
@@ -276,7 +276,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         if !kSBFeedbackMailAddress.isEmpty {
             var urlString: NSString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
             urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString))
+            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString)!)
         }
     }
     
@@ -344,7 +344,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Help
     
     func localize(sender: AnyObject) {
-        if localizationWindowController != nil && localizationWindowController!.window.occlusionState != .Visible {
+        if localizationWindowController != nil && localizationWindowController!.window!.occlusionState != .Visible {
             localizationWindowController!.showWindow(nil)
         } else {
             let path = NSBundle.mainBundle().pathForResource("Localizable", ofType:"strings")
@@ -361,8 +361,8 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func sunrisepage(sender: AnyObject) {
-        let info = NSBundle.mainBundle().localizedInfoDictionary
-        if let string: String = info["SBHomePageURL"] as? NSString {
+        let info = NSBundle.mainBundle().localizedInfoDictionary!
+        if let string = info["SBHomePageURL"] as? String {
             if let document = SBGetSelectedDocument {
                 if document.selectedWebDataSource != nil {
                     document.constructNewTab(URL: NSURL(string: string), selection: true)
@@ -377,7 +377,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Debug
     
     func constructDebugMenu() {
-        let mainMenu = NSApp.mainMenu
+        let mainMenu = NSApplication.sharedApplication().mainMenu!
         let debugMenuItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
         let debugMenu = NSMenu(title: "Debug")
         let writeViewStructure = NSMenuItem(title: "Export View Structure...", action: "writeViewStructure:", keyEquivalent: "")
@@ -389,7 +389,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
             debugMenu.addItem(item)
         }
         debugMenuItem.submenu = debugMenu
-        mainMenu!.addItem(debugMenuItem)
+        mainMenu.addItem(debugMenuItem)
     }
     
     func writeViewStructure(AnyObject) {
@@ -398,7 +398,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
             let panel = NSSavePanel()
             panel.nameFieldStringValue = "ViewStructure.plist"
             if panel.runModal() == NSFileHandlingPanelOKButton {
-                SBDebugWriteViewStructure(view, panel.URL.path!)
+                SBDebugWriteViewStructure(view, panel.URL!.path!)
             }
         }
     }
@@ -407,7 +407,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let panel = NSSavePanel()
         panel.nameFieldStringValue = "Menu.plist"
         if panel.runModal() == NSFileHandlingPanelOKButton {
-            SBDebugWriteMainMenu(panel.URL.path!)
+            SBDebugWriteMainMenu(panel.URL!.path!)
         }
     }
     
@@ -416,7 +416,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         panel.allowedFileTypes = ["strings"]
         panel.directoryURL = NSBundle.mainBundle().resourceURL
         if panel.runModal() == NSFileHandlingPanelOKButton {
-            if let (textSet, _, _) = SBGetLocalizableTextSet(panel.URL.path!) {
+            if let (textSet, _, _) = SBGetLocalizableTextSet(panel.URL!.path!) {
                 for (index, texts) in enumerate(textSet) {
                     let text0 = texts[0]
                     for (i, ts) in enumerate(textSet) {

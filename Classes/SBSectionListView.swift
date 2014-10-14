@@ -56,7 +56,7 @@ class SBSectionListView: SBView {
         didSet {
             if sections != oldValue {
                 contentView.frame = contentViewRect
-                contentView.scrollRectToVisible(NSMakeRect(0, NSMaxY(contentView.frame), 0, 0))
+                contentView.scrollRectToVisible(NSMakeRect(0, contentView.frame.maxY, 0, 0))
                 constructSectionGroupViews()
             }
         }
@@ -93,7 +93,7 @@ class SBSectionListView: SBView {
                 break
             }
         }
-        r.origin.y = height - NSMaxY(r)
+        r.origin.y = height - r.maxY
         return r
     }
     
@@ -136,7 +136,7 @@ class SBSectionGroupView: SBView {
         r.size.height = kSBSectionItemHeight
         r.origin.x = kSBSectionMarginX
         r.origin.y = CGFloat(index) * kSBSectionItemHeight + kSBSectionTitleHeight + kSBSectionTopMargin
-        r.origin.y = bounds.size.height - NSMaxY(r)
+        r.origin.y = bounds.size.height - r.maxY
         return r
     }
     
@@ -213,10 +213,9 @@ class SBSectionGroupView: SBView {
         tr.origin.y += 2.0
         attributes = [NSFontAttributeName: NSFont.boldSystemFontOfSize(13.0),
                       NSForegroundColorAttributeName: NSColor.whiteColor()]
-        (group.title as NSString).drawInRect(tr, withAttributes: attributes)
+        groupTitle.drawInRect(tr, withAttributes: attributes)
     }
 }
-
 
 class SBSectionItemView: SBView, NSTextFieldDelegate {
     var item: SBSectionItem
@@ -258,7 +257,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
                 popUp.action = "select:"
                 popUp.menu = menu
             }
-            if let selectedItem = popUp.menu.selectItem(representedObject: string) {
+            if let selectedItem = popUp.menu!.selectItem(representedObject: string) {
                 popUp.selectItem(selectedItem)
             }
             addSubview(popUp)
@@ -269,9 +268,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             field.delegate = self
             field.focusRingType = .None
             (field.cell() as NSTextFieldCell).placeholderString = item.context as? String
-            if let string = SBPreferences.objectForKey(item.keyName) as? String {
-                field.stringValue = string
-            }
+            field.stringValue = (SBPreferences.objectForKey(item.keyName) as? String) ?? ""
             addSubview(field)
         } else if item.controlClass === NSOpenPanel.self {
             var fr = r
@@ -297,8 +294,8 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             
             let imageView = NSImageView(frame: ir)
             let space = NSWorkspace.sharedWorkspace()
-            let path = SBPreferences.objectForKey(item.keyName) as? NSString
-            if let image = space.iconForFile(path) {
+            let path = SBPreferences.objectForKey(item.keyName) as? String
+            if let image = path !! space.iconForFile {
                 image.size = NSMakeSize(16.0, 16.0)
                 imageView.image = image
             }
@@ -325,7 +322,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             button.target = self
             button.action = "check:"
             button.setButtonType(.SwitchButton)
-            button.title = item.context as? String
+            button.title = (item.context as? String) ?? ""
             button.state = enabled ? NSOnState : NSOffState
             addSubview(button)
         }
@@ -355,20 +352,19 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
         panel.allowsMultipleSelection = false
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
-        panel.beginSheetModalForWindow(window) {
+        panel.beginSheetModalForWindow(window!) {
             panel.orderOut(nil)
             if $0 == NSOKButton {
                 let imageView = self.currentImageView
                 let field = self.currentField
                 if (imageView !! field) != nil {
                     let space = NSWorkspace.sharedWorkspace()
-                    let path = panel.URL.path
-                    if let image = space.iconForFile(path) {
-                        image.size = NSMakeSize(16.0, 16.0)
-                        imageView!.image = image
-                    }
-                    field!.stringValue = (path! as NSString).stringByAbbreviatingWithTildeInPath
-                    SBPreferences.setObject(path!, forKey: self.item.keyName)
+                    let path = panel.URL!.path!
+                    let image = space.iconForFile(path)
+                    image.size = NSMakeSize(16.0, 16.0)
+                    imageView!.image = image
+                    field!.stringValue = (path as NSString).stringByAbbreviatingWithTildeInPath
+                    SBPreferences.setObject(path, forKey: self.item.keyName)
                 }
             }
         }
@@ -387,8 +383,8 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
         // Stroke
         let margin: CGFloat = 10.0
         let path = NSBezierPath()
-        path.moveToPoint(NSMakePoint(r.origin.x + margin, NSMaxY(r)))
-        path.lineToPoint(NSMakePoint(NSMaxX(r) - margin * 2, NSMaxY(r)))
+        path.moveToPoint(NSMakePoint(r.origin.x + margin, r.maxY))
+        path.lineToPoint(NSMakePoint(r.maxX - margin * 2, r.maxY))
         path.lineWidth = 0.5
         NSColor(deviceWhite: 0.6, alpha: 1.0).set()
         path.stroke()

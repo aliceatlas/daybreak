@@ -152,7 +152,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     }
     
     var itemRepresentation: NSDictionary {
-        let data = image!.bitmapImageRep.data
+        let data = image!.bitmapImageRep!.data
         let labelName = SBBookmarkLabelColorNames[colorPopup.indexOfSelectedItem - 1]
         let offset: String = NSStringFromPoint(NSZeroPoint)
         return SBCreateBookmarkItem(title, urlString, data, NSDate(), labelName, offset)
@@ -215,10 +215,10 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     var titleLabelRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(imageRect) + 10.0
+        r.origin.x = imageRect.maxX + 10.0
         r.size.width = labelWidth
         r.size.height = 24.0
-        r.origin.y = NSMaxY(imageRect) - r.size.height
+        r.origin.y = imageRect.maxY - r.size.height
         return r
     }
     
@@ -242,7 +242,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     var titleFieldRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(titleLabelRect) + 10.0
+        r.origin.x = titleLabelRect.maxX + 10.0
         r.origin.y = titleLabelRect.origin.y
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.size.height = 24.0
@@ -251,7 +251,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     var urlFieldRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(urlLabelRect) + 10.0
+        r.origin.x = urlLabelRect.maxX + 10.0
         r.origin.y = urlLabelRect.origin.y
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.size.height = 24.0
@@ -260,7 +260,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     var colorPopupRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(colorLabelRect) + 10.0
+        r.origin.x = colorLabelRect.maxX + 10.0
         r.origin.y = colorLabelRect.origin.y
         r.size.width = 150.0
         r.size.height = 26.0

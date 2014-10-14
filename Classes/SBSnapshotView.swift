@@ -161,7 +161,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     private lazy var filetypePopup: SBBLKGUIPopUpButton = {
         var selectedIndex = 0
         let filetypePopup = SBBLKGUIPopUpButton(frame: NSMakeRect(6, self.imageViewSize.height - 272, 114, 26))
-        let menu = filetypePopup.menu
+        let menu = filetypePopup.menu!
         let fileTypeNames = ["TIFF", "GIF", "JPEG", "PNG"]
         let filetypes = [NSBitmapImageFileType.NSTIFFFileType, NSBitmapImageFileType.NSGIFFileType, NSBitmapImageFileType.NSJPEGFileType, NSBitmapImageFileType.NSPNGFileType]
         menu.addItemWithTitle("", action: nil, keyEquivalent: "")
@@ -185,12 +185,12 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         optionTabView.tabViewType = .NoTabsNoBorder
         optionTabView.drawsBackground = false
         let tabViewItem0 = NSTabViewItem(identifier: NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.rawValue))
-        tabViewItem0.view.addSubview(self.tiffOptionLabel)
-        tabViewItem0.view.addSubview(self.tiffOptionPopup)
+        tabViewItem0.view!.addSubview(self.tiffOptionLabel)
+        tabViewItem0.view!.addSubview(self.tiffOptionPopup)
         let tabViewItem1 = NSTabViewItem(identifier: NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.rawValue))
-        tabViewItem1.view.addSubview(self.jpgOptionLabel)
-        tabViewItem1.view.addSubview(self.jpgOptionSlider)
-        tabViewItem1.view.addSubview(self.jpgOptionField)
+        tabViewItem1.view!.addSubview(self.jpgOptionLabel)
+        tabViewItem1.view!.addSubview(self.jpgOptionSlider)
+        tabViewItem1.view!.addSubview(self.jpgOptionField)
         optionTabView.addTabViewItem(tabViewItem0)
         optionTabView.addTabViewItem(tabViewItem1)
         switch self.filetype {
@@ -219,7 +219,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     private lazy var tiffOptionPopup: SBBLKGUIPopUpButton = {
         var selectedIndex = 0
         let tiffOptionPopup = SBBLKGUIPopUpButton(frame: NSMakeRect(12, 0, 100, 26))
-        let menu = tiffOptionPopup.menu
+        let menu = tiffOptionPopup.menu!
         let compressionNames = [NSLocalizedString("None", comment: ""), "LZW", "PackBits"]
         let compressions: [NSTIFFCompression] = [.None, .LZW, .PackBits]
         menu.addItemWithTitle("", action: nil, keyEquivalent: "")
@@ -330,24 +330,24 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     private var image: NSImage?
     
     private lazy var filetype: NSBitmapImageFileType = {
-        if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotFileType) as? NSNumber {
-            return NSBitmapImageFileType(rawValue: UInt(value.intValue))!
+        if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotFileType) as? UInt {
+            return NSBitmapImageFileType(rawValue: value)!
         } else {
             return NSBitmapImageFileType.NSTIFFFileType
         }
     }()
     
     private lazy var tiffCompression: NSTIFFCompression = {
-        if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotTIFFCompression) as? NSNumber {
-            return NSTIFFCompression(rawValue: UInt(value.intValue))!
+        if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotTIFFCompression) as? UInt {
+            return NSTIFFCompression(rawValue: value)!
         } else {
             return .None
         }
     }()
     
     private lazy var jpgFactor: CGFloat = {
-        if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotJPGFactor) as? NSNumber {
-            return CGFloat(value.doubleValue)
+        if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotJPGFactor) as? CGFloat {
+            return value
         } else {
             return 1.0
         }
@@ -423,7 +423,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     func windowDidResize(notification: NSNotification) {
         var imageRect = imageView.frame
-        let imageSize = imageView.image.size
+        let imageSize = imageView.image!.size
         var scrollBounds = NSZeroRect
         scrollBounds.size = scrollView.frame.size
         imageRect.size.width = SBConstrain(imageSize.width, min: scrollBounds.size.width)
@@ -724,7 +724,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let tag = sender.tag
         if Int(filetype.rawValue) != tag {
             filetype = NSBitmapImageFileType(rawValue: UInt(tag))!
-            for item in filetypePopup.menu.itemArray as [NSMenuItem] {
+            for item in filetypePopup.menu!.itemArray as [NSMenuItem] {
                 item.state = (Int(filetype.rawValue) == item.tag) ? NSOnState : NSOffState
             }
             // Update image
@@ -748,7 +748,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let tag = sender.tag
         if Int(tiffCompression.rawValue) != tag {
             tiffCompression = NSTIFFCompression(rawValue: UInt(tag))!
-            for item in tiffOptionPopup.menu.itemArray as [NSMenuItem] {
+            for item in tiffOptionPopup.menu!.itemArray as [NSMenuItem] {
                 item.state = (Int(tiffCompression.rawValue) == item.tag) ? NSOnState : NSOffState
             }
             // Update image
@@ -775,7 +775,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             panel.canCreateDirectories = true
             panel.nameFieldStringValue = filename
             if panel.runModal() == NSFileHandlingPanelOKButton {
-                if data!.writeToURL(panel.URL, atomically: true) {
+                if data!.writeToURL(panel.URL!, atomically: true) {
                     done()
                 }
             }
@@ -801,7 +801,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let anImage = NSImage(size: size)
         if onlyVisibleButton.state == NSOnState {
             fromRect = visibleRect
-            fromRect.origin.y = image!.size.height - NSMaxY(visibleRect)
+            fromRect.origin.y = image!.size.height - visibleRect.maxY
         } else {
             fromRect.size = image!.size
         }
@@ -811,23 +811,25 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         
         // Change filetype
         aData = anImage.TIFFRepresentation
-        switch inFiletype {
-            case NSBitmapImageFileType.NSTIFFFileType:
-                bitmapImageRep = NSBitmapImageRep(data: aData)
-                aData = bitmapImageRep.TIFFRepresentationUsingCompression(tiffCompression, factor: 1.0)
-            case NSBitmapImageFileType.NSGIFFileType:
-                bitmapImageRep = NSBitmapImageRep(data: aData)
-                let properties = [NSImageDitherTransparency: true as NSNumber]
-                aData = bitmapImageRep.representationUsingType(NSBitmapImageFileType.NSGIFFileType, properties: properties)
-            case NSBitmapImageFileType.NSJPEGFileType:
-                bitmapImageRep = NSBitmapImageRep(data: aData)
-                let properties = [NSImageCompressionFactor: jpgFactor as NSNumber]
-                aData = bitmapImageRep.representationUsingType(NSBitmapImageFileType.NSJPEGFileType, properties: properties)
-            case NSBitmapImageFileType.NSPNGFileType:
-                bitmapImageRep = NSBitmapImageRep(data: aData)
-                aData = bitmapImageRep.representationUsingType(NSBitmapImageFileType.NSPNGFileType, properties: nil)
-            default:
-                break
+        if aData != nil {
+            switch inFiletype {
+                case NSBitmapImageFileType.NSTIFFFileType:
+                    bitmapImageRep = NSBitmapImageRep(data: aData!)
+                    aData = bitmapImageRep.TIFFRepresentationUsingCompression(tiffCompression, factor: 1.0)
+                case NSBitmapImageFileType.NSGIFFileType:
+                    bitmapImageRep = NSBitmapImageRep(data: aData!)
+                    let properties = [NSImageDitherTransparency: true]
+                    aData = bitmapImageRep.representationUsingType(NSBitmapImageFileType.NSGIFFileType, properties: properties)
+                case NSBitmapImageFileType.NSJPEGFileType:
+                    bitmapImageRep = NSBitmapImageRep(data: aData!)
+                    let properties = [NSImageCompressionFactor: jpgFactor]
+                    aData = bitmapImageRep.representationUsingType(NSBitmapImageFileType.NSJPEGFileType, properties: properties)
+                case NSBitmapImageFileType.NSPNGFileType:
+                    bitmapImageRep = NSBitmapImageRep(data: aData!)
+                    aData = bitmapImageRep.representationUsingType(NSBitmapImageFileType.NSPNGFileType, properties: [:])
+                default:
+                    break
+            }
         }
         if aData != nil {
             successSize = size

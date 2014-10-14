@@ -51,7 +51,7 @@ class SBView: SBBaseView {
         return (subviews as [NSView]).get(0)
     }
     
-    override var description: String! {
+    override var description: String {
     	return "\(super.description) \(NSStringFromRect(frame))"
     }
     
@@ -88,7 +88,7 @@ class SBView: SBBaseView {
     
     // MARK: NSCoding Protocol
     
-    required init(coder decoder: NSCoder) {
+    required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
 		if decoder.allowsKeyedCoding {
 			if decoder.containsValueForKey("frameColor") {

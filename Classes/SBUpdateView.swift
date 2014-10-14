@@ -161,7 +161,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     var titleRect: NSRect {
         var r = NSZeroRect
         r.size.height = 19.0
-        r.origin.x = NSMaxX(imageRect) + 10
+        r.origin.x = imageRect.maxX + 10
         r.origin.y = imageRect.origin.y + 34
         r.size.width = bounds.size.width - r.origin.x - margin.x
         return r
@@ -170,7 +170,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     var textRect: NSRect {
         var r = NSZeroRect
         r.size.height = 19.0
-        r.origin.x = NSMaxX(imageRect) + 10
+        r.origin.x = imageRect.maxX + 10
         r.origin.y = imageRect.origin.y + 10
         r.size.width = bounds.size.width - r.origin.x - margin.x
         return r
@@ -189,8 +189,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
         var r = NSZeroRect
         r.size.width = 32.0
         r.size.height = 32.0
-        r.origin.x = NSMidX(webRect) - r.size.width / 2
-        r.origin.y = NSMidY(webRect) - r.size.height / 2
+        r.origin.x = webRect.midX - r.size.width / 2
+        r.origin.y = webRect.midY - r.size.height / 2
         return r
     }
     

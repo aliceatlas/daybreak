@@ -37,7 +37,7 @@ class SBBottombar: SBView {
         // Lines
         let lh: CGFloat = 1.0
         NSColor(calibratedWhite: 1.0, alpha: 0.45).set()
-        NSRectFill(NSMakeRect(bounds.origin.x, NSMaxY(bounds) - lh, bounds.size.width, lh))
+        NSRectFill(NSMakeRect(bounds.origin.x, bounds.maxY - lh, bounds.size.width, lh))
         NSColor(calibratedWhite: 1.0, alpha: 0.3).set()
         NSRectFill(NSMakeRect(bounds.origin.x, 0.0, bounds.size.width, lh))
     }

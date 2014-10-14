@@ -138,7 +138,7 @@ class SBTabbarItem: SBView {
         let point = convertPoint(location, fromView: nil)
         dragInClose = false
         if closable {
-            downInClose = CGRectContainsPoint(closableRect, point)
+            downInClose = closableRect.contains(point)
             if downInClose {
                 // Close
                 dragInClose = true
@@ -160,7 +160,7 @@ class SBTabbarItem: SBView {
         let point = convertPoint(location, fromView: nil)
         if downInClose {
             // Close
-            let close =  CGRectContainsPoint(closableRect, point)
+            let close =  closableRect.contains(point)
             if dragInClose != close {
                 dragInClose = close
                 needsDisplay = true
@@ -175,7 +175,7 @@ class SBTabbarItem: SBView {
             let location = event.locationInWindow
             let point = convertPoint(location, fromView: nil)
             superview!.mouseMoved(event)
-            if CGRectContainsPoint(bounds, point) {
+            if bounds.contains(point) {
                 tabbar.constructClosableTimerForItem(self)
             } else {
                 tabbar.applyDisclosableAllItem()
@@ -200,7 +200,7 @@ class SBTabbarItem: SBView {
         if downInClose {
             // Close
             if closable {
-                if CGRectContainsPoint(closableRect, point) {
+                if closableRect.contains(point) {
                     executeShouldClose()
                 }
             }

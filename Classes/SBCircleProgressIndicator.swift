@@ -71,7 +71,7 @@ class SBCircleProgressIndicator: SBView {
         super.init(frame: frame)
     }
     
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
         if coder.allowsKeyedCoding {
             style = SBCircleProgressIndicatorStyle(rawValue: coder.decodeIntegerForKey("style")) ?? .Regular
@@ -122,7 +122,7 @@ class SBCircleProgressIndicator: SBView {
             if progress >= 0 {
                 let r = bounds
                 
-                let cp = NSMakePoint(NSMidX(r), NSMidY(r))
+                let cp = NSMakePoint(r.midX, r.midY)
                 let lw: CGFloat = 1.5
                 let square = SBCenteredSquare(r)
                 let radius = (square.size.width / 2) - lw

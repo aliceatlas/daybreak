@@ -33,27 +33,27 @@ class SBDocumentController: NSDocumentController {
         return kSBDocumentTypeName
     }
     
-    override func typeForContentsOfURL(inAbsoluteURL: NSURL?, error outError: NSErrorPointer) -> String? {
-        if inAbsoluteURL?.fileURL ?? false {
+    override func typeForContentsOfURL(inAbsoluteURL: NSURL, error outError: NSErrorPointer) -> String? {
+        if inAbsoluteURL.fileURL {
             return super.typeForContentsOfURL(inAbsoluteURL, error: outError)
         } else {
             return kSBDocumentTypeName
         }
     }
     
-    override func openUntitledDocumentAndDisplay(displayDocument: Bool, error outError: NSErrorPointer) -> AnyObject! {
+    override func openUntitledDocumentAndDisplay(displayDocument: Bool, error outError: NSErrorPointer) -> AnyObject? {
         let sidebarVisibility = NSUserDefaults.standardUserDefaults().boolForKey(kSBSidebarVisibilityFlag)
         let homepage = SBPreferences.sharedPreferences.homepage(true) ?? ""
         let url = !homepage.isEmpty &? NSURL(string: homepage.requestURLString)
         return openUntitledDocumentAndDisplay(displayDocument, sidebarVisibility: sidebarVisibility, initialURL: url, error: outError)
     }
     
-    func openUntitledDocumentAndDisplay(displayDocument: Bool, sidebarVisibility: Bool, initialURL url: NSURL?, error outError: NSErrorPointer) -> AnyObject! {
-        let type = typeForContentsOfURL(url, error: outError)
+    func openUntitledDocumentAndDisplay(displayDocument: Bool, sidebarVisibility: Bool, initialURL URL: NSURL?, error outError: NSErrorPointer) -> AnyObject? {
+        let type = URL !! {self.typeForContentsOfURL($0, error: outError)}
         if type == kSBStringsDocumentTypeName {
         } else {
             if let document = makeUntitledDocumentOfType(kSBDocumentTypeName, error: outError) as? SBDocument {
-                url !! { document.initialURL = $0 }
+                URL !! { document.initialURL = $0 }
                 document.sidebarVisibility = sidebarVisibility
                 addDocument(document)
                 document.makeWindowControllers()

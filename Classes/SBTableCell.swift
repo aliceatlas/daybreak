@@ -108,8 +108,8 @@ class SBTableCell: NSCell {
             let color = highlighted ? NSColor.whiteColor() : textColor
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineBreakMode = lineBreakMode
-            let attribute = [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle]
-            let sAttribute = [NSFontAttributeName: font, NSForegroundColorAttributeName: sTextColor, NSParagraphStyleAttributeName: paragraphStyle]
+            let attribute = [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle]
+            let sAttribute = [NSFontAttributeName: font!, NSForegroundColorAttributeName: sTextColor, NSParagraphStyleAttributeName: paragraphStyle]
             var size = nsTitle.sizeWithAttributes(attribute)
             SBConstrain(&size.width, max: cellFrame.size.width - side * 2)
             r.size = size
@@ -154,10 +154,10 @@ class SBIconDataCell: NSCell {
     func drawImageWithFrame(cellFrame: NSRect, inView controlView: NSView) {
         if image != nil {
             var r = NSZeroRect
-            r.size = image.size
+            r.size = image!.size
             r.origin.x = cellFrame.origin.x + (cellFrame.size.width - r.size.width) / 2
             r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
-            image.drawInRect(r, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
+            image!.drawInRect(r, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
         }
     }
 }

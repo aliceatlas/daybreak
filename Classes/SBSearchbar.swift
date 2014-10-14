@@ -27,12 +27,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBSearchbar: SBFindbar {
-    override internal lazy var backwardButton: SBButton? = nil
-    override internal lazy var forwardButton: SBButton? = nil
-    override internal lazy var caseSensitiveCheck: SBBLKGUIButton? = nil
-    override internal lazy var wrapCheck: SBBLKGUIButton? = nil
-
-    override internal lazy var searchField: SBFindSearchField = {
+    override internal var backwardButton: SBButton? { get { return nil } set { } }
+    override internal var forwardButton: SBButton? { get { return nil } set { } }
+    override internal var caseSensitiveCheck: SBBLKGUIButton? { get { return nil } set { } }
+    override internal var wrapCheck: SBBLKGUIButton? { get { return nil } set { } }
+    
+    private lazy var _searchField: SBFindSearchField = {
         let searchField = SBFindSearchField(frame: self.searchRect)
         searchField.autoresizingMask = .ViewWidthSizable
         searchField.delegate = self
@@ -46,7 +46,10 @@ class SBSearchbar: SBFindbar {
         }
         return searchField
     }()
-    
+    override internal var searchField: SBFindSearchField {
+        get { return _searchField }
+        set(searchField) { _searchField = searchField }
+    }
     
     override init(frame: NSRect) {
         super.init(frame: frame)
@@ -56,18 +59,16 @@ class SBSearchbar: SBFindbar {
         fatalError("NSCoding not supported")
     }
     
-    override class func minimumWidth() -> CGFloat { return 200 }
-    override class func availableWidth() -> CGFloat { return 200 }
-    override func minimumWidth() -> CGFloat { return SBSearchbar.minimumWidth() }
-    override func availableWidth() -> CGFloat { return SBSearchbar.availableWidth() }
+    override class var minimumWidth: CGFloat { return 200 }
+    override class var availableWidth: CGFloat { return 200 }
     
     // MARK: Rects
     
     override var searchRect: NSRect {
         var r = NSZeroRect
-        r.size.width = self.bounds.size.width - NSMaxX(closeRect)
+        r.size.width = self.bounds.size.width - closeRect.maxX
         r.size.height = 19.0
-        r.origin.x = NSMaxX(closeRect)
+        r.origin.x = closeRect.maxX
         r.origin.y = (bounds.size.height - r.size.height) / 2
         return r
     }
@@ -78,7 +79,7 @@ class SBSearchbar: SBFindbar {
         let text = searchField.stringValue
         if !text.isEmpty {
             if target?.respondsToSelector(doneSelector) ?? false {
-                NSApp.sendAction(doneSelector, to: target!, from: text as NSString)
+                NSApp.sendAction(doneSelector, to: target!, from: text)
             }
         }
     }

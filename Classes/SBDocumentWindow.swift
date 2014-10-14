@@ -85,7 +85,7 @@ class SBDocumentWindow: NSWindow {
         let styleMask = NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask
         super.init(contentRect: frame, styleMask: styleMask, backing: .Buffered, defer: true)
         
-        contentView.addSubview(innerView)
+        contentView!.addSubview(innerView)
         minSize = NSMakeSize(kSBDocumentWindowMinimumSizeWidth, kSBDocumentWindowMinimumSizeHeight)
         sbDelegate = delegate
         releasedWhenClosed = true
@@ -124,7 +124,7 @@ class SBDocumentWindow: NSWindow {
     
     // MARK: Rects
     
-    var innerRect: NSRect { return contentView.bounds }
+    var innerRect: NSRect { return contentView!.bounds }
     let tabbarHeight = kSBTabbarHeight
     
     var tabbarRect: NSRect {
@@ -165,7 +165,7 @@ class SBDocumentWindow: NSWindow {
     
     override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
         if menuItem.action == "toggleToolbarShown:" {
-            menuItem.title = toolbar.visible ? NSLocalizedString("Hide Toolbar", comment: "") : NSLocalizedString("Show Toolbar", comment: "")
+            menuItem.title = toolbar!.visible ? NSLocalizedString("Hide Toolbar", comment: "") : NSLocalizedString("Show Toolbar", comment: "")
             return coverWindow == nil
         }
         return super.validateMenuItem(menuItem)
@@ -214,13 +214,13 @@ class SBDocumentWindow: NSWindow {
         scrollView.hasHorizontalScroller = hasHorizontalScroller
         scrollView.hasVerticalScroller = hasVerticalScroller
         scrollView.drawsBackground = false
-        coverWindow!.contentView.addSubview(scrollView)
+        coverWindow!.contentView!.addSubview(scrollView)
         coverWindow!.releasedWhenClosed = false
         scrollView.documentView = view
         showsToolbarButton = false
         
         #if true
-            addChildWindow(coverWindow, ordered: .Above)
+            addChildWindow(coverWindow!, ordered: .Above)
             coverWindow!.makeKeyWindow()
         #else
             coverWindow.contentView.hidden = true
@@ -240,7 +240,7 @@ class SBDocumentWindow: NSWindow {
 
     #if true
         func hideCoverWindow() {
-            removeChildWindow(coverWindow)
+            removeChildWindow(coverWindow!)
             coverWindow!.orderOut(nil)
             destructCoverWindow()
             makeKeyWindow()
@@ -260,13 +260,13 @@ class SBDocumentWindow: NSWindow {
     #endif
     
     func hideToolbar() {
-        if toolbar.visible {
+        if toolbar!.visible {
             toggleToolbarShown(self)
         }
     }
     
     func showToolbar() {
-        if !toolbar.visible {
+        if !(toolbar!.visible) {
             toggleToolbarShown(self)
         }
     }
@@ -311,7 +311,7 @@ class SBDocumentWindow: NSWindow {
         backWindow!.backgroundColor = SBWindowBackColor
         backWindow!.releasedWhenClosed = false
         view.frame = NSMakeRect((br.size.width - view.frame.size.width) / 2, (br.size.height - view.frame.size.height) / 2, view.frame.size.width, view.frame.size.height)
-        backWindow!.contentView.addSubview(view)
+        backWindow!.contentView!.addSubview(view)
         backWindow!.makeKeyAndOrderFront(nil)
         alphaValue = 0
     }

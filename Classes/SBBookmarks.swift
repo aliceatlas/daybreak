@@ -45,12 +45,12 @@ class SBBookmarks: NSObject {
     
     // MARK: Getter
     
-    func containsURL(urlString: String) -> Bool {
-        return indexOfURL(urlString) != NSNotFound
+    func containsURL(URLString: String) -> Bool {
+        return indexOfURL(URLString) != NSNotFound
     }
     
-    func indexOfURL(urlString: String) -> Int {
-        return items.firstIndex({ $0[kSBBookmarkURL] as NSString == urlString }) ?? NSNotFound
+    func indexOfURL(URLString: String) -> Int {
+        return items.firstIndex({ $0[kSBBookmarkURL] as String == URLString }) ?? NSNotFound
     }
     
     func isEqualBookmarkItems(item1: BookmarkItem, anotherItem item2: BookmarkItem) -> Bool {
@@ -107,7 +107,7 @@ class SBBookmarks: NSObject {
             }
         } else {
             let info = NSDictionary(contentsOfFile: SBBookmarksFilePath!)
-            if let bookmarkItems = info?[kSBBookmarkItems] as? NSArray as? [BookmarkItem] {
+            if let bookmarkItems = info?[kSBBookmarkItems] as? [BookmarkItem] {
                 if !bookmarkItems.isEmpty {
                     items = bookmarkItems.map { NSMutableDictionary(dictionary: $0) }
                     return true
@@ -249,7 +249,7 @@ class SBBookmarks: NSObject {
     
     func changeLabelFromMenuItem(menuItem: NSMenuItem) {
         let representedIndexes = menuItem.representedObject as NSIndexSet
-        let tag = menuItem.menu.indexOfItem(menuItem)
+        let tag = menuItem.menu!.indexOfItem(menuItem)
         if representedIndexes.count > 0 && tag < SBBookmarkLabelColorNames.count {
             let labelName = SBBookmarkLabelColorNames[tag]
             changeLabelName(labelName, atIndexes: representedIndexes)

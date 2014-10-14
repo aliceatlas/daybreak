@@ -134,7 +134,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
     
     var urlFieldRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(urlLabelRect) + 10.0
+        r.origin.x = urlLabelRect.maxX + 10.0
         r.origin.y = urlLabelRect.origin.y
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.size.height = 24.0

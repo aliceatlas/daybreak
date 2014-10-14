@@ -4,7 +4,7 @@ private var _sharedPreferences = SBPreferences()
 
 class SBPreferences: NSObject {
     class var sharedPreferences: SBPreferences {
-        return _sharedPreferences;
+        return _sharedPreferences
     }
     
     func registerDefaults() {
@@ -12,16 +12,16 @@ class SBPreferences: NSObject {
         var info: [String: AnyObject] = [:]
         
         // Common
-        info[kSBSidebarWidth] = NSNumber(float: Float(kSBDefaultSidebarWidth))
-        info[kSBSidebarPosition] = SBSidebarPosition.Right.rawValue as NSNumber
-        info[kSBSidebarVisibilityFlag] = true as NSNumber
-        info[kSBTabbarVisibilityFlag] = true as NSNumber
-        info[kSBBookmarkCellWidth] = kSBDefaultBookmarkCellWidth as NSNumber
-        info[kSBBookmarkMode] = SBBookmarkMode.Icon.rawValue as NSNumber
+        info[kSBSidebarWidth] = Float(kSBDefaultSidebarWidth)
+        info[kSBSidebarPosition] = SBSidebarPosition.Right.rawValue
+        info[kSBSidebarVisibilityFlag] = true
+        info[kSBTabbarVisibilityFlag] = true
+        info[kSBBookmarkCellWidth] = kSBDefaultBookmarkCellWidth
+        info[kSBBookmarkMode] = SBBookmarkMode.Icon.rawValue
         info[kSBUserAgentName] = SBUserAgentNames[0]
         // General
-        info[kSBOpenNewWindowsWithHomePage] = true as NSNumber
-        info[kSBOpenNewTabsWithHomePage] = true as NSNumber
+        info[kSBOpenNewWindowsWithHomePage] = true
+        info[kSBOpenNewTabsWithHomePage] = true
         if let homepage = SBDefaultHomePage() {
             info[kSBHomePage] = homepage
         }
@@ -29,10 +29,10 @@ class SBPreferences: NSObject {
             info[kSBSaveDownloadedFilesTo] = downloadsPath
         }
         info[kSBOpenURLFromApplications] = "in the current tab"
-        info[kSBQuitWhenTheLastWindowIsClosed] = true as NSNumber
-        info[kSBConfirmBeforeClosingMultipleTabs] = true as NSNumber
-        info[kSBCheckTheNewVersionAfterLaunching] = true as NSNumber
-        info[kSBClearsAllCachesAfterLaunching] = true as NSNumber
+        info[kSBQuitWhenTheLastWindowIsClosed] = true
+        info[kSBConfirmBeforeClosingMultipleTabs] = true
+        info[kSBCheckTheNewVersionAfterLaunching] = true
+        info[kSBClearsAllCachesAfterLaunching] = true
         // Appearance
         //	kSBAllowsAnimatedImageToLoop
         //	kSBAllowsAnimatedImages
@@ -40,65 +40,59 @@ class SBPreferences: NSObject {
         //	kSBDefaultEncoding
         //	kSBIncludeBackgroundsWhenPrinting
         // Bookmarks
-        info[kSBShowBookmarksWhenWindowOpens] = true as NSNumber
-        info[kSBShowAlertWhenRemovingBookmark] = true as NSNumber
-        info[kSBUpdatesImageWhenAccessingBookmarkURL] = true as NSNumber
+        info[kSBShowBookmarksWhenWindowOpens] = true
+        info[kSBShowAlertWhenRemovingBookmark] = true
+        info[kSBUpdatesImageWhenAccessingBookmarkURL] = true
         // Security
         //	kSBEnablePlugIns
         //	kSBEnableJava
         //	kSBEnableJavaScript
         //	kSBBlockPopUpWindows
-        info[kSBURLFieldShowsIDNAsASCII] = false as NSNumber
+        info[kSBURLFieldShowsIDNAsASCII] = false
         info[kSBAcceptCookies] = "Only visited sites"
         // History
-        info[kSBHistorySaveDays] = SBDefaultHistorySaveSeconds as NSNumber
+        info[kSBHistorySaveDays] = SBDefaultHistorySaveSeconds
         // Advanced
         // WebKitDeveloper
-        info[kWebKitDeveloperExtras] = true as NSNumber
-        info[kSBWhenNewTabOpensMakeActiveFlag] = true as NSNumber
+        info[kWebKitDeveloperExtras] = true
+        info[kSBWhenNewTabOpensMakeActiveFlag] = true
         defaults.registerDefaults(info)
     }
     
     func homepage(isInWindow: Bool) -> String? {
-        if let homepage = SBPreferences.objectForKey(kSBHomePage) as? NSString {
-            if isInWindow {
-                if SBPreferences.boolForKey(kSBOpenNewWindowsWithHomePage) {
-                    return homepage
-                }
-            } else {
-                if SBPreferences.boolForKey(kSBOpenNewTabsWithHomePage) {
-                    return homepage
-                }
+        if let homepage = SBPreferences.objectForKey(kSBHomePage) as? String {
+            if SBPreferences.boolForKey(isInWindow ? kSBOpenNewWindowsWithHomePage : kSBOpenNewTabsWithHomePage) {
+                return homepage
             }
         }
         return nil
     }
     
     class func boolForKey(keyName: String) -> Bool {
-        return (objectForKey(keyName) as NSNumber).boolValue
+        return objectForKey(keyName) as Bool
     }
     
     class func objectForKey(keyName: String) -> AnyObject? {
         let preferences = SBGetWebPreferences
         switch keyName {
         case kSBAllowsAnimatedImageToLoop:
-            return NSNumber(bool: preferences.allowsAnimatedImageLooping)
+            return preferences.allowsAnimatedImageLooping
         case kSBAllowsAnimatedImages:
-            return NSNumber(bool: preferences.allowsAnimatedImages)
+            return preferences.allowsAnimatedImages
         case kSBLoadsImagesAutomatically:
-            return NSNumber(bool: preferences.loadsImagesAutomatically)
+            return preferences.loadsImagesAutomatically
         case kSBDefaultEncoding:
             return preferences.defaultTextEncodingName
         case kSBIncludeBackgroundsWhenPrinting:
-            return NSNumber(bool: preferences.shouldPrintBackgrounds)
+            return preferences.shouldPrintBackgrounds
         case kSBEnablePlugIns:
-            return NSNumber(bool: preferences.plugInsEnabled)
+            return preferences.plugInsEnabled
         case kSBEnableJava:
-            return NSNumber(bool: preferences.javaEnabled)
+            return preferences.javaEnabled
         case kSBEnableJavaScript:
-            return NSNumber(bool: preferences.javaScriptEnabled)
+            return preferences.javaScriptEnabled
         case kSBBlockPopUpWindows:
-            return NSNumber(bool: !preferences.javaScriptCanOpenWindowsAutomatically)
+            return !preferences.javaScriptCanOpenWindowsAutomatically
         default:
             return NSUserDefaults.standardUserDefaults().objectForKey(keyName)
         }
@@ -118,7 +112,7 @@ class SBPreferences: NSObject {
         case kSBLoadsImagesAutomatically:
             preferences.loadsImagesAutomatically = object.boolValue
         case kSBDefaultEncoding:
-            preferences.defaultTextEncodingName = object as NSString
+            preferences.defaultTextEncodingName = object as String
         case kSBIncludeBackgroundsWhenPrinting:
             preferences.shouldPrintBackgrounds = object.boolValue
         case kSBEnablePlugIns:

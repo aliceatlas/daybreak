@@ -102,7 +102,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     private lazy var loadButton: SBLoadButton = {
         let loadButton = SBLoadButton(frame: self.loadViewBounds)
         loadButton.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-        loadButton.images = ["Reload.png", "Stop.png"].map {NSImage(named: $0)}
+        loadButton.images = ["Reload.png", "Stop.png"].map {NSImage(named: $0)!}
         loadButton.target = self
         loadButton.action = "load:"
         return loadButton
@@ -110,12 +110,11 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     private lazy var encodingButton: SBPopUpButton = {
         let encodingButton = SBPopUpButton(frame: self.encodingViewBounds)
-        let image = NSImage(named: "Plain.png").stretchableImage(size: self.encodingViewBounds.size, sideCapWidth: 7.0)
+        let image = NSImage(named: "Plain.png")?.stretchableImage(size: self.encodingViewBounds.size, sideCapWidth: 7.0)
         encodingButton.backgroundImage = image
         encodingButton.menu = SBEncodingMenu(nil, nil, true)
-        unowned let zelf = self
-        encodingButton.operation = { (item: NSMenuItem) in
-            zelf.changeEncodingFromMenuItem(item)
+        encodingButton.operation = { [unowned self] (item: NSMenuItem) in
+            self.changeEncodingFromMenuItem(item)
         }
         let encodingName = SBGetWebPreferences.defaultTextEncodingName
         encodingButton.selectItem(representedObject: encodingName)
@@ -283,7 +282,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         return selectedWebViewImage(size: SBBookmarkImageMaxSize)
     }
     var selectedWebViewImageDataForBookmark: NSData? {
-        return selectedWebViewImageForBookmark?.bitmapImageRep.data
+        return selectedWebViewImageForBookmark?.bitmapImageRep?.data
     }
     var resourcesView: SBWebResourcesView? {
         return sidebar?.view as? SBWebResourcesView
@@ -403,7 +402,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         let defaultFrame = SBDefaultDocumentWindowRect
         let r: NSRect = savedFrameString !! NSRectFromString ?? defaultFrame
         let newWindow = SBDocumentWindow(frame: r, delegate: self, tabbarVisibility: true)
-        let button = newWindow.standardWindowButton(.CloseButton)
+        let button = newWindow.standardWindowButton(.CloseButton)!
         button.target = self
         button.action = "performCloseFromButton:"
         return newWindow
@@ -438,7 +437,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             if URL != nil {
                 window.makeFirstResponder(tabViewItem.webView)
             } else {
-                if window.toolbar.visible {
+                if window.toolbar!.visible {
                     selectURLField()
                 }
             }
@@ -450,7 +449,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func constructTabViewItem(#identifier: NSNumber, tabbarItem: SBTabbarItem) -> SBTabViewItem {
-        return tabView.addItem(identifier: identifier, tabbarItem: tabbarItem)
+        return tabView.addItem(identifier: identifier as Int, tabbarItem: tabbarItem)
     }
     
     func constructDownloadsViewInSidebar() -> SBDownloadsView {
@@ -638,8 +637,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         let characters = event.characters
         let command = event.modifierFlags & .CommandKeyMask != nil
         let shift = event.modifierFlags & .ShiftKeyMask != nil
-        if command && shift {
-            switch characters {
+        if command && shift && characters != nil {
+            switch characters! {
                 case "b":
                     toggleAllbarsAndSidebar()
                     return true
@@ -1051,9 +1050,9 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             let identifier = tableColumn.identifier
             if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
                 if identifier == kSBURL {
-                    cell.title = resourceIdentifier.URL.absoluteString
+                    cell.title = resourceIdentifier.URL.absoluteString!
                 } else if identifier == "Length" {
-                    var title: String?
+                    var title: String!
                     let expected = NSString.bytesStringForLength(resourceIdentifier.length)
                     if resourceIdentifier.received > 0 && resourceIdentifier.length > 0 {
                         if resourceIdentifier.received == resourceIdentifier.length {
@@ -1100,7 +1099,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                     panel.nameFieldStringValue = filename
                     window.beginSheet(panel) {
                         if $0 == NSFileHandlingPanelOKButton {
-                            if data.writeToURL(panel.URL, atomically: true) {
+                            if data.writeToURL(panel.URL!, atomically: true) {
                             }
                         }
                     }
@@ -1130,7 +1129,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     // MARK: BookmarksView Delegate
     
     func bookmarksView(bookmarksView: SBBookmarksView, didChangeMode mode: SBBookmarkMode) {
-        window.toolbar.validateVisibleItems()
+        window.toolbar!.validateVisibleItems()
     }
     
     func bookmarksView(bookmarksView: SBBookmarksView, shouldEditItemAtIndex index: Int) {
@@ -1157,7 +1156,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func downloadsWillRemoveItem(notification: NSNotification) {
         if let downloadsView = sidebar!.drawer!.view as? SBDownloadsView {
-            let items = notification.userInfo![kSBDownloadsItems] as NSArray as [SBDownload]
+            let items = notification.userInfo![kSBDownloadsItems] as [SBDownload]
             items.map(downloadsView.removeForItem)
         }
     }
@@ -1200,7 +1199,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             case "downloadFromURL:":
                 r = window.coverWindow == nil
             case "toggleAllbars:":
-                let shouldShow = !(window.toolbar.visible && window.tabbarVisibility)
+                let shouldShow = !(window.toolbar!.visible && window.tabbarVisibility)
                 menuItem.title = shouldShow ? NSLocalizedString("Show All Bars", comment: "") : NSLocalizedString("Hide All Bars", comment: "")
                 r = window.coverWindow == nil
             case "toggleTabbar:":
@@ -1322,7 +1321,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             case kSBToolbarSnapshotItemIdentifier:
                 r = !(selectedWebView!.isEmpty)
             case kSBToolbarHomeItemIdentifier:
-                let homepage = NSUserDefaults.standardUserDefaults().stringForKey(kSBHomePage)!
+                let homepage = NSUserDefaults.standardUserDefaults().stringForKey(kSBHomePage) ?? ""
                 r = !homepage.isEmpty
             case kSBToolbarSourceItemIdentifier:
                 break
@@ -1361,14 +1360,14 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if data != nil && urlField.isFirstResponder {
             let parser = SBGoogleSuggestParser()
             let error = parser.parseData(data!)
-            var items = (error == nil) &? parser.items
+            var items = ((error == nil) &? parser.items) ?? []
             // Parse XML
-            if !(items ?? []).isEmpty {
-                items!.insert([kSBImage: NSImage(named: "Icon_G.png").TIFFRepresentation,
-                                kSBTitle: NSLocalizedString("Suggestions", comment: "") as NSString,
-                                kSBType:  SBURLFieldItemType.None.rawValue as NSNumber],
+            if !items.isEmpty {
+                items.insert([kSBImage: NSImage(named: "Icon_G.png")!.TIFFRepresentation!,
+                                kSBTitle: NSLocalizedString("Suggestions", comment: ""),
+                                kSBType:  SBURLFieldItemType.None.rawValue],
                                atIndex: 0)
-                urlField.gsItems = items!
+                urlField.gsItems = items
                 urlField.items = urlField.gsItems + urlField.bmItems + urlField.hItems
             } else {
                 urlField.gsItems = []
@@ -1381,59 +1380,57 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     func updateURLFieldCompletionList() {
         var bmItems: [NSDictionary] = []
         var hItems: [NSDictionary] = []
-        var urlStrings: [String] = []
+        var URLStrings: [String] = []
         let string = urlField.stringValue
         let bookmarks = SBBookmarks.sharedBookmarks
         let history = SBHistory.sharedHistory
         
         // Search in bookmarks
         for bookmarkItem in bookmarks.items {
-            if let urlString = bookmarkItem[kSBBookmarkURL] as? NSString {
+            if let URLString = bookmarkItem[kSBBookmarkURL] as? NSString {
                 let title = bookmarkItem[kSBBookmarkTitle] as? NSString
-                let schemelessUrlString = urlString.stringByDeletingScheme
+                let schemelessURLString = URLString.stringByDeletingScheme
                 var range = title?.rangeOfString(string, options: .CaseInsensitiveSearch) ?? NSMakeRange(NSNotFound, 0)
                 var matchWithTitle = false
                 if range.location == NSNotFound {
-                    range = urlString.rangeOfString(string)
+                    range = URLString.rangeOfString(string)
                 } else {
                     // Match with title
                     matchWithTitle = title != nil
                 }
                 if range.location == NSNotFound {
-                    range = schemelessUrlString!.rangeOfString(string)
+                    range = schemelessURLString!.rangeOfString(string)
                 }
                 if range.location != NSNotFound {
                     var item: [NSObject: AnyObject] = [:]
                     if matchWithTitle {
                         item[kSBTitle] = title
                     }
-                    item[kSBURL] = urlString
-                    if let image = bookmarkItem[kSBBookmarkImage] {
-                        item[kSBImage] = image
-                    }
-                    item[kSBType] = SBURLFieldItemType.Bookmark.rawValue as NSNumber
+                    item[kSBURL] = URLString
+                    item[kSBImage] = bookmarkItem[kSBBookmarkImage]
+                    item[kSBType] = SBURLFieldItemType.Bookmark.rawValue
                     bmItems.append(item)
-                    urlStrings.append(urlString)
+                    URLStrings.append(URLString)
                 }
             }
         }
         
         // Search in history
         for historyItem in history.items {
-            if let urlString: NSString = historyItem.URLString {
-                if !containsItem(urlStrings, urlString) {
-                    let schemelessUrlString = urlString.stringByDeletingScheme!
-                    var range = urlString.rangeOfString(string)
+            if let URLString: NSString = historyItem.URLString {
+                if !containsItem(URLStrings, URLString) {
+                    let schemelessURLString = URLString.stringByDeletingScheme!
+                    var range = URLString.rangeOfString(string)
                     if range.location == NSNotFound {
-                        range = schemelessUrlString.rangeOfString(string)
+                        range = schemelessURLString.rangeOfString(string)
                     }
                     if range.location != NSNotFound {
                         var item: [NSObject: AnyObject] = [:]
-                        item[kSBURL] = urlString
+                        item[kSBURL] = URLString
                         if let iconData = historyItem.icon?.TIFFRepresentation {
                             item[kSBImage] = iconData
                         }
-                        item[kSBType] = SBURLFieldItemType.History.rawValue as NSNumber
+                        item[kSBType] = SBURLFieldItemType.History.rawValue
                         hItems.append(item)
                     }
                 }
@@ -1441,15 +1438,15 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         }
         
         if !bmItems.isEmpty {
-            bmItems.insert([kSBImage: NSImage(named: "Icon_Bookmarks.png").TIFFRepresentation,
+            bmItems.insert([kSBImage: NSImage(named: "Icon_Bookmarks.png")!.TIFFRepresentation!,
                             kSBTitle: NSLocalizedString("Bookmarks", comment: ""),
-                            kSBType:  SBURLFieldItemType.None.rawValue as NSNumber],
+                            kSBType:  SBURLFieldItemType.None.rawValue],
                            atIndex: 0)
         }
         if !hItems.isEmpty {
-            hItems.insert([kSBImage: NSImage(named: "Icon_History.png").TIFFRepresentation,
+            hItems.insert([kSBImage: NSImage(named: "Icon_History.png")!.TIFFRepresentation!,
                            kSBTitle: NSLocalizedString("History", comment: ""),
-                           kSBType:  SBURLFieldItemType.None.rawValue as NSNumber],
+                           kSBType:  SBURLFieldItemType.None.rawValue],
                           atIndex: 0)
         }
         urlField.bmItems = bmItems
@@ -1518,7 +1515,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             window.makeFirstResponder(selectedWebView)
         }
         for (i, item) in enumerate(items) {
-            if let URLString = item[kSBBookmarkURL] as? NSString {
+            if let URLString = item[kSBBookmarkURL] as? String {
                 if i == 0 {
                     openURLStringInSelectedTabViewItem(URLString)
                 } else {
@@ -1579,14 +1576,14 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     override func saveDocumentAs(sender: AnyObject?) {
         let panel = SBSavePanel.sbSavePanel()
         let title = selectedWebDataSource?.pageTitle
-        let name = (title ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("webarchive")
+        let name = (title ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("webarchive")!
         panel.nameFieldStringValue = name
         window.beginSheet(panel) {
             if $0 == NSFileHandlingPanelOKButton {
                 let dataSource = self.selectedWebDataSource
                 let archive = dataSource?.webArchive
                 if let data = archive?.data {
-                    if data.writeToURL(panel.URL, atomically: true) {
+                    if data.writeToURL(panel.URL!, atomically: true) {
                     }
                 }
             }
@@ -1654,7 +1651,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     // View menu
     
     func toggleAllbars(sender: AnyObject?) {
-        let shouldShow = !(window.toolbar.visible && window.tabbarVisibility)
+        let shouldShow = !(window.toolbar!.visible && window.tabbarVisibility)
         if shouldShow {
             showAllbars()
         } else {
@@ -1788,7 +1785,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
 
     func openHome(sender: AnyObject?) {
-        var homepage: String? = NSUserDefaults.standardUserDefaults().stringForKey(kSBHomePage)!
+        var homepage: String? = NSUserDefaults.standardUserDefaults().stringForKey(kSBHomePage) ?? ""
         homepage = homepage!.isEmpty &? homepage!.requestURLString
         if homepage != nil {
             if urlField.isFirstResponder {
@@ -1858,9 +1855,9 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             if let item = bookmarks.itemAtIndex(index) {
                 let imageData = item[kSBBookmarkImage] as? NSData
                 let image = imageData !! {NSImage(data: $0)}
-                let title = item[kSBBookmarkTitle] as? NSString
-                let URLString = item[kSBBookmarkURL] as? NSString
-                let labelName = item[kSBBookmarkLabelName] as? NSString
+                let title = item[kSBBookmarkTitle] as? String
+                let URLString = item[kSBBookmarkURL] as? String
+                let labelName = item[kSBBookmarkLabelName] as? String
                 editBookmarkView = SBEditBookmarkView(frame: NSMakeRect(0, 0, 880, 480), index: index)
                 //editBookmarkView!.index = index
                 editBookmarkView!.image = image
@@ -1977,8 +1974,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func changeEncodingFromMenuItem(sender: NSMenuItem) {
-        let ianaName = sender.representedObject as? NSString
-        selectedWebView!.customTextEncodingName = ianaName
+        let IANAName = sender.representedObject as? String
+        selectedWebView!.customTextEncodingName = IANAName
     }
     
     func load(sender: AnyObject?) {
@@ -2043,7 +2040,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func selectURLField() {
-        if !window.toolbar.visible {
+        if !window.toolbar!.visible {
             window.showToolbar()
         }
         urlField.selectText(nil)
@@ -2054,7 +2051,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func toggleAllbarsAndSidebar() {
-        let visibleToolbar = window.toolbar.visible
+        let visibleToolbar = window.toolbar!.visible
         let visibleTabbar = window.tabbarVisibility
         let visibleSidebar = splitView.visibleSidebar && sidebar != nil
         if visibleToolbar && visibleTabbar && visibleSidebar {
@@ -2150,7 +2147,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             while confirmed == -1 {
                 // Wait event...
                 //@autoreleasepool {
-                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: NSDate.distantFuture() as NSDate, inMode: NSDefaultRunLoopMode, dequeue: true)
+                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: NSDate.distantFuture() as NSDate, inMode: NSDefaultRunLoopMode, dequeue: true)!
                     NSApp.sendEvent(event)
                 //}
             }
@@ -2186,7 +2183,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             while confirmed == -1 {
                 // Wait event...
                 //@autoreleasepool {
-                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: NSDate.distantFuture() as NSDate, inMode: NSDefaultRunLoopMode, dequeue: true)
+                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: NSDate.distantFuture() as NSDate, inMode: NSDefaultRunLoopMode, dequeue: true)!
                     NSApp.sendEvent(event)
                 //}
             }

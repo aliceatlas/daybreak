@@ -186,7 +186,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     
     var messageLabelRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(iconRect) + 10.0
+        r.origin.x = iconRect.maxX + 10.0
         r.size.width = bounds.size.width - r.origin.x - searchFieldWidth - margin.x
         r.size.height = 20.0
         r.origin.y = bounds.size.height - margin.y - r.size.height - (iconRect.size.height - r.size.height) / 2
@@ -225,7 +225,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         r.size.width = 140.0
         r.size.height = removeButtonRect.size.height
         r.origin.y = margin.y
-        r.origin.x = NSMaxX(removeButtonRect) + 10.0
+        r.origin.x = removeButtonRect.maxX + 10.0
         return r
     }
     
@@ -389,17 +389,17 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     }
     
     func open() {
-        var urls: [NSURL] = []
+        var URLs: [NSURL] = []
         let indexes = tableView.selectedRowIndexes
         for var index = indexes.lastIndex; index != NSNotFound; index = indexes.indexLessThanIndex(index) {
             let item = items.get(index)
             let URLString = item?.URLString
             if let URL = URLString !! {NSURL(string: $0)} {
-                urls.append(URL)
+                URLs.append(URL)
             }
         }
         if target?.respondsToSelector(doneSelector) ?? false {
-            NSApp.sendAction(doneSelector, to: target, from: urls as NSArray)
+            NSApp.sendAction(doneSelector, to: target, from: URLs)
         }
     }
 }

@@ -93,7 +93,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         r.size.height = 24.0
         if itemView != nil {
             r.origin.x = itemView!.frame.origin.x
-            r.origin.y = NSMaxY(itemView!.frame) - r.size.height
+            r.origin.y = itemView!.frame.maxY - r.size.height
         }
         return r
     }
@@ -104,7 +104,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         r.size.height = 24.0
         if itemView != nil {
             r.origin.x = itemView!.frame.origin.x
-            r.origin.y = NSMaxY(itemView!.frame) - r.size.height
+            r.origin.y = itemView!.frame.maxY - r.size.height
         }
         r.origin.x += r.size.width
         return r
@@ -205,7 +205,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
             var r = frame
             var block = NSZeroPoint
             var animations: [[NSObject: AnyObject]] = []
-            let currentEvent = NSApplication.sharedApplication().currentEvent
+            let currentEvent = NSApplication.sharedApplication().currentEvent!
             let location = currentEvent.locationInWindow
             var currentDownloadView: SBDownloadView?
             let count = downloadViews.count
@@ -226,7 +226,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
                 let r1 = cellFrameAtIndex(index)
                 let point = convertPoint(location, fromView: nil)
                 if r0 != r1 {
-                    if animated && (NSIntersectsRect(visibleRect, downloadView.frame) || NSIntersectsRect(visibleRect, r)) { // Only visible views
+                    if animated && (visibleRect.intersects(downloadView.frame) || visibleRect.intersects(r)) { // Only visible views
                         animations.append([
                             NSViewAnimationTargetKey: downloadView,
                             NSViewAnimationStartFrameKey: NSValue(rect: r0),
@@ -235,7 +235,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
                         downloadView.frame = r1
                     }
                 }
-                if NSPointInRect(point, r1) {
+                if r1.contains(point) {
                     currentDownloadView = downloadView
                 }
             }
@@ -271,13 +271,12 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         let point = convertPoint(location, fromView: nil)
         for (index, downloadView) in enumerate(downloadViews) {
             let r = cellFrameAtIndex(index)
-            downloadView.selected = NSPointInRect(point, r)
+            downloadView.selected = r.contains(point)
         }
     }
     
     override func keyDown(event: NSEvent) {
-        let characters = event.characters as NSString
-        let character = Int(characters.characterAtIndex(0))
+        let character = Int((event.characters! as NSString).characterAtIndex(0))
         if character == NSDeleteCharacter {
             delete(nil)
         }
@@ -289,7 +288,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
             let point = convertPoint(location, fromView: nil)
             for (index, downloadView) in enumerate(downloadViews) {
                 let r = cellFrameAtIndex(index)
-                if NSPointInRect(point, r) {
+                if r.contains(point) {
                     downloadView.open()
                 }
             }

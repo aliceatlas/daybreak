@@ -54,7 +54,7 @@ class SBWebView: WebView, SBFindbarTarget {
     // MARK: Menu Actions
     
     func performFind(sender: AnyObject) {
-        if bounds.size.width >= SBFindbar.availableWidth() {
+        if bounds.size.width >= SBFindbar.availableWidth {
             executeOpenFindbar()
         } else {
             NSBeep()
@@ -62,7 +62,7 @@ class SBWebView: WebView, SBFindbarTarget {
     }
     
     func performFindNext(sender: AnyObject) {
-        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)
+        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) ?? ""
         if !string.isEmpty {
             let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
             let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
@@ -73,7 +73,7 @@ class SBWebView: WebView, SBFindbarTarget {
     }
     
     func performFindPrevious(sender: AnyObject) {
-        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)
+        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) ?? ""
         if !string.isEmpty {
             let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
             let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
@@ -129,7 +129,7 @@ class SBWebView: WebView, SBFindbarTarget {
     }
     
     override func keyDown(event: NSEvent) {
-        let character = (event.characters as NSString).characterAtIndex(0)
+        let character = (event.characters! as NSString).characterAtIndex(0)
         if character == 0x1B {
             if !executeCloseFindbar() {
                 super.keyDown(event)

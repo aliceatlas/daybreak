@@ -143,7 +143,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     func indexForPoint(point: NSPoint) -> (Int, NSRect) {
         for index in 0..<items.count {
             let r = itemRectAtIndex(index)
-            if point.x >= r.origin.x && point.x <= NSMaxX(r) {
+            if point.x >= r.origin.x && point.x <= r.maxX {
                 return (index, r)
             }
         }
@@ -151,7 +151,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     func itemAtPoint(point: NSPoint) -> SBTabbarItem? {
-        return items.first { NSPointInRect(point, $0.frame) }
+        return items.first { $0.frame.contains(point) }
     }
     
     var selectedTabbarItem: SBTabbarItem? {
@@ -400,9 +400,9 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         leftRect.size.width = width
         rightRect.size.width = width
         rightRect.origin.x = bounds.size.width - width
-        if leftRect.origin.x < point.x && NSMaxX(leftRect) > point.x {
+        if leftRect.origin.x < point.x && leftRect.maxX > point.x {
             deltaX = 10.0
-        } else if rightRect.origin.x < point.x && NSMaxX(rightRect) > point.x {
+        } else if rightRect.origin.x < point.x && rightRect.maxX > point.x {
             deltaX = -10.0
         }
         if deltaX != 0 {
@@ -471,7 +471,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
                 if canClosable {
                     // If the mouse is entered in the closable rect, make a tabbar item closable
                     let point = item.convertPoint(location!, fromView: nil)
-                    if NSPointInRect(point, item.closableRect) {
+                    if item.closableRect.contains(point) {
                         constructClosableTimerForItem(item)
                     }
                 }
@@ -489,7 +489,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         
         for item in items {
             r = itemRectAtIndex(index)
-            if point.x >= r.origin.x && point.x <= NSMaxX(r) {
+            if point.x >= r.origin.x && point.x <= r.maxX {
                 index++
                 r = itemRectAtIndex(index)
             }
@@ -535,8 +535,8 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         let types = pasteboard.types as [NSString] as [String]
         let point = contentView.convertPoint(sender.draggingLocation(), fromView: nil)
         if containsItem(types, SBBookmarkPboardType) {
-            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as NSArray as [NSDictionary]
-            let URLStrings = pbItems.map({ $0[kSBBookmarkURL] as NSString as String }).filter({ !$0.isEmpty })
+            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as [NSDictionary]
+            let URLStrings = pbItems.map({ $0[kSBBookmarkURL] as String }).filter({ !$0.isEmpty })
             let URLs = URLStrings.map({ NSURL(string: $0) }).filter({ $0 != nil }).map({ $0! })
             if !URLs.isEmpty {
                 if URLs.count == 1 {
@@ -550,7 +550,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
                 }
             }
         } else if containsItem(types, NSURLPboardType) {
-            let URL = NSURL(fromPasteboard: pasteboard)
+            let URL = NSURL(fromPasteboard: pasteboard)!
             if let item = itemAtPoint(point) {
                 executeShouldOpenURLs([URL], startInItem: item)
             } else {
@@ -590,7 +590,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
                 if draggedItem != nil {
                     // Move dragged item
                     var r = draggedItemRect
-                    if (NSMaxX(r) + (point.x - downPoint.x)) >= contentView.bounds.size.width {
+                    if (r.maxX + (point.x - downPoint.x)) >= contentView.bounds.size.width {
                         // Max
                         r.origin.x = contentView.bounds.size.width - r.size.width
                     } else if (r.origin.x + (point.x - downPoint.x)) <= 0 {
@@ -646,7 +646,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     func menuForItem(item: SBTabbarItem) -> NSMenu {
         let single = items.count == 1
         let index = indexOfItem(items, item)!
-        menu = NSMenu()
+        let menu = NSMenu()
         menu.addItemWithTitle(NSLocalizedString("New Tab", comment: ""), action: "addNewItem:", keyEquivalent: "")
         if single {
         } else {
@@ -684,13 +684,13 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         
         var path = NSBezierPath()
         path.moveToPoint(rect.origin)
-        path.lineToPoint(NSMakePoint(NSMaxX(rect), rect.origin.y))
+        path.lineToPoint(NSMakePoint(rect.maxX, rect.origin.y))
         path.lineWidth = 0.5
         path.stroke()
         
         path = NSBezierPath()
-        path.moveToPoint(NSMakePoint(rect.origin.x, NSMaxY(rect)))
-        path.lineToPoint(NSMakePoint(NSMaxX(rect), NSMaxY(rect) - 0.5))
+        path.moveToPoint(NSMakePoint(rect.origin.x, rect.maxY))
+        path.lineToPoint(NSMakePoint(rect.maxX, rect.maxY - 0.5))
         path.lineWidth = 0.5
         path.stroke()
     }

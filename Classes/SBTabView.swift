@@ -65,14 +65,16 @@ class SBTabView: NSTabView {
     }
     
     func tabViewItem(#identifier: Int) -> SBTabViewItem? {
-        return sbTabViewItems.first { $0.identifier as NSNumber == identifier }
+        return sbTabViewItems.first { $0.identifier as? Int == identifier }
     }
     
     // MARK: Actions
     
-    override func selectTabViewItem(tabViewItem: NSTabViewItem) {
+    override func selectTabViewItem(tabViewItem: NSTabViewItem?) {
         super.selectTabViewItem(tabViewItem)
-        SBDispatch { self.executeDidSelectTabViewItem(tabViewItem as SBTabViewItem) }
+        if let sbTabViewItem = tabViewItem as? SBTabViewItem {
+            SBDispatch { self.executeDidSelectTabViewItem(sbTabViewItem) }
+        }
     }
     
     func addItem(#identifier: Int, tabbarItem: SBTabbarItem) -> SBTabViewItem {

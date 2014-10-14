@@ -39,11 +39,11 @@ class SBRenderWindow: NSWindow {
         set(sbDelegate) { delegate = sbDelegate }
     }
     
-    class func startRenderingWithSize(size: NSSize, delegate: SBRenderWindowDelegate?, url: NSURL) -> SBRenderWindow {
+    class func startRenderingWithSize(size: NSSize, delegate: SBRenderWindowDelegate?, URL: NSURL) -> SBRenderWindow {
         let r = NSRect(origin: NSZeroPoint, size: size)
         let window = SBRenderWindow(contentRect: r)
         window.delegate = delegate
-        window.webView!.mainFrame.loadRequest(NSURLRequest(URL: url))
+        window.webView!.mainFrame.loadRequest(NSURLRequest(URL: URL))
         if kSBFlagShowRenderWindow {
             window.orderFront(nil)
         }
@@ -62,7 +62,7 @@ class SBRenderWindow: NSWindow {
         webView!.frameLoadDelegate = self
         webView!.preferences = SBGetWebPreferences
         webView!.hostWindow = self
-        contentView.addSubview(webView!)
+        (contentView! as NSView).addSubview(webView!)
         releasedWhenClosed = true
     }
     

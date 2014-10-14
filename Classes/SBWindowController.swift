@@ -32,7 +32,7 @@ class SBWindowController: NSWindowController {
     init(viewSize inViewSize: NSSize) {
         var frameRect = NSZeroRect
         var window: NSWindow?
-        let screen = NSScreen.screens()[0] as NSScreen
+        let screen = NSScreen.screens()![0] as NSScreen
         let visibleRect = screen.visibleFrame
         viewSize = inViewSize
         frameRect.size.width = viewSize.width + 20 * 2
@@ -44,7 +44,7 @@ class SBWindowController: NSWindowController {
         window!.center()
     }
     
-    required init(coder: NSCoder!) {
+    required init(coder: NSCoder) {
         fatalError("NSCoding not supported")
     }
 }

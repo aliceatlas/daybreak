@@ -88,57 +88,57 @@ let kSBLocalizationsDirectoryName = "Localizations"
 // Default values
 let kSBDefaultEncodingName = "utf-8"
 let SBDefaultHistorySaveSeconds = 604800
-let SBAvailableStringEncodings = [
-	-2147481087,	// Japanese (Shift JIS)
-	21,				// Japanese (ISO 2022-JP)
-	3,				// Japanese (EUC)
-	-2147482072,	// Japanese (Shift JIS X0213)
+let SBAvailableStringEncodings: [NSStringEncoding] = [
+	0x80000a01,	// Japanese (Shift JIS)
+	21,			// Japanese (ISO 2022-JP)
+	3,			// Japanese (EUC)
+	0x80000628,	// Japanese (Shift JIS X0213)
 	NSNotFound,	
-	4,				// Unicode (UTF-8)
+	4,			// Unicode (UTF-8)
 	NSNotFound,	
-	5,				// Western (ISO Latin 1)
-	30,				// Western (Mac OS Roman)
+	5,			// Western (ISO Latin 1)
+	30,			// Western (Mac OS Roman)
 	NSNotFound,	
-	-2147481085,	// Traditional Chinese (Big 5)
-	-2147481082,	// Traditional Chinese (Big 5 HKSCS)
-	-2147482589,	// Traditional Chinese (Windows, DOS)
+	0x80000a03,	// Traditional Chinese (Big 5)
+	0x80000a06,	// Traditional Chinese (Big 5 HKSCS)
+	0x80000423,	// Traditional Chinese (Windows, DOS)
 	NSNotFound,	
-	-2147481536,	// Korean (ISO 2022-KR)
-	-2147483645,	// Korean (Mac OS)
-	-2147482590,	// Korean (Windows, DOS)
+	0x80000840,	// Korean (ISO 2022-KR)
+	0x80000003,	// Korean (Mac OS)
+	0x80000422,	// Korean (Windows, DOS)
 	NSNotFound,	
-	-2147483130,	// Arabic (ISO 8859-6)
-	-2147482362,	// Arabic (Windows)
+	0x80000206,	// Arabic (ISO 8859-6)
+	0x80000506,	// Arabic (Windows)
 	NSNotFound,	
-	-2147483128,	// Hebrew (ISO 8859-8)
-	-2147482363,	// Hebrew (Windows)
+	0x80000208,	// Hebrew (ISO 8859-8)
+	0x80000505,	// Hebrew (Windows)
 	NSNotFound, 
-	-2147483129,	// Greek (ISO 8859-7)
-	13,				// Greek (Windows)
+	0x80000207,	// Greek (ISO 8859-7)
+	13,			// Greek (Windows)
 	NSNotFound, 
-	-2147483131,	// Cyrillic (ISO 8859-5)
-	-2147483641,	// Cyrillic (Mac OS)
-	-2147481086,	// Cyrillic (KOI8-R)
-	11,				// Cyrillic (Windows)
-	-2147481080,	// Ukrainian (KOI8-U)
+	0x80000205,	// Cyrillic (ISO 8859-5)
+	0x80000007,	// Cyrillic (Mac OS)
+	0x80000a02,	// Cyrillic (KOI8-R)
+	11,			// Cyrillic (Windows)
+	0x80000A08,	// Ukrainian (KOI8-U)
 	NSNotFound,	
-	-2147482595,	// Thai (Windows, DOS)
+	0x8000041d,	// Thai (Windows, DOS)
 	NSNotFound,	
-	-2147481296,	// Simplified Chinese (GB 2312)
-	-2147481083,	// Simplified Chinese (HZ GB 2312)
-	-2147482062,	// Chinese (GB 18030)
+	0x80000930,	// Simplified Chinese (GB 2312)
+	0x80000A05,	// Simplified Chinese (HZ GB 2312)
+	0x80000632,	// Chinese (GB 18030)
 	NSNotFound, 
-	9,				// Central European (ISO Latin 2)
-	-2147483619,	// Central European (Mac OS)
-	15,				// Central European (Windows Latin 2)
+	9,			// Central European (ISO Latin 2)
+	0x8000001d,	// Central European (Mac OS)
+	15,			// Central European (Windows Latin 2)
 	NSNotFound, 
-	-2147482360,	// Vietnamese (Windows)
+	0x80000508,	// Vietnamese (Windows)
 	NSNotFound, 
-	-2147483127,	// Turkish (ISO Latin 5)
-	14,				// Turkish (Windows Latin 5)
+	0x80000209,	// Turkish (ISO Latin 5)
+	14,			// Turkish (Windows Latin 5)
 	NSNotFound, 
-	-2147483132,	// Central European (ISO Latin 4)
-	-2147482361 	// Baltic (Windows)
+	0x80000204,	// Central European (ISO Latin 4)
+	0x80000507 	// Baltic (Windows)
 ].map({NSStringEncoding($0)})
 
 // UserDefault keys

@@ -92,7 +92,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     private lazy var userAgentPopup: SBBLKGUIPopUpButton = {
         let userAgentPopup = SBBLKGUIPopUpButton(frame: self.userAgentPopupRect)
-        let menu = userAgentPopup.menu
+        let menu = userAgentPopup.menu!
         var names: [String] = []
         let name0: String = SBUserAgentNames[0]
         let name1: String = SBUserAgentNames[1]
@@ -116,9 +116,10 @@ class SBReportView: SBView, NSTextFieldDelegate {
             }
             menu.addItem(item)
         }
-        let selectedIndex = userAgentPopup.indexOfItemWithTitle(userAgentName)
         userAgentPopup.pullsDown = true
-        userAgentPopup.selectItemAtIndex(selectedIndex)
+        if let selectedIndex = userAgentName !! userAgentPopup.indexOfItemWithTitle {
+            userAgentPopup.selectItemAtIndex(selectedIndex)
+        }
         return userAgentPopup
     }()
     
@@ -230,7 +231,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     var titleRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(iconRect) + 10.0
+        r.origin.x = iconRect.maxX + 10.0
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.size.height = 19.0
         r.origin.y = bounds.size.height - margin.y - r.size.height - (32.0 - r.size.height) / 2
@@ -248,10 +249,10 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     var summaryFieldRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(summaryLabelRect) + 8.0
+        r.origin.x = summaryLabelRect.maxX + 8.0
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.size.height = 58.0
-        r.origin.y = NSMaxY(summaryLabelRect) - r.size.height + 2.0
+        r.origin.y = summaryLabelRect.maxY - r.size.height + 2.0
         return r
     }
     
@@ -266,10 +267,10 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     var userAgentPopupRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(userAgentLabelRect) + 8.0
+        r.origin.x = userAgentLabelRect.maxX + 8.0
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.size.height = 26.0
-        r.origin.y = NSMaxY(userAgentLabelRect) - r.size.height + 2.0
+        r.origin.y = userAgentLabelRect.maxY - r.size.height + 2.0
         return r
     }
     
@@ -284,10 +285,10 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     var switchRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(switchLabelRect) + 8.0
+        r.origin.x = switchLabelRect.maxX + 8.0
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.size.height = 18.0
-        r.origin.y = NSMaxY(switchLabelRect) - r.size.height
+        r.origin.y = switchLabelRect.maxY - r.size.height
         return r
     }
     
@@ -302,10 +303,10 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     var wayFieldRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = NSMaxX(wayLabelRect) + 8.0
+        r.origin.x = wayLabelRect.maxX + 8.0
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.origin.y = (32.0 + margin.y * 2) + 4.0
-        r.size.height = NSMaxY(wayLabelRect) - r.origin.y
+        r.size.height = wayLabelRect.maxY - r.origin.y
         return r
     }
     
@@ -358,7 +359,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
             subject !! { urlString += "?subject=\($0)" }
             message !! { urlString += (subject !! "&" ?? "?") + "body=\($0)" }
             urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString))
+            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString)!)
         } else {
             // Error
             errorString = NSLocalizedString("Could not send the report.", comment: "")
@@ -370,7 +371,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         // Get properties
         var message = ""
         let summary = summaryField.stringValue
-        let userAgent = userAgentPopup.titleOfSelectedItem
+        let userAgent = userAgentPopup.titleOfSelectedItem ?? ""
         let reproducibility = switchMatrix.selectedColumn == 0
         let wayToReproduce = wayField.stringValue
         let osVersion = NSProcessInfo.processInfo().operatingSystemVersionString
@@ -385,7 +386,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
                 processor = "x86_64"
             }
         }
-        let applicationVersion: String = NSBundle.mainBundle().infoDictionary["CFBundleVersion"] as NSString
+        let applicationVersion = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as String
         
         // Make message
         if !summary.isEmpty {

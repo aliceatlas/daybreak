@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     private let kSBLocalizationAvailableSubversionAccess = 0
     
-    var contentView: NSView { return window.contentView as NSView }
+    var contentView: NSView { return window!.contentView as NSView }
     
     private lazy var langField: NSTextField = {
         let contentRect = self.contentView.bounds
@@ -53,13 +53,13 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     
     private lazy var langPopup: NSPopUpButton = {
         let defaults = NSUserDefaults.standardUserDefaults()
-        let languages = defaults.objectForKey("AppleLanguages") as NSArray
+        let languages = defaults.objectForKey("AppleLanguages") as [String]
         let menu = NSMenu()
         let langFRect = self.langField.frame
         var langRect = langFRect
         langRect.size.width = 250.0
         langRect.size.height = 22.0
-        langRect.origin.x = NSMaxX(langFRect) + 8.0
+        langRect.origin.x = langFRect.maxX + 8.0
         let langPopup = NSPopUpButton(frame: langRect, pullsDown: false)
         langPopup.autoresizingMask = .ViewMinYMargin
         langPopup.bezelStyle = .TexturedRoundedBezelStyle
@@ -328,9 +328,9 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))!
         panel.allowedFileTypes = ["strings"]
         panel.directoryURL = NSURL.fileURLWithPath(directoryPath)
-        panel.beginSheet(window) {
+        panel.beginSheet(window!) {
             if $0 == NSFileHandlingPanelOKButton {
-                self.mergeFilePath(panel.URL.path!)
+                self.mergeFilePath(panel.URL!.path!)
             }
         }
     }
@@ -355,7 +355,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         }
         
         // Select lang
-        langPopup.menu.selectItem(representedObject: lang)
+        langPopup.menu!.selectItem(representedObject: lang)
     }
     
     func showContribute() {
@@ -380,7 +380,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
      */
     func changeView(index: Int) {
         var animations: [NSDictionary] = []
-        let contentView = window.contentView as NSView
+        let contentView = window!.contentView as NSView
         let duration: CGFloat = 0.4
         animating = true
         var editRect0 = editView.frame
@@ -433,7 +433,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     }
     
     func animationDidEnd(animation: SBViewAnimation) {
-        if let index: Int = animation.context as? NSNumber {
+        if let index = animation.context as? Int {
             if index == 0 {
                 editView.removeFromSuperview()
             } else {
@@ -451,7 +451,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         var success = false
         if let data = SBLocalizableStringsData(fieldSet) {
             let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))!
-            let langCode = langPopup.selectedItem.representedObject as? NSString
+            let langCode = langPopup.selectedItem?.representedObject as? NSString
             if let name = langCode?.stringByAppendingPathExtension("strings") {
                 // Create strings into application support folder
                 let path = directoryPath.stringByAppendingPathComponent(name)
@@ -473,7 +473,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
                         let alert = NSAlert()
                         alert.messageText = NSLocalizedString("Complete to add new localization. Restart Sunrise.", comment: "")
                         alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
-                        alert.beginSheetModalForWindow(window) {
+                        alert.beginSheetModalForWindow(window!) {
                             (NSModalResponse) -> Void in
                             success = true
                         }
@@ -486,20 +486,19 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
             let alert = NSAlert()
             alert.messageText = NSLocalizedString("Failed to add new localization.", comment: "")
             alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
-            alert.beginSheetModalForWindow(window) { (response: NSModalResponse) in return }
+            alert.beginSheetModalForWindow(window!) { (response: NSModalResponse) in return }
         }
     }
 
     func export() {
         let panel = SBSavePanel.sbSavePanel()
-        let langCode = langPopup.selectedItem.representedObject as? NSString
-        let name = langCode?.stringByAppendingPathExtension("strings")
+        let langCode = langPopup.selectedItem?.representedObject as? NSString
+        let name = langCode?.stringByAppendingPathExtension("strings") ?? ""
         panel.nameFieldStringValue = name
-        window.beginSheet(panel) {
+        window!.beginSheet(panel) {
             if $0 == NSFileHandlingPanelOKButton {
                 if let data = SBLocalizableStringsData(self.fieldSet) {
-                    let url = panel.URL
-                    if data.writeToURL(url, atomically: true) {
+                    if data.writeToURL(panel.URL!, atomically: true) {
                         SBDispatch {
                             //self.copyResourceInBundle(url)
                             // hey this was never implemented...

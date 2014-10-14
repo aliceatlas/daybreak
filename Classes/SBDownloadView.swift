@@ -151,7 +151,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     
     func finder() {
         if download.path &! {NSFileManager.defaultManager().fileExistsAtPath($0)} {
-            NSWorkspace.sharedWorkspace().selectFile(download.path!, inFileViewerRootedAtPath: nil)
+            NSWorkspace.sharedWorkspace().selectFile(download.path!, inFileViewerRootedAtPath: "")
             (superview as SBDownloadsView).layoutToolsHidden()
         }
     }
@@ -171,7 +171,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     override func mouseMoved(event: NSEvent) {
         let location = event.locationInWindow
         let point = convertPoint(location, fromView: nil)
-        if NSPointInRect(point, bounds) {
+        if bounds.contains(point) {
             (superview as SBDownloadsView).layoutToolsForItem(self)
         }
     }
@@ -186,19 +186,18 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
         super.drawRect(rect)
         
         // Icon
-        if !(download.path?.isEmpty ?? true) {
-            if let image = NSWorkspace.sharedWorkspace().iconForFile(download.path) {
-                var r = NSZeroRect
-                var b = bounds
-                let size = image.size
-                var fraction: CGFloat = 1.0
-                r.size.height = bounds.size.height - heights - padding.y * 3
-                r.size.width = size.width * (r.size.height / size.height)
-                r.origin.x = (bounds.size.width - r.size.width) / 2
-                r.origin.y = heights + padding.y * 2
-                fraction = (download.status == .Done) ? 1.0 : 0.5
-                image.drawInRect(r, fromRect: NSRect(origin: NSZeroPoint, size: size), operation: .CompositeSourceOver, fraction: fraction)
-            }
+        if !(download.path ?? "").isEmpty {
+            let image = NSWorkspace.sharedWorkspace().iconForFile(download.path!)
+            var r = NSZeroRect
+            var b = bounds
+            let size = image.size
+            var fraction: CGFloat = 1.0
+            r.size.height = bounds.size.height - heights - padding.y * 3
+            r.size.width = size.width * (r.size.height / size.height)
+            r.origin.x = (bounds.size.width - r.size.width) / 2
+            r.origin.y = heights + padding.y * 2
+            fraction = (download.status == .Done) ? 1.0 : 0.5
+            image.drawInRect(r, fromRect: NSRect(origin: NSZeroPoint, size: size), operation: .CompositeSourceOver, fraction: fraction)
         }
         
         // name string
@@ -255,7 +254,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
             name.drawInRect(r, withAttributes: attributes)
         }
         // bytes string
-        var description: String?
+        var description: NSString?
         switch download.status {
             case .Undone:
                 description = NSLocalizedString("Undone", comment: "")
@@ -274,10 +273,10 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
             let attributes = [NSFontAttributeName: NSFont.systemFontOfSize(9.0),
                               NSForegroundColorAttributeName: NSColor.lightGrayColor(),
                               NSParagraphStyleAttributeName: paragraphStyle]
-            let size = (description! as NSString).sizeWithAttributes(attributes)
+            let size = description!.sizeWithAttributes(attributes)
             r.origin.y += (r.size.height - size.height) / 2
             r.size.height = size.height
-            (description! as NSString).drawInRect(r, withAttributes: attributes)
+            description!.drawInRect(r, withAttributes: attributes)
         }
     }
 }

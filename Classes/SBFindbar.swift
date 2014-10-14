@@ -133,16 +133,14 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         fatalError("NSCoding not supported")
     }
     
-    class func minimumWidth() -> CGFloat { return 750 }
-    class func availableWidth() -> CGFloat { return 300 }
-    func minimumWidth() -> CGFloat { return SBFindbar.minimumWidth() }
-    func availableWidth() -> CGFloat { return SBFindbar.availableWidth() }
+    class var minimumWidth: CGFloat { return 750 }
+    class var availableWidth: CGFloat { return 300 }
     
     // MARK: Rects
     
     var contentRect: NSRect {
         var r = bounds
-        SBConstrain(&r.size.width, min: minimumWidth())
+        SBConstrain(&r.size.width, min: self.dynamicType.minimumWidth)
         return r
     }
     
@@ -156,9 +154,9 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     var searchRect: NSRect {
         var r = NSZeroRect
         let marginNextToCase: CGFloat = 150.0;
-        r.size.width = caseSensitiveRect.origin.x - NSMaxX(closeRect) - marginNextToCase - 24.0 * 2
+        r.size.width = caseSensitiveRect.origin.x - closeRect.maxX - marginNextToCase - 24.0 * 2
         r.size.height = 19.0
-        r.origin.x = NSMaxX(closeRect)
+        r.origin.x = closeRect.maxX
         r.origin.y = (bounds.size.height - r.size.height) / 2
         return r
     }
@@ -168,7 +166,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         r.size.width = 24.0
         r.size.height = 18.0
         r.origin.y = (bounds.size.height - r.size.height) / 2
-        r.origin.x = NSMaxX(searchRect)
+        r.origin.x = searchRect.maxX
         return r
     }
     
@@ -177,7 +175,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         r.size.width = 24.0
         r.size.height = 18.0
         r.origin.y = (bounds.size.height - r.size.height) / 2
-        r.origin.x = NSMaxX(backwardRect)
+        r.origin.x = backwardRect.maxX
         return r
     }
     
@@ -286,7 +284,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         
         // Lines
         NSColor.blackColor().set()
-        NSRectFill(NSMakeRect(bounds.origin.x, NSMaxY(bounds) - lh, bounds.size.width, lh))
+        NSRectFill(NSMakeRect(bounds.origin.x, bounds.maxY - lh, bounds.size.width, lh))
         NSRectFill(NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, lh))
     }
 }

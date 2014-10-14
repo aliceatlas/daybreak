@@ -376,9 +376,9 @@ class SBSideBottombar: SBBottombar {
         r.size.width = kSBSidebarNewFolderButtonWidth
         r.size.height = buttonWidth
         if position == .Left {
-            r.origin.x = NSMaxX(drawerButtonRect) - kSBSidebarNewFolderButtonWidth
+            r.origin.x = drawerButtonRect.maxX - kSBSidebarNewFolderButtonWidth
         } else if position == .Right {
-            r.origin.x = NSMaxX(drawerButtonRect)
+            r.origin.x = drawerButtonRect.maxX
         }
         return r
     }
@@ -402,8 +402,8 @@ class SBSideBottombar: SBBottombar {
     func adjustButtons() {
         var validRect = NSZeroRect
         if position == .Left {
-            validRect.origin.x = NSMaxX(sizeSliderRect)
-            validRect.size.width = bounds.size.width - NSMaxX(sizeSliderRect) - kSBSidebarResizableWidth
+            validRect.origin.x = sizeSliderRect.maxX
+            validRect.size.width = bounds.size.width - sizeSliderRect.maxX - kSBSidebarResizableWidth
             validRect.size.height = bounds.size.height
         } else if position == .Right {
             validRect.origin.x = kSBSidebarResizableWidth
@@ -411,7 +411,7 @@ class SBSideBottombar: SBBottombar {
             validRect.size.height = bounds.size.height
         }
         for button in buttons {
-            button.hidden = !NSContainsRect(validRect, button.frame)
+            button.hidden = !validRect.contains(button.frame)
         }
         sizeSlider.frame = sizeSliderRect
     }
@@ -454,13 +454,13 @@ class SBSideBottombar: SBBottombar {
         super.drawRect(rect)
         
         var r = resizableRect
-        let resizerImage = NSImage(named: "Resizer.png")
+        let resizerImage = NSImage(named: "Resizer.png")!
         resizerImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
         if position == .Left {
             r.origin.x = r.origin.x - 1
             r.size.width = 1
         } else if position == .Right {
-            r.origin.x = NSMaxX(r) + 1
+            r.origin.x = r.maxX + 1
             r.size.width = 1
         }
         NSColor.blackColor().set()

@@ -759,12 +759,12 @@
 				505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */,
 				507A8E21195FFF6700BF56AD /* SBDefinitions.h */,
 				507A8E24195FFF8800BF56AD /* SBDefinitions.swift */,
+				5096684F19D27BE000596F88 /* SBOperators.swift */,
 				0840676A0FE2B95200CC80E3 /* SBUtil.h */,
 				0840676B0FE2B95200CC80E3 /* SBUtil.m */,
 				50B2A9A41960BD5200DA1B4A /* SBUtil.swift */,
 				32DBCF750370BD2300C91783 /* Sunrise_Prefix.pch */,
 				508FAC5219653AC400F4380F /* main.swift */,
-				5096684F19D27BE000596F88 /* SBOperators.swift */,
 			);
 			name = Sources;
 			sourceTree = "<group>";

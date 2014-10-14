@@ -59,13 +59,13 @@ var SBGetWebPreferences: WebPreferences {
 }
 
 func SBMenuWithTag(tag: Int) -> NSMenu? {
-    let items = NSApplication.sharedApplication().mainMenu.itemArray as [NSMenuItem]
+    let items = NSApplication.sharedApplication().mainMenu!.itemArray as [NSMenuItem]
     return items.first({ $0.tag == tag })?.submenu
 }
 
 func SBMenuItemWithTag(tag: Int) -> NSMenuItem? {
-    let items = NSApplication.sharedApplication().mainMenu.itemArray as [NSMenuItem]
-    return items.map({ $0.submenu.itemWithTag(tag) }).first({ $0 != nil })
+    let items = NSApplication.sharedApplication().mainMenu!.itemArray as [NSMenuItem]
+    return items.map({ $0.submenu!.itemWithTag(tag) }).first({ $0 != nil }) !! {$0}
 }
 
 // MARK: Default values
@@ -96,9 +96,9 @@ func SBDefaultSaveDownloadedFilesToPath() -> String? {
 var SBDefaultBookmarks: NSDictionary? {
     let path = NSBundle.mainBundle().pathForResource("DefaultBookmark", ofType: "plist")
     if let defaultItem = path !! {NSDictionary(contentsOfFile: $0)} {
-        var title = defaultItem[kSBBookmarkTitle] as NSString
-        var imageData = defaultItem[kSBBookmarkImage] as NSData
-        var URLString = defaultItem[kSBBookmarkURL] as NSString
+        var title = defaultItem[kSBBookmarkTitle] as? String
+        var imageData = defaultItem[kSBBookmarkImage] as? NSData
+        var URLString = defaultItem[kSBBookmarkURL] as? String
         title = title ?? NSLocalizedString("Untitled", comment: "")
         URLString = URLString ?? NSLocalizedString("http://www.example.com/", comment: "")
         imageData = imageData ?? SBEmptyBookmarkImageData
@@ -141,14 +141,14 @@ var SBEmptyBookmarkImageData: NSData {
         }
     }
     
-    return image.bitmapImageRep.data
+    return image.bitmapImageRep!.data!
 }
 
 // MARK: Bookmarks
 
 func SBBookmarksWithItems(items: [NSDictionary]) -> [NSObject: AnyObject] {
     return [kSBBookmarkVersion: SBBookmarkVersion,
-            kSBBookmarkItems: items as NSArray]
+            kSBBookmarkItems: items]
 }
 
 func SBCreateBookmarkItem(title: String?, URL: String?, imageData: NSData?, date: NSDate?, labelName: String?, offsetString: String?) -> BookmarkItem {
@@ -185,8 +185,8 @@ func SBBookmarkItemsFromBookmarkDictionaryList(bookmarkDictionaryList: [NSDictio
         for dictionary in bookmarkDictionaryList {
             let type = dictionary["WebBookmarkType"] as String
             var URLString = dictionary["URLString"] as String
-            let URIDictionary = dictionary["URIDictionary"] as? NSDictionary
-            let title = URIDictionary?["title"] as? NSString
+            let URIDictionary = dictionary["URIDictionary"] as? [NSObject: AnyObject]
+            let title = URIDictionary?["title"] as? String
             var hasScheme = false
             if type == "WebBookmarkTypeLeaf" && URLString.isURLString(&hasScheme) {
                 var item: [NSString: AnyObject] = [:]
@@ -269,8 +269,8 @@ var SBBookmarksFilePath: String? {
         if manager.fileExistsAtPath(version1Path) {
             // Exist version1 bookmarks
             let plistData = NSData(contentsOfFile: version1Path)!
-            if let items = NSPropertyListSerialization.propertyListWithData(plistData, options: Int(NSPropertyListMutabilityOptions.Immutable.rawValue), format: nil, error: &error) as? NSArray {
-                if let plistData = NSPropertyListSerialization.dataWithPropertyList(SBBookmarksWithItems(items as [NSDictionary]), format: .BinaryFormat_v1_0, options: 0, error: &error) {
+            if let items = NSPropertyListSerialization.propertyListWithData(plistData, options: Int(NSPropertyListMutabilityOptions.Immutable.rawValue), format: nil, error: &error) as? [NSDictionary] {
+                if let plistData = NSPropertyListSerialization.dataWithPropertyList(SBBookmarksWithItems(items), format: .BinaryFormat_v1_0, options: 0, error: &error) {
                     if plistData.writeToFile(path!, atomically: true) {
                     } else {
                         path = nil
@@ -507,52 +507,52 @@ func SBTrianglePath(rect: NSRect, direction: SBTriangleDirection) -> NSBezierPat
     
     switch direction {
         case .Left:
-            p.x = NSMaxX(rect)
-            p.y = NSMinY(rect)
+            p.x = rect.maxX
+            p.y = rect.minY
             path.moveToPoint(p)
-            p.y = NSMaxY(rect)
+            p.y = rect.maxY
             path.lineToPoint(p)
-            p.x = NSMinX(rect)
-            p.y = NSMidY(rect)
+            p.x = rect.minX
+            p.y = rect.midY
             path.lineToPoint(p)
-            p.x = NSMaxX(rect)
-            p.y = NSMinY(rect)
+            p.x = rect.maxX
+            p.y = rect.minY
             path.lineToPoint(p)
         case .Top:
-            p.x = NSMinX(rect)
-            p.y = NSMaxY(rect)
+            p.x = rect.minX
+            p.y = rect.maxY
             path.moveToPoint(p)
-            p.x = NSMaxX(rect)
+            p.x = rect.maxX
             path.lineToPoint(p)
-            p.x = NSMidX(rect)
-            p.y = NSMinY(rect)
+            p.x = rect.midX
+            p.y = rect.minY
             path.lineToPoint(p)
-            p.x = NSMinX(rect)
-            p.y = NSMaxY(rect)
+            p.x = rect.minX
+            p.y = rect.maxY
             path.lineToPoint(p)
         case .Right:
-            p.x = NSMinX(rect)
-            p.y = NSMinY(rect)
+            p.x = rect.minX
+            p.y = rect.minY
             path.moveToPoint(p)
-            p.y = NSMaxY(rect)
+            p.y = rect.maxY
             path.lineToPoint(p)
-            p.x = NSMaxX(rect)
-            p.y = NSMidY(rect)
+            p.x = rect.maxX
+            p.y = rect.midY
             path.lineToPoint(p)
-            p.x = NSMinX(rect)
-            p.y = NSMinY(rect)
+            p.x = rect.minX
+            p.y = rect.minY
             path.lineToPoint(p)
         case .Bottom:
-            p.x = NSMinX(rect)
-            p.y = NSMinY(rect)
+            p.x = rect.minX
+            p.y = rect.minY
             path.moveToPoint(p)
-            p.x = NSMaxX(rect)
+            p.x = rect.maxX
             path.lineToPoint(p)
-            p.x = NSMidX(rect)
-            p.y = NSMaxY(rect)
+            p.x = rect.midX
+            p.y = rect.maxY
             path.lineToPoint(p)
-            p.x = NSMinX(rect)
-            p.y = NSMinY(rect)
+            p.x = rect.minX
+            p.y = rect.minY
             path.lineToPoint(p)
     }
     
@@ -565,12 +565,12 @@ func SBEllipsePath3D(r: NSRect, transform: CATransform3D) -> NSBezierPath {
     var cp1 = NSZeroPoint
     var cp2 = NSZeroPoint
     
-    p.x = NSMidX(r)
+    p.x = r.midX
     p.y = r.origin.y
     SBCGPointApplyTransform3D(&p, transform)
     path.moveToPoint(p)
     p.x = r.origin.x
-    p.y = NSMidY(r)
+    p.y = r.midY
     cp1.x = r.origin.x + r.size.width / 4
     cp1.y = r.origin.y
     cp2.x = r.origin.x
@@ -579,29 +579,29 @@ func SBEllipsePath3D(r: NSRect, transform: CATransform3D) -> NSBezierPath {
     SBCGPointApplyTransform3D(&cp1, transform)
     SBCGPointApplyTransform3D(&cp1, transform)
     path.curveToPoint(p, controlPoint1: cp1, controlPoint2: cp2)
-    p.x = NSMidX(r)
-    p.y = NSMaxY(r)
+    p.x = r.midX
+    p.y = r.maxY
     cp1.x = r.origin.x
     cp1.y = r.origin.y + r.size.height / 4 * 3
     cp2.x = r.origin.x + r.size.width / 4
-    cp2.y = NSMaxY(r)
+    cp2.y = r.maxY
     SBCGPointApplyTransform3D(&p, transform)
     SBCGPointApplyTransform3D(&cp1, transform)
     SBCGPointApplyTransform3D(&cp1, transform)
     path.curveToPoint(p, controlPoint1: cp1, controlPoint2: cp2)
-    p.x = NSMaxX(r)
-    p.y = NSMidY(r)
+    p.x = r.maxX
+    p.y = r.midY
     cp1.x = r.origin.x + r.size.width / 4 * 3
-    cp1.y = NSMaxY(r)
-    cp2.x = NSMaxX(r)
+    cp1.y = r.maxY
+    cp2.x = r.maxX
     cp2.y = r.origin.y + r.size.height / 4 * 3
     SBCGPointApplyTransform3D(&p, transform)
     SBCGPointApplyTransform3D(&cp1, transform)
     SBCGPointApplyTransform3D(&cp1, transform)
     path.curveToPoint(p, controlPoint1: cp1, controlPoint2: cp2)
-    p.x = NSMidX(r)
+    p.x = r.midX
     p.y = r.origin.y
-    cp1.x = NSMaxX(r)
+    cp1.x = r.maxX
     cp1.y = r.origin.y + r.size.height / 4
     cp2.x = r.origin.x + r.size.width / 4 * 3
     cp2.y = r.origin.y
@@ -698,17 +698,17 @@ func SBCGPointApplyTransform3D(inout p: NSPoint, t: CATransform3D) {
 func SBCenteredSquare(inRect: NSRect) -> NSRect {
     let side = min(inRect.size.width, inRect.size.height)
     let size = NSMakeSize(side, side)
-    let origin = NSMakePoint(NSMidX(inRect) - side / 2, NSMidY(inRect) - side / 2)
+    let origin = NSMakePoint(inRect.midX - side / 2, inRect.midY - side / 2)
     return NSRect(origin: origin, size: size)
 }
 
 // MARK: Drawing
 
-let SBAlternateSelectedLightControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.whiteColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+let SBAlternateSelectedLightControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.whiteColor())!.colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
 
-let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
 
-let SBAlternateSelectedDarkControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.blackColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+let SBAlternateSelectedDarkControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.blackColor())!.colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
 
 func SBPreserveGraphicsState(block: () -> Void) {
     NSGraphicsContext.saveGraphicsState()
@@ -722,7 +722,7 @@ func SBGraphicsPortFromContext(context: NSGraphicsContext) -> CGContext {
 }
 
 var SBCurrentGraphicsPort: CGContext {
-    return SBGraphicsPortFromContext(NSGraphicsContext.currentContext())
+    return SBGraphicsPortFromContext(NSGraphicsContext.currentContext()!)
 }
 
 // MARK: Image
@@ -1100,7 +1100,7 @@ func SBIconImage(iconImage: NSImage?, shape: SBButtonShape, size: NSSize) -> NSI
                     insetRect.size.height -= insetMargin * 2
                     rad = insetRect.size.height / 2
                     
-                    p.x = NSMaxX(insetRect) + lineWidth / 4
+                    p.x = insetRect.maxX + lineWidth / 4
                     p.y = insetRect.origin.y
                     path.moveToPoint(p)
                     p.x = insetRect.origin.x + rad
@@ -1116,13 +1116,13 @@ func SBIconImage(iconImage: NSImage?, shape: SBButtonShape, size: NSSize) -> NSI
                     
                     p.x = insetRect.origin.x + rad
                     cp2.x = insetRect.origin.x
-                    cp2.y = NSMaxY(insetRect) - rad / 2
+                    cp2.y = insetRect.maxY - rad / 2
                     cp1.x = insetRect.origin.x + rad / 2
-                    cp1.y = NSMaxY(insetRect)
-                    p.y = NSMaxY(insetRect)
+                    cp1.y = insetRect.maxY
+                    p.y = insetRect.maxY
                     path.curveToPoint(p, controlPoint1: cp2, controlPoint2: cp1)
                     
-                    p.x = NSMaxX(insetRect) + lineWidth / 4
+                    p.x = insetRect.maxX + lineWidth / 4
                     path.lineToPoint(p)
                     
                     path.closePath()
@@ -1146,23 +1146,23 @@ func SBIconImage(iconImage: NSImage?, shape: SBButtonShape, size: NSSize) -> NSI
                     p.x = insetRect.origin.x - lineWidth / 4
                     p.y = insetRect.origin.y
                     path.moveToPoint(p)
-                    p.x = NSMaxX(insetRect) - rad
+                    p.x = insetRect.maxX - rad
                     path.lineToPoint(p)
                     
-                    p.x = NSMaxX(insetRect)
-                    cp1.x = NSMaxX(insetRect)
-                    cp1.y = NSMinY(insetRect) + rad / 2
-                    cp2.x = NSMaxX(insetRect) - rad / 2
-                    cp2.y = NSMinY(insetRect)
-                    p.y = NSMinY(insetRect) + rad
+                    p.x = insetRect.maxX
+                    cp1.x = insetRect.maxX
+                    cp1.y = insetRect.minY + rad / 2
+                    cp2.x = insetRect.maxX - rad / 2
+                    cp2.y = insetRect.minY
+                    p.y = insetRect.minY + rad
                     path.curveToPoint(p, controlPoint1: cp2, controlPoint2: cp1)
                     
-                    p.x = NSMaxX(insetRect) - rad
-                    cp2.x = NSMaxX(insetRect)
-                    cp2.y = NSMaxY(insetRect) - rad / 2
-                    cp1.x = NSMaxX(insetRect) - rad / 2
-                    cp1.y = NSMaxY(insetRect)
-                    p.y = NSMaxY(insetRect)
+                    p.x = insetRect.maxX - rad
+                    cp2.x = insetRect.maxX
+                    cp2.y = insetRect.maxY - rad / 2
+                    cp1.x = insetRect.maxX - rad / 2
+                    cp1.y = insetRect.maxY
+                    p.y = insetRect.maxY
                     path.curveToPoint(p, controlPoint1: cp2, controlPoint2: cp1)
                     
                     p.x = insetRect.origin.x - lineWidth / 4
@@ -1378,11 +1378,11 @@ func SBValueForKey(keyName: String, dictionary: [NSObject: AnyObject]) -> AnyObj
     var value: AnyObject? = dictionary[keyName]
     if value == nil  {
         for object in dictionary.values {
-            if let object = object as? NSDictionary as? [NSObject: AnyObject] {
+            if let object = object as? [NSObject: AnyObject] {
                 value = SBValueForKey(keyName, object)
             }
         }
-    } else if let dict = value as? NSDictionary as? [NSObject: AnyObject] {
+    } else if let dict = value as? [NSObject: AnyObject] {
         value = dict.values.first
     }
     return value
@@ -1581,7 +1581,7 @@ func SBDebugViewStructure(view: NSView) -> [NSObject: AnyObject] {
     } else {
         description = "\(view) \(NSStringFromRect(view.frame))"
     }
-    info["Description"] = description as NSString
+    info["Description"] = description
     if !subviews.isEmpty {
         let children = subviews.map(SBDebugViewStructure)
         info["Children"] = children
@@ -1593,7 +1593,7 @@ func SBDebugLayerStructure(layer: CALayer) -> [NSObject: AnyObject] {
     var info: [NSObject: AnyObject] = [:]
     let sublayers = (layer.sublayers ?? []) as [CALayer]
     let description = "\(layer) \(NSStringFromRect(layer.frame))"
-    info["Description"] = description as NSString
+    info["Description"] = description
     if !sublayers.isEmpty {
         let children = sublayers.map(SBDebugLayerStructure)
         info["Children"] = children
@@ -1602,7 +1602,7 @@ func SBDebugLayerStructure(layer: CALayer) -> [NSObject: AnyObject] {
 }
 
 func SBDebugDumpMainMenu() -> [NSObject: AnyObject] {
-    return ["MenuItems": SBDebugDumpMenu(NSApplication.sharedApplication().mainMenu)]
+    return ["MenuItems": SBDebugDumpMenu(NSApplication.sharedApplication().mainMenu!)]
 }
 
 func SBDebugDumpMenu(menu: NSMenu) -> [[NSObject: AnyObject]] {
@@ -1619,15 +1619,15 @@ func SBDebugDumpMenu(menu: NSMenu) -> [[NSObject: AnyObject]] {
         let keyEquivalent = item.keyEquivalent
         let keyEquivalentModifierMask = item.keyEquivalentModifierMask
         let toolTip = item.toolTip
-        title !! { info["Title"] = $0 as NSString }
-        target !! { info["Target"] = "\($0)" as NSString }
+        info["Title"] = title
+        target !! { info["Target"] = "\($0)" }
         action !! { info["Action"] = NSStringFromSelector($0) }
-        info["Tag"] = tag as NSNumber
+        info["Tag"] = tag
         info["State"] = state
         image !! { info["Image"] = $0.TIFFRepresentation }
-        keyEquivalent !! { info["KeyEquivalent"] = $0 as NSString }
+        info["KeyEquivalent"] = keyEquivalent
         info["KeyEquivalentModifierMask"] = keyEquivalentModifierMask
-        toolTip !! { info["ToolTip"] = $0 as NSString }
+        toolTip !! { info["ToolTip"] = $0 }
         submenu !! { info["MenuItems"] = SBDebugDumpMenu($0) }
         items.append(info)
     }

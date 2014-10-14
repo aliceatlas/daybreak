@@ -136,7 +136,7 @@ extension NSString {
             var range = NSMakeRange(0, 0)
             let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
             if range.location == 0 {
-                hasScheme.memory = ObjCBool(!(URL?.scheme ?? "").isEmpty ? string.hasPrefix(URL.scheme!) : false)
+                hasScheme.memory = ObjCBool(!(URL?.scheme ?? "").isEmpty ? string.hasPrefix(URL!.scheme!) : false)
                 return true
             }
         }
@@ -177,8 +177,8 @@ extension NSString {
     var searchURLString: NSString {
         var stringValue = self
         
-        let info = NSBundle.mainBundle().localizedInfoDictionary
-        if let gSearchFormat = info["SBGSearchFormat"] as? NSString {
+        let info = NSBundle.mainBundle().localizedInfoDictionary!
+        if let gSearchFormat = info["SBGSearchFormat"] as? String {
             let str = NSString(format: gSearchFormat, stringValue)
             let requestURL = NSURL._web_URLWithUserTypedString(str)
             stringValue = requestURL.absoluteString!

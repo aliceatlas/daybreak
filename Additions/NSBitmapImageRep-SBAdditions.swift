@@ -27,8 +27,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 extension NSBitmapImageRep {
-    var data: NSData {
-        let properties: [NSObject: AnyObject] = [NSImageCompressionFactor: Float(kSBBookmarkItemImageCompressionFactor) as NSNumber]
+    var data: NSData? {
+        let properties: [NSObject: AnyObject] = [NSImageCompressionFactor: Float(kSBBookmarkItemImageCompressionFactor)]
         return representationUsingType(NSBitmapImageFileType.NSJPEGFileType, properties: properties)
     }
 }

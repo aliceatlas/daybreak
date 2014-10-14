@@ -40,7 +40,7 @@ class SBBLKGUITextField: NSTextField {
         setDefaultValues()
     }
     
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
@@ -91,12 +91,12 @@ class SBBLKGUITextFieldCell: NSTextFieldCell {
         NSColor(deviceWhite: 0.0, alpha: alpha * 0.1).set()
         path.fill()
         
-        r = NSInsetRect(r, 0.5, 0.5)
+        r.inset(dx: 0.5, dy: 0.5)
         path = NSBezierPath(roundedRect: r, xRadius: SBFieldRoundedCurve, yRadius: SBFieldRoundedCurve)
         path.lineWidth = 0.5
         NSColor(deviceWhite: 1.0, alpha: alpha).set()
         path.stroke()
         
-        drawInteriorWithFrame(cellFrame, inView: controlView)
+        drawInteriorWithFrame(cellFrame, inView: inView)
     }
 }

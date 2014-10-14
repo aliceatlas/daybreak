@@ -50,7 +50,7 @@ class SBSegmentedButton: SBView {
     
     // MARK: NSCoding Protocol
     
-    required init(coder decoder: NSCoder) {
+    required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             if decoder.containsValueForKey("buttons") {
@@ -62,7 +62,7 @@ class SBSegmentedButton: SBView {
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
         if !buttons.isEmpty {
-            coder.encodeObject(buttons as NSArray, forKey: "buttons")
+            coder.encodeObject(buttons, forKey: "buttons")
         }
     }
     

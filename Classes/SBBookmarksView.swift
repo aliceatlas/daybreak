@@ -68,7 +68,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     // MARK: Delegate
     
     func bookmarkListViewShouldOpenSearchbar(bookmarkListView: SBBookmarkListView) {
-        if bounds.size.width >= SBSearchbar.availableWidth() {
+        if bounds.size.width >= SBSearchbar.availableWidth {
             setShowSearchbar(true)
         } else {
             NSBeep()
@@ -98,7 +98,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         scrollView!.backgroundColor = SBBackgroundColor
         scrollView!.drawsBackground = true
         listView = SBBookmarkListView(frame: bounds, wrapperView: self)
-        listView!.cellWidth = CGFloat(NSUserDefaults.standardUserDefaults().integerForKey(kSBBookmarkCellWidth as NSString) as Int)
+        listView!.cellWidth = CGFloat(NSUserDefaults.standardUserDefaults().integerForKey(kSBBookmarkCellWidth))
         scrollView!.documentView = listView
         scrollView!.contentView.copiesOnScroll = true
         addSubview(scrollView!)

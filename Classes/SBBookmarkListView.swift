@@ -178,7 +178,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     var width: CGFloat {
         if let scrollView = enclosingScrollView {
-            let documentRect = scrollView.documentView.frame
+            let documentRect = (scrollView.documentView! as NSView).frame
             let documentVisibleRect = scrollView.documentVisibleRect
             return documentRect.size.height > documentVisibleRect.size.height ? scrollView.contentSize.width : scrollView.frame.size.width
         }
@@ -343,7 +343,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         r.size.width = 24.0
         r.size.height = r.size.width
         itemView !! { r.origin = $0.frame.origin }
-        r.origin.x = NSMaxX(removeButtonRect)
+        r.origin.x = removeButtonRect.maxX
         return r
     }
     
@@ -353,7 +353,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         r.size.width = 24.0
         r.size.height = r.size.width
         itemView !! { r.origin = $0.frame.origin }
-        r.origin.x = NSMaxX(editButtonRect)
+        r.origin.x = editButtonRect.maxX
         return r
     }
     
@@ -367,7 +367,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     var canScrollToNext: Bool {
-        return NSMaxY(visibleRect) < NSMaxY(bounds)
+        return visibleRect.maxY < bounds.maxY
     }
     
     var canScrollToPrevious: Bool {
@@ -471,9 +471,9 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     func selectPoint(point: NSPoint, toPoint: NSPoint, exclusive: Bool) {
         if selectionView != nil {
-            let r = NSUnionRect(NSMakeRect(toPoint.x, toPoint.y, 1.0, 1.0), NSMakeRect(point.x, point.y, 1.0, 1.0))
+            let r = NSMakeRect(toPoint.x, toPoint.y, 1.0, 1.0).rectByUnion(NSMakeRect(point.x, point.y, 1.0, 1.0))
             for itemView in itemViews {
-                let intersectionRect = NSIntersectionRect(r, itemView.frame)
+                let intersectionRect = r.rectByIntersecting(itemView.frame)
                 if intersectionRect == NSZeroRect {
                     if exclusive {
                         itemView.selected = false
@@ -482,7 +482,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                     var intersectionRectInView = intersectionRect
                     intersectionRectInView.origin.x = intersectionRect.origin.x - itemView.frame.origin.x
                     intersectionRectInView.origin.y = intersectionRect.origin.y - itemView.frame.origin.y
-                    intersectionRectInView.origin.y = itemView.frame.size.height - NSMaxY(intersectionRectInView)
+                    intersectionRectInView.origin.y = itemView.frame.size.height - intersectionRectInView.maxY
                     itemView.selected = itemView.hitToRect(intersectionRectInView)
                 }
             }
@@ -528,7 +528,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             let itemView = itemViews[index]
             itemView.mode = mode
             let r = itemRectAtIndex(index)
-            if NSIntersectsRect(visibleRect, itemView.frame) || NSIntersectsRect(visibleRect, r) {  // Only visible views
+            if visibleRect.intersects(itemView.frame) || visibleRect.intersects(r) {  // Only visible views
                 animations.append([
                     NSViewAnimationTargetKey: itemView,
                     NSViewAnimationStartFrameKey: NSValue(rect: itemView.frame),
@@ -551,7 +551,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             selectionView!.frameColor = NSColor.alternateSelectedControlColor()
             addSubview(selectionView!)
         }
-        let r = NSUnionRect(NSMakeRect(self.point.x, self.point.y, 1.0, 1.0), NSMakeRect(point.x, point.y, 1.0, 1.0))
+        let r = NSMakeRect(self.point.x, self.point.y, 1.0, 1.0).rectByUnion(NSMakeRect(point.x, point.y, 1.0, 1.0))
         selectionView!.frame = r
     }
     
@@ -622,8 +622,8 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     func scrollToNext() {
         var r = visibleRect
-        if NSMaxY(visibleRect) + visibleRect.size.height < bounds.size.height {
-            r.origin.y = NSMaxY(visibleRect)
+        if visibleRect.maxY + visibleRect.size.height < bounds.size.height {
+            r.origin.y = visibleRect.maxY
         } else {
             r.origin.y = bounds.size.height - visibleRect.size.height
         }
@@ -816,9 +816,9 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 let image = NSImage(view: draggedItemView!)!
                 let dragLocation = NSMakePoint(point.x + offset.width, point.y + (draggedItemView!.frame.size.height - offset.height))
                 let pasteboard = NSPasteboard(name: NSDragPboard)
-                let title = draggedItemView!.item[kSBBookmarkTitle] as NSString
+                let title = draggedItemView!.item[kSBBookmarkTitle] as String
                 let imageData = draggedItemView!.item[kSBBookmarkImage] as NSData
-                let URLString = draggedItemView!.item[kSBBookmarkURL] as NSString
+                let URLString = draggedItemView!.item[kSBBookmarkURL] as String
                 let URL = URLString !! {NSURL(string: $0)}
                 pasteboard.declareTypes([SBBookmarkPboardType, NSURLPboardType], owner: nil)
                 draggedItems !! { pasteboard.setPropertyList($0, forType: SBBookmarkPboardType) }
@@ -885,7 +885,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     override func keyDown(event: NSEvent) {
-        let character = Int((event.characters as NSString).characterAtIndex(0))
+        let character = Int((event.characters! as NSString).characterAtIndex(0))
         switch character {
             case NSDeleteCharacter:
                 // Delete
@@ -943,14 +943,14 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         return .Copy
     }
     
-    override func draggingExited(sender: NSDraggingInfo) {
+    override func draggingExited(sender: NSDraggingInfo?) {
         draggingLineView = nil
     }
     
     override func draggingUpdated(sender: NSDraggingInfo) -> NSDragOperation {
         let point = convertPoint(sender.draggingLocation(), fromView: nil)
         layoutDraggingLineView(point)
-        autoscroll(NSApplication.sharedApplication().currentEvent)
+        autoscroll(NSApplication.sharedApplication().currentEvent!)
         return .Copy
     }
     
@@ -961,7 +961,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         
         if containsItem(types, SBBookmarkPboardType) {
             // Sunrise bookmarks
-            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as NSArray as [NSDictionary]
+            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as [NSDictionary]
             if !pbItems.isEmpty {
                 let bookmarks = SBBookmarks.sharedBookmarks
                 let indexes = bookmarks.indexesOfItems(pbItems)
@@ -979,7 +979,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             }
         } else if containsItem(types, SBSafariBookmarkDictionaryListPboardType) {
             // Safari bookmarks
-            let pbItems = pasteboard.propertyListForType(SBSafariBookmarkDictionaryListPboardType) as NSArray as [NSDictionary]
+            let pbItems = pasteboard.propertyListForType(SBSafariBookmarkDictionaryListPboardType) as [NSDictionary]
             let bookmarkItems = SBBookmarkItemsFromBookmarkDictionaryList(pbItems)
             if !bookmarkItems.isEmpty {
                 let bookmarks = SBBookmarks.sharedBookmarks
@@ -990,9 +990,9 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             }
         } else if containsItem(types, NSURLPboardType) {
             // General URL
-            if let URL = NSURL(fromPasteboard: pasteboard).absoluteString {
+            if let URL = NSURL(fromPasteboard: pasteboard)?.absoluteString {
                 var title: String!
-                var data: NSData?
+                var data: NSData!
                 if containsItem(types, NSPasteboardTypeString) {
                     title = pasteboard.stringForType(NSPasteboardTypeString)
                 } else {
@@ -1000,13 +1000,13 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 }
                 if containsItem(types, NSPasteboardTypeTIFF) {
                     var shouldInset = true
-                    data = pasteboard.dataForType(NSPasteboardTypeTIFF)
+                    data = pasteboard.dataForType(NSPasteboardTypeTIFF)!
                     if let image = NSImage(data: data) {
                         shouldInset = image.size != SBBookmarkImageMaxSize
                     }
                     if shouldInset {
                         if let insetImage = NSImage(data: data)?.inset(size: SBBookmarkImageMaxSize, intersectRect: NSZeroRect, offset: NSZeroPoint) {
-                            insetImage.bitmapImageRep !! { data = $0.data }
+                            insetImage.bitmapImageRep !! { data = $0.data! }
                         }
                     }
                 } else {
