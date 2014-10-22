@@ -4,4 +4,4 @@
 
 #import "SBDefinitions.h"
 #import "SBUtil.h"
-#import "SBBaseView.h"
+#import "NSView-SBAdditions.h"

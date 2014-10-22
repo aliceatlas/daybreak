@@ -144,7 +144,6 @@
 		5096684E19D1FEBE00596F88 /* SBBookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096684D19D1FEBE00596F88 /* SBBookmarkListView.swift */; };
 		5096685019D27BE000596F88 /* SBOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096684F19D27BE000596F88 /* SBOperators.swift */; };
 		5096685219D2AA6A00596F88 /* SBView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096685119D2AA6A00596F88 /* SBView.swift */; };
-		5096685A19D2CF4500596F88 /* SBBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5096685819D2CF4500596F88 /* SBBaseView.m */; };
 		50A7B45619736FB3002D4B1C /* SBBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5044E66A19666D550053CBF1 /* SBBookmarksView.swift */; };
 		50A8F02019BF4E08008DEFEC /* SBTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A8F01F19BF4E07008DEFEC /* SBTableCell.swift */; };
 		50ACCDF71963E76700CE593E /* SBCoverWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ACCDF61963E76700CE593E /* SBCoverWindow.swift */; };
@@ -182,6 +181,7 @@
 		50FEEAA419BF307400962BB9 /* SBFixedSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA319BF307400962BB9 /* SBFixedSplitView.swift */; };
 		50FEEAA619BF345C00962BB9 /* SBSearchbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */; };
 		50FEEAA919BF453300962BB9 /* SBFindbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA719BF3A0200962BB9 /* SBFindbar.swift */; };
+		665362C819F77DCD00D32D82 /* NSView-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 665362C619F77DCD00D32D82 /* NSView-SBAdditions.m */; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -365,8 +365,6 @@
 		5096684D19D1FEBE00596F88 /* SBBookmarkListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBookmarkListView.swift; path = Classes/SBBookmarkListView.swift; sourceTree = "<group>"; };
 		5096684F19D27BE000596F88 /* SBOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBOperators.swift; path = Sources/SBOperators.swift; sourceTree = "<group>"; };
 		5096685119D2AA6A00596F88 /* SBView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBView.swift; path = Classes/SBView.swift; sourceTree = "<group>"; };
-		5096685719D2CF4500596F88 /* SBBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBBaseView.h; path = Classes/SBBaseView.h; sourceTree = "<group>"; };
-		5096685819D2CF4500596F88 /* SBBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBBaseView.m; path = Classes/SBBaseView.m; sourceTree = "<group>"; };
 		50A8F01F19BF4E07008DEFEC /* SBTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTableCell.swift; path = Classes/SBTableCell.swift; sourceTree = "<group>"; };
 		50AC47B6196916EF009219AF /* SBPopUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBPopUpButton.swift; path = Classes/SBPopUpButton.swift; sourceTree = "<group>"; };
 		50AC47B8196923B4009219AF /* SBBLKGUIScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUIScrollView.swift; path = Classes/SBBLKGUIScrollView.swift; sourceTree = "<group>"; };
@@ -403,6 +401,8 @@
 		50FEEAA319BF307400962BB9 /* SBFixedSplitView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBFixedSplitView.swift; path = Classes/SBFixedSplitView.swift; sourceTree = "<group>"; };
 		50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSearchbar.swift; path = Classes/SBSearchbar.swift; sourceTree = "<group>"; };
 		50FEEAA719BF3A0200962BB9 /* SBFindbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBFindbar.swift; path = Classes/SBFindbar.swift; sourceTree = "<group>"; };
+		665362C519F77DCD00D32D82 /* NSView-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSView-SBAdditions.h"; path = "Additions/NSView-SBAdditions.h"; sourceTree = "<group>"; };
+		665362C619F77DCD00D32D82 /* NSView-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSView-SBAdditions.m"; path = "Additions/NSView-SBAdditions.m"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -476,8 +476,6 @@
 		0840678C0FE2C12500CC80E3 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5096685719D2CF4500596F88 /* SBBaseView.h */,
-				5096685819D2CF4500596F88 /* SBBaseView.m */,
 				5096685119D2AA6A00596F88 /* SBView.swift */,
 				50FEEA9419BABDB900962BB9 /* SBBottombar.swift */,
 				50FEEAA719BF3A0200962BB9 /* SBFindbar.swift */,
@@ -546,6 +544,8 @@
 				502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */,
 				502DEBB619C0A64A006A68C3 /* NSString-SBURLAdditions.swift */,
 				502DEBA819C067C9006A68C3 /* NSURL-SBAdditions.swift */,
+				665362C519F77DCD00D32D82 /* NSView-SBAdditions.h */,
+				665362C619F77DCD00D32D82 /* NSView-SBAdditions.m */,
 				50D7C34E19C22DE500B3F7C3 /* NSView-SBAdditions.swift */,
 				50B2A9A81960E19A00DA1B4A /* Array-SBAdditions.swift */,
 				501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */,
@@ -1000,12 +1000,12 @@
 				502DEBB119C0855A006A68C3 /* NSColor-SBAdditions.swift in Sources */,
 				5096685019D27BE000596F88 /* SBOperators.swift in Sources */,
 				50FEEAA419BF307400962BB9 /* SBFixedSplitView.swift in Sources */,
-				5096685A19D2CF4500596F88 /* SBBaseView.m in Sources */,
 				505E49F9198C91A4001F5254 /* SBDrawer.swift in Sources */,
 				50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */,
 				50782C8C19AC939E00CB8706 /* SBLocalizationWindowController.swift in Sources */,
 				50CE69E019863F4C00C17D44 /* SBWebResourceIdentifier.swift in Sources */,
 				50B2A9A71960D74400DA1B4A /* SBHistory.swift in Sources */,
+				665362C819F77DCD00D32D82 /* NSView-SBAdditions.m in Sources */,
 				5072657219A0CA380099DA28 /* SBMessageView.swift in Sources */,
 				5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */,
 				50FEEAA019BF1AA200962BB9 /* SBReportView.swift in Sources */,

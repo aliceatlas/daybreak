@@ -26,7 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-class SBView: SBBaseView {
+class SBView: NSView {
 	var animationDuration: CGFloat = 0.5
 	var frameColor: NSColor?
 	weak var target: NSObjectProtocol?
@@ -55,14 +55,14 @@ class SBView: SBBaseView {
     	return "\(super.description) \(NSStringFromRect(frame))"
     }
     
-	override var keyView: Bool {
+	var keyView: Bool = true {
         didSet {
             if keyView != oldValue {
                 needsDisplay = true
         		if !subviews.isEmpty {
         			for subview in subviews as [NSView] {
                         if let view = subview as? SBView {
-        					view.keyView = keyView
+                            { view.keyView = self.keyView }()
         				}
         			}
         		}
@@ -70,7 +70,7 @@ class SBView: SBBaseView {
         }
     }
     
-	override var toolbarVisible: Bool {
+	var toolbarVisible: Bool = true {
         didSet {
             if toolbarVisible != oldValue {
                 needsDisplay = true
