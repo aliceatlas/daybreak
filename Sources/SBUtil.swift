@@ -43,7 +43,7 @@ var SBGetSelectedDocument: SBDocument? {
     let documents = NSApplication.sharedApplication().orderedDocuments as [NSDocument]
     if documents.isEmpty {
         var error: NSError?
-        document = SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error) as SBDocument
+        document = SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument
     } else {
         if let sbDocument = documents[0] as? SBDocument {
             document = sbDocument

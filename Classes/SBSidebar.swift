@@ -59,7 +59,7 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
                 if let view = view {
                     view.frame = viewRect
                     if !subviews.isEmpty {
-                        addSubview(view, positioned: .Below, relativeTo: subviews[0] as NSView)
+                        addSubview(view, positioned: .Below, relativeTo: (subviews[0] as NSView))
                     } else {
                         addSubview(view)
                     }

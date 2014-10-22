@@ -301,7 +301,7 @@
 		08BD046D114D2AAE00BF9834 /* fi */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fi; path = Resources/fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08BD047B114D2AB500BF9834 /* fi */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = fi; path = Resources/fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		08BD344D118DC08400E17E69 /* Cached.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cached.png; path = Resources/Images/Cached.png; sourceTree = "<group>"; };
-		08BE0189153F0033002D108B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		08BE0189153F0033002D108B /* ru */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = ru; path = Resources/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		08C1D4B60FF9092A005709D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		08C3F2E510DDFCFA00340900 /* Credits.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; name = Credits.rtfd; path = Resources/Credits.rtfd; sourceTree = "<group>"; };
 		08C6DBCB114B4B610019BCE9 /* Download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Download.png; path = Resources/Images/Download.png; sourceTree = "<group>"; };

@@ -92,7 +92,7 @@ class SBView: SBBaseView {
         super.init(coder: decoder)
 		if decoder.allowsKeyedCoding {
 			if decoder.containsValueForKey("frameColor") {
-				frameColor = decoder.decodeObjectForKey("frameColor") as NSColor
+				frameColor = (decoder.decodeObjectForKey("frameColor") as NSColor)
 			}
 			if decoder.containsValueForKey("animationDuration") {
 				animationDuration = CGFloat(decoder.decodeDoubleForKey("animationDuration"))

@@ -2147,7 +2147,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             while confirmed == -1 {
                 // Wait event...
                 //@autoreleasepool {
-                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: NSDate.distantFuture() as NSDate, inMode: NSDefaultRunLoopMode, dequeue: true)!
+                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: (NSDate.distantFuture() as NSDate), inMode: NSDefaultRunLoopMode, dequeue: true)!
                     NSApp.sendEvent(event)
                 //}
             }
@@ -2183,7 +2183,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             while confirmed == -1 {
                 // Wait event...
                 //@autoreleasepool {
-                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: NSDate.distantFuture() as NSDate, inMode: NSDefaultRunLoopMode, dequeue: true)!
+                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: (NSDate.distantFuture() as NSDate), inMode: NSDefaultRunLoopMode, dequeue: true)!
                     NSApp.sendEvent(event)
                 //}
             }
