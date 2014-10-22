@@ -1858,8 +1858,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 let title = item[kSBBookmarkTitle] as? String
                 let URLString = item[kSBBookmarkURL] as? String
                 let labelName = item[kSBBookmarkLabelName] as? String
-                editBookmarkView = SBEditBookmarkView(frame: NSMakeRect(0, 0, 880, 480), index: index)
-                //editBookmarkView!.index = index
+                editBookmarkView = SBEditBookmarkView(frame: NSMakeRect(0, 0, 880, 480))
+                editBookmarkView!.index = index
                 editBookmarkView!.image = image
                 editBookmarkView!.title = title!
                 editBookmarkView!.urlString = URLString!

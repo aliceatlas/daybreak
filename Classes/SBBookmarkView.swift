@@ -345,9 +345,9 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
             image.drawInRect(imageRect, fromRect: NSMakeRect(0, 0, image.size.width, image.size.height * 0.5), operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
-    
-    //!!! workaround for weird crash in SBDocument
-    
+}
+
+class SBEditBookmarkView: SBBookmarkView {
     var index: Int!
     
     var labelName: String? {
@@ -362,17 +362,14 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
             }
         }
     }
-}
-
-class SBEditBookmarkView: SBBookmarkView {
+    
     override var message: String {
         get { fatalError("message property not available"); return "" }
         set(message) { fatalError("message property not available") }
     }
     
-    init(frame: NSRect, index: Int) {
+    override init(frame: NSRect) {
         super.init(frame: frame)
-        self.index = index
         
         messageLabel!.removeFromSuperview()
         messageLabel = nil
