@@ -750,7 +750,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
         let linkURL = element[WebElementLinkURLKey] as? NSURL
         let frame = element[WebElementFrameKey] as WebFrame
-        let frameURL = frame.dataSource.request.URL
+        let frameURL = frame.dataSource?.request.URL
         let applicationBundleIdentifier = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenApplicationBundleIdentifier)
         var appName: String?
         if let applicationPath = applicationBundleIdentifier !! {NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier($0)} {

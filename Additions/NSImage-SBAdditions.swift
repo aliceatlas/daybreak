@@ -111,8 +111,9 @@ extension NSImage {
     
     convenience init?(CGImage srcImage: CGImageRef) {
         self.init()
-        if let imageRep = NSBitmapImageRep(CGImage: srcImage) {
-            addRepresentation(imageRep)
+        let imageRep: NSBitmapImageRep? = NSBitmapImageRep(CGImage: srcImage)
+        if imageRep != nil {
+            addRepresentation(imageRep!)
         } else {
             return nil
         }

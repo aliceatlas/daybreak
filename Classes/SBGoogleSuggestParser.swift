@@ -42,7 +42,8 @@ class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
     func parseData(data: NSData) -> NSError? {
         inToplevel = false
         inCompleteSuggestion = false
-        if let parser = NSXMLParser(data: data) {
+        let parser: NSXMLParser? = NSXMLParser(data: data)
+        if let parser = parser {
             parser.delegate = self
             parser.shouldProcessNamespaces = false
             parser.shouldReportNamespacePrefixes = false
