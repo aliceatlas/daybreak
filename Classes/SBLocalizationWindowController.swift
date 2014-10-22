@@ -324,7 +324,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     }
     
     func open() {
-        let panel = SBOpenPanel.sbOpenPanel()
+        let panel = SBOpenPanel()
         let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))!
         panel.allowedFileTypes = ["strings"]
         panel.directoryURL = NSURL.fileURLWithPath(directoryPath)
@@ -491,7 +491,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     }
 
     func export() {
-        let panel = SBSavePanel.sbSavePanel()
+        let panel = SBSavePanel()
         let langCode = langPopup.selectedItem?.representedObject as? NSString
         let name = langCode?.stringByAppendingPathExtension("strings") ?? ""
         panel.nameFieldStringValue = name

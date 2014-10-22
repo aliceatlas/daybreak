@@ -125,7 +125,6 @@
 		506D2ADA19A23ACD007A8842 /* SBDownloaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */; };
 		506D2ADC19A2432E007A8842 /* SBWebResourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506D2ADB19A2432E007A8842 /* SBWebResourcesView.swift */; };
 		506E44B1198E41CE00178D36 /* SBSavePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E49EF19882F3B001F5254 /* SBSavePanel.swift */; };
-		506E44B5198E654800178D36 /* NSSavePanel-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */; };
 		5072657219A0CA380099DA28 /* SBMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5072657119A0CA380099DA28 /* SBMessageView.swift */; };
 		5072657519A0D9530099DA28 /* SBUserAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5072657419A0D9530099DA28 /* SBUserAgentView.swift */; };
 		5076918919B9EA8900F64734 /* SBAboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5076918819B9EA8900F64734 /* SBAboutView.swift */; };
@@ -345,8 +344,6 @@
 		505E49FC198CA577001F5254 /* SBTabViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBTabViewItem.swift; path = Classes/SBTabViewItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		506D2AD919A23ACD007A8842 /* SBDownloaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDownloaderView.swift; path = Classes/SBDownloaderView.swift; sourceTree = "<group>"; };
 		506D2ADB19A2432E007A8842 /* SBWebResourcesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBWebResourcesView.swift; path = Classes/SBWebResourcesView.swift; sourceTree = "<group>"; };
-		506E44B2198E654800178D36 /* NSSavePanel-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSavePanel-SBAdditions.h"; path = "Additions/NSSavePanel-SBAdditions.h"; sourceTree = "<group>"; };
-		506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSavePanel-SBAdditions.m"; path = "Additions/NSSavePanel-SBAdditions.m"; sourceTree = "<group>"; };
 		5072657119A0CA380099DA28 /* SBMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBMessageView.swift; path = Classes/SBMessageView.swift; sourceTree = "<group>"; };
 		5072657419A0D9530099DA28 /* SBUserAgentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBUserAgentView.swift; path = Classes/SBUserAgentView.swift; sourceTree = "<group>"; };
 		5076918819B9EA8900F64734 /* SBAboutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBAboutView.swift; path = Classes/SBAboutView.swift; sourceTree = "<group>"; };
@@ -546,8 +543,6 @@
 				502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */,
 				502DEBAC19C07197006A68C3 /* NSImage-SBAdditions.swift */,
 				502DEBAA19C06876006A68C3 /* NSMenu-SBAdditions.swift */,
-				506E44B2198E654800178D36 /* NSSavePanel-SBAdditions.h */,
-				506E44B3198E654800178D36 /* NSSavePanel-SBAdditions.m */,
 				502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */,
 				502DEBB619C0A64A006A68C3 /* NSString-SBURLAdditions.swift */,
 				502DEBA819C067C9006A68C3 /* NSURL-SBAdditions.swift */,
@@ -1010,7 +1005,6 @@
 				50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */,
 				50782C8C19AC939E00CB8706 /* SBLocalizationWindowController.swift in Sources */,
 				50CE69E019863F4C00C17D44 /* SBWebResourceIdentifier.swift in Sources */,
-				506E44B5198E654800178D36 /* NSSavePanel-SBAdditions.m in Sources */,
 				50B2A9A71960D74400DA1B4A /* SBHistory.swift in Sources */,
 				5072657219A0CA380099DA28 /* SBMessageView.swift in Sources */,
 				5044E66619653E4C0053CBF1 /* SBRenderWindow.swift in Sources */,

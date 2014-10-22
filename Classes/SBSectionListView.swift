@@ -348,7 +348,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
     }
     
     func open(sender: AnyObject) {
-        let panel = SBOpenPanel.sbOpenPanel()
+        let panel = SBOpenPanel()
         panel.allowsMultipleSelection = false
         panel.canChooseFiles = false
         panel.canChooseDirectories = true

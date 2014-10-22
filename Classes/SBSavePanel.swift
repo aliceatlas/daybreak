@@ -29,14 +29,17 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Cocoa
 
 class SBSavePanel: NSSavePanel {
-    override class func sbSavePanel() -> SBSavePanel {
-        let panel = super.sbSavePanel() as SBSavePanel
-        panel.opaque = false
-        panel.backgroundColor = NSColor.clearColor()
-        panel.showsResizeIndicator = false
-        panel.constructBackgroundView()
-        panel.switchButtonType()
-        return panel
+    override init(contentRect: NSRect, styleMask: Int, backing bufferingType: NSBackingStoreType, defer: Bool) {
+        super.init(contentRect: contentRect, styleMask: styleMask, backing: bufferingType, defer: defer)
+        opaque = false
+        backgroundColor = NSColor.clearColor()
+        showsResizeIndicator = false
+        constructBackgroundView()
+        switchButtonType()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("NSCoding not supported")
     }
     
     func constructBackgroundView() {
@@ -71,14 +74,17 @@ class SBSavePanel: NSSavePanel {
 }
 
 class SBOpenPanel: NSOpenPanel {
-    override class func sbOpenPanel() -> SBOpenPanel {
-        let panel = super.sbOpenPanel() as SBOpenPanel
-        panel.opaque = false
-        panel.backgroundColor = NSColor.clearColor()
-        panel.showsResizeIndicator = false
-        panel.constructBackgroundView()
-        panel.switchButtonType()
-        return panel
+    override init(contentRect: NSRect, styleMask: Int, backing bufferingType: NSBackingStoreType, defer: Bool) {
+        super.init(contentRect: contentRect, styleMask: styleMask, backing: bufferingType, defer: defer)
+        opaque = false
+        backgroundColor = NSColor.clearColor()
+        showsResizeIndicator = false
+        constructBackgroundView()
+        switchButtonType()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("NSCoding not supported")
     }
     
     func constructBackgroundView() {

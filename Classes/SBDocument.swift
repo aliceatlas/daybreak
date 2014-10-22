@@ -1095,7 +1095,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 let response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceIdentifier.request)
                 if let data = response?.data {
                     let filename = resourceIdentifier.URL.absoluteString?.lastPathComponent ?? "UntitledData"
-                    let panel = SBSavePanel.sbSavePanel()
+                    let panel = SBSavePanel()
                     panel.nameFieldStringValue = filename
                     window.beginSheet(panel) {
                         if $0 == NSFileHandlingPanelOKButton {
@@ -1574,7 +1574,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     override func saveDocumentAs(sender: AnyObject?) {
-        let panel = SBSavePanel.sbSavePanel()
+        let panel = SBSavePanel()
         let title = selectedWebDataSource?.pageTitle
         let name = (title ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("webarchive")!
         panel.nameFieldStringValue = name

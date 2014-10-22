@@ -5,4 +5,3 @@
 #import "SBDefinitions.h"
 #import "SBUtil.h"
 #import "SBBaseView.h"
-#import "NSSavePanel-SBAdditions.h"

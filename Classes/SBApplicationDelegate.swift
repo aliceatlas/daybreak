@@ -327,7 +327,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func openDocument(AnyObject) {
-        let panel = SBOpenPanel.sbOpenPanel()
+        let panel = SBOpenPanel()
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         let result = panel.runModal()
@@ -412,7 +412,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func validateStrings(AnyObject) {
-        let panel = SBOpenPanel.sbOpenPanel()
+        let panel = SBOpenPanel()
         panel.allowedFileTypes = ["strings"]
         panel.directoryURL = NSBundle.mainBundle().resourceURL
         if panel.runModal() == NSFileHandlingPanelOKButton {

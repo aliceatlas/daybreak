@@ -723,7 +723,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     override func webView(sender: WebView, runOpenPanelForFileButtonWithResultListener resultListener: WebOpenPanelResultListener) {
-        let panel = SBOpenPanel.sbOpenPanel()
+        let panel = SBOpenPanel()
         let window = tabView!.window!
         panel.beginSheetModalForWindow(window) {
             if $0 == NSFileHandlingPanelOKButton {
@@ -944,7 +944,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     func openDocumentSource(sender: AnyObject?) {
-        let openPanel = SBOpenPanel.sbOpenPanel()
+        let openPanel = SBOpenPanel()
         openPanel.canChooseDirectories = false
         openPanel.allowedFileTypes = ["app"]
         if openPanel.runModal() == NSFileHandlingPanelOKButton {
