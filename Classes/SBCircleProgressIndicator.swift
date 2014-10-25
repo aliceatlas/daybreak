@@ -75,8 +75,8 @@ class SBCircleProgressIndicator: SBView {
         super.init(coder: coder)
         if coder.allowsKeyedCoding {
             style = SBCircleProgressIndicatorStyle(rawValue: coder.decodeIntegerForKey("style")) ?? .Regular
-            backgroundColor = coder.decodeObjectForKey("backgroundColor") as NSColor
-            fillColor = coder.decodeObjectForKey("fillColor") as NSColor
+            (coder.decodeObjectForKey("backgroundColor") as? NSColor) !! {self.backgroundColor = $0}
+            (coder.decodeObjectForKey("fillColor") as? NSColor) !! {self.fillColor = $0}
             progress = CGFloat(coder.decodeDoubleForKey("progress"))
             selected = coder.decodeBoolForKey("selected")
             highlighted = coder.decodeBoolForKey("highlighted")
