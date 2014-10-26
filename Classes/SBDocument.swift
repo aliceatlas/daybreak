@@ -1313,13 +1313,13 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             case kSBToolbarLoadItemIdentifier:
                 break
             case kSBToolbarBookmarkItemIdentifier:
-                r = !(selectedWebView!.isEmpty)
+                r = !(selectedWebView?.isEmpty ?? true)
             case kSBToolbarBookmarksItemIdentifier:
                 let bookmarksView = sidebar?.view as? SBBookmarksView
                 let mode = bookmarksView?.mode ?? .Icon
                 item.image = NSImage(named: (mode == .Icon || mode == .Tile) ? "Bookmarks-Icon" : "Bookmarks-List")
             case kSBToolbarSnapshotItemIdentifier:
-                r = !(selectedWebView!.isEmpty)
+                r = !(selectedWebView?.isEmpty ?? true)
             case kSBToolbarHomeItemIdentifier:
                 let homepage = NSUserDefaults.standardUserDefaults().stringForKey(kSBHomePage) ?? ""
                 r = !homepage.isEmpty
