@@ -578,7 +578,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                         alert.messageText = aTitle
                         alert.addButtonWithTitle(NSLocalizedString("Continue", comment: ""))
                         alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: ""))
-                        alert.informativeText = NSString(format: NSLocalizedString("The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", comment: ""), url.host!)
+                        alert.informativeText = NSLocalizedString("The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", comment: "").format(url.host!)
                         alert.beginSheetModalForWindow(sender.window!) {
                             if $0 == NSOKButton {
                                 NSURLRequest.setAllowsAnyHTTPSCertificate(true, forHost: url.host)
@@ -769,7 +769,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                 newItem1.representedObject = frameURL
                 var newItem2: NSMenuItem?
                 if appName != nil {
-                    newItem2 = NSMenuItem(title: NSString(format: NSLocalizedString("Open in %@", comment: ""), appName!), action: "openURLInApplicationFromMenu:", keyEquivalent: "")
+                    newItem2 = NSMenuItem(title: NSLocalizedString("Open in %@", comment: "").format(appName!), action: "openURLInApplicationFromMenu:", keyEquivalent: "")
                     newItem2!.target = self
                     newItem2!.representedObject = frameURL
                 }
@@ -793,7 +793,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     newItem1.representedObject = frameURL
                     var newItem2: NSMenuItem?
                     if appName != nil {
-                        let newItem2 = NSMenuItem(title: NSString(format: NSLocalizedString("Open Link in %@", comment: ""), appName!), action: "openURLInApplicationFromMenu:", keyEquivalent: "")
+                        let newItem2 = NSMenuItem(title: NSLocalizedString("Open Link in %@", comment: "").format(appName!), action: "openURLInApplicationFromMenu:", keyEquivalent: "")
                         newItem2.target = self
                         newItem2.representedObject = frameURL
                     }
@@ -959,7 +959,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             } else {
                 let appPath = openPanel.URL!.path!
                 if !NSWorkspace.sharedWorkspace().openFile(filePath, withApplication: appPath) {
-                    SBRunAlertWithMessage(NSString(format: NSLocalizedString("Could not open in %@.", comment: ""), appPath))
+                    SBRunAlertWithMessage(NSLocalizedString("Could not open in %@.", comment: "").format(appPath))
                 }
             }
         }
@@ -990,12 +990,12 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         let title = "<img src=\"Application.icns\" style=\"width:76px;height:76px;margin-right:10px;vertical-align:middle;\" alt=\"\">" + title
         let searchURLString = "http://www.google.com/search?hl=ja&q=" + urlString
         let searchMessage = NSLocalizedString("You can search the web for this URL.", comment: "")
-        var message = NSString(format: NSLocalizedString("Sunrise can’t open the page “%@”", comment: ""), urlString)
+        var message = NSLocalizedString("Sunrise can’t open the page “%@”", comment: "").format(urlString)
         message = "\(message)<br /><br />\(searchMessage)<br /><a href=\"\(searchURLString)\">\(urlString)</a>"
         let path = bundle.pathForResource("Error", ofType: "html")!
         if NSFileManager.defaultManager().fileExistsAtPath(path) {
             if let htmlString = NSString(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
-                let formattedHTML = NSString(format: htmlString, title, message)
+                let formattedHTML = htmlString.format(title, message)
                 // Load
                 frame.loadHTMLString(formattedHTML, baseURL: NSURL.fileURLWithPath(path))
             }

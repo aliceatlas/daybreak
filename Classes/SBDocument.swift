@@ -1349,7 +1349,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
 
     func updateURLFieldGoogleSuggest() {
         let string = urlField.stringValue
-        let URLString = !string.isEmpty &? NSString(format: kSBGoogleSuggestURL, string).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        let URLString = !string.isEmpty &? (kSBGoogleSuggestURL as NSString).format(string).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
         let URL = URLString !! {NSURL(string: $0)}
         let downloader = SBDownloader(URL: URL)
         downloader.delegate = self
@@ -1501,7 +1501,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     func openAndConstructTab(bookmarkItems items: [NSDictionary]) {
         let count = items.count
         if count > kSBDocumentWarningNumberOfBookmarksForOpening {
-            let message = NSString(format: NSLocalizedString("Are you sure you want to open %d items?", comment: ""), count)
+            let message = NSLocalizedString("Are you sure you want to open %d items?", comment: "").format(count)
             let alert = NSAlert()
             alert.messageText = message
             alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))

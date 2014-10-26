@@ -32,4 +32,8 @@ extension String {
     func stringByAppendingPathComponent(pathComponent: String) -> String {
         return (self as NSString).stringByAppendingPathComponent(pathComponent)
     }
+    
+    func format(_ args: CVarArgType...) -> String {
+        return withVaList(args) { NSString(format: self, arguments: $0) }
+    }
 }

@@ -269,7 +269,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
         if data != nil {
             let baseHTML = NSString(contentsOfURL: baseURL, encoding: NSUTF8StringEncoding, error: nil)
             let releaseNotes = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            return baseHTML !! { NSString(format: $0, releaseNotes ?? NSLocalizedString("No data", comment: "")) }
+            return baseHTML !! { $0.format(releaseNotes ?? NSLocalizedString("No data", comment: "")) }
         }
         return nil
     }

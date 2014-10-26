@@ -125,6 +125,10 @@ extension NSString {
         }
         return string
     }
+    
+    func format(_ args: CVarArgType...) -> NSString {
+        return withVaList(args) { NSString(format: self, arguments: $0) }
+    }
 }
 
 // URL additions
@@ -179,7 +183,7 @@ extension NSString {
         
         let info = NSBundle.mainBundle().localizedInfoDictionary!
         if let gSearchFormat = info["SBGSearchFormat"] as? String {
-            let str = NSString(format: gSearchFormat, stringValue)
+            let str = gSearchFormat.format(stringValue)
             let requestURL = NSURL._web_URLWithUserTypedString(str)
             stringValue = requestURL.absoluteString!
         }

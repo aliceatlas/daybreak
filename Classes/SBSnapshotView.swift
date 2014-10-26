@@ -27,8 +27,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBSnapshotView: SBView, NSTextFieldDelegate {
-    // TODO: stop using stringValue workaround when possible
-    
     private let kSBMinFrameSizeWidth: CGFloat = 600
     private let kSBMaxFrameSizeWidth: CGFloat = 1200
     private let kSBMinFrameSizeHeight: CGFloat = 480
@@ -184,10 +182,10 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let optionTabView = NSTabView(frame: NSMakeRect(6, self.imageViewSize.height - 321, 114, 45))
         optionTabView.tabViewType = .NoTabsNoBorder
         optionTabView.drawsBackground = false
-        let tabViewItem0 = NSTabViewItem(identifier: NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.rawValue))
+        let tabViewItem0 = NSTabViewItem(identifier: NSBitmapImageFileType.NSTIFFFileType.rawValue)
         tabViewItem0.view!.addSubview(self.tiffOptionLabel)
         tabViewItem0.view!.addSubview(self.tiffOptionPopup)
-        let tabViewItem1 = NSTabViewItem(identifier: NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.rawValue))
+        let tabViewItem1 = NSTabViewItem(identifier: NSBitmapImageFileType.NSJPEGFileType.rawValue)
         tabViewItem1.view!.addSubview(self.jpgOptionLabel)
         tabViewItem1.view!.addSubview(self.jpgOptionSlider)
         tabViewItem1.view!.addSubview(self.jpgOptionField)
@@ -195,10 +193,10 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         optionTabView.addTabViewItem(tabViewItem1)
         switch self.filetype {
             case NSBitmapImageFileType.NSTIFFFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.rawValue))
+                optionTabView.selectTabViewItemWithIdentifier(NSBitmapImageFileType.NSTIFFFileType.rawValue)
                 optionTabView.hidden = false
             case NSBitmapImageFileType.NSJPEGFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.rawValue))
+                optionTabView.selectTabViewItemWithIdentifier(NSBitmapImageFileType.NSJPEGFileType.rawValue)
                 optionTabView.hidden = false
             default:
                 optionTabView.hidden = true
@@ -268,7 +266,10 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         jpgOptionField.bordered = false
         jpgOptionField.drawsBackground = false
         jpgOptionField.textColor = NSColor.whiteColor()
-        jpgOptionField.stringValue = NSString(format: "%.1f", Double(self.jpgFactor))
+        let formatter = NSNumberFormatter()
+        formatter.positiveFormat = "0.0"
+        jpgOptionField.formatter = formatter
+        jpgOptionField.doubleValue = Double(self.jpgFactor)
         return jpgOptionField
     }()
     
@@ -310,11 +311,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return doneButton
     }()
     
-    private lazy var numberFormatter: NSNumberFormatter = {
-        let formatter = NSNumberFormatter()
-        formatter.numberStyle = .NoStyle
-        return formatter
-    }()
+    private let numberFormatter = NSNumberFormatter()
     
     //private var progressBackgroundView: SBView
     //private var progressField: NSTextField
@@ -734,10 +731,10 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         }
         switch filetype {
             case NSBitmapImageFileType.NSTIFFFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSTIFFFileType.rawValue))
+                optionTabView.selectTabViewItemWithIdentifier(NSBitmapImageFileType.NSTIFFFileType.rawValue)
                 optionTabView.hidden = false
             case NSBitmapImageFileType.NSJPEGFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSString(format: "%d", NSBitmapImageFileType.NSJPEGFileType.rawValue))
+                optionTabView.selectTabViewItemWithIdentifier(NSBitmapImageFileType.NSJPEGFileType.rawValue)
                 optionTabView.hidden = false
             default:
                 optionTabView.hidden = true
@@ -761,7 +758,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     func slideJpgOption(sender: AnyObject) {
         let value = jpgOptionSlider.doubleValue
         jpgFactor = CGFloat(value)
-        jpgOptionField.stringValue = NSString(format: "%.1f", value)
+        jpgOptionField.doubleValue = value
         // Save to defaults
         NSUserDefaults.standardUserDefaults().setDouble(value, forKey: kSBSnapshotJPGFactor)
         // Update image

@@ -171,7 +171,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     func updaterNotNeedUpdate(notification: NSNotification) {
         let versionString = notification.userInfo![kSBUpdaterVersionString] as String
-        let title = NSString(format: NSLocalizedString("Sunrise %@ is currently the newest version available.", comment: ""), versionString)
+        let title = NSLocalizedString("Sunrise %@ is currently the newest version available.", comment: "").format(versionString)
         let alert = NSAlert()
         alert.messageText = title
         alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
@@ -211,7 +211,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let urlString = info["SBReleaseNotesURL"] as String
         destructUpdateView()
         updateView = SBUpdateView(frame: window.splitViewRect)
-        updateView!.title = NSString(format: NSLocalizedString("A new version of Sunrise %@ is available.", comment: ""), versionString)
+        updateView!.title = NSLocalizedString("A new version of Sunrise %@ is available.", comment: "").format(versionString)
         updateView!.text = NSLocalizedString("If you click the \"Download\" button, the download of the disk image file will begin. ", comment: "")
         updateView!.versionString = versionString
         updateView!.target = self
@@ -236,7 +236,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         if versionString.length != mutableVString.length {
             versionString = mutableVString.copy() as String
         }
-        let url = NSURL(string: NSString(format: kSBUpdaterNewVersionURL, versionString))
+        let url = NSURL(string: kSBUpdaterNewVersionURL.format(versionString))
         window.hideCoverWindow()
         destructUpdateView()
         document.startDownloading(forURL: url)

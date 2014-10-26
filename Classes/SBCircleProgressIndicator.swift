@@ -182,7 +182,7 @@ class SBCircleProgressIndicator: SBView {
                 
                 if showPercentage {
                     // Percentage(String)
-                    let percentage = NSString(format: "%.1f%%", Double(progress * 100))
+                    let percentage: NSString = "%.1f%%".format(Double(progress * 100))
                     var tr = NSZeroRect
                     var sr = NSZeroRect
                     let attributes  = [NSFontAttributeName: NSFont.boldSystemFontOfSize(10.0),
