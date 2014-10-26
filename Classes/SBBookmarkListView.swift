@@ -362,8 +362,8 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     var selectedItems: [NSDictionary]? {
-        var ditems = itemViews.filter({ $0.selected }).map({ $0.item })
-        return !ditems.isEmpty ? ditems : nil
+        var dItems = itemViews.filter({ $0.selected }).map({ $0.item })
+        return !dItems.isEmpty ? dItems : nil
     }
     
     var canScrollToNext: Bool {

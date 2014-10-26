@@ -133,14 +133,15 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         addSubviewsAndConstraintStrings(
             metrics: ["margin": 20.0, "submargin": 10.0],
             views: ["done": doneButton, "cancel": cancelButton, "popup": popup, "icon": iconImageView, "title": titleLabel, "field": field],
-            constraints: ["[cancel(124)]-8-[done(124)]-margin-|",
-                          "V:[cancel(23)]-margin-|",
-                          "V:[done(23)]-margin-|",
-                          "|-margin-[popup]-margin-|",
-                          "|-margin-[field]-margin-|",
-                          "|-margin-[icon(32)]-submargin-[title]-margin-|",
-                          "V:|-margin-[icon(32)]-margin-[popup(26)]-submargin-[field]-margin-[done]",
-                          "V:|-\(20+7)-[title(19)]"])
+            "[cancel(124)]-8-[done(124)]-margin-|",
+            "V:[cancel(23)]-margin-|",
+            "V:[done(23)]-margin-|",
+            "|-margin-[popup]-margin-|",
+            "|-margin-[field]-margin-|",
+            "|-margin-[icon(32)]-submargin-[title]-margin-|",
+            "V:|-margin-[icon(32)]-margin-[popup(26)]-submargin-[field]-margin-[done]",
+            "V:|-\(20+7)-[title(19)]"
+        )
         
         autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
     }

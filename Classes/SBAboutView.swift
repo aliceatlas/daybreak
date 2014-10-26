@@ -125,8 +125,13 @@ class SBAboutView: SBView {
         rightColumn.addSubviewsAndConstraintStrings(
             metrics: ["margin": 10],
             views: ["name": self.nameLabel, "identifier": self.identifierLabel, "credits": self.creditScrollView, "copyright": self.copyrightLabel, "back": self.backButton],
-            constraints: ["V:|[name(24)][identifier(16)]-margin-[credits]-margin-[copyright(16)]-40-[back(23)]|",
-                          "|[name]|", "|[identifier]|", "|[credits]|", "|[copyright]|", "[back(105)]|"])
+            "V:|[name(24)][identifier(16)]-margin-[credits]-margin-[copyright(16)]-40-[back(23)]|",
+            "|[name]|",
+            "|[identifier]|",
+            "|[credits]|",
+            "|[copyright]|",
+            "[back(105)]|"
+        )
         return rightColumn
     }()
     
@@ -138,8 +143,12 @@ class SBAboutView: SBView {
         super.init(frame: frame)
         animationDuration = 2.0
         // addSubview(iconImageView) //???
-        addSubviewsAndConstraintStrings(metrics: [:], views: ["rightColumn": rightColumn],
-            constraints: ["V:|[rightColumn]|", "[rightColumn(336)]|"])
+        addSubviewsAndConstraintStrings(
+            metrics: [:],
+            views: ["rightColumn": rightColumn],
+            "V:|[rightColumn]|",
+            "[rightColumn(336)]|"
+        )
         autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
     }
     

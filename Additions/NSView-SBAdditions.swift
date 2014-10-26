@@ -33,6 +33,10 @@ extension NSView {
         }
     }
     
+    func addConstraintStrings(#metrics: [String: Double], views: [String: NSView], _ constraintStrings: String...) {
+        addConstraintStrings(metrics: metrics, views: views, constraints: constraintStrings)
+    }
+    
     func addSubviewsAndConstraintStrings(#metrics: [String: Double], views: [String: NSView], constraints constraintStrings: [String]) {
         for (_, subview) in views {
             if subview.superview == nil {
@@ -40,5 +44,9 @@ extension NSView {
             }
         }
         addConstraintStrings(metrics: metrics, views: views, constraints: constraintStrings)
+    }
+    
+    func addSubviewsAndConstraintStrings(#metrics: [String: Double], views: [String: NSView], _ constraintStrings: String...) {
+        addSubviewsAndConstraintStrings(metrics: metrics, views: views, constraints: constraintStrings)
     }
 }
