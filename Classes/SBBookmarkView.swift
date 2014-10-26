@@ -154,7 +154,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     var itemRepresentation: NSDictionary {
         let data = image!.bitmapImageRep!.data
         let labelName = SBBookmarkLabelColorNames[colorPopup.indexOfSelectedItem - 1]
-        let offset: String = NSStringFromPoint(NSZeroPoint)
+        let offset = NSStringFromPoint(NSZeroPoint)
         return SBCreateBookmarkItem(title, urlString, data, NSDate(), labelName, offset)
     }
     

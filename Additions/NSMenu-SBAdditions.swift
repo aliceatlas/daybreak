@@ -41,7 +41,7 @@ extension NSMenu {
         var selectedItem: NSMenuItem?
         for item in itemArray as [NSMenuItem] {
             let repObject: AnyObject? = item.representedObject
-            let equal = repObject &! {$0 === representedObject}
+            let equal = repObject === representedObject
             item.state = equal ? (selectedItem !! NSOffState ?? NSOnState) : NSOffState
             if equal && selectedItem == nil {
                 selectedItem = item

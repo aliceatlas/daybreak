@@ -185,7 +185,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         let bookmarks = SBBookmarks.sharedBookmarks
         let index = bookmarks.indexOfItem(bookmarkItem)
         if index != NSNotFound {
-            let itemRect = listView!.itemRectAtIndex(Int(index))
+            let itemRect = listView!.itemRectAtIndex(index)
             scrollView!.scrollRectToVisible(itemRect)
         }
     }

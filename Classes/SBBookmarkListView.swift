@@ -397,7 +397,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     func addForItems(items: [NSDictionary], toIndex: Int) {
         layoutFrame()
-        addItemViewsToIndex(toIndex, items: items)
+        addItemViews(toIndex: toIndex, items: items)
     }
     
     func createItemViews() {
@@ -417,7 +417,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         addSubview(itemView)
     }
     
-    func addItemViewsToIndex(toIndex: Int, items: [NSDictionary]) {
+    func addItemViews(#toIndex: Int, items: [NSDictionary]) {
         for (index, item) in enumerate(items) {
             addItemViewAtIndex(index + toIndex, item: item)
         }
@@ -912,9 +912,9 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             let bookmarks = SBBookmarks.sharedBookmarks
             var representedItems: [NSDictionary] = []
             let menu = NSMenu()
-            var title: String = indexes.count == 1 ? NSLocalizedString("Open an item", comment: "") : NSString(format: NSLocalizedString("Open %d items", comment: ""), indexes.count)
+            var title = indexes.count == 1 ? NSLocalizedString("Open an item", comment: "") : NSLocalizedString("Open %d items", comment: "").format(indexes.count)
             let openItem = NSMenuItem(title: title, action: "openItemsFromMenuItem:", keyEquivalent: "")
-            title = indexes.count == 1 ? NSLocalizedString("Remove an item", comment: "") : NSString(format: NSLocalizedString("Remove %d items", comment: ""), indexes.count)
+            title = indexes.count == 1 ? NSLocalizedString("Remove an item", comment: "") : NSLocalizedString("Remove %d items", comment: "").format(indexes.count)
             let removeItem = NSMenuItem(title: title, action: "removeItemsFromMenuItem:", keyEquivalent: "")
             let labelsItem = NSMenuItem(title: NSLocalizedString("Label", comment: ""), action:nil, keyEquivalent: "")
             openItem.target = bookmarks
@@ -1023,13 +1023,11 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                     bookmarks.moveItemsAtIndexes(NSIndexSet(index: fromIndex), toIndex: toIndex)
                     moveItemViewsAtIndexes(NSIndexSet(index: fromIndex), toIndex: toIndex)
                     layoutItemViewsWithAnimationFromIndex(0)
-                } else {
+                } else if toIndex != NSNotFound {
                     // Add as new item
-                    if toIndex != NSNotFound {
-                        bookmarkItems.append(item)
-                        bookmarks.addItems(bookmarkItems, toIndex: toIndex)
-                        addForItems(bookmarkItems, toIndex: toIndex)
-                    }
+                    bookmarkItems.append(item)
+                    bookmarks.addItems(bookmarkItems, toIndex: toIndex)
+                    addForItems(bookmarkItems, toIndex: toIndex)
                 }
             }
         }

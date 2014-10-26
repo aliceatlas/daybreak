@@ -2283,8 +2283,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 item.status = .Undone
             } else if index > 0 {
                 item.expectedLength = 10000000
-                let zot = CGFloat(item.expectedLength) * (CGFloat(index) / CGFloat(names.count))
-                item.receivedLength = Int(zot)
+                item.receivedLength = Int(CGFloat(item.expectedLength) * (CGFloat(index) / CGFloat(names.count)))
                 item.status = .Processing
             } else if index >= 1 {
                 item.receivedLength = 10000000

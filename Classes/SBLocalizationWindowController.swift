@@ -379,7 +379,6 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
      * 1 - Show the edit view
      */
     func changeView(index: Int) {
-        var animations: [NSDictionary] = []
         let contentView = window!.contentView as NSView
         let duration: CGFloat = 0.4
         animating = true
@@ -413,12 +412,12 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
             editView.frame = editRect0
             contentView.addSubview(editView)
         }
-        animations.append([NSViewAnimationTargetKey: editView,
+        let animations = [[NSViewAnimationTargetKey: editView,
                            NSViewAnimationStartFrameKey: NSValue(rect: editRect0),
-                           NSViewAnimationEndFrameKey: NSValue(rect: editRect1)])
-        animations.append([NSViewAnimationTargetKey: contributeView,
+                           NSViewAnimationEndFrameKey: NSValue(rect: editRect1)],
+                          [NSViewAnimationTargetKey: contributeView,
                            NSViewAnimationStartFrameKey: NSValue(rect: contributeRect0),
-                           NSViewAnimationEndFrameKey: NSValue(rect: contributeRect1)])
+                           NSViewAnimationEndFrameKey: NSValue(rect: contributeRect1)]]
         let animation = SBViewAnimation(viewAnimations: animations)
         animation.context = index
         animation.duration = NSTimeInterval(duration)

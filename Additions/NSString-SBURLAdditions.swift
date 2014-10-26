@@ -126,7 +126,7 @@ extension NSString {
         return string
     }
     
-    func format(_ args: CVarArgType...) -> NSString {
+    func format(args: CVarArgType...) -> NSString {
         return withVaList(args) { NSString(format: self, arguments: $0) }
     }
 }

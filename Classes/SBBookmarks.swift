@@ -66,14 +66,14 @@ class SBBookmarks: NSObject {
     
     func containsItem(bookmarkItem: BookmarkItem) -> Int {
         if let i = items.firstIndex({ self.isEqualBookmarkItems($0, anotherItem: bookmarkItem) }) {
-            return Int(i)
+            return i
         }
         return NSNotFound
     }
     
     func indexOfItem(bookmarkItem: BookmarkItem) -> Int {
         if let i = items.firstIndex({ $0 === bookmarkItem }) {
-            return Int(i)
+            return i
         }
         return NSNotFound
     }
@@ -83,7 +83,7 @@ class SBBookmarks: NSObject {
         for bookmarkItem in bookmarkItems {
             let index = indexOfItem(bookmarkItem)
             if index != NSNotFound {
-                indexes.addIndex(Int(index))
+                indexes.addIndex(index)
             }
         }
         return indexes
@@ -141,7 +141,7 @@ class SBBookmarks: NSObject {
             if index == NSNotFound {
                 items.append(dict)
             } else {
-                items[Int(index)] = dict
+                items[index] = dict
             }
             writeToFile()
             SBDispatch(notifyDidUpdate)
@@ -157,7 +157,7 @@ class SBBookmarks: NSObject {
     func replaceItem(oldItem: BookmarkItem, withItem newItem: BookmarkItem) {
         let index = indexOfItem(oldItem)
         if index != NSNotFound {
-            items[Int(index)] = NSMutableDictionary(dictionary: newItem)
+            items[index] = NSMutableDictionary(dictionary: newItem)
             writeToFile()
             SBDispatch(notifyDidUpdate)
         }

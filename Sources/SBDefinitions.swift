@@ -35,7 +35,7 @@ func DebugLogS(format: String, args: AnyObject...) {}
 // Flags for Debug
 let kSBFlagCreateTabItemWhenLaunched = true
 let kSBFlagShowRenderWindow = false
-let kSBCountOfDebugBookmarks = 0	/* If more than 0, the bookmarks creates bookmark items for the count. */
+let kSBCountOfDebugBookmarks = 0 // If more than 0, the bookmarks creates bookmark items for the count.
 let kSBURLFieldShowsGoogleSuggest = true
 let kSBFlagShowAllStringEncodings = false
 

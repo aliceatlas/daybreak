@@ -33,7 +33,7 @@ extension String {
         return (self as NSString).stringByAppendingPathComponent(pathComponent)
     }
     
-    func format(_ args: CVarArgType...) -> String {
+    func format(args: CVarArgType...) -> String {
         return withVaList(args) { NSString(format: self, arguments: $0) }
     }
 }
