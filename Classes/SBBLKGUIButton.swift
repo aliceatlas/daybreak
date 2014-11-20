@@ -64,7 +64,11 @@ class SBBLKGUIButton: NSButton {
     }*/
     
     override var alignmentRectInsets: NSEdgeInsets {
-        return NSEdgeInsetsMake(6, 0, 6, 0)
+        return NSEdgeInsetsMake(0, 0, 0, 0)
+    }
+    
+    override var baselineOffsetFromBottom: CGFloat {
+        return 8
     }
 }
 
