@@ -1314,22 +1314,22 @@ func SBValueForKey(keyName: String, dictionary: [NSObject: AnyObject]) -> AnyObj
 
 func SBEncodingMenu(target: AnyObject?, selector: Selector, showDefault: Bool) -> NSMenu {
     let menu = NSMenu()
-    var encs: [NSStringEncoding]!
+    var encs: [NSStringEncoding?]!
     if kSBFlagShowAllStringEncodings {
         let encPtr = NSString.availableStringEncodings()
+        var mEncs: [NSStringEncoding] = []
         for var enc = encPtr; enc.memory != 0; enc = enc.successor() {
-            encs.append(enc.memory)
+            mEncs.append(enc.memory)
         }
-        encs.sort(SBStringEncodingSortFunction)
+        mEncs.sort(SBStringEncodingSortFunction)
+        encs = mEncs.map { $0 }
     } else {
         encs = SBAvailableStringEncodings
     }
     
     // Create menu items
     for enc in encs {
-        if Int(enc) == NSNotFound {
-            menu.addItem(NSMenuItem.separatorItem())
-        } else {
+        if let enc = enc {
             let encodingName = NSString.localizedNameOfStringEncoding(enc)
             let cfEncoding = CFStringConvertNSStringEncodingToEncoding(enc)
             let ianaName = CFStringConvertEncodingToIANACharSetName(cfEncoding) as NSString
@@ -1342,6 +1342,8 @@ func SBEncodingMenu(target: AnyObject?, selector: Selector, showDefault: Bool) -
                 item.representedObject = ianaName
                 menu.addItem(item)
             }
+        } else {
+            menu.addItem(NSMenuItem.separatorItem())
         }
     }
     

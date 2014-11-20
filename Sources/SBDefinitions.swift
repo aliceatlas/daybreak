@@ -88,58 +88,68 @@ let kSBLocalizationsDirectoryName = "Localizations"
 // Default values
 let kSBDefaultEncodingName = "utf-8"
 let SBDefaultHistorySaveSeconds = 604800
-let SBAvailableStringEncodings: [NSStringEncoding] = [
-	0x80000a01,	// Japanese (Shift JIS)
-	21,			// Japanese (ISO 2022-JP)
-	3,			// Japanese (EUC)
-	0x80000628,	// Japanese (Shift JIS X0213)
-	NSNotFound,	
-	4,			// Unicode (UTF-8)
-	NSNotFound,	
-	5,			// Western (ISO Latin 1)
-	30,			// Western (Mac OS Roman)
-	NSNotFound,	
-	0x80000a03,	// Traditional Chinese (Big 5)
-	0x80000a06,	// Traditional Chinese (Big 5 HKSCS)
-	0x80000423,	// Traditional Chinese (Windows, DOS)
-	NSNotFound,	
-	0x80000840,	// Korean (ISO 2022-KR)
-	0x80000003,	// Korean (Mac OS)
-	0x80000422,	// Korean (Windows, DOS)
-	NSNotFound,	
-	0x80000206,	// Arabic (ISO 8859-6)
-	0x80000506,	// Arabic (Windows)
-	NSNotFound,	
-	0x80000208,	// Hebrew (ISO 8859-8)
-	0x80000505,	// Hebrew (Windows)
-	NSNotFound, 
-	0x80000207,	// Greek (ISO 8859-7)
-	13,			// Greek (Windows)
-	NSNotFound, 
-	0x80000205,	// Cyrillic (ISO 8859-5)
-	0x80000007,	// Cyrillic (Mac OS)
-	0x80000a02,	// Cyrillic (KOI8-R)
-	11,			// Cyrillic (Windows)
-	0x80000A08,	// Ukrainian (KOI8-U)
-	NSNotFound,	
-	0x8000041d,	// Thai (Windows, DOS)
-	NSNotFound,	
-	0x80000930,	// Simplified Chinese (GB 2312)
-	0x80000A05,	// Simplified Chinese (HZ GB 2312)
-	0x80000632,	// Chinese (GB 18030)
-	NSNotFound, 
-	9,			// Central European (ISO Latin 2)
-	0x8000001d,	// Central European (Mac OS)
-	15,			// Central European (Windows Latin 2)
-	NSNotFound, 
-	0x80000508,	// Vietnamese (Windows)
-	NSNotFound, 
-	0x80000209,	// Turkish (ISO Latin 5)
-	14,			// Turkish (Windows Latin 5)
-	NSNotFound, 
-	0x80000204,	// Central European (ISO Latin 4)
-	0x80000507 	// Baltic (Windows)
-].map({NSStringEncoding($0)})
+
+let SBAvailableStringEncodings: [NSStringEncoding?] = [
+    CFStringEncodings.ShiftJIS,                    // Japanese (Shift JIS)
+    CFStringEncodings.ISO_2022_JP,                 // Japanese (ISO 2022-JP)
+    CFStringEncodings.EUC_JP,                      // Japanese (EUC)
+    CFStringEncodings.ShiftJIS_X0213,              // Japanese (Shift JIS X0213)
+    nil,
+    CFStringBuiltInEncodings.UTF8,                 // Unicode (UTF-8)
+    nil,
+    CFStringBuiltInEncodings.ISOLatin1,            // Western (ISO Latin 1)
+    CFStringBuiltInEncodings.MacRoman,             // Western (Mac OS Roman)
+    nil,
+    CFStringEncodings.Big5,                        // Traditional Chinese (Big 5)
+    CFStringEncodings.Big5_HKSCS_1999,             // Traditional Chinese (Big 5 HKSCS)
+    CFStringEncodings.DOSChineseTrad,              // Traditional Chinese (Windows, DOS)
+    nil,
+    CFStringEncodings.ISO_2022_KR,                 // Korean (ISO 2022-KR)
+    CFStringEncodings.MacKorean,                   // Korean (Mac OS)
+    CFStringEncodings.DOSKorean,                   // Korean (Windows, DOS)
+    nil,
+    CFStringEncodings.ISOLatinArabic,              // Arabic (ISO 8859-6)
+    CFStringEncodings.WindowsArabic,               // Arabic (Windows)
+    nil,
+    CFStringEncodings.ISOLatinHebrew,              // Hebrew (ISO 8859-8)
+    CFStringEncodings.WindowsHebrew,               // Hebrew (Windows)
+    nil,
+    CFStringEncodings.ISOLatinGreek,               // Greek (ISO 8859-7)
+    CFStringEncodings.WindowsGreek,                // Greek (Windows)
+    nil,
+    CFStringEncodings.ISOLatinCyrillic,            // Cyrillic (ISO 8859-5)
+    CFStringEncodings.MacCyrillic,                 // Cyrillic (Mac OS)
+    CFStringEncodings.KOI8_R,                      // Cyrillic (KOI8-R)
+    CFStringEncodings.WindowsCyrillic,             // Cyrillic (Windows)
+    CFStringEncodings.KOI8_U,                      // Ukrainian (KOI8-U)
+    nil,
+    CFStringEncodings.DOSThai,                     // Thai (Windows, DOS)
+    nil,
+    CFStringEncodings.GB_2312_80,                  // Simplified Chinese (GB 2312)
+    CFStringEncodings.HZ_GB_2312,                  // Simplified Chinese (HZ GB 2312)
+    CFStringEncodings.GB_18030_2000,               // Chinese (GB 18030)
+    nil,
+    CFStringEncodings.ISOLatin2,                   // Central European (ISO Latin 2)
+    CFStringEncodings.MacCentralEurRoman,          // Central European (Mac OS)
+    CFStringEncodings.WindowsLatin2,               // Central European (Windows Latin 2)
+    nil,
+    CFStringEncodings.WindowsVietnamese,           // Vietnamese (Windows)
+    nil,
+    CFStringEncodings.ISOLatin5,                   // Turkish (ISO Latin 5)
+    CFStringEncodings.WindowsLatin5,               // Turkish (Windows Latin 5)
+    nil,
+    CFStringEncodings.ISOLatin4,                   // Central European (ISO Latin 4)
+    CFStringEncodings.WindowsBalticRim             // Baltic (Windows)
+].map {
+    (inEnc: Any?) in
+    var cfEnc: CFStringEncoding?
+    if let enc = inEnc as? CFStringEncodings {
+        cfEnc = CFStringEncoding(enc.rawValue)
+    } else if let enc = inEnc as? CFStringBuiltInEncodings {
+        cfEnc = enc.rawValue
+    }
+    return cfEnc !! { NSStringEncoding(CFStringConvertEncodingToNSStringEncoding($0)) }
+}
 
 // UserDefault keys
 let kSBDocumentWindowAutosaveName = "Document"                             // String
