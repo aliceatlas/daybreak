@@ -26,7 +26,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 infix operator !! {
-    associativity right
+    associativity left
     precedence 120
 }
 
