@@ -62,7 +62,7 @@ class SBRenderWindow: NSWindow {
         webView!.frameLoadDelegate = self
         webView!.preferences = SBGetWebPreferences
         webView!.hostWindow = self
-        (contentView! as NSView).addSubview(webView!)
+        (contentView as NSView).addSubview(webView!)
         releasedWhenClosed = true
     }
     

@@ -51,7 +51,7 @@ class SBUpdater: NSObject {
         var error: NSError?
         let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
         let currentThread = NSThread.currentThread()
-        let threadDictionary = currentThread.threadDictionary!
+        let threadDictionary = currentThread.threadDictionary
         
         threadDictionary[kSBUpdaterResult] = result.rawValue
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "threadWillExit:", name: NSThreadWillExitNotification, object: currentThread)
@@ -84,7 +84,7 @@ class SBUpdater: NSObject {
     
     func threadWillExit(notification: NSNotification) {
         let currentThread = notification.object as NSThread
-        let threadDictionary = currentThread.threadDictionary!
+        let threadDictionary = currentThread.threadDictionary
         let userInfo = threadDictionary.copy() as [NSObject: AnyObject]
         if let errorDescription = threadDictionary[kSBUpdaterErrorDescription] as? String {
             if let result = NSComparisonResult(rawValue: userInfo[kSBUpdaterResult] as Int) {

@@ -56,7 +56,7 @@ class SBSavePanel: NSSavePanel {
     }
     
     func switchButtonType() {
-        let subviews = contentView!.subviews
+        let subviews = contentView.subviews
         switchButtonTypeInSubViews(subviews)
     }
     
@@ -101,7 +101,7 @@ class SBOpenPanel: NSOpenPanel {
     }
     
     func switchButtonType() {
-        switchButtonTypeInSubViews(contentView!.subviews)
+        switchButtonTypeInSubViews(contentView.subviews)
     }
     
     func switchButtonTypeInSubViews(subviews: [AnyObject]) {
