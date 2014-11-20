@@ -33,8 +33,27 @@ let SBURLFieldRoundedCurve: CGFloat = SBFieldRoundedCurve
 let SBURLFieldSheetPadding: CGFloat = 10
 let kSBURLFieldSectionHeight: CGFloat = 18.0
 
-enum SBURLFieldItemType: Int {
-	case None, Bookmark, History, GoogleSuggest
+struct SBURLFieldItem {
+    enum Type {
+        case None, Bookmark, History, GoogleSuggest
+    }
+    var type: Type
+    var title: String?
+    var URL: String?
+    var image: NSData?
+    
+    static func None(#title: String, image: NSData?) -> SBURLFieldItem {
+        return SBURLFieldItem(type: .None, title: title, URL: nil, image: image)
+    }
+    static func Bookmark(#title: String?, URL: String, image: NSData?) -> SBURLFieldItem {
+        return SBURLFieldItem(type: .Bookmark, title: title, URL: URL, image: image)
+    }
+    static func History(#URL: String, image: NSData?) -> SBURLFieldItem {
+        return SBURLFieldItem(type: .Bookmark, title: nil, URL: URL, image: image)
+    }
+    static func GoogleSuggest(#title: String, URL: String) -> SBURLFieldItem {
+        return SBURLFieldItem(type: .Bookmark, title: title, URL: URL, image: nil)
+    }
 }
 
 @objc protocol SBURLFieldDelegate {
@@ -188,10 +207,10 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         }
     }
     
-    var gsItems: [NSDictionary] = []
-    var bmItems: [NSDictionary] = []
-    var hItems: [NSDictionary] = []
-    var items: [NSDictionary] = [] {
+    var gsItems: [SBURLFieldItem] = []
+    var bmItems: [SBURLFieldItem] = []
+    var hItems: [SBURLFieldItem] = []
+    var items: [SBURLFieldItem] = [] {
         didSet {
             //!!! was setURLItems in original and this appears to not have been called anywhere
             reloadData()
@@ -477,16 +496,13 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row rowIndex: Int) -> AnyObject? {
         if tableColumn.identifier == kSBURL {
             if let item = items.get(rowIndex) {
-                if let type = (item[kSBType] as? Int) !! {SBURLFieldItemType(rawValue: $0)} {
-                    let title = item[kSBTitle] as? String
-                    switch type {
-                        case .None:
-                            return title
-                        case .GoogleSuggest:
-                            return title
-                        case .Bookmark, .History:
-                            return title ?? (item[kSBURL] as? String)
-                    }
+                switch item.type {
+                    case .None:
+                        return item.title
+                    case .GoogleSuggest:
+                        return item.title
+                    case .Bookmark, .History:
+                        return item.title ?? item.URL
                 }
             }
         }
@@ -496,32 +512,29 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     func tableView(tableView: NSTableView, willDisplayCell cell: SBURLFieldDataCell, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
         if tableColumn.identifier != kSBURL { return }
         if let item = items.get(rowIndex) {
-            let title = item[kSBTitle] as? String
             var string: String?
             var image: NSImage?
             var separator = false
             var sectionHeader = false
             var drawsImage = true
-            if let type = (item[kSBType] as? Int) !! {SBURLFieldItemType(rawValue: $0)} {
-                switch type {
-                    case .None:
-                        if let data = item[kSBImage] as? NSData {
-                            image = NSImage(data: data)
-                            image!.size = NSMakeSize(16.0, 16.0)
-                        }
-                        string = title
-                        separator = rowIndex > 0
-                        sectionHeader = true
-                    case .GoogleSuggest:
-                        string = title
-                        drawsImage = false
-                    case .Bookmark, .History:
-                        if let data = item[kSBImage] as? NSData {
-                            image = NSImage(data: data)
-                            image!.size = NSMakeSize(16.0, 16.0)
-                        }
-                        string = title ?? (item[kSBURL] as? String)
-                }
+            switch item.type {
+                case .None:
+                    if let data = item.image {
+                        image = NSImage(data: data)
+                        image!.size = NSMakeSize(16.0, 16.0)
+                    }
+                    string = item.title
+                    separator = rowIndex > 0
+                    sectionHeader = true
+                case .GoogleSuggest:
+                    string = item.title
+                    drawsImage = false
+                case .History, .Bookmark:
+                    if let data = item.image {
+                        image = NSImage(data: data)
+                        image!.size = NSMakeSize(16.0, 16.0)
+                    }
+                    string = item.title ?? item.URL
             }
             cell.separator = separator
             cell.sectionHeader = sectionHeader
@@ -1020,20 +1033,17 @@ class SBURLFieldContentView: NSView {
         if let field = field {
             if index < field.items.count {
                 let selectedItem = field.items[index]
-                let type = (selectedItem[kSBType] as? Int) !! {SBURLFieldItemType(rawValue: $0)}
-                if type &! {$0 == .GoogleSuggest} {
-                    let title = selectedItem[kSBTitle]! as String
-                    field.URLString = title
-                    return true
-                } else {
-                    let URLString = selectedItem[kSBURL]! as String
-                    if URLString != field.stringValue {
-                        let data = selectedItem[kSBImage] as NSData
-                        let icon = NSImage(data: data)
-                        field.URLString = URLString
-                        field.image = icon
+                switch selectedItem.type {
+                    case .GoogleSuggest:
+                        field.URLString = selectedItem.title!
                         return true
-                    }
+                    default:
+                        let URLString = selectedItem.URL!
+                        if URLString != field.stringValue {
+                            selectedItem.image !! {NSImage(data: $0)} !! {field.image = $0}
+                            field.URLString = URLString
+                            return true
+                        }
                 }
             }
         }

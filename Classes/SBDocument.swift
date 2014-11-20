@@ -1358,15 +1358,13 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func updateURLFieldGoogleSuggestDidEnd(data: NSData?) {
         if data != nil && urlField.isFirstResponder {
-            let parser = SBGoogleSuggestParser()
-            let error = parser.parseData(data!)
-            var items = ((error == nil) &? parser.items) ?? []
             // Parse XML
+            var error: NSError?
+            var items = SBParseGoogleSuggestData(data!, &error) ?? []
             if !items.isEmpty {
-                items.insert([kSBImage: NSImage(named: "Icon_G.png")!.TIFFRepresentation!,
-                                kSBTitle: NSLocalizedString("Suggestions", comment: ""),
-                                kSBType:  SBURLFieldItemType.None.rawValue],
-                               atIndex: 0)
+                let item = SBURLFieldItem.None(title: NSLocalizedString("Suggestions", comment: ""),
+                                               image: NSImage(named: "Icon_G.png")!.TIFFRepresentation!)
+                items.insert(item, atIndex: 0)
                 urlField.gsItems = items
                 urlField.items = urlField.gsItems + urlField.bmItems + urlField.hItems
             } else {
@@ -1378,8 +1376,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func updateURLFieldCompletionList() {
-        var bmItems: [NSDictionary] = []
-        var hItems: [NSDictionary] = []
+        var bmItems: [SBURLFieldItem] = []
+        var hItems: [SBURLFieldItem] = []
         var URLStrings: [String] = []
         let string = urlField.stringValue
         let bookmarks = SBBookmarks.sharedBookmarks
@@ -1402,13 +1400,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                     range = schemelessURLString!.rangeOfString(string)
                 }
                 if range.location != NSNotFound {
-                    var item: [NSObject: AnyObject] = [:]
-                    if matchWithTitle {
-                        item[kSBTitle] = title
-                    }
-                    item[kSBURL] = URLString
-                    item[kSBImage] = bookmarkItem[kSBBookmarkImage]
-                    item[kSBType] = SBURLFieldItemType.Bookmark.rawValue
+                    let item = SBURLFieldItem.Bookmark(title: matchWithTitle &? title, URL: URLString, image: bookmarkItem[kSBBookmarkImage] as? NSData)
                     bmItems.append(item)
                     URLStrings.append(URLString)
                 }
@@ -1425,12 +1417,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                         range = schemelessURLString.rangeOfString(string)
                     }
                     if range.location != NSNotFound {
-                        var item: [NSObject: AnyObject] = [:]
-                        item[kSBURL] = URLString
-                        if let iconData = historyItem.icon?.TIFFRepresentation {
-                            item[kSBImage] = iconData
-                        }
-                        item[kSBType] = SBURLFieldItemType.History.rawValue
+                        let item = SBURLFieldItem.History(URL: URLString, image: historyItem.icon?.TIFFRepresentation)
                         hItems.append(item)
                     }
                 }
@@ -1438,15 +1425,13 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         }
         
         if !bmItems.isEmpty {
-            bmItems.insert([kSBImage: NSImage(named: "Icon_Bookmarks.png")!.TIFFRepresentation!,
-                            kSBTitle: NSLocalizedString("Bookmarks", comment: ""),
-                            kSBType:  SBURLFieldItemType.None.rawValue],
+            bmItems.insert(SBURLFieldItem.None(title: NSLocalizedString("Bookmarks", comment: ""),
+                                               image: NSImage(named: "Icon_Bookmarks.png")!.TIFFRepresentation!),
                            atIndex: 0)
         }
         if !hItems.isEmpty {
-            hItems.insert([kSBImage: NSImage(named: "Icon_History.png")!.TIFFRepresentation!,
-                           kSBTitle: NSLocalizedString("History", comment: ""),
-                           kSBType:  SBURLFieldItemType.None.rawValue],
+            hItems.insert(SBURLFieldItem.None(title: NSLocalizedString("History", comment: ""),
+                                              image: NSImage(named: "Icon_History.png")!.TIFFRepresentation!),
                           atIndex: 0)
         }
         urlField.bmItems = bmItems

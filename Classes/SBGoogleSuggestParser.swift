@@ -28,72 +28,23 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-class SBGoogleSuggestParser: NSObject, NSXMLParserDelegate {
-    private let kSBGSToplevelTagName = "toplevel"
-    private let kSBGSCompleteSuggestionTagName = "CompleteSuggestion"
-    private let kSBGSSuggestionTagName = "suggestion"
-    private let kSBGSNum_queriesTagName = "num_queries"
-    private let kSBGSSuggestionAttributeDataArgumentName = "data"
-    
-    var items: [NSMutableDictionary] = []
-    private var inToplevel = false
-    private var inCompleteSuggestion = false
-    
-    func parseData(data: NSData) -> NSError? {
-        inToplevel = false
-        inCompleteSuggestion = false
-        let parser: NSXMLParser? = NSXMLParser(data: data)
-        if let parser = parser {
-            parser.delegate = self
-            parser.shouldProcessNamespaces = false
-            parser.shouldReportNamespacePrefixes = false
-            parser.shouldResolveExternalEntities = false
-            items = []
-            return parser.parse() ? nil : parser.parserError
+private let kSBGSToplevelTagName = "toplevel"
+private let kSBGSCompleteSuggestionTagName = "CompleteSuggestion"
+private let kSBGSSuggestionTagName = "suggestion"
+private let kSBGSNum_queriesTagName = "num_queries"
+private let kSBGSSuggestionAttributeDataArgumentName = "data"
+
+func SBParseGoogleSuggestData(data: NSData, error: NSErrorPointer) -> [SBURLFieldItem]? {
+    if let document = NSXMLDocument(data: data, options: 0, error: error) {
+        var items: [SBURLFieldItem] = []
+        let element = document.rootElement()!
+        for suggestion in element.elementsForName(kSBGSCompleteSuggestionTagName) as [NSXMLElement] {
+            let item = suggestion.elementsForName(kSBGSSuggestionTagName)[0] as NSXMLElement
+            let string = item.attributeForName(kSBGSSuggestionAttributeDataArgumentName)!.stringValue!
+            items.append(SBURLFieldItem.GoogleSuggest(title: string, URL: string.searchURLString))
         }
-        return NSError(domain: "Sunrise", code: 420, userInfo: nil) //!!!
+        return items
     }
-    
-    // MARK: Delegate
-    
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName: String?, attributes: NSDictionary) {
-        if elementName == kSBGSToplevelTagName {
-            inToplevel = true
-        } else if elementName == kSBGSCompleteSuggestionTagName {
-            let item = NSMutableDictionary()
-            inCompleteSuggestion = true
-            item[kSBType] = SBURLFieldItemType.GoogleSuggest.rawValue
-            items.append(item)
-        } else {
-            if inToplevel && inCompleteSuggestion {
-                if elementName == kSBGSSuggestionTagName {
-                    let dataText = attributes[kSBGSSuggestionAttributeDataArgumentName] as String
-                    if !dataText.isEmpty {
-                        let item = items[items.count - 1]
-                        item[kSBTitle] = dataText
-                        item[kSBURL] = dataText.searchURLString
-                    }
-                }
-            }
-        }
-    }
-    
-    func parser(parser: NSXMLParser, foundCharacters string: String) {
-    }
-    
-    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName: String?) {
-        if elementName == kSBGSToplevelTagName {
-            inToplevel = false
-        } else if elementName == kSBGSCompleteSuggestionTagName {
-            inCompleteSuggestion = false
-        }
-    }
-    
-    func parser(parser: NSXMLParser, parseErrorOccurred error: NSError) {
-        parser.abortParsing()
-    }
-    
-    func parser(parser: NSXMLParser, validationErrorOccurred error: NSError) {
-        parser.abortParsing()
-    }
+    error.memory = error.memory ?? NSError(domain: "Sunrise", code: 420, userInfo: nil)
+    return nil
 }
