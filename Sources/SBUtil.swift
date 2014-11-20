@@ -310,110 +310,34 @@ var SBHistoryFilePath: String {
 
 // MARK: Paths
 
-func SBRoundedPath(inRect: CGRect, curve: CGFloat, inner: CGFloat, top: Bool, bottom: Bool) -> NSBezierPath {
-    let path = NSBezierPath()
+func SBRoundedPath(inRect: CGRect, curve: CGFloat, inner: CGFloat, top: Bool, bottom: Bool, close: Bool = false) -> NSBezierPath {
     let rect = NSInsetRect(inRect, inner / 2, inner / 2)
-    var point = CGPointZero
-    var cp1 = CGPointZero
-    var cp2 = CGPointZero
     
     if top && bottom {
-        // Left-top to right
-        point.x = rect.origin.x + curve
-        point.y = rect.origin.y
-        path.moveToPoint(point)
-        point.x = rect.origin.x + rect.size.width - curve
-        path.lineToPoint(point)
-        point.x = rect.origin.x + rect.size.width
-        cp1.x = rect.origin.x + rect.size.width
-        cp1.y = rect.origin.y + curve / 2
-        cp2.x = rect.origin.x + rect.size.width - curve / 2
-        cp2.y = rect.origin.y
-        point.y = rect.origin.y + curve
-        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
-        // Right-top to bottom
-        point.y = rect.origin.y + rect.size.height - curve
-        path.lineToPoint(point)
-        point.y = rect.origin.y + rect.size.height
-        cp1.y = rect.origin.y + rect.size.height
-        cp1.x = rect.origin.x + rect.size.width - curve / 2
-        cp2.y = rect.origin.y + rect.size.height - curve / 2
-        cp2.x = rect.origin.x + rect.size.width
-        point.x = rect.origin.x + rect.size.width - curve
-        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
-        // Right-bottom to left
-        point.x = rect.origin.x + curve
-        path.lineToPoint(point)
-        point.x = rect.origin.x
-        cp1.x = rect.origin.x
-        cp1.y = rect.origin.y + rect.size.height - curve / 2;
-        cp2.x = rect.origin.x + curve / 2
-        cp2.y = rect.origin.y + rect.size.height
-        point.y = rect.origin.y + rect.size.height - curve
-        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
-        // Left-bottom to top
-        point.y = rect.origin.y + curve
-        path.lineToPoint(point)
-        point.y = rect.origin.y
-        cp1.y = rect.origin.y
-        cp1.x = rect.origin.x + curve / 2
-        cp2.y = rect.origin.y + curve / 2
-        cp2.x = rect.origin.x
-        point.x = rect.origin.x + curve
-        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
-        // add left edge and close
-        path.closePath()
-    } else if top {
-        point = rect.origin
-        point.x = rect.origin.x + rect.size.width
-        path.moveToPoint(point)
-        
-        point.y = rect.origin.y + rect.size.height - curve
-        path.lineToPoint(point)
-        point.y = rect.origin.y + rect.size.height
-        cp1.y = rect.origin.y + rect.size.height
-        cp1.x = rect.origin.x + rect.size.width - curve / 2
-        cp2.y = rect.origin.y + rect.size.height - curve / 2
-        cp2.x = rect.origin.x + rect.size.width
-        point.x = rect.origin.x + rect.size.width - curve
-        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
-        
-        point.x = rect.origin.x + curve
-        path.lineToPoint(point)
-        point.x = rect.origin.x
-        cp1.x = rect.origin.x
-        cp1.y = rect.origin.y + rect.size.height - curve / 2
-        cp2.x = rect.origin.x + curve / 2
-        cp2.y = rect.origin.y + rect.size.height
-        point.y = rect.origin.y + rect.size.height - curve
-        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
-        point = rect.origin
-        path.lineToPoint(point)
+        return NSBezierPath(roundedRect: rect, xRadius: curve, yRadius: curve)
+    }
+    
+    let path = NSBezierPath()
+    let innerRect = NSInsetRect(rect, curve, curve)
+    
+    if top {
+        path.moveToPoint(NSMakePoint(rect.maxX, rect.minY))
+        path.lineToPoint(NSMakePoint(rect.maxX, innerRect.maxY))
+        path.appendBezierPathWithArcWithCenter(NSMakePoint(innerRect.maxX, innerRect.maxY), radius: curve, startAngle: 0, endAngle: 90)
+        path.appendBezierPathWithArcWithCenter(NSMakePoint(innerRect.minX, innerRect.maxY), radius: curve, startAngle: 90, endAngle: 180)
+        path.lineToPoint(NSMakePoint(rect.minX, rect.minY))
+        if close {
+            path.closePath()
+        }
     } else if bottom {
-        point.x = rect.origin.x
-        point.y = rect.origin.y + rect.size.height
-        path.moveToPoint(point)
-        
-        point.y = rect.origin.y + curve
-        path.lineToPoint(point)
-        point.y = rect.origin.y
-        cp1.y = rect.origin.y
-        cp1.x = rect.origin.x + curve / 2
-        cp2.y = rect.origin.y + curve / 2
-        cp2.x = rect.origin.x
-        point.x = rect.origin.x + curve
-        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
-        point.x = rect.origin.x + rect.size.width - curve
-        path.lineToPoint(point)
-        point.x = rect.origin.x + rect.size.width
-        cp1.x = rect.origin.x + rect.size.width
-        cp1.y = rect.origin.y + curve / 2
-        cp2.x = rect.origin.x + rect.size.width - curve / 2
-        cp2.y = rect.origin.y
-        point.y = rect.origin.y + curve
-        path.curveToPoint(point, controlPoint1: cp2, controlPoint2: cp1)
-        point.y = rect.origin.y + rect.size.height
-        path.lineToPoint(point)
+        path.moveToPoint(NSMakePoint(rect.minX, rect.maxY))
+        path.lineToPoint(NSMakePoint(rect.minX, innerRect.minY))
+        path.appendBezierPathWithArcWithCenter(NSMakePoint(innerRect.minX, innerRect.minY), radius: curve, startAngle: 180, endAngle: 270)
+        path.appendBezierPathWithArcWithCenter(NSMakePoint(innerRect.maxX, innerRect.minY), radius: curve, startAngle: 270, endAngle: 360)
+        path.lineToPoint(NSMakePoint(rect.maxX, rect.maxY))
+        if close {
+            path.closePath()
+        }
     } else {
         path.appendBezierPathWithRect(rect)
     }
