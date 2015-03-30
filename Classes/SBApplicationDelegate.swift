@@ -113,7 +113,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
             return .TerminateNow
         }
         
-        let title = NSLocalizedString("Are you sure you want to quit? Sunrise is currently downloading some files. If you quit now, it will not finish downloading these files.", comment: "")
+        let title = NSLocalizedString("Are you sure you want to quit? Daybreak is currently downloading some files. If you quit now, it will not finish downloading these files.", comment: "")
         let message = ""
         let okTitle = NSLocalizedString("Quit", comment: "")
         let otherTitle = NSLocalizedString("Don't Quit", comment: "")
@@ -170,8 +170,8 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updaterNotNeedUpdate(notification: NSNotification) {
-        let versionString = notification.userInfo![kSBUpdaterVersionString] as String
-        let title = NSLocalizedString("Sunrise %@ is currently the newest version available.", comment: "").format(versionString)
+        let versionString = notification.userInfo![kSBUpdaterVersionString] as! String
+        let title = NSLocalizedString("Daybreak %@ is currently the newest version available.", comment: "").format(versionString)
         let alert = NSAlert()
         alert.messageText = title
         alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
@@ -211,7 +211,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let urlString = info["SBReleaseNotesURL"] as String
         destructUpdateView()
         updateView = SBUpdateView(frame: window.splitViewRect)
-        updateView!.title = NSLocalizedString("A new version of Sunrise %@ is available.", comment: "").format(versionString)
+        updateView!.title = NSLocalizedString("A new version of Daybreak %@ is available.", comment: "").format(versionString)
         updateView!.text = NSLocalizedString("If you click the \"Download\" button, the download of the disk image file will begin. ", comment: "")
         updateView!.versionString = versionString
         updateView!.target = self
@@ -272,7 +272,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Application
     
     @IBAction func provideFeedback(AnyObject) {
-        let title = NSLocalizedString("Sunrise Feedback", comment: "")
+        let title = NSLocalizedString("Daybreak Feedback", comment: "")
         if !kSBFeedbackMailAddress.isEmpty {
             var urlString: NSString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
             urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
@@ -298,7 +298,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func emptyAllCaches(AnyObject) {
         let cache = NSURLCache.sharedURLCache()
         let title = NSLocalizedString("Are you sure you want to empty the cache?", comment: "")
-        var message = NSLocalizedString("Sunrise saves the contents of webpages you open, and stores them in a cache, so the pages load faster when you visit them again.", comment: "")
+        var message = NSLocalizedString("Daybreak saves the contents of webpages you open, and stores them in a cache, so the pages load faster when you visit them again.", comment: "")
         if cache.diskCapacity > 0 && cache.memoryCapacity > 0 {
             let diskCapacityDescription = bytesString(Int64(cache.currentDiskUsage), Int64(cache.diskCapacity))
             let memoryCapacityDescription = bytesString(Int64(cache.currentMemoryUsage), Int64(cache.memoryCapacity))

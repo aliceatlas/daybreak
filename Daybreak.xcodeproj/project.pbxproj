@@ -316,7 +316,7 @@
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32DBCF750370BD2300C91783 /* Sunrise_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Sunrise_Prefix.pch; path = Sources/Sunrise_Prefix.pch; sourceTree = "<group>"; };
+		32DBCF750370BD2300C91783 /* Daybreak_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Daybreak_Prefix.pch; path = Sources/Daybreak_Prefix.pch; sourceTree = "<group>"; };
 		5000B70919BF5636003DD2D1 /* SBSnapshotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSnapshotView.swift; path = Classes/SBSnapshotView.swift; sourceTree = "<group>"; };
 		5008E34B19B9DB7500BED173 /* SBBookmarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBookmarkView.swift; path = Classes/SBBookmarkView.swift; sourceTree = "<group>"; };
 		501D1F311963C9E500AEF4D1 /* SBDownload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDownload.swift; path = Classes/SBDownload.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -335,7 +335,7 @@
 		5044E66519653E4C0053CBF1 /* SBRenderWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBRenderWindow.swift; path = Classes/SBRenderWindow.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5044E66819655AF00053CBF1 /* SBLoadButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBLoadButton.swift; path = Classes/SBLoadButton.swift; sourceTree = "<group>"; };
 		5044E66A19666D550053CBF1 /* SBBookmarksView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBookmarksView.swift; path = Classes/SBBookmarksView.swift; sourceTree = "<group>"; };
-		505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Sunrise3-Bridging-Header.h"; path = "Sources/Sunrise3-Bridging-Header.h"; sourceTree = "<group>"; };
+		505E49ED1987AC0A001F5254 /* Daybreak-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Daybreak-Bridging-Header.h"; path = "Sources/Daybreak-Bridging-Header.h"; sourceTree = "<group>"; };
 		505E49EF19882F3B001F5254 /* SBSavePanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBSavePanel.swift; path = Classes/SBSavePanel.swift; sourceTree = "<group>"; };
 		505E49F3198A2645001F5254 /* SBButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBButton.swift; path = Classes/SBButton.swift; sourceTree = "<group>"; };
 		505E49F5198B7638001F5254 /* SBToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBToolbar.swift; path = Classes/SBToolbar.swift; sourceTree = "<group>"; };
@@ -403,7 +403,7 @@
 		50FEEAA719BF3A0200962BB9 /* SBFindbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBFindbar.swift; path = Classes/SBFindbar.swift; sourceTree = "<group>"; };
 		665362C519F77DCD00D32D82 /* NSView-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSView-SBAdditions.h"; path = "Additions/NSView-SBAdditions.h"; sourceTree = "<group>"; };
 		665362C619F77DCD00D32D82 /* NSView-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSView-SBAdditions.m"; path = "Additions/NSView-SBAdditions.m"; sourceTree = "<group>"; };
-		8D15AC370486D014006FF6A4 /* Sunrise3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sunrise3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D15AC370486D014006FF6A4 /* Daybreak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daybreak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -708,12 +708,12 @@
 		19C28FB0FE9D524F11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D15AC370486D014006FF6A4 /* Sunrise3.app */,
+				8D15AC370486D014006FF6A4 /* Daybreak.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2A37F4AAFDCFA73011CA2CEA /* Sunrise */ = {
+		2A37F4AAFDCFA73011CA2CEA /* Daybreak */ = {
 			isa = PBXGroup;
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
@@ -722,7 +722,7 @@
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
 			);
-			name = Sunrise;
+			name = Daybreak;
 			sourceTree = "<group>";
 		};
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
@@ -751,14 +751,14 @@
 		2A37F4AFFDCFA73011CA2CEA /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				505E49ED1987AC0A001F5254 /* Sunrise3-Bridging-Header.h */,
+				505E49ED1987AC0A001F5254 /* Daybreak-Bridging-Header.h */,
 				507A8E21195FFF6700BF56AD /* SBDefinitions.h */,
 				507A8E24195FFF8800BF56AD /* SBDefinitions.swift */,
 				5096684F19D27BE000596F88 /* SBOperators.swift */,
 				0840676A0FE2B95200CC80E3 /* SBUtil.h */,
 				0840676B0FE2B95200CC80E3 /* SBUtil.m */,
 				50B2A9A41960BD5200DA1B4A /* SBUtil.swift */,
-				32DBCF750370BD2300C91783 /* Sunrise_Prefix.pch */,
+				32DBCF750370BD2300C91783 /* Daybreak_Prefix.pch */,
 				508FAC5219653AC400F4380F /* main.swift */,
 			);
 			name = Sources;
@@ -803,9 +803,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8D15AC270486D014006FF6A4 /* Sunrise */ = {
+		8D15AC270486D014006FF6A4 /* Daybreak */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Sunrise" */;
+			buildConfigurationList = C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Daybreak" */;
 			buildPhases = (
 				8D15AC2B0486D014006FF6A4 /* Resources */,
 				8D15AC300486D014006FF6A4 /* Sources */,
@@ -816,10 +816,10 @@
 			);
 			dependencies = (
 			);
-			name = Sunrise;
+			name = Daybreak;
 			productInstallPath = "$(HOME)/Applications";
-			productName = Sunrise;
-			productReference = 8D15AC370486D014006FF6A4 /* Sunrise3.app */;
+			productName = Daybreak;
+			productReference = 8D15AC370486D014006FF6A4 /* Daybreak.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -830,7 +830,7 @@
 			attributes = {
 				LastUpgradeCheck = 0600;
 			};
-			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Sunrise" */;
+			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Daybreak" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -854,11 +854,11 @@
 				zh_Hant,
 				ru,
 			);
-			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Sunrise */;
+			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* Daybreak */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8D15AC270486D014006FF6A4 /* Sunrise */,
+				8D15AC270486D014006FF6A4 /* Daybreak */,
 			);
 		};
 /* End PBXProject section */
@@ -1131,13 +1131,13 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Sources/Sunrise_Prefix.pch;
+				GCC_PREFIX_HEADER = Sources/Daybreak_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "__debug__=1";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_MODULE_NAME = Sunrise3;
-				PRODUCT_NAME = Sunrise3;
-				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Sunrise3-Bridging-Header.h";
+				PRODUCT_MODULE_NAME = Daybreak;
+				PRODUCT_NAME = Daybreak;
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Daybreak-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1155,12 +1155,12 @@
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Sources/Sunrise_Prefix.pch;
+				GCC_PREFIX_HEADER = Sources/Daybreak_Prefix.pch;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_MODULE_NAME = Sunrise3;
-				PRODUCT_NAME = Sunrise3;
-				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Sunrise3-Bridging-Header.h";
+				PRODUCT_MODULE_NAME = Daybreak;
+				PRODUCT_NAME = Daybreak;
+				SWIFT_OBJC_BRIDGING_HEADER = "Sources/Daybreak-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -1198,7 +1198,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Sunrise" */ = {
+		C05733C708A9546B00998B17 /* Build configuration list for PBXNativeTarget "Daybreak" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C05733C808A9546B00998B17 /* Debug */,
@@ -1207,7 +1207,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Sunrise" */ = {
+		C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "Daybreak" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C05733CC08A9546B00998B17 /* Debug */,

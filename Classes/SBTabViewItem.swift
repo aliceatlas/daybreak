@@ -990,7 +990,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         let title = "<img src=\"Application.icns\" style=\"width:76px;height:76px;margin-right:10px;vertical-align:middle;\" alt=\"\">" + title
         let searchURLString = "http://www.google.com/search?hl=ja&q=" + urlString
         let searchMessage = NSLocalizedString("You can search the web for this URL.", comment: "")
-        var message = NSLocalizedString("Sunrise can’t open the page “%@”", comment: "").format(urlString)
+        var message = NSLocalizedString("Daybreak can’t open the page “%@”", comment: "").format(urlString)
         message = "\(message)<br /><br />\(searchMessage)<br /><a href=\"\(searchURLString)\">\(urlString)</a>"
         let path = bundle.pathForResource("Error", ofType: "html")!
         if NSFileManager.defaultManager().fileExistsAtPath(path) {

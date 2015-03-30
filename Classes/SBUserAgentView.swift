@@ -66,7 +66,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
             self.field.stringValue = userAgentName!
             self.field.hidden = false
         }
-        let icon0 = (SBUserAgentNames[0] == "Sunrise") &? NSImage(named: "Application.icns")
+        let icon0 = (SBUserAgentNames[0] == "Daybreak") &? NSImage(named: "Application.icns")
         let icon1 = (SBUserAgentNames[1] == "Safari") &? NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns")
         icon0?.size = NSMakeSize(24.0, 24.0)
         icon1?.size = NSMakeSize(24.0, 24.0)

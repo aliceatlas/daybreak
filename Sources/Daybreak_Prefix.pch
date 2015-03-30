@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Daybreak' target in the 'Daybreak' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

@@ -64,7 +64,7 @@ let kSBToolbarBugsItemIdentifier = "Bugs"
 let kSBToolbarUserAgentItemIdentifier = "UserAgent"
 let kSBToolbarZoomItemIdentifier = "Zoom"
 let kSBToolbarSourceItemIdentifier = "Source"
-let kSBWebPreferencesIdentifier = "Sunrise"
+let kSBWebPreferencesIdentifier = "Daybreak"
 
 // Document type names
 let kSBDocumentTypeName = "HTML Document Type"
@@ -79,7 +79,7 @@ let kSBFeedbackMailAddress = "feedback@sunrisebrowser.com"
 let kSBBugReportMailAddress = "bugreport@sunrisebrowser.com"
 
 // Path components
-let kSBApplicationSupportDirectoryName = "Sunrise3"
+let kSBApplicationSupportDirectoryName = "Daybreak"
 let kSBApplicationSupportDirectoryName_Version1 = "Sunrise"
 let kSBBookmarksFileName = "Bookmarks.plist"
 let kSBHistoryFileName = "History.plist"
@@ -292,7 +292,7 @@ let SBSidebarTextColor = NSColor(calibratedRed: 0.66, green: 0.67, blue: 0.68, a
 
 // User agent names
 let SBUserAgentNames = [
-    "Sunrise",
+    "Daybreak",
     "Safari",
     "Other"
 ]

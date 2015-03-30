@@ -45,6 +45,6 @@ func SBParseGoogleSuggestData(data: NSData, error: NSErrorPointer) -> [SBURLFiel
         }
         return items
     }
-    error.memory = error.memory ?? NSError(domain: "Sunrise", code: 420, userInfo: nil)
+    error.memory = error.memory ?? NSError(domain: "Daybreak", code: 420, userInfo: nil)
     return nil
 }

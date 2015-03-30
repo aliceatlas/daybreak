@@ -960,7 +960,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         let types = pasteboard.types as [NSString] as [String]
         
         if containsItem(types, SBBookmarkPboardType) {
-            // Sunrise bookmarks
+            // Daybreak bookmarks
             let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as [NSDictionary]
             if !pbItems.isEmpty {
                 let bookmarks = SBBookmarks.sharedBookmarks

@@ -96,7 +96,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         var names: [String] = []
         let name0: String = SBUserAgentNames[0]
         let name1: String = SBUserAgentNames[1]
-        let icon0 = (name0 == "Sunrise") &? NSImage(named: "Application.icns")
+        let icon0 = (name0 == "Daybreak") &? NSImage(named: "Application.icns")
         let icon1 = (name1 == "Safari") &? NSImage(contentsOfFile: "/Applications/Safari.app/Contents/Resources/compass.icns")
         icon0?.size = NSMakeSize(24.0, 24.0)
         icon1?.size = NSMakeSize(24.0, 24.0)
@@ -409,7 +409,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         }
         
         // Send message
-        let errorDescription = sendMailWithMessage(message, subject: NSLocalizedString("Sunrise Bug Report", comment: ""), to: [kSBBugReportMailAddress])
+        let errorDescription = sendMailWithMessage(message, subject: NSLocalizedString("Daybreak Bug Report", comment: ""), to: [kSBBugReportMailAddress])
         if errorDescription == nil {
             done()
         }

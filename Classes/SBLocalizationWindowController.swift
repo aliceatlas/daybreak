@@ -229,7 +229,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         textField.font = NSFont.systemFontOfSize(16.0)
         textField.textColor = NSColor.whiteColor()
         textField.alignment = .LeftTextAlignment
-        textField.stringValue = NSLocalizedString("You can contribute the translation file for the Sunrise project if you participate in the project on Google Code.", comment: "")
+        textField.stringValue = NSLocalizedString("You can contribute the translation file for the Daybreak project if you participate in the project on Google Code.", comment: "")
         return textField
     }()
     
@@ -470,7 +470,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
                     if manager.copyItemAtPath(url.path!, toPath: dstPath, error: &error) {
                         // Complete
                         let alert = NSAlert()
-                        alert.messageText = NSLocalizedString("Complete to add new localization. Restart Sunrise.", comment: "")
+                        alert.messageText = NSLocalizedString("Complete to add new localization. Restart Daybreak.", comment: "")
                         alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
                         alert.beginSheetModalForWindow(window!) {
                             (NSModalResponse) -> Void in
