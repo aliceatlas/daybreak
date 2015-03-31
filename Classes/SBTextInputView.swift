@@ -36,7 +36,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         messageLabel.drawsBackground = false
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = font
-        (messageLabel.cell() as NSTextFieldCell).wraps = true
+        (messageLabel.cell() as! NSTextFieldCell).wraps = true
         return messageLabel
     }()
     lazy var textLabel: SBBLKGUITextField = {
@@ -45,7 +45,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         textLabel.font = NSFont.systemFontOfSize(14.0)
         textLabel.textColor = NSColor.whiteColor()
         textLabel.delegate = self
-        (textLabel.cell() as NSTextFieldCell).wraps = true
+        (textLabel.cell() as! NSTextFieldCell).wraps = true
         return textLabel
     }()
     lazy var doneButton: SBBLKGUIButton = {
@@ -69,7 +69,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     var message: String {
         get { return messageLabel.stringValue }
         set(message) {
-            let size = (message as NSString).sizeWithAttributes([NSFontAttributeName: messageLabel.font!])
+            let size = message.sizeWithAttributes([NSFontAttributeName: messageLabel.font!])
             messageLabel.alignment = size.width > (messageLabelRect.size.width - 20.0) ? .LeftTextAlignment : .CenterTextAlignment
             messageLabel.stringValue = message
         }
@@ -80,7 +80,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         set(text) { textLabel.stringValue = text }
     }
     
-    init(frame: NSRect, prompt: NSString) {
+    init(frame: NSRect, prompt: String) {
         super.init(frame: frame)
         message = prompt
         addSubview(messageLabel)

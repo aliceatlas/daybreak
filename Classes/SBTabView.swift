@@ -52,7 +52,7 @@ class SBTabView: NSTabView {
     }
     
     private var sbTabViewItems: [SBTabViewItem] {
-        return tabViewItems as [SBTabViewItem]
+        return tabViewItems as! [SBTabViewItem]
     }
     
     override var selectedTabViewItem: SBTabViewItem? {
@@ -61,7 +61,7 @@ class SBTabView: NSTabView {
     
     override var description: String {
         let desc = super.description
-        return prefix(desc, desc.utf16Count - 1) + " frame = \(frame)>"
+        return dropLast(desc) + " frame = \(frame)>"
     }
     
     func tabViewItem(#identifier: Int) -> SBTabViewItem? {

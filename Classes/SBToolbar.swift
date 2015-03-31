@@ -65,33 +65,14 @@ class SBToolbar: NSToolbar {
     
     // Returns whether the main toolbar contains item from item identifier
     func visibleItemForItemIdentifier(itemIdentifier: String) -> NSToolbarItem? {
-        return (items as [NSToolbarItem]).first { $0.itemIdentifier == itemIdentifier }
+        return (items as! [NSToolbarItem]).first { $0.itemIdentifier == itemIdentifier }
     }
     
     func itemRectInWindowForIdentifier(identifier: String) -> NSRect {
-        var r = NSZeroRect
-        var delta = NSZeroPoint
-        if let item = (visibleItems as [NSToolbarItem]).first({ $0.itemIdentifier == identifier })
-        {
-            var view: NSView! = item.view
-            while true {
-                view = view.superview
-                if view == nil {
-                    break
-                }
-                delta.x += view.frame.origin.x
-                delta.y += view.frame.origin.y
-                if view === _toolbarView() {
-                    break
-                }
-            }
-            if item.view != nil {
-                r = item.view!.frame
-                r.origin.x += delta.x
-                r.origin.y += delta.y
-            }
+        if let view = (visibleItems as! [NSToolbarItem]).first({ $0.itemIdentifier == identifier })?.view {
+            return view.convertRect(view.bounds, toView: nil)
         }
-        return r
+        return NSZeroRect
     }
     
     func itemRectInScreenForIdentifier(identifier: String) -> NSRect {
@@ -99,6 +80,6 @@ class SBToolbar: NSToolbar {
     }
     
     var window: NSWindow {
-        return ((NSApp.windows as [NSWindow]).first { $0.toolbar === self })!
+        return ((NSApp.windows as! [NSWindow]).first { $0.toolbar === self })!
     }
 }

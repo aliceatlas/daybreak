@@ -227,7 +227,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
         doneButton.enabled = true
     }
     
-    func downloader(downloader: SBDownloader, didFail error: NSError) {
+    func downloader(downloader: SBDownloader, didFail error: NSError?) {
         indicator.stopAnimation(nil)
     }
     
@@ -267,8 +267,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     
     func htmlString(#baseURL: NSURL, releaseNotesData data: NSData?) -> String? {
         if data != nil {
-            let baseHTML = NSString(contentsOfURL: baseURL, encoding: NSUTF8StringEncoding, error: nil)
-            let releaseNotes = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            let baseHTML = String(contentsOfURL: baseURL, encoding: NSUTF8StringEncoding, error: nil)
+            let releaseNotes = String(UTF8String: UnsafePointer<CChar>(data!.bytes))
             return baseHTML !! { $0.format(releaseNotes ?? NSLocalizedString("No data", comment: "")) }
         }
         return nil

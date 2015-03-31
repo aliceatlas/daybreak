@@ -31,4 +31,4 @@ import Cocoa
 //let app = NSApplication.sharedApplication()
 //app.delegate = SBApplicationDelegate()
 //app.run()
-NSApplicationMain(C_ARGC, C_ARGV)
+NSApplicationMain(Process.argc, Process.unsafeArgv)

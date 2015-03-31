@@ -47,7 +47,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = NSFont.boldSystemFontOfSize(16)
         messageLabel.alignment = .LeftTextAlignment
-        (messageLabel.cell() as NSTextFieldCell).wraps = true
+        (messageLabel.cell() as! NSTextFieldCell).wraps = true
         return messageLabel
     }()
 	private lazy var searchField: SBBLKGUISearchField = {
@@ -55,7 +55,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         searchField.delegate = self
         searchField.target = self
         searchField.action = "search:"
-        let cell = searchField.cell() as NSSearchFieldCell
+        let cell = searchField.cell() as! NSSearchFieldCell
         cell.sendsWholeSearchString = true
         cell.sendsSearchStringImmediately = true
         return searchField
@@ -246,7 +246,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     func updateItems() {
         let allItems = SBHistory.sharedHistory.items
         let searchFieldText = searchField.stringValue
-        let searchWords = !searchFieldText.isEmpty ? (searchFieldText as NSString).componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) as [String] : []
+        let searchWords = !searchFieldText.isEmpty ? searchFieldText.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) : []
         if !searchWords.isEmpty {
             items = []
             for item in allItems {
@@ -257,7 +257,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
                 if !string.isEmpty {
                     var index = 0
                     for searchWord in searchWords {
-                        if searchWord.isEmpty || (string as NSString).rangeOfString(searchWord, options: .CaseInsensitiveSearch).location != NSNotFound {
+                        if searchWord.isEmpty || string.rangeOfString(searchWord, options: .CaseInsensitiveSearch) != nil {
                             if index == searchWords.count - 1 {
                                 items.append(item)
                             }
@@ -280,8 +280,8 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         return items.count
     }
     
-    func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row rowIndex: Int) -> AnyObject? {
-        let identifier = tableColumn.identifier
+    func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row rowIndex: Int) -> AnyObject? {
+        let identifier = tableColumn!.identifier
         let item = items.get(rowIndex)
         switch identifier {
         case kSBTitle:
@@ -296,9 +296,10 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         return nil
     }
     
-    func tableView(tableView: NSTableView, willDisplayCell cell: NSCell, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
-        let identifier = tableColumn.identifier
+    func tableView(tableView: NSTableView, willDisplayCell aCell: AnyObject, forTableColumn tableColumn: NSTableColumn?, row rowIndex: Int) {
+        let identifier = tableColumn!.identifier
         let item = items.get(rowIndex)
+        let cell = aCell as! NSCell
         var string: String?
         switch identifier {
         case kSBImage:
@@ -380,7 +381,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         alert.messageText = NSLocalizedString("Are you sure you want to remove all items?", comment: "")
         alert.addButtonWithTitle(NSLocalizedString("Remove All", comment: ""))
         alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: ""))
-        if alert.runModal() == NSOKButton {
+        if alert.runModal() == NSAlertFirstButtonReturn {
             SBHistory.sharedHistory.removeAllItems()
             tableView.deselectAll(nil)
             updateItems()

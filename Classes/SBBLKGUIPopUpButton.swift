@@ -31,7 +31,7 @@ class SBBLKGUIPopUpButton: NSPopUpButton {
         SBBLKGUIPopUpButton.setCellClass(SBBLKGUIPopUpButtonCell.self)
     }
     
-    convenience override init() {
+    convenience init() {
         self.init(frame: NSZeroRect)
     }
     
@@ -54,7 +54,7 @@ class SBBLKGUIPopUpButton: NSPopUpButton {
 
 class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
     override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
-        let controlView = inView as SBBLKGUIPopUpButton
+        let controlView = inView as! SBBLKGUIPopUpButton
         
         var leftImage: NSImage?
         var centerImage: NSImage?

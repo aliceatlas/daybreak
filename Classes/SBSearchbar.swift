@@ -38,7 +38,7 @@ class SBSearchbar: SBFindbar {
         searchField.delegate = self
         searchField.target = self
         searchField.action = "executeDoneSelector:"
-        let cell = searchField.cell() as NSSearchFieldCell
+        let cell = searchField.cell() as! NSSearchFieldCell
         cell.sendsWholeSearchString = true
         cell.sendsSearchStringImmediately = false
         if let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) {

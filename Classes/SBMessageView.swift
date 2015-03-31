@@ -34,7 +34,7 @@ class SBMessageView: SBView {
         textLabel.drawsBackground = false
         textLabel.textColor = NSColor.whiteColor()
         textLabel.font = self.textFont
-        (textLabel.cell() as NSCell).wraps = true
+        (textLabel.cell() as! NSCell).wraps = true
         textLabel.stringValue = "JavaScript"
         return textLabel
     }()
@@ -47,7 +47,7 @@ class SBMessageView: SBView {
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = NSFont.boldSystemFontOfSize(16)
         messageLabel.alignment = .CenterTextAlignment
-        (messageLabel.cell() as NSCell).wraps = true
+        (messageLabel.cell() as! NSCell).wraps = true
         return messageLabel
     }()
     private lazy var cancelButton: SBBLKGUIButton = {
@@ -77,7 +77,7 @@ class SBMessageView: SBView {
         get { return textLabel.stringValue }
         set(text) {
             textLabel.stringValue = text
-            let size = (text as NSString).sizeWithAttributes([NSFontAttributeName: textFont])
+            let size = text.sizeWithAttributes([NSFontAttributeName: textFont])
             textLabel.alignment = size.width > (textLabelRect.size.width - 20.0) ? .LeftTextAlignment : .CenterTextAlignment
         }
     }

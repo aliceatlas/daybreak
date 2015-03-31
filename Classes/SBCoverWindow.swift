@@ -53,7 +53,7 @@ class SBCoverWindow: NSWindow {
         return 0
     }
     
-    func canBecomeKeyWindow() -> Bool {
+    override var canBecomeKeyWindow: Bool {
         return true
     }
 }

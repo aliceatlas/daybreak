@@ -46,7 +46,10 @@ class SBHistory: NSObject {
     }
     
     var items: [WebHistoryItem] {
-        return history.orderedLastVisitedDays.map({self.history.orderedItemsLastVisitedOnDay($0 as NSCalendarDate) as [WebHistoryItem]}).reduce([], +)
+        func swindle<T, U>(fn: T -> U) (arg: AnyObject) -> U {
+            return fn(arg as! T)
+        }
+        return history.orderedLastVisitedDays.map(swindle(history.orderedItemsLastVisitedOnDay)).map { $0 as! [WebHistoryItem] }.reduce([], combine: +)
     }
     
     func itemsAtIndexes(indexes: NSIndexSet) -> [WebHistoryItem] {

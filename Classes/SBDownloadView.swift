@@ -89,7 +89,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     var paragraphStyle: NSParagraphStyle {
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .CenterTextAlignment
-        return paragraph.copy() as NSParagraphStyle
+        return paragraph.copy() as! NSParagraphStyle
     }
     
     var progressRect: NSRect {
@@ -108,8 +108,8 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
         let margin: CGFloat = 8.0
         let availableWidth: CGFloat = bounds.size.width - titleHeight
         if !title.isEmpty {
-            let size = (title as NSString).sizeWithAttributes([NSFontAttributeName: nameFont, 
-                                                     NSParagraphStyleAttributeName: paragraphStyle])
+            let size = title.sizeWithAttributes([NSFontAttributeName: nameFont, 
+                                       NSParagraphStyleAttributeName: paragraphStyle])
             if size.width <= availableWidth {
                 drawRect.origin.x = (availableWidth - size.width) / 2
                 drawRect.size.width = size.width
@@ -145,14 +145,14 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     }
     
     func remove() {
-        (superview as SBDownloadsView).layoutToolsHidden()
+        (superview as! SBDownloadsView).layoutToolsHidden()
         SBDownloads.sharedDownloads.removeItem(download)
     }
     
     func finder() {
         if download.path &! {NSFileManager.defaultManager().fileExistsAtPath($0)} {
             NSWorkspace.sharedWorkspace().selectFile(download.path!, inFileViewerRootedAtPath: "")
-            (superview as SBDownloadsView).layoutToolsHidden()
+            (superview as! SBDownloadsView).layoutToolsHidden()
         }
     }
     
@@ -165,19 +165,19 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     // MARK: Event
     
     override func mouseEntered(event: NSEvent) {
-        (superview as SBDownloadsView).layoutToolsForItem(self)
+        (superview as! SBDownloadsView).layoutToolsForItem(self)
     }
     
     override func mouseMoved(event: NSEvent) {
         let location = event.locationInWindow
         let point = convertPoint(location, fromView: nil)
         if bounds.contains(point) {
-            (superview as SBDownloadsView).layoutToolsForItem(self)
+            (superview as! SBDownloadsView).layoutToolsForItem(self)
         }
     }
     
     override func mouseExited(event: NSEvent) {
-        (superview as SBDownloadsView).layoutToolsHidden()
+        (superview as! SBDownloadsView).layoutToolsHidden()
     }
     
     // MARK: Drawing

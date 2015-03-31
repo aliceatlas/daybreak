@@ -66,7 +66,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         didSet {
             if toolbarVisible != oldValue {
                 needsDisplay = true
-                for subview in subviews {
+                for subview: NSView in subviews {
                     if let subview = subview as? SBView {
                         subview.toolbarVisible = toolbarVisible
                     }
@@ -75,7 +75,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         }
     }
     
-    override init() {
+    init() {
         super.init(frame: NSZeroRect)
         addSubview(contentView)
         registerForDraggedTypes([SBBookmarkPboardType, NSURLPboardType, NSFilenamesPboardType])
@@ -425,7 +425,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     @objc(mouseDraggedWithTimer:)
     func mouseDragged(#timer: NSTimer) {
-        let event = timer.userInfo!["Event"] as NSEvent
+        let event = timer.userInfo!["Event"] as! NSEvent
         mouseDragged(event)
     }
     
@@ -532,11 +532,11 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         var r = true
         let pasteboard = sender.draggingPasteboard()
-        let types = pasteboard.types as [NSString] as [String]
+        let types = pasteboard.types as! [String]
         let point = contentView.convertPoint(sender.draggingLocation(), fromView: nil)
         if containsItem(types, SBBookmarkPboardType) {
-            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as [NSDictionary]
-            let URLStrings = pbItems.map({ $0[kSBBookmarkURL] as String }).filter({ !$0.isEmpty })
+            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as! [NSDictionary]
+            let URLStrings = pbItems.map({ $0[kSBBookmarkURL] as! String }).filter({ !$0.isEmpty })
             let URLs = URLStrings.map({ NSURL(string: $0) }).filter({ $0 != nil }).map({ $0! })
             if !URLs.isEmpty {
                 if URLs.count == 1 {

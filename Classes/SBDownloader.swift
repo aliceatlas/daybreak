@@ -85,7 +85,7 @@ class SBDownloader: NSObject {
     // MARK: Execute
     
     func executeDidFinish() {
-        delegate?.downloader(self, didFinish: receivedData!.copy() as NSData) // ???(!)
+        delegate?.downloader(self, didFinish: receivedData!.copy() as! NSData) // ???(!)
     }
     
     func executeDidFail(error: NSError?) {

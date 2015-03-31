@@ -50,14 +50,14 @@ class SBBookmarks: NSObject {
     }
     
     func indexOfURL(URLString: String) -> Int {
-        return items.firstIndex({ $0[kSBBookmarkURL] as String == URLString }) ?? NSNotFound
+        return items.firstIndex({ $0[kSBBookmarkURL] as! String == URLString }) ?? NSNotFound
     }
     
     func isEqualBookmarkItems(item1: BookmarkItem, anotherItem item2: BookmarkItem) -> Bool {
         return
-            (item1[kSBBookmarkTitle] as String) == (item2[kSBBookmarkTitle] as String) &&
-            (item1[kSBBookmarkURL] as String) == (item2[kSBBookmarkURL] as String) &&
-            (item1[kSBBookmarkImage] as NSData) == (item2[kSBBookmarkImage] as NSData)
+            (item1[kSBBookmarkTitle] as! String) == (item2[kSBBookmarkTitle] as! String) &&
+            (item1[kSBBookmarkURL] as! String) == (item2[kSBBookmarkURL] as! String) &&
+            (item1[kSBBookmarkImage] as! NSData) == (item2[kSBBookmarkImage] as! NSData)
     }
     
     func itemAtIndex(index: Int) -> BookmarkItem? {
@@ -103,13 +103,13 @@ class SBBookmarks: NSObject {
                 let title = "Title \(index)"
                 let url = "http://\(index).com/"
                 let item = SBCreateBookmarkItem(title, url, SBEmptyBookmarkImageData, NSDate(), nil, NSStringFromPoint(NSZeroPoint))
-                items.append(NSMutableDictionary(dictionary: item))
+                items.append(NSMutableDictionary(dictionary: item as! [NSObject: AnyObject]))
             }
         } else {
             let info = NSDictionary(contentsOfFile: SBBookmarksFilePath!)
             if let bookmarkItems = info?[kSBBookmarkItems] as? [BookmarkItem] {
                 if !bookmarkItems.isEmpty {
-                    items = bookmarkItems.map { NSMutableDictionary(dictionary: $0) }
+                    items = bookmarkItems.map { NSMutableDictionary(dictionary: $0 as! [NSObject: AnyObject]) }
                     return true
                 }
             }
@@ -125,7 +125,7 @@ class SBBookmarks: NSObject {
             let data = NSPropertyListSerialization.dataWithPropertyList(
                 SBBookmarksWithItems(items), format: NSPropertyListFormat.BinaryFormat_v1_0, options: 0, error: &error)
             if error != nil {
-                DebugLogS("\(__FUNCTION__) error = \(error)")
+                DebugLog("%@ error = %@", __FUNCTION__, error!)
             } else {
                 r = data!.writeToFile(path, atomically: true)
             }
@@ -136,8 +136,8 @@ class SBBookmarks: NSObject {
     
     func addItem(bookmarkItem: BookmarkItem?) {
         if let item = bookmarkItem {
-            let dict = NSMutableDictionary(dictionary: item)
-            let index = indexOfURL(dict[kSBBookmarkURL] as String)
+            let dict = NSMutableDictionary(dictionary: item as! [NSObject: AnyObject])
+            let index = indexOfURL(dict[kSBBookmarkURL] as! String)
             if index == NSNotFound {
                 items.append(dict)
             } else {
@@ -149,7 +149,7 @@ class SBBookmarks: NSObject {
     }
     
     func replaceItem(item: BookmarkItem, atIndex index: Int) {
-        items[index] = NSMutableDictionary(dictionary: item)
+        items[index] = NSMutableDictionary(dictionary: item as! [NSObject: AnyObject])
         writeToFile()
         SBDispatch(notifyDidUpdate)
     }
@@ -157,7 +157,7 @@ class SBBookmarks: NSObject {
     func replaceItem(oldItem: BookmarkItem, withItem newItem: BookmarkItem) {
         let index = indexOfItem(oldItem)
         if index != NSNotFound {
-            items[index] = NSMutableDictionary(dictionary: newItem)
+            items[index] = NSMutableDictionary(dictionary: newItem as! [NSObject: AnyObject])
             writeToFile()
             SBDispatch(notifyDidUpdate)
         }
@@ -167,7 +167,7 @@ class SBBookmarks: NSObject {
         if !inItems.isEmpty && toIndex <= items.count {
     		//[items insertObjects:inItems atIndexes:[NSIndexSet indexSetWithIndex:toIndex]];
             for (i, item) in enumerate(inItems) {
-                items.insert(NSMutableDictionary(dictionary: item), atIndex: i + toIndex)
+                items.insert(NSMutableDictionary(dictionary: item as! [NSObject: AnyObject]), atIndex: i + toIndex)
             }
             writeToFile()
             SBDispatch(notifyDidUpdate)
@@ -226,7 +226,7 @@ class SBBookmarks: NSObject {
     // MARK: Exec
     
     func openItemsFromMenuItem(menuItem: NSMenuItem) {
-        let representedItems = menuItem.representedObject as [BookmarkItem]
+        let representedItems = menuItem.representedObject as! [BookmarkItem]
         if !representedItems.isEmpty {
             openItemsInSelectedDocument(representedItems)
         }
@@ -241,14 +241,14 @@ class SBBookmarks: NSObject {
     }
     
     func removeItemsFromMenuItem(menuItem: NSMenuItem) {
-        let representedIndexes = menuItem.representedObject as NSIndexSet
+        let representedIndexes = menuItem.representedObject as! NSIndexSet
         if representedIndexes.count > 0 {
             removeItemsAtIndexes(representedIndexes)
         }
     }
     
     func changeLabelFromMenuItem(menuItem: NSMenuItem) {
-        let representedIndexes = menuItem.representedObject as NSIndexSet
+        let representedIndexes = menuItem.representedObject as! NSIndexSet
         let tag = menuItem.menu!.indexOfItem(menuItem)
         if representedIndexes.count > 0 && tag < SBBookmarkLabelColorNames.count {
             let labelName = SBBookmarkLabelColorNames[tag]

@@ -35,8 +35,12 @@ let SBByteUnitString = "byte"
 let SBBytesUnitString = "bytes"
 
 extension String {
+    var stringByDeletingScheme: String? {
+        return SBSchemes.first({self.hasPrefix($0)}) !! {suffix(self, count(self)-count($0))}
+    }
+    
     var requestURLString: String {
-        return (self as NSString).requestURLString
+        return (self as NSString).requestURLString as! String
     }
     
     func isURLString(inout hasScheme: Bool) -> Bool {
@@ -47,31 +51,72 @@ extension String {
     }
     
     var URLEncodedString: String {
-        return (self as NSString).URLEncodedString
+        return (self as NSString).URLEncodedString as! String
     }
-
+    
+    var URLDecodedString: String? {
+        return NSURL(string: self)?._web_userVisibleString()
+    }
+    
     var searchURLString: String {
-        return (self as NSString).searchURLString
+        return (self as NSString).searchURLString as! String
     }
-}
-
-func bytesStringForLength(length: Int64, unit hasUnit: Bool = true) -> String {
-    let formatter = NSByteCountFormatter()
-    formatter.countStyle = .Memory
-    formatter.includesUnit = hasUnit
-    return formatter.stringFromByteCount(length)
-}
-
-func unitStringForLength(length: Int64) -> String {
-    let formatter = NSByteCountFormatter()
-    formatter.countStyle = .Memory
-    formatter.includesCount = false
-    return formatter.stringFromByteCount(length)
-}
-
-func bytesString(receivedLegnth: Int64, expectedLength: Int64) -> String {
-	let expected = bytesStringForLength(expectedLength)
-    let sameUnit = unitStringForLength(receivedLegnth) == unitStringForLength(expectedLength)
-    let received = bytesStringForLength(receivedLegnth, unit: !sameUnit)
-    return "\(received)/\(expected)"
+    
+    func compareAsVersionString(string: String) -> NSComparisonResult {
+        var result: NSComparisonResult = .OrderedSame
+        let array0 = componentsSeparatedByString(" ")
+        let array1 = string.componentsSeparatedByString(" ")
+        var string0: String!
+        var string1: String!
+        if array1.count > 1 && array0.count > 1 {
+            string0 = array0[0]
+            string1 = array1[0]
+            result = string0.compare(string1)
+            if result == .OrderedSame {
+                string0 = array0[1]
+                string1 = array1[1]
+                result = string0.compare(string1)
+            }
+        } else if array1.count > 0 && array0.count > 1 {
+            string0 = array0[0]
+            string1 = array1[0]
+            result = string0.compare(string1)
+            if result == .OrderedSame {
+                result = .OrderedAscending
+            }
+        } else if array1.count > 1 && array0.count > 0 {
+            string0 = array0[0]
+            string1 = array1[0]
+            result = string0.compare(string1)
+            if result == .OrderedSame {
+                result = .OrderedDescending
+            }
+        } else if array1.count > 0 && array0.count > 0 {
+            string0 = array0[0]
+            string1 = array1[0]
+            result = string0.compare(string1)
+        }
+        return result
+    }
+    
+    static func bytesStringForLength(length: Int64, unit hasUnit: Bool = true) -> String {
+        let formatter = NSByteCountFormatter()
+        formatter.countStyle = .Memory
+        formatter.includesUnit = hasUnit
+        return formatter.stringFromByteCount(length)
+    }
+    
+    static func unitStringForLength(length: Int64) -> String {
+        let formatter = NSByteCountFormatter()
+        formatter.countStyle = .Memory
+        formatter.includesCount = false
+        return formatter.stringFromByteCount(length)
+    }
+    
+    static func bytesString(receivedLegnth: Int64, expectedLength: Int64) -> String {
+        let expected = bytesStringForLength(expectedLength)
+        let sameUnit = unitStringForLength(receivedLegnth) == unitStringForLength(expectedLength)
+        let received = bytesStringForLength(receivedLegnth, unit: !sameUnit)
+        return "\(received)/\(expected)"
+    }
 }

@@ -31,7 +31,7 @@ class SBBLKGUIButton: NSButton {
         SBBLKGUIButton.setCellClass(SBBLKGUIButtonCell.self)
     }
     
-    convenience override init() {
+    convenience init() {
         self.init(frame: NSZeroRect)
     }
     
@@ -47,11 +47,17 @@ class SBBLKGUIButton: NSButton {
     
     var buttonType: NSButtonType {
         get {
-            return (cell() as SBBLKGUIButtonCell).buttonType
+            return (cell() as! SBBLKGUIButtonCell).buttonType
         }
+        
+        @objc(_setButtonType:)
         set(buttonType) {
-            (cell() as SBBLKGUIButtonCell).buttonType = buttonType
+            (cell() as! SBBLKGUIButtonCell).buttonType = buttonType
         }
+    }
+    
+    override func setButtonType(type: NSButtonType) {
+        buttonType = type
     }
     
     /*var selected: NSButtonType {
@@ -74,10 +80,16 @@ class SBBLKGUIButton: NSButton {
 
 
 class SBBLKGUIButtonCell: NSButtonCell {
-    var buttonType: NSButtonType = .MomentaryLightButton {
-        didSet {
-            super.setButtonType(buttonType)
-        }
+    var _buttonType: NSButtonType = .MomentaryLightButton
+    var buttonType: NSButtonType {
+        get { return _buttonType }
+        
+        @objc(_setButtonType:)
+        set { setButtonType(newValue) }
+    }
+    override func setButtonType(type: NSButtonType) {
+        super.setButtonType(type)
+        _buttonType = type
     }
     
     override func drawWithFrame(cellFrame: NSRect, inView: NSView) {

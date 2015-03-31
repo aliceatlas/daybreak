@@ -80,7 +80,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
         if mode == .List {
             paragraphStyle.alignment = .LeftTextAlignment
         }
-        return paragraphStyle.copy() as NSParagraphStyle
+        return paragraphStyle.copy() as! NSParagraphStyle
     }
     
     init(frame: NSRect, item: NSDictionary) {
@@ -151,9 +151,9 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
         var drawRect = bounds
         let margin = titleHeight / 2
         let availableWidth = bounds.size.width - titleHeight
-        if title.utf16Count > 0 {
-            let size = (title as NSString).sizeWithAttributes([NSFontAttributeName: titleFont,
-                                                               NSParagraphStyleAttributeName: paragraphStyle])
+        if count(title.utf16) > 0 {
+            let size = title.sizeWithAttributes([NSFontAttributeName: titleFont,
+                                       NSParagraphStyleAttributeName: paragraphStyle])
             if size.width <= availableWidth {
                 drawRect.origin.x = (availableWidth - size.width) / 2
                 drawRect.size.width = size.width
@@ -210,7 +210,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     func hitToPoint(point: NSPoint) -> Bool {
         var r = false
         if mode == .Icon || mode == .Tile {
-            r = imageRect.contains(point) | titleRect.contains(point) | bytesRect.contains(point)
+            r = imageRect.contains(point) || titleRect.contains(point) || bytesRect.contains(point)
         } else if mode == .List {
             r = bounds.contains(point)
         }
@@ -220,7 +220,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     func hitToRect(rect: NSRect) -> Bool {
         var r = false
         if mode == .Icon || mode == .Tile {
-            r = rect.intersects(imageRect) | rect.intersects(titleRect) | rect.intersects(bytesRect)
+            r = rect.intersects(imageRect) || rect.intersects(titleRect) || rect.intersects(bytesRect)
         } else if mode == .List {
             r = rect.intersects(bounds)
         }
@@ -235,7 +235,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     
     func renderWindow(renderWindow: SBRenderWindow, didFinishRenderingImage image: NSImage) {
         let data = image.bitmapImageRep!.data
-        var mItem: [NSObject: AnyObject] = item
+        var mItem = item as! [NSObject: AnyObject]
         mItem[kSBBookmarkImage] = data
         SBBookmarks.sharedBookmarks.replaceItem(item, withItem: mItem)
         hideProgress()
@@ -250,19 +250,19 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     // MARK: Event
     
     override func mouseEntered(event: NSEvent) {
-        (superview as SBBookmarkListView).layoutToolsForItem(self)
+        (superview as! SBBookmarkListView).layoutToolsForItem(self)
     }
 
     override func mouseMoved(event: NSEvent) {
         let location = event.locationInWindow
         let point = convertPoint(location, fromView: nil)
         if bounds.contains(point) {
-            (superview as SBBookmarkListView).layoutToolsForItem(self)
+            (superview as! SBBookmarkListView).layoutToolsForItem(self)
         }
     }
     
     override func mouseExited(event: NSEvent) {
-        (superview as SBBookmarkListView).layoutToolsHidden()
+        (superview as! SBBookmarkListView).layoutToolsHidden()
     }
     
     // MARK: Drawing
@@ -314,7 +314,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 if let title = title {
                     let margin = titleHeight / 2
                     
-                    r = titleRect(title)
+                    r = titleRect(title as! String)
                     
                     if labelColor != nil {
                         // Label color

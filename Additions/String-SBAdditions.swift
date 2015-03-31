@@ -29,11 +29,28 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Foundation
 
 extension String {
-    func stringByAppendingPathComponent(pathComponent: String) -> String {
-        return (self as NSString).stringByAppendingPathComponent(pathComponent)
+    func containsCharacter(character: Character) -> Bool {
+        for chr in self {
+            if chr == character {
+                return true
+            }
+        }
+        return false
+    }
+    
+    var stringByDeletingQuotations: String {
+        return stringByDeletingCharacter("\"")
+    }
+    
+    var stringByDeletingSpaces: String {
+        return stringByDeletingCharacter(" ")
+    }
+    
+    func stringByDeletingCharacter(character: String) -> String {
+        return stringByReplacingOccurrencesOfString(character, withString: "")
     }
     
     func format(args: CVarArgType...) -> String {
-        return withVaList(args) { NSString(format: self, arguments: $0) }
+        return String(format: self, arguments: args)
     }
 }

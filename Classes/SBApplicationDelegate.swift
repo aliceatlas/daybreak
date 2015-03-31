@@ -63,7 +63,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         // Create History instance
         SBHistory.sharedHistory
         SBDispatch {
-            self.applicationHasFinishLaunching(aNotification.object as NSApplication)
+            self.applicationHasFinishLaunching(aNotification.object as! NSApplication)
         }
     }
     
@@ -74,11 +74,11 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    func application(sender: NSApplication, openFiles filenames: [String]) {
+    func application(sender: NSApplication, openFiles filenames: [AnyObject]) {
         var index = 0
         let documentController = SBGetDocumentController
         
-        if let document = SBGetSelectedDocument {
+        if let filenames = filenames as? [String], document = SBGetSelectedDocument {
             for filename in filenames {
                 var error: NSError?
                 let url = NSURL.fileURLWithPath(filename)!
@@ -117,15 +117,15 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let message = ""
         let okTitle = NSLocalizedString("Quit", comment: "")
         let otherTitle = NSLocalizedString("Don't Quit", comment: "")
-        let doc = SBGetSelectedDocument
-        let window = doc?.window
+        let doc = SBGetSelectedDocument!
+        let window = doc.window!
         let alert = NSAlert()
         alert.messageText = title
         alert.addButtonWithTitle(okTitle)
         alert.addButtonWithTitle(otherTitle)
         //alert.informativeText = ""
-        alert.beginSheetModalForWindow(window!) {
-            NSApp.replyToApplicationShouldTerminate($0 != NSAlertOtherReturn)
+        alert.beginSheetModalForWindow(window) {
+            NSApp.replyToApplicationShouldTerminate($0 != NSAlertSecondButtonReturn)
         }
         return .TerminateLater
     }
@@ -166,7 +166,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Notifications
     
     func updaterShouldUpdate(notification: NSNotification) {
-        update(notification.userInfo![kSBUpdaterVersionString] as String)
+        update(notification.userInfo![kSBUpdaterVersionString] as! String)
     }
     
     func updaterNotNeedUpdate(notification: NSNotification) {
@@ -179,7 +179,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func updaterDidFailChecking(notification: NSNotification) {
-        let errorDescription = notification.userInfo![kSBUpdaterErrorDescription] as String
+        let errorDescription = notification.userInfo![kSBUpdaterErrorDescription] as! String
         let alert = NSAlert()
         alert.messageText = errorDescription
         alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
@@ -208,7 +208,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func update(versionString: String) {
         let window = SBGetSelectedDocument!.window
         let info = NSBundle.mainBundle().localizedInfoDictionary!
-        let urlString = info["SBReleaseNotesURL"] as String
+        let urlString = info["SBReleaseNotesURL"] as! String
         destructUpdateView()
         updateView = SBUpdateView(frame: window.splitViewRect)
         updateView!.title = NSLocalizedString("A new version of Daybreak %@ is available.", comment: "").format(versionString)
@@ -225,7 +225,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let document = SBGetSelectedDocument!
         let window = document.window
         var versionString: NSString = updateView!.versionString!
-        let mutableVString = versionString.mutableCopy() as NSMutableString
+        let mutableVString = versionString.mutableCopy() as! NSMutableString
         var r: NSRange
         do {
             r = mutableVString.rangeOfString(" ")
@@ -234,7 +234,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
             }
         } while r.location != NSNotFound && r.length > 0
         if versionString.length != mutableVString.length {
-            versionString = mutableVString.copy() as String
+            versionString = mutableVString.copy() as! String
         }
         let url = NSURL(string: kSBUpdaterNewVersionURL.format(versionString))
         window.hideCoverWindow()
@@ -253,7 +253,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
                 localizationWindowController = SBLocalizationWindowController(viewSize: viewSize)
                 localizationWindowController!.fieldSet = fieldSet
                 localizationWindowController!.textSet = textSet
-                anotherPath !! { self.localizationWindowController!.mergeFilePath($0) }
+                anotherPath !! localizationWindowController!.mergeFilePath
                 localizationWindowController!.showWindow(nil)
             
                 /*if (floor(NSAppKitVersionNumber) < 1038)	// Resize window frame for auto-resizing (Call for 10.5. Strange bugs of Mac)
@@ -276,7 +276,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         if !kSBFeedbackMailAddress.isEmpty {
             var urlString: NSString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
             urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString)!)
+            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString as String)!)
         }
     }
     
@@ -300,8 +300,8 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let title = NSLocalizedString("Are you sure you want to empty the cache?", comment: "")
         var message = NSLocalizedString("Daybreak saves the contents of webpages you open, and stores them in a cache, so the pages load faster when you visit them again.", comment: "")
         if cache.diskCapacity > 0 && cache.memoryCapacity > 0 {
-            let diskCapacityDescription = bytesString(Int64(cache.currentDiskUsage), Int64(cache.diskCapacity))
-            let memoryCapacityDescription = bytesString(Int64(cache.currentMemoryUsage), Int64(cache.memoryCapacity))
+            let diskCapacityDescription = String.bytesString(Int64(cache.currentDiskUsage), expectedLength: Int64(cache.diskCapacity))
+            let memoryCapacityDescription = String.bytesString(Int64(cache.currentMemoryUsage), expectedLength: Int64(cache.memoryCapacity))
             let onDisk = NSLocalizedString("On disk", comment: "")
             let inMemory = NSLocalizedString("In memory", comment: "")
             message = message + "\n\n\(onDisk): \(diskCapacityDescription)\n\(inMemory): \(memoryCapacityDescription)"
@@ -313,7 +313,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         alert.addButtonWithTitle(defaultTitle)
         alert.addButtonWithTitle(alternateTitle)
         let returnCode = alert.runModal()
-        if returnCode == NSOKButton {
+        if returnCode == NSAlertFirstButtonReturn {
             NSURLCache.sharedURLCache().removeAllCachedResponses()
         }
     }
@@ -323,7 +323,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func newDocument(AnyObject) {
         var error: NSError?
         SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error)
-        error !! { DebugLogS("\(__FUNCTION__) \($0)") }
+        error !! { DebugLog("%@ %@", __FUNCTION__, $0) }
     }
     
     func openDocument(AnyObject) {
@@ -331,9 +331,9 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         let result = panel.runModal()
-        if result == NSOKButton {
+        if result == NSFileHandlingPanelOKButton {
             if let document = SBGetSelectedDocument {
-                let urls = panel.URLs as [NSURL]
+                let urls = panel.URLs as! [NSURL]
                 for (index, file) in enumerate(urls) {
                     document.constructNewTab(URL: file, selection:(index == urls.count - 1))
                 }

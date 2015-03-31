@@ -178,7 +178,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     var width: CGFloat {
         if let scrollView = enclosingScrollView {
-            let documentRect = (scrollView.documentView! as NSView).frame
+            let documentRect = (scrollView.documentView as! NSView).frame
             let documentVisibleRect = scrollView.documentVisibleRect
             return documentRect.size.height > documentVisibleRect.size.height ? scrollView.contentSize.width : scrollView.frame.size.width
         }
@@ -291,7 +291,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 indexes.addIndex(index)
             }
         }
-        return indexes.copy() as NSIndexSet
+        return indexes.copy() as! NSIndexSet
     }
     
     func draggingLineRectAtPoint(point: NSPoint) -> NSRect {
@@ -660,8 +660,8 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             
             // Search in bookmarks
             for (index, bookmarkItem) in enumerate(items) {
-                let title = bookmarkItem[kSBBookmarkTitle] as NSString
-                let URLString = bookmarkItem[kSBBookmarkURL] as NSString
+                let title = bookmarkItem[kSBBookmarkTitle] as! NSString
+                let URLString = bookmarkItem[kSBBookmarkURL] as! NSString
                 let schemelessURLString = URLString.stringByDeletingScheme!
                 var range = title.rangeOfString(text, options: .CaseInsensitiveSearch)
                 if range.location == NSNotFound {
@@ -675,7 +675,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 }
             }
             if indexes.count > 0 {
-                showIndexes(indexes.copy() as NSIndexSet)
+                showIndexes(indexes.copy() as! NSIndexSet)
             } else {
                 NSBeep()
             }
@@ -751,7 +751,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 indexes.addIndex(index)
             }
         }
-        removeItemViewsAtIndexes(indexes.copy() as NSIndexSet)
+        removeItemViewsAtIndexes(indexes.copy() as! NSIndexSet)
     }
     
     override func selectAll(sender: AnyObject?) {
@@ -765,7 +765,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 indexes.addIndex(index)
             }
         }
-        openItemsAtIndexes(indexes.copy() as NSIndexSet)
+        openItemsAtIndexes(indexes.copy() as! NSIndexSet)
     }
     
     // MARK: Event
@@ -816,9 +816,9 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 let image = NSImage(view: draggedItemView!)!
                 let dragLocation = NSMakePoint(point.x + offset.width, point.y + (draggedItemView!.frame.size.height - offset.height))
                 let pasteboard = NSPasteboard(name: NSDragPboard)
-                let title = draggedItemView!.item[kSBBookmarkTitle] as String
-                let imageData = draggedItemView!.item[kSBBookmarkImage] as NSData
-                let URLString = draggedItemView!.item[kSBBookmarkURL] as String
+                let title = draggedItemView!.item[kSBBookmarkTitle] as! String
+                let imageData = draggedItemView!.item[kSBBookmarkImage] as! NSData
+                let URLString = draggedItemView!.item[kSBBookmarkURL] as! String
                 let URL = URLString !! {NSURL(string: $0)}
                 pasteboard.declareTypes([SBBookmarkPboardType, NSURLPboardType], owner: nil)
                 draggedItems !! { pasteboard.setPropertyList($0, forType: SBBookmarkPboardType) }
@@ -957,11 +957,11 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         let pasteboard = sender.draggingPasteboard()
         let point = convertPoint(sender.draggingLocation(), fromView: nil)
-        let types = pasteboard.types as [NSString] as [String]
+        let types = pasteboard.types as! [String]
         
         if containsItem(types, SBBookmarkPboardType) {
             // Daybreak bookmarks
-            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as [NSDictionary]
+            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as! [NSDictionary]
             if !pbItems.isEmpty {
                 let bookmarks = SBBookmarks.sharedBookmarks
                 let indexes = bookmarks.indexesOfItems(pbItems)
@@ -979,7 +979,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             }
         } else if containsItem(types, SBSafariBookmarkDictionaryListPboardType) {
             // Safari bookmarks
-            let pbItems = pasteboard.propertyListForType(SBSafariBookmarkDictionaryListPboardType) as [NSDictionary]
+            let pbItems = pasteboard.propertyListForType(SBSafariBookmarkDictionaryListPboardType) as! [NSDictionary]
             let bookmarkItems = SBBookmarkItemsFromBookmarkDictionaryList(pbItems)
             if !bookmarkItems.isEmpty {
                 let bookmarks = SBBookmarks.sharedBookmarks

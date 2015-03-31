@@ -84,7 +84,7 @@ class SBLoadButton: SBButton {
         super.init(coder: decoder)
         if decoder.allowsKeyedCoding {
             if decoder.containsValueForKey("images") {
-                images = decoder.decodeObjectOfClass(NSArray.self, forKey: "images") as [NSImage]
+                images = decoder.decodeObjectOfClass(NSArray.self, forKey: "images") as! [NSImage]
             }
             if decoder.containsValueForKey("on") {
                 on = decoder.decodeBoolForKey("on")

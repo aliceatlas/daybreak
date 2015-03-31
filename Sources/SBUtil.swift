@@ -31,16 +31,16 @@ import Foundation
 // MARK: Get objects
 
 var SBGetApplicationDelegate: SBApplicationDelegate {
-    return NSApplication.sharedApplication().delegate as SBApplicationDelegate
+    return NSApplication.sharedApplication().delegate as! SBApplicationDelegate
 }
 
 var SBGetDocumentController: SBDocumentController {
-    return SBDocumentController.sharedDocumentController() as SBDocumentController
+    return SBDocumentController.sharedDocumentController() as! SBDocumentController
 }
 
 var SBGetSelectedDocument: SBDocument? {
     var document: SBDocument?
-    let documents = NSApplication.sharedApplication().orderedDocuments as [NSDocument]
+    let documents = NSApplication.sharedApplication().orderedDocuments as! [NSDocument]
     if documents.isEmpty {
         var error: NSError?
         document = SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument
@@ -59,19 +59,19 @@ var SBGetWebPreferences: WebPreferences {
 }
 
 func SBMenuWithTag(tag: Int) -> NSMenu? {
-    let items = NSApplication.sharedApplication().mainMenu!.itemArray as [NSMenuItem]
+    let items = NSApplication.sharedApplication().mainMenu!.itemArray as! [NSMenuItem]
     return items.first({ $0.tag == tag })?.submenu
 }
 
 func SBMenuItemWithTag(tag: Int) -> NSMenuItem? {
-    let items = NSApplication.sharedApplication().mainMenu!.itemArray as [NSMenuItem]
+    let items = NSApplication.sharedApplication().mainMenu!.itemArray as! [NSMenuItem]
     return items.map({ $0.submenu!.itemWithTag(tag) }).first({ $0 != nil }) !! {$0}
 }
 
 // MARK: Default values
 
 var SBDefaultDocumentWindowRect: NSRect {
-    let screens = NSScreen.screens() as [NSScreen]
+    let screens = NSScreen.screens() as! [NSScreen]
     return screens.get(0)?.visibleFrame ?? NSZeroRect
 }
 
@@ -81,7 +81,7 @@ func SBDefaultHomePage() -> String? {
         if NSFileManager.defaultManager().fileExistsAtPath(path) {
             if let internetConfig = NSDictionary(contentsOfFile: path) {
                 if internetConfig.count > 0 {
-                    return SBValueForKey("WWWHomePage", internetConfig) as? String
+                    return SBValueForKey("WWWHomePage", internetConfig as! [NSObject: AnyObject]) as? String
                 }
             }
         }
@@ -183,8 +183,8 @@ func SBBookmarkItemsFromBookmarkDictionaryList(bookmarkDictionaryList: [NSDictio
     if !bookmarkDictionaryList.isEmpty {
         let emptyImageData = SBEmptyBookmarkImageData
         for dictionary in bookmarkDictionaryList {
-            let type = dictionary["WebBookmarkType"] as String
-            var URLString = dictionary["URLString"] as String
+            let type = dictionary["WebBookmarkType"] as! String
+            var URLString = dictionary["URLString"] as! String
             let URIDictionary = dictionary["URIDictionary"] as? [NSObject: AnyObject]
             let title = URIDictionary?["title"] as? String
             var hasScheme = false
@@ -230,7 +230,7 @@ func SBLibraryDirectory(subdirectory: String?) -> String? {
 
 func SBSearchFileInDirectory(filename: String, directoryPath: String) -> String? {
     let manager = NSFileManager.defaultManager()
-    let contents = manager.contentsOfDirectoryAtPath(directoryPath, error: nil) as [String]
+    let contents = manager.contentsOfDirectoryAtPath(directoryPath, error: nil) as! [String]
 
     if let findFileName = contents.first({ $0.hasPrefix(filename) }) {
         return directoryPath.stringByAppendingPathComponent(findFileName)
@@ -240,7 +240,7 @@ func SBSearchFileInDirectory(filename: String, directoryPath: String) -> String?
 
 func SBSearchPath(searchPathDirectory: NSSearchPathDirectory, subdirectory: String?) -> String? {
     let manager = NSFileManager.defaultManager()
-    let paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, .UserDomainMask, true) as [NSString] as [String]
+    let paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, .UserDomainMask, true) as! [String]
     var path = paths.get(0)
     if path &! manager.fileExistsAtPath {
         if subdirectory != nil {
@@ -289,7 +289,7 @@ var SBBookmarksFilePath: String? {
             } else {
                 path = nil
             }
-            DebugLogS("\(__FUNCTION__) error = \(error)")
+            DebugLog("%@ error = %@", __FUNCTION__, "\(error)")
         }
     }
     return path
@@ -1332,10 +1332,10 @@ func SBEncodingMenu(target: AnyObject?, selector: Selector, showDefault: Bool) -
         if let enc = enc {
             let encodingName = NSString.localizedNameOfStringEncoding(enc)
             let cfEncoding = CFStringConvertNSStringEncodingToEncoding(enc)
-            let ianaName = CFStringConvertEncodingToIANACharSetName(cfEncoding) as NSString
-            let available = CFStringIsEncodingAvailable(cfEncoding)
-            let cfEncodingName = CFStringGetNameOfEncoding(cfEncoding)
-            DebugLogS("\(available)\t\(enc)\t\(encodingName)\t\(cfEncodingName)\t\(ianaName)")
+            let ianaName = CFStringConvertEncodingToIANACharSetName(cfEncoding) as! String
+            let available = Bool(Int(CFStringIsEncodingAvailable(cfEncoding)))
+            let cfEncodingName = CFStringGetNameOfEncoding(cfEncoding) as! String
+            DebugLog("%@\t%u\t%@\t%@\t%@", available ? "√" : " ", enc, encodingName, cfEncodingName, ianaName)
             if encodingName != "" {
                 let item = NSMenuItem(title: encodingName, action: selector, keyEquivalent: "")
                 target !! { item.target = $0 }
@@ -1392,21 +1392,21 @@ func SBAllowsDrag(downPoint: NSPoint, dragPoint: NSPoint) -> Bool {
 
 func SBLocalizeTitlesInMenu(menu: NSMenu) {
     menu.title = NSLocalizedString(menu.title, comment: "")
-    for item in menu.itemArray as [NSMenuItem] {
+    for item in menu.itemArray as! [NSMenuItem] {
         item.title = NSLocalizedString(item.title, comment: "")
         item.submenu !! {SBLocalizeTitlesInMenu($0)}
     }
 }
 
 func SBGetLocalizableTextSet(path: String) -> ([[String]], [[NSTextField]], NSSize)? {
-    let localizableString = NSString(contentsOfFile: path, encoding: NSUTF16StringEncoding, error: nil)
-    if localizableString &! {$0.length > 0} {
+    let localizableString = String(contentsOfFile: path, encoding: NSUTF16StringEncoding, error: nil)
+    if localizableString &! {count($0) > 0} {
         let fieldSize = NSSize(width: 300, height: 22)
         let offset = NSPoint(x: 45, y: 12)
         let margin = CGFloat(20)
         //let lines = split(elements: Array(localizableString), isSeparator: {$0 as String == "\n"})
         //<S : Sliceable, R : BooleanType>(elements: S, isSeparator: {} -> R, maxSplit: Int = default, allowEmptySlices: Bool = default) -> [S.SubSlice]
-        let lines = localizableString!.componentsSeparatedByString("\n") as [String]
+        let lines = localizableString!.componentsSeparatedByString("\n")
         let count = CGFloat(lines.count)
         var size = NSSize(
             width: offset.x + (fieldSize.width * 2) + margin * 2,
@@ -1419,7 +1419,7 @@ func SBGetLocalizableTextSet(path: String) -> ([[String]], [[NSTextField]], NSSi
                 var fieldRect = NSRect()
                 var texts: [String] = []
                 var fields: [NSTextField] = []
-                let components = line.componentsSeparatedByString(" = ") as [NSString] as [String]
+                let components = line.componentsSeparatedByString(" = ")
                 
                 fieldRect.size = fieldSize
                 fieldRect.origin.y = size.height - margin - (fieldSize.height * CGFloat(i + 1)) - (offset.y * CGFloat(i))
@@ -1436,9 +1436,9 @@ func SBGetLocalizableTextSet(path: String) -> ([[String]], [[NSTextField]], NSSi
                         field.bordered = isMenuItem
                         field.drawsBackground = isMenuItem
                         field.bezeled = editable
-                        (field.cell() as NSCell).scrollable = isMenuItem
+                        (field.cell() as! NSCell).scrollable = isMenuItem
                         if isMenuItem {
-                            string = (component as NSString).stringByDeletingQuotations
+                            string = component.stringByDeletingQuotations
                         }
                         texts.append(string)
                         fields.append(field)
@@ -1500,7 +1500,7 @@ func SBConstrain<T: Comparable>(inout value: T, min minValue: T? = nil, max maxV
 
 func SBDebugViewStructure(view: NSView) -> [NSObject: AnyObject] {
     var info: [NSObject: AnyObject] = [:]
-    let subviews = view.subviews as [NSView]
+    let subviews: [NSView] = view.subviews
     var description: String!
     if let view = view as? SBView {
         description = view.description
@@ -1517,7 +1517,7 @@ func SBDebugViewStructure(view: NSView) -> [NSObject: AnyObject] {
 
 func SBDebugLayerStructure(layer: CALayer) -> [NSObject: AnyObject] {
     var info: [NSObject: AnyObject] = [:]
-    let sublayers = (layer.sublayers ?? []) as [CALayer]
+    let sublayers = (layer.sublayers ?? []) as! [CALayer]
     let description = "\(layer) \(NSStringFromRect(layer.frame))"
     info["Description"] = description
     if !sublayers.isEmpty {
@@ -1533,7 +1533,7 @@ func SBDebugDumpMainMenu() -> [NSObject: AnyObject] {
 
 func SBDebugDumpMenu(menu: NSMenu) -> [[NSObject: AnyObject]] {
     var items: [[NSObject: AnyObject]] = []
-    for item in menu.itemArray as [NSMenuItem] {
+    for item in menu.itemArray as! [NSMenuItem] {
         var info: [NSObject: AnyObject] = [:]
         let submenu = item.submenu
         let title = item.title

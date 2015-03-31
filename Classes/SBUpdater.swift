@@ -44,7 +44,7 @@ class SBUpdater: NSObject {
     
     func checking() {
         let result = NSComparisonResult.OrderedSame;
-        let appVersionString = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? NSString
+        let appVersionString = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String
         let url = NSURL(string: SBVersionFileURL)!
         let request = NSURLRequest(URL: url, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
         var response: NSURLResponse?
@@ -59,22 +59,16 @@ class SBUpdater: NSObject {
         if (data !! appVersionString) != nil {
             // Success for networking
             // Parse data
-            if let string = NSString(data: data!, encoding: NSUTF8StringEncoding) {
-                if string.length > 0 {
-                    let range0 = string.rangeOfString("version=\"")
-                    if range0.location != NSNotFound {
-                        let range1 = string.rangeOfString("\";", options: NSStringCompareOptions(0), range: NSMakeRange(NSMaxRange(range0), string.length - NSMaxRange(range0)))
-                        if range1.location != NSNotFound {
-                            let range2 = NSMakeRange(NSMaxRange(range0), range1.location - NSMaxRange(range0))
-                            let versionString = string.substringWithRange(range2)
-                            if !versionString.isEmpty {
-                                let comparisonResult = appVersionString!.compareAsVersionString(versionString)
-                                threadDictionary[kSBUpdaterResult] = comparisonResult.rawValue
-                                threadDictionary[kSBUpdaterVersionString] = versionString
-                            }
-                        }
-                    }
-                }
+            if let string = String(UTF8String: UnsafePointer<CChar>(data!.bytes))
+                   where !string.isEmpty,
+               let range0 = string.rangeOfString("version=\""),
+                   range1 = string.rangeOfString("\";", range: range0.endIndex..<string.endIndex),
+                   range2 = Optional(range0.endIndex..<range1.startIndex),
+                   versionString = Optional(string[range2])
+                   where !versionString.isEmpty {
+                let comparisonResult = appVersionString!.compareAsVersionString(versionString)
+                threadDictionary[kSBUpdaterResult] = comparisonResult.rawValue
+                threadDictionary[kSBUpdaterVersionString] = versionString
             }
         } else {
             // Error
@@ -83,16 +77,16 @@ class SBUpdater: NSObject {
     }
     
     func threadWillExit(notification: NSNotification) {
-        let currentThread = notification.object as NSThread
+        let currentThread = notification.object as! NSThread
         let threadDictionary = currentThread.threadDictionary
-        let userInfo = threadDictionary.copy() as [NSObject: AnyObject]
+        let userInfo = threadDictionary.copy() as! [NSObject: AnyObject]
         if let errorDescription = threadDictionary[kSBUpdaterErrorDescription] as? String {
-            if let result = NSComparisonResult(rawValue: userInfo[kSBUpdaterResult] as Int) {
+            if let result = NSComparisonResult(rawValue: userInfo[kSBUpdaterResult] as! Int) {
                 switch result {
                 case .OrderedAscending:
                     var shouldSkip = false
                     if checkSkipVersion {
-                        let versionString = userInfo[kSBUpdaterVersionString] as String
+                        let versionString = userInfo[kSBUpdaterVersionString] as! String
                         let skipVersion = NSUserDefaults.standardUserDefaults().stringForKey(kSBUpdaterSkipVersion)
                         shouldSkip = versionString == skipVersion
                     }
@@ -117,14 +111,14 @@ class SBUpdater: NSObject {
     }
     
     func postShouldUpdateNotification(userInfo: NSDictionary) {
-        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterShouldUpdateNotification, object: self, userInfo: userInfo)
+        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterShouldUpdateNotification, object: self, userInfo: userInfo as [NSObject: AnyObject])
     }
     
     func postNotNeedUpdateNotification(userInfo: NSDictionary) {
-        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterNotNeedUpdateNotification, object: self, userInfo: userInfo)
+        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterNotNeedUpdateNotification, object: self, userInfo: userInfo as [NSObject: AnyObject])
     }
     
     func postDidFailCheckingNotification(userInfo: NSDictionary) {
-        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterDidFailCheckingNotification, object: self, userInfo: userInfo)
+        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterDidFailCheckingNotification, object: self, userInfo: userInfo as [NSObject: AnyObject])
     }
 }

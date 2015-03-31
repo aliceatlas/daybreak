@@ -44,7 +44,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = NSFont.boldSystemFontOfSize(16)
         messageLabel.alignment = .CenterTextAlignment
-        (messageLabel.cell() as NSCell).wraps = true
+        (messageLabel.cell() as! NSCell).wraps = true
         return messageLabel
     }()
     
@@ -364,7 +364,7 @@ class SBEditBookmarkView: SBBookmarkView {
     }
     
     override var message: String {
-        get { fatalError("message property not available"); return "" }
+        get { fatalError("message property not available") }
         set(message) { fatalError("message property not available") }
     }
     

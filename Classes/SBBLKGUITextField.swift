@@ -31,7 +31,7 @@ class SBBLKGUITextField: NSTextField {
         SBBLKGUITextField.setCellClass(SBBLKGUITextFieldCell.self)
     }
     
-    convenience override init() {
+    convenience init() {
         self.init(frame: NSZeroRect)
     }
     
@@ -52,10 +52,6 @@ class SBBLKGUITextField: NSTextField {
 }
 
 class SBBLKGUITextFieldCell: NSTextFieldCell {
-    override init() {
-        super.init()
-    }
-    
     @objc(initTextCell:)
     override init(textCell string: String) {
         super.init(textCell: string)

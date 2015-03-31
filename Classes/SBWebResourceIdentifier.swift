@@ -33,7 +33,7 @@ class SBWebResourceIdentifier: NSObject /*, NSCoding */ {
     var length: CLongLong = 0
     var received: CLongLong = 0
     var flag: Bool = true
-    var URL: NSURL { return request.URL }
+    var URL: NSURL { return request.URL! }
     
     init(URLRequest request: NSURLRequest) {
         self.request = request

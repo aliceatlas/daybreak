@@ -69,7 +69,7 @@ class SBPreferences: NSObject {
     }
     
     class func boolForKey(keyName: String) -> Bool {
-        return objectForKey(keyName) as Bool
+        return objectForKey(keyName) as! Bool
     }
     
     class func objectForKey(keyName: String) -> AnyObject? {
@@ -112,7 +112,7 @@ class SBPreferences: NSObject {
         case kSBLoadsImagesAutomatically:
             preferences.loadsImagesAutomatically = object.boolValue
         case kSBDefaultEncoding:
-            preferences.defaultTextEncodingName = object as String
+            preferences.defaultTextEncodingName = object as! String
         case kSBIncludeBackgroundsWhenPrinting:
             preferences.shouldPrintBackgrounds = object.boolValue
         case kSBEnablePlugIns:

@@ -43,7 +43,7 @@ class SBWebView: WebView, SBFindbarTarget {
     }
     
     var documentString: String {
-        return (mainFrame.frameView.documentView as WebDocumentText).string()
+        return (mainFrame.frameView.documentView as! WebDocumentText).string()
     }
     
     var isEmpty: Bool {

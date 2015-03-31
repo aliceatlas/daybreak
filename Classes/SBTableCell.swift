@@ -35,10 +35,21 @@ class SBTableCell: NSCell {
     var showSelection = true
     var showRoundedPath: Bool = false
     
-    override init() {
-        super.init()
+    private func setDefaultValues() {
         enabled = true
         lineBreakMode = .ByTruncatingTail
+    }
+    
+    @objc(initImageCell:)
+    override init(imageCell anImage: NSImage?) {
+        super.init(imageCell: anImage)
+        setDefaultValues()
+    }
+    
+    @objc(initTextCell:)
+    override init(textCell aString: String) {
+        super.init(textCell: aString)
+        setDefaultValues()
     }
     
     required init(coder: NSCoder) {

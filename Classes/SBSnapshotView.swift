@@ -141,7 +141,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         lockButton.setButtonType(.ToggleButton)
         lockButton.image = NSImage(named: "Icon_Lock.png")
         lockButton.alternateImage = NSImage(named: "Icon_Unlock.png")
-        (lockButton.cell() as NSButtonCell).imageScaling = .ImageScaleNone
+        (lockButton.cell() as! NSButtonCell).imageScaling = .ImageScaleNone
         lockButton.bordered = false
         return lockButton
     }()
@@ -247,7 +247,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     private lazy var jpgOptionSlider: SBBLKGUISlider = {
         let jpgOptionSlider = SBBLKGUISlider(frame: NSMakeRect(5, 8, 75, 17))
-        (jpgOptionSlider.cell() as SBBLKGUISliderCell).controlSize = .MiniControlSize
+        (jpgOptionSlider.cell() as! SBBLKGUISliderCell).controlSize = .MiniControlSize
         jpgOptionSlider.minValue = 0.0
         jpgOptionSlider.maxValue = 1.0
         jpgOptionSlider.numberOfTickMarks = 11
@@ -357,18 +357,21 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     var data: NSData?
     
     var filename: String {
-        let untitled: NSString = NSLocalizedString("Untitled", comment: "")
+        if let title = title {
+            return title
+        }
+        let untitled = NSLocalizedString("Untitled", comment: "")
         switch filetype {
             case NSBitmapImageFileType.NSTIFFFileType:
-                return title ?? untitled.stringByAppendingPathExtension("tiff")!
+                return untitled.stringByAppendingPathExtension("tiff")!
             case NSBitmapImageFileType.NSGIFFileType:
-                return title ?? untitled.stringByAppendingPathExtension("gif")!
+                return untitled.stringByAppendingPathExtension("gif")!
             case NSBitmapImageFileType.NSJPEGFileType:
-                return title ?? untitled.stringByAppendingPathExtension("jpg")!
+                return untitled.stringByAppendingPathExtension("jpg")!
             case NSBitmapImageFileType.NSPNGFileType:
-                return title ?? untitled.stringByAppendingPathExtension("png")!
+                return untitled.stringByAppendingPathExtension("png")!
             default:
-                return title ?? untitled
+                return untitled
         }
     }
     
@@ -438,7 +441,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             alert.addButtonWithTitle(NSLocalizedString("Continue", comment: ""))
             alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: ""))
             let r = alert.runModal()
-            if r == NSOKButton {
+            if r == NSAlertFirstButtonReturn {
                 updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "updateWithTimer:", userInfo: field, repeats: false)
             } else {
                 if field === widthField {
@@ -591,7 +594,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             imageView.image = compressedImage
             // Get length of image data
             // Set length as string
-            let fileSizeString = NSString.bytesStringForLength(CLongLong(data!.length))
+            let fileSizeString = String.bytesStringForLength(CLongLong(data!.length))
             filesizeField.stringValue = fileSizeString
             doneButton.enabled = true
         } else {
@@ -721,7 +724,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let tag = sender.tag
         if Int(filetype.rawValue) != tag {
             filetype = NSBitmapImageFileType(rawValue: UInt(tag))!
-            for item in filetypePopup.menu!.itemArray as [NSMenuItem] {
+            for item in filetypePopup.menu!.itemArray as! [NSMenuItem] {
                 item.state = (Int(filetype.rawValue) == item.tag) ? NSOnState : NSOffState
             }
             // Update image
@@ -745,7 +748,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let tag = sender.tag
         if Int(tiffCompression.rawValue) != tag {
             tiffCompression = NSTIFFCompression(rawValue: UInt(tag))!
-            for item in tiffOptionPopup.menu!.itemArray as [NSMenuItem] {
+            for item in tiffOptionPopup.menu!.itemArray as! [NSMenuItem] {
                 item.state = (Int(tiffCompression.rawValue) == item.tag) ? NSOnState : NSOffState
             }
             // Update image

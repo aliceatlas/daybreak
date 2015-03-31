@@ -48,10 +48,6 @@ class SBBLKGUISearchField: NSSearchField {
 }
 
 class SBBLKGUISearchFieldCell: NSSearchFieldCell {
-    override init() {
-        super.init()
-    }
-    
     @objc(initTextCell:)
     override init(textCell string: String) {
         super.init(textCell: string)

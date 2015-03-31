@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     private let kSBLocalizationAvailableSubversionAccess = 0
     
-    var contentView: NSView { return window!.contentView as NSView }
+    var contentView: NSView { return window!.contentView as! NSView }
     
     private lazy var langField: NSTextField = {
         let contentRect = self.contentView.bounds
@@ -53,7 +53,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     
     private lazy var langPopup: NSPopUpButton = {
         let defaults = NSUserDefaults.standardUserDefaults()
-        let languages = defaults.objectForKey("AppleLanguages") as [String]
+        let languages = defaults.objectForKey("AppleLanguages") as! [String]
         let menu = NSMenu()
         let langFRect = self.langField.frame
         var langRect = langFRect
@@ -63,7 +63,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         let langPopup = NSPopUpButton(frame: langRect, pullsDown: false)
         langPopup.autoresizingMask = .ViewMinYMargin
         langPopup.bezelStyle = .TexturedRoundedBezelStyle
-        (langPopup.cell() as NSPopUpButtonCell).arrowPosition = .ArrowAtBottom
+        (langPopup.cell() as! NSPopUpButtonCell).arrowPosition = .ArrowAtBottom
         for lang in languages {
             let title = NSLocale.systemLocale().displayNameForKey(NSLocaleIdentifier, value: lang)
             menu.addItem(title: title!, representedObject: lang, target: self, action: "selectLanguage:")
@@ -379,7 +379,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
      * 1 - Show the edit view
      */
     func changeView(index: Int) {
-        let contentView = window!.contentView as NSView
+        let contentView = window!.contentView as! NSView
         let duration: CGFloat = 0.4
         animating = true
         var editRect0 = editView.frame
@@ -431,8 +431,9 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         CATransaction.commit()
     }
     
-    func animationDidEnd(animation: SBViewAnimation) {
-        if let index = animation.context as? Int {
+    func animationDidEnd(animation: NSAnimation) {
+        if let animation = animation as? SBViewAnimation,
+               index = animation.context as? Int {
             if index == 0 {
                 editView.removeFromSuperview()
             } else {
@@ -458,7 +459,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
                 if data.writeToURL(url, atomically: true) {
                     // Copy strings into bundle resource
                     let manager = NSFileManager.defaultManager()
-                    let directoryPath = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent(langCode!).stringByAppendingPathExtension("lproj")!
+                    let directoryPath = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent(langCode as! String).stringByAppendingPathExtension("lproj")!
                     if !manager.fileExistsAtPath(directoryPath) {
                         manager.createDirectoryAtPath(directoryPath, withIntermediateDirectories: true, attributes: nil, error: nil)
                     }

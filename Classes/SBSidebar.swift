@@ -58,8 +58,8 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
                 oldValue?.removeFromSuperview()
                 if let view = view {
                     view.frame = viewRect
-                    if !subviews.isEmpty {
-                        addSubview(view, positioned: .Below, relativeTo: (subviews[0] as NSView))
+                    if let subview: NSView = subviews.get(0) {
+                        addSubview(view, positioned: .Below, relativeTo: subview)
                     } else {
                         addSubview(view)
                     }
@@ -308,7 +308,7 @@ class SBSideBottombar: SBBottombar {
     
     lazy var sizeSlider: SBBLKGUISlider = {
         let sizeSlider = SBBLKGUISlider(frame: self.sizeSliderRect)
-        (sizeSlider.cell() as NSCell).controlSize = .SmallControlSize
+        (sizeSlider.cell() as! NSCell).controlSize = .SmallControlSize
         sizeSlider.minValue = kSBBookmarkCellMinWidth
         sizeSlider.maxValue = kSBBookmarkCellMaxWidth
         sizeSlider.floatValue = Float(kSBBookmarkCellMinWidth)
@@ -337,7 +337,11 @@ class SBSideBottombar: SBBottombar {
         // buttons.append(newFolderButton)
         addSubview(sizeSlider)
     }
-        
+    
+    required init(coder: NSCoder) {
+        fatalError("NSCoding not supported")
+    }
+    
     // MARK: Rects
     
     var buttonWidth: CGFloat { return bounds.size.height }

@@ -37,97 +37,8 @@ extension NSString {
         return false
     }
     
-    func compareAsVersionString(string: NSString) -> NSComparisonResult {
-        var result: NSComparisonResult = .OrderedSame
-        let array0 = componentsSeparatedByString(" ") as [NSString]
-        let array1 = string.componentsSeparatedByString(" ") as [NSString]
-        var string0: NSString!
-        var string1: NSString!
-        if array1.count > 1 && array0.count > 1 {
-            string0 = array0[0]
-            string1 = array1[0]
-            result = string0.compare(string1)
-            if result == .OrderedSame {
-                string0 = array0[1]
-                string1 = array1[1]
-                result = string0.compare(string1)
-            }
-        } else if array1.count > 0 && array0.count > 1 {
-            string0 = array0[0]
-            string1 = array1[0]
-            result = string0.compare(string1)
-            if result == .OrderedSame {
-                result = .OrderedAscending
-            }
-        } else if array1.count > 1 && array0.count > 0 {
-            string0 = array0[0]
-            string1 = array1[0]
-            result = string0.compare(string1)
-            if result == .OrderedSame {
-                result = .OrderedDescending
-            }
-        } else if array1.count > 0 && array0.count > 0 {
-            string0 = array0[0]
-            string1 = array1[0]
-            result = string0.compare(string1)
-        }
-        return result;
-    }
-    
-    class func bytesStringForLength(length: CLongLong) -> NSString {
-        return bytesStringForLength(length, unit: true)
-    }
-    
-    class func bytesStringForLength(length: Int64, unit hasUnit: Bool) -> NSString {
-        let formatter = NSByteCountFormatter()
-        formatter.countStyle = .Memory
-        formatter.includesUnit = hasUnit
-        return formatter.stringFromByteCount(length)
-    }
-    
-    class func unitStringForLength(length: Int64) -> NSString {
-        let formatter = NSByteCountFormatter()
-        formatter.countStyle = .Memory
-        formatter.includesCount = false
-        return formatter.stringFromByteCount(length)
-    }
-    
-    class func bytesString(receivedLegnth: CLongLong, expectedLength: CLongLong) -> NSString {
-        let expected = bytesStringForLength(Int64(expectedLength))
-        let sameUnit = unitStringForLength(receivedLegnth) == unitStringForLength(expectedLength)
-        let received = bytesStringForLength(receivedLegnth, unit: !sameUnit)
-        return "\(received)/\(expected)"
-    }
-    
-    var stringByDeletingQuotations: NSString {
-        return stringByDeletingCharacter("\"")
-    }
-    
-    var stringByDeletingSpaces: NSString {
-        return stringByDeletingCharacter(" ")
-    }
-    
-    func stringByDeletingCharacter(character: NSString) -> NSString {
-        var string = self
-        if rangeOfString(character).location != NSNotFound {
-            let firstRange = string.rangeOfString(character)
-            let lastRange = string.rangeOfString(character, options: .BackwardsSearch)
-            var range = NSMakeRange(NSNotFound, 0)
-            if firstRange.location != NSNotFound && lastRange.location != NSNotFound {
-                if NSEqualRanges(firstRange, lastRange) {
-                    string = string.stringByReplacingCharactersInRange(firstRange, withString: "")
-                } else {
-                    range.location = firstRange.location + firstRange.length
-                    range.length = lastRange.location - range.location
-                    string = string.substringWithRange(range)
-                }
-            }
-        }
-        return string
-    }
-    
     func format(args: CVarArgType...) -> NSString {
-        return withVaList(args) { NSString(format: self, arguments: $0) }
+        return withVaList(args) { NSString(format: self as! String, arguments: $0) }
     }
 }
 
@@ -136,7 +47,7 @@ extension NSString {
     func isURLString(hasScheme: UnsafeMutablePointer<ObjCBool>) -> Bool {
         if (rangeOfString(" ").location == NSNotFound && rangeOfString(".").location != NSNotFound) || hasPrefix("http://localhost") {
             let string = URLEncodedString
-            let attributedString = NSAttributedString(string: string)
+            let attributedString = NSAttributedString(string: string as! String)
             var range = NSMakeRange(0, 0)
             let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
             if range.location == 0 {
@@ -148,16 +59,12 @@ extension NSString {
     }
     
     var stringByDeletingScheme: NSString? {
-        return SBSchemes.first(self.hasPrefix) !! {self.substringFromIndex($0.utf16Count)}
+        return SBSchemes.first(self.hasPrefix) !! count !! substringFromIndex
     }
     
     var URLEncodedString: NSString {
-        let requestURL = NSURL._web_URLWithUserTypedString(self)
+        let requestURL = NSURL._web_URLWithUserTypedString(self as! String)
         return requestURL.absoluteString!
-    }
-    
-    var URLDecodedString: NSString? {
-        return NSURL(string: self)?._web_userVisibleString()
     }
     
     var requestURLString: NSString {
@@ -166,9 +73,9 @@ extension NSString {
         if stringValue.isURLString(&hasScheme) {
             if !hasScheme {
                 if stringValue.hasPrefix("/") {
-                    stringValue = "file://" + stringValue
+                    stringValue = "file://\(stringValue)"
                 } else {
-                    stringValue = "http://" + stringValue
+                    stringValue = "http://\(stringValue)"
                 }
             }
             stringValue = stringValue.URLEncodedString

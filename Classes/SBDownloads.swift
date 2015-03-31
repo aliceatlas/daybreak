@@ -116,7 +116,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         executeDidUpdateItem(downloadItem!)
     }
     
-    func download(download: NSURLDownload, willSendRequest request: NSURLRequest, redirectResponse: NSURLResponse) -> NSURLRequest {
+    func download(download: NSURLDownload, willSendRequest request: NSURLRequest, redirectResponse: NSURLResponse?) -> NSURLRequest? {
         if let item = items.first({ $0.download === download }) {
             // Update views
             executeDidUpdateItem(item)
@@ -127,7 +127,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     func download(download: NSURLDownload, didReceiveResponse response: NSURLResponse) {
         if let item = items.first({ $0.download === download }) {
             item.expectedLength = SBConstrain(Int(response.expectedContentLength), min: 0)
-            item.bytes = bytesString(Int64(item.receivedLength), Int64(item.expectedLength))
+            item.bytes = String.bytesString(Int64(item.receivedLength), expectedLength: Int64(item.expectedLength))
             // Update views
             executeDidUpdateItem(item)
         }
@@ -135,7 +135,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     
     func download(download: NSURLDownload, decideDestinationWithSuggestedFilename filename: String) {
         if let item = items.first({ $0.download === download }) {
-            item.path = (SBPreferences.objectForKey(kSBSaveDownloadedFilesTo) as String)
+            item.path = SBPreferences.objectForKey(kSBSaveDownloadedFilesTo) as! String
             if NSFileManager.defaultManager().fileExistsAtPath(item.path!) {
                 item.path = item.path!.stringByAppendingPathComponent(filename)
                 item.download?.setDestination(item.path!, allowOverwrite: false)
@@ -156,7 +156,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
             if item.expectedLength > 0 {
                 item.receivedLength += length
             }
-            item.bytes = bytesString(Int64(item.receivedLength), Int64(item.expectedLength))
+            item.bytes = String.bytesString(Int64(item.receivedLength), expectedLength: Int64(item.expectedLength))
             // Update views
             executeDidUpdateItem(item)
         }
@@ -187,7 +187,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         return true
     }
     
-    func download(download: NSURLDownload, didCreateDestination path: String!) {
+    func download(download: NSURLDownload, didCreateDestination path: String) {
         if let item = items.first({ $0.download === download }) {
             if !path.lastPathComponent.isEmpty {
                 item.name = path.lastPathComponent

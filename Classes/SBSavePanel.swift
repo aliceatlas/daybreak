@@ -44,30 +44,28 @@ class SBSavePanel: NSSavePanel {
     
     func constructBackgroundView() {
         if let contentView = contentView as? NSView {
-            let subviews = contentView.subviews
+            let subviews: [NSView] = contentView.subviews
             if !subviews.isEmpty {
-                if let belowView = subviews[0] as? NSView {
-                    let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
-                    savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-                    contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
-                }
+                let belowView = subviews[0]
+                let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
+                savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+                contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
             }
         }
     }
     
     func switchButtonType() {
-        let subviews = contentView.subviews
-        switchButtonTypeInSubViews(subviews)
+        switchButtonTypeInSubViews(contentView.subviews)
     }
     
-    func switchButtonTypeInSubViews(subviews: [AnyObject]) {
+    func switchButtonTypeInSubViews(subviews: [NSView]) {
         for subview in subviews {
             if let button = subview as? NSButton {
                 if button.bezelStyle == .RoundedBezelStyle {
                     button.bezelStyle = .TexturedRoundedBezelStyle
                 }
-            } else if let view = subview as? NSView {
-                switchButtonTypeInSubViews(view.subviews)
+            } else {
+                switchButtonTypeInSubViews(subview.subviews)
             }
         }
     }
@@ -89,13 +87,12 @@ class SBOpenPanel: NSOpenPanel {
     
     func constructBackgroundView() {
         if let contentView = contentView as? NSView {
-            let subviews = contentView.subviews
+            let subviews: [NSView] = contentView.subviews
             if !subviews.isEmpty {
-                if let belowView = subviews[0] as? NSView {
-                    let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
-                    savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-                    contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
-                }
+                let belowView = subviews[0]
+                let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
+                savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+                contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
             }
         }
     }
@@ -104,14 +101,14 @@ class SBOpenPanel: NSOpenPanel {
         switchButtonTypeInSubViews(contentView.subviews)
     }
     
-    func switchButtonTypeInSubViews(subviews: [AnyObject]) {
+    func switchButtonTypeInSubViews(subviews: [NSView]) {
         for subview in subviews {
             if let button = subview as? NSButton {
                 if button.bezelStyle == .RoundedBezelStyle {
                     button.bezelStyle = .TexturedRoundedBezelStyle
                 }
-            } else if let view = subview as? NSView {
-                switchButtonTypeInSubViews(view.subviews)
+            } else {
+                switchButtonTypeInSubViews(subview.subviews)
             }
         }
     }

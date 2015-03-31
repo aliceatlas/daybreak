@@ -42,7 +42,7 @@ class SBBLKGUIScrollView: NSScrollView {
         }
     }
 
-    convenience override init() {
+    convenience init() {
         self.init(frame: NSZeroRect)
     }
     
@@ -299,7 +299,7 @@ class SBBLKGUIScroller: NSScroller {
 }
 
 class SBBLKGUIClipView: NSClipView {
-    func isFlipped() -> Bool {
+    override var flipped: Bool {
         return true
     }
 }

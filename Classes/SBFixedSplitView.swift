@@ -51,10 +51,9 @@ class SBFixedSplitView: NSSplitView {
     
     override var dividerThickness: CGFloat { return 0 }
     
-    @objc(resizeSubviewsWithOldSize:)
-    func resizeSubviews(#oldSize: NSSize) {
+    override func resizeSubviewsWithOldSize(oldSize: NSSize) {
         if !vertical {
-            let subviews = self.subviews as [NSView]
+            let subviews: [NSView] = self.subviews
             let subview1 = subviews.get(0)
             let subview2 = subviews.get(1)
             if subview1 != nil && subview2 != nil {

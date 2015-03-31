@@ -73,7 +73,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         summaryField.font = NSFont.systemFontOfSize(14.0)
         summaryField.textColor = NSColor.whiteColor()
         summaryField.delegate = self
-        (summaryField.cell() as SBBLKGUITextFieldCell).wraps = true
+        (summaryField.cell() as! SBBLKGUITextFieldCell).wraps = true
         return summaryField
     }()
     
@@ -142,8 +142,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let switchMatrix = NSMatrix(frame: self.switchRect, mode: .RadioModeMatrix, prototype: cell, numberOfRows: 1, numberOfColumns: 2)
         switchMatrix.cellSize = NSMakeSize(150.0, 18.0)
         switchMatrix.drawsBackground = false
-        (switchMatrix.cellAtRow(0, column: 0) as NSCell).title = NSLocalizedString("Describe", comment: "")
-        (switchMatrix.cellAtRow(0, column: 1) as NSCell).title = NSLocalizedString("None", comment: "")
+        (switchMatrix.cellAtRow(0, column: 0) as! NSCell).title = NSLocalizedString("Describe", comment: "")
+        (switchMatrix.cellAtRow(0, column: 1) as! NSCell).title = NSLocalizedString("None", comment: "")
         switchMatrix.target = self
         switchMatrix.action = "switchReproducibility:"
         return switchMatrix
@@ -168,7 +168,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         wayField.font = NSFont.systemFontOfSize(14.0)
         wayField.textColor = NSColor.whiteColor()
         wayField.delegate = self
-        (wayField.cell() as SBBLKGUITextFieldCell).wraps = true
+        (wayField.cell() as! SBBLKGUITextFieldCell).wraps = true
         return wayField
     }()
     
@@ -386,7 +386,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
                 processor = "x86_64"
             }
         }
-        let applicationVersion = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as String
+        let applicationVersion = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
         
         // Make message
         if !summary.isEmpty {

@@ -267,7 +267,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             let field = NSTextField(frame: r)
             field.delegate = self
             field.focusRingType = .None
-            (field.cell() as NSTextFieldCell).placeholderString = item.context as? String
+            (field.cell() as! NSTextFieldCell).placeholderString = item.context as? String
             field.stringValue = (SBPreferences.objectForKey(item.keyName) as? String) ?? ""
             addSubview(field)
         } else if item.controlClass === NSOpenPanel.self {
@@ -306,7 +306,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             field.selectable = false
             field.editable = false
             field.drawsBackground = false
-            (field.cell() as NSTextFieldCell).placeholderString = item.context as? String
+            (field.cell() as! NSTextFieldCell).placeholderString = item.context as? String
             field.stringValue = path?.stringByAbbreviatingWithTildeInPath ?? ""
             
             addSubview(imageView)
@@ -331,7 +331,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
     // MARK: Delegate
     
     override func controlTextDidChange(notification: NSNotification) {
-        let field = notification.object as NSTextField
+        let field = notification.object as! NSTextField
         let text = field.stringValue
         SBPreferences.setObject(text, forKey: item.keyName)
     }
@@ -354,7 +354,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
         panel.canChooseDirectories = true
         panel.beginSheetModalForWindow(window!) {
             panel.orderOut(nil)
-            if $0 == NSOKButton {
+            if $0 == NSFileHandlingPanelOKButton {
                 let imageView = self.currentImageView
                 let field = self.currentField
                 if (imageView !! field) != nil {

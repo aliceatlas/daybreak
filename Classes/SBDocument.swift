@@ -311,7 +311,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
 
     func adjustedSplitPositon(proposedPosition: CGFloat) -> CGFloat {
         var pos = proposedPosition
-        let bookmarksView = sidebar!.view as SBBookmarksView
+        let bookmarksView = sidebar!.view as! SBBookmarksView
         var proposedWidth: CGFloat!
         let maxWidth = splitView.bounds.size.width
         if splitView.sidebarPosition == SBSidebarPosition.Right {
@@ -400,7 +400,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     func constructWindow() -> SBDocumentWindow {
         let savedFrameString = NSUserDefaults.standardUserDefaults().stringForKey("NSWindow Frame " + kSBDocumentWindowAutosaveName)
         let defaultFrame = SBDefaultDocumentWindowRect
-        let r: NSRect = savedFrameString !! NSRectFromString ?? defaultFrame
+        let r: NSRect = savedFrameString !! { NSRectFromString($0) } ?? defaultFrame
         let newWindow = SBDocumentWindow(frame: r, delegate: self, tabbarVisibility: true)
         let button = newWindow.standardWindowButton(.CloseButton)!
         button.target = self
@@ -482,7 +482,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     // MARK: Toolbar
     
-    func toolbarAllowedItemIdentifiers(toolbar: NSToolbar) -> [String] {
+    func toolbarAllowedItemIdentifiers(toolbar: NSToolbar) -> [AnyObject] {
         return [kSBToolbarURLFieldItemIdentifier, 
                 kSBToolbarLoadItemIdentifier,
                 kSBToolbarBookmarkItemIdentifier,
@@ -500,7 +500,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 NSToolbarPrintItemIdentifier]
     }
     
-    func toolbarDefaultItemIdentifiers(toolbar: NSToolbar) -> [String] {
+    func toolbarDefaultItemIdentifiers(toolbar: NSToolbar) -> [AnyObject] {
         return [kSBToolbarURLFieldItemIdentifier, 
                 kSBToolbarLoadItemIdentifier,
                 kSBToolbarBookmarkItemIdentifier,
@@ -515,7 +515,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 kSBToolbarZoomItemIdentifier]
     }
     
-    func toolbar(toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: String, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem {
+    func toolbar(toolbar: NSToolbar, itemForItemIdentifier itemIdentifier: String, willBeInsertedIntoToolbar flag: Bool) -> NSToolbarItem? {
         let item = NSToolbarItem(itemIdentifier: itemIdentifier)
         switch itemIdentifier {
             case kSBToolbarURLFieldItemIdentifier:
@@ -704,7 +704,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func tabbar(aTabbar: SBTabbar, didChangeSelection aTabbarItem: SBTabbarItem) {
         // Select tab
-        let tabViewItem = tabView.selectTabViewItem(identifier: aTabbarItem.tag)!
+        let tabViewItem = tabView.selectTabViewItem(intIdentifier: aTabbarItem.tag)!
         
         // Change window values
         window.title = tabViewItem.tabbarItem.title
@@ -865,7 +865,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func splitViewDidResizeSubviews(notification: NSNotification) {
-        let aSplitView = notification.object as NSSplitView
+        let aSplitView = notification.object as! NSSplitView
         if aSplitView === splitView {
             if !splitView.animating && splitView.visibleSidebar {
                 var width = splitView.sidebar.frame.size.width
@@ -905,15 +905,17 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     // MARK: TabView Delegate
     
-    func tabView(aTabView: SBTabView, didSelectTabViewItem tabViewItem: SBTabViewItem) {
-        // Change encoding pop-up
-        let encodingName = tabViewItem.webView.customTextEncodingName
-        encodingButton.selectItem(representedObject: encodingName)
+    func tabView(aTabView: NSTabView, didSelectTabViewItem tabViewItem: NSTabViewItem?) {
+        if let tabViewItem = tabViewItem as? SBTabViewItem {
+            // Change encoding pop-up
+            let encodingName = tabViewItem.webView.customTextEncodingName
+            encodingButton.selectItem(representedObject: encodingName)
+        }
     }
     
     func tabView(aTabView: SBTabView, selectedItemDidStartLoading tabViewItem: SBTabViewItem) {
         if !urlField.isFirstResponder || urlField.stringValue.isEmpty {
-            urlField.stringValue = tabViewItem.mainFrameURLString!.URLDecodedString
+            urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
         }
         updateMenu(tag: SBViewMenuTag)
         updateResourcesViewIfNeeded()
@@ -925,7 +927,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         urlField.enabledBackward = tabViewItem.canBackward
         urlField.enabledForward = tabViewItem.canForward
         if !urlField.isFirstResponder || urlField.stringValue.isEmpty {
-            urlField.stringValue = tabViewItem.mainFrameURLString!.URLDecodedString
+            urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
         }
         // if !urlField.isFirstResponder && webView != nil {
         //     window.makeFirstResponder(webView)
@@ -939,7 +941,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         urlField.enabledBackward = tabViewItem.canBackward
         urlField.enabledForward = tabViewItem.canForward
         if !urlField.isFirstResponder || urlField.stringValue.isEmpty {
-            urlField.stringValue = tabViewItem.mainFrameURLString!.URLDecodedString
+            urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
         }
         updateMenu(tag: SBViewMenuTag)
         updateResourcesViewIfNeeded()
@@ -959,7 +961,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func tabView(aTabView: SBTabView, selectedItemDidReceiveServerRedirect tabViewItem: SBTabViewItem) {
         if !urlField.isFirstResponder || urlField.stringValue.isEmpty {
-            urlField.stringValue = tabViewItem.mainFrameURLString!.URLDecodedString
+            urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
         }
     }
 
@@ -982,8 +984,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         showMessage(message)
     }
 
-    func tabView(aTabView: SBTabView, shouldTextInput prompt: String) -> String? {
-        return textInput(prompt)
+    func tabView(aTabView: SBTabView, shouldTextInput prompt: String) -> String {
+        return textInput(prompt)!
     }
 
     func tabView(aTabView: SBTabView, didAddResourceID resourceID: SBWebResourceIdentifier) {
@@ -1016,20 +1018,20 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 if identifier == kSBURL {
                     object = resourceIdentifier.URL.absoluteString
                 } else if identifier == "Length" {
-                    let expected = NSString.bytesStringForLength(resourceIdentifier.length)
+                    let expected = String.bytesStringForLength(resourceIdentifier.length)
                     if resourceIdentifier.received > 0 && resourceIdentifier.length > 0 {
                         if resourceIdentifier.received == resourceIdentifier.length {
                             // Completed
                             object = expected
                         } else {
                             // Processing
-                            let sameUnit = NSString.unitStringForLength(resourceIdentifier.received) == NSString.unitStringForLength(resourceIdentifier.length)
-                            let received = NSString.bytesStringForLength(resourceIdentifier.received, unit: !sameUnit)
+                            let sameUnit = String.unitStringForLength(resourceIdentifier.received) == String.unitStringForLength(resourceIdentifier.length)
+                            let received = String.bytesStringForLength(resourceIdentifier.received, unit: !sameUnit)
                             object = "\(received)/\(expected)"
                         }
                     } else if resourceIdentifier.received > 0 {
                         // Completed
-                        let received = NSString.bytesStringForLength(resourceIdentifier.received)
+                        let received = String.bytesStringForLength(resourceIdentifier.received)
                         object = received
                     } else if resourceIdentifier.length > 0 {
                         // Unloaded
@@ -1045,7 +1047,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func webResourcesView(webResourcesView: SBWebResourcesView, willDisplayCell aCell: AnyObject?, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
-        let cell = aCell as NSCell
+        let cell = aCell as! NSCell
         if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers {
             let identifier = tableColumn.identifier
             if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
@@ -1053,20 +1055,20 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                     cell.title = resourceIdentifier.URL.absoluteString!
                 } else if identifier == "Length" {
                     var title: String!
-                    let expected = NSString.bytesStringForLength(resourceIdentifier.length)
+                    let expected = String.bytesStringForLength(resourceIdentifier.length)
                     if resourceIdentifier.received > 0 && resourceIdentifier.length > 0 {
                         if resourceIdentifier.received == resourceIdentifier.length {
                             // Completed
                             title = expected
                         } else {
                             // Processing
-                            let sameUnit = NSString.unitStringForLength(resourceIdentifier.received) == NSString.unitStringForLength(resourceIdentifier.length)
-                            let received = NSString.bytesStringForLength(resourceIdentifier.received, unit: !sameUnit)
+                            let sameUnit = String.unitStringForLength(resourceIdentifier.received) == String.unitStringForLength(resourceIdentifier.length)
+                            let received = String.bytesStringForLength(resourceIdentifier.received, unit: !sameUnit)
                             title = "\(received)/\(expected)"
                         }
                     } else if resourceIdentifier.received > 0 {
                         // Completed
-                        let received = NSString.bytesStringForLength(resourceIdentifier.received)
+                        let received = String.bytesStringForLength(resourceIdentifier.received)
                         title = received
                     } else if resourceIdentifier.length > 0 {
                         // Unloaded
@@ -1078,10 +1080,10 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 } else if identifier == "Cached" {
                     let response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceIdentifier.request)
                     let data = response?.data
-                    (cell as NSButtonCell).enabled = data != nil
-                    (cell as NSButtonCell).image = data !! NSImage(named: "Cached.png")
+                    (cell as! NSButtonCell).enabled = data != nil
+                    (cell as! NSButtonCell).image = data !! NSImage(named: "Cached.png")
                 } else if identifier == "Action" {
-                    (cell as NSButtonCell).image = NSImage(named: "Download.png")
+                    (cell as! NSButtonCell).image = NSImage(named: "Download.png")
                 }
             }
         }
@@ -1150,34 +1152,34 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             showDrawer()
         }
         let item = notification.userInfo![kSBDownloadsItem] as? SBDownload
-        let downloadsView = sidebar!.drawer!.view as? SBDownloadsView ?? constructDownloadsViewInSidebar()
+        let downloadsView = (sidebar!.drawer!.view as? SBDownloadsView) ?? constructDownloadsViewInSidebar()
         item !! downloadsView.addForItem
     }
     
     func downloadsWillRemoveItem(notification: NSNotification) {
         if let downloadsView = sidebar!.drawer!.view as? SBDownloadsView {
-            let items = notification.userInfo![kSBDownloadsItems] as [SBDownload]
+            let items = notification.userInfo![kSBDownloadsItems] as! [SBDownload]
             items.map(downloadsView.removeForItem)
         }
     }
     
     func downloadsDidUpdateItem(notification: NSNotification) {
         if let downloadsView = sidebar!.drawer!.view as? SBDownloadsView {
-            let item = notification.userInfo![kSBDownloadsItem] as SBDownload
+            let item = notification.userInfo![kSBDownloadsItem] as! SBDownload
             downloadsView.updateForItem(item)
         }
     }
     
     func downloadsDidFinishItem(notification: NSNotification) {
         if let downloadsView = sidebar!.drawer!.view as? SBDownloadsView {
-            let item = notification.userInfo![kSBDownloadsItem] as SBDownload
+            let item = notification.userInfo![kSBDownloadsItem] as! SBDownload
             downloadsView.finishForItem(item)
         }
     }
     
     func downloadsDidFailItem(notification: NSNotification) {
         if let downloadsView = sidebar!.drawer!.view as? SBDownloadsView {
-            let item = notification.userInfo![kSBDownloadsItem] as SBDownload
+            let item = notification.userInfo![kSBDownloadsItem] as! SBDownload
             downloadsView.failForItem(item)
         }
     }
@@ -1385,22 +1387,22 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         
         // Search in bookmarks
         for bookmarkItem in bookmarks.items {
-            if let URLString = bookmarkItem[kSBBookmarkURL] as? NSString {
-                let title = bookmarkItem[kSBBookmarkTitle] as? NSString
+            if let URLString = bookmarkItem[kSBBookmarkURL] as? String {
+                let title = bookmarkItem[kSBBookmarkTitle] as? String
                 let schemelessURLString = URLString.stringByDeletingScheme
-                var range = title?.rangeOfString(string, options: .CaseInsensitiveSearch) ?? NSMakeRange(NSNotFound, 0)
+                var range = title?.rangeOfString(string, options: .CaseInsensitiveSearch)
                 var matchWithTitle = false
-                if range.location == NSNotFound {
+                if range == nil {
                     range = URLString.rangeOfString(string)
                 } else {
                     // Match with title
                     matchWithTitle = title != nil
                 }
-                if range.location == NSNotFound {
+                if range == nil {
                     range = schemelessURLString!.rangeOfString(string)
                 }
-                if range.location != NSNotFound {
-                    let item = SBURLFieldItem.Bookmark(title: matchWithTitle &? title, URL: URLString, image: bookmarkItem[kSBBookmarkImage] as? NSData)
+                if range != nil {
+                    let item = SBURLFieldItem.Bookmark(title: matchWithTitle &? (title! as String), URL: URLString, image: bookmarkItem[kSBBookmarkImage] as? NSData)
                     bmItems.append(item)
                     URLStrings.append(URLString)
                 }
@@ -1409,14 +1411,14 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         
         // Search in history
         for historyItem in history.items {
-            if let URLString: NSString = historyItem.URLString {
+            if let URLString = historyItem.URLString {
                 if !containsItem(URLStrings, URLString) {
                     let schemelessURLString = URLString.stringByDeletingScheme!
                     var range = URLString.rangeOfString(string)
-                    if range.location == NSNotFound {
+                    if range == nil {
                         range = schemelessURLString.rangeOfString(string)
                     }
-                    if range.location != NSNotFound {
+                    if range != nil {
                         let item = SBURLFieldItem.History(URL: URLString, image: historyItem.icon?.TIFFRepresentation)
                         hItems.append(item)
                     }
@@ -1492,7 +1494,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
             alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: ""))
             
-            if alert.runModal() == NSAlertAlternateReturn {
+            if alert.runModal() == NSAlertSecondButtonReturn {
                 return
             }
         }
@@ -1758,7 +1760,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func doneHistory(URLs: NSArray) {
         if URLs.count > 0 {
-            openAndConstructTab(URLs: URLs as [NSURL], startInTabbarItem: tabbar.selectedTabbarItem!)
+            openAndConstructTab(URLs: URLs as! [NSURL], startInTabbarItem: tabbar.selectedTabbarItem!)
         }
         window.hideCoverWindow()
         historyView = nil
@@ -2131,10 +2133,10 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             window.showCoverWindow(messageView!)
             while confirmed == -1 {
                 // Wait event...
-                //@autoreleasepool {
-                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: (NSDate.distantFuture() as NSDate), inMode: NSDefaultRunLoopMode, dequeue: true)!
+                autoreleasepool {
+                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: (NSDate.distantFuture() as! NSDate), inMode: NSDefaultRunLoopMode, dequeue: true)!
                     NSApp.sendEvent(event)
-                //}
+                }
             }
             r = confirmed == 1
         }
@@ -2167,10 +2169,10 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             window.showCoverWindow(textInputView!)
             while confirmed == -1 {
                 // Wait event...
-                //@autoreleasepool {
-                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: (NSDate.distantFuture() as NSDate), inMode: NSDefaultRunLoopMode, dequeue: true)!
+                autoreleasepool {
+                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: (NSDate.distantFuture() as! NSDate), inMode: NSDefaultRunLoopMode, dequeue: true)!
                     NSApp.sendEvent(event)
-                //}
+                }
             }
             if confirmed == 1 {
                 text = textInputView!.text
@@ -2261,7 +2263,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func debugAddDummyDownloadsDidEnd(names: [String]) {
         let downloads = SBDownloads.sharedDownloads
-        let downloadsView = sidebar!.drawer!.view as SBDownloadsView
+        let downloadsView = sidebar!.drawer!.view as! SBDownloadsView
         for index in 0..<names.count {
             let item = downloads.items[index]
             if index == 0 {
@@ -2275,7 +2277,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 item.expectedLength = item.receivedLength
                 item.status = .Done
             }
-            item.bytes = NSString.bytesString(CLongLong(item.receivedLength), expectedLength: CLongLong(item.expectedLength))
+            item.bytes = String.bytesString(CLongLong(item.receivedLength), expectedLength: CLongLong(item.expectedLength))
             downloadsView.updateForItem(item)
         }
     }

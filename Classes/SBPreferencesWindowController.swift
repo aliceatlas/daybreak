@@ -122,6 +122,6 @@ class SBPreferencesWindowController: SBWindowController {
     }
     
     func prepare() {
-        (window!.contentView as NSView).addSubview(sectionListView)
+        (window!.contentView as! NSView).addSubview(sectionListView)
     }
 }

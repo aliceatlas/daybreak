@@ -27,49 +27,49 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 infix operator !! {
     associativity left
-    precedence 120
+    precedence 132
 }
 
-func !!<T, U>(optional: T?, nonNilValue: @autoclosure () -> U!) -> U? {
+func !!<T, U>(optional: T?, @autoclosure nonNilValue: () -> U!) -> U? {
     if optional != nil {
         return nonNilValue()
     }
     return nil
 }
 
-func !!<T, U>(optional: T?, nonNilValue: @autoclosure () -> U) -> U? {
+func !!<T, U>(optional: T?, @autoclosure nonNilValue: () -> U) -> U? {
     if optional != nil {
         return nonNilValue()
     }
     return nil
 }
 
-func !!<T, U>(optional: T?, nonNilFunc: T -> U!) -> U? {
+func !!<T, U>(optional: T?, @noescape nonNilFunc: T -> U!) -> U? {
     return optional !! nonNilFunc(optional!)
 }
 
-func !!<T, U>(optional: T?, nonNilFunc: T -> U) -> U? {
+func !!<T, U>(optional: T?, @noescape nonNilFunc: T -> U) -> U? {
     return optional !! nonNilFunc(optional!)
 }
 
 infix operator &! {
     associativity right
-    precedence 120
+    precedence 132
 }
 
-func &!<T>(optional: T?, nonNilCond: T -> Bool) -> Bool {
+func &!<T>(optional: T?, @noescape nonNilCond: T -> Bool) -> Bool {
     return optional !! nonNilCond ?? false
 }
 
-func &!<T>(optional: T?, nonNilCond: @autoclosure () -> Bool) -> Bool {
+func &!<T>(optional: T?, @autoclosure nonNilCond: () -> Bool) -> Bool {
     return optional !! nonNilCond ?? false
 }
 
 infix operator &? {
     associativity right
-    precedence 120
+    precedence 132
 }
 
-func &?<T>(cond: Bool, trueFunc: @autoclosure () -> T?) -> T? {
+func &?<T>(cond: Bool, @autoclosure trueFunc: () -> T?) -> T? {
     return cond ? trueFunc() : nil
 }

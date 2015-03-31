@@ -28,36 +28,36 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 extension NSArray {
     func containsIndexes(indexes: NSIndexSet) -> Bool {
-    	var r = true
-    	for var i = indexes.lastIndex; i != NSNotFound; i = indexes.indexLessThanIndex(i) {
-    		if i >= count {
-    			r = false
-    		}
-    	}
-    	return r
+        var r = true
+        for var i = indexes.lastIndex; i != NSNotFound; i = indexes.indexLessThanIndex(i) {
+            if i >= count {
+                r = false
+            }
+        }
+        return r
     }
     
     func indexesOfObjects(objects: NSArray) -> NSIndexSet {
-    	let indexes = NSMutableIndexSet()
-    	for object in objects {
-    		let index = indexOfObject(object)
-    		if index != NSNotFound {
-    			indexes.addIndex(index)
-    		}
-    	}
-    	return indexes.copy() as NSIndexSet
+        let indexes = NSMutableIndexSet()
+        for object in objects {
+            let index = indexOfObject(object)
+            if index != NSNotFound {
+                indexes.addIndex(index)
+            }
+        }
+        return indexes.copy() as! NSIndexSet
     }
     
     convenience init(arrays: [NSArray]) {
-        self.init(array: NSMutableArray(arrays: arrays))
+        self.init(array: NSMutableArray(arrays: arrays) as [AnyObject])
     }
 }
 
 extension NSMutableArray {
     convenience init(arrays: [NSArray]) {
-        self.init(capacity: arrays.map({ $0.count }).reduce(0, +))
+        self.init(capacity: arrays.map({ $0.count }).reduce(0, combine: +))
         for a in arrays {
-            addObjectsFromArray(a)
+            addObjectsFromArray(a as! [AnyObject])
         }
     }
 }

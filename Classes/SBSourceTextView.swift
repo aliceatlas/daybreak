@@ -72,7 +72,7 @@ class SBSourceTextView: NSTextView, SBFindbarTarget {
     func searchFor(searchString: String, direction forward: Bool, caseSensitive caseFlag: Bool, wrap wrapFlag: Bool, continuous: Bool) -> Bool {
         var r = false
         var selectedRange = self.selectedRange
-        let allRange = NSMakeRange(0, string!.utf16Count)
+        let allRange = NSMakeRange(0, count(string!))
         var options: NSStringCompareOptions = nil
         if selectedRange.location == NSNotFound { selectedRange = NSMakeRange(0, 0) }
         let invalidLength = continuous ? selectedRange.location : (selectedRange.location + selectedRange.length)

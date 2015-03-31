@@ -119,10 +119,6 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         return tableView
     }()
     
-    override init() {
-        super.init()
-    }
-    
     override init(frame: NSRect) {
         super.init(frame: frame)
         addSubview(scrollView)
@@ -138,12 +134,12 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         return dataSource?.numberOfRowsInWebResourcesView(self) ?? 0
     }
     
-    func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row rowIndex: Int) -> AnyObject? {
-        return dataSource?.webResourcesView(self, objectValueForTableColumn: tableColumn, row: rowIndex)
+    func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row rowIndex: Int) -> AnyObject? {
+        return dataSource?.webResourcesView(self, objectValueForTableColumn: tableColumn!, row: rowIndex)
     }
     
-    func tableView(tableView: NSTableView, willDisplayCell cell: AnyObject?, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
-        dataSource?.webResourcesView(self, willDisplayCell: cell, forTableColumn: tableColumn, row: rowIndex)
+    func tableView(tableView: NSTableView, willDisplayCell cell: AnyObject, forTableColumn tableColumn: NSTableColumn?, row rowIndex: Int) {
+        dataSource?.webResourcesView(self, willDisplayCell: cell, forTableColumn: tableColumn!, row: rowIndex)
     }
     
     // MARK: Actions

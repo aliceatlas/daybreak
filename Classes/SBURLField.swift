@@ -113,8 +113,8 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         field.delegate = self
         field.font = NSFont.systemFontOfSize(13.0)
         field.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-        (field.cell() as NSTextFieldCell).wraps = false
-        (field.cell() as NSTextFieldCell).scrollable = true
+        (field.cell() as! NSTextFieldCell).wraps = false
+        (field.cell() as! NSTextFieldCell).scrollable = true
         field.setRefusesFirstResponder(false)
         return field
     }()
@@ -192,15 +192,15 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
             if (scheme ?? "").hasPrefix(string) {
                 let headRange = (URLString as NSString).rangeOfString(string)
                 range.location = headRange.location + headRange.length
-                range.length = URLString.utf16Count - range.location
+                range.length = count(URLString) - range.location
             } else {
-                let currentSchemeLength = currentScheme?.utf16Count ?? 0
-                let schemeLength = scheme?.utf16Count ?? 0
+                let currentSchemeLength = count(currentScheme ?? "")
+                let schemeLength = count(scheme ?? "")
                 
                 selectedRange.location -= currentSchemeLength
                 selectedRange.length -= currentSchemeLength
                 range.location = selectedRange.location + schemeLength
-                range.length = URLString.utf16Count - range.location
+                range.length = count(URLString) - range.location
             }
             self.stringValue = URLString
             editor.selectedRange = range
@@ -252,12 +252,12 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     var editing: Bool { return true }
     
     var isFirstResponder: Bool {
-        return window!.firstResponder === field.currentEditor()
+        return window &! {$0.firstResponder === field.currentEditor()}
     }
     
     var placeholderString: String? {
-        get { return (field.cell() as NSTextFieldCell).placeholderString }
-        set(placeholderString) { (field.cell() as NSTextFieldCell).placeholderString = placeholderString }
+        get { return (field.cell() as! NSTextFieldCell).placeholderString }
+        set(placeholderString) { (field.cell() as! NSTextFieldCell).placeholderString = placeholderString }
     }
     
     var textColor: NSColor? {
@@ -303,8 +303,8 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         let position = (window?.toolbar as? SBToolbar)?.itemRectInScreenForIdentifier(kSBToolbarURLFieldItemIdentifier).origin ?? NSZeroPoint
         r.origin.x = frame.origin.x + position.x
         r.origin.y = frame.origin.y + position.y
-        r.origin.x = r.origin.x + buttonWidth * 2
-        r.origin.y = r.origin.y - r.size.height + 1
+        r.origin.x += buttonWidth * 2
+        r.origin.y -= r.size.height - 1
         return r
     }
         
@@ -395,7 +395,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     // MARK: Delegate
     
     func tableViewSelectionDidChange(notification: NSNotification) {
-        let rowIndex = (notification.object as NSTableView).selectedRow
+        let rowIndex = (notification.object as! NSTableView).selectedRow
         if rowIndex > -1 && canSelectIndex(rowIndex) {
             contentView.pushSelectedItem()
         }
@@ -409,12 +409,12 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         return canSelectIndex(rowIndex)
     }
     
-    func tableView(tableView: NSTableView, selectionIndexesForProposedSelection proposedSelectionIndexes: NSIndexSet) -> NSIndexSet? {
+    func tableView(tableView: NSTableView, selectionIndexesForProposedSelection proposedSelectionIndexes: NSIndexSet) -> NSIndexSet {
         let index = proposedSelectionIndexes.firstIndex // because single selection
         if canSelectIndex(index) {
             return proposedSelectionIndexes
         }
-        return nil
+        return NSIndexSet()
     }
     
     func tableView(tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
@@ -493,8 +493,8 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         return items.count
     }
     
-    func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn, row rowIndex: Int) -> AnyObject? {
-        if tableColumn.identifier == kSBURL {
+    func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row rowIndex: Int) -> AnyObject? {
+        if tableColumn?.identifier == kSBURL {
             if let item = items.get(rowIndex) {
                 switch item.type {
                     case .None:
@@ -509,9 +509,9 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         return nil
     }
     
-    func tableView(tableView: NSTableView, willDisplayCell cell: SBURLFieldDataCell, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
-        if tableColumn.identifier != kSBURL { return }
-        if let item = items.get(rowIndex) {
+    func tableView(tableView: NSTableView, willDisplayCell cell: AnyObject, forTableColumn tableColumn: NSTableColumn?, row rowIndex: Int) {
+        if tableColumn?.identifier != kSBURL { return }
+        if let item = items.get(rowIndex), cell = cell as? SBURLFieldDataCell {
             var string: String?
             var image: NSImage?
             var separator = false
@@ -549,7 +549,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     func endEditing() {
         disappearSheet()
         hiddenGo = true
-        (field.cell() as NSTextFieldCell).endEditing(window!.fieldEditor(false, forObject: field)!)
+        (field.cell() as! NSTextFieldCell).endEditing(window!.fieldEditor(false, forObject: field)!)
     }
     
     func adjustSheet() {
@@ -734,7 +734,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
 }
 
 class SBURLImageView: NSImageView, NSDraggingSource {
-    var field: SBURLField { return superview as SBURLField }
+    var field: SBURLField { return superview as! SBURLField }
     var URL: NSURL { return NSURL(string: field.stringValue)! }
     
     var selectedWebViewImageForBookmark: NSImage? {
@@ -830,7 +830,7 @@ class SBURLImageView: NSImageView, NSDraggingSource {
 class SBURLTextField: NSTextField {
     var commandAction: Selector = nil
     var optionAction: Selector = nil
-    var field: SBURLField { return superview as SBURLField }
+    var field: SBURLField { return superview as! SBURLField }
     
     // MARK: Responder
     
@@ -1083,9 +1083,20 @@ class SBURLFieldDataCell: NSCell {
     var sectionHeader = false
     var drawsImage = true
     
-    override init() {
-        super.init()
+    private func setDefaultValues() {
         alignment = .LeftTextAlignment
+    }
+    
+    @objc(initImageCell:)
+    override init(imageCell anImage: NSImage?) {
+        super.init(imageCell: anImage)
+        setDefaultValues()
+    }
+    
+    @objc(initTextCell:)
+    override init(textCell aString: String) {
+        super.init(textCell: aString)
+        setDefaultValues()
     }
     
     required init(coder: NSCoder) {

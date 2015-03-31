@@ -34,7 +34,7 @@ class SBPopUpButton: NSPopUpButton {
     override var menu: NSMenu? {
         didSet {
             if menu != nil {
-                for item in menu!.itemArray as [NSMenuItem] {
+                for item in menu!.itemArray as! [NSMenuItem] {
                     item.target = self
                     item.action = "executeAction:"
                 }
@@ -75,7 +75,7 @@ class SBPopUpButton: NSPopUpButton {
 
 class SBPopUpButtonCell: NSPopUpButtonCell {
     override func drawWithFrame(cellFrame: NSRect, inView controlView: NSView) {
-        let view = controlView as SBPopUpButton
+        let view = controlView as! SBPopUpButton
         if let image = view.backgroundImage {
             SBPreserveGraphicsState {
                 let transform = NSAffineTransform()
