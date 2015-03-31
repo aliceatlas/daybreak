@@ -28,6 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Cocoa
 
+@NSApplicationMain
 class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     var localizationWindowController: SBLocalizationWindowController?
     var preferencesWindowController: SBPreferencesWindowController?

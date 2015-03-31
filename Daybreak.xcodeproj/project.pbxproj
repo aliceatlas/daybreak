@@ -138,7 +138,6 @@
 		50782C8819AC77E400CB8706 /* SBUpdateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8719AC77E400CB8706 /* SBUpdateView.swift */; };
 		50782C8A19AC835600CB8706 /* SBTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8919AC835600CB8706 /* SBTabView.swift */; };
 		50782C8C19AC939E00CB8706 /* SBLocalizationWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50782C8B19AC939E00CB8706 /* SBLocalizationWindowController.swift */; };
-		508FAC5319653AC400F4380F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FAC5219653AC400F4380F /* main.swift */; };
 		5093D20B19AD088D00733CC3 /* SBDocumentWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5093D20A19AD088D00733CC3 /* SBDocumentWindow.swift */; };
 		5093D20D19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5093D20C19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift */; };
 		5096684E19D1FEBE00596F88 /* SBBookmarkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096684D19D1FEBE00596F88 /* SBBookmarkListView.swift */; };
@@ -359,7 +358,6 @@
 		507A8E21195FFF6700BF56AD /* SBDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBDefinitions.h; path = Sources/SBDefinitions.h; sourceTree = "<group>"; };
 		507A8E24195FFF8800BF56AD /* SBDefinitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBDefinitions.swift; path = Sources/SBDefinitions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5083AFD4195FCBDE00537E8B /* SBApplicationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SBApplicationDelegate.swift; path = Classes/SBApplicationDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		508FAC5219653AC400F4380F /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = main.swift; path = Sources/main.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5093D20A19AD088D00733CC3 /* SBDocumentWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBDocumentWindow.swift; path = Classes/SBDocumentWindow.swift; sourceTree = "<group>"; };
 		5093D20C19AECE6600733CC3 /* SBBLKGUIPopUpButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBLKGUIPopUpButton.swift; path = Classes/SBBLKGUIPopUpButton.swift; sourceTree = "<group>"; };
 		5096684D19D1FEBE00596F88 /* SBBookmarkListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBBookmarkListView.swift; path = Classes/SBBookmarkListView.swift; sourceTree = "<group>"; };
@@ -759,7 +757,6 @@
 				0840676B0FE2B95200CC80E3 /* SBUtil.m */,
 				50B2A9A41960BD5200DA1B4A /* SBUtil.swift */,
 				32DBCF750370BD2300C91783 /* Daybreak_Prefix.pch */,
-				508FAC5219653AC400F4380F /* main.swift */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -980,7 +977,6 @@
 				502DEBA719C0667F006A68C3 /* NSScrollView-SBAdditions.swift in Sources */,
 				50D7C35119C29FE300B3F7C3 /* SBBookmarkListItemView.swift in Sources */,
 				50FEEA9719BABFDD00962BB9 /* SBSidebar.swift in Sources */,
-				508FAC5319653AC400F4380F /* main.swift in Sources */,
 				502DEBBE19C1180F006A68C3 /* SBSectionListView.swift in Sources */,
 				50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */,
 				5076918F19BA169600F64734 /* SBBLKGUISlider.swift in Sources */,
