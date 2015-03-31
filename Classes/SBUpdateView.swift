@@ -69,7 +69,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
         webView.UIDelegate = self
         webView.hidden = true
         webView.drawsBackground = false
-        // webView.mainFrame.loadRequest(NSURLRequest(URL: NSURL(string: "http://www.google.com/")))
+        // webView.mainFrame.loadRequest(NSURLRequest(URL: NSURL(string: "https://www.google.com/")))
         return webView
     }()
 	private lazy var indicator: NSProgressIndicator = {

@@ -72,7 +72,7 @@ let kSBStringsDocumentTypeName = "Strings Document Type"
 
 // URLs
 let kSBUpdaterNewVersionURL = "http://www.sunrisebrowser.com/Sunrise%@.dmg"
-let kSBGoogleSuggestURL = "http://google.com/complete/search?output=toolbar&q=%@"
+let kSBGoogleSuggestURL = "https://www.google.com/complete/search?output=toolbar&q=%@"
 
 // Mail Addresses
 let kSBFeedbackMailAddress = "feedback@sunrisebrowser.com"

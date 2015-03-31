@@ -988,7 +988,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     func showErrorPageWithTitle(title: String, urlString: String, frame: WebFrame) {
         let bundle = NSBundle.mainBundle()
         let title = "<img src=\"Application.icns\" style=\"width:76px;height:76px;margin-right:10px;vertical-align:middle;\" alt=\"\">" + title
-        let searchURLString = "http://www.google.com/search?hl=ja&q=" + urlString
+        let searchURLString = "https://www.google.com/search?hl=ja&q=" + urlString
         let searchMessage = NSLocalizedString("You can search the web for this URL.", comment: "")
         var message = NSLocalizedString("Daybreak can’t open the page “%@”", comment: "").format(urlString)
         message = "\(message)<br /><br />\(searchMessage)<br /><a href=\"\(searchURLString)\">\(urlString)</a>"
