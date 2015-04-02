@@ -49,10 +49,10 @@ struct SBURLFieldItem {
         return SBURLFieldItem(type: .Bookmark, title: title, URL: URL, image: image)
     }
     static func History(#URL: String, image: NSData?) -> SBURLFieldItem {
-        return SBURLFieldItem(type: .Bookmark, title: nil, URL: URL, image: image)
+        return SBURLFieldItem(type: .History, title: nil, URL: URL, image: image)
     }
     static func GoogleSuggest(#title: String, URL: String) -> SBURLFieldItem {
-        return SBURLFieldItem(type: .Bookmark, title: title, URL: URL, image: nil)
+        return SBURLFieldItem(type: .GoogleSuggest, title: title, URL: URL, image: nil)
     }
 }
 
