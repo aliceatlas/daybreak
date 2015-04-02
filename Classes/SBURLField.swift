@@ -113,8 +113,8 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         field.delegate = self
         field.font = NSFont.systemFontOfSize(13.0)
         field.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-        (field.cell() as! NSTextFieldCell).wraps = false
-        (field.cell() as! NSTextFieldCell).scrollable = true
+        field.cell!.wraps = false
+        field.cell!.scrollable = true
         field.setRefusesFirstResponder(false)
         return field
     }()
@@ -256,8 +256,8 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     var placeholderString: String? {
-        get { return (field.cell() as! NSTextFieldCell).placeholderString }
-        set(placeholderString) { (field.cell() as! NSTextFieldCell).placeholderString = placeholderString }
+        get { return field.cell!.placeholderString }
+        set(placeholderString) { field.cell!.placeholderString = placeholderString }
     }
     
     var textColor: NSColor? {
@@ -549,7 +549,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     func endEditing() {
         disappearSheet()
         hiddenGo = true
-        (field.cell() as! NSTextFieldCell).endEditing(window!.fieldEditor(false, forObject: field)!)
+        field.cell!.endEditing(window!.fieldEditor(false, forObject: field)!)
     }
     
     func adjustSheet() {

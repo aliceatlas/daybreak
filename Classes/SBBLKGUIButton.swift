@@ -27,6 +27,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBBLKGUIButton: NSButton {
+    override var cell: SBBLKGUIButtonCell? { return super.cell as? SBBLKGUIButtonCell }
+    
     override class func initialize() {
         SBBLKGUIButton.setCellClass(SBBLKGUIButtonCell.self)
     }
@@ -47,12 +49,12 @@ class SBBLKGUIButton: NSButton {
     
     var buttonType: NSButtonType {
         get {
-            return (cell() as! SBBLKGUIButtonCell).buttonType
+            return cell!.buttonType
         }
         
         @objc(_setButtonType:)
         set(buttonType) {
-            (cell() as! SBBLKGUIButtonCell).buttonType = buttonType
+            cell!.buttonType = buttonType
         }
     }
     
@@ -62,10 +64,10 @@ class SBBLKGUIButton: NSButton {
     
     /*var selected: NSButtonType {
         get {
-            return (cell() as SBBLKGUIButtonCell).selected
+            return cell!.selected
         }
         set(selected) {
-            (cell() as SBBLKGUIButtonCell).selected = selected
+            cell!.selected = selected
         }
     }*/
     

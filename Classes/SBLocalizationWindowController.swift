@@ -63,7 +63,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         let langPopup = NSPopUpButton(frame: langRect, pullsDown: false)
         langPopup.autoresizingMask = .ViewMinYMargin
         langPopup.bezelStyle = .TexturedRoundedBezelStyle
-        (langPopup.cell() as! NSPopUpButtonCell).arrowPosition = .ArrowAtBottom
+        langPopup.cell!.arrowPosition = .ArrowAtBottom
         for lang in languages {
             let title = NSLocale.systemLocale().displayNameForKey(NSLocaleIdentifier, value: lang)
             menu.addItem(title: title!, representedObject: lang, target: self, action: "selectLanguage:")

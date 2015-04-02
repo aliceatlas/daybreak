@@ -267,7 +267,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             let field = NSTextField(frame: r)
             field.delegate = self
             field.focusRingType = .None
-            (field.cell() as! NSTextFieldCell).placeholderString = item.context as? String
+            field.cell!.placeholderString = item.context as? String
             field.stringValue = (SBPreferences.objectForKey(item.keyName) as? String) ?? ""
             addSubview(field)
         } else if item.controlClass === NSOpenPanel.self {
@@ -306,7 +306,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             field.selectable = false
             field.editable = false
             field.drawsBackground = false
-            (field.cell() as! NSTextFieldCell).placeholderString = item.context as? String
+            field.cell!.placeholderString = item.context as? String
             field.stringValue = path?.stringByAbbreviatingWithTildeInPath ?? ""
             
             addSubview(imageView)

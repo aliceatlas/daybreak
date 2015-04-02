@@ -141,7 +141,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         lockButton.setButtonType(.ToggleButton)
         lockButton.image = NSImage(named: "Icon_Lock.png")
         lockButton.alternateImage = NSImage(named: "Icon_Unlock.png")
-        (lockButton.cell() as! NSButtonCell).imageScaling = .ImageScaleNone
+        lockButton.cell!.imageScaling = .ImageScaleNone
         lockButton.bordered = false
         return lockButton
     }()
@@ -247,7 +247,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     private lazy var jpgOptionSlider: SBBLKGUISlider = {
         let jpgOptionSlider = SBBLKGUISlider(frame: NSMakeRect(5, 8, 75, 17))
-        (jpgOptionSlider.cell() as! SBBLKGUISliderCell).controlSize = .MiniControlSize
+        jpgOptionSlider.cell!.controlSize = .MiniControlSize
         jpgOptionSlider.minValue = 0.0
         jpgOptionSlider.maxValue = 1.0
         jpgOptionSlider.numberOfTickMarks = 11

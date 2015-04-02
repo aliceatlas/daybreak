@@ -36,7 +36,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         messageLabel.drawsBackground = false
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = font
-        (messageLabel.cell() as! NSTextFieldCell).wraps = true
+        messageLabel.cell!.wraps = true
         return messageLabel
     }()
     lazy var textLabel: SBBLKGUITextField = {
@@ -45,7 +45,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         textLabel.font = NSFont.systemFontOfSize(14.0)
         textLabel.textColor = NSColor.whiteColor()
         textLabel.delegate = self
-        (textLabel.cell() as! NSTextFieldCell).wraps = true
+        textLabel.cell!.wraps = true
         return textLabel
     }()
     lazy var doneButton: SBBLKGUIButton = {

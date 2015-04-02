@@ -73,7 +73,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         summaryField.font = NSFont.systemFontOfSize(14.0)
         summaryField.textColor = NSColor.whiteColor()
         summaryField.delegate = self
-        (summaryField.cell() as! SBBLKGUITextFieldCell).wraps = true
+        summaryField.cell!.wraps = true
         return summaryField
     }()
     
@@ -168,7 +168,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         wayField.font = NSFont.systemFontOfSize(14.0)
         wayField.textColor = NSColor.whiteColor()
         wayField.delegate = self
-        (wayField.cell() as! SBBLKGUITextFieldCell).wraps = true
+        wayField.cell!.wraps = true
         return wayField
     }()
     

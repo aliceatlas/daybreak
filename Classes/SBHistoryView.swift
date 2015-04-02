@@ -47,7 +47,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = NSFont.boldSystemFontOfSize(16)
         messageLabel.alignment = .LeftTextAlignment
-        (messageLabel.cell() as! NSTextFieldCell).wraps = true
+        messageLabel.cell!.wraps = true
         return messageLabel
     }()
 	private lazy var searchField: SBBLKGUISearchField = {
@@ -55,9 +55,8 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         searchField.delegate = self
         searchField.target = self
         searchField.action = "search:"
-        let cell = searchField.cell() as! NSSearchFieldCell
-        cell.sendsWholeSearchString = true
-        cell.sendsSearchStringImmediately = true
+        searchField.cell!.sendsWholeSearchString = true
+        searchField.cell!.sendsSearchStringImmediately = true
         return searchField
     }()
 	private lazy var scrollView: SBBLKGUIScrollView = {

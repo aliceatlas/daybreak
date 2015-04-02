@@ -308,7 +308,7 @@ class SBSideBottombar: SBBottombar {
     
     lazy var sizeSlider: SBBLKGUISlider = {
         let sizeSlider = SBBLKGUISlider(frame: self.sizeSliderRect)
-        (sizeSlider.cell() as! NSCell).controlSize = .SmallControlSize
+        sizeSlider.cell!.controlSize = .SmallControlSize
         sizeSlider.minValue = kSBBookmarkCellMinWidth
         sizeSlider.maxValue = kSBBookmarkCellMaxWidth
         sizeSlider.floatValue = Float(kSBBookmarkCellMinWidth)

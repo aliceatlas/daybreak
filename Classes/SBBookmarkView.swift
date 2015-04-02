@@ -44,7 +44,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = NSFont.boldSystemFontOfSize(16)
         messageLabel.alignment = .CenterTextAlignment
-        (messageLabel.cell() as! NSCell).wraps = true
+        messageLabel.cell!.wraps = true
         return messageLabel
     }()
     

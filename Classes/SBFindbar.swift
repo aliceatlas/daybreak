@@ -62,9 +62,8 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         searchField.action = "search:"
         searchField.nextAction = "searchForward:"
         searchField.previousAction = "searchBackward:"
-        let cell = searchField.cell() as! NSSearchFieldCell
-        cell.sendsWholeSearchString = true
-        cell.sendsSearchStringImmediately = false
+        searchField.cell!.sendsWholeSearchString = true
+        searchField.cell!.sendsSearchStringImmediately = false
         string !! { searchField.stringValue = $0 }
         return searchField
     }()
