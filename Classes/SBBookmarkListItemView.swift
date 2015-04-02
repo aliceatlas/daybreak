@@ -400,7 +400,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                     SBPreserveGraphicsState {
                         shadow.set()
                         labelColor!.set()
-                        NSFrameRectWithWidth(self.bounds, self.bounds.size.width * 0.04)
+                        NSFrameRectWithWidth(bounds, bounds.size.width * 0.04)
                     }
                 }
                 
@@ -415,7 +415,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                     SBPreserveGraphicsState {
                         shadow.set()
                         color.set()
-                        NSFrameRectWithWidth(NSInsetRect(self.bounds, -lineWidth/2, -lineWidth/2), lineWidth)
+                        NSFrameRectWithWidth(NSInsetRect(bounds, -lineWidth/2, -lineWidth/2), lineWidth)
                     }
                 }
                 

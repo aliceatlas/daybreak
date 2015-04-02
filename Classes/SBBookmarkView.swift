@@ -329,7 +329,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         }
         SBPreserveGraphicsState {
             mPath.addClip()
-            gradient.drawInRect(self.bounds, angle: 90)
+            gradient.drawInRect(bounds, angle: 90)
         }
         
         if let image = image {

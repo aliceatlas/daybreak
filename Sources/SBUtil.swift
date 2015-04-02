@@ -634,7 +634,7 @@ let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().co
 
 let SBAlternateSelectedDarkControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.blackColor())!.colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
 
-func SBPreserveGraphicsState(block: () -> Void) {
+func SBPreserveGraphicsState(@noescape block: () -> Void) {
     NSGraphicsContext.saveGraphicsState()
     block()
     NSGraphicsContext.restoreGraphicsState()
