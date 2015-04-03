@@ -179,6 +179,7 @@
 		50FEEAA619BF345C00962BB9 /* SBSearchbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA519BF345C00962BB9 /* SBSearchbar.swift */; };
 		50FEEAA919BF453300962BB9 /* SBFindbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEEAA719BF3A0200962BB9 /* SBFindbar.swift */; };
 		665362C819F77DCD00D32D82 /* NSView-SBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 665362C619F77DCD00D32D82 /* NSView-SBAdditions.m */; };
+		8659A8E41ACB82CD00C67C9C /* NSControl-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8659A8E31ACB82CD00C67C9C /* NSControl-SBAdditions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -397,6 +398,7 @@
 		50FEEAA719BF3A0200962BB9 /* SBFindbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBFindbar.swift; path = Classes/SBFindbar.swift; sourceTree = "<group>"; };
 		665362C519F77DCD00D32D82 /* NSView-SBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSView-SBAdditions.h"; path = "Additions/NSView-SBAdditions.h"; sourceTree = "<group>"; };
 		665362C619F77DCD00D32D82 /* NSView-SBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSView-SBAdditions.m"; path = "Additions/NSView-SBAdditions.m"; sourceTree = "<group>"; };
+		8659A8E31ACB82CD00C67C9C /* NSControl-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSControl-SBAdditions.swift"; path = "Additions/NSControl-SBAdditions.swift"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Daybreak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daybreak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -530,6 +532,7 @@
 				502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */,
 				502DEBAE19C07EE1006A68C3 /* NSArray-SBAdditions.swift */,
 				502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */,
+				8659A8E31ACB82CD00C67C9C /* NSControl-SBAdditions.swift */,
 				502DEBAC19C07197006A68C3 /* NSImage-SBAdditions.swift */,
 				502DEBAA19C06876006A68C3 /* NSMenu-SBAdditions.swift */,
 				502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */,
@@ -957,6 +960,7 @@
 				50F850641968E64B00C28795 /* SBSegmentedButton.swift in Sources */,
 				5076918F19BA169600F64734 /* SBBLKGUISlider.swift in Sources */,
 				5076918D19BA0DF400F64734 /* SBSourceTextView.swift in Sources */,
+				8659A8E41ACB82CD00C67C9C /* NSControl-SBAdditions.swift in Sources */,
 				50B2A9A91960E19A00DA1B4A /* Array-SBAdditions.swift in Sources */,
 				50FEEA9C19BDF28000962BB9 /* SBDownloadsView.swift in Sources */,
 				50ACCDF91963E9EC00CE593E /* SBTextInputView.swift in Sources */,
