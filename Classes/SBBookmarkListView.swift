@@ -959,7 +959,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         let point = convertPoint(sender.draggingLocation(), fromView: nil)
         let types = pasteboard.types as! [String]
         
-        if containsItem(types, SBBookmarkPboardType) {
+        if contains(types, SBBookmarkPboardType) {
             // Daybreak bookmarks
             if let pbItems = (pasteboard.propertyListForType(SBBookmarkPboardType) as! [NSDictionary]).ifNotEmpty {
                 let bookmarks = SBBookmarks.sharedBookmarks
@@ -976,7 +976,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 }
                 layoutItemViewsWithAnimationFromIndex(0)
             }
-        } else if containsItem(types, SBSafariBookmarkDictionaryListPboardType) {
+        } else if contains(types, SBSafariBookmarkDictionaryListPboardType) {
             // Safari bookmarks
             let pbItems = pasteboard.propertyListForType(SBSafariBookmarkDictionaryListPboardType) as! [NSDictionary]
             if let bookmarkItems = SBBookmarkItemsFromBookmarkDictionaryList(pbItems).ifNotEmpty {
@@ -986,17 +986,17 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 addForItems(bookmarkItems, toIndex: toIndex)
                 layoutItemViewsWithAnimationFromIndex(0)
             }
-        } else if containsItem(types, NSURLPboardType) {
+        } else if contains(types, NSURLPboardType) {
             // General URL
             if let URL = NSURL(fromPasteboard: pasteboard)?.absoluteString {
                 var title: String!
                 var data: NSData!
-                if containsItem(types, NSPasteboardTypeString) {
+                if contains(types, NSPasteboardTypeString) {
                     title = pasteboard.stringForType(NSPasteboardTypeString)
                 } else {
                     title = NSLocalizedString("Untitled", comment: "")
                 }
-                if containsItem(types, NSPasteboardTypeTIFF) {
+                if contains(types, NSPasteboardTypeTIFF) {
                     var shouldInset = true
                     data = pasteboard.dataForType(NSPasteboardTypeTIFF)!
                     if let image = NSImage(data: data) {

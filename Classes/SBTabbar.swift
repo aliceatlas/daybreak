@@ -261,7 +261,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     func removeItem(item: SBTabbarItem) -> Bool {
-        if containsItem(items, item) {
+        if contains(items, item) {
             item.removeFromSuperview()
             _arrayRemoveItem(&items, item)
             return true
@@ -534,7 +534,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         let pasteboard = sender.draggingPasteboard()
         let types = pasteboard.types as! [String]
         let point = contentView.convertPoint(sender.draggingLocation(), fromView: nil)
-        if containsItem(types, SBBookmarkPboardType) {
+        if contains(types, SBBookmarkPboardType) {
             let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as! [NSDictionary]
             let URLStrings = pbItems.map {$0[kSBBookmarkURL] as! String}.filter {!$0.isEmpty}
             if let URLs = URLStrings.map({ NSURL(string: $0) }).filter({ $0 != nil }).map({ $0! }).ifNotEmpty {
@@ -548,7 +548,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
                     executeShouldAddNewItemForURLs(URLs)
                 }
             }
-        } else if containsItem(types, NSURLPboardType) {
+        } else if contains(types, NSURLPboardType) {
             let URL = NSURL(fromPasteboard: pasteboard)!
             if let item = itemAtPoint(point) {
                 executeShouldOpenURLs([URL], startInItem: item)

@@ -1408,7 +1408,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         // Search in history
         for historyItem in history.items {
             if let URLString = historyItem.URLString {
-                if !containsItem(URLStrings, URLString) {
+                if !contains(URLStrings, URLString) {
                     let schemelessURLString = URLString.stringByDeletingScheme!
                     var range = URLString.rangeOfString(string)
                     if range == nil {
