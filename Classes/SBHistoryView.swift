@@ -245,8 +245,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     func updateItems() {
         let allItems = SBHistory.sharedHistory.items
         let searchFieldText = searchField.stringValue
-        let searchWords = !searchFieldText.isEmpty ? searchFieldText.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) : []
-        if !searchWords.isEmpty {
+        if let searchWords = searchFieldText.ifNotEmpty?.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).ifNotEmpty {
             items = []
             for item in allItems {
                 var string = ""
@@ -323,10 +322,10 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         default:
             break
         }
-        if !(string ?? "").isEmpty {
+        if let string = string?.ifNotEmpty {
             let attributes = [NSFontAttributeName: NSFont.systemFontOfSize(14.0),
                               NSForegroundColorAttributeName: NSColor.whiteColor()]
-            let attributedString = NSAttributedString(string: string!, attributes: attributes)
+            let attributedString = NSAttributedString(string: string, attributes: attributes)
             cell.attributedStringValue = attributedString
         }
     }

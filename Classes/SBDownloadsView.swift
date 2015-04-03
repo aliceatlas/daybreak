@@ -252,8 +252,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
     // MARK: Menu Actions
     
     func delete(sender: AnyObject?) {
-        let selectedDownloads = downloadViews.filter({ $0.selected }).map({ $0.download })
-        if selectedDownloads.count > 0 {
+        if let selectedDownloads = downloadViews.filter({ $0.selected }).map({ $0.download }).ifNotEmpty {
             SBDownloads.sharedDownloads.removeItems(selectedDownloads)
         }
     }

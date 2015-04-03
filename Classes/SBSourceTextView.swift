@@ -48,8 +48,7 @@ class SBSourceTextView: NSTextView, SBFindbarTarget {
     }
     
     func performFindNext(sender: AnyObject) {
-        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) ?? ""
-        if !string.isEmpty {
+        if let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)?.ifNotEmpty {
             let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
             let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
             searchFor(string, direction: true, caseSensitive: caseFlag, wrap: wrapFlag, continuous: false)
@@ -59,8 +58,7 @@ class SBSourceTextView: NSTextView, SBFindbarTarget {
     }
     
     func performFindPrevious(sender: AnyObject) {
-        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) ?? ""
-        if !string.isEmpty {
+        if let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)?.ifNotEmpty {
             let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
             let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
             searchFor(string, direction: false, caseSensitive: caseFlag, wrap: wrapFlag, continuous: false)

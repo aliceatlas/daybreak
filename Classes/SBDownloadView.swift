@@ -107,15 +107,11 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
         var drawRect = bounds
         let margin: CGFloat = 8.0
         let availableWidth: CGFloat = bounds.size.width - titleHeight
-        if !title.isEmpty {
-            let size = title.sizeWithAttributes([NSFontAttributeName: nameFont, 
-                                       NSParagraphStyleAttributeName: paragraphStyle])
-            if size.width <= availableWidth {
-                drawRect.origin.x = (availableWidth - size.width) / 2
-                drawRect.size.width = size.width
-            } else {
-                drawRect.size.width = availableWidth
-            }
+        if let size = title.ifNotEmpty?.sizeWithAttributes([NSFontAttributeName: nameFont,
+                                                  NSParagraphStyleAttributeName: paragraphStyle])
+           where size.width <= availableWidth {
+            drawRect.origin.x = (availableWidth - size.width) / 2
+            drawRect.size.width = size.width
         } else {
             drawRect.size.width = availableWidth
         }
@@ -186,8 +182,8 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
         super.drawRect(rect)
         
         // Icon
-        if !(download.path ?? "").isEmpty {
-            let image = NSWorkspace.sharedWorkspace().iconForFile(download.path!)
+        if let path = download.path?.ifNotEmpty {
+            let image = NSWorkspace.sharedWorkspace().iconForFile(path)
             var r = NSZeroRect
             var b = bounds
             let size = image.size

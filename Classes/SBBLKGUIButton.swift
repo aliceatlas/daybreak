@@ -179,8 +179,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
             }
         }
         
-        if !(title?.isEmpty ?? true) {
-            let title: NSString = self.title
+        if let title: NSString = title?.ifNotEmpty {
             var size = NSZeroSize
             let frameMargin: CGFloat = 2.0
             let frame = NSMakeRect(cellFrame.origin.x + frameMargin, cellFrame.origin.y, cellFrame.size.width - frameMargin * 2, cellFrame.size.height)

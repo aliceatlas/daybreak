@@ -51,7 +51,7 @@ extension NSString {
             var range = NSMakeRange(0, 0)
             let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
             if range.location == 0 {
-                hasScheme.memory = ObjCBool(!(URL?.scheme ?? "").isEmpty ? string.hasPrefix(URL!.scheme!) : false)
+                hasScheme.memory = ObjCBool(URL?.scheme?.ifNotEmpty &! string.hasPrefix)
                 return true
             }
         }

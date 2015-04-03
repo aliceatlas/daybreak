@@ -103,7 +103,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let userAgentName = NSUserDefaults.standardUserDefaults().stringForKey(kSBUserAgentName)
         names.append(name0)
         names.append(name1)
-        if userAgentName &! {!$0.isEmpty && $0 != name0 && $0 != name1} {
+        if userAgentName?.ifNotEmpty &! {$0 != name0 && $0 != name1} {
             names.append(userAgentName!)
         }
         let images = [icon0, icon1]
@@ -389,24 +389,14 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let applicationVersion = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
         
         // Make message
-        if !summary.isEmpty {
-            message += NSLocalizedString("Summary", comment: "") + " : \n\(summary)\n\n"
-        }
-        if !userAgent.isEmpty {
-            message += NSLocalizedString("User Agent", comment: "") + " : \n\(userAgent)\n\n"
-        }
-        if reproducibility && !wayToReproduce.isEmpty {
-            message += NSLocalizedString("A way to reproduce", comment: "") + " : \n\(wayToReproduce)\n\n"
-        }
-        if !osVersion.isEmpty {
-            message += NSLocalizedString("OS", comment: "") + " : \(osVersion)\n"
-        }
-        if !(processor?.isEmpty ?? false) {
-            message += NSLocalizedString("Processor", comment: "") + " : \(processor)\n"
-        }
-        if !applicationVersion.isEmpty {
-            message += NSLocalizedString("Application Version", comment: "") + " : \(applicationVersion)\n"
-        }
+        summary.ifNotEmpty    !! { message += NSLocalizedString("Summary", comment: "") + " : \n\($0)\n\n" }
+        userAgent.ifNotEmpty  !! { message += NSLocalizedString("User Agent", comment: "") + " : \n\($0)\n\n" }
+        (reproducibility &? wayToReproduce.ifNotEmpty)
+                              !! { message += NSLocalizedString("A way to reproduce", comment: "") + " : \n\($0)\n\n" }
+        osVersion.ifNotEmpty  !! { message += NSLocalizedString("OS", comment: "") + " : \($0)\n" }
+        processor?.ifNotEmpty !! { message += NSLocalizedString("Processor", comment: "") + " : \($0)\n" }
+        applicationVersion.ifNotEmpty
+                              !! { message += NSLocalizedString("Application Version", comment: "") + " : \($0)\n" }
         
         // Send message
         let errorDescription = sendMailWithMessage(message, subject: NSLocalizedString("Daybreak Bug Report", comment: ""), to: [kSBBugReportMailAddress])

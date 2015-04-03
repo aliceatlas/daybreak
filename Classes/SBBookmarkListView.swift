@@ -363,7 +363,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     var selectedItems: [NSDictionary]? {
         var dItems = itemViews.filter({ $0.selected }).map({ $0.item })
-        return !dItems.isEmpty ? dItems : nil
+        return dItems.ifNotEmpty
     }
     
     var canScrollToNext: Bool {
@@ -961,8 +961,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         
         if containsItem(types, SBBookmarkPboardType) {
             // Daybreak bookmarks
-            let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as! [NSDictionary]
-            if !pbItems.isEmpty {
+            if let pbItems = (pasteboard.propertyListForType(SBBookmarkPboardType) as! [NSDictionary]).ifNotEmpty {
                 let bookmarks = SBBookmarks.sharedBookmarks
                 let indexes = bookmarks.indexesOfItems(pbItems)
                 let toIndex = indexAtPoint(point)
@@ -980,8 +979,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         } else if containsItem(types, SBSafariBookmarkDictionaryListPboardType) {
             // Safari bookmarks
             let pbItems = pasteboard.propertyListForType(SBSafariBookmarkDictionaryListPboardType) as! [NSDictionary]
-            let bookmarkItems = SBBookmarkItemsFromBookmarkDictionaryList(pbItems)
-            if !bookmarkItems.isEmpty {
+            if let bookmarkItems = SBBookmarkItemsFromBookmarkDictionaryList(pbItems).ifNotEmpty {
                 let bookmarks = SBBookmarks.sharedBookmarks
                 let toIndex = indexAtPoint(point)
                 bookmarks.addItems(bookmarkItems, toIndex: toIndex)

@@ -634,10 +634,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
             goButton.title = NSLocalizedString("Download", comment: "")
         } else {
             var hasScheme = false
-            var title: String?
-            if !stringValue.isEmpty {
-                title = stringValue.isURLString(&hasScheme) ? NSLocalizedString("Go", comment: "") : NSLocalizedString("Search", comment: "")
-            }
+            let title = stringValue.ifNotEmpty !! { $0.isURLString(&hasScheme) ? NSLocalizedString("Go", comment: "") : NSLocalizedString("Search", comment: "") }
             goButton.title = title
         }
     }
@@ -1152,8 +1149,7 @@ class SBURLFieldDataCell: NSCell {
     
     func drawTitleWithFrame(cellFrame: NSRect, inView controlView: NSView) {
         let title = self.title as String?
-        if !(title ?? "").isEmpty {
-            let nsTitle: NSString = title!
+        if let title: NSString = title?.ifNotEmpty {
             let imageWidth = self.imageWidth + side + leftMargin
             let titleRect = NSMakeRect(cellFrame.origin.x + imageWidth, cellFrame.origin.y, cellFrame.size.width - imageWidth, cellFrame.size.height)
             let textColor = (sectionHeader ? SBTableDarkGrayCellColor : NSColor.blackColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
@@ -1164,7 +1160,7 @@ class SBURLFieldDataCell: NSCell {
             paragraphStyle.lineBreakMode = .ByTruncatingTail
             let attribute = [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle]
             let sAttribute = [NSFontAttributeName: font, NSForegroundColorAttributeName: sTextColor, NSParagraphStyleAttributeName: paragraphStyle]
-            var size = nsTitle.sizeWithAttributes(attribute)
+            var size = title.sizeWithAttributes(attribute)
             SBConstrain(size.width, max: titleRect.size.width - side * 2)
             var r = NSZeroRect
             r.size = size
@@ -1181,8 +1177,8 @@ class SBURLFieldDataCell: NSCell {
             r.origin.y = titleRect.origin.y + (titleRect.size.height - r.size.height) / 2
             var sr = r
             sr.origin.y += 1.0
-            nsTitle.drawInRect(sr, withAttributes: sAttribute)
-            nsTitle.drawInRect(r, withAttributes: attribute)
+            title.drawInRect(sr, withAttributes: sAttribute)
+            title.drawInRect(r, withAttributes: attribute)
             if separator {
                 let leftMargin = r.maxX + 10.0
                 var separatorRect = NSZeroRect

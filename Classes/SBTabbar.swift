@@ -536,9 +536,8 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
         let point = contentView.convertPoint(sender.draggingLocation(), fromView: nil)
         if containsItem(types, SBBookmarkPboardType) {
             let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as! [NSDictionary]
-            let URLStrings = pbItems.map({ $0[kSBBookmarkURL] as! String }).filter({ !$0.isEmpty })
-            let URLs = URLStrings.map({ NSURL(string: $0) }).filter({ $0 != nil }).map({ $0! })
-            if !URLs.isEmpty {
+            let URLStrings = pbItems.map {$0[kSBBookmarkURL] as! String}.filter {!$0.isEmpty}
+            if let URLs = URLStrings.map({ NSURL(string: $0) }).filter({ $0 != nil }).map({ $0! }).ifNotEmpty {
                 if URLs.count == 1 {
                     if let item = itemAtPoint(point) {
                         executeShouldOpenURLs([URLs[0]], startInItem: item)

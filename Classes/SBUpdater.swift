@@ -59,13 +59,11 @@ class SBUpdater: NSObject {
         if (data !! appVersionString) != nil {
             // Success for networking
             // Parse data
-            if let string = String(UTF8String: UnsafePointer<CChar>(data!.bytes))
-                   where !string.isEmpty,
-               let range0 = string.rangeOfString("version=\""),
+            if let string = String(UTF8String: UnsafePointer<CChar>(data!.bytes))?.ifNotEmpty,
+                   range0 = string.rangeOfString("version=\""),
                    range1 = string.rangeOfString("\";", range: range0.endIndex..<string.endIndex),
-                   range2 = Optional(range0.endIndex..<range1.startIndex),
-                   versionString = Optional(string[range2])
-                   where !versionString.isEmpty {
+                   range2 = .Some(range0.endIndex..<range1.startIndex),
+                   versionString = string[range2].ifNotEmpty {
                 let comparisonResult = appVersionString!.compareAsVersionString(versionString)
                 threadDictionary[kSBUpdaterResult] = comparisonResult.rawValue
                 threadDictionary[kSBUpdaterVersionString] = versionString

@@ -87,8 +87,7 @@ class SBPopUpButtonCell: NSPopUpButtonCell {
         }
         if let menu = view.menu {
             if let item = menu.selectedItem {
-                let itemTitle: NSString = item.title
-                if itemTitle.length > 0 {
+                if let itemTitle: NSString = item.title.ifNotEmpty {
                     var r = view.bounds
                     let padding: CGFloat = 10.0
                     let shadow = NSShadow()

@@ -110,8 +110,7 @@ class SBTableCell: NSCell {
             sTextColor = highlighted ? NSColor.clearColor() : NSColor.whiteColor()
         }
         
-        if !title.isEmpty {
-            let nsTitle = title as NSString
+        if let title: NSString = title.ifNotEmpty {
             var r = NSZeroRect
             var sr = NSZeroRect
             let side = self.side + (cellFrame.size.height - 0.5 * 2) / 2
@@ -121,7 +120,7 @@ class SBTableCell: NSCell {
             paragraphStyle.lineBreakMode = lineBreakMode
             let attribute = [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle]
             let sAttribute = [NSFontAttributeName: font!, NSForegroundColorAttributeName: sTextColor, NSParagraphStyleAttributeName: paragraphStyle]
-            var size = nsTitle.sizeWithAttributes(attribute)
+            var size = title.sizeWithAttributes(attribute)
             SBConstrain(&size.width, max: cellFrame.size.width - side * 2)
             r.size = size
             if alignment == .LeftTextAlignment {
@@ -138,8 +137,8 @@ class SBTableCell: NSCell {
             } else if style == .White {
                 sr.origin.y += 1.0
             }
-            nsTitle.drawInRect(sr, withAttributes: sAttribute)
-            nsTitle.drawInRect(r, withAttributes: attribute)
+            title.drawInRect(sr, withAttributes: sAttribute)
+            title.drawInRect(r, withAttributes: attribute)
         }
     }
 }

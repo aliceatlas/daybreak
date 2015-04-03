@@ -62,8 +62,7 @@ class SBWebView: WebView, SBFindbarTarget {
     }
     
     func performFindNext(sender: AnyObject) {
-        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) ?? ""
-        if !string.isEmpty {
+        if let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)?.ifNotEmpty {
             let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
             let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
             searchFor(string, direction: true, caseSensitive: caseFlag, wrap: wrapFlag, continuous: false)
@@ -73,8 +72,7 @@ class SBWebView: WebView, SBFindbarTarget {
     }
     
     func performFindPrevious(sender: AnyObject) {
-        let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) ?? ""
-        if !string.isEmpty {
+        if let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType)?.ifNotEmpty {
             let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
             let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
             searchFor(string, direction: false, caseSensitive: caseFlag, wrap: wrapFlag, continuous: false)
@@ -122,10 +120,7 @@ class SBWebView: WebView, SBFindbarTarget {
     
     // Return range of string in web document
     func rangeOfStringInWebDocument(string: String, caseSensitive caseFlag: Bool) -> NSRange {
-        if !documentString.isEmpty {
-            return (documentString as NSString).rangeOfString(string, options:(caseFlag ? .CaseInsensitiveSearch : nil))
-        }
-        return NSMakeRange(NSNotFound, 0)
+        return (documentString.ifNotEmpty as NSString?)?.rangeOfString(string, options:(caseFlag ? .CaseInsensitiveSearch : nil)) ?? NSMakeRange(NSNotFound, 0)
     }
     
     override func keyDown(event: NSEvent) {

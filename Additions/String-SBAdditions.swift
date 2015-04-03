@@ -53,4 +53,8 @@ extension String {
     func format(args: CVarArgType...) -> String {
         return String(format: self, arguments: args)
     }
+    
+    var ifNotEmpty: String? {
+        return isEmpty ? nil : self
+    }
 }

@@ -101,8 +101,7 @@ class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
             }
         }
         
-        let attributedTitle = NSAttributedString(string: controlView.titleOfSelectedItem ?? "")
-        if attributedTitle.length > 0 {
+        if let attributedTitle = controlView.titleOfSelectedItem?.ifNotEmpty !! {NSAttributedString(string: $0)} {
             var titleRect = NSZeroRect
             let mutableTitle = NSMutableAttributedString(attributedString: attributedTitle)
             let range = NSMakeRange(0, attributedTitle.length)

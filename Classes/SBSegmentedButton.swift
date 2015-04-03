@@ -57,9 +57,7 @@ class SBSegmentedButton: SBView {
     
     override func encodeWithCoder(coder: NSCoder) {
         super.encodeWithCoder(coder)
-        if !buttons.isEmpty {
-            coder.encodeObject(buttons, forKey: "buttons")
-        }
+        buttons.ifNotEmpty !! { coder.encodeObject($0, forKey: "buttons") }
     }
     
     // MARK: Actions

@@ -196,7 +196,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     sourceTextView!.autoresizingMask = .ViewWidthSizable
                     sourceTextView!.textContainer!.containerSize = NSMakeSize(r.size.width, CGFloat(FLT_MAX))
                     sourceTextView!.textContainer!.widthTracksTextView = true
-                    sourceTextView!.string = (documentSource ?? "")!
+                    sourceTextView!.string = documentSource ?? ""
                     sourceTextView!.selectedRange = NSMakeRange(0, 0)
                     scrollView.documentView = sourceTextView
                     openButton.autoresizingMask = .ViewMinXMargin
@@ -950,10 +950,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         if openPanel.runModal() == NSFileHandlingPanelOKButton {
             let encodingName = webView.textEncodingName
             var error: NSError?
-            var name = (pageTitle != "") &? pageTitle
-            name = (name ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")
-            let filePath = NSTemporaryDirectory().stringByAppendingPathComponent(name!)
-            let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(!encodingName.isEmpty ? encodingName : kSBDefaultEncodingName))
+            var name = (pageTitle?.ifNotEmpty ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")!
+            let filePath = NSTemporaryDirectory().stringByAppendingPathComponent(name)
+            let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(encodingName.ifNotEmpty ?? kSBDefaultEncodingName))
             if !(documentSource! as NSString).writeToFile(filePath, atomically: true, encoding: encoding, error: &error) {
                 SBRunAlertWithMessage(error!.localizedDescription)
             } else {
@@ -967,8 +966,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     func saveDocumentSource(sender: AnyObject?) {
         let encodingName = webView.textEncodingName
-        var name = (((pageTitle != "") &? pageTitle) ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")!
-        let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(!encodingName.isEmpty ? encodingName : kSBDefaultEncodingName))
+        var name = (pageTitle?.ifNotEmpty ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")!
+        let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(encodingName.ifNotEmpty ?? kSBDefaultEncodingName))
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.nameFieldStringValue = name

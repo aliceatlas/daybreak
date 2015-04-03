@@ -107,11 +107,9 @@ class SBBookmarks: NSObject {
             }
         } else {
             let info = NSDictionary(contentsOfFile: SBBookmarksFilePath!)
-            if let bookmarkItems = info?[kSBBookmarkItems] as? [BookmarkItem] {
-                if !bookmarkItems.isEmpty {
-                    items = bookmarkItems.map { NSMutableDictionary(dictionary: $0 as! [NSObject: AnyObject]) }
-                    return true
-                }
+            if let bookmarkItems = (info?[kSBBookmarkItems] as? [BookmarkItem])?.ifNotEmpty {
+                items = bookmarkItems.map { NSMutableDictionary(dictionary: $0 as! [NSObject: AnyObject]) }
+                return true
             }
         }
         return false
@@ -226,8 +224,7 @@ class SBBookmarks: NSObject {
     // MARK: Exec
     
     func openItemsFromMenuItem(menuItem: NSMenuItem) {
-        let representedItems = menuItem.representedObject as! [BookmarkItem]
-        if !representedItems.isEmpty {
+        if let representedItems = (menuItem.representedObject as! [BookmarkItem]).ifNotEmpty {
             openItemsInSelectedDocument(representedItems)
         }
     }

@@ -414,10 +414,9 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         return newWindowController
     }
     
-    func constructNewTab(string inString: String?, selection: Bool) {
-        let string = inString ?? ""
-        let requestURLString = !string.isEmpty &? string.requestURLString
-        let URL = requestURLString !! {!$0.isEmpty &? NSURL(string: $0)}
+    func constructNewTab(#string: String?, selection: Bool) {
+        let requestURLString = string?.ifNotEmpty?.requestURLString
+        let URL = requestURLString?.ifNotEmpty !! {NSURL(string: $0)}
         constructNewTab(URL: URL, selection: selection)
     }
     
@@ -692,9 +691,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func tabbar(aTabbar: SBTabbar, shouldOpenURLs URLs: [NSURL], startInItem aTabbarItem: SBTabbarItem) {
-        if !URLs.isEmpty {
-            openAndConstructTab(URLs: URLs, startInTabbarItem: aTabbarItem)
-        }
+        URLs.ifNotEmpty !! { openAndConstructTab(URLs: $0, startInTabbarItem: aTabbarItem) }
     }
     
     func tabbar(aTabbar: SBTabbar, shouldReload aTabbarItem: SBTabbarItem) {
@@ -1351,7 +1348,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
 
     func updateURLFieldGoogleSuggest() {
         let string = urlField.stringValue
-        let URLString = !string.isEmpty &? (kSBGoogleSuggestURL as NSString).format(string).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+        let URLString = string.ifNotEmpty !! {(kSBGoogleSuggestURL as NSString).format($0).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)}
         let URL = URLString !! {NSURL(string: $0)}
         let downloader = SBDownloader(URL: URL)
         downloader.delegate = self
@@ -1362,8 +1359,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if data != nil && urlField.isFirstResponder {
             // Parse XML
             var error: NSError?
-            var items = SBParseGoogleSuggestData(data!, &error) ?? []
-            if !items.isEmpty {
+            if var items = SBParseGoogleSuggestData(data!, &error)?.ifNotEmpty {
                 let item = SBURLFieldItem.None(title: NSLocalizedString("Suggestions", comment: ""),
                                                image: NSImage(named: "Icon_G.png")!.TIFFRepresentation!)
                 items.insert(item, atIndex: 0)
@@ -1593,8 +1589,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func doneDownloader() {
         let URLString = downloaderView!.urlString
-        if let URL = !URLString.isEmpty &? NSURL(string: URLString) {
-            self.startDownloading(forURL: URL)
+        if let URL = URLString.ifNotEmpty !! {NSURL(string: $0)} {
+            startDownloading(forURL: URL)
         } else {
             // Error
         }
@@ -1772,13 +1768,11 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
 
     func openHome(sender: AnyObject?) {
-        var homepage: String? = NSUserDefaults.standardUserDefaults().stringForKey(kSBHomePage) ?? ""
-        homepage = homepage!.isEmpty &? homepage!.requestURLString
-        if homepage != nil {
+        if let homepage = NSUserDefaults.standardUserDefaults().stringForKey(kSBHomePage)?.ifNotEmpty?.requestURLString {
             if urlField.isFirstResponder {
                 window.makeFirstResponder(selectedWebView)
             }
-            openURLStringInSelectedTabViewItem(homepage!)
+            openURLStringInSelectedTabViewItem(homepage)
         }
     }
     
@@ -1940,7 +1934,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if stringValue != nil {
             let requestURLString = stringValue!.requestURLString
             if newer {
-                let URL = !requestURLString.isEmpty &? NSURL(string: requestURLString)
+                let URL = requestURLString.ifNotEmpty !! {NSURL(string: $0)}
                 constructNewTab(URL: URL, selection: true)
             } else {
                 openURLStringInSelectedTabViewItem(requestURLString)
@@ -1952,7 +1946,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if stringValue != nil {
             let searchURLString = stringValue!.searchURLString
             if newer {
-                let URL = !searchURLString.isEmpty &? NSURL(string: searchURLString)
+                let URL = searchURLString.ifNotEmpty !! {NSURL(string: $0)}
                 constructNewTab(URL: URL, selection: true)
             } else {
                 openURLStringInSelectedTabViewItem(searchURLString)

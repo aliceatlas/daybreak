@@ -95,6 +95,10 @@ extension Array {
     func get(index: Int) -> Element? {
         return (index >= 0 && index < count) &? self[index]
     }
+    
+    var ifNotEmpty: Array? {
+        return isEmpty ? nil : self
+    }
 }
 
 func removeItem<T: Equatable>(inout array: [T], toRemove: T) {

@@ -1399,14 +1399,13 @@ func SBLocalizeTitlesInMenu(menu: NSMenu) {
 }
 
 func SBGetLocalizableTextSet(path: String) -> ([[String]], [[NSTextField]], NSSize)? {
-    let localizableString = String(contentsOfFile: path, encoding: NSUTF16StringEncoding, error: nil)
-    if localizableString &! {count($0) > 0} {
+    if let localizableString = String(contentsOfFile: path, encoding: NSUTF16StringEncoding, error: nil)?.ifNotEmpty {
         let fieldSize = NSSize(width: 300, height: 22)
         let offset = NSPoint(x: 45, y: 12)
         let margin = CGFloat(20)
         //let lines = split(elements: Array(localizableString), isSeparator: {$0 as String == "\n"})
         //<S : Sliceable, R : BooleanType>(elements: S, isSeparator: {} -> R, maxSplit: Int = default, allowEmptySlices: Bool = default) -> [S.SubSlice]
-        let lines = localizableString!.componentsSeparatedByString("\n")
+        let lines = localizableString.componentsSeparatedByString("\n")
         let count = CGFloat(lines.count)
         var size = NSSize(
             width: offset.x + (fieldSize.width * 2) + margin * 2,
@@ -1469,10 +1468,7 @@ func SBLocalizableStringsData(fieldSet: [[NSTextField]]) -> NSData? {
             string += "\"\(text0)\" = \"\(text1)\";\n"
         }
     }
-    if !string.isEmpty {
-        return string.dataUsingEncoding(NSUTF16StringEncoding)
-    }
-    return nil
+    return string.ifNotEmpty?.dataUsingEncoding(NSUTF16StringEncoding)
 }
 
 func SBDispatch(block: dispatch_block_t) {
@@ -1508,10 +1504,7 @@ func SBDebugViewStructure(view: NSView) -> [NSObject: AnyObject] {
         description = "\(view) \(NSStringFromRect(view.frame))"
     }
     info["Description"] = description
-    if !subviews.isEmpty {
-        let children = subviews.map(SBDebugViewStructure)
-        info["Children"] = children
-    }
+    subviews.ifNotEmpty !! { info["Children"] = $0.map(SBDebugViewStructure) }
     return info
 }
 
@@ -1520,10 +1513,7 @@ func SBDebugLayerStructure(layer: CALayer) -> [NSObject: AnyObject] {
     let sublayers = (layer.sublayers ?? []) as! [CALayer]
     let description = "\(layer) \(NSStringFromRect(layer.frame))"
     info["Description"] = description
-    if !sublayers.isEmpty {
-        let children = sublayers.map(SBDebugLayerStructure)
-        info["Children"] = children
-    }
+    sublayers.ifNotEmpty !! { info["Children"] = $0.map(SBDebugLayerStructure) }
     return info
 }
 
