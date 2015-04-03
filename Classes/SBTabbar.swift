@@ -35,10 +35,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     optional func tabbar(SBTabbar, didRemoveItem tag: NSInteger)
 }
 
-private func _arrayRemoveItem<T: Equatable>(inout array: [T], toRemove: T) {
-    removeItem(&array, toRemove)
-}
-
 class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     var items: [SBTabbarItem] = []
     weak var delegate: SBTabbarDelegate?
@@ -263,7 +259,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     func removeItem(item: SBTabbarItem) -> Bool {
         if contains(items, item) {
             item.removeFromSuperview()
-            _arrayRemoveItem(&items, item)
+            Daybreak.removeItem(&items, item)
             return true
         }
         return false
@@ -582,7 +578,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
                         draggedItem = item
                         shouldReselectItem = nil
                         draggedItemRect = item.frame
-                        _arrayRemoveItem(&items, item)
+                        Daybreak.removeItem(&items, item)
                         contentView.addSubview(item)  // Bring to front
                     }
                 }

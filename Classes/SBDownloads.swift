@@ -28,9 +28,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-private func _arrayRemoveItems<T: Equatable>(inout array: [T], toRemove: [T]) {
-    removeItems(&array, toRemove)
-}
 private var _sharedDownloads = SBDownloads()
 
 func ==(first: SBDownload, second: SBDownload) -> Bool {
@@ -78,7 +75,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
         }
         // Update views
         executeWillRemoveItem(inItems)
-        _arrayRemoveItems(&items, inItems)
+        Daybreak.removeItems(&items, inItems)
     }
     
     // MARK: Execute
