@@ -28,6 +28,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 private var _sharedHistory = SBHistory()
 
+private func swindle<T, U>(fn: T -> U) (_ arg: AnyObject) -> U {
+    return fn(arg as! T)
+}
+
 class SBHistory: NSObject {
 	var history = WebHistory()
     
@@ -46,10 +50,7 @@ class SBHistory: NSObject {
     }
     
     var items: [WebHistoryItem] {
-        func swindle<T, U>(fn: T -> U) (arg: AnyObject) -> U {
-            return fn(arg as! T)
-        }
-        return history.orderedLastVisitedDays.map(swindle(history.orderedItemsLastVisitedOnDay)).map { $0 as! [WebHistoryItem] }.reduce([], combine: +)
+        return history.orderedLastVisitedDays.flatMap{swindle(history.orderedItemsLastVisitedOnDay)($0) as! [WebHistoryItem]}
     }
     
     func itemsAtIndexes(indexes: NSIndexSet) -> [WebHistoryItem] {
