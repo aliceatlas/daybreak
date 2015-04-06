@@ -99,6 +99,10 @@ extension Array {
     var ifNotEmpty: Array? {
         return isEmpty ? nil : self
     }
+    
+    func optionalMap<U>(transform: (T) -> U?) -> [U] {
+        return map(transform).filter{$0 != nil}.map{$0!}
+    }
 }
 
 func removeItem<T: Equatable>(inout array: [T], toRemove: T) {

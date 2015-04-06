@@ -65,7 +65,7 @@ func SBMenuWithTag(tag: Int) -> NSMenu? {
 
 func SBMenuItemWithTag(tag: Int) -> NSMenuItem? {
     let items = NSApplication.sharedApplication().mainMenu!.itemArray as! [NSMenuItem]
-    return items.map{$0.submenu!.itemWithTag(tag)}.first{$0 != nil} !! {$0}
+    return items.optionalMap{$0.submenu!.itemWithTag(tag)}.get(0)
 }
 
 // MARK: Default values
