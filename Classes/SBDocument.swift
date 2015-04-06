@@ -1348,7 +1348,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
 
     func updateURLFieldGoogleSuggest() {
         let string = urlField.stringValue
-        let URLString = string.ifNotEmpty !! {(kSBGoogleSuggestURL as NSString).format($0).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)}
+        let URLString = string.ifNotEmpty !! {kSBGoogleSuggestURL.format($0).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)}
         let URL = URLString !! {NSURL(string: $0)}
         let downloader = SBDownloader(URL: URL)
         downloader.delegate = self

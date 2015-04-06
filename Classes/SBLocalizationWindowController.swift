@@ -451,7 +451,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         var success = false
         if let data = SBLocalizableStringsData(fieldSet) {
             let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))!
-            let langCode = langPopup.selectedItem?.representedObject as? NSString
+            let langCode = langPopup.selectedItem?.representedObject as? String
             if let name = langCode?.stringByAppendingPathExtension("strings") {
                 // Create strings into application support folder
                 let path = directoryPath.stringByAppendingPathComponent(name)
@@ -459,7 +459,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
                 if data.writeToURL(url, atomically: true) {
                     // Copy strings into bundle resource
                     let manager = NSFileManager.defaultManager()
-                    let directoryPath = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent(langCode as! String).stringByAppendingPathExtension("lproj")!
+                    let directoryPath = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent(langCode!).stringByAppendingPathExtension("lproj")!
                     if !manager.fileExistsAtPath(directoryPath) {
                         manager.createDirectoryAtPath(directoryPath, withIntermediateDirectories: true, attributes: nil, error: nil)
                     }
@@ -492,7 +492,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
 
     func export() {
         let panel = SBSavePanel()
-        let langCode = langPopup.selectedItem?.representedObject as? NSString
+        let langCode = langPopup.selectedItem?.representedObject as? String
         let name = langCode?.stringByAppendingPathExtension("strings") ?? ""
         panel.nameFieldStringValue = name
         window!.beginSheet(panel) {

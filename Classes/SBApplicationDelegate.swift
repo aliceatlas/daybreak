@@ -85,7 +85,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
                 let url = NSURL.fileURLWithPath(filename)!
                 if let type = documentController.typeForContentsOfURL(url, error: &error) {
                     if type == kSBStringsDocumentTypeName {
-                        let path = NSBundle.mainBundle().pathForResource("Localizable", ofType:"strings")
+                        let path = NSBundle.mainBundle().pathForResource("Localizable", ofType: "strings")
                         openStrings(path: path!, anotherPath:url.path!)
                     } else if type == kSBDocumentTypeName {
                         document.constructNewTab(URL: url, selection: (index == filenames.count - 1))
@@ -225,18 +225,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func doneUpdate() {
         let document = SBGetSelectedDocument!
         let window = document.window
-        var versionString: NSString = updateView!.versionString!
-        let mutableVString = versionString.mutableCopy() as! NSMutableString
-        var r: NSRange
-        do {
-            r = mutableVString.rangeOfString(" ")
-            if r.location != NSNotFound && r.length > 0 {
-                mutableVString.deleteCharactersInRange(r)
-            }
-        } while r.location != NSNotFound && r.length > 0
-        if versionString.length != mutableVString.length {
-            versionString = mutableVString.copy() as! String
-        }
+        let versionString = updateView!.versionString!.stringByDeletingCharacter(" ")
         let url = NSURL(string: kSBUpdaterNewVersionURL.format(versionString))
         window.hideCoverWindow()
         destructUpdateView()
@@ -275,9 +264,9 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     @IBAction func provideFeedback(AnyObject) {
         let title = NSLocalizedString("Daybreak Feedback", comment: "")
         if !kSBFeedbackMailAddress.isEmpty {
-            var urlString: NSString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
+            var urlString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
             urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString as String)!)
+            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString)!)
         }
     }
     

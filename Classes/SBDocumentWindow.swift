@@ -77,7 +77,7 @@ class SBDocumentWindow: NSWindow {
     }
     override var title: String! {
         didSet {
-            super.title = (self.title as String?) ?? ""
+            super.title = super.title ?? ""
         }
     }
 

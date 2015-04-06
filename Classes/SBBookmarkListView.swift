@@ -660,17 +660,17 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             
             // Search in bookmarks
             for (index, bookmarkItem) in enumerate(items) {
-                let title = bookmarkItem[kSBBookmarkTitle] as! NSString
-                let URLString = bookmarkItem[kSBBookmarkURL] as! NSString
+                let title = bookmarkItem[kSBBookmarkTitle] as! String
+                let URLString = bookmarkItem[kSBBookmarkURL] as! String
                 let schemelessURLString = URLString.stringByDeletingScheme!
                 var range = title.rangeOfString(text, options: .CaseInsensitiveSearch)
-                if range.location == NSNotFound {
+                if range == nil {
                     range = URLString.rangeOfString(text)
                 }
-                if range.location == NSNotFound {
+                if range == nil {
                     range = schemelessURLString.rangeOfString(text)
                 }
-                if range.location != NSNotFound {
+                if range != nil {
                     indexes.addIndex(index)
                 }
             }

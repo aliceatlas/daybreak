@@ -1316,11 +1316,7 @@ func SBEncodingMenu(target: AnyObject?, selector: Selector, showDefault: Bool) -
     let menu = NSMenu()
     var encs: [NSStringEncoding?]!
     if kSBFlagShowAllStringEncodings {
-        let encPtr = NSString.availableStringEncodings()
-        var mEncs: [NSStringEncoding] = []
-        for var enc = encPtr; enc.memory != 0; enc = enc.successor() {
-            mEncs.append(enc.memory)
-        }
+        var mEncs = String.availableStringEncodings()
         mEncs.sort(SBStringEncodingSortFunction)
         encs = mEncs.map { $0 }
     } else {
@@ -1330,7 +1326,7 @@ func SBEncodingMenu(target: AnyObject?, selector: Selector, showDefault: Bool) -
     // Create menu items
     for enc in encs {
         if let enc = enc {
-            let encodingName = NSString.localizedNameOfStringEncoding(enc)
+            let encodingName = String.localizedNameOfStringEncoding(enc)
             let cfEncoding = CFStringConvertNSStringEncodingToEncoding(enc)
             let ianaName = CFStringConvertEncodingToIANACharSetName(cfEncoding) as! String
             let available = Bool(Int(CFStringIsEncodingAvailable(cfEncoding)))
@@ -1359,8 +1355,8 @@ func SBEncodingMenu(target: AnyObject?, selector: Selector, showDefault: Bool) -
 }
 
 func SBStringEncodingSortFunction(num1: NSStringEncoding, num2: NSStringEncoding) -> Bool {
-    let enc1 = NSString.localizedNameOfStringEncoding(num1)
-    let enc2 = NSString.localizedNameOfStringEncoding(num2)
+    let enc1 = String.localizedNameOfStringEncoding(num1)
+    let enc2 = String.localizedNameOfStringEncoding(num2)
     return enc1 < enc2
 }
 

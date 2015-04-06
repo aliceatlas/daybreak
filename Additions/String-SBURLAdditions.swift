@@ -40,18 +40,38 @@ extension String {
     }
     
     var requestURLString: String {
-        return (self as NSString).requestURLString as! String
+        var hasScheme = false
+        if isURLString(&hasScheme) {
+            var stringValue = self
+            if !hasScheme {
+                if stringValue.hasPrefix("/") {
+                    stringValue = "file://\(stringValue)"
+                } else {
+                    stringValue = "http://\(stringValue)"
+                }
+            }
+            return stringValue.URLEncodedString
+        }
+        return searchURLString
     }
     
     func isURLString(inout hasScheme: Bool) -> Bool {
-        var objcHasScheme: ObjCBool = false
-        let val = (self as NSString).isURLString(&objcHasScheme)
-        hasScheme = Bool(objcHasScheme)
-        return val
+        if (rangeOfString(" ") == nil && rangeOfString(".") != nil) || hasPrefix("http://localhost") {
+            let string = URLEncodedString
+            let attributedString = NSAttributedString(string: string)
+            var range = NSMakeRange(0, 0)
+            let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
+            if range.location == 0 {
+                hasScheme = URL?.scheme?.ifNotEmpty &! {string.hasPrefix($0)}
+                return true
+            }
+        }
+        return false
     }
     
     var URLEncodedString: String {
-        return (self as NSString).URLEncodedString as! String
+        let requestURL = NSURL._web_URLWithUserTypedString(self)
+        return requestURL.absoluteString!
     }
     
     var URLDecodedString: String? {
@@ -59,7 +79,13 @@ extension String {
     }
     
     var searchURLString: String {
-        return (self as NSString).searchURLString as! String
+        let info = NSBundle.mainBundle().localizedInfoDictionary!
+        if let gSearchFormat = info["SBGSearchFormat"] as? String {
+            let str = gSearchFormat.format(self)
+            let requestURL = NSURL._web_URLWithUserTypedString(str)
+            return requestURL.absoluteString!
+        }
+        return self
     }
     
     func compareAsVersionString(string: String) -> NSComparisonResult {

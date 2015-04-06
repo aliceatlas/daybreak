@@ -953,7 +953,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             var name = (pageTitle?.ifNotEmpty ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")!
             let filePath = NSTemporaryDirectory().stringByAppendingPathComponent(name)
             let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(encodingName.ifNotEmpty ?? kSBDefaultEncodingName))
-            if !(documentSource! as NSString).writeToFile(filePath, atomically: true, encoding: encoding, error: &error) {
+            if !documentSource!.writeToFile(filePath, atomically: true, encoding: encoding, error: &error) {
                 SBRunAlertWithMessage(error!.localizedDescription)
             } else {
                 let appPath = openPanel.URL!.path!
@@ -973,7 +973,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         savePanel.nameFieldStringValue = name
         if savePanel.runModal() == NSFileHandlingPanelOKButton {
             var error: NSError?
-            if !(documentSource! as NSString).writeToFile(savePanel.URL!.path!, atomically: true, encoding: encoding, error: &error) {
+            if !documentSource!.writeToFile(savePanel.URL!.path!, atomically: true, encoding: encoding, error: &error) {
                 SBRunAlertWithMessage(error!.localizedDescription)
             }
         }

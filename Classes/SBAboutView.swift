@@ -55,7 +55,7 @@ class SBAboutView: SBView {
         let localizedInfo = bundle.localizedInfoDictionary
         let name = localizedInfo?["CFBundleName"] as? String
         let version = info?["CFBundleVersion"] as? String
-        let string: String? = name !! {$0 + (version !! {" \($0)"} ?? "")}
+        let string = name !! {$0 + (version !! {" \($0)"} ?? "")}
         string !! { nameLabel.stringValue = $0 }
         return nameLabel
     }()

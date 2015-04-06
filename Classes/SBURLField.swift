@@ -1196,12 +1196,9 @@ class SBURLFieldDataCell: NSCell {
     }
 }
 
-func schemeForURLString(urlString: NSString) -> String? {
-    var range = urlString.rangeOfString("://")
-    if range.location != NSNotFound {
-        range.length += range.location
-        range.location = 0
-        return urlString.substringWithRange(range)
+func schemeForURLString(urlString: String) -> String? {
+    if let range = urlString.rangeOfString("://") {
+        return urlString[urlString.startIndex..<range.endIndex]
     }
     return nil
 }

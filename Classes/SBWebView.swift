@@ -85,7 +85,7 @@ class SBWebView: WebView, SBFindbarTarget {
         var r = false
         if continuous {
             let range = rangeOfStringInWebDocument(searchString, caseSensitive: caseFlag) // Flip case flag
-            r = range.location != NSNotFound
+            r = range != nil
         } else {
             r = searchFor(searchString, direction: forward, caseSensitive: !caseFlag, wrap: wrapFlag)
         }
@@ -119,8 +119,8 @@ class SBWebView: WebView, SBFindbarTarget {
     }
     
     // Return range of string in web document
-    func rangeOfStringInWebDocument(string: String, caseSensitive caseFlag: Bool) -> NSRange {
-        return (documentString.ifNotEmpty as NSString?)?.rangeOfString(string, options:(caseFlag ? .CaseInsensitiveSearch : nil)) ?? NSMakeRange(NSNotFound, 0)
+    func rangeOfStringInWebDocument(string: String, caseSensitive caseFlag: Bool) -> Range<String.Index>? {
+        return documentString.ifNotEmpty?.rangeOfString(string, options:(caseFlag &? .CaseInsensitiveSearch))
     }
     
     override func keyDown(event: NSEvent) {
