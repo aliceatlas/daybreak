@@ -54,16 +54,13 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         let popup = SBBLKGUIPopUpButton()
         popup.translatesAutoresizingMaskIntoConstraints = false
         let count = SBUserAgentNames.count
-        var selectedIndex: Int?
-        let userAgentName = NSUserDefaults.standardUserDefaults().stringForKey(kSBUserAgentName)
-        if userAgentName != nil {
-            if let index = SBUserAgentNames.firstIndex({$0 == userAgentName!}) {
-                selectedIndex = index + 1
-            }
-        }
-        if selectedIndex == nil {
+        let userAgentName = NSUserDefaults.standardUserDefaults().stringForKey(kSBUserAgentName)!
+        var selectedIndex: Int!
+        if let index = SBUserAgentNames.firstIndex({$0 == userAgentName}) {
+            selectedIndex = index + 1
+        } else {
             selectedIndex = count
-            self.field.stringValue = userAgentName!
+            self.field.stringValue = userAgentName
             self.field.hidden = false
         }
         let icon0 = (SBUserAgentNames[0] == "Daybreak") &? NSImage(named: "Application.icns")
@@ -82,7 +79,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
             popup.menu!.addItem(item)
         }
         popup.pullsDown = true
-        popup.selectItemAtIndex(selectedIndex!)
+        popup.selectItemAtIndex(selectedIndex)
         return popup
     }()
     

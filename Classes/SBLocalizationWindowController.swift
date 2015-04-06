@@ -342,14 +342,10 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         // Replace text
         if let (tSet, _, _) = SBGetLocalizableTextSet(path) {
             for texts in tSet {
-                if texts.count == 2 {
-                    let text0 = texts[0]
-                    let text1 = texts[1]
-                    if let fields = fieldSet.first({ $0.count == 2 && $0[0].stringValue == text0 }) {
-                        if fields[1].stringValue != text1 {
-                            fields[1].stringValue = text1
-                        }
-                    }
+                if texts.count == 2,
+                   let fields = fieldSet.first({$0.count == 2 && $0[0].stringValue == texts[0]})
+                   where fields[1].stringValue != texts[1] {
+                    fields[1].stringValue = texts[1]
                 }
             }
         }
@@ -449,34 +445,33 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     
     func done() {
         var success = false
-        if let data = SBLocalizableStringsData(fieldSet) {
+        if let data = SBLocalizableStringsData(fieldSet),
+               langCode = langPopup.selectedItem?.representedObject as? String,
+               name = langCode.stringByAppendingPathExtension("strings") {
+            // Create strings into application support folder
             let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))!
-            let langCode = langPopup.selectedItem?.representedObject as? String
-            if let name = langCode?.stringByAppendingPathExtension("strings") {
-                // Create strings into application support folder
-                let path = directoryPath.stringByAppendingPathComponent(name)
-                let url = NSURL.fileURLWithPath(path)!
-                if data.writeToURL(url, atomically: true) {
-                    // Copy strings into bundle resource
-                    let manager = NSFileManager.defaultManager()
-                    let directoryPath = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent(langCode!).stringByAppendingPathExtension("lproj")!
-                    if !manager.fileExistsAtPath(directoryPath) {
-                        manager.createDirectoryAtPath(directoryPath, withIntermediateDirectories: true, attributes: nil, error: nil)
-                    }
-                    let dstPath = directoryPath.stringByAppendingPathComponent("Localizable").stringByAppendingPathExtension("strings")!
-                    var error: NSError?
-                    if manager.fileExistsAtPath(dstPath) {
-                        manager.removeItemAtPath(dstPath, error: &error)
-                    }
-                    if manager.copyItemAtPath(url.path!, toPath: dstPath, error: &error) {
-                        // Complete
-                        let alert = NSAlert()
-                        alert.messageText = NSLocalizedString("Complete to add new localization. Restart Daybreak.", comment: "")
-                        alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
-                        alert.beginSheetModalForWindow(window!) {
-                            (NSModalResponse) -> Void in
-                            success = true
-                        }
+            let path = directoryPath.stringByAppendingPathComponent(name)
+            let url = NSURL.fileURLWithPath(path)!
+            if data.writeToURL(url, atomically: true) {
+                // Copy strings into bundle resource
+                let manager = NSFileManager.defaultManager()
+                let directoryPath = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent(langCode).stringByAppendingPathExtension("lproj")!
+                if !manager.fileExistsAtPath(directoryPath) {
+                    manager.createDirectoryAtPath(directoryPath, withIntermediateDirectories: true, attributes: nil, error: nil)
+                }
+                let dstPath = directoryPath.stringByAppendingPathComponent("Localizable").stringByAppendingPathExtension("strings")!
+                var error: NSError?
+                if manager.fileExistsAtPath(dstPath) {
+                    manager.removeItemAtPath(dstPath, error: &error)
+                }
+                if manager.copyItemAtPath(url.path!, toPath: dstPath, error: &error) {
+                    // Complete
+                    let alert = NSAlert()
+                    alert.messageText = NSLocalizedString("Complete to add new localization. Restart Daybreak.", comment: "")
+                    alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
+                    alert.beginSheetModalForWindow(window!) {
+                        (NSModalResponse) -> Void in
+                        success = true
                     }
                 }
             }
@@ -496,14 +491,12 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         let name = langCode?.stringByAppendingPathExtension("strings") ?? ""
         panel.nameFieldStringValue = name
         window!.beginSheet(panel) {
-            if $0 == NSFileHandlingPanelOKButton {
-                if let data = SBLocalizableStringsData(self.fieldSet) {
-                    if data.writeToURL(panel.URL!, atomically: true) {
-                        SBDispatch {
-                            //self.copyResourceInBundle(url)
-                            // hey this was never implemented...
-                        }
-                    }
+            if $0 == NSFileHandlingPanelOKButton,
+               let data = SBLocalizableStringsData(self.fieldSet)
+               where data.writeToURL(panel.URL!, atomically: true) {
+                SBDispatch {
+                    //self.copyResourceInBundle(url)
+                    // hey this was never implemented...
                 }
             }
         }

@@ -138,28 +138,27 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Apple Events
     
     func openURL(event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
-        if let URLString = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue {
-            if let method = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenURLFromApplications) {
-                switch method {
-                    case "in a new window":
+        if let URLString = event.paramDescriptorForKeyword(AEKeyword(keyDirectObject))?.stringValue,
+               method = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenURLFromApplications) {
+            switch method {
+                case "in a new window":
                     var error: NSError?
                     if let document = SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument {
                         document.openURLStringInSelectedTabViewItem(URLString)
                     }
 
-                    case "in a new tab":
+                case "in a new tab":
                     if let document = SBGetSelectedDocument {
                         document.constructNewTab(URL: NSURL(string: URLString), selection: true)
                     }
 
-                    case "in the current tab":
+                case "in the current tab":
                     if let document = SBGetSelectedDocument {
                         document.openURLStringInSelectedTabViewItem(URLString)
                     }
-                    
-                    default:
-                    assert(false)
-                }
+                
+                default:
+                    fatalError("???")
             }
         }
     }
@@ -237,23 +236,13 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func openStrings(#path: String, anotherPath: String? = nil) {
-        if let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSet(path) {
-            if !textSet.isEmpty {
-                destructLocalizeWindowController()
-                localizationWindowController = SBLocalizationWindowController(viewSize: viewSize)
-                localizationWindowController!.fieldSet = fieldSet
-                localizationWindowController!.textSet = textSet
-                anotherPath !! localizationWindowController!.mergeFilePath
-                localizationWindowController!.showWindow(nil)
-            
-                /*if (floor(NSAppKitVersionNumber) < 1038)	// Resize window frame for auto-resizing (Call for 10.5. Strange bugs of Mac)
-                {
-                    NSWindow *window = [localizationWindowController window];
-                    NSRect r = [window frame];
-                    [window setFrame:NSMakeRect(r.origin.x, r.origin.y, r.size.width, r.size.height - 1) display:YES];
-                    [window setFrame:r display:YES];
-                }*/
-            }
+        if let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSet(path) where !textSet.isEmpty {
+            destructLocalizeWindowController()
+            localizationWindowController = SBLocalizationWindowController(viewSize: viewSize)
+            localizationWindowController!.fieldSet = fieldSet
+            localizationWindowController!.textSet = textSet
+            anotherPath !! localizationWindowController!.mergeFilePath
+            localizationWindowController!.showWindow(nil)
         }
     }
     
@@ -321,12 +310,11 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         let result = panel.runModal()
-        if result == NSFileHandlingPanelOKButton {
-            if let document = SBGetSelectedDocument {
-                let urls = panel.URLs as! [NSURL]
-                for (index, file) in enumerate(urls) {
-                    document.constructNewTab(URL: file, selection:(index == urls.count - 1))
-                }
+        if result == NSFileHandlingPanelOKButton,
+           let document = SBGetSelectedDocument {
+            let URLs = panel.URLs as! [NSURL]
+            for (index, file) in enumerate(URLs) {
+                document.constructNewTab(URL: file, selection: (index == URLs.count - 1))
             }
         }
     }
@@ -334,8 +322,8 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Help
     
     func localize(sender: AnyObject) {
-        if localizationWindowController != nil && localizationWindowController!.window!.occlusionState != .Visible {
-            localizationWindowController!.showWindow(nil)
+        if let controller = localizationWindowController where controller.window!.occlusionState != .Visible {
+            controller.showWindow(nil)
         } else {
             let path = NSBundle.mainBundle().pathForResource("Localizable", ofType:"strings")
             openStrings(path: path!)
@@ -343,22 +331,20 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     }
     
     func plugins(sender: AnyObject) {
-        if let path = SBFilePathInApplicationBundle("Plug-ins", "html") {
-            if let document = SBGetSelectedDocument {
-                document.constructNewTab(URL: NSURL.fileURLWithPath(path), selection: true)
-            }
+        if let path = SBFilePathInApplicationBundle("Plug-ins", "html"),
+               document = SBGetSelectedDocument {
+            document.constructNewTab(URL: NSURL.fileURLWithPath(path), selection: true)
         }
     }
     
     func sunrisepage(sender: AnyObject) {
         let info = NSBundle.mainBundle().localizedInfoDictionary!
-        if let string = info["SBHomePageURL"] as? String {
-            if let document = SBGetSelectedDocument {
-                if document.selectedWebDataSource != nil {
-                    document.constructNewTab(URL: NSURL(string: string), selection: true)
-                } else {
-                    document.openURLStringInSelectedTabViewItem(string)
-                }
+        if let string = info["SBHomePageURL"] as? String,
+               document = SBGetSelectedDocument {
+            if document.selectedWebDataSource != nil {
+                document.constructNewTab(URL: NSURL(string: string), selection: true)
+            } else {
+                document.openURLStringInSelectedTabViewItem(string)
             }
         }
     }
@@ -405,15 +391,14 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let panel = SBOpenPanel()
         panel.allowedFileTypes = ["strings"]
         panel.directoryURL = NSBundle.mainBundle().resourceURL
-        if panel.runModal() == NSFileHandlingPanelOKButton {
-            if let (textSet, _, _) = SBGetLocalizableTextSet(panel.URL!.path!) {
-                for (index, texts) in enumerate(textSet) {
-                    let text0 = texts[0]
-                    for (i, ts) in enumerate(textSet) {
-                        let t0 = ts[0]
-                        if text0 == t0 && index != i {
-                            NSLog("Same keys \(i): \(t0)")
-                        }
+        if panel.runModal() == NSFileHandlingPanelOKButton,
+           let (textSet, _, _) = SBGetLocalizableTextSet(panel.URL!.path!) {
+            for (index, texts) in enumerate(textSet) {
+                let text0 = texts[0]
+                for (i, ts) in enumerate(textSet) {
+                    let t0 = ts[0]
+                    if text0 == t0 && index != i {
+                        NSLog("Same keys \(i): \(t0)")
                     }
                 }
             }

@@ -197,20 +197,17 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     // MARK: Delegate
     
     override func controlTextDidChange(notification: NSNotification) {
-        let string = searchField.stringValue
-        if !string.isEmpty {
+        if !searchField.stringValue.isEmpty {
             searchContinuous(nil)
         }
     }
     
     func control(control: NSControl, textView: NSTextView, doCommandBySelector command: Selector) -> Bool {
-        if control === searchField {
-            if command == "cancelOperation:" {
-                if searchField.stringValue.isEmpty {
-                    executeClose()
-                    return true
-                }
-            }
+        if control === searchField &&
+           command == "cancelOperation:" &&
+           searchField.stringValue.isEmpty {
+            executeClose()
+            return true
         }
         return false
     }

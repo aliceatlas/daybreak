@@ -85,27 +85,23 @@ class SBPopUpButtonCell: NSPopUpButtonCell {
                 image.drawInRect(view.bounds, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
             }
         }
-        if let menu = view.menu {
-            if let item = menu.selectedItem {
-                if let itemTitle: NSString = item.title.ifNotEmpty {
-                    var r = view.bounds
-                    let padding: CGFloat = 10.0
-                    let shadow = NSShadow()
-                    shadow.shadowOffset = NSMakeSize(0.0, -1.0)
-                    shadow.shadowColor = NSColor.whiteColor()
-                    let style = NSMutableParagraphStyle()
-                    style.lineBreakMode = .ByTruncatingTail
-                    let attributes = [NSFontAttributeName:            NSFont.boldSystemFontOfSize(11.0),
-                                      NSForegroundColorAttributeName: NSColor.blackColor(),
-                                      NSShadowAttributeName:          shadow,
-                                      NSParagraphStyleAttributeName:  style]
-                    r.size = itemTitle.sizeWithAttributes(attributes)
-                    SBConstrain(&r.size.width, max: view.bounds.size.width - padding * 2)
-                    r.origin.x = padding
-                    r.origin.y = (view.bounds.size.height - r.size.height) / 2
-                    itemTitle.drawInRect(r, withAttributes: attributes)
-                }
-            }
+        if let itemTitle: NSString = view.menu?.selectedItem?.title.ifNotEmpty {
+            var r = view.bounds
+            let padding: CGFloat = 10.0
+            let shadow = NSShadow()
+            shadow.shadowOffset = NSMakeSize(0.0, -1.0)
+            shadow.shadowColor = NSColor.whiteColor()
+            let style = NSMutableParagraphStyle()
+            style.lineBreakMode = .ByTruncatingTail
+            let attributes = [NSFontAttributeName:            NSFont.boldSystemFontOfSize(11.0),
+                              NSForegroundColorAttributeName: NSColor.blackColor(),
+                              NSShadowAttributeName:          shadow,
+                              NSParagraphStyleAttributeName:  style]
+            r.size = itemTitle.sizeWithAttributes(attributes)
+            SBConstrain(&r.size.width, max: view.bounds.size.width - padding * 2)
+            r.origin.x = padding
+            r.origin.y = (view.bounds.size.height - r.size.height) / 2
+            itemTitle.drawInRect(r, withAttributes: attributes)
         }
     }
 }

@@ -77,14 +77,11 @@ var SBDefaultDocumentWindowRect: NSRect {
 
 // Return value for key in "com.apple.internetconfig.plist"
 func SBDefaultHomePage() -> String? {
-    if let path = SBLibraryDirectory("Preferences") !! {SBSearchFileInDirectory("com.apple.internetconfig", $0)} {
-        if NSFileManager.defaultManager().fileExistsAtPath(path) {
-            if let internetConfig = NSDictionary(contentsOfFile: path) {
-                if internetConfig.count > 0 {
-                    return SBValueForKey("WWWHomePage", internetConfig as! [NSObject: AnyObject]) as? String
-                }
-            }
-        }
+    if let path = SBLibraryDirectory("Preferences") !! {SBSearchFileInDirectory("com.apple.internetconfig", $0)}
+       where NSFileManager.defaultManager().fileExistsAtPath(path),
+       let internetConfig = NSDictionary(contentsOfFile: path)
+       where internetConfig.count > 0 {
+        return SBValueForKey("WWWHomePage", internetConfig as! [NSObject: AnyObject]) as? String
     }
     return nil
 }
@@ -270,22 +267,16 @@ var SBBookmarksFilePath: String? {
             // Exist version1 bookmarks
             let plistData = NSData(contentsOfFile: version1Path)!
             if let items = NSPropertyListSerialization.propertyListWithData(plistData, options: Int(NSPropertyListMutabilityOptions.Immutable.rawValue), format: nil, error: &error) as? [NSDictionary] {
-                if let plistData = NSPropertyListSerialization.dataWithPropertyList(SBBookmarksWithItems(items), format: .BinaryFormat_v1_0, options: 0, error: &error) {
-                    if plistData.writeToFile(path!, atomically: true) {
-                    } else {
-                        path = nil
-                    }
+                if let plistData = NSPropertyListSerialization.dataWithPropertyList(SBBookmarksWithItems(items), format: .BinaryFormat_v1_0, options: 0, error: &error)
+                   where plistData.writeToFile(path!, atomically: true) {
                 } else {
                     path = nil
                 }
             }
         } else {
             // Create default bookmarks
-            if let plistData = NSPropertyListSerialization.dataWithPropertyList(SBDefaultBookmarks!, format: .BinaryFormat_v1_0, options: 0, error: &error) {
-                if plistData.writeToFile(path!, atomically: true) {
-                } else {
-                    path = nil
-                }
+            if let plistData = NSPropertyListSerialization.dataWithPropertyList(SBDefaultBookmarks!, format: .BinaryFormat_v1_0, options: 0, error: &error)
+               where plistData.writeToFile(path!, atomically: true) {
             } else {
                 path = nil
             }
@@ -1431,7 +1422,7 @@ func SBGetLocalizableTextSet(path: String) -> ([[String]], [[NSTextField]], NSSi
                         field.bordered = isMenuItem
                         field.drawsBackground = isMenuItem
                         field.bezeled = editable
-                        (field.cell() as! NSCell).scrollable = isMenuItem
+                        field.cell!.scrollable = isMenuItem
                         if isMenuItem {
                             string = component.stringByDeletingQuotations
                         }

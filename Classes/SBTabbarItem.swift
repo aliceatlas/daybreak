@@ -199,10 +199,8 @@ class SBTabbarItem: SBView {
         let point = convertPoint(location, fromView: nil)
         if downInClose {
             // Close
-            if closable {
-                if closableRect.contains(point) {
-                    executeShouldClose()
-                }
+            if closable && closableRect.contains(point) {
+                executeShouldClose()
             }
         } else {
             superview!.mouseUp(event)

@@ -75,10 +75,8 @@ class SBSearchbar: SBFindbar {
     // MARK: Actions
     
     func executeDoneSelector(sender: AnyObject) {
-        if let text = searchField.stringValue.ifNotEmpty {
-            if target?.respondsToSelector(doneSelector) ?? false {
-                NSApp.sendAction(doneSelector, to: target!, from: text)
-            }
+        if target?.respondsToSelector(doneSelector) ?? false, let text = searchField.stringValue.ifNotEmpty {
+            NSApp.sendAction(doneSelector, to: target!, from: text)
         }
     }
     

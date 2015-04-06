@@ -49,19 +49,17 @@ class SBDocumentController: NSDocumentController {
     }
     
     func openUntitledDocumentAndDisplay(displayDocument: Bool, sidebarVisibility: Bool, initialURL URL: NSURL?, error outError: NSErrorPointer) -> AnyObject? {
-        let type = URL !! {self.typeForContentsOfURL($0, error: outError)}
+        let type = URL !! {typeForContentsOfURL($0, error: outError)}
         if type == kSBStringsDocumentTypeName {
-        } else {
-            if let document = makeUntitledDocumentOfType(kSBDocumentTypeName, error: outError) as? SBDocument {
-                URL !! { document.initialURL = $0 }
-                document.sidebarVisibility = sidebarVisibility
-                addDocument(document)
-                document.makeWindowControllers()
-                if displayDocument {
-                    document.showWindows()
-                }
-                return document
+        } else if let document = makeUntitledDocumentOfType(kSBDocumentTypeName, error: outError) as? SBDocument {
+            URL !! { document.initialURL = $0 }
+            document.sidebarVisibility = sidebarVisibility
+            addDocument(document)
+            document.makeWindowControllers()
+            if displayDocument {
+                document.showWindows()
             }
+            return document
         }
         return nil
     }

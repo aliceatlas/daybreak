@@ -60,10 +60,9 @@ class SBPreferences: NSObject {
     }
     
     func homepage(isInWindow: Bool) -> String? {
-        if let homepage = SBPreferences.objectForKey(kSBHomePage) as? String {
-            if SBPreferences.boolForKey(isInWindow ? kSBOpenNewWindowsWithHomePage : kSBOpenNewTabsWithHomePage) {
-                return homepage
-            }
+        if SBPreferences.boolForKey(isInWindow ? kSBOpenNewWindowsWithHomePage : kSBOpenNewTabsWithHomePage),
+           let homepage = SBPreferences.objectForKey(kSBHomePage) as? String {
+            return homepage
         }
         return nil
     }

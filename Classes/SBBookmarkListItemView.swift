@@ -200,8 +200,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     func update() {
-        let URLString = item[kSBBookmarkURL] as? String
-        if let URL = URLString !! {NSURL(string: $0)} {
+        if let URLString = item[kSBBookmarkURL] as? String, URL = NSURL(string: URLString) {
             let window = SBRenderWindow.startRenderingWithSize(NSMakeSize(800, 600), delegate: self, URL: URL)
             window.releasedWhenClosed = false
         }

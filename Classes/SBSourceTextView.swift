@@ -81,14 +81,12 @@ class SBSourceTextView: NSTextView, SBFindbarTarget {
         if range.location != NSNotFound {
             selectRange(range)
             r = true
-        } else {
-            if wrapFlag {
-                searchRange = forward ? NSMakeRange(0, selectedRange.location) : NSMakeRange(invalidLength, allRange.length - invalidLength)
-                range = (string! as NSString).rangeOfString(searchString, options: options, range: searchRange)
-                if range.location != NSNotFound {
-                    selectRange(range)
-                    r = true
-                }
+        } else if wrapFlag {
+            searchRange = forward ? NSMakeRange(0, selectedRange.location) : NSMakeRange(invalidLength, allRange.length - invalidLength)
+            range = (string! as NSString).rangeOfString(searchString, options: options, range: searchRange)
+            if range.location != NSNotFound {
+                selectRange(range)
+                r = true
             }
         }
         if !r {

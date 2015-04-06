@@ -557,11 +557,10 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     case NSURLErrorFileDoesNotExist:
                         title = NSLocalizedString("File Does Not Exist", comment: "")
                     case NSURLErrorFileIsDirectory:
-                        if let url = NSURL(string: URLString) {
-                            // Try to opening with other application
-                            if !NSWorkspace.sharedWorkspace().openURL(url) {
-                                title = NSLocalizedString("File is Directory", comment: "")
-                            }
+                        // Try to opening with other application
+                        if let URL = NSURL(string: URLString)
+                           where !NSWorkspace.sharedWorkspace().openURL(URL) {
+                            title = NSLocalizedString("File is Directory", comment: "")
                         }
                     case NSURLErrorNoPermissionsToReadFile:
                         title = NSLocalizedString("No Permissions to ReadFile", comment: "")
@@ -637,12 +636,10 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     override func webView(sender: WebView, resource identifier: AnyObject?, didReceiveResponse response: NSURLResponse, fromDataSource dataSource: WebDataSource) {
         let length = response.expectedContentLength
-        if length > 0 {
-            if let resourceID = identifier as? SBWebResourceIdentifier {
-                resourceID.length = length
-                if selected {
-                    tabView.executeSelectedItemDidReceiveExpectedContentLengthOfResourceID(resourceID)
-                }
+        if length > 0, let resourceID = identifier as? SBWebResourceIdentifier {
+            resourceID.length = length
+            if selected {
+                tabView.executeSelectedItemDidReceiveExpectedContentLengthOfResourceID(resourceID)
             }
         }
     }
@@ -654,12 +651,10 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     override func webView(sender: WebView, resource identifier: AnyObject?, didReceiveContentLength length: Int, fromDataSource dataSource: WebDataSource) {
-        if length > 0 {
-            if let resourceID = identifier as? SBWebResourceIdentifier {
-                resourceID.received += length
-                if selected {
-                    tabView.executeSelectedItemDidReceiveContentLengthOfResourceID(resourceID)
-                }
+        if length > 0, let resourceID = identifier as? SBWebResourceIdentifier {
+            resourceID.received += length
+            if selected {
+                tabView.executeSelectedItemDidReceiveContentLengthOfResourceID(resourceID)
             }
         }
     }
@@ -753,10 +748,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         let frameURL = frame.dataSource?.request.URL
         let applicationBundleIdentifier = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenApplicationBundleIdentifier)
         var appName: String?
-        if let applicationPath = applicationBundleIdentifier !! {NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier($0)} {
-            if let bundle = NSBundle(path: applicationPath) {
-                appName = (bundle.localizedInfoDictionary?["CFBundleDisplayName"] ?? bundle.infoDictionary?["CFBundleName"]) as? String
-            }
+        if let applicationPath = applicationBundleIdentifier !! {NSWorkspace.sharedWorkspace().absolutePathForAppBundleWithIdentifier($0)},
+               bundle = NSBundle(path: applicationPath) {
+            appName = (bundle.localizedInfoDictionary?["CFBundleDisplayName"] ?? bundle.infoDictionary?["CFBundleName"]) as? String
         }
         
         menuItems.extend(defaultMenuItems as! [NSMenuItem])
@@ -901,15 +895,14 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     override func webView(webView: WebView, unableToImplementPolicyWithError error: NSError, frame: WebFrame) {
-        if let string = error.userInfo?["NSErrorFailingURLStringKey"] as? String {
-            if let URL = NSURL(string: string) {
-                if URL.hasWebScheme { // 'http', 'https', 'file'
+        if let string = error.userInfo?["NSErrorFailingURLStringKey"] as? String,
+               URL = NSURL(string: string) {
+            if URL.hasWebScheme { // 'http', 'https', 'file'
+                // Error
+            } else {
+                // open URL with other applications
+                if !NSWorkspace.sharedWorkspace().openURL(URL) {
                     // Error
-                } else {
-                    // open URL with other applications
-                    if !NSWorkspace.sharedWorkspace().openURL(URL) {
-                        // Error
-                    }
                 }
             }
         }
@@ -918,13 +911,12 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     // MARK: Actions
     
     func addResourceIdentifier(identifier: SBWebResourceIdentifier) -> Bool {
-        let anIdentifier = resourceIdentifiers.first { $0.request == identifier.request }
-        if anIdentifier == nil {
-            resourceIdentifiers.append(identifier)
-            return true
+        if let anIdentifier = resourceIdentifiers.first({$0.request == identifier.request}) {
+            DebugLog("%@ contains request %@", __FUNCTION__, anIdentifier.request)
+            return false
         }
-        DebugLog("%@ contains request %@", __FUNCTION__, anIdentifier!.request)
-        return false
+        resourceIdentifiers.append(identifier)
+        return true
     }
     
     func removeAllResourceIdentifiers() {
@@ -992,12 +984,11 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         var message = NSLocalizedString("Daybreak can’t open the page “%@”", comment: "").format(urlString)
         message = "\(message)<br /><br />\(searchMessage)<br /><a href=\"\(searchURLString)\">\(urlString)</a>"
         let path = bundle.pathForResource("Error", ofType: "html")!
-        if NSFileManager.defaultManager().fileExistsAtPath(path) {
-            if let htmlString = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
-                let formattedHTML = htmlString.format(title, message)
-                // Load
-                frame.loadHTMLString(formattedHTML, baseURL: NSURL.fileURLWithPath(path))
-            }
+        if NSFileManager.defaultManager().fileExistsAtPath(path),
+           let HTMLString = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
+            let formattedHTML = HTMLString.format(title, message)
+            // Load
+            frame.loadHTMLString(formattedHTML, baseURL: NSURL.fileURLWithPath(path))
         }
     }
     
@@ -1016,10 +1007,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     func openURLInApplicationFromMenu(menuItem: NSMenuItem) {
-        if let url = menuItem.representedObject as? NSURL {
-            if let savedBundleIdentifier = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenApplicationBundleIdentifier) {
-                openURL(url, inBundleIdentifier: savedBundleIdentifier)
-            }
+        if let URL = menuItem.representedObject as? NSURL,
+               savedBundleIdentifier = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenApplicationBundleIdentifier) {
+            openURL(URL, inBundleIdentifier: savedBundleIdentifier)
         }
     }
     
@@ -1032,15 +1022,11 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             panel.allowedFileTypes = ["app"]
             panel.allowsMultipleSelection = false
             panel.directoryURL = NSURL.fileURLWithPath("/Applications")
-            if panel.runModal() == NSFileHandlingPanelOKButton {
-                if let bundle = NSBundle(URL: panel.URL!) {
-                    bundleIdentifier = bundle.bundleIdentifier
-                }
-            }
-            if bundleIdentifier != nil {
-                if openURL(url, inBundleIdentifier: bundleIdentifier!) {
-                    NSUserDefaults.standardUserDefaults().setObject(bundleIdentifier!, forKey: kSBOpenApplicationBundleIdentifier)
-                }
+            if panel.runModal() == NSFileHandlingPanelOKButton,
+               let bundle = NSBundle(URL: panel.URL!),
+                   bundleIdentifier = bundle.bundleIdentifier
+               where openURL(url, inBundleIdentifier: bundleIdentifier) {
+                NSUserDefaults.standardUserDefaults().setObject(bundleIdentifier, forKey: kSBOpenApplicationBundleIdentifier)
             }
         }
     }

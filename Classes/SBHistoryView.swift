@@ -356,8 +356,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     // MARK: Actions
     
     func search(sender: AnyObject) {
-        let string = searchField.stringValue
-        if !string.isEmpty {
+        if !searchField.stringValue.isEmpty {
             updateItems()
             tableView.reloadData()
         }
@@ -365,8 +364,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     
     func remove() {
         let indexes = tableView.selectedRowIndexes
-        let removedItems = indexes.count > 0 ? items.objectsAtIndexes(indexes) : []
-        if !removedItems.isEmpty {
+        if let removedItems = items.objectsAtIndexes(indexes).ifNotEmpty {
             SBHistory.sharedHistory.removeItems(removedItems)
             tableView.deselectAll(nil)
             updateItems()

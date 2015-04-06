@@ -43,14 +43,11 @@ class SBSavePanel: NSSavePanel {
     }
     
     func constructBackgroundView() {
-        if let contentView = contentView as? NSView {
-            let subviews: [NSView] = contentView.subviews
-            if !subviews.isEmpty {
-                let belowView = subviews[0]
-                let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
-                savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-                contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
-            }
+        if let contentView = contentView as? NSView,
+               belowView: NSView = contentView.subviews.get(0) {
+            let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
+            savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+            contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
         }
     }
     
@@ -86,14 +83,11 @@ class SBOpenPanel: NSOpenPanel {
     }
     
     func constructBackgroundView() {
-        if let contentView = contentView as? NSView {
-            let subviews: [NSView] = contentView.subviews
-            if !subviews.isEmpty {
-                let belowView = subviews[0]
-                let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
-                savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
-                contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
-            }
+        if let contentView = contentView as? NSView,
+               belowView: NSView = contentView.subviews.get(0) {
+            let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
+            savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+            contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
         }
     }
     

@@ -42,10 +42,8 @@ class SBCircleProgressIndicator: SBView {
         didSet {
             if progress != oldValue {
                 needsDisplay = true
-                if !alwaysDrawing {
-                    if progress >= 1.0 {
-                        SBDispatchDelay(0.5, clearProgress)
-                    }
+                if !alwaysDrawing && progress >= 1.0 {
+                    SBDispatchDelay(0.5, clearProgress)
                 }
             }
         }

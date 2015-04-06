@@ -158,11 +158,9 @@ class SBSplitView: NSSplitView, SBSidebarDelegate {
         } else if position == .Right && subview0 === sidebar && subview1 === view {
             switching = true
         }
-        if switching {
-            if subview0 != nil {
-                subview0!.removeFromSuperview()
-                addSubview(subview0!)
-            }
+        if switching, let subview0 = subview0 {
+            subview0.removeFromSuperview()
+            addSubview(subview0)
         }
     }
     

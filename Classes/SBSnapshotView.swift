@@ -774,10 +774,9 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             let panel = SBSavePanel()
             panel.canCreateDirectories = true
             panel.nameFieldStringValue = filename
-            if panel.runModal() == NSFileHandlingPanelOKButton {
-                if data!.writeToURL(panel.URL!, atomically: true) {
-                    done()
-                }
+            if panel.runModal() == NSFileHandlingPanelOKButton &&
+               data!.writeToURL(panel.URL!, atomically: true) {
+                done()
             }
         }
     }

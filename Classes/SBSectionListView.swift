@@ -341,8 +341,8 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
     func select(sender: AnyObject) {
         //kSBOpenURLFromApplications
         //kSBDefaultEncoding
-        let selectedItem = (sender as? NSPopUpButton)?.selectedItem
-        if let representedObject: AnyObject = selectedItem?.representedObject {
+        if let selectedItem = (sender as? NSPopUpButton)?.selectedItem,
+               representedObject: AnyObject = selectedItem.representedObject {
             SBPreferences.setObject(representedObject, forKey: item.keyName)
         }
     }
@@ -354,18 +354,16 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
         panel.canChooseDirectories = true
         panel.beginSheetModalForWindow(window!) {
             panel.orderOut(nil)
-            if $0 == NSFileHandlingPanelOKButton {
-                let imageView = self.currentImageView
-                let field = self.currentField
-                if (imageView !! field) != nil {
-                    let space = NSWorkspace.sharedWorkspace()
-                    let path = panel.URL!.path!
-                    let image = space.iconForFile(path)
-                    image.size = NSMakeSize(16.0, 16.0)
-                    imageView!.image = image
-                    field!.stringValue = (path as NSString).stringByAbbreviatingWithTildeInPath
-                    SBPreferences.setObject(path, forKey: self.item.keyName)
-                }
+            if $0 == NSFileHandlingPanelOKButton,
+               let imageView = self.currentImageView,
+                   field = self.currentField {
+                let space = NSWorkspace.sharedWorkspace()
+                let path = panel.URL!.path!
+                let image = space.iconForFile(path)
+                image.size = NSMakeSize(16.0, 16.0)
+                imageView.image = image
+                field.stringValue = path.stringByAbbreviatingWithTildeInPath
+                SBPreferences.setObject(path, forKey: self.item.keyName)
             }
         }
     }

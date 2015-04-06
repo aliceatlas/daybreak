@@ -64,10 +64,8 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     private var searchAnimations: NSViewAnimation? {
         didSet {
-            if let animations = oldValue {
-                if animations.animating {
-                    animations.stopAnimation()
-                }
+            if let animations = oldValue where animations.animating {
+                animations.stopAnimation()
             }
         }
     }
@@ -425,20 +423,19 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     func moveItemViewsAtIndexes(indexes: NSIndexSet, toIndex: Int) {
-        let views = itemViews.objectsAtIndexes(indexes)
-        if !views.isEmpty && toIndex <= itemViews.count {
-            if itemViews.containsIndexes(indexes) {
-                var to = toIndex
-                var offset = 0
-                for var i = indexes.lastIndex; i != NSNotFound; i = indexes.indexLessThanIndex(i) {
-                    if i < to {
-                        offset++
-                    }
+        if toIndex <= itemViews.count &&
+           itemViews.containsIndexes(indexes),
+           let views = itemViews.objectsAtIndexes(indexes).ifNotEmpty {
+            var to = toIndex
+            var offset = 0
+            indexes.enumerateIndexesWithOptions(.Reverse) { (i, _) in
+                if i < to {
+                    offset++
                 }
-                to -= offset
-                itemViews.removeObjectsAtIndexes(indexes)
-                itemViews.insertItems(views, atIndexes: NSIndexSet(indexesInRange: NSMakeRange(to, indexes.count)))
             }
+            to -= offset
+            itemViews.removeObjectsAtIndexes(indexes)
+            itemViews.insertItems(views, atIndexes: NSIndexSet(indexesInRange: NSMakeRange(to, indexes.count)))
         }
     }
     
@@ -893,11 +890,9 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             case NSEnterCharacter, NSCarriageReturnCharacter:
                 // Open URL
                 openSelectedItems(nil)
-            case 0x66: // f
-                if event.modifierFlags & .CommandKeyMask != nil {
-                    // Open searchbar
-                    executeShouldOpenSearchbar()
-                }
+            case 0x66 /* f */ where event.modifierFlags & .CommandKeyMask != nil:
+                // Open searchbar
+                executeShouldOpenSearchbar()
             case 0x1B:
                 // Close searchbar
                 executeShouldCloseSearchbar()
@@ -1002,10 +997,9 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                     if let image = NSImage(data: data) {
                         shouldInset = image.size != SBBookmarkImageMaxSize
                     }
-                    if shouldInset {
-                        if let insetImage = NSImage(data: data)?.inset(size: SBBookmarkImageMaxSize, intersectRect: NSZeroRect, offset: NSZeroPoint) {
-                            insetImage.bitmapImageRep !! { data = $0.data! }
-                        }
+                    if shouldInset,
+                       let insetImageRep = NSImage(data: data)?.inset(size: SBBookmarkImageMaxSize, intersectRect: NSZeroRect, offset: NSZeroPoint).bitmapImageRep {
+                        data = insetImageRep.data!
                     }
                 } else {
                     data = SBEmptyBookmarkImageData

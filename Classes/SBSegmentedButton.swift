@@ -48,10 +48,8 @@ class SBSegmentedButton: SBView {
     
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
-        if decoder.allowsKeyedCoding {
-            if decoder.containsValueForKey("buttons") {
-                buttons = decoder.decodeObjectForKey("buttons") as! [SBButton]
-            }
+        if decoder.allowsKeyedCoding && decoder.containsValueForKey("buttons") {
+            buttons = decoder.decodeObjectForKey("buttons") as! [SBButton]
         }
     }
     

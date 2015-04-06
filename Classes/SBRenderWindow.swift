@@ -95,12 +95,10 @@ class SBRenderWindow: NSWindow {
     }
     
     override func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
-        if let f: (SBRenderWindow, didFinishRenderingImage: NSImage) -> Void = sbDelegate?.renderWindow {
-            if let webDocumentView = sender.mainFrame.frameView.documentView {
-                if let image = NSImage(view: webDocumentView)?.inset(size: SBBookmarkImageMaxSize, intersectRect: webDocumentView.bounds, offset: NSZeroPoint) {
-                    f(self, didFinishRenderingImage: image)
-                }
-            }
+        if let f: (SBRenderWindow, didFinishRenderingImage: NSImage) -> Void = sbDelegate?.renderWindow,
+               webDocumentView = sender.mainFrame.frameView.documentView,
+               image = NSImage(view: webDocumentView)?.inset(size: SBBookmarkImageMaxSize, intersectRect: webDocumentView.bounds, offset: NSZeroPoint) {
+            f(self, didFinishRenderingImage: image)
         }
         destruct()
     }

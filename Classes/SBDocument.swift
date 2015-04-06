@@ -371,7 +371,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
     
         // For applications targeted for Panther or earlier systems, you should use the deprecated API -dataRepresentationOfType:. In this case you can also choose to override -fileWrapperRepresentationOfType: or -writeToFile:ofType: instead.
-    
+        
         if outError != nil {
             outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
         }
@@ -435,10 +435,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if selection {
             if URL != nil {
                 window.makeFirstResponder(tabViewItem.webView)
-            } else {
-                if window.toolbar!.visible {
-                    selectURLField()
-                }
+            } else if window.toolbar!.visible {
+                selectURLField()
             }
         }
     }
@@ -818,8 +816,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 center.x = splitView.sidebarWidth - kSBBottombarHeight
             }
             return NSMakeRect(center.x, center.y, kSBBottombarHeight, kSBBottombarHeight)
-        }
-        else if aSplitView === sidebar {
+        } else if aSplitView === sidebar {
         }
         return NSZeroRect
     }
@@ -1009,35 +1006,34 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func webResourcesView(webResourcesView: SBWebResourcesView, objectValueForTableColumn tableColumn: NSTableColumn, row rowIndex: Int) -> AnyObject? {
         var object: String?
-        if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers {
+        if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers,
+               resourceIdentifier = resourceIdentifiers.get(rowIndex) {
             let identifier = tableColumn.identifier
-            if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
-                if identifier == kSBURL {
-                    object = resourceIdentifier.URL.absoluteString
-                } else if identifier == "Length" {
-                    let expected = String.bytesStringForLength(resourceIdentifier.length)
-                    if resourceIdentifier.received > 0 && resourceIdentifier.length > 0 {
-                        if resourceIdentifier.received == resourceIdentifier.length {
-                            // Completed
-                            object = expected
-                        } else {
-                            // Processing
-                            let sameUnit = String.unitStringForLength(resourceIdentifier.received) == String.unitStringForLength(resourceIdentifier.length)
-                            let received = String.bytesStringForLength(resourceIdentifier.received, unit: !sameUnit)
-                            object = "\(received)/\(expected)"
-                        }
-                    } else if resourceIdentifier.received > 0 {
+            if identifier == kSBURL {
+                object = resourceIdentifier.URL.absoluteString
+            } else if identifier == "Length" {
+                let expected = String.bytesStringForLength(resourceIdentifier.length)
+                if resourceIdentifier.received > 0 && resourceIdentifier.length > 0 {
+                    if resourceIdentifier.received == resourceIdentifier.length {
                         // Completed
-                        let received = String.bytesStringForLength(resourceIdentifier.received)
-                        object = received
-                    } else if resourceIdentifier.length > 0 {
-                        // Unloaded
-                        object = "?/\(expected)"
+                        object = expected
                     } else {
-                        object = "?"
+                        // Processing
+                        let sameUnit = String.unitStringForLength(resourceIdentifier.received) == String.unitStringForLength(resourceIdentifier.length)
+                        let received = String.bytesStringForLength(resourceIdentifier.received, unit: !sameUnit)
+                        object = "\(received)/\(expected)"
                     }
-                } else if identifier == "Action" {
+                } else if resourceIdentifier.received > 0 {
+                    // Completed
+                    let received = String.bytesStringForLength(resourceIdentifier.received)
+                    object = received
+                } else if resourceIdentifier.length > 0 {
+                    // Unloaded
+                    object = "?/\(expected)"
+                } else {
+                    object = "?"
                 }
+            } else if identifier == "Action" {
             }
         }
         return object
@@ -1045,43 +1041,42 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func webResourcesView(webResourcesView: SBWebResourcesView, willDisplayCell aCell: AnyObject?, forTableColumn tableColumn: NSTableColumn, row rowIndex: Int) {
         let cell = aCell as! NSCell
-        if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers {
+        if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers,
+               resourceIdentifier = resourceIdentifiers.get(rowIndex) {
             let identifier = tableColumn.identifier
-            if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
-                if identifier == kSBURL {
-                    cell.title = resourceIdentifier.URL.absoluteString!
-                } else if identifier == "Length" {
-                    var title: String!
-                    let expected = String.bytesStringForLength(resourceIdentifier.length)
-                    if resourceIdentifier.received > 0 && resourceIdentifier.length > 0 {
-                        if resourceIdentifier.received == resourceIdentifier.length {
-                            // Completed
-                            title = expected
-                        } else {
-                            // Processing
-                            let sameUnit = String.unitStringForLength(resourceIdentifier.received) == String.unitStringForLength(resourceIdentifier.length)
-                            let received = String.bytesStringForLength(resourceIdentifier.received, unit: !sameUnit)
-                            title = "\(received)/\(expected)"
-                        }
-                    } else if resourceIdentifier.received > 0 {
+            if identifier == kSBURL {
+                cell.title = resourceIdentifier.URL.absoluteString!
+            } else if identifier == "Length" {
+                var title: String!
+                let expected = String.bytesStringForLength(resourceIdentifier.length)
+                if resourceIdentifier.received > 0 && resourceIdentifier.length > 0 {
+                    if resourceIdentifier.received == resourceIdentifier.length {
                         // Completed
-                        let received = String.bytesStringForLength(resourceIdentifier.received)
-                        title = received
-                    } else if resourceIdentifier.length > 0 {
-                        // Unloaded
-                        title = "?/\(expected)"
+                        title = expected
                     } else {
-                        title = "?"
+                        // Processing
+                        let sameUnit = String.unitStringForLength(resourceIdentifier.received) == String.unitStringForLength(resourceIdentifier.length)
+                        let received = String.bytesStringForLength(resourceIdentifier.received, unit: !sameUnit)
+                        title = "\(received)/\(expected)"
                     }
-                    cell.title = title
-                } else if identifier == "Cached" {
-                    let response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceIdentifier.request)
-                    let data = response?.data
-                    (cell as! NSButtonCell).enabled = data != nil
-                    (cell as! NSButtonCell).image = data !! NSImage(named: "Cached.png")
-                } else if identifier == "Action" {
-                    (cell as! NSButtonCell).image = NSImage(named: "Download.png")
+                } else if resourceIdentifier.received > 0 {
+                    // Completed
+                    let received = String.bytesStringForLength(resourceIdentifier.received)
+                    title = received
+                } else if resourceIdentifier.length > 0 {
+                    // Unloaded
+                    title = "?/\(expected)"
+                } else {
+                    title = "?"
                 }
+                cell.title = title
+            } else if identifier == "Cached", let cell = cell as? NSButtonCell {
+                let response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceIdentifier.request)
+                let data = response?.data
+                cell.enabled = data != nil
+                cell.image = data !! NSImage(named: "Cached.png")
+            } else if identifier == "Action" {
+                (cell as! NSButtonCell).image = NSImage(named: "Download.png")
             }
         }
     }
@@ -1089,18 +1084,16 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     // MARK: SBWebResourcesViewDelegate
     
     func webResourcesView(webResourcesView: SBWebResourcesView, shouldSaveAtRow rowIndex: Int) {
-        if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers {
-            if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
-                let response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceIdentifier.request)
-                if let data = response?.data {
-                    let filename = resourceIdentifier.URL.absoluteString?.lastPathComponent ?? "UntitledData"
-                    let panel = SBSavePanel()
-                    panel.nameFieldStringValue = filename
-                    window.beginSheet(panel) {
-                        if $0 == NSFileHandlingPanelOKButton {
-                            if data.writeToURL(panel.URL!, atomically: true) {
-                            }
-                        }
+        if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers,
+               resourceIdentifier = resourceIdentifiers.get(rowIndex),
+               response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceIdentifier.request) {
+            let data = response.data
+            let filename = resourceIdentifier.URL.absoluteString?.lastPathComponent ?? "UntitledData"
+            let panel = SBSavePanel()
+            panel.nameFieldStringValue = filename
+            window.beginSheet(panel) {
+                if $0 == NSFileHandlingPanelOKButton {
+                    if data.writeToURL(panel.URL!, atomically: true) {
                     }
                 }
             }
@@ -1108,10 +1101,9 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func webResourcesView(webResourcesView: SBWebResourcesView, shouldDownloadAtRow rowIndex: Int) {
-        if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers {
-            if let resourceIdentifier = resourceIdentifiers.get(rowIndex) {
-                resourceIdentifier.URL !! startDownloading
-            }
+        if let resourceIdentifiers = selectedTabViewItem?.resourceIdentifiers,
+               resourceIdentifier = resourceIdentifiers.get(rowIndex) {
+            startDownloading(forURL: resourceIdentifier.URL)
         }
     }
     
@@ -1406,18 +1398,12 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         
         // Search in history
         for historyItem in history.items {
-            if let URLString = historyItem.URLString {
-                if !contains(URLStrings, URLString) {
-                    let schemelessURLString = URLString.stringByDeletingScheme!
-                    var range = URLString.rangeOfString(string)
-                    if range == nil {
-                        range = schemelessURLString.rangeOfString(string)
-                    }
-                    if range != nil {
-                        let item = SBURLFieldItem.History(URL: URLString, image: historyItem.icon?.TIFFRepresentation)
-                        hItems.append(item)
-                    }
-                }
+            if let URLString = historyItem.URLString
+                   where !contains(URLStrings, URLString),
+               let schemelessURLString = URLString.stringByDeletingScheme,
+                   range = URLString.rangeOfString(string) ?? schemelessURLString.rangeOfString(string) {
+                let item = SBURLFieldItem.History(URL: URLString, image: historyItem.icon?.TIFFRepresentation)
+                hItems.append(item)
             }
         }
         
@@ -1791,16 +1777,15 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func bookmark(sender: AnyObject?) {
         if window.coverWindow == nil {
-            let image = selectedWebViewImageForBookmark
-            let URLString = selectedTabViewItem!.mainFrameURLString
-            if (image !! URLString) != nil {
+            if let image = selectedWebViewImageForBookmark,
+                   URLString = selectedTabViewItem!.mainFrameURLString {
                 let bookmarks = SBBookmarks.sharedBookmarks
-                let containsURL = bookmarks.containsURL(URLString!)
+                let containsURL = bookmarks.containsURL(URLString)
                 bookmarkView = SBBookmarkView(frame: NSMakeRect(0, 0, 880, 480))
                 bookmarkView!.image = image
                 bookmarkView!.message = containsURL ? NSLocalizedString("This page is already added to bookmarks. \nAre you sure you want to update it?", comment: "") : NSLocalizedString("Are you sure you want to bookmark this page?", comment: "")
                 bookmarkView!.title = window.title
-                bookmarkView!.urlString = URLString!
+                bookmarkView!.urlString = URLString
                 bookmarkView!.target = self
                 bookmarkView!.doneSelector = "doneBookmark"
                 bookmarkView!.cancelSelector = "cancelBookmark"
@@ -1930,8 +1915,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func openString(stringValue: String?, newTab newer: Bool) {
-        if stringValue != nil {
-            let requestURLString = stringValue!.requestURLString
+        if let requestURLString = stringValue?.requestURLString {
             if newer {
                 let URL = requestURLString.ifNotEmpty !! {NSURL(string: $0)}
                 constructNewTab(URL: URL, selection: true)
@@ -1942,8 +1926,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func searchString(stringValue: String?, newTab newer: Bool) {
-        if stringValue != nil {
-            let searchURLString = stringValue!.searchURLString
+        if let searchURLString = stringValue?.searchURLString {
             if newer {
                 let URL = searchURLString.ifNotEmpty !! {NSURL(string: $0)}
                 constructNewTab(URL: URL, selection: true)

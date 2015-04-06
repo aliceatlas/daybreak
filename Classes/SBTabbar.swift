@@ -301,19 +301,16 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     func selectPreviousItem() {
-        if !items.isEmpty {
-            let anItem = (selectedTabbarItemIndex !! {items.get($0 - 1)})
-            let prevItem = anItem ?? items.last
-            prevItem !! selectItem
+        if !items.isEmpty, let prevItem = selectedTabbarItemIndex !! {items.get($0 - 1)} ?? items.last {
+            selectItem(prevItem)
         } else {
             NSBeep()
         }
     }
     
     func selectNextItem() {
-        if !items.isEmpty {
-            let nextItem = selectedTabbarItemIndex !! {items.get($0 + 1)} ?? items.first
-            nextItem !! selectItem
+        if !items.isEmpty, let nextItem = selectedTabbarItemIndex !! {items.get($0 + 1)} ?? items.first {
+            selectItem(nextItem)
         } else {
             NSBeep()
         }
@@ -534,12 +531,8 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
             let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as! [NSDictionary]
             let URLStrings = pbItems.map {$0[kSBBookmarkURL] as! String}.filter {!$0.isEmpty}
             if let URLs = URLStrings.map({ NSURL(string: $0) }).filter({ $0 != nil }).map({ $0! }).ifNotEmpty {
-                if URLs.count == 1 {
-                    if let item = itemAtPoint(point) {
-                        executeShouldOpenURLs([URLs[0]], startInItem: item)
-                    } else {
-                        executeShouldAddNewItemForURLs(URLs)
-                    }
+                if URLs.count == 1, let item = itemAtPoint(point) {
+                    executeShouldOpenURLs([URLs[0]], startInItem: item)
                 } else {
                     executeShouldAddNewItemForURLs(URLs)
                 }
@@ -572,15 +565,13 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
             let location = event.locationInWindow
             let point = contentView.convertPoint(location, fromView: nil)
             if SBAllowsDrag(downPoint, point) {
-                if draggedItem == nil {
+                if draggedItem == nil, let item = itemAtPoint(downPoint) {
                     // Get dragging item
-                    if let item = itemAtPoint(downPoint) {
-                        draggedItem = item
-                        shouldReselectItem = nil
-                        draggedItemRect = item.frame
-                        Daybreak.removeItem(&items, item)
-                        contentView.addSubview(item)  // Bring to front
-                    }
+                    draggedItem = item
+                    shouldReselectItem = nil
+                    draggedItemRect = item.frame
+                    Daybreak.removeItem(&items, item)
+                    contentView.addSubview(item)  // Bring to front
                 }
                 if draggedItem != nil {
                     // Move dragged item
