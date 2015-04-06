@@ -113,7 +113,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
     // MARK: Actions
     
     func addForItem(item: SBDownload) {
-        var downloadView = downloadViews.first { $0.download.identifier == item.identifier }
+        var downloadView = downloadViews.first{$0.download.identifier == item.identifier}
         if downloadView == nil {
             let r = cellFrameAtIndex(downloadViews.count)
             downloadView = SBDownloadView(frame: r, download: item)
@@ -127,7 +127,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
     }
     
     func removeForItem(item: SBDownload) -> Bool {
-        if let downloadView = downloadViews.first({ $0.download.identifier == item.identifier }) {
+        if let downloadView = downloadViews.first({$0.download.identifier == item.identifier}) {
             downloadView.removeFromSuperview()
             removeItem(&downloadViews, downloadView)
             if !downloadViews.isEmpty {
@@ -141,16 +141,16 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
     }
     
     func updateForItem(item: SBDownload) {
-        downloadViews.first({ $0.download === item })?.update()
+        downloadViews.first{$0.download === item}?.update()
     }
     
     func finishForItem(item: SBDownload) {
-        downloadViews.first({ $0.download === item })?.update()
+        downloadViews.first{$0.download === item}?.update()
     }
     
     func failForItem(item: SBDownload) {
         if item.status != .Undone {
-            downloadViews.first({ $0.download === item })?.update()
+            downloadViews.first{$0.download === item}?.update()
         }
     }
     

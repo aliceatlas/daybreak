@@ -1368,7 +1368,6 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             } else {
                 urlField.gsItems = []
             }
-            
             urlField.appearSheetIfNeeded(true)
         }
     }

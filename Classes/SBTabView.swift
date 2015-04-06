@@ -65,7 +65,7 @@ class SBTabView: NSTabView {
     }
     
     func tabViewItem(#identifier: Int) -> SBTabViewItem? {
-        return sbTabViewItems.first { $0.identifier as? Int == identifier }
+        return sbTabViewItems.first{$0.identifier as? Int == identifier}
     }
     
     // MARK: Actions

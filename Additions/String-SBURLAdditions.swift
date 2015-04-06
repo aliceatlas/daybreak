@@ -36,7 +36,7 @@ let SBBytesUnitString = "bytes"
 
 extension String {
     var stringByDeletingScheme: String? {
-        return SBSchemes.first({self.hasPrefix($0)}) !! {suffix(self, count(self)-count($0))}
+        return SBSchemes.first{hasPrefix($0)} !! {suffix(self, count(self)-count($0))}
     }
     
     var requestURLString: String {

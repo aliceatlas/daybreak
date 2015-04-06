@@ -67,7 +67,7 @@ extension Array {
         }
     }
     
-    func first(condition: (Element) -> Bool) -> Element? {
+    func first(@noescape condition: (Element) -> Bool) -> Element? {
         for item in self {
             if condition(item) {
                 return item
@@ -76,7 +76,7 @@ extension Array {
         return nil
     }
     
-    func firstIndex(condition: (Element) -> Bool) -> Int? {
+    func firstIndex(@noescape condition: (Element) -> Bool) -> Int? {
         for (index, item) in enumerate(self) {
             if condition(item) {
                 return index
@@ -85,7 +85,7 @@ extension Array {
         return nil
     }
     
-    func any(condition: (Element) -> Bool) -> Bool {
+    func any(@noescape condition: (Element) -> Bool) -> Bool {
         if let x = first(condition) {
             return true
         }

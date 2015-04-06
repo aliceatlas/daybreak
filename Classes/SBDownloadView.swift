@@ -71,7 +71,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     // MARK: Getter
     
     var isFirstResponder: Bool {
-        return window &! {$0.firstResponder === self.superview}
+        return window &! {$0.firstResponder === superview}
     }
     
     var padding: NSPoint {

@@ -57,7 +57,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         var selectedIndex: Int?
         let userAgentName = NSUserDefaults.standardUserDefaults().stringForKey(kSBUserAgentName)
         if userAgentName != nil {
-            if let index = SBUserAgentNames.firstIndex({ $0 == userAgentName! }) {
+            if let index = SBUserAgentNames.firstIndex({$0 == userAgentName!}) {
                 selectedIndex = index + 1
             }
         }

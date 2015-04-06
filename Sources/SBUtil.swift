@@ -60,12 +60,12 @@ var SBGetWebPreferences: WebPreferences {
 
 func SBMenuWithTag(tag: Int) -> NSMenu? {
     let items = NSApplication.sharedApplication().mainMenu!.itemArray as! [NSMenuItem]
-    return items.first({ $0.tag == tag })?.submenu
+    return items.first{$0.tag == tag}?.submenu
 }
 
 func SBMenuItemWithTag(tag: Int) -> NSMenuItem? {
     let items = NSApplication.sharedApplication().mainMenu!.itemArray as! [NSMenuItem]
-    return items.map({ $0.submenu!.itemWithTag(tag) }).first({ $0 != nil }) !! {$0}
+    return items.map{$0.submenu!.itemWithTag(tag)}.first{$0 != nil} !! {$0}
 }
 
 // MARK: Default values
@@ -232,7 +232,7 @@ func SBSearchFileInDirectory(filename: String, directoryPath: String) -> String?
     let manager = NSFileManager.defaultManager()
     let contents = manager.contentsOfDirectoryAtPath(directoryPath, error: nil) as! [String]
 
-    if let findFileName = contents.first({ $0.hasPrefix(filename) }) {
+    if let findFileName = contents.first({$0.hasPrefix(filename)}) {
         return directoryPath.stringByAppendingPathComponent(findFileName)
     }
     return nil

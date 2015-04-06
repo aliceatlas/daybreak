@@ -147,15 +147,15 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     func itemAtPoint(point: NSPoint) -> SBTabbarItem? {
-        return items.first { $0.frame.contains(point) }
+        return items.first{$0.frame.contains(point)}
     }
     
     var selectedTabbarItem: SBTabbarItem? {
-        return items.first { $0.selected }
+        return items.first{$0.selected}
     }
     
     var selectedTabbarItemIndex: Int? {
-        return items.firstIndex { $0.selected }
+        return items.firstIndex{$0.selected}
     }
     
     // MARK: NSAnimation Delegate
@@ -302,7 +302,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     func selectPreviousItem() {
         if !items.isEmpty {
-            let anItem = (selectedTabbarItemIndex !! {self.items.get($0 - 1)})
+            let anItem = (selectedTabbarItemIndex !! {items.get($0 - 1)})
             let prevItem = anItem ?? items.last
             prevItem !! selectItem
         } else {
@@ -312,7 +312,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     func selectNextItem() {
         if !items.isEmpty {
-            let nextItem = selectedTabbarItemIndex !! {self.items.get($0 + 1)} ?? items.first
+            let nextItem = selectedTabbarItemIndex !! {items.get($0 + 1)} ?? items.first
             nextItem !! selectItem
         } else {
             NSBeep()

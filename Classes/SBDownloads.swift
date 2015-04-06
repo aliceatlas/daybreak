@@ -65,7 +65,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     }
     
     func removeItems(inItems: [SBDownload]) {
-        if let item = inItems.first({ $0.downloading }) {
+        if let item = inItems.first({$0.downloading}) {
             item.stop()
         }
         for item in inItems {
@@ -103,7 +103,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     // MARK: NSURLDownload Delegate
     
     func downloadDidBegin(download: NSURLDownload) {
-        var downloadItem = items.first { $0.download === download }
+        var downloadItem = items.first{$0.download === download}
         if downloadItem == nil {
             downloadItem = SBDownload(download: download)
             addItem(downloadItem!)
@@ -114,7 +114,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     }
     
     func download(download: NSURLDownload, willSendRequest request: NSURLRequest, redirectResponse: NSURLResponse?) -> NSURLRequest? {
-        if let item = items.first({ $0.download === download }) {
+        if let item = items.first({$0.download === download}) {
             // Update views
             executeDidUpdateItem(item)
         }
@@ -122,7 +122,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     }
     
     func download(download: NSURLDownload, didReceiveResponse response: NSURLResponse) {
-        if let item = items.first({ $0.download === download }) {
+        if let item = items.first({$0.download === download}) {
             item.expectedLength = SBConstrain(Int(response.expectedContentLength), min: 0)
             item.bytes = String.bytesString(Int64(item.receivedLength), expectedLength: Int64(item.expectedLength))
             // Update views
@@ -131,7 +131,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     }
     
     func download(download: NSURLDownload, decideDestinationWithSuggestedFilename filename: String) {
-        if let item = items.first({ $0.download === download }) {
+        if let item = items.first({$0.download === download}) {
             item.path = SBPreferences.objectForKey(kSBSaveDownloadedFilesTo) as! String
             if NSFileManager.defaultManager().fileExistsAtPath(item.path!) {
                 item.path = item.path!.stringByAppendingPathComponent(filename)
@@ -148,7 +148,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     }
     
     func download(download: NSURLDownload, didReceiveDataOfLength length: Int) {
-        if let item = items.first({ $0.download === download }) {
+        if let item = items.first({$0.download === download}) {
             // Update the item
             if item.expectedLength > 0 {
                 item.receivedLength += length
@@ -160,7 +160,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     }
     
     func downloadDidFinish(download: NSURLDownload) {
-        if let item = items.first({ $0.download === download }) {
+        if let item = items.first({$0.download === download}) {
             // Finish the item
             item.status = .Done
             item.downloading = false
@@ -170,7 +170,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     }
     
     func download(download: NSURLDownload, didFailWithError error: NSError) {
-        if let item = items.first({ $0.download === download }) {
+        if let item = items.first({$0.download === download}) {
             item.status = .Undone
             item.downloading = false
             item.receivedLength = 0
@@ -185,7 +185,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate {
     }
     
     func download(download: NSURLDownload, didCreateDestination path: String) {
-        if let item = items.first({ $0.download === download }) {
+        if let item = items.first({$0.download === download}) {
             path.lastPathComponent.ifNotEmpty !! { item.name = $0 }
             item.path = path
         }
