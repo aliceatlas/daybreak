@@ -123,19 +123,18 @@ class SBTableCell: NSCell {
             var size = title.sizeWithAttributes(attribute)
             SBConstrain(&size.width, max: cellFrame.size.width - side * 2)
             r.size = size
-            if alignment == .LeftTextAlignment {
-                r.origin.x = cellFrame.origin.x + side
-            } else if alignment == .RightTextAlignment {
-                r.origin.x = cellFrame.origin.x + side + ((cellFrame.size.width - side * 2) - size.width)
-            } else if alignment == .CenterTextAlignment {
-                r.origin.x = cellFrame.origin.x + ((cellFrame.size.width - side * 2) - size.width) / 2
+            r.origin.x = cellFrame.origin.x
+            switch alignment {
+                case .LeftTextAlignment: r.origin.x += side
+                case .RightTextAlignment: r.origin.x += side + ((cellFrame.size.width - side * 2) - size.width)
+                case .CenterTextAlignment: r.origin.x += ((cellFrame.size.width - side * 2) - size.width) / 2
+                default: break
             }
             r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
             sr = r
-            if style == .Gray {
-                sr.origin.y -= 1.0
-            } else if style == .White {
-                sr.origin.y += 1.0
+            switch style {
+                case .Gray: sr.origin.y -= 1.0
+                case .White: sr.origin.y += 1.0
             }
             title.drawInRect(sr, withAttributes: sAttribute)
             title.drawInRect(r, withAttributes: attribute)

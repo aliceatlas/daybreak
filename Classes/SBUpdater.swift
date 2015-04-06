@@ -81,26 +81,24 @@ class SBUpdater: NSObject {
         if let errorDescription = threadDictionary[kSBUpdaterErrorDescription] as? String {
             if let result = NSComparisonResult(rawValue: userInfo[kSBUpdaterResult] as! Int) {
                 switch result {
-                case .OrderedAscending:
-                    var shouldSkip = false
-                    if checkSkipVersion {
-                        let versionString = userInfo[kSBUpdaterVersionString] as! String
-                        let skipVersion = NSUserDefaults.standardUserDefaults().stringForKey(kSBUpdaterSkipVersion)
-                        shouldSkip = versionString == skipVersion
-                    }
-                    if !shouldSkip {
-                        SBDispatch { self.postShouldUpdateNotification(userInfo) }
-                    }
-                case .OrderedSame:
-                    if raiseResult {
+                    case .OrderedAscending:
+                        var shouldSkip = false
+                        if checkSkipVersion {
+                            let versionString = userInfo[kSBUpdaterVersionString] as! String
+                            let skipVersion = NSUserDefaults.standardUserDefaults().stringForKey(kSBUpdaterSkipVersion)
+                            shouldSkip = versionString == skipVersion
+                        }
+                        if !shouldSkip {
+                            SBDispatch { self.postShouldUpdateNotification(userInfo) }
+                        }
+                    case .OrderedSame where raiseResult:
                         SBDispatch { self.postNotNeedUpdateNotification(userInfo) }
-                    }
-                case .OrderedDescending:
-                    if raiseResult {
+                    case .OrderedDescending where raiseResult:
                         // Error
                         threadDictionary[kSBUpdaterErrorDescription] = NSLocalizedString("Invalid version number.", comment: "")
                         SBDispatch { self.postDidFailCheckingNotification(userInfo) }
-                    }
+                    default:
+                        break
                 }
             }
         } else if raiseResult {

@@ -231,9 +231,7 @@ class SBBookmarks: NSObject {
     
     func openItemsInSelectedDocument(inItems: [BookmarkItem]) {
         if let selectedDocument = SBGetSelectedDocument {
-            if selectedDocument.respondsToSelector("openAndConstructTabWithBookmarkItems:") {
-                selectedDocument.openAndConstructTab(bookmarkItems: inItems)
-            }
+            selectedDocument.openAndConstructTab(bookmarkItems: inItems)
         }
     }
     

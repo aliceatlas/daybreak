@@ -1573,8 +1573,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func doneDownloader() {
-        let URLString = downloaderView!.urlString
-        if let URL = URLString.ifNotEmpty !! {NSURL(string: $0)} {
+        if let URL = downloaderView!.urlString.ifNotEmpty !! {NSURL(string: $0)} {
             startDownloading(forURL: URL)
         } else {
             // Error
@@ -1765,7 +1764,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func bookmarks(sender: AnyObject?) {
         if splitView.visibleSidebar && sidebar != nil {
-            if let bookmarksView = sidebar!.view as? SBBookmarksView {
+            if sidebar!.view is SBBookmarksView {
                 hideSidebar()
             } else {
                 sidebar!.view = constructBookmarksView()
@@ -1855,21 +1854,15 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func searchInBookmarks(sender: AnyObject?) {
-        if let bookmarksView = sidebar?.view as? SBBookmarksView {
-            bookmarksView.setShowSearchbar(true)
-        }
+        (sidebar?.view as? SBBookmarksView)?.setShowSearchbar(true)
     }
     
     func switchToIconMode(sender: AnyObject?) {
-        if let bookmarksView = sidebar?.view as? SBBookmarksView {
-            bookmarksView.mode = .Icon
-        }
+        (sidebar?.view as? SBBookmarksView)?.mode = .Icon
     }
     
     func switchToListMode(sender: AnyObject?) {
-        if let bookmarksView = sidebar?.view as? SBBookmarksView {
-            bookmarksView.mode = .List
-        }
+        (sidebar?.view as? SBBookmarksView)?.mode = .List
     }
     
     func switchToTileMode(sender: AnyObject?) {
@@ -1890,16 +1883,13 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func downloads(sender: AnyObject?) {
-        let downloadsView = sidebar!.drawer!.view as? SBDownloadsView
-        
         if !splitView.visibleSidebar {
             showSidebar()
         }
         if !(sidebar!.visibleDrawer) {
             showDrawer()
         }
-        if downloadsView != nil {
-        } else {
+        if !(sidebar!.drawer!.view is SBDownloadsView) {
             constructDownloadsViewInSidebar()
         }
     }

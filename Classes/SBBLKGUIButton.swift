@@ -100,19 +100,14 @@ class SBBLKGUIButtonCell: NSButtonCell {
         let alpha: CGFloat = controlView !! {$0.enabled ? 1.0 : 0.2} ?? 1.0
         let isDone = controlView &! {$0.keyEquivalent == "\r"}
         if /*NSEqualRects(cellFrame, controlView.bounds)*/ true {
-            var leftImage: NSImage?
-            var centerImage: NSImage?
-            var rightImage: NSImage?
             var r = NSZeroRect
             var offset: CGFloat = 0
             if buttonType == .SwitchButton {
                 var imageRect = NSZeroRect
                 
-                if state == NSOnState {
-                    image = NSImage(named: highlighted ? "BLKGUI_CheckBox-Selected-Highlighted.png" : "BLKGUI_CheckBox-Selected.png")
-                } else {
-                    image = NSImage(named: highlighted ? "BLKGUI_CheckBox-Highlighted.png" : "BLKGUI_CheckBox.png")
-                }
+                let highlightedFlag = highlighted ? "-Highlighted" : ""
+                let selectedFlag = state == NSOnState ? "-Selected" : ""
+                image = NSImage(named: "BLKGUI_CheckBox\(selectedFlag)\(highlightedFlag).png")
                 
                 imageRect.size = image!.size
                 r.size = imageRect.size
@@ -121,12 +116,9 @@ class SBBLKGUIButtonCell: NSButtonCell {
             } else if buttonType == .RadioButton {
                 var imageRect = NSZeroRect
                 
-                if state == NSOnState {
-                    image = NSImage(named: highlighted ? "BLKGUI_Radio-Selected-Highlighted.png" : "BLKGUI_Radio-Selected.png")
-                }
-                else {
-                    image = NSImage(named: highlighted ? "BLKGUI_Radio-Highlighted.png" : "BLKGUI_Radio.png")
-                }
+                let highlightedFlag = highlighted ? "-Highlighted" : ""
+                let selectedFlag = state == NSOnState ? "-Selected" : ""
+                image = NSImage(named: "BLKGUI_Radio\(selectedFlag)\(highlightedFlag).png")
                 
                 imageRect.size = image?.size ?? NSZeroSize
                 r.size = imageRect.size
@@ -134,27 +126,12 @@ class SBBLKGUIButtonCell: NSButtonCell {
                 r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
                 image!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: true)
             } else {
-                if isDone {
-                    if highlighted {
-                        leftImage = NSImage(named: "BLKGUI_Button-Active-Highlighted-Left.png")
-                        centerImage = NSImage(named: "BLKGUI_Button-Active-Highlighted-Center.png")
-                        rightImage = NSImage(named: "BLKGUI_Button-Active-Highlighted-Right.png")
-                    } else {
-                        leftImage = NSImage(named: "BLKGUI_Button-Active-Left.png")
-                        centerImage = NSImage(named: "BLKGUI_Button-Active-Center.png")
-                        rightImage = NSImage(named: "BLKGUI_Button-Active-Right.png")
-                    }
-                } else {
-                    if highlighted {
-                        leftImage = NSImage(named: "BLKGUI_Button-Highlighted-Left.png")
-                        centerImage = NSImage(named: "BLKGUI_Button-Highlighted-Center.png")
-                        rightImage = NSImage(named: "BLKGUI_Button-Highlighted-Right.png")
-                    } else {
-                        leftImage = NSImage(named: "BLKGUI_Button-Left.png")
-                        centerImage = NSImage(named: "BLKGUI_Button-Center.png")
-                        rightImage = NSImage(named: "BLKGUI_Button-Right.png")
-                    }
-                }
+                let activeFlag = isDone ? "-Active" : ""
+                let highlightedFlag = highlighted ? "-Highlighted" : ""
+                let stem = "BLKGUI_Button\(activeFlag)\(highlightedFlag)"
+                let leftImage = NSImage(named: "\(stem)-Left.png")
+                let centerImage = NSImage(named: "\(stem)-Center.png")
+                let rightImage = NSImage(named: "\(stem)-Right.png")
                 
                 if leftImage != nil {
                     r.size = leftImage!.size

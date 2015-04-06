@@ -39,17 +39,11 @@ var SBGetDocumentController: SBDocumentController {
 }
 
 var SBGetSelectedDocument: SBDocument? {
-    var document: SBDocument?
-    let documents = NSApplication.sharedApplication().orderedDocuments as! [NSDocument]
-    if documents.isEmpty {
-        var error: NSError?
-        document = SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument
-    } else {
-        if let sbDocument = documents[0] as? SBDocument {
-            document = sbDocument
-        }
+    if let document = NSApplication.sharedApplication().orderedDocuments.get(0) as? SBDocument {
+        return document
     }
-    return document
+    var error: NSError?
+    return SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument
 }
 
 var SBGetWebPreferences: WebPreferences {

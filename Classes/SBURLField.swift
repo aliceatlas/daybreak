@@ -372,22 +372,21 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     func canSelectIndex(index: Int) -> Bool {
         var can = false
         var matchIndex = false
-        let gsEmpty = gsItems.isEmpty
-        let bmEmpty = bmItems.isEmpty
-        let hEmpty = hItems.isEmpty
-        if gsEmpty && bmEmpty && hEmpty {
-        } else if ((!gsEmpty && bmEmpty && hEmpty) ||
-                   (gsEmpty && !bmEmpty && hEmpty) ||
-                   (gsEmpty && bmEmpty && !hEmpty)) {
-            matchIndex = index == 0
-        } else if !gsEmpty && !bmEmpty && hEmpty {
-            matchIndex = (index == 0) || (index == gsItems.count)
-        } else if gsEmpty && !bmEmpty && !hEmpty {
-            matchIndex = (index == 0) || (index == bmItems.count)
-        } else if !gsEmpty && bmEmpty && !hEmpty {
-            matchIndex = (index == 0) || (index == gsItems.count)
-        } else if !gsEmpty && !bmEmpty && !hEmpty {
-            matchIndex = (index == 0) || (index == gsItems.count) || (index == gsItems.count + bmItems.count)
+        
+        switch (gsItems.isEmpty, bmItems.isEmpty, hItems.isEmpty) {
+            case (false, true, true), (true, false, true), (true, true, false):
+                matchIndex = index == 0
+            case (false, false, true):
+                matchIndex = (index == 0) || (index == gsItems.count)
+            case (true, false, false):
+                matchIndex = (index == 0) || (index == bmItems.count)
+            case (false, true, false):
+                matchIndex = (index == 0) || (index == gsItems.count)
+            case (false, false, false):
+                matchIndex = (index == 0) || (index == gsItems.count) || (index == gsItems.count + bmItems.count)
+            default:
+                // swift bug? if i explicitly put case (true, true, true) it doesn't recognize the switch as exhaustive
+                break
         }
         return !matchIndex
     }
@@ -475,14 +474,13 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
-        if control === field {
-            if commandSelector == "insertNewlineIgnoringFieldEditor:" {
-                // Ignore new line action
-                let center = NSNotificationCenter.defaultCenter()
-                center.postNotificationName(NSControlTextDidEndEditingNotification, object: self)
-                field.sendAction(field.optionAction, to: field.target)
-                return true
-            }
+        if control === field &&
+           commandSelector == "insertNewlineIgnoringFieldEditor:" {
+            // Ignore new line action
+            let center = NSNotificationCenter.defaultCenter()
+            center.postNotificationName(NSControlTextDidEndEditingNotification, object: self)
+            field.sendAction(field.optionAction, to: field.target)
+            return true
         }
         return false
     }
@@ -494,16 +492,11 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     func tableView(tableView: NSTableView, objectValueForTableColumn tableColumn: NSTableColumn?, row rowIndex: Int) -> AnyObject? {
-        if tableColumn?.identifier == kSBURL {
-            if let item = items.get(rowIndex) {
-                switch item.type {
-                    case .None:
-                        return item.title
-                    case .GoogleSuggest:
-                        return item.title
-                    case .Bookmark, .History:
-                        return item.title ?? item.URL
-                }
+        if tableColumn?.identifier == kSBURL, let item = items.get(rowIndex) {
+            switch item.type {
+                case .None:               return item.title
+                case .GoogleSuggest:      return item.title
+                case .Bookmark, .History: return item.title ?? item.URL
             }
         }
         return nil
@@ -860,30 +853,28 @@ class SBURLTextField: NSTextField {
         let center = NSNotificationCenter.defaultCenter()
         let character = (event.characters as NSString?)?.characterAtIndex(0) !! {Int($0)}
         if character == NSCarriageReturnCharacter || character == NSEnterCharacter {
-            let modifierFlags = event.modifierFlags
-            if modifierFlags & .CommandKeyMask != nil {
+            if event.modifierFlags & .CommandKeyMask != nil {
                 // Command + Return
                 center.postNotificationName(NSControlTextDidEndEditingNotification, object: self)
                 sendAction(commandAction, to: target)
                 return true
             }
-        } else {
-            if field.isOpenSheet {
-                if event.type == .KeyDown {
-                    if character == NSUpArrowFunctionKey {
-                        field.selectRowAbove()
-                        return true
-                    } else if character == NSDownArrowFunctionKey {
-                        field.selectRowBelow()
-                        return true
-                    } else if character == NSLeftArrowFunctionKey {
-                        center.postNotificationName(NSControlTextDidChangeNotification, object: self)
-                    } else if character == NSRightArrowFunctionKey {
-                        center.postNotificationName(NSControlTextDidChangeNotification, object: self)
-                    } else if character == 0x1B {
-                        field.disappearSheet()
-                    }
-                }
+        } else if field.isOpenSheet && event.type == .KeyDown, let character = character {
+            switch character {
+                case NSUpArrowFunctionKey:
+                    field.selectRowAbove()
+                    return true
+                case NSDownArrowFunctionKey:
+                    field.selectRowBelow()
+                    return true
+                case NSLeftArrowFunctionKey:
+                    center.postNotificationName(NSControlTextDidChangeNotification, object: self)
+                case NSRightArrowFunctionKey:
+                    center.postNotificationName(NSControlTextDidChangeNotification, object: self)
+                case 0x1B:
+                    field.disappearSheet()
+                default:
+                    break
             }
         }
         return super.performKeyEquivalent(event)
@@ -1027,21 +1018,18 @@ class SBURLFieldContentView: NSView {
     }
     
     func pushItemAtIndex(index: Int) -> Bool {
-        if let field = field {
-            if index < field.items.count {
-                let selectedItem = field.items[index]
-                switch selectedItem.type {
-                    case .GoogleSuggest:
-                        field.URLString = selectedItem.title!
+        if let field = field, selectedItem = field.items.get(index) {
+            switch selectedItem.type {
+                case .GoogleSuggest:
+                    field.URLString = selectedItem.title!
+                    return true
+                default:
+                    let URLString = selectedItem.URL!
+                    if URLString != field.stringValue {
+                        selectedItem.image !! {NSImage(data: $0)} !! {field.image = $0}
+                        field.URLString = URLString
                         return true
-                    default:
-                        let URLString = selectedItem.URL!
-                        if URLString != field.stringValue {
-                            selectedItem.image !! {NSImage(data: $0)} !! {field.image = $0}
-                            field.URLString = URLString
-                            return true
-                        }
-                }
+                    }
             }
         }
         return false
@@ -1138,7 +1126,7 @@ class SBURLFieldDataCell: NSCell {
     }
     
     func drawImageWithFrame(cellFrame: NSRect, inView controlView: NSView) {
-        if let image = self.image as NSImage? {
+        if let image = image {
             var r = NSZeroRect
             r.size = image.size
             r.origin.x = cellFrame.origin.x + side + leftMargin + (imageWidth - r.size.width) / 2

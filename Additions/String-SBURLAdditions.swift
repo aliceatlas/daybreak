@@ -94,33 +94,36 @@ extension String {
         let array1 = string.componentsSeparatedByString(" ")
         var string0: String!
         var string1: String!
-        if array1.count > 1 && array0.count > 1 {
-            string0 = array0[0]
-            string1 = array1[0]
-            result = string0.compare(string1)
-            if result == .OrderedSame {
-                string0 = array0[1]
-                string1 = array1[1]
+        switch (min(array0.count, 2), min(array1.count, 2)) {
+            case (2, 2):
+                string0 = array0[0]
+                string1 = array1[0]
                 result = string0.compare(string1)
-            }
-        } else if array1.count > 0 && array0.count > 1 {
-            string0 = array0[0]
-            string1 = array1[0]
-            result = string0.compare(string1)
-            if result == .OrderedSame {
-                result = .OrderedAscending
-            }
-        } else if array1.count > 1 && array0.count > 0 {
-            string0 = array0[0]
-            string1 = array1[0]
-            result = string0.compare(string1)
-            if result == .OrderedSame {
-                result = .OrderedDescending
-            }
-        } else if array1.count > 0 && array0.count > 0 {
-            string0 = array0[0]
-            string1 = array1[0]
-            result = string0.compare(string1)
+                if result == .OrderedSame {
+                    string0 = array0[1]
+                    string1 = array1[1]
+                    result = string0.compare(string1)
+                }
+            case (2, 1):
+                string0 = array0[0]
+                string1 = array1[0]
+                result = string0.compare(string1)
+                if result == .OrderedSame {
+                    result = .OrderedAscending
+                }
+            case (1, 2):
+                string0 = array0[0]
+                string1 = array1[0]
+                result = string0.compare(string1)
+                if result == .OrderedSame {
+                    result = .OrderedDescending
+                }
+            case (1, 1):
+                string0 = array0[0]
+                string1 = array1[0]
+                result = string0.compare(string1)
+            default:
+                break
         }
         return result
     }

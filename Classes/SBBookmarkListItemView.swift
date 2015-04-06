@@ -151,7 +151,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
         var drawRect = bounds
         let margin = titleHeight / 2
         let availableWidth = bounds.size.width - titleHeight
-        if count(title.utf16) > 0 {
+        if !title.isEmpty {
             let size = title.sizeWithAttributes([NSFontAttributeName: titleFont,
                                        NSParagraphStyleAttributeName: paragraphStyle])
             if size.width <= availableWidth {
@@ -207,23 +207,21 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     func hitToPoint(point: NSPoint) -> Bool {
-        var r = false
-        if mode == .Icon || mode == .Tile {
-            r = imageRect.contains(point) || titleRect.contains(point) || bytesRect.contains(point)
-        } else if mode == .List {
-            r = bounds.contains(point)
+        switch mode {
+            case .Icon, .Tile:
+                return imageRect.contains(point) || titleRect.contains(point) || bytesRect.contains(point)
+            case .List:
+                return bounds.contains(point)
         }
-        return r
     }
     
     func hitToRect(rect: NSRect) -> Bool {
-        var r = false
-        if mode == .Icon || mode == .Tile {
-            r = rect.intersects(imageRect) || rect.intersects(titleRect) || rect.intersects(bytesRect)
-        } else if mode == .List {
-            r = rect.intersects(bounds)
+        switch mode {
+            case .Icon, .Tile:
+                return rect.intersects(imageRect) || rect.intersects(titleRect) || rect.intersects(bytesRect)
+            case .List:
+                return rect.intersects(bounds)
         }
-        return r
     }
     
     // MARK: Delegate

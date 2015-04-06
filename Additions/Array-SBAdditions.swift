@@ -30,13 +30,12 @@ import Foundation
 
 extension Array {
     func containsIndexes(indexes: NSIndexSet) -> Bool {
-        var r = true
         for var i = indexes.lastIndex; i != NSNotFound; i = indexes.indexLessThanIndex(i) {
             if i >= count {
-                r = false
+                return false
             }
         }
-        return r
+        return true
     }
     
     mutating func insertItems(items: [Element], atIndexes indexes: NSIndexSet) {

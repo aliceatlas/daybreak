@@ -266,10 +266,9 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     // MARK: Functions
     
     func htmlString(#baseURL: NSURL, releaseNotesData data: NSData?) -> String? {
-        if data != nil {
-            let baseHTML = String(contentsOfURL: baseURL, encoding: NSUTF8StringEncoding, error: nil)
-            let releaseNotes = String(UTF8String: UnsafePointer<CChar>(data!.bytes))
-            return baseHTML !! { $0.format(releaseNotes ?? NSLocalizedString("No data", comment: "")) }
+        if let data = data, baseHTML = String(contentsOfURL: baseURL, encoding: NSUTF8StringEncoding, error: nil) {
+            let releaseNotes = String(UTF8String: UnsafePointer<CChar>(data.bytes))
+            return baseHTML.format(releaseNotes ?? NSLocalizedString("No data", comment: ""))
         }
         return nil
     }

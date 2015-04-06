@@ -249,33 +249,17 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                 let findbar = SBFindbar(frame: NSMakeRect(0, 0, webView.frame.size.width, 24.0))
                 findbar.target = webView
                 findbar.doneSelector = "executeCloseFindbar"
-                if sourceSplitView != nil {
-                    sourceSplitView!.removeFromSuperview()
-                } else if sourceView != nil {
-                    sourceView!.removeFromSuperview()
-                }
+                (sourceSplitView ?? sourceView)?.removeFromSuperview()
                 webSplitView = SBFixedSplitView(embedViews: [findbar, webView], frameRect: webView.frame)
-                if sourceSplitView != nil {
-                    splitView.addSubview(sourceSplitView!)
-                } else if sourceView != nil {
-                    splitView.addSubview(sourceView!)
-                }
+                (sourceSplitView ?? sourceView) !! splitView.addSubview
                 findbar.selectText(nil)
                 r = true
             }
         } else {
             if webSplitView != nil {
-                if sourceSplitView != nil {
-                    sourceSplitView!.removeFromSuperview()
-                } else if sourceView != nil {
-                    sourceView!.removeFromSuperview()
-                }
+                (sourceSplitView ?? sourceView)?.removeFromSuperview()
                 SBDisembedViewInSplitView(webView, webSplitView!)
-                if sourceSplitView != nil {
-                    splitView.addSubview(sourceSplitView!)
-                } else if sourceView != nil {
-                    splitView.addSubview(sourceView!)
-                }
+                (sourceSplitView ?? sourceView) !! splitView.addSubview
                 webSplitView = nil
                 webView.window!.makeFirstResponder(webView)
                 r = true
@@ -350,7 +334,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             let applicationName = (localizedInfoDictionary?["CFBundleName"] ?? infoDictionary?["CFBundleName"]) as? String
             let version = (infoDictionary?["CFBundleVersion"] as? String)?.stringByDeletingSpaces
             var safariVersion = NSBundle(path: "/Applications/Safari.app")?.infoDictionary?["CFBundleVersion"] as? String
-            safariVersion = safariVersion !! {suffix($0, count($0.utf16) - 1)} ?? "0"
+            safariVersion = safariVersion !! {suffix($0, count($0) - 1)} ?? "0"
             if applicationName != nil {
                 webView.applicationNameForUserAgent = applicationName!
                 version !! { webView.applicationNameForUserAgent = "\(webView.applicationNameForUserAgent)/\($0) Safari/\(safariVersion!)" }
@@ -362,7 +346,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             let infoDictionary = bundle?.infoDictionary
             let version = (infoDictionary?["CFBundleShortVersionString"] ?? infoDictionary?["CFBundleVersion"]) as? String
             var safariVersion = NSBundle(path: "/Applications/Safari.app")?.infoDictionary?["CFBundleVersion"] as? String
-            safariVersion = safariVersion !! {suffix($0, count($0.utf16) - 1)} ?? "0"
+            safariVersion = safariVersion !! {suffix($0, count($0) - 1)} ?? "0"
             if (version !! safariVersion) != nil {
                 webView.applicationNameForUserAgent = "Version/\(version!) \(applicationName)/\(safariVersion!)"
                 webView.customUserAgent = nil

@@ -30,7 +30,7 @@ class SBLoadButton: SBButton {
     var images: [NSImage] = [] {
         didSet {
             if !images.isEmpty {
-                image = images[0] as NSImage
+                image = images[0]
                 needsDisplay = true
             }
             on = false
@@ -100,16 +100,9 @@ class SBLoadButton: SBButton {
     
     func switchImage() {
         if images.count == 2 {
-            if on {
-                if image === images[0] {
-                    image = images[1] as NSImage
-                    needsDisplay = true
-                }
-            } else {
-                if image === images[1] {
-                    image = images[0] as NSImage
-                    needsDisplay = true
-                }
+            if image === images[on ? 0 : 1] {
+                image = images[on ? 1 : 0]
+                needsDisplay = true
             }
         }
     }

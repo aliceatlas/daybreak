@@ -90,7 +90,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         field.font = NSFont.systemFontOfSize(14.0)
         field.textColor = NSColor.whiteColor()
         field.delegate = self
-        (field.cell() as! NSCell).wraps = true
+        field.cell!.wraps = true
         field.hidden = true
         return field
     }()

@@ -324,7 +324,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         set(visibleRect) { _visibleRect = visibleRect }
     }
     
-    private var image: NSImage?
+    internal var image: NSImage?
     
     private lazy var filetype: NSBitmapImageFileType = {
         if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotFileType) as? UInt {
@@ -733,11 +733,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             NSUserDefaults.standardUserDefaults().setInteger(Int(filetype.rawValue), forKey: kSBSnapshotFileType)
         }
         switch filetype {
-            case NSBitmapImageFileType.NSTIFFFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSBitmapImageFileType.NSTIFFFileType.rawValue)
-                optionTabView.hidden = false
-            case NSBitmapImageFileType.NSJPEGFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSBitmapImageFileType.NSJPEGFileType.rawValue)
+            case .NSTIFFFileType, .NSJPEGFileType:
+                optionTabView.selectTabViewItemWithIdentifier(filetype.rawValue)
                 optionTabView.hidden = false
             default:
                 optionTabView.hidden = true
@@ -812,20 +809,20 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         aData = anImage.TIFFRepresentation
         if aData != nil {
             switch inFiletype {
-                case NSBitmapImageFileType.NSTIFFFileType:
+                case .NSTIFFFileType:
                     bitmapImageRep = NSBitmapImageRep(data: aData!)
                     aData = bitmapImageRep.TIFFRepresentationUsingCompression(tiffCompression, factor: 1.0)
-                case NSBitmapImageFileType.NSGIFFileType:
+                case .NSGIFFileType:
                     bitmapImageRep = NSBitmapImageRep(data: aData!)
                     let properties = [NSImageDitherTransparency: true]
-                    aData = bitmapImageRep.representationUsingType(NSBitmapImageFileType.NSGIFFileType, properties: properties)
-                case NSBitmapImageFileType.NSJPEGFileType:
+                    aData = bitmapImageRep.representationUsingType(.NSGIFFileType, properties: properties)
+                case .NSJPEGFileType:
                     bitmapImageRep = NSBitmapImageRep(data: aData!)
                     let properties = [NSImageCompressionFactor: jpgFactor]
-                    aData = bitmapImageRep.representationUsingType(NSBitmapImageFileType.NSJPEGFileType, properties: properties)
-                case NSBitmapImageFileType.NSPNGFileType:
+                    aData = bitmapImageRep.representationUsingType(.NSJPEGFileType, properties: properties)
+                case .NSPNGFileType:
                     bitmapImageRep = NSBitmapImageRep(data: aData!)
-                    aData = bitmapImageRep.representationUsingType(NSBitmapImageFileType.NSPNGFileType, properties: [:])
+                    aData = bitmapImageRep.representationUsingType(.NSPNGFileType, properties: [:])
                 default:
                     break
             }

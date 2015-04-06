@@ -121,7 +121,7 @@ class SBView: NSView {
     
     func setFrame(frame: NSRect, animate: Bool) {
         if animate {
-            let info: [NSObject: AnyObject] = [
+            let info = [
                 NSViewAnimationTargetKey: self,
                 NSViewAnimationStartFrameKey: NSValue(rect: frame),
                 NSViewAnimationEndFrameKey: NSValue(rect: frame)]
@@ -136,7 +136,7 @@ class SBView: NSView {
     // MARK: Actions
     
     func fadeIn(delegate: NSAnimationDelegate?) {
-        let info: [NSObject: AnyObject] = [
+        let info = [
             NSViewAnimationTargetKey: self,
             NSViewAnimationEffectKey: NSViewAnimationFadeInEffect]
         let animation = NSViewAnimation(viewAnimations: [info])
@@ -146,7 +146,7 @@ class SBView: NSView {
     }
     
     func fadeOut(delegate: NSAnimationDelegate?) {
-        let info: [NSObject: AnyObject] = [
+        let info = [
             NSViewAnimationTargetKey: self,
             NSViewAnimationEffectKey: NSViewAnimationFadeOutEffect]
         let animation = NSViewAnimation(viewAnimations: [info])

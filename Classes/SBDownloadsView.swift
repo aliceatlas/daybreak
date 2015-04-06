@@ -158,11 +158,11 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         if toolsItemView !== itemView {
             toolsItemView = itemView
             SBDispatchDelay(kSBDownloadsToolsInterval) {
-                if self.toolsItemView != nil {
-                    self.removeButton.frame = self.removeButtonRect(self.toolsItemView)
-                    self.finderButton.frame = self.finderButtonRect(self.toolsItemView)
-                    self.removeButton.target = self.toolsItemView
-                    self.finderButton.target = self.toolsItemView
+                if let view = self.toolsItemView {
+                    self.removeButton.frame = self.removeButtonRect(view)
+                    self.finderButton.frame = self.finderButtonRect(view)
+                    self.removeButton.target = view
+                    self.finderButton.target = view
                     self.addSubview(self.removeButton)
                     self.addSubview(self.finderButton)
                 }

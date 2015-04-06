@@ -253,8 +253,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
                 item.URLString !! { string += " \($0)" }
                 item.title !! { string += " \($0)" }
                 if !string.isEmpty {
-                    var index = 0
-                    for searchWord in searchWords {
+                    for (index, searchWord) in enumerate(searchWords) {
                         if searchWord.isEmpty || string.rangeOfString(searchWord, options: .CaseInsensitiveSearch) != nil {
                             if index == searchWords.count - 1 {
                                 items.append(item)
@@ -262,7 +261,6 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
                         } else {
                             break
                         }
-                        index++
                     }
                 }
             }
@@ -300,27 +298,27 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         let cell = aCell as! NSCell
         var string: String?
         switch identifier {
-        case kSBImage:
-            if let image = item?.icon {
-                cell.image = image
-            }
-        case kSBTitle:
-            string = item?.title
-        case kSBURL:
-            string = item?.URLString
-        case kSBDate:
-            let interval = item?.lastVisitedTimeInterval ?? 0
-            if interval > 0 {
-                let dateFormatter = NSDateFormatter()
-                dateFormatter.dateFormat = "%Y/%m/%d %H:%M:%S"
-                dateFormatter.formatterBehavior = .Behavior10_4
-                dateFormatter.dateStyle = .LongStyle
-                dateFormatter.timeStyle = .ShortStyle
-                dateFormatter.locale = NSLocale.currentLocale()
-                string = dateFormatter.stringFromDate(NSDate(timeIntervalSince1970: interval))
-            }
-        default:
-            break
+            case kSBImage:
+                if let image = item?.icon {
+                    cell.image = image
+                }
+            case kSBTitle:
+                string = item?.title
+            case kSBURL:
+                string = item?.URLString
+            case kSBDate:
+                let interval = item?.lastVisitedTimeInterval ?? 0
+                if interval > 0 {
+                    let dateFormatter = NSDateFormatter()
+                    dateFormatter.dateFormat = "%Y/%m/%d %H:%M:%S"
+                    dateFormatter.formatterBehavior = .Behavior10_4
+                    dateFormatter.dateStyle = .LongStyle
+                    dateFormatter.timeStyle = .ShortStyle
+                    dateFormatter.locale = NSLocale.currentLocale()
+                    string = dateFormatter.stringFromDate(NSDate(timeIntervalSince1970: interval))
+                }
+            default:
+                break
         }
         if let string = string?.ifNotEmpty {
             let attributes = [NSFontAttributeName: NSFont.systemFontOfSize(14.0),
