@@ -60,7 +60,6 @@
 		501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */; };
 		502DEBA319C03CF9006A68C3 /* SBTabbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA219C03CF9006A68C3 /* SBTabbarItem.swift */; };
 		502DEBA519C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */; };
-		502DEBA719C0667F006A68C3 /* NSScrollView-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */; };
 		502DEBA919C067C9006A68C3 /* NSURL-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBA819C067C9006A68C3 /* NSURL-SBAdditions.swift */; };
 		502DEBAB19C06876006A68C3 /* NSMenu-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBAA19C06876006A68C3 /* NSMenu-SBAdditions.swift */; };
 		502DEBAD19C07197006A68C3 /* NSImage-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBAC19C07197006A68C3 /* NSImage-SBAdditions.swift */; };
@@ -291,7 +290,6 @@
 		501D1F331963CE5100AEF4D1 /* String-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = "String-SBAdditions.swift"; path = "Additions/String-SBAdditions.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		502DEBA219C03CF9006A68C3 /* SBTabbarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SBTabbarItem.swift; path = Classes/SBTabbarItem.swift; sourceTree = "<group>"; };
 		502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSBitmapImageRep-SBAdditions.swift"; path = "Additions/NSBitmapImageRep-SBAdditions.swift"; sourceTree = "<group>"; };
-		502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSScrollView-SBAdditions.swift"; path = "Additions/NSScrollView-SBAdditions.swift"; sourceTree = "<group>"; };
 		502DEBA819C067C9006A68C3 /* NSURL-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSURL-SBAdditions.swift"; path = "Additions/NSURL-SBAdditions.swift"; sourceTree = "<group>"; };
 		502DEBAA19C06876006A68C3 /* NSMenu-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSMenu-SBAdditions.swift"; path = "Additions/NSMenu-SBAdditions.swift"; sourceTree = "<group>"; };
 		502DEBAC19C07197006A68C3 /* NSImage-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSImage-SBAdditions.swift"; path = "Additions/NSImage-SBAdditions.swift"; sourceTree = "<group>"; };
@@ -550,7 +548,6 @@
 				8659A8E31ACB82CD00C67C9C /* NSControl-SBAdditions.swift */,
 				502DEBAC19C07197006A68C3 /* NSImage-SBAdditions.swift */,
 				502DEBAA19C06876006A68C3 /* NSMenu-SBAdditions.swift */,
-				502DEBA619C0667F006A68C3 /* NSScrollView-SBAdditions.swift */,
 				502DEBA819C067C9006A68C3 /* NSURL-SBAdditions.swift */,
 				665362C519F77DCD00D32D82 /* NSView-SBAdditions.h */,
 				665362C619F77DCD00D32D82 /* NSView-SBAdditions.m */,
@@ -828,7 +825,6 @@
 			buildConfigurationList = 862E951F1AD2E07E00FCFC8B /* Build configuration list for PBXNativeTarget "BLKGUI" */;
 			buildPhases = (
 				862E95011AD2E07D00FCFC8B /* Sources */,
-				862E95021AD2E07D00FCFC8B /* Frameworks */,
 				862E95031AD2E07D00FCFC8B /* Headers */,
 				862E95041AD2E07D00FCFC8B /* Resources */,
 			);
@@ -1045,7 +1041,6 @@
 				505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */,
 				50ACCDFB196404FE00CE593E /* SBGoogleSuggestParser.swift in Sources */,
 				505E49FD198CA577001F5254 /* SBTabViewItem.swift in Sources */,
-				502DEBA719C0667F006A68C3 /* NSScrollView-SBAdditions.swift in Sources */,
 				50D7C35119C29FE300B3F7C3 /* SBBookmarkListItemView.swift in Sources */,
 				50FEEA9719BABFDD00962BB9 /* SBSidebar.swift in Sources */,
 				502DEBBE19C1180F006A68C3 /* SBSectionListView.swift in Sources */,
