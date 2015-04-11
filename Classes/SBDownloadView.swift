@@ -27,6 +27,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBDownloadView: SBView, SBAnswersIsFirstResponder {
+    var sbSuperview: SBDownloadsView? { return super.superview as? SBDownloadsView }
+    
     unowned var download: SBDownload
     private lazy var progressIndicator: SBCircleProgressIndicator? = {
         let progressIndicator = SBCircleProgressIndicator(frame: self.progressRect)
@@ -141,14 +143,14 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     }
     
     func remove() {
-        (superview as! SBDownloadsView).layoutToolsHidden()
+        sbSuperview!.layoutToolsHidden()
         SBDownloads.sharedDownloads.removeItem(download)
     }
     
     func finder() {
         if download.path &! {NSFileManager.defaultManager().fileExistsAtPath($0)} {
             NSWorkspace.sharedWorkspace().selectFile(download.path!, inFileViewerRootedAtPath: "")
-            (superview as! SBDownloadsView).layoutToolsHidden()
+            sbSuperview!.layoutToolsHidden()
         }
     }
     
@@ -161,19 +163,19 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     // MARK: Event
     
     override func mouseEntered(event: NSEvent) {
-        (superview as! SBDownloadsView).layoutToolsForItem(self)
+        sbSuperview!.layoutToolsForItem(self)
     }
     
     override func mouseMoved(event: NSEvent) {
         let location = event.locationInWindow
         let point = convertPoint(location, fromView: nil)
         if bounds.contains(point) {
-            (superview as! SBDownloadsView).layoutToolsForItem(self)
+            sbSuperview!.layoutToolsForItem(self)
         }
     }
     
     override func mouseExited(event: NSEvent) {
-        (superview as! SBDownloadsView).layoutToolsHidden()
+        sbSuperview!.layoutToolsHidden()
     }
     
     // MARK: Drawing
