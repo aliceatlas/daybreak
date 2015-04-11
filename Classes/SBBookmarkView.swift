@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBBookmarkView: SBView, NSTextFieldDelegate {
     var image: NSImage? {
         didSet {
@@ -87,23 +89,23 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         return colorLabel
     }()
     
-    private lazy var titleField: SBBLKGUITextField = {
-        let titleField = SBBLKGUITextField(frame: self.titleFieldRect)
+    private lazy var titleField: BLKGUI.TextField = {
+        let titleField = BLKGUI.TextField(frame: self.titleFieldRect)
         titleField.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
         titleField.alignment = .LeftTextAlignment
         return titleField
     }()
     
-    private lazy var urlField: SBBLKGUITextField = {
-        let urlField = SBBLKGUITextField(frame: self.urlFieldRect)
+    private lazy var urlField: BLKGUI.TextField = {
+        let urlField = BLKGUI.TextField(frame: self.urlFieldRect)
         urlField.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
         urlField.delegate = self
         urlField.alignment = .LeftTextAlignment
         return urlField
     }()
     
-    private lazy var colorPopup: SBBLKGUIPopUpButton = {
-        let colorPopup = SBBLKGUIPopUpButton(frame: self.colorPopupRect)
+    private lazy var colorPopup: BLKGUI.PopUpButton = {
+        let colorPopup = BLKGUI.PopUpButton(frame: self.colorPopupRect)
         colorPopup.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
         colorPopup.pullsDown = true
         colorPopup.alignment = .LeftTextAlignment
@@ -112,8 +114,8 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         return colorPopup
     }()
     
-    private lazy var doneButton: SBBLKGUIButton = {
-        let doneButton = SBBLKGUIButton(frame: self.doneButtonRect)
+    private lazy var doneButton: BLKGUI.Button = {
+        let doneButton = BLKGUI.Button(frame: self.doneButtonRect)
         doneButton.title = NSLocalizedString("Add", comment: "")
         doneButton.target = self
         doneButton.action = "done"
@@ -122,8 +124,8 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         return doneButton
     }()
     
-    private lazy var cancelButton: SBBLKGUIButton = {
-        let cancelButton = SBBLKGUIButton(frame: self.cancelButtonRect)
+    private lazy var cancelButton: BLKGUI.Button = {
+        let cancelButton = BLKGUI.Button(frame: self.cancelButtonRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
         cancelButton.action = "cancel"

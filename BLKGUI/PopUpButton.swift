@@ -1,5 +1,5 @@
 /*
-SBBLKGUIPopUpButton.swift
+PopUpButton.swift
 
 Copyright (c) 2014, Alice Atlas
 Copyright (c) 2010, Atsushi Jike
@@ -26,35 +26,31 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-class SBBLKGUIPopUpButton: NSPopUpButton {
-    override class func initialize() {
-        SBBLKGUIPopUpButton.setCellClass(SBBLKGUIPopUpButtonCell.self)
+public class PopUpButton: NSPopUpButton {
+    override public class func initialize() {
+        PopUpButton.setCellClass(PopUpButtonCell.self)
     }
     
-    convenience init() {
-        self.init(frame: NSZeroRect)
-    }
-    
-    override init(frame: NSRect) {
+    override public init(frame: NSRect) {
         super.init(frame: frame)
     }
     
-    override init(frame: NSRect, pullsDown: Bool) {
+    override public init(frame: NSRect, pullsDown: Bool) {
         super.init(frame: frame, pullsDown: pullsDown)
     }
     
-    required init(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("NSCoding not supported")
     }
     
-    override var alignmentRectInsets: NSEdgeInsets {
+    override public var alignmentRectInsets: NSEdgeInsets {
         return NSEdgeInsetsMake(0, 0, 0, 0)
     }
 }
 
-class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
+class PopUpButtonCell: NSPopUpButtonCell {
     override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
-        let controlView = inView as! SBBLKGUIPopUpButton
+        let controlView = inView as! PopUpButton
         
         var leftImage: NSImage?
         var centerImage: NSImage?
@@ -63,9 +59,9 @@ class SBBLKGUIPopUpButtonCell: NSPopUpButtonCell {
             var drawRect = NSZeroRect
             let fraction: CGFloat = enabled ? 1.0 : 0.5
             
-            leftImage = NSImage(named:   highlighted ? "BLKGUI_PopUp-Highlighted-Left.png" :   "BLKGUI_PopUp-Left.png")
-            centerImage = NSImage(named: highlighted ? "BLKGUI_PopUp-Highlighted-Center.png" : "BLKGUI_PopUp-Center.png")
-            rightImage = NSImage(named:  highlighted ? "BLKGUI_PopUp-Highlighted-Right.png" :  "BLKGUI_PopUp-Right.png")
+            leftImage = NSImage(named:   highlighted ? "PopUp-Highlighted-Left.png" :   "PopUp-Left.png")
+            centerImage = NSImage(named: highlighted ? "PopUp-Highlighted-Center.png" : "PopUp-Center.png")
+            rightImage = NSImage(named:  highlighted ? "PopUp-Highlighted-Right.png" :  "PopUp-Right.png")
             
             // Left
             drawRect.origin = cellFrame.origin

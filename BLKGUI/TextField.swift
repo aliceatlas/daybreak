@@ -1,5 +1,5 @@
 /*
-SBBLKGUISearchField.swift
+TextField.swift
 
 Copyright (c) 2014, Alice Atlas
 Copyright (c) 2010, Atsushi Jike
@@ -26,35 +26,35 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-class SBBLKGUISearchField: NSSearchField {
-    override class func initialize() {
-        SBBLKGUISearchField.setCellClass(SBBLKGUISearchFieldCell.self)
+public class TextField: NSTextField {
+    override public class func initialize() {
+        TextField.setCellClass(TextFieldCell.self)
     }
     
-    override init(frame: NSRect) {
+    override public init(frame: NSRect) {
         super.init(frame: frame)
         setDefaultValues()
     }
-    
-    required init?(coder: NSCoder) {
+
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
     private func setDefaultValues() {
-        alignment = .LeftTextAlignment
+        alignment = .RightTextAlignment
         drawsBackground = false
         textColor = NSColor.whiteColor()
     }
 }
 
-class SBBLKGUISearchFieldCell: NSSearchFieldCell {
+public class TextFieldCell: NSTextFieldCell {
     @objc(initTextCell:)
-    override init(textCell string: String) {
+    override public init(textCell string: String) {
         super.init(textCell: string)
         setDefaultValues()
     }
     
-    required init(coder: NSCoder) {
+    required public init(coder: NSCoder) {
         super.init(coder: coder)
     }
 
@@ -62,12 +62,9 @@ class SBBLKGUISearchFieldCell: NSSearchFieldCell {
         wraps = false
         scrollable = true
         focusRingType = .Exterior
-        searchButtonCell!.image = NSImage(named: "Search.png")!
-        searchButtonCell!.alternateImage = searchButtonCell!.image
-
     }
     
-    override func setUpFieldEditorAttributes(textObj: NSText) -> NSText {
+    override public func setUpFieldEditorAttributes(textObj: NSText) -> NSText {
         let text = super.setUpFieldEditorAttributes(textObj)
         if let textView = text as? NSTextView {
             let attributes = [NSForegroundColorAttributeName: NSColor.whiteColor(),
@@ -78,18 +75,16 @@ class SBBLKGUISearchFieldCell: NSSearchFieldCell {
         return text
     }
     
-    override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
+    override public func drawWithFrame(cellFrame: NSRect, inView: NSView) {
         let controlView = inView as? NSControl
         let alpha: CGFloat = (controlView?.enabled ?? true) ? 1.0 : 0.2
         var r = cellFrame
-        var radius = r.size.height / 2
-        var path = NSBezierPath(roundedRect: r, xRadius: radius, yRadius: radius)
+        var path = NSBezierPath(roundedRect: r, xRadius: SBFieldRoundedCurve, yRadius: SBFieldRoundedCurve)
         NSColor(deviceWhite: 0.0, alpha: alpha * 0.1).set()
         path.fill()
         
         r.inset(dx: 0.5, dy: 0.5)
-        radius = r.size.height / 2
-        path = NSBezierPath(roundedRect: r, xRadius: radius, yRadius: radius)
+        path = NSBezierPath(roundedRect: r, xRadius: SBFieldRoundedCurve, yRadius: SBFieldRoundedCurve)
         path.lineWidth = 0.5
         NSColor(deviceWhite: 1.0, alpha: alpha).set()
         path.stroke()

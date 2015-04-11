@@ -1,5 +1,5 @@
 /*
-SBBLKGUIButton.swift
+Button.swift
 
 Copyright (c) 2014, Alice Atlas
 Copyright (c) 2010, Atsushi Jike
@@ -26,39 +26,33 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-class SBBLKGUIButton: NSButton {
-    override var cell: SBBLKGUIButtonCell? { return super.cell as? SBBLKGUIButtonCell }
-    
-    override class func initialize() {
-        SBBLKGUIButton.setCellClass(SBBLKGUIButtonCell.self)
+public class Button: NSButton {
+    override public class func initialize() {
+        Button.setCellClass(ButtonCell.self)
     }
     
-    convenience init() {
-        self.init(frame: NSZeroRect)
-    }
-    
-    override init(frame: NSRect) {
+    override public init(frame: NSRect) {
         super.init(frame: frame)
         buttonType = .MomentaryChangeButton
         bezelStyle = .RoundedBezelStyle
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     
-    var buttonType: NSButtonType {
+    public var buttonType: NSButtonType {
         get {
-            return cell!.buttonType
+            return (cell() as! ButtonCell).buttonType
         }
         
         @objc(_setButtonType:)
         set(buttonType) {
-            cell!.buttonType = buttonType
+            (cell() as! ButtonCell).buttonType = buttonType
         }
     }
     
-    override func setButtonType(type: NSButtonType) {
+    override public func setButtonType(type: NSButtonType) {
         buttonType = type
     }
     
@@ -71,30 +65,30 @@ class SBBLKGUIButton: NSButton {
         }
     }*/
     
-    override var alignmentRectInsets: NSEdgeInsets {
+    override public var alignmentRectInsets: NSEdgeInsets {
         return NSEdgeInsetsMake(0, 0, 0, 0)
     }
     
-    override var baselineOffsetFromBottom: CGFloat {
+    override public var baselineOffsetFromBottom: CGFloat {
         return 8
     }
 }
 
 
-class SBBLKGUIButtonCell: NSButtonCell {
-    var _buttonType: NSButtonType = .MomentaryLightButton
-    var buttonType: NSButtonType {
+public class ButtonCell: NSButtonCell {
+    private var _buttonType: NSButtonType = .MomentaryLightButton
+    public var buttonType: NSButtonType {
         get { return _buttonType }
         
         @objc(_setButtonType:)
         set { setButtonType(newValue) }
     }
-    override func setButtonType(type: NSButtonType) {
+    override public func setButtonType(type: NSButtonType) {
         super.setButtonType(type)
         _buttonType = type
     }
     
-    override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
+    override public func drawWithFrame(cellFrame: NSRect, inView: NSView) {
         var image: NSImage?
         let controlView = inView as? NSButton
         let alpha: CGFloat = controlView !! {$0.enabled ? 1.0 : 0.2} ?? 1.0
@@ -107,7 +101,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                 
                 let highlightedFlag = highlighted ? "-Highlighted" : ""
                 let selectedFlag = state == NSOnState ? "-Selected" : ""
-                image = NSImage(named: "BLKGUI_CheckBox\(selectedFlag)\(highlightedFlag).png")
+                image = NSImage(named: "CheckBox\(selectedFlag)\(highlightedFlag).png")
                 
                 imageRect.size = image!.size
                 r.size = imageRect.size
@@ -118,7 +112,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
                 
                 let highlightedFlag = highlighted ? "-Highlighted" : ""
                 let selectedFlag = state == NSOnState ? "-Selected" : ""
-                image = NSImage(named: "BLKGUI_Radio\(selectedFlag)\(highlightedFlag).png")
+                image = NSImage(named: "Radio\(selectedFlag)\(highlightedFlag).png")
                 
                 imageRect.size = image?.size ?? NSZeroSize
                 r.size = imageRect.size
@@ -128,7 +122,7 @@ class SBBLKGUIButtonCell: NSButtonCell {
             } else {
                 let activeFlag = isDone ? "-Active" : ""
                 let highlightedFlag = highlighted ? "-Highlighted" : ""
-                let stem = "BLKGUI_Button\(activeFlag)\(highlightedFlag)"
+                let stem = "Button\(activeFlag)\(highlightedFlag)"
                 let leftImage = NSImage(named: "\(stem)-Left.png")
                 let centerImage = NSImage(named: "\(stem)-Center.png")
                 let rightImage = NSImage(named: "\(stem)-Right.png")

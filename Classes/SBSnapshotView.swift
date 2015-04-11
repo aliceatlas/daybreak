@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBSnapshotView: SBView, NSTextFieldDelegate {
     private let kSBMinFrameSizeWidth: CGFloat = 600
     private let kSBMaxFrameSizeWidth: CGFloat = 1200
@@ -34,8 +36,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     private let kSBMaxImageSizeWidth: CGFloat = 10000
     private let kSBMaxImageSizeHeight: CGFloat = 10000
     
-    private lazy var scrollView: SBBLKGUIScrollView = {
-        let scrollView = SBBLKGUIScrollView(frame: NSMakeRect(self.margin.x, self.margin.y, self.imageViewSize.width, self.imageViewSize.height))
+    private lazy var scrollView: BLKGUI.ScrollView = {
+        let scrollView = BLKGUI.ScrollView(frame: NSMakeRect(self.margin.x, self.margin.y, self.imageViewSize.width, self.imageViewSize.height))
         scrollView.documentView = self.imageView
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView.hasHorizontalScroller = true
@@ -70,8 +72,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return toolsView
     }()
     
-    private lazy var onlyVisibleButton: SBBLKGUIButton = {
-        let onlyVisibleButton = SBBLKGUIButton(frame: NSMakeRect(6, self.imageViewSize.height - 36, 119, 36))
+    private lazy var onlyVisibleButton: BLKGUI.Button = {
+        let onlyVisibleButton = BLKGUI.Button(frame: NSMakeRect(6, self.imageViewSize.height - 36, 119, 36))
         onlyVisibleButton.buttonType = .SwitchButton
         onlyVisibleButton.state = NSUserDefaults.standardUserDefaults().boolForKey(kSBSnapshotOnlyVisiblePortion) ? NSOnState : NSOffState
         onlyVisibleButton.target = self
@@ -81,8 +83,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return onlyVisibleButton
     }()
     
-    private lazy var updateButton: SBBLKGUIButton = {
-        let updateButton = SBBLKGUIButton(frame: NSMakeRect(6, self.imageViewSize.height - 76, 119, 32))
+    private lazy var updateButton: BLKGUI.Button = {
+        let updateButton = BLKGUI.Button(frame: NSMakeRect(6, self.imageViewSize.height - 76, 119, 32))
         updateButton.buttonType = .MomentaryPushInButton
         updateButton.target = self
         updateButton.action = "update:"
@@ -104,15 +106,15 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return sizeLabel
     }()
     
-    private lazy var widthField: SBBLKGUITextField = {
-        let widthField = SBBLKGUITextField(frame: NSMakeRect(6, self.imageViewSize.height - 130, 67, 24))
+    private lazy var widthField: BLKGUI.TextField = {
+        let widthField = BLKGUI.TextField(frame: NSMakeRect(6, self.imageViewSize.height - 130, 67, 24))
         widthField.delegate = self
         widthField.formatter = self.numberFormatter
         return widthField
     }()
     
-    private lazy var heightField: SBBLKGUITextField = {
-        let heightField = SBBLKGUITextField(frame: NSMakeRect(6, self.imageViewSize.height - 162, 67, 24))
+    private lazy var heightField: BLKGUI.TextField = {
+        let heightField = BLKGUI.TextField(frame: NSMakeRect(6, self.imageViewSize.height - 162, 67, 24))
         heightField.delegate = self
         heightField.formatter = self.numberFormatter
         return heightField
@@ -128,8 +130,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return scaleLabel
     }()
     
-    private lazy var scaleField: SBBLKGUITextField = {
-        let scaleField = SBBLKGUITextField(frame: NSMakeRect(6, self.imageViewSize.height - 216, 67, 24))
+    private lazy var scaleField: BLKGUI.TextField = {
+        let scaleField = BLKGUI.TextField(frame: NSMakeRect(6, self.imageViewSize.height - 216, 67, 24))
         scaleField.delegate = self
         scaleField.formatter = self.numberFormatter
         return scaleField
@@ -156,9 +158,9 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return filetypeLabel
     }()
     
-    private lazy var filetypePopup: SBBLKGUIPopUpButton = {
+    private lazy var filetypePopup: BLKGUI.PopUpButton = {
         var selectedIndex = 0
-        let filetypePopup = SBBLKGUIPopUpButton(frame: NSMakeRect(6, self.imageViewSize.height - 272, 114, 26))
+        let filetypePopup = BLKGUI.PopUpButton(frame: NSMakeRect(6, self.imageViewSize.height - 272, 114, 26))
         let menu = filetypePopup.menu!
         let fileTypeNames = ["TIFF", "GIF", "JPEG", "PNG"]
         let filetypes = [NSBitmapImageFileType.NSTIFFFileType, NSBitmapImageFileType.NSGIFFileType, NSBitmapImageFileType.NSJPEGFileType, NSBitmapImageFileType.NSPNGFileType]
@@ -214,9 +216,9 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return tiffOptionLabel
     }()
     
-    private lazy var tiffOptionPopup: SBBLKGUIPopUpButton = {
+    private lazy var tiffOptionPopup: BLKGUI.PopUpButton = {
         var selectedIndex = 0
-        let tiffOptionPopup = SBBLKGUIPopUpButton(frame: NSMakeRect(12, 0, 100, 26))
+        let tiffOptionPopup = BLKGUI.PopUpButton(frame: NSMakeRect(12, 0, 100, 26))
         let menu = tiffOptionPopup.menu!
         let compressionNames = [NSLocalizedString("None", comment: ""), "LZW", "PackBits"]
         let compressions: [NSTIFFCompression] = [.None, .LZW, .PackBits]
@@ -245,8 +247,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return jpgOptionLabel
     }()
     
-    private lazy var jpgOptionSlider: SBBLKGUISlider = {
-        let jpgOptionSlider = SBBLKGUISlider(frame: NSMakeRect(5, 8, 75, 17))
+    private lazy var jpgOptionSlider: BLKGUI.Slider = {
+        let jpgOptionSlider = BLKGUI.Slider(frame: NSMakeRect(5, 8, 75, 17))
         jpgOptionSlider.cell!.controlSize = .MiniControlSize
         jpgOptionSlider.minValue = 0.0
         jpgOptionSlider.maxValue = 1.0
@@ -292,8 +294,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return filesizeField
     }()
     
-    private lazy var cancelButton: SBBLKGUIButton = {
-        let cancelButton = SBBLKGUIButton(frame: self.cancelButtonRect)
+    private lazy var cancelButton: BLKGUI.Button = {
+        let cancelButton = BLKGUI.Button(frame: self.cancelButtonRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
         cancelButton.action = "cancel"
@@ -301,8 +303,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         return cancelButton
     }()
     
-    private lazy var doneButton: SBBLKGUIButton = {
-        let doneButton = SBBLKGUIButton(frame: self.doneButtonRect)
+    private lazy var doneButton: BLKGUI.Button = {
+        let doneButton = BLKGUI.Button(frame: self.doneButtonRect)
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
         doneButton.action = "save:"

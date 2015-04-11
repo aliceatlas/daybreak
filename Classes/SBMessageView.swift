@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBMessageView: SBView {
     private lazy var textLabel: NSTextField = {
         let textLabel = NSTextField(frame: self.textLabelRect)
@@ -50,16 +52,16 @@ class SBMessageView: SBView {
         messageLabel.cell!.wraps = true
         return messageLabel
     }()
-    private lazy var cancelButton: SBBLKGUIButton = {
-        let cancelButton = SBBLKGUIButton(frame: self.cancelButtonRect)
+    private lazy var cancelButton: BLKGUI.Button = {
+        let cancelButton = BLKGUI.Button(frame: self.cancelButtonRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
         cancelButton.action = "cancel"
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()
-    private lazy var doneButton: SBBLKGUIButton = {
-        let doneButton = SBBLKGUIButton(frame: self.doneButtonRect)
+    private lazy var doneButton: BLKGUI.Button = {
+        let doneButton = BLKGUI.Button(frame: self.doneButtonRect)
         doneButton.title = NSLocalizedString("OK", comment: "")
         doneButton.target = self
         doneButton.action = "done"

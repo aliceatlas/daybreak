@@ -1,5 +1,5 @@
 /*
-SBBLKGUIScrollView.swift
+ScrollView.swift
 
 Copyright (c) 2014, Alice Atlas
 Copyright (c) 2010, Atsushi Jike
@@ -26,53 +26,47 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import Cocoa
-
-class SBBLKGUIScrollView: NSScrollView {
-    override var horizontalScroller: NSScroller? {
+public class ScrollView: NSScrollView {
+    override public var horizontalScroller: NSScroller? {
         get { return super.horizontalScroller }
         set(scroller) {
             super.horizontalScroller = scroller
         }
     }
-    override var verticalScroller: NSScroller? {
+    override public var verticalScroller: NSScroller? {
         get { return super.verticalScroller }
         set(scroller) {
             super.verticalScroller = scroller
         }
     }
 
-    convenience init() {
-        self.init(frame: NSZeroRect)
-    }
-    
-    override init(frame: NSRect) {
+    override public init(frame: NSRect) {
         super.init(frame: frame)
         initialize()
     }
 
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
         initialize()
     }
     
     class func _horizontalScrollerClass() -> AnyClass {
-        return SBBLKGUIScroller.self
+        return Scroller.self
     }
     
     class func _verticalScrollerClass() -> AnyClass {
-        return SBBLKGUIScroller.self
+        return Scroller.self
     }
 
     func initialize() {
-        contentView = SBBLKGUIClipView(frame: contentView.frame)
+        contentView = ClipView(frame: contentView.frame)
         
         /*
       	hasVerticalScroller = hasVerticalScroller
       	hasHorizontalScroller = hasHorizontalScroller
         if hasVerticalScroller {
       		let scroller = verticalScroller
-            let newScroller = SBBLKGUIScroller(frame: scroller.frame)
+            let newScroller = Scroller(frame: scroller.frame)
       		newScroller.backgroundColor = backgroundColor
       		newScroller.arrowsPosition = .ScrollerArrowsMaxEnd
       		newScroller.controlSize = scroller.controlSize
@@ -81,7 +75,7 @@ class SBBLKGUIScrollView: NSScrollView {
       	
         if hasHorizontalScroller {
       		let scroller = horizontalScroller
-            let newScroller = SBBLKGUIScroller(frame: scroller.frame)
+            let newScroller = Scroller(frame: scroller.frame)
             newScroller.backgroundColor = backgroundColor
             newScroller.arrowsPosition = .ScrollerArrowsMaxEnd
             newScroller.controlSize = scroller.controlSize
@@ -122,7 +116,7 @@ class SBBLKGUIScrollView: NSScrollView {
     }
     */
     
-    override func drawRect(rect: NSRect) {
+    override public func drawRect(rect: NSRect) {
         if drawsBackground {
             NSColor(calibratedWhite: 0.0, alpha: 0.85).set()
             NSRectFill(rect)
@@ -138,8 +132,8 @@ class SBBLKGUIScrollView: NSScrollView {
     }
 }
 
-class SBBLKGUIScroller: NSScroller {
-    var drawsBackground: Bool = false {
+public class Scroller: NSScroller {
+    public var drawsBackground: Bool = false {
         didSet {
             if drawsBackground != oldValue {
                 needsDisplay = true
@@ -147,7 +141,7 @@ class SBBLKGUIScroller: NSScroller {
         }
     }
     
-    var backgroundColor: NSColor? {
+    public var backgroundColor: NSColor? {
         didSet {
             if backgroundColor != oldValue {
                 needsDisplay = true
@@ -155,7 +149,7 @@ class SBBLKGUIScroller: NSScroller {
         }
     }
     
-    override func drawRect(rect: NSRect) {
+    override public func drawRect(rect: NSRect) {
         if drawsBackground {
             let color = NSColor(calibratedWhite: 0.0, alpha:0.85)
             (backgroundColor ?? color).set()
@@ -178,14 +172,14 @@ class SBBLKGUIScroller: NSScroller {
         
         // Up
         if isVertical {
-            image = NSImage(named: (part == 1) ? "BLKGUI_ScrollerArrow-Highlighted-Vertical-Up.png" : "BLKGUI_ScrollerArrow-Vertical-Up.png")
-            let downImage = NSImage(named: "BLKGUI_ScrollerArrow-Vertical-Down.png")!
+            image = NSImage(named: (part == 1) ? "ScrollerArrow-Highlighted-Vertical-Up.png" : "ScrollerArrow-Vertical-Up.png")
+            let downImage = NSImage(named: "ScrollerArrow-Vertical-Down.png")!
             drawRect.size = image.size
             drawRect.origin.y = arrowRect.origin.y + (arrowRect.size.height - (image.size.height + downImage.size.height))
         }
         // Right
         else {
-            image = NSImage(named: (part == 0) ? "BLKGUI_ScrollerArrow-Highlighted-Horizontal-Right.png" : "BLKGUI_ScrollerArrow-Horizontal-Right.png")
+            image = NSImage(named: (part == 0) ? "ScrollerArrow-Highlighted-Horizontal-Right.png" : "ScrollerArrow-Horizontal-Right.png")
             drawRect.size = image.size
             drawRect.origin.x = (arrowRect.origin.x + arrowRect.size.width) - drawRect.size.width
         }
@@ -197,14 +191,14 @@ class SBBLKGUIScroller: NSScroller {
         
         // Down
         if isVertical {
-            image = NSImage(named: (part == 0) ? "BLKGUI_ScrollerArrow-Highlighted-Vertical-Down.png" : "BLKGUI_ScrollerArrow-Vertical-Down.png")
+            image = NSImage(named: (part == 0) ? "ScrollerArrow-Highlighted-Vertical-Down.png" : "ScrollerArrow-Vertical-Down.png")
             drawRect.size = image.size
             drawRect.origin.y = (arrowRect.origin.y + arrowRect.size.height) - drawRect.size.height
         }
         // Left
         else {
-            image = NSImage(named: (part == 1) ? "BLKGUI_ScrollerArrow-Highlighted-Horizontal-Left.png" : "BLKGUI_ScrollerArrow-Horizontal-Left.png")
-            let rightImage = NSImage(named: "BLKGUI_ScrollerArrow-Horizontal-Right.png")!
+            image = NSImage(named: (part == 1) ? "ScrollerArrow-Highlighted-Horizontal-Left.png" : "ScrollerArrow-Horizontal-Left.png")
+            let rightImage = NSImage(named: "ScrollerArrow-Horizontal-Right.png")!
             drawRect.size = image.size
             drawRect.origin.x = (arrowRect.origin.x + arrowRect.size.width) - (drawRect.size.width + rightImage.size.width)
         }
@@ -219,7 +213,7 @@ class SBBLKGUIScroller: NSScroller {
         NSFrameRect(bounds)
     }
     
-    override func drawKnobSlotInRect(rect: NSRect, highlight: Bool) {
+    override public func drawKnobSlotInRect(rect: NSRect, highlight: Bool) {
         let r = rectForPart(.KnobSlot)
         let color = NSColor(calibratedWhite: 0.0, alpha:0.85)
         var drawRect = NSZeroRect
@@ -238,12 +232,12 @@ class SBBLKGUIScroller: NSScroller {
         NSFrameRect(r)
         
         // Draw top image
-        let image = NSImage(named: isVertical ? "BLKGUI_ScrollerSlot-Vertical-Top.png" : "BLKGUI_ScrollerSlot-Horizontal-Left.png")!
+        let image = NSImage(named: isVertical ? "ScrollerSlot-Vertical-Top.png" : "ScrollerSlot-Horizontal-Left.png")!
         drawRect.size = image.size
         image.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
     }
     
-    override func drawKnob() {
+    override public func drawKnob() {
         var drawRect = NSZeroRect
         var m: CGFloat = 2
         
@@ -252,21 +246,21 @@ class SBBLKGUIScroller: NSScroller {
         
         if isVertical {
             // Bottom
-            let bottomImage = NSImage(named: "BLKGUI_ScrollerKnob-Vertical-Bottom.png")!
+            let bottomImage = NSImage(named: "ScrollerKnob-Vertical-Bottom.png")!
             drawRect.size = bottomImage.size
             drawRect.origin.x = knobRect.origin.x + (knobRect.size.width - drawRect.size.width) / 2
             drawRect.origin.y = (knobRect.origin.y + knobRect.size.height) - bottomImage.size.height - m
             bottomImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
             
             // Top
-            let topImage = NSImage(named: "BLKGUI_ScrollerKnob-Vertical-Top.png")!
+            let topImage = NSImage(named: "ScrollerKnob-Vertical-Top.png")!
             drawRect.size = topImage.size
             drawRect.origin.x = knobRect.origin.x + (knobRect.size.width - drawRect.size.width) / 2
             drawRect.origin.y = knobRect.origin.y + m
             topImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
             
             // Middle
-            let middleImage = NSImage(named: "BLKGUI_ScrollerKnob-Vertical-Middle.png")!
+            let middleImage = NSImage(named: "ScrollerKnob-Vertical-Middle.png")!
             drawRect.size.width = middleImage.size.width
             drawRect.origin.x = knobRect.origin.x + (knobRect.size.width - drawRect.size.width) / 2
             drawRect.origin.y = knobRect.origin.y + bottomImage.size.height + m
@@ -274,21 +268,21 @@ class SBBLKGUIScroller: NSScroller {
             middleImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
         } else {
             // Left
-            let leftImage = NSImage(named: "BLKGUI_ScrollerKnob-Horizontal-Left.png")!
+            let leftImage = NSImage(named: "ScrollerKnob-Horizontal-Left.png")!
             drawRect.size = leftImage.size
             drawRect.origin.x = knobRect.origin.x + m
             drawRect.origin.y = knobRect.origin.y + (knobRect.size.height - drawRect.size.height) / 2
             leftImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
             
             // Right
-            let rightImage = NSImage(named: "BLKGUI_ScrollerKnob-Horizontal-Right.png")!
+            let rightImage = NSImage(named: "ScrollerKnob-Horizontal-Right.png")!
             drawRect.size = rightImage.size
             drawRect.origin.y = knobRect.origin.y + (knobRect.size.height - drawRect.size.height) / 2
             drawRect.origin.x = knobRect.origin.x + knobRect.size.width - (leftImage.size.width + m)
             rightImage.drawInRect(drawRect, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
             
             // Center
-            let centerImage = NSImage(named: "BLKGUI_ScrollerKnob-Horizontal-Center.png")!
+            let centerImage = NSImage(named: "ScrollerKnob-Horizontal-Center.png")!
             drawRect.size.height = centerImage.size.height
             drawRect.origin.y = knobRect.origin.y + (knobRect.size.height - drawRect.size.height) / 2
             drawRect.origin.x = knobRect.origin.x + leftImage.size.width + m
@@ -298,8 +292,8 @@ class SBBLKGUIScroller: NSScroller {
     }
 }
 
-class SBBLKGUIClipView: NSClipView {
-    override var flipped: Bool {
+public class ClipView: NSClipView {
+    override public var flipped: Bool {
         return true
     }
 }

@@ -26,7 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import Cocoa
+import BLKGUI
 
 @objc protocol SBBookmarksViewDelegate {
     optional func bookmarksView(SBBookmarksView, didChangeMode: SBBookmarkMode)
@@ -37,7 +37,7 @@ import Cocoa
 class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     var splitView: SBFixedSplitView?
     var searchbar: SBSearchbar?
-    var scrollView: SBBLKGUIScrollView?
+    var scrollView: BLKGUI.ScrollView?
     var listView: SBBookmarkListView?
     weak var delegate: SBBookmarksViewDelegate?
     
@@ -90,7 +90,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     
     func constructListView(inMode: SBBookmarkMode) {
         destructListView()
-        scrollView = SBBLKGUIScrollView(frame: bounds)
+        scrollView = BLKGUI.ScrollView(frame: bounds)
         scrollView!.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView!.autohidesScrollers = true
         scrollView!.hasHorizontalScroller = false

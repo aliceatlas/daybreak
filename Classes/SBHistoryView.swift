@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource {
     private let kSBMinFrameSizeWidth: CGFloat = 480
     private let kSBMinFrameSizeHeight: CGFloat = 320
@@ -50,8 +52,8 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         messageLabel.cell!.wraps = true
         return messageLabel
     }()
-	private lazy var searchField: SBBLKGUISearchField = {
-        let searchField = SBBLKGUISearchField(frame: self.searchFieldRect)
+	private lazy var searchField: BLKGUI.SearchField = {
+        let searchField = BLKGUI.SearchField(frame: self.searchFieldRect)
         searchField.delegate = self
         searchField.target = self
         searchField.action = "search:"
@@ -59,8 +61,8 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         searchField.cell!.sendsSearchStringImmediately = true
         return searchField
     }()
-	private lazy var scrollView: SBBLKGUIScrollView = {
-        let scrollView = SBBLKGUIScrollView(frame: self.tableViewRect)
+	private lazy var scrollView: BLKGUI.ScrollView = {
+        let scrollView = BLKGUI.ScrollView(frame: self.tableViewRect)
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView.autohidesScrollers = true
         scrollView.hasVerticalScroller = true
@@ -114,24 +116,24 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         tableView.doubleAction = "open"
         return tableView
     }()
-	private lazy var removeButton: SBBLKGUIButton = {
-        let removeButton = SBBLKGUIButton(frame: self.removeButtonRect)
+	private lazy var removeButton: BLKGUI.Button = {
+        let removeButton = BLKGUI.Button(frame: self.removeButtonRect)
         removeButton.title = NSLocalizedString("Remove", comment: "")
         removeButton.target = self
         removeButton.action = "remove"
         removeButton.enabled = false
         return removeButton
     }()
-	private lazy var removeAllButton: SBBLKGUIButton = {
-        let removeAllButton = SBBLKGUIButton(frame: self.removeAllButtonRect)
+	private lazy var removeAllButton: BLKGUI.Button = {
+        let removeAllButton = BLKGUI.Button(frame: self.removeAllButtonRect)
         removeAllButton.title = NSLocalizedString("Remove All", comment: "")
         removeAllButton.target = self
         removeAllButton.action = "removeAll"
         removeAllButton.enabled = false
         return removeAllButton
     }()
-	private lazy var backButton: SBBLKGUIButton = {
-        let backButton = SBBLKGUIButton(frame: self.backButtonRect)
+	private lazy var backButton: BLKGUI.Button = {
+        let backButton = BLKGUI.Button(frame: self.backButtonRect)
         backButton.title = NSLocalizedString("Back", comment: "")
         backButton.target = self
         backButton.action = "cancel"

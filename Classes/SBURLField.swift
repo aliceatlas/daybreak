@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 let SBURLFieldRowCount = 3
 let SBURLFieldMaxRowCount = 20
 let SBURLFieldRowHeight: CGFloat = 20
@@ -933,7 +935,7 @@ class SBURLFieldContentView: NSView {
     }
     
     private lazy var scroller: NSScrollView = {
-        let scroller = SBBLKGUIScrollView(frame: self.scrollerRect)
+        let scroller = BLKGUI.ScrollView(frame: self.scrollerRect)
         scroller.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scroller.autohidesScrollers = true
         scroller.hasVerticalScroller = true

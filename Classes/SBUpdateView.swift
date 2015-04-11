@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBUpdateView: SBView, SBDownloaderDelegate {
     private let kSBMinFrameSizeWidth: CGFloat = 600
     private let kSBMaxFrameSizeWidth: CGFloat = 900
@@ -79,8 +81,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
         indicator.displayedWhenStopped = false
         return indicator
     }()
-	private lazy var skipButton: SBBLKGUIButton = {
-        let skipButton = SBBLKGUIButton(frame: self.skipButtonRect)
+	private lazy var skipButton: BLKGUI.Button = {
+        let skipButton = BLKGUI.Button(frame: self.skipButtonRect)
         skipButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
         skipButton.target = self
         skipButton.action = "skip"
@@ -89,8 +91,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
         skipButton.font = NSFont.systemFontOfSize(11.0)
         return skipButton
     }()
-	private lazy var cancelButton: SBBLKGUIButton = {
-        let cancelButton = SBBLKGUIButton(frame: self.skipButtonRect)
+	private lazy var cancelButton: BLKGUI.Button = {
+        let cancelButton = BLKGUI.Button(frame: self.skipButtonRect)
         cancelButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
         cancelButton.target = self
         cancelButton.action = "cancel"
@@ -100,8 +102,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()
-	private lazy var doneButton: SBBLKGUIButton = {
-        let doneButton = SBBLKGUIButton(frame: self.skipButtonRect)
+	private lazy var doneButton: BLKGUI.Button = {
+        let doneButton = BLKGUI.Button(frame: self.skipButtonRect)
         doneButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
         doneButton.target = self
         doneButton.action = "done"

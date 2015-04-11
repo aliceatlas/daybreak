@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 @objc protocol SBFindbarTarget {
     func searchFor(String, direction forward: Bool, caseSensitive: Bool, wrap: Bool, continuous: Bool) -> Bool
 }
@@ -91,9 +93,9 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         return forwardButton
     }()
     
-    internal lazy var caseSensitiveCheck: SBBLKGUIButton? = {
+    internal lazy var caseSensitiveCheck: BLKGUI.Button? = {
         let caseFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindCaseFlag)
-        let caseSensitiveCheck = SBBLKGUIButton(frame: self.caseSensitiveRect)
+        let caseSensitiveCheck = BLKGUI.Button(frame: self.caseSensitiveRect)
         caseSensitiveCheck.autoresizingMask = .ViewMinXMargin
         caseSensitiveCheck.buttonType = .SwitchButton
         caseSensitiveCheck.font = NSFont.systemFontOfSize(10.0)
@@ -104,9 +106,9 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         return caseSensitiveCheck
     }()
     
-    internal lazy var wrapCheck: SBBLKGUIButton? = {
+    internal lazy var wrapCheck: BLKGUI.Button? = {
         let wrapFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBFindWrapFlag)
-        let wrapCheck = SBBLKGUIButton(frame: self.wrapRect)
+        let wrapCheck = BLKGUI.Button(frame: self.wrapRect)
         wrapCheck.autoresizingMask = .ViewMinXMargin
         wrapCheck.buttonType = .SwitchButton
         wrapCheck.font = NSFont.systemFontOfSize(10.0)

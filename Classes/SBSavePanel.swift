@@ -26,8 +26,6 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import Cocoa
-
 class SBSavePanel: NSSavePanel {
     override init(contentRect: NSRect, styleMask: Int, backing bufferingType: NSBackingStoreType, defer: Bool) {
         super.init(contentRect: contentRect, styleMask: styleMask, backing: bufferingType, defer: defer)

@@ -26,11 +26,11 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import Cocoa
+import BLKGUI
 
 class SBDrawer: SBView {
-    lazy var scrollView: SBBLKGUIScrollView = {
-        let scrollView = SBBLKGUIScrollView(frame: self.availableRect)
+    lazy var scrollView: BLKGUI.ScrollView = {
+        let scrollView = BLKGUI.ScrollView(frame: self.availableRect)
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView.autohidesScrollers = true
         scrollView.hasHorizontalScroller = false

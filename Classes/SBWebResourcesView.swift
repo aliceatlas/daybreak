@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 @objc protocol SBWebResourcesViewDataSource {
     func numberOfRowsInWebResourcesView(SBWebResourcesView) -> Int
     func webResourcesView(SBWebResourcesView, objectValueForTableColumn: NSTableColumn, row: Int) -> AnyObject?
@@ -42,7 +44,7 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
     weak var delegate: SBWebResourcesViewDelegate?
     
     lazy var scrollView: NSScrollView = {
-        let scrollView = SBBLKGUIScrollView(frame: self.bounds)
+        let scrollView = BLKGUI.ScrollView(frame: self.bounds)
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView.autohidesScrollers = true
         scrollView.hasVerticalScroller = true

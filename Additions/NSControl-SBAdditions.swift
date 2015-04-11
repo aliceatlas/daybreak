@@ -25,6 +25,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 extension NSControl {
     @objc(_cell)
     var cell: NSCell? {
@@ -50,4 +52,8 @@ extension NSTextField {
 
 extension NSSearchField {
     override var cell: NSSearchFieldCell? { return super.cell as? NSSearchFieldCell }
+}
+
+extension BLKGUI.Button {
+    override var cell: ButtonCell? { return super.cell as? ButtonCell }
 }

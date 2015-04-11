@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBTextInputView: SBView, NSTextFieldDelegate {
     lazy var messageLabel: NSTextField = {
         let font = NSFont.boldSystemFontOfSize(16)
@@ -39,8 +41,8 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         messageLabel.cell!.wraps = true
         return messageLabel
     }()
-    lazy var textLabel: SBBLKGUITextField = {
-        let textLabel = SBBLKGUITextField(frame: self.textLabelRect)
+    lazy var textLabel: BLKGUI.TextField = {
+        let textLabel = BLKGUI.TextField(frame: self.textLabelRect)
         textLabel.alignment = .LeftTextAlignment
         textLabel.font = NSFont.systemFontOfSize(14.0)
         textLabel.textColor = NSColor.whiteColor()
@@ -48,8 +50,8 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         textLabel.cell!.wraps = true
         return textLabel
     }()
-    lazy var doneButton: SBBLKGUIButton = {
-        let doneButton = SBBLKGUIButton(frame: self.doneButtonRect)
+    lazy var doneButton: BLKGUI.Button = {
+        let doneButton = BLKGUI.Button(frame: self.doneButtonRect)
         doneButton.title = NSLocalizedString("OK", comment: "")
         doneButton.target = self
         doneButton.action = "done"
@@ -57,8 +59,8 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         doneButton.keyEquivalent = "\r" // busy if button is added into a view
         return doneButton
     }()
-    lazy var cancelButton: SBBLKGUIButton = {
-        let cancelButton = SBBLKGUIButton(frame: self.cancelButtonRect)
+    lazy var cancelButton: BLKGUI.Button = {
+        let cancelButton = BLKGUI.Button(frame: self.cancelButtonRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
         cancelButton.action = "cancel"

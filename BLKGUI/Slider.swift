@@ -1,5 +1,5 @@
 /*
-SBBLKGUISlider.swift
+Slider.swift
 
 Copyright (c) 2014, Alice Atlas
 Copyright (c) 2010, Atsushi Jike
@@ -26,14 +26,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-class SBBLKGUISlider: NSSlider {
-    override class func initialize() {
-        SBBLKGUISlider.setCellClass(SBBLKGUISliderCell.self)
+public class Slider: NSSlider {
+    override public class func initialize() {
+        Slider.setCellClass(SliderCell.self)
     }
 }
 
-class SBBLKGUISliderCell: NSSliderCell {
-    override func drawKnob(knobRect: NSRect) {
+public class SliderCell: NSSliderCell {
+    override public func drawKnob(knobRect: NSRect) {
         var r = NSInsetRect(knobRect, 2, 2)
         r.origin.y += 1
         let path = NSBezierPath(ovalInRect: r)

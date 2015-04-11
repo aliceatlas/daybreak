@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 // Sidebar positions
 enum SBSidebarPosition: Int {
 	case Left
@@ -306,8 +308,8 @@ class SBSideBottombar: SBBottombar {
         return newFolderButton
     }()
     
-    lazy var sizeSlider: SBBLKGUISlider = {
-        let sizeSlider = SBBLKGUISlider(frame: self.sizeSliderRect)
+    lazy var sizeSlider: BLKGUI.Slider = {
+        let sizeSlider = BLKGUI.Slider(frame: self.sizeSliderRect)
         sizeSlider.cell!.controlSize = .SmallControlSize
         sizeSlider.minValue = kSBBookmarkCellMinWidth
         sizeSlider.maxValue = kSBBookmarkCellMaxWidth

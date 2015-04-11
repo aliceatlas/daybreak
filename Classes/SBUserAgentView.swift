@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBUserAgentView: SBView, NSTextFieldDelegate {
     private lazy var iconImageView: NSImageView = {
         let image = NSImage(named: "UserAgent")!
@@ -50,8 +52,8 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         return titleLabel
     }()
     
-    private lazy var popup: SBBLKGUIPopUpButton = {
-        let popup = SBBLKGUIPopUpButton()
+    private lazy var popup: BLKGUI.PopUpButton = {
+        let popup = BLKGUI.PopUpButton()
         popup.translatesAutoresizingMaskIntoConstraints = false
         let count = SBUserAgentNames.count
         let userAgentName = NSUserDefaults.standardUserDefaults().stringForKey(kSBUserAgentName)!
@@ -83,8 +85,8 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         return popup
     }()
     
-    private lazy var field: SBBLKGUITextField = {
-        let field = SBBLKGUITextField()
+    private lazy var field: BLKGUI.TextField = {
+        let field = BLKGUI.TextField()
         field.translatesAutoresizingMaskIntoConstraints = false
         field.alignment = .LeftTextAlignment
         field.font = NSFont.systemFontOfSize(14.0)
@@ -95,8 +97,8 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         return field
     }()
     
-    private lazy var cancelButton: SBBLKGUIButton = {
-        let cancelButton = SBBLKGUIButton()
+    private lazy var cancelButton: BLKGUI.Button = {
+        let cancelButton = BLKGUI.Button()
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
@@ -105,8 +107,8 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         return cancelButton
     }()
     
-    private lazy var doneButton: SBBLKGUIButton = {
-        let doneButton = SBBLKGUIButton()
+    private lazy var doneButton: BLKGUI.Button = {
+        let doneButton = BLKGUI.Button()
         doneButton.translatesAutoresizingMaskIntoConstraints = false
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self

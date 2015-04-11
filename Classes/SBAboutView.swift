@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 private var _sharedAboutView = SBAboutView(frame: NSMakeRect(0, 0, 640, 360))
 
 class SBAboutView: SBView {
@@ -75,7 +77,7 @@ class SBAboutView: SBView {
         return identifierLabel
     }()
     
-    private lazy var creditScrollView: SBBLKGUIScrollView = {
+    private lazy var creditScrollView: BLKGUI.ScrollView = {
         let rtfdPath = NSBundle.mainBundle().pathForResource("Credits", ofType: "rtfd")!
         let creditLabel = NSTextView()
         creditLabel.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
@@ -83,7 +85,7 @@ class SBAboutView: SBView {
         creditLabel.selectable = true
         creditLabel.drawsBackground = false
         creditLabel.readRTFDFromFile(rtfdPath)
-        let creditScrollView = SBBLKGUIScrollView()
+        let creditScrollView = BLKGUI.ScrollView()
         creditScrollView.translatesAutoresizingMaskIntoConstraints = false
         creditScrollView.autohidesScrollers = true
         creditScrollView.hasHorizontalScroller = false
@@ -109,8 +111,8 @@ class SBAboutView: SBView {
         return copyrightLabel
     }()
     
-    private lazy var backButton: SBBLKGUIButton = {
-        let backButton = SBBLKGUIButton()
+    private lazy var backButton: BLKGUI.Button = {
+        let backButton = BLKGUI.Button()
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.title = NSLocalizedString("Back", comment: "")
         backButton.target = self

@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBDownloaderView: SBView, NSTextFieldDelegate {
 	private lazy var messageLabel: NSTextField = {
         let messageLabel = NSTextField(frame: self.messageLabelRect)
@@ -53,16 +55,16 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         return urlLabel
     }()
     
-	private lazy var urlField: SBBLKGUITextField = {
-        let urlField = SBBLKGUITextField(frame: self.urlFieldRect)
+	private lazy var urlField: BLKGUI.TextField = {
+        let urlField = BLKGUI.TextField(frame: self.urlFieldRect)
         urlField.delegate = self
         urlField.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
         urlField.cell!.alignment = .LeftTextAlignment
         return urlField
     }()
     
-    private lazy var doneButton: SBBLKGUIButton = {
-        let doneButton = SBBLKGUIButton(frame: self.doneButtonRect)
+    private lazy var doneButton: BLKGUI.Button = {
+        let doneButton = BLKGUI.Button(frame: self.doneButtonRect)
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
         doneButton.action = "done"
@@ -71,8 +73,8 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         return doneButton
     }()
     
-    private lazy var cancelButton: SBBLKGUIButton = {
-        let cancelButton = SBBLKGUIButton(frame: self.cancelButtonRect)
+    private lazy var cancelButton: BLKGUI.Button = {
+        let cancelButton = BLKGUI.Button(frame: self.cancelButtonRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
         cancelButton.action = "cancel"

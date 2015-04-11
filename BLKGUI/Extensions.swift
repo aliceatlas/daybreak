@@ -1,8 +1,7 @@
 /*
-SBSectionGroup.swift
+Extensions.swift
 
-Copyright (c) 2014, Alice Atlas
-Copyright (c) 2010, Atsushi Jike
+Copyright (c) 2015, Alice Atlas
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -26,29 +25,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-class SBSectionGroup: NSObject {
-    var title: String
-    var items: [SBSectionItem] = []
-    
-    init(title: String) {
-        self.title = title
-    }
-    
-    func addItem(item: SBSectionItem) {
-        items.append(item)
-    }
-}
-
-class SBSectionItem: NSObject {
-    var title: String
-    var keyName: String
-    var controlClass: AnyClass = NSObject.self
-    var context: AnyObject?
-    
-    init(title: String, keyName: String, controlClass: AnyClass, context: AnyObject?) {
-        self.title = title
-        self.keyName = keyName
-        self.controlClass = controlClass
-        self.context = context
-    }
+func SBPreserveGraphicsState(@noescape block: () -> Void) {
+    NSGraphicsContext.saveGraphicsState()
+    block()
+    NSGraphicsContext.restoreGraphicsState()
 }

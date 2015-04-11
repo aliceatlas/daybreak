@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 private let kSBSectionTitleHeight: CGFloat = 32.0
 private let kSBSectionItemHeight: CGFloat = 32.0
 private let kSBSectionMarginX: CGFloat = 10.0
@@ -40,7 +42,7 @@ class SBSectionListView: SBView {
     private var sectionGroupViews: [SBSectionGroupView] = []
 
     private lazy var scrollView: NSScrollView = {
-        let clipView = SBBLKGUIClipView(frame: self.bounds)
+        let clipView = BLKGUI.ClipView(frame: self.bounds)
         let scrollView = NSScrollView(frame: self.bounds)
         scrollView.contentView = clipView
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable

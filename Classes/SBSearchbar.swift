@@ -26,11 +26,13 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBSearchbar: SBFindbar {
     override internal var backwardButton: SBButton? { get { return nil } set { } }
     override internal var forwardButton: SBButton? { get { return nil } set { } }
-    override internal var caseSensitiveCheck: SBBLKGUIButton? { get { return nil } set { } }
-    override internal var wrapCheck: SBBLKGUIButton? { get { return nil } set { } }
+    override internal var caseSensitiveCheck: BLKGUI.Button? { get { return nil } set { } }
+    override internal var wrapCheck: BLKGUI.Button? { get { return nil } set { } }
     
     private lazy var _searchField: SBFindSearchField = {
         let searchField = SBFindSearchField(frame: self.searchRect)

@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 @objc protocol SBDocumentWindowDelegate: NSWindowDelegate {
     optional func window(window: SBDocumentWindow, shouldClose: AnyObject?) -> Bool
     optional func window(window: SBDocumentWindow, shouldHandleKeyEvent: NSEvent) -> Bool
@@ -209,7 +211,7 @@ class SBDocumentWindow: NSWindow {
         r.size.height = hasVerticalScroller ? br.size.height : vr.size.height
         destructCoverWindow()
         coverWindow = SBCoverWindow(parentWindow: self, size: br.size)
-        let scrollView = SBBLKGUIScrollView(frame: NSIntegralRect(r))
+        let scrollView = BLKGUI.ScrollView(frame: NSIntegralRect(r))
         scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
         scrollView.hasHorizontalScroller = hasHorizontalScroller
         scrollView.hasVerticalScroller = hasVerticalScroller
@@ -291,7 +293,7 @@ class SBDocumentWindow: NSWindow {
         var doneRect = NSZeroRect
         doneRect.size.width = 105.0
         doneRect.size.height = 24.0
-        let doneButton = SBBLKGUIButton(frame: doneRect)
+        let doneButton = BLKGUI.Button(frame: doneRect)
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
         doneButton.action = "doneFlip"

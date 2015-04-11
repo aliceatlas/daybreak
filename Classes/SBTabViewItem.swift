@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSourceTextViewDelegate {
     unowned var tabbarItem: SBTabbarItem
     override var tabView: SBTabView! {
@@ -75,8 +77,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     var sourceTextView: SBSourceTextView?
     var webSplitView: SBFixedSplitView?
     var sourceSplitView: SBFixedSplitView?
-    var sourceSaveButton: SBBLKGUIButton?
-    var sourceCloseButton: SBBLKGUIButton?
+    var sourceSaveButton: BLKGUI.Button?
+    var sourceCloseButton: BLKGUI.Button?
     var resourceIdentifiers: [SBWebResourceIdentifier] = []
     //var showSource = false
     private let sourceBottomMargin: CGFloat = 48.0
@@ -164,13 +166,13 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     closeRect.origin.y = saveRect.origin.y
                     closeRect.origin.x = 10.0
                     sourceView = SBDrawer(frame: r)
-                    let scrollView = SBBLKGUIScrollView(frame: tr)
-                    let openButton = SBBLKGUIButton(frame: openRect)
-                    sourceSaveButton = SBBLKGUIButton(frame: saveRect)
-                    sourceCloseButton = SBBLKGUIButton(frame: closeRect)
+                    let scrollView = BLKGUI.ScrollView(frame: tr)
+                    let openButton = BLKGUI.Button(frame: openRect)
+                    sourceSaveButton = BLKGUI.Button(frame: saveRect)
+                    sourceCloseButton = BLKGUI.Button(frame: closeRect)
         #if true
-                    let horizontalScroller = scrollView.horizontalScroller as? SBBLKGUIScroller
-                    let verticalScroller = scrollView.verticalScroller as? SBBLKGUIScroller
+                    let horizontalScroller = scrollView.horizontalScroller as? BLKGUI.Scroller
+                    let verticalScroller = scrollView.verticalScroller as? BLKGUI.Scroller
                     verticalScroller !! { r.size.width = r.size.width - $0.frame.size.width }
         #endif
                     sourceTextView = SBSourceTextView(frame: tr)

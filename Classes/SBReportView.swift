@@ -26,6 +26,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+import BLKGUI
+
 class SBReportView: SBView, NSTextFieldDelegate {
     private let kSBMinFrameSizeWidth: CGFloat = 600
     private let kSBMaxFrameSizeWidth: CGFloat = 900
@@ -67,8 +69,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         return summaryLabel
     }()
     
-    private lazy var summaryField: SBBLKGUITextField = {
-        let summaryField = SBBLKGUITextField(frame: self.summaryFieldRect)
+    private lazy var summaryField: BLKGUI.TextField = {
+        let summaryField = BLKGUI.TextField(frame: self.summaryFieldRect)
         summaryField.alignment = .LeftTextAlignment
         summaryField.font = NSFont.systemFontOfSize(14.0)
         summaryField.textColor = NSColor.whiteColor()
@@ -90,8 +92,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         return userAgentLabel
     }()
     
-    private lazy var userAgentPopup: SBBLKGUIPopUpButton = {
-        let userAgentPopup = SBBLKGUIPopUpButton(frame: self.userAgentPopupRect)
+    private lazy var userAgentPopup: BLKGUI.PopUpButton = {
+        let userAgentPopup = BLKGUI.PopUpButton(frame: self.userAgentPopupRect)
         let menu = userAgentPopup.menu!
         var names: [String] = []
         let name0: String = SBUserAgentNames[0]
@@ -137,7 +139,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     }()
     
     private lazy var switchMatrix: NSMatrix = {
-        let cell = SBBLKGUIButtonCell()
+        let cell = BLKGUI.ButtonCell()
         cell.buttonType = .RadioButton
         let switchMatrix = NSMatrix(frame: self.switchRect, mode: .RadioModeMatrix, prototype: cell, numberOfRows: 1, numberOfColumns: 2)
         switchMatrix.cellSize = NSMakeSize(150.0, 18.0)
@@ -162,8 +164,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         return wayLabel
     }()
     
-    private lazy var wayField: SBBLKGUITextField = {
-        let wayField = SBBLKGUITextField(frame: self.wayFieldRect)
+    private lazy var wayField: BLKGUI.TextField = {
+        let wayField = BLKGUI.TextField(frame: self.wayFieldRect)
         wayField.alignment = .LeftTextAlignment
         wayField.font = NSFont.systemFontOfSize(14.0)
         wayField.textColor = NSColor.whiteColor()
@@ -172,8 +174,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         return wayField
     }()
     
-    private lazy var cancelButton: SBBLKGUIButton = {
-        let cancelButton = SBBLKGUIButton(frame: self.cancelRect)
+    private lazy var cancelButton: BLKGUI.Button = {
+        let cancelButton = BLKGUI.Button(frame: self.cancelRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
         cancelButton.action = "cancel"
@@ -181,8 +183,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         return cancelButton
     }()
     
-    private lazy var doneButton: SBBLKGUIButton = {
-        let doneButton = SBBLKGUIButton(frame: self.doneRect)
+    private lazy var doneButton: BLKGUI.Button = {
+        let doneButton = BLKGUI.Button(frame: self.doneRect)
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
         doneButton.action = "send"
