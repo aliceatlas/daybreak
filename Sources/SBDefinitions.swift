@@ -89,6 +89,12 @@ let kSBLocalizationsDirectoryName = "Localizations"
 let kSBDefaultEncodingName = "utf-8"
 let SBDefaultHistorySaveSeconds = 604800
 
+
+// Bookmark display modes
+@objc enum SBBookmarkMode: Int {
+    case Icon, List, Tile
+}
+
 let SBAvailableStringEncodings: [NSStringEncoding?] = [
     CFStringEncodings.ShiftJIS,                    // Japanese (Shift JIS)
     CFStringEncodings.ISO_2022_JP,                 // Japanese (ISO 2022-JP)

@@ -25,13 +25,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-// Bookmark display modes
-typedef NS_ENUM(NSInteger, SBBookmarkMode) {
-	SBBookmarkModeIcon,
-	SBBookmarkModeList,
-	SBBookmarkModeTile
-};
-
 // Un-documented methods
 @interface NSURL (WebNSURLExtras)
 + (NSURL *)_web_URLWithUserTypedString:(NSString *)string;
