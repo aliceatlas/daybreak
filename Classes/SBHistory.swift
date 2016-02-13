@@ -26,18 +26,14 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-private var _sharedHistory = SBHistory()
-
 private func swindle<T, U>(fn: T -> U) (_ arg: AnyObject) -> U {
     return fn(arg as! T)
 }
 
 class SBHistory: NSObject {
-	var history = WebHistory()
+    static let sharedHistory = SBHistory()
     
-    class var sharedHistory: SBHistory {
-        return _sharedHistory
-    }
+	var history = WebHistory()
     
     override init() {
         super.init()

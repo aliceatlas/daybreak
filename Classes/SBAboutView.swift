@@ -28,9 +28,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import BLKGUI
 
-private var _sharedAboutView = SBAboutView(frame: NSMakeRect(0, 0, 640, 360))
-
 class SBAboutView: SBView {
+    static let sharedView = SBAboutView(frame: NSMakeRect(0, 0, 640, 360))
+    
     private lazy var iconImageView: NSImageView = {
         let image = NSImage(named: "Application.icns")!
         let r = self.iconImageRect
@@ -136,10 +136,6 @@ class SBAboutView: SBView {
         )
         return rightColumn
     }()
-    
-    class var sharedView: SBAboutView {
-        return _sharedAboutView
-    }
     
     override init(frame: NSRect) {
         super.init(frame: frame)

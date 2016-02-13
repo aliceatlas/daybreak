@@ -28,15 +28,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-private var _sharedUpdater = SBUpdater()
-
 class SBUpdater: NSObject {
+    static let sharedUpdater = SBUpdater()
+    
     var raiseResult = false
     var checkSkipVersion = true
-    
-    class var sharedUpdater: SBUpdater {
-        return _sharedUpdater
-    }
     
     func check() {
         NSThread.detachNewThreadSelector("checking", toTarget: self, withObject: nil)

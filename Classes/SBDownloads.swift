@@ -28,20 +28,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import Foundation
 
-private var _sharedDownloads = SBDownloads()
-
 func ==(first: SBDownload, second: SBDownload) -> Bool {
     return first === second
 }
 extension SBDownload: Equatable {}
 
 class SBDownloads: NSObject, NSURLDownloadDelegate {
+    static let sharedDownloads = SBDownloads()
+    
     var items: [SBDownload] = []
 	var _identifier = 0
-    
-    class var sharedDownloads: SBDownloads {
-        return _sharedDownloads
-    }
     
     var downloading: Bool {
         return items.any { $0.downloading }

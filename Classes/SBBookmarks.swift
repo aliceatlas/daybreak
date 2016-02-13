@@ -30,13 +30,11 @@ import Foundation
 
 //typealias BookmarkItem = [String: Any]
 typealias BookmarkItem = NSDictionary
-private var _sharedBookmarks = SBBookmarks()
 
 class SBBookmarks: NSObject {
+    static let sharedBookmarks = SBBookmarks()
+    
     var items: [NSMutableDictionary] = []
-    class var sharedBookmarks: SBBookmarks {
-        return _sharedBookmarks
-    }
 
     override init() {
         super.init()
