@@ -98,7 +98,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     private lazy var removeButton: SBButton = {
         let removeRect = self.removeButtonRect(nil)
         let removeButton = SBButton(frame: removeRect)
-        removeButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
+        removeButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         removeButton.image = SBIconImage(SBCloseIconImage(), .Left, removeRect.size)
         removeButton.action = "remove"
         return removeButton
@@ -107,7 +107,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     private lazy var editButton: SBButton = {
         let editRect = self.editButtonRect(nil)
         let editButton = SBButton(frame: editRect)
-        editButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
+        editButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         editButton.image = SBIconImageWithName("Edit", .Center, editRect.size)
         editButton.action = "edit"
         return editButton
@@ -116,7 +116,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     private lazy var updateButton: SBButton = {
         let updateRect = self.updateButtonRect(nil)
         let updateButton = SBButton(frame: updateRect)
-        updateButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
+        updateButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         updateButton.image = SBIconImageWithName("Update", .Right, updateRect.size) // !!! editRect.size?
         updateButton.action = "update"
         return updateButton
@@ -806,7 +806,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         let location = event.locationInWindow
         let point = convertPoint(location, fromView: nil)
         let modifierFlags = event.modifierFlags
-        let exclusive = modifierFlags & .ShiftKeyMask == nil
+        let exclusive = !modifierFlags.contains(.ShiftKeyMask)
         if self.point == NSZeroPoint {
             // Drag
             if (draggedItemView !! draggedItems) != nil {
@@ -890,7 +890,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
             case NSEnterCharacter, NSCarriageReturnCharacter:
                 // Open URL
                 openSelectedItems(nil)
-            case 0x66 /* f */ where event.modifierFlags & .CommandKeyMask != nil:
+            case 0x66 /* f */ where event.modifierFlags.contains(.CommandKeyMask):
                 // Open searchbar
                 executeShouldOpenSearchbar()
             case 0x1B:

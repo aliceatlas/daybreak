@@ -45,7 +45,7 @@ class SBSectionListView: SBView {
         let clipView = BLKGUI.ClipView(frame: self.bounds)
         let scrollView = NSScrollView(frame: self.bounds)
         scrollView.contentView = clipView
-        scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        scrollView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         scrollView.drawsBackground = false
         scrollView.hasHorizontalScroller = false
         scrollView.hasVerticalScroller = true

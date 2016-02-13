@@ -39,7 +39,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     private lazy var scrollView: BLKGUI.ScrollView = {
         let scrollView = BLKGUI.ScrollView(frame: NSMakeRect(self.margin.x, self.margin.y, self.imageViewSize.width, self.imageViewSize.height))
         scrollView.documentView = self.imageView
-        scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        scrollView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         scrollView.hasHorizontalScroller = true
         scrollView.hasVerticalScroller = true
         scrollView.autohidesScrollers = true
@@ -386,7 +386,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         addSubview(scrollView)
         addSubview(cancelButton)
         addSubview(doneButton)
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "windowDidResize:", name: NSWindowDidResizeNotification, object: window)
     }
     

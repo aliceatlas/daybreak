@@ -66,7 +66,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     }()
 	private lazy var webView: WebView = {
         let webView = WebView(frame: self.webRect, frameName: nil, groupName: nil)
-        webView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        webView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         webView.frameLoadDelegate = self
         webView.UIDelegate = self
         webView.hidden = true
@@ -83,7 +83,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     }()
 	private lazy var skipButton: BLKGUI.Button = {
         let skipButton = BLKGUI.Button(frame: self.skipButtonRect)
-        skipButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
+        skipButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         skipButton.target = self
         skipButton.action = "skip"
         skipButton.setButtonType(.MomentaryPushInButton)
@@ -93,7 +93,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     }()
 	private lazy var cancelButton: BLKGUI.Button = {
         let cancelButton = BLKGUI.Button(frame: self.skipButtonRect)
-        cancelButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
+        cancelButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         cancelButton.target = self
         cancelButton.action = "cancel"
         cancelButton.setButtonType(.MomentaryPushInButton)
@@ -104,7 +104,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
     }()
 	private lazy var doneButton: BLKGUI.Button = {
         let doneButton = BLKGUI.Button(frame: self.skipButtonRect)
-        doneButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
+        doneButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         doneButton.target = self
         doneButton.action = "done"
         doneButton.setButtonType(.MomentaryPushInButton)
@@ -139,7 +139,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
         addSubview(skipButton)
         addSubview(cancelButton)
         addSubview(doneButton)
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
 
     required init(coder: NSCoder) {

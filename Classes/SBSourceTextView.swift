@@ -71,11 +71,11 @@ class SBSourceTextView: NSTextView, SBFindbarTarget {
         var r = false
         var selectedRange = self.selectedRange
         let allRange = NSMakeRange(0, count(string!))
-        var options: NSStringCompareOptions = nil
+        var options: NSStringCompareOptions = []
         if selectedRange.location == NSNotFound { selectedRange = NSMakeRange(0, 0) }
         let invalidLength = continuous ? selectedRange.location : (selectedRange.location + selectedRange.length)
-        if forward { options |= .BackwardsSearch }
-        if caseFlag { options |= .CaseInsensitiveSearch }
+        if forward { options.insert(.BackwardsSearch) }
+        if caseFlag { options.insert(.CaseInsensitiveSearch) }
         var searchRange = forward ? NSMakeRange(invalidLength, allRange.length - invalidLength) : NSMakeRange(0, selectedRange.location)
         var range = (string! as NSString).rangeOfString(searchString, options: options, range: searchRange)
         if range.location != NSNotFound {

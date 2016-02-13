@@ -52,7 +52,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     private lazy var area: NSTrackingArea = {
-        NSTrackingArea(rect: self.bounds, options: (.MouseEnteredAndExited | .MouseMoved | .ActiveAlways | .InVisibleRect), owner: self, userInfo: nil)
+        NSTrackingArea(rect: self.bounds, options: [.MouseEnteredAndExited, .MouseMoved, .ActiveAlways, .InVisibleRect], owner: self, userInfo: nil)
     }()
     
     var isFirstResponder: Bool {

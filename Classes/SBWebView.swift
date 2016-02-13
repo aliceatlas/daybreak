@@ -120,7 +120,7 @@ class SBWebView: WebView, SBFindbarTarget {
     
     // Return range of string in web document
     func rangeOfStringInWebDocument(string: String, caseSensitive caseFlag: Bool) -> Range<String.Index>? {
-        return documentString.ifNotEmpty?.rangeOfString(string, options:(caseFlag &? .CaseInsensitiveSearch))
+        return documentString.ifNotEmpty?.rangeOfString(string, options:(caseFlag ? [.CaseInsensitiveSearch] : []))
     }
     
     override func keyDown(event: NSEvent) {

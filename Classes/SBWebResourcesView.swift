@@ -45,7 +45,7 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
     
     lazy var scrollView: NSScrollView = {
         let scrollView = BLKGUI.ScrollView(frame: self.bounds)
-        scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        scrollView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         scrollView.autohidesScrollers = true
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false

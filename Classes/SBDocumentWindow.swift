@@ -44,7 +44,7 @@ class SBDocumentWindow: NSWindow {
 	var keyView = false
 	lazy var innerView: SBInnerView = {
         let innerView = SBInnerView(frame: self.innerRect)
-        innerView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        innerView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         return innerView
     }()
 	var coverWindow: SBCoverWindow?
@@ -53,7 +53,7 @@ class SBDocumentWindow: NSWindow {
             oldValue?.removeFromSuperview()
             if tabbar != nil {
                 tabbar!.frame = tabbarRect
-                tabbar!.autoresizingMask = .ViewWidthSizable | .ViewMinYMargin
+                tabbar!.autoresizingMask = [.ViewWidthSizable, .ViewMinYMargin]
                 innerView.addSubview(tabbar!)
             }
         }
@@ -72,7 +72,7 @@ class SBDocumentWindow: NSWindow {
             oldValue?.removeFromSuperview()
             if splitView != nil {
                 splitView!.frame = splitViewRect
-                splitView!.autoresizingMask = .ViewWidthSizable | .ViewMinYMargin
+                splitView!.autoresizingMask = [.ViewWidthSizable, .ViewMinYMargin]
                 innerView.addSubview(splitView!)
             }
         }
@@ -94,7 +94,7 @@ class SBDocumentWindow: NSWindow {
         showsToolbarButton = true
         oneShot = true
         acceptsMouseMovedEvents = true
-        collectionBehavior = .FullScreenPrimary | .FullScreenAuxiliary
+        collectionBehavior = [.FullScreenPrimary, .FullScreenAuxiliary]
         animationBehavior = .None
         tabbarVisibility = inTabbarVisibility
     }
@@ -212,7 +212,7 @@ class SBDocumentWindow: NSWindow {
         destructCoverWindow()
         coverWindow = SBCoverWindow(parentWindow: self, size: br.size)
         let scrollView = BLKGUI.ScrollView(frame: NSIntegralRect(r))
-        scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        scrollView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         scrollView.hasHorizontalScroller = hasHorizontalScroller
         scrollView.hasVerticalScroller = hasVerticalScroller
         scrollView.drawsBackground = false

@@ -88,7 +88,7 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
         bottombar.delegate = self
         bottombar.position = self.position
         bottombar.drawerVisibility = self.visibleDrawer
-        bottombar.autoresizingMask = .ViewWidthSizable | .ViewMaxYMargin
+        bottombar.autoresizingMask = [.ViewWidthSizable, .ViewMaxYMargin]
         return bottombar
     }()
     var bottombar: SBSideBottombar { return _bottombar }

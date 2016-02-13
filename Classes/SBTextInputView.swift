@@ -32,7 +32,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     lazy var messageLabel: NSTextField = {
         let font = NSFont.boldSystemFontOfSize(16)
         let messageLabel = NSTextField(frame: self.messageLabelRect)
-        messageLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        messageLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
@@ -89,7 +89,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         addSubview(textLabel)
         addSubview(doneButton)
         addSubview(cancelButton)
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
     
     required init(coder: NSCoder) {

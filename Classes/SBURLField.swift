@@ -114,7 +114,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         field.focusRingType = .None
         field.delegate = self
         field.font = NSFont.systemFontOfSize(13.0)
-        field.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        field.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         field.cell!.wraps = false
         field.cell!.scrollable = true
         field.setRefusesFirstResponder(false)
@@ -622,10 +622,10 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     func updateGoTitle(event: NSEvent?) {
-        let modifierFlags: NSEventModifierFlags = event?.modifierFlags ?? nil
-        if modifierFlags & .CommandKeyMask != nil {
+        let modifierFlags = event?.modifierFlags ?? []
+        if modifierFlags.contains(.CommandKeyMask) {
             goButton.title = NSLocalizedString("Open", comment: "")
-        } else if modifierFlags & .AlternateKeyMask != nil {
+        } else if modifierFlags.contains(.AlternateKeyMask) {
             goButton.title = NSLocalizedString("Download", comment: "")
         } else {
             var hasScheme = false
@@ -635,17 +635,14 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     func go() {
-        var f: (() -> Void)?
-        let theEvent = NSApplication.sharedApplication().currentEvent
-        let modifierFlags: NSEventModifierFlags = theEvent?.modifierFlags ?? nil
-        if modifierFlags & .CommandKeyMask != nil {
-            f = executeShouldOpenURLInNewTab
-        } else if modifierFlags & .AlternateKeyMask != nil {
-            f = executeShouldDownloadURL
+        let modifierFlags = NSApp.currentEvent?.modifierFlags ?? []
+        if modifierFlags.contains(.CommandKeyMask) {
+            executeShouldOpenURLInNewTab()
+        } else if modifierFlags.contains(.AlternateKeyMask) {
+            executeShouldDownloadURL()
         } else {
-            f = executeShouldOpenURL
+            executeShouldOpenURL()
         }
-        f?()
     }
     
     // MARK: Exec
@@ -768,7 +765,7 @@ class SBURLImageView: NSImageView, NSDraggingSource {
         let point = convertPoint(event.locationInWindow, fromView: nil)
         
         while true {
-            let mask: NSEventMask = .LeftMouseDraggedMask | .LeftMouseUpMask
+            let mask: NSEventMask = [.LeftMouseDraggedMask, .LeftMouseUpMask]
             let newEvent = window!.nextEventMatchingMask(Int(mask.rawValue))!
             let newPoint = convertPoint(newEvent.locationInWindow, fromView: nil)
             var isDragging = false
@@ -855,7 +852,7 @@ class SBURLTextField: NSTextField {
         let center = NSNotificationCenter.defaultCenter()
         let character = (event.characters as NSString?)?.characterAtIndex(0) !! {Int($0)}
         if character == NSCarriageReturnCharacter || character == NSEnterCharacter {
-            if event.modifierFlags & .CommandKeyMask != nil {
+            if event.modifierFlags.contains(.CommandKeyMask) {
                 // Command + Return
                 center.postNotificationName(NSControlTextDidEndEditingNotification, object: self)
                 sendAction(commandAction, to: target)
@@ -936,7 +933,7 @@ class SBURLFieldContentView: NSView {
     
     private lazy var scroller: NSScrollView = {
         let scroller = BLKGUI.ScrollView(frame: self.scrollerRect)
-        scroller.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        scroller.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         scroller.autohidesScrollers = true
         scroller.hasVerticalScroller = true
         scroller.autohidesScrollers = true

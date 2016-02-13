@@ -31,7 +31,7 @@ import BLKGUI
 class SBDrawer: SBView {
     lazy var scrollView: BLKGUI.ScrollView = {
         let scrollView = BLKGUI.ScrollView(frame: self.availableRect)
-        scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        scrollView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         scrollView.autohidesScrollers = true
         scrollView.hasHorizontalScroller = false
         scrollView.hasVerticalScroller = true

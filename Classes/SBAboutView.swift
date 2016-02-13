@@ -36,7 +36,7 @@ class SBAboutView: SBView {
         let r = self.iconImageRect
         let iconImageView = NSImageView(frame: r)
         iconImageView.imageFrameStyle = .None
-        iconImageView.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        iconImageView.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin, .ViewMaxYMargin]
         image.size = r.size
         iconImageView.image = image
         iconImageView.imageScaling = .ImageScaleProportionallyDown
@@ -80,7 +80,7 @@ class SBAboutView: SBView {
     private lazy var creditScrollView: BLKGUI.ScrollView = {
         let rtfdPath = NSBundle.mainBundle().pathForResource("Credits", ofType: "rtfd")!
         let creditLabel = NSTextView()
-        creditLabel.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        creditLabel.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         creditLabel.editable = false
         creditLabel.selectable = true
         creditLabel.drawsBackground = false
@@ -147,7 +147,7 @@ class SBAboutView: SBView {
             "V:|[rightColumn]|",
             "[rightColumn(336)]|"
         )
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
     
     required init(coder: NSCoder) {

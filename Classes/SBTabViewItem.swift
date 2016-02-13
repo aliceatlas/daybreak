@@ -41,7 +41,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     lazy var splitView: SBTabSplitView = {
         let splitView = SBTabSplitView(frame: NSZeroRect)
         splitView.delegate = self
-        splitView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        splitView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         return splitView
     }()
     var sourceView: SBDrawer?
@@ -51,7 +51,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         let view = SBWebView(frame: self.tabView!.bounds, frameName: nil, groupName: nil)
         // Set properties
         view.drawsBackground = true
-        view.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        view.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         view.delegate = self
         view.hostWindow = self.tabView!.window
         view.frameLoadDelegate = self
@@ -176,7 +176,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     verticalScroller !! { r.size.width = r.size.width - $0.frame.size.width }
         #endif
                     sourceTextView = SBSourceTextView(frame: tr)
-                    scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+                    scrollView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
                     scrollView.autohidesScrollers = true
                     scrollView.hasHorizontalScroller = false
                     scrollView.hasVerticalScroller = true
@@ -839,23 +839,16 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         switch navigationType {
             case .LinkClicked:
                 if URL.hasWebScheme { // 'http', 'https', 'file'
-                    if modifierFlags & .CommandKeyMask != nil { // Command
+                    if modifierFlags.contains(.CommandKeyMask) { // Command
                         var selection = true
                         let makeActiveFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBWhenNewTabOpensMakeActiveFlag)
                         // Make it active flag and Shift key mask
-                        if makeActiveFlag {
-                            if modifierFlags & .ShiftKeyMask != nil {
-                                selection = false
-                            }
-                        } else {
-                            if modifierFlags & .ShiftKeyMask != nil {
-                            } else {
-                                selection = false
-                            }
+                        if makeActiveFlag == modifierFlags.contains(.ShiftKeyMask) {
+                            selection = false
                         }
                         tabView.executeShouldAddNewItemForURL(URL, selection: selection)
                         listener.ignore()
-                    } else if modifierFlags & .AlternateKeyMask != nil { // Option
+                    } else if modifierFlags.contains(.AlternateKeyMask) { // Option
                         listener.download()
                     } else {
                         listener.use()

@@ -34,7 +34,7 @@ extension NSView {
     
     func addConstraintStrings(#metrics: [String: Double], views: [String: NSView], constraints constraintStrings: [String]) {
         for constraintString in constraintStrings {
-            let layoutConstraints = NSLayoutConstraint.constraintsWithVisualFormat(constraintString, options: nil, metrics: metrics, views: views)
+            let layoutConstraints = NSLayoutConstraint.constraintsWithVisualFormat(constraintString, options: [], metrics: metrics, views: views)
             addConstraints(layoutConstraints)
         }
     }

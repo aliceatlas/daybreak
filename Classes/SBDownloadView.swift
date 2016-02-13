@@ -48,7 +48,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     }
     
     private lazy var area: NSTrackingArea = {
-        return NSTrackingArea(rect: self.bounds, options: (.MouseEnteredAndExited | .MouseMoved | .ActiveAlways | .InVisibleRect), owner: self, userInfo: nil)
+        return NSTrackingArea(rect: self.bounds, options: [.MouseEnteredAndExited, .MouseMoved, .ActiveAlways, .InVisibleRect], owner: self, userInfo: nil)
     }()
     
     init(frame: NSRect, download: SBDownload) {

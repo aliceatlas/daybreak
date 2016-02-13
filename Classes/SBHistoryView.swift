@@ -42,7 +42,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     }()
 	private lazy var messageLabel: NSTextField = {
         let messageLabel = NSTextField(frame: self.messageLabelRect)
-        messageLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        messageLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
@@ -63,7 +63,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     }()
 	private lazy var scrollView: BLKGUI.ScrollView = {
         let scrollView = BLKGUI.ScrollView(frame: self.tableViewRect)
-        scrollView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        scrollView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         scrollView.autohidesScrollers = true
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
@@ -161,7 +161,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         addSubview(removeAllButton)
         addSubview(backButton)
         makeResponderChain()
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
 
     required init(coder: NSCoder) {

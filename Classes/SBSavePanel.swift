@@ -44,7 +44,7 @@ class SBSavePanel: NSSavePanel {
         if let contentView = contentView as? NSView,
                belowView: NSView = contentView.subviews.get(0) {
             let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
-            savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+            savePanelContentView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
             contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
         }
     }
@@ -84,7 +84,7 @@ class SBOpenPanel: NSOpenPanel {
         if let contentView = contentView as? NSView,
                belowView: NSView = contentView.subviews.get(0) {
             let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
-            savePanelContentView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+            savePanelContentView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
             contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
         }
     }

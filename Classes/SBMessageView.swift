@@ -42,7 +42,7 @@ class SBMessageView: SBView {
     }()
     private lazy var messageLabel: NSTextField = {
         let messageLabel = NSTextField(frame: self.messageLabelRect)
-        messageLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        messageLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
@@ -110,7 +110,7 @@ class SBMessageView: SBView {
         addSubview(textLabel)
         addSubview(messageLabel)
         let viewsDictionary: [NSObject: AnyObject] = ["textLabel": textLabel, "messageLabel": messageLabel, "cancelButton": cancelButton, "doneButton": doneButton]
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
     
     required init(coder: NSCoder) {

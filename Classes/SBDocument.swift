@@ -64,13 +64,13 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     private let urlViewBounds = NSMakeRect(0, 0, 320.0, 24.0)
     private lazy var urlView: NSView = {
         let urlView = NSView(frame: self.urlViewBounds)
-        urlView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        urlView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         urlView.addSubview(self.urlField)
         return urlView
     }()
     lazy var urlField: SBURLField = {
         let urlField = SBURLField(frame: self.urlViewBounds)
-        urlField.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        urlField.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         urlField.delegate = self
         urlField.dataSource = self
         return urlField
@@ -79,7 +79,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     private let loadViewBounds = NSMakeRect(0, 0, 24.0, 24.0)
     private lazy var loadView: NSView = {
         let loadView = NSView(frame: self.loadViewBounds)
-        loadView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        loadView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         loadView.addSubview(self.loadButton)
         return loadView
     }()
@@ -87,21 +87,21 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     private let encodingViewBounds = NSMakeRect(0, 0, 250.0, 24.0)
     private lazy var encodingView: NSView = {
         let encodingView = NSView(frame: self.encodingViewBounds)
-        encodingView.autoresizingMask = .ViewMaxXMargin | .ViewMinXMargin | .ViewMaxYMargin | .ViewMinYMargin
+        encodingView.autoresizingMask = [.ViewMaxXMargin, .ViewMinXMargin, .ViewMaxYMargin, .ViewMinYMargin]
         encodingView.addSubview(self.encodingButton)
         return encodingView
     }()
     
     private lazy var zoomView: NSView = {
         let zoomView = NSView(frame: NSMakeRect(0, 0, 72.0, 24.0))
-        zoomView.autoresizingMask = .ViewMaxXMargin | .ViewMinXMargin | .ViewMaxYMargin | .ViewMinYMargin
+        zoomView.autoresizingMask = [.ViewMaxXMargin, .ViewMinXMargin, .ViewMaxYMargin, .ViewMinYMargin]
         zoomView.addSubview(self.zoomButton)
         return zoomView
     }()
     
     private lazy var loadButton: SBLoadButton = {
         let loadButton = SBLoadButton(frame: self.loadViewBounds)
-        loadButton.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        loadButton.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         loadButton.images = ["Reload.png", "Stop.png"].map {NSImage(named: $0)!}
         loadButton.target = self
         loadButton.action = "load:"
@@ -255,7 +255,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         let sidebar = aSidebar ?? self.sidebar!
         let defaults = NSUserDefaults.standardUserDefaults()
         let bookmarksView = SBBookmarksView(frame: sidebar.viewRect)
-        bookmarksView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        bookmarksView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         bookmarksView.delegate = self
         bookmarksView.constructListView(SBBookmarkMode(rawValue: defaults.integerForKey(kSBBookmarkMode))!)
         return bookmarksView
@@ -632,8 +632,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func window(aWindow: SBDocumentWindow, shouldHandleKeyEvent event: NSEvent) -> Bool {
         let characters = event.characters
-        let command = event.modifierFlags & .CommandKeyMask != nil
-        let shift = event.modifierFlags & .ShiftKeyMask != nil
+        let command = event.modifierFlags.contains(.CommandKeyMask)
+        let shift = event.modifierFlags.contains(.ShiftKeyMask)
         if command && shift && characters != nil {
             switch characters! {
                 case "b":

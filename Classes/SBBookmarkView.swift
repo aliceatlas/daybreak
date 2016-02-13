@@ -39,7 +39,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     private lazy var messageLabel: NSTextField? = {
         let messageLabel = NSTextField(frame: self.messageLabelRect)
-        messageLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        messageLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
@@ -52,7 +52,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     private lazy var titleLabel: NSTextField = {
         let titleLabel = NSTextField(frame: self.titleLabelRect)
-        titleLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        titleLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         titleLabel.editable = false
         titleLabel.bordered = false
         titleLabel.drawsBackground = false
@@ -65,7 +65,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     private lazy var urlLabel: NSTextField = {
         let urlLabel = NSTextField(frame: self.urlLabelRect)
-        urlLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        urlLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         urlLabel.editable = false
         urlLabel.bordered = false
         urlLabel.drawsBackground = false
@@ -78,7 +78,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     private lazy var colorLabel: NSTextField = {
         let colorLabel = NSTextField(frame: self.colorLabelRect)
-        colorLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        colorLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         colorLabel.editable = false
         colorLabel.bordered = false
         colorLabel.drawsBackground = false
@@ -91,14 +91,14 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     private lazy var titleField: BLKGUI.TextField = {
         let titleField = BLKGUI.TextField(frame: self.titleFieldRect)
-        titleField.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        titleField.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         titleField.alignment = .LeftTextAlignment
         return titleField
     }()
     
     private lazy var urlField: BLKGUI.TextField = {
         let urlField = BLKGUI.TextField(frame: self.urlFieldRect)
-        urlField.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        urlField.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         urlField.delegate = self
         urlField.alignment = .LeftTextAlignment
         return urlField
@@ -106,7 +106,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     private lazy var colorPopup: BLKGUI.PopUpButton = {
         let colorPopup = BLKGUI.PopUpButton(frame: self.colorPopupRect)
-        colorPopup.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        colorPopup.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         colorPopup.pullsDown = true
         colorPopup.alignment = .LeftTextAlignment
         colorPopup.menu = SBBookmarkLabelColorMenu(true, nil, nil, nil)
@@ -175,7 +175,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         addSubview(doneButton)
         addSubview(cancelButton)
         makeResponderChain()
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
     
     required init(coder: NSCoder) {

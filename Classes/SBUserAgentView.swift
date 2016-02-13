@@ -142,7 +142,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
             "V:|-\(20+7)-[title(19)]"
         )
         
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
     
     required init(coder: NSCoder) {

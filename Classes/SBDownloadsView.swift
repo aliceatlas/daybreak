@@ -36,7 +36,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
     private lazy var removeButton: SBButton = {
         let removeRect = self.removeButtonRect(nil)
         let removeButton = SBButton(frame: removeRect)
-        removeButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
+        removeButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         removeButton.image = SBIconImage(SBCloseIconImage(), .Left, removeRect.size)
         removeButton.action = "remove"
         return removeButton
@@ -44,7 +44,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
     private lazy var finderButton: SBButton = {
         let finderRect = self.finderButtonRect(nil)
         let finderButton = SBButton(frame: finderRect)
-        finderButton.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin;
+        finderButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin];
         finderButton.image = SBIconImageWithName("Finder", .Right, finderRect.size)
         finderButton.action = "finder"
         return finderButton
@@ -117,7 +117,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         if downloadView == nil {
             let r = cellFrameAtIndex(downloadViews.count)
             downloadView = SBDownloadView(frame: r, download: item)
-            downloadView!.autoresizingMask = .ViewMaxXMargin | .ViewMinYMargin
+            downloadView!.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
             downloadView!.update()
             downloadViews.append(downloadView!)
             addSubview(downloadView!)

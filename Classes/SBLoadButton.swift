@@ -39,7 +39,7 @@ class SBLoadButton: SBButton {
     
     lazy var indicator: NSProgressIndicator = {
         let indicator = NSProgressIndicator(frame: NSMakeRect((self.bounds.size.width - 16.0) / 2, (self.bounds.size.height - 16.0) / 2, 16.0, 16.0))
-        indicator.autoresizingMask = .ViewMaxXMargin | .ViewMinXMargin | .ViewMaxYMargin | .ViewMinYMargin
+        indicator.autoresizingMask = [.ViewMaxXMargin, .ViewMinXMargin, .ViewMaxYMargin, .ViewMinYMargin]
         indicator.usesThreadedAnimation = true
         indicator.style = .SpinningStyle
         indicator.displayedWhenStopped = false

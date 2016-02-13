@@ -31,7 +31,7 @@ import BLKGUI
 class SBDownloaderView: SBView, NSTextFieldDelegate {
 	private lazy var messageLabel: NSTextField = {
         let messageLabel = NSTextField(frame: self.messageLabelRect)
-        messageLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        messageLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
@@ -44,7 +44,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
     
 	private lazy var URLLabel: NSTextField = {
         let URLLabel = NSTextField(frame: self.URLLabelRect)
-        URLLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        URLLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         URLLabel.editable = false
         URLLabel.bordered = false
         URLLabel.drawsBackground = false
@@ -58,7 +58,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
 	private lazy var URLField: BLKGUI.TextField = {
         let URLField = BLKGUI.TextField(frame: self.URLFieldRect)
         URLField.delegate = self
-        URLField.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        URLField.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         URLField.cell!.alignment = .LeftTextAlignment
         return URLField
     }()
@@ -100,7 +100,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         addSubview(doneButton)
         addSubview(cancelButton)
         makeResponderChain()
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
     
     required init(coder: NSCoder) {

@@ -210,7 +210,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         addSubview(wayField)
         addSubview(cancelButton)
         addSubview(doneButton)
-        autoresizingMask = .ViewMinXMargin | .ViewMaxXMargin | .ViewMinYMargin | .ViewMaxYMargin
+        autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
     
     required init(coder: NSCoder) {

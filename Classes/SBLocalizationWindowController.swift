@@ -93,7 +93,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         var editRect = contentRect
         editRect.size.height -= self.topMargin
         let editView = NSView(frame: editRect)
-        editView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        editView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         let backgroundColor = CGColorCreateGenericGray(0.8, 1.0)
         self.contentView.layer!.backgroundColor = backgroundColor
         self.editBounds = editView.bounds
@@ -136,7 +136,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
             let contentRect = editBounds
             let scrollRect = NSMakeRect(margin, bottomMargin, contentRect.size.width - margin * 2, contentRect.size.height - bottomMargin)
             editScrollView = NSScrollView(frame: scrollRect)
-            editScrollView!.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+            editScrollView!.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
             editScrollView!.backgroundColor = NSColor.clearColor()
             editScrollView!.drawsBackground = false
             editScrollView!.hasVerticalScroller = true
@@ -200,7 +200,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         var contributeRect = contentRect
         contributeRect.size.height -= self.topMargin
         let contributeView = NSView(frame: contributeRect)
-        contributeView.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        contributeView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         contributeView.addSubview(self.iconImageView)
         contributeView.addSubview(self.textField)
         contributeView.addSubview(self.checkoutTitleField)

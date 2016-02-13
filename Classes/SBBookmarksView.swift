@@ -91,7 +91,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
     func constructListView(inMode: SBBookmarkMode) {
         destructListView()
         scrollView = BLKGUI.ScrollView(frame: bounds)
-        scrollView!.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+        scrollView!.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         scrollView!.autohidesScrollers = true
         scrollView!.hasHorizontalScroller = false
         scrollView!.hasVerticalScroller = true
@@ -136,7 +136,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
                 searchbar!.doneSelector = "searchWithText:"
                 searchbar!.cancelSelector = "closeSearchbar"
                 splitView = SBFixedSplitView(embedViews: [searchbar!, scrollView!], frameRect: scrollView!.frame)
-                splitView!.autoresizingMask = .ViewWidthSizable | .ViewHeightSizable
+                splitView!.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
                 r = true
             }
             searchbar!.selectText(nil)
