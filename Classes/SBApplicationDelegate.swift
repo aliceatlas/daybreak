@@ -82,13 +82,13 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         if let filenames = filenames as? [String], document = SBGetSelectedDocument {
             for filename in filenames {
                 var error: NSError?
-                let url = NSURL.fileURLWithPath(filename)!
-                if let type = documentController.typeForContentsOfURL(url, error: &error) {
+                let URL = NSURL.fileURLWithPath(filename)!
+                if let type = documentController.typeForContentsOfURL(URL, error: &error) {
                     if type == kSBStringsDocumentTypeName {
                         let path = NSBundle.mainBundle().pathForResource("Localizable", ofType: "strings")
-                        openStrings(path: path!, anotherPath:url.path!)
+                        openStrings(path: path!, anotherPath: URL.path!)
                     } else if type == kSBDocumentTypeName {
-                        document.constructNewTab(URL: url, selection: (index == filenames.count - 1))
+                        document.constructNewTab(URL: URL, selection: (index == filenames.count - 1))
                         index++
                     }
                 }
@@ -208,7 +208,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     func update(versionString: String) {
         let window = SBGetSelectedDocument!.window
         let info = NSBundle.mainBundle().localizedInfoDictionary!
-        let urlString = info["SBReleaseNotesURL"] as! String
+        let URLString = info["SBReleaseNotesURL"] as! String
         destructUpdateView()
         updateView = SBUpdateView(frame: window.splitViewRect)
         updateView!.title = NSLocalizedString("A new version of Daybreak %@ is available.", comment: "").format(versionString)
@@ -217,7 +217,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         updateView!.target = self
         updateView!.doneSelector = "doneUpdate"
         updateView!.cancelSelector = "cancelUpdate"
-        updateView!.loadRequest(NSURL(string: urlString)!)
+        updateView!.loadRequest(NSURL(string: URLString)!)
         window.showCoverWindow(updateView!)
     }
     
@@ -225,10 +225,10 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let document = SBGetSelectedDocument!
         let window = document.window
         let versionString = updateView!.versionString!.stringByDeletingCharacter(" ")
-        let url = NSURL(string: kSBUpdaterNewVersionURL.format(versionString))
+        let URL = NSURL(string: kSBUpdaterNewVersionURL.format(versionString))
         window.hideCoverWindow()
         destructUpdateView()
-        document.startDownloading(forURL: url)
+        document.startDownloading(forURL: URL)
     }
     
     func cancelUpdate() {
@@ -253,9 +253,9 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     @IBAction func provideFeedback(AnyObject) {
         let title = NSLocalizedString("Daybreak Feedback", comment: "")
         if !kSBFeedbackMailAddress.isEmpty {
-            var urlString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
-            urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString)!)
+            var URLString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
+            URLString = URLString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            NSWorkspace.sharedWorkspace().openURL(NSURL(string: URLString)!)
         }
     }
     

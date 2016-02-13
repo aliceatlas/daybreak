@@ -45,8 +45,8 @@ class SBUpdater: NSObject {
     func checking() {
         let result = NSComparisonResult.OrderedSame;
         let appVersionString = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String
-        let url = NSURL(string: SBVersionFileURL)!
-        let request = NSURLRequest(URL: url, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
+        let URL = NSURL(string: SBVersionFileURL)!
+        let request = NSURLRequest(URL: URL, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
         var response: NSURLResponse?
         var error: NSError?
         let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)

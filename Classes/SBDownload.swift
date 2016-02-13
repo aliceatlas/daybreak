@@ -48,8 +48,8 @@ class SBDownload: NSObject {
     var expectedLength: Int = 0
     var status: SBStatus = .Processing
     
-    convenience init(URL url: NSURL) {
-        let download = NSURLDownload(request: NSURLRequest(URL: url), delegate: SBDownloads.sharedDownloads)
+    convenience init(URL: NSURL) {
+        let download = NSURLDownload(request: NSURLRequest(URL: URL), delegate: SBDownloads.sharedDownloads)
         self.init(download: download)
     }
     

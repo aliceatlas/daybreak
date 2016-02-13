@@ -362,7 +362,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         addWindowController(windowController)
         addObserverNotifications()
         tabbar.keyView = window.keyWindow
-        urlField.keyView = window.keyWindow
+        URLField.keyView = window.keyWindow
     }
     
     override func dataOfType(typeName: String, error outError: NSErrorPointer) -> NSData? {
@@ -601,19 +601,19 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func windowDidBecomeMain(notification: NSNotification) {
         window.keyView = true
-        urlField.keyView = true
+        URLField.keyView = true
         tabbar.keyView = true
     }
     
     func windowDidResignMain(notification: NSNotification) {
         window.keyView = false
-        urlField.keyView = false
+        URLField.keyView = false
         tabbar.keyView = false
-        urlField.disappearSheet()
+        URLField.disappearSheet()
     }
     
     func windowDidResignKey(notification: NSNotification) {
-        urlField.disappearSheet()
+        URLField.disappearSheet()
     }
     
     func windowDidResize(notification: NSNotification) {
@@ -704,10 +704,10 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         // Change window values
         window.title = tabViewItem.tabbarItem.title
         // Change URL field values
-        urlField.enabledBackward = tabViewItem.canBackward
-        urlField.enabledForward = tabViewItem.canForward
-        urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
-        urlField.image = tabViewItem.tabbarItem.image
+        URLField.enabledBackward = tabViewItem.canBackward
+        URLField.enabledForward = tabViewItem.canForward
+        URLField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
+        URLField.image = tabViewItem.tabbarItem.image
         // Change state of the load button
         loadButton.on = tabViewItem.webView.loading
         // Change resources
@@ -727,40 +727,40 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     // MARK: URL Field Delegate
     
-    func urlFieldDidSelectBackward(aURLField: SBURLField) {
-        backward(urlField)
+    func URLFieldDidSelectBackward(aURLField: SBURLField) {
+        backward(URLField)
     }
     
-    func urlFieldDidSelectForward(aURLField: SBURLField) {
-        forward(urlField)
+    func URLFieldDidSelectForward(aURLField: SBURLField) {
+        forward(URLField)
     }
     
-    func urlFieldShouldOpenURL(aURLField: SBURLField) {
-        openURLFromField(urlField)
+    func URLFieldShouldOpenURL(aURLField: SBURLField) {
+        openURLFromField(URLField)
         window.makeFirstResponder(selectedWebView)
     }
     
-    func urlFieldShouldOpenURLInNewTab(aURLField: SBURLField) {
-        openURLInNewTabFromField(urlField)
+    func URLFieldShouldOpenURLInNewTab(aURLField: SBURLField) {
+        openURLInNewTabFromField(URLField)
         window.makeFirstResponder(selectedWebView)
     }
     
-    func urlFieldShouldDownloadURL(aURLField: SBURLField) {
-        if let stringValue = urlField.stringValue {
+    func URLFieldShouldDownloadURL(aURLField: SBURLField) {
+        if let stringValue = URLField.stringValue {
             window.makeFirstResponder(nil)
             startDownloading(forURL: NSURL(string: stringValue))
         }
     }
     
-    func urlFieldTextDidChange(aURLField: SBURLField) {
+    func URLFieldTextDidChange(aURLField: SBURLField) {
         updateURLFieldCompletionList()
         if kSBURLFieldShowsGoogleSuggest {
             updateURLFieldGoogleSuggest()
         }
     }
     
-    func urlFieldWillResignFirstResponder(aURLField: SBURLField) {
-        urlField.hiddenGo = true
+    func URLFieldWillResignFirstResponder(aURLField: SBURLField) {
+        URLField.hiddenGo = true
     }
     
     // MARK: SBDownloaderDelegate
@@ -908,8 +908,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func tabView(aTabView: SBTabView, selectedItemDidStartLoading tabViewItem: SBTabViewItem) {
-        if !urlField.isFirstResponder || urlField.stringValue.isEmpty {
-            urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
+        if !URLField.isFirstResponder || URLField.stringValue.isEmpty {
+            URLField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
         }
         updateMenu(tag: SBViewMenuTag)
         updateResourcesViewIfNeeded()
@@ -918,12 +918,12 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func tabView(aTabView: SBTabView, selectedItemDidFinishLoading tabViewItem: SBTabViewItem) {
         // let webView = self.selectedWebView
-        urlField.enabledBackward = tabViewItem.canBackward
-        urlField.enabledForward = tabViewItem.canForward
-        if !urlField.isFirstResponder || urlField.stringValue.isEmpty {
-            urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
+        URLField.enabledBackward = tabViewItem.canBackward
+        URLField.enabledForward = tabViewItem.canForward
+        if !URLField.isFirstResponder || URLField.stringValue.isEmpty {
+            URLField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
         }
-        // if !urlField.isFirstResponder && webView != nil {
+        // if !URLField.isFirstResponder && webView != nil {
         //     window.makeFirstResponder(webView)
         // }
         updateMenu(tag: SBViewMenuTag)
@@ -932,10 +932,10 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
 
     func tabView(aTabView: SBTabView, selectedItemDidFailLoading tabViewItem: SBTabViewItem) {
-        urlField.enabledBackward = tabViewItem.canBackward
-        urlField.enabledForward = tabViewItem.canForward
-        if !urlField.isFirstResponder || urlField.stringValue.isEmpty {
-            urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
+        URLField.enabledBackward = tabViewItem.canBackward
+        URLField.enabledForward = tabViewItem.canForward
+        if !URLField.isFirstResponder || URLField.stringValue.isEmpty {
+            URLField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
         }
         updateMenu(tag: SBViewMenuTag)
         updateResourcesViewIfNeeded()
@@ -950,12 +950,12 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func tabView(aTabView: SBTabView, selectedItemDidReceiveIcon tabViewItem: SBTabViewItem) {
-        urlField.image = tabViewItem.tabbarItem.image
+        URLField.image = tabViewItem.tabbarItem.image
     }
     
     func tabView(aTabView: SBTabView, selectedItemDidReceiveServerRedirect tabViewItem: SBTabViewItem) {
-        if !urlField.isFirstResponder || urlField.stringValue.isEmpty {
-            urlField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
+        if !URLField.isFirstResponder || URLField.stringValue.isEmpty {
+            URLField.stringValue = tabViewItem.mainFrameURLString?.URLDecodedString
         }
     }
 
@@ -1339,7 +1339,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
 
     func updateURLFieldGoogleSuggest() {
-        let string = urlField.stringValue
+        let string = URLField.stringValue
         let URLString = string.ifNotEmpty !! {kSBGoogleSuggestURL.format($0).stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)}
         let URL = URLString !! {NSURL(string: $0)}
         let downloader = SBDownloader(URL: URL)
@@ -1348,19 +1348,19 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func updateURLFieldGoogleSuggestDidEnd(data: NSData?) {
-        if data != nil && urlField.isFirstResponder {
+        if data != nil && URLField.isFirstResponder {
             // Parse XML
             var error: NSError?
             if var items = SBParseGoogleSuggestData(data!, &error)?.ifNotEmpty {
                 let item = SBURLFieldItem.None(title: NSLocalizedString("Suggestions", comment: ""),
                                                image: NSImage(named: "Icon_G.png")!.TIFFRepresentation!)
                 items.insert(item, atIndex: 0)
-                urlField.gsItems = items
-                urlField.items = urlField.gsItems + urlField.bmItems + urlField.hItems
+                URLField.gsItems = items
+                URLField.items = URLField.gsItems + URLField.bmItems + URLField.hItems
             } else {
-                urlField.gsItems = []
+                URLField.gsItems = []
             }
-            urlField.appearSheetIfNeeded(true)
+            URLField.appearSheetIfNeeded(true)
         }
     }
     
@@ -1368,7 +1368,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         var bmItems: [SBURLFieldItem] = []
         var hItems: [SBURLFieldItem] = []
         var URLStrings: [String] = []
-        let string = urlField.stringValue
+        let string = URLField.stringValue
         let bookmarks = SBBookmarks.sharedBookmarks
         let history = SBHistory.sharedHistory
         
@@ -1417,9 +1417,9 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                                               image: NSImage(named: "Icon_History.png")!.TIFFRepresentation!),
                           atIndex: 0)
         }
-        urlField.bmItems = bmItems
-        urlField.hItems = hItems
-        urlField.items = bmItems + hItems
+        URLField.bmItems = bmItems
+        URLField.hItems = hItems
+        URLField.items = bmItems + hItems
     }
     
     // MARK: Actions
@@ -1452,7 +1452,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func openAndConstructTab(#URLs: [NSURL], startInTabbarItem aTabbarItem: SBTabbarItem) {
         let tabViewItem = tabView.tabViewItem(identifier: aTabbarItem.tag)
-        if urlField.isFirstResponder {
+        if URLField.isFirstResponder {
             window.makeFirstResponder(selectedWebView)
         }
         for (i, URL) in enumerate(URLs) {
@@ -1479,7 +1479,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 return
             }
         }
-        if urlField.isFirstResponder {
+        if URLField.isFirstResponder {
             window.makeFirstResponder(selectedWebView)
         }
         for (i, item) in enumerate(items) {
@@ -1753,7 +1753,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
 
     func openHome(sender: AnyObject?) {
         if let homepage = NSUserDefaults.standardUserDefaults().stringForKey(kSBHomePage)?.ifNotEmpty?.requestURLString {
-            if urlField.isFirstResponder {
+            if URLField.isFirstResponder {
                 window.makeFirstResponder(selectedWebView)
             }
             openURLStringInSelectedTabViewItem(homepage)
@@ -1784,7 +1784,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 bookmarkView!.image = image
                 bookmarkView!.message = containsURL ? NSLocalizedString("This page is already added to bookmarks. \nAre you sure you want to update it?", comment: "") : NSLocalizedString("Are you sure you want to bookmark this page?", comment: "")
                 bookmarkView!.title = window.title
-                bookmarkView!.urlString = URLString
+                bookmarkView!.URLString = URLString
                 bookmarkView!.target = self
                 bookmarkView!.doneSelector = "doneBookmark"
                 bookmarkView!.cancelSelector = "cancelBookmark"
@@ -1826,7 +1826,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 editBookmarkView!.index = index
                 editBookmarkView!.image = image
                 editBookmarkView!.title = title!
-                editBookmarkView!.urlString = URLString!
+                editBookmarkView!.URLString = URLString!
                 editBookmarkView!.labelName = labelName
                 editBookmarkView!.target = self
                 editBookmarkView!.doneSelector = "doneEditBookmark"
@@ -1897,11 +1897,11 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     // MARK: Toolbar Actions
     
     func openURLFromField(sender: AnyObject?) {
-        openString(urlField.stringValue, newTab: false)
+        openString(URLField.stringValue, newTab: false)
     }
     
     func openURLInNewTabFromField(sender: AnyObject?) {
-        openString(urlField.stringValue, newTab: true)
+        openString(URLField.stringValue, newTab: true)
     }
     
     func openString(stringValue: String?, newTab newer: Bool) {
@@ -1996,7 +1996,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if !window.toolbar!.visible {
             window.showToolbar()
         }
-        urlField.selectText(nil)
+        URLField.selectText(nil)
     }
     
     func startDownloading(forURL URL: NSURL?) {

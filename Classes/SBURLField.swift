@@ -59,13 +59,13 @@ struct SBURLFieldItem {
 }
 
 @objc protocol SBURLFieldDelegate {
-    optional func urlFieldDidSelectBackward(SBURLField)
-    optional func urlFieldDidSelectForward(SBURLField)
-    optional func urlFieldShouldOpenURL(SBURLField)
-    optional func urlFieldShouldOpenURLInNewTab(SBURLField)
-    optional func urlFieldShouldDownloadURL(SBURLField)
-    optional func urlFieldTextDidChange(SBURLField)
-    optional func urlFieldWillResignFirstResponder(SBURLField)
+    optional func URLFieldDidSelectBackward(_: SBURLField)
+    optional func URLFieldDidSelectForward(_: SBURLField)
+    optional func URLFieldShouldOpenURL(_: SBURLField)
+    optional func URLFieldShouldOpenURLInNewTab(_: SBURLField)
+    optional func URLFieldShouldDownloadURL(_: SBURLField)
+    optional func URLFieldTextDidChange(_: SBURLField)
+    optional func URLFieldWillResignFirstResponder(_: SBURLField)
 }
 
 @objc protocol SBURLFieldDatasource {
@@ -651,31 +651,31 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     // MARK: Exec
     
     func executeDidSelectBackward() {
-        delegate?.urlFieldDidSelectBackward?(self)
+        delegate?.URLFieldDidSelectBackward?(self)
     }
     
     func executeDidSelectForward() {
-        delegate?.urlFieldDidSelectForward?(self)
+        delegate?.URLFieldDidSelectForward?(self)
     }
     
     func executeShouldOpenURL() {
-        delegate?.urlFieldShouldOpenURL?(self)
+        delegate?.URLFieldShouldOpenURL?(self)
     }
     
     func executeShouldOpenURLInNewTab() {
-        delegate?.urlFieldShouldOpenURLInNewTab?(self)
+        delegate?.URLFieldShouldOpenURLInNewTab?(self)
     }
     
     func executeShouldDownloadURL() {
-        delegate?.urlFieldShouldDownloadURL?(self)
+        delegate?.URLFieldShouldDownloadURL?(self)
     }
     
     func executeTextDidChange() {
-        delegate?.urlFieldTextDidChange?(self)
+        delegate?.URLFieldTextDidChange?(self)
     }
     
     func executeWillResignFirstResponder() {
-        delegate?.urlFieldWillResignFirstResponder?(self)
+        delegate?.URLFieldWillResignFirstResponder?(self)
     }
     
     // MARK: Drawing
@@ -738,10 +738,10 @@ class SBURLImageView: NSImageView, NSDraggingSource {
     }
     
     var dragImage: NSImage {
-        let urlString: NSString = URL.absoluteString!
+        let URLString: NSString = URL.absoluteString!
         let margin: CGFloat = 5.0
         let attribute: [NSObject: AnyObject] = [NSFontAttributeName: field.font!]
-        let textSize = urlString.sizeWithAttributes(attribute)
+        let textSize = URLString.sizeWithAttributes(attribute)
         var size = NSZeroSize
         size.height = bounds.size.height
         size.width = bounds.size.width + textSize.width + margin
@@ -757,7 +757,7 @@ class SBURLImageView: NSImageView, NSDraggingSource {
         let image = NSImage(size: size)
         image.withFocus {
             self.image?.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-            urlString.drawInRect(textRect, withAttributes: attribute)
+            URLString.drawInRect(textRect, withAttributes: attribute)
         }
         
         return image
@@ -1186,9 +1186,9 @@ class SBURLFieldDataCell: NSCell {
     }
 }
 
-func schemeForURLString(urlString: String) -> String? {
-    if let range = urlString.rangeOfString("://") {
-        return urlString[urlString.startIndex..<range.endIndex]
+func schemeForURLString(URLString: String) -> String? {
+    if let range = URLString.rangeOfString("://") {
+        return URLString[URLString.startIndex..<range.endIndex]
     }
     return nil
 }

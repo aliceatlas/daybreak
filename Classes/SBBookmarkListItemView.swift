@@ -67,7 +67,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
         return NSFont.boldSystemFontOfSize((mode == .Icon || mode == .List) ? 10.0 : 11.0)
     }
     
-    var urlFont: NSFont {
+    var URLFont: NSFont {
         return NSFont.systemFontOfSize((mode == .Icon || mode == .List) ? 9.0 : 11.0)
     }
     
@@ -357,15 +357,15 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 }
                 
                 // url string
-                if let urlString = urlString {
+                if let URLString = URLString {
                     var r = bytesRect
-                    let attributes = [NSFontAttributeName: urlFont,
+                    let attributes = [NSFontAttributeName: URLFont,
                                       NSForegroundColorAttributeName: NSColor.lightGrayColor(),
                                       NSParagraphStyleAttributeName: paragraphStyle]
-                    size = urlString.sizeWithAttributes(attributes)
+                    size = URLString.sizeWithAttributes(attributes)
                     r.origin.y += (r.size.height - size.height) / 2
                     r.size.height = size.height
-                    urlString.drawInRect(r, withAttributes: attributes)
+                    URLString.drawInRect(r, withAttributes: attributes)
                 }
             } else if mode == .Tile {
                 var path: NSBezierPath!
@@ -433,7 +433,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 // Rects
                 let imageRect = NSMakeRect(0, 0, 60, bounds.size.height)
                 var titleRect = NSMakeRect((imageRect.maxX + padding.x), 0, (bounds.size.width - (imageRect.maxX + padding.x)) * 0.5, bounds.size.height)
-                var urlRect = NSMakeRect((titleRect.maxX + padding.x), 0, (bounds.size.width - (titleRect.maxX + padding.x)), bounds.size.height)
+                var URLRect = NSMakeRect((titleRect.maxX + padding.x), 0, (bounds.size.width - (titleRect.maxX + padding.x)), bounds.size.height)
                 
                 // line
                 NSColor.darkGrayColor().set()
@@ -490,15 +490,15 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 }
                 
                 // url string
-                if let urlString = urlString {
+                if let URLString = URLString {
                     let color = selected ? NSColor.whiteColor() : (labelColor !! NSColor.blackColor() ?? NSColor.lightGrayColor())
-                    let attributes = [NSFontAttributeName: urlFont,
+                    let attributes = [NSFontAttributeName: URLFont,
                                       NSForegroundColorAttributeName: color,
                                       NSParagraphStyleAttributeName: paragraphStyle]
-                    size = urlString.sizeWithAttributes(attributes)
-                    urlRect.origin.y += (urlRect.size.height - size.height) / 2
-                    urlRect.size.height = size.height
-                    urlString.drawInRect(urlRect, withAttributes: attributes)
+                    size = URLString.sizeWithAttributes(attributes)
+                    URLRect.origin.y += (URLRect.size.height - size.height) / 2
+                    URLRect.size.height = size.height
+                    URLString.drawInRect(URLRect, withAttributes: attributes)
                 }
                 NSColor.darkGrayColor().set()
                 NSFrameRect(bounds)

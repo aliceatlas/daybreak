@@ -451,8 +451,8 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
             // Create strings into application support folder
             let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))!
             let path = directoryPath.stringByAppendingPathComponent(name)
-            let url = NSURL.fileURLWithPath(path)!
-            if data.writeToURL(url, atomically: true) {
+            let URL = NSURL.fileURLWithPath(path)!
+            if data.writeToURL(URL, atomically: true) {
                 // Copy strings into bundle resource
                 let manager = NSFileManager.defaultManager()
                 let directoryPath = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent(langCode).stringByAppendingPathExtension("lproj")!
@@ -464,7 +464,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
                 if manager.fileExistsAtPath(dstPath) {
                     manager.removeItemAtPath(dstPath, error: &error)
                 }
-                if manager.copyItemAtPath(url.path!, toPath: dstPath, error: &error) {
+                if manager.copyItemAtPath(URL.path!, toPath: dstPath, error: &error) {
                     // Complete
                     let alert = NSAlert()
                     alert.messageText = NSLocalizedString("Complete to add new localization. Restart Daybreak.", comment: "")

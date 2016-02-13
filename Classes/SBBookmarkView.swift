@@ -145,11 +145,11 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         set(title) { titleField.stringValue = title }
     }
     
-    var urlString: String {
-        get { return urlField.stringValue }
-        set(urlString) {
-            urlField.stringValue = urlString
-            doneButton.enabled = !urlString.isEmpty
+    var URLString: String {
+        get { return URLField.stringValue }
+        set(URLString) {
+            URLField.stringValue = URLString
+            doneButton.enabled = !URLString.isEmpty
         }
     }
     
@@ -157,7 +157,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         let data = image!.bitmapImageRep!.data
         let labelName = SBBookmarkLabelColorNames[colorPopup.indexOfSelectedItem - 1]
         let offset = NSStringFromPoint(NSZeroPoint)
-        return SBCreateBookmarkItem(title, urlString, data, NSDate(), labelName, offset)
+        return SBCreateBookmarkItem(title, URLString, data, NSDate(), labelName, offset)
     }
     
     // MARK: Construction
@@ -167,10 +167,10 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         animationDuration = 1.0
         addSubview(messageLabel!)
         addSubview(titleLabel)
-        addSubview(urlLabel)
+        addSubview(URLLabel)
         addSubview(colorLabel)
         addSubview(titleField)
-        addSubview(urlField)
+        addSubview(URLField)
         addSubview(colorPopup)
         addSubview(doneButton)
         addSubview(cancelButton)
@@ -183,8 +183,8 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     }
     
     func makeResponderChain() {
-        titleField.nextKeyView = urlField
-        urlField.nextKeyView = cancelButton
+        titleField.nextKeyView = URLField
+        URLField.nextKeyView = cancelButton
         cancelButton.nextKeyView = doneButton
         doneButton.nextKeyView = titleField
     }
@@ -224,7 +224,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         return r
     }
     
-    var urlLabelRect: NSRect {
+    var URLLabelRect: NSRect {
         var r = NSZeroRect
         r.origin.x = titleLabelRect.origin.x
         r.size.width = labelWidth
@@ -235,10 +235,10 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     
     var colorLabelRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = urlLabelRect.origin.x
+        r.origin.x = URLLabelRect.origin.x
         r.size.width = labelWidth
         r.size.height = 24.0
-        r.origin.y = urlLabelRect.origin.y - 10.0 - r.size.height
+        r.origin.y = URLLabelRect.origin.y - 10.0 - r.size.height
         return r
     }
     
@@ -251,10 +251,10 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         return r
     }
     
-    var urlFieldRect: NSRect {
+    var URLFieldRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = urlLabelRect.maxX + 10.0
-        r.origin.y = urlLabelRect.origin.y
+        r.origin.x = URLLabelRect.maxX + 10.0
+        r.origin.y = URLLabelRect.origin.y
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.size.height = 24.0
         return r
@@ -288,8 +288,8 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     // MARK: Delegate
     
     override func controlTextDidChange(notification: NSNotification) {
-        if notification.object === urlField {
-            doneButton.enabled = !urlField.stringValue.isEmpty
+        if notification.object === URLField {
+            doneButton.enabled = !URLField.stringValue.isEmpty
         }
     }
     

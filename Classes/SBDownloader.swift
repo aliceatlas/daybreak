@@ -34,13 +34,13 @@ import Foundation
 }
 
 class SBDownloader: NSObject {
-    var url: NSURL?
+    var URL: NSURL?
     weak var delegate: SBDownloaderDelegate?
     var connection: NSURLConnection?
     var receivedData: NSMutableData?
     
-    init(URL url: NSURL?) {
-        self.url = url
+    init(URL: NSURL?) {
+        self.URL = URL
     }
     
     // MARK: Delegate
@@ -104,8 +104,8 @@ class SBDownloader: NSObject {
     
     func start() {
         destructReceivedData()
-        if url != nil {
-            let request = NSURLRequest(URL: url!, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
+        if URL != nil {
+            let request = NSURLRequest(URL: URL!, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
             destructConnection()
             connection = NSURLConnection(request: request, delegate: self)
         }

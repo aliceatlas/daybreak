@@ -63,18 +63,18 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         let actionWidth: CGFloat = 22.0
         tableRect.size = self.bounds.size
         let tableView = NSTableView(frame: tableRect)
-        let urlColumn = NSTableColumn(identifier: kSBURL)
+        let URLColumn = NSTableColumn(identifier: kSBURL)
         let lengthColumn = NSTableColumn(identifier: "Length")
         let cachedColumn = NSTableColumn(identifier: "Cached")
         let actionColumn = NSTableColumn(identifier: "Action")
-        let urlTextCell = SBTableCell()
+        let URLTextCell = SBTableCell()
         let lengthTextCell = SBTableCell()
         let cachedCell = SBWebResourceButtonCell()
         let actionCell = SBWebResourceButtonCell()
-        urlTextCell.font = NSFont.systemFontOfSize(12.0)
-        urlTextCell.showRoundedPath = true
-        urlTextCell.alignment = .LeftTextAlignment
-        urlTextCell.lineBreakMode = .ByTruncatingMiddle
+        URLTextCell.font = NSFont.systemFontOfSize(12.0)
+        URLTextCell.showRoundedPath = true
+        URLTextCell.alignment = .LeftTextAlignment
+        URLTextCell.lineBreakMode = .ByTruncatingMiddle
         lengthTextCell.font = NSFont.systemFontOfSize(10.0)
         lengthTextCell.showRoundedPath = false
         lengthTextCell.showSelection = false
@@ -83,10 +83,10 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         cachedCell.action = "save:"
         actionCell.target = self
         actionCell.action = "download:"
-        urlColumn.dataCell = urlTextCell
-        urlColumn.width = tableRect.size.width - lengthWidth - cachedWidth - actionWidth
-        urlColumn.editable = false
-        urlColumn.resizingMask = .AutoresizingMask
+        URLColumn.dataCell = URLTextCell
+        URLColumn.width = tableRect.size.width - lengthWidth - cachedWidth - actionWidth
+        URLColumn.editable = false
+        URLColumn.resizingMask = .AutoresizingMask
         lengthColumn.dataCell = lengthTextCell
         lengthColumn.width = lengthWidth
         lengthColumn.editable = false
@@ -101,7 +101,7 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         actionColumn.resizingMask = .NoResizing
         tableView.backgroundColor = NSColor.clearColor()
         tableView.rowHeight = 20
-        tableView.addTableColumn(urlColumn)
+        tableView.addTableColumn(URLColumn)
         tableView.addTableColumn(lengthColumn)
         tableView.addTableColumn(cachedColumn)
         tableView.addTableColumn(actionColumn)

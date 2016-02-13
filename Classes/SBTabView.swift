@@ -127,8 +127,8 @@ class SBTabView: NSTabView {
         sbDelegate?.tabView?(self, selectedItemDidReceiveServerRedirect: tabViewItem)
     }
     
-    func executeShouldAddNewItemForURL(url: NSURL, selection: Bool) {
-        sbDelegate?.tabView?(self, shouldAddNewItemForURL: url, selection: selection)
+    func executeShouldAddNewItemForURL(URL: NSURL, selection: Bool) {
+        sbDelegate?.tabView?(self, shouldAddNewItemForURL: URL, selection: selection)
     }
     
     func executeShouldSearchString(string: String, newTab: Bool) {

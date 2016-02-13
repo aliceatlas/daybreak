@@ -79,7 +79,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         let tableView = NSTableView(frame: tableRect)
         let iconColumn = NSTableColumn(identifier: kSBImage)
         let titleColumn = NSTableColumn(identifier: kSBTitle)
-        let urlColumn = NSTableColumn(identifier: kSBURL)
+        let URLColumn = NSTableColumn(identifier: kSBURL)
         let dateColumn = NSTableColumn(identifier: kSBDate)
         let iconCell = SBIconDataCell()
         let textCell = NSCell()
@@ -90,9 +90,9 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         titleColumn.dataCell = textCell
         titleColumn.width = (tableRect.size.width - 22.0) * 0.3
         titleColumn.editable = false
-        urlColumn.dataCell = textCell
-        urlColumn.width = (tableRect.size.width - 22.0) * 0.4
-        urlColumn.editable = false
+        URLColumn.dataCell = textCell
+        URLColumn.width = (tableRect.size.width - 22.0) * 0.4
+        URLColumn.editable = false
         dateColumn.dataCell = textCell
         dateColumn.width = (tableRect.size.width - 22.0) * 0.3
         dateColumn.editable = false
@@ -100,7 +100,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         tableView.rowHeight = 20
         tableView.addTableColumn(iconColumn)
         tableView.addTableColumn(titleColumn)
-        tableView.addTableColumn(urlColumn)
+        tableView.addTableColumn(URLColumn)
         tableView.addTableColumn(dateColumn)
         tableView.allowsMultipleSelection = true
         tableView.allowsColumnSelection = false

@@ -357,11 +357,11 @@ class SBReportView: SBView, NSTextFieldDelegate {
     func sendMailWithMessage(message: String?, subject: String?, to addresses: [String]) -> String? {
         var errorString: String?
         if !addresses.isEmpty {
-            var urlString = "mailto:" + ", ".join(addresses)
-            subject !! { urlString += "?subject=\($0)" }
-            message !! { urlString += (subject !! "&" ?? "?") + "body=\($0)" }
-            urlString = urlString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
-            NSWorkspace.sharedWorkspace().openURL(NSURL(string: urlString)!)
+            var URLString = "mailto:" + ", ".join(addresses)
+            subject !! { URLString += "?subject=\($0)" }
+            message !! { URLString += (subject !! "&" ?? "?") + "body=\($0)" }
+            URLString = URLString.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!
+            NSWorkspace.sharedWorkspace().openURL(NSURL(string: URLString)!)
         } else {
             // Error
             errorString = NSLocalizedString("Could not send the report.", comment: "")

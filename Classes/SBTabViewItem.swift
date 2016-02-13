@@ -557,20 +557,20 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     case NSURLErrorServerCertificateHasBadDate:
                         title = NSLocalizedString("Server Certificate Has BadDate", comment: "")
                     case NSURLErrorServerCertificateUntrusted:
-                        let url = NSURL(string: URLString)!
+                        let URL = NSURL(string: URLString)!
                         let aTitle = NSLocalizedString("Server Certificate Untrusted", comment: "")
                         var alert = NSAlert()
                         alert.messageText = aTitle
                         alert.addButtonWithTitle(NSLocalizedString("Continue", comment: ""))
                         alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: ""))
-                        alert.informativeText = NSLocalizedString("The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", comment: "").format(url.host!)
+                        alert.informativeText = NSLocalizedString("The certificate for this website is invalid. You might be connecting to a website that is pretending to be \"%@\", which could put your confidential information at risk. Would you like to connect to the website anyway?", comment: "").format(URL.host!)
                         alert.beginSheetModalForWindow(sender.window!) {
                             if $0 == NSAlertFirstButtonReturn {
-                                NSURLRequest.setAllowsAnyHTTPSCertificate(true, forHost: url.host)
-                                frame.loadRequest(NSURLRequest(URL: url, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval))
+                                NSURLRequest.setAllowsAnyHTTPSCertificate(true, forHost: URL.host)
+                                frame.loadRequest(NSURLRequest(URL: URL, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval))
                                 self.webView(self.webView, didStartProvisionalLoadForFrame: frame)
                             } else {
-                                self.showErrorPageWithTitle(aTitle, urlString: url.absoluteString!, frame: frame)
+                                self.showErrorPageWithTitle(aTitle, URLString: URL.absoluteString!, frame: frame)
                             }
                         }
                     case NSURLErrorServerCertificateHasUnknownRoot:
@@ -584,7 +584,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     default:
                         break
                 }
-                title !! { self.showErrorPageWithTitle($0, urlString: URLString, frame: frame) }
+                title !! { self.showErrorPageWithTitle($0, URLString: URLString, frame: frame) }
             }
         }
     }
@@ -833,12 +833,12 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
 
     override func webView(webView: WebView, decidePolicyForNavigationAction actionInformation: [NSObject: AnyObject], request: NSURLRequest, frame: WebFrame, decisionListener listener: WebPolicyDecisionListener) {
-        let url = request.URL!
+        let URL = request.URL!
         let modifierFlags = NSEventModifierFlags(rawValue: actionInformation[WebActionModifierFlagsKey] as! UInt)
         let navigationType = WebNavigationType(rawValue: actionInformation[WebActionNavigationTypeKey] as! Int)!
         switch navigationType {
             case .LinkClicked:
-                if url.hasWebScheme { // 'http', 'https', 'file'
+                if URL.hasWebScheme { // 'http', 'https', 'file'
                     if modifierFlags & .CommandKeyMask != nil { // Command
                         var selection = true
                         let makeActiveFlag = NSUserDefaults.standardUserDefaults().boolForKey(kSBWhenNewTabOpensMakeActiveFlag)
@@ -853,7 +853,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                                 selection = false
                             }
                         }
-                        tabView.executeShouldAddNewItemForURL(url, selection: selection)
+                        tabView.executeShouldAddNewItemForURL(URL, selection: selection)
                         listener.ignore()
                     } else if modifierFlags & .AlternateKeyMask != nil { // Option
                         listener.download()
@@ -862,7 +862,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     }
                 } else {
                     // Open URL in other application. 
-                    if NSWorkspace.sharedWorkspace().openURL(url) {
+                    if NSWorkspace.sharedWorkspace().openURL(URL) {
                         listener.ignore()
                     } else {
                         listener.use()
@@ -962,13 +962,13 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         tabView!.removeTabViewItem(self)
     }
     
-    func showErrorPageWithTitle(title: String, urlString: String, frame: WebFrame) {
+    func showErrorPageWithTitle(title: String, URLString: String, frame: WebFrame) {
         let bundle = NSBundle.mainBundle()
         let title = "<img src=\"Application.icns\" style=\"width:76px;height:76px;margin-right:10px;vertical-align:middle;\" alt=\"\">" + title
-        let searchURLString = "https://www.google.com/search?hl=ja&q=" + urlString
+        let searchURLString = "https://www.google.com/search?hl=ja&q=" + URLString
         let searchMessage = NSLocalizedString("You can search the web for this URL.", comment: "")
-        var message = NSLocalizedString("Daybreak can’t open the page “%@”", comment: "").format(urlString)
-        message = "\(message)<br /><br />\(searchMessage)<br /><a href=\"\(searchURLString)\">\(urlString)</a>"
+        var message = NSLocalizedString("Daybreak can’t open the page “%@”", comment: "").format(URLString)
+        message = "\(message)<br /><br />\(searchMessage)<br /><a href=\"\(searchURLString)\">\(URLString)</a>"
         let path = bundle.pathForResource("Error", ofType: "html")!
         if NSFileManager.defaultManager().fileExistsAtPath(path),
            let HTMLString = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
@@ -1000,7 +1000,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     func openURLInSelectedApplicationFromMenu(menuItem: NSMenuItem) {
-        if let url = menuItem.representedObject as? NSURL {
+        if let URL = menuItem.representedObject as? NSURL {
             var bundleIdentifier: String?
             let panel = NSOpenPanel()
             panel.canChooseFiles = true
@@ -1011,7 +1011,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             if panel.runModal() == NSFileHandlingPanelOKButton,
                let bundle = NSBundle(URL: panel.URL!),
                    bundleIdentifier = bundle.bundleIdentifier
-               where openURL(url, inBundleIdentifier: bundleIdentifier) {
+               where openURL(URL, inBundleIdentifier: bundleIdentifier) {
                 NSUserDefaults.standardUserDefaults().setObject(bundleIdentifier, forKey: kSBOpenApplicationBundleIdentifier)
             }
         }
@@ -1031,8 +1031,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     func openURLInNewTabFromMenu(menuItem: NSMenuItem) {
-        if let url = menuItem.representedObject as? NSURL {
-            tabView.executeShouldAddNewItemForURL(url, selection: true)
+        if let URL = menuItem.representedObject as? NSURL {
+            tabView.executeShouldAddNewItemForURL(URL, selection: true)
         }
     }
 

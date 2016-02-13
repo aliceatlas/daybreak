@@ -42,25 +42,25 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         return messageLabel
     }()
     
-	private lazy var urlLabel: NSTextField = {
-        let urlLabel = NSTextField(frame: self.urlLabelRect)
-        urlLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
-        urlLabel.editable = false
-        urlLabel.bordered = false
-        urlLabel.drawsBackground = false
-        urlLabel.textColor = NSColor.lightGrayColor()
-        urlLabel.cell!.font = NSFont.systemFontOfSize(12)
-        urlLabel.cell!.alignment = .RightTextAlignment
-        urlLabel.stringValue = NSLocalizedString("URL", comment: "") + ": "
-        return urlLabel
+	private lazy var URLLabel: NSTextField = {
+        let URLLabel = NSTextField(frame: self.URLLabelRect)
+        URLLabel.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        URLLabel.editable = false
+        URLLabel.bordered = false
+        URLLabel.drawsBackground = false
+        URLLabel.textColor = NSColor.lightGrayColor()
+        URLLabel.cell!.font = NSFont.systemFontOfSize(12)
+        URLLabel.cell!.alignment = .RightTextAlignment
+        URLLabel.stringValue = NSLocalizedString("URL", comment: "") + ": "
+        return URLLabel
     }()
     
-	private lazy var urlField: BLKGUI.TextField = {
-        let urlField = BLKGUI.TextField(frame: self.urlFieldRect)
-        urlField.delegate = self
-        urlField.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
-        urlField.cell!.alignment = .LeftTextAlignment
-        return urlField
+	private lazy var URLField: BLKGUI.TextField = {
+        let URLField = BLKGUI.TextField(frame: self.URLFieldRect)
+        URLField.delegate = self
+        URLField.autoresizingMask = .ViewMinXMargin | .ViewMinYMargin
+        URLField.cell!.alignment = .LeftTextAlignment
+        return URLField
     }()
     
     private lazy var doneButton: BLKGUI.Button = {
@@ -87,16 +87,16 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         set(message) { messageLabel.stringValue = message }
     }
     
-    var urlString: String {
-        get { return urlField.stringValue }
-        set(urlString) { urlField.stringValue = urlString }
+    var URLString: String {
+        get { return URLField.stringValue }
+        set(URLString) { URLField.stringValue = URLString }
     }
 
     override init(frame: NSRect) {
         super.init(frame: frame)
         addSubview(messageLabel)
-        addSubview(urlLabel)
-        addSubview(urlField)
+        addSubview(URLLabel)
+        addSubview(URLField)
         addSubview(doneButton)
         addSubview(cancelButton)
         makeResponderChain()
@@ -123,7 +123,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         return r
     }
     
-    var urlLabelRect: NSRect {
+    var URLLabelRect: NSRect {
         var r = NSZeroRect
         r.origin.x = margin.x
         r.size.width = labelWidth
@@ -132,10 +132,10 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         return r
     }
     
-    var urlFieldRect: NSRect {
+    var URLFieldRect: NSRect {
         var r = NSZeroRect
-        r.origin.x = urlLabelRect.maxX + 10.0
-        r.origin.y = urlLabelRect.origin.y
+        r.origin.x = URLLabelRect.maxX + 10.0
+        r.origin.y = URLLabelRect.origin.y
         r.size.width = bounds.size.width - r.origin.x - margin.x
         r.size.height = 24.0
         return r
@@ -160,20 +160,20 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
     // MARK: Delegate
     
     override func controlTextDidChange(notification: NSNotification) {
-        doneButton.enabled = !urlString.isEmpty
+        doneButton.enabled = !URLString.isEmpty
     }
     
     // MARK: Construction
     
     func makeResponderChain() {
-        urlField.nextKeyView = cancelButton
+        URLField.nextKeyView = cancelButton
         cancelButton.nextKeyView = doneButton
-        doneButton.nextKeyView = urlField
+        doneButton.nextKeyView = URLField
     }
     
     // MARK: Actions
     
     func makeFirstResponderToURLField() {
-        window!.makeFirstResponder(urlField)
+        window!.makeFirstResponder(URLField)
     }
 }
