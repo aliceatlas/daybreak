@@ -185,6 +185,8 @@
 		862E955C1AD5B67700FCFC8B /* NSColor-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */; };
 		862E955F1AD5B76300FCFC8B /* SBDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507A8E24195FFF8800BF56AD /* SBDefinitions.swift */; };
 		8659A8E41ACB82CD00C67C9C /* NSControl-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8659A8E31ACB82CD00C67C9C /* NSControl-SBAdditions.swift */; };
+		865A92201B5E2C5D00A17C68 /* CGGeometry-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865A921F1B5E2C5D00A17C68 /* CGGeometry-SBAdditions.swift */; };
+		865A92211B5E2C5D00A17C68 /* CGGeometry-SBAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865A921F1B5E2C5D00A17C68 /* CGGeometry-SBAdditions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -414,6 +416,7 @@
 		862E950A1AD2E07D00FCFC8B /* BLKGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BLKGUI.h; sourceTree = "<group>"; };
 		862E95581AD2FAB200FCFC8B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		8659A8E31ACB82CD00C67C9C /* NSControl-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSControl-SBAdditions.swift"; path = "Additions/NSControl-SBAdditions.swift"; sourceTree = "<group>"; };
+		865A921F1B5E2C5D00A17C68 /* CGGeometry-SBAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGGeometry-SBAdditions.swift"; path = "Additions/CGGeometry-SBAdditions.swift"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* Daybreak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daybreak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -542,6 +545,7 @@
 		08916E731009D52A0012D4EA /* Additions */ = {
 			isa = PBXGroup;
 			children = (
+				865A921F1B5E2C5D00A17C68 /* CGGeometry-SBAdditions.swift */,
 				502DEBA419C0636C006A68C3 /* NSBitmapImageRep-SBAdditions.swift */,
 				502DEBAE19C07EE1006A68C3 /* NSArray-SBAdditions.swift */,
 				502DEBB019C0855A006A68C3 /* NSColor-SBAdditions.swift */,
@@ -1028,6 +1032,7 @@
 				862E952B1AD2E10F00FCFC8B /* Slider.swift in Sources */,
 				862E955C1AD5B67700FCFC8B /* NSColor-SBAdditions.swift in Sources */,
 				862E955F1AD5B76300FCFC8B /* SBDefinitions.swift in Sources */,
+				865A92211B5E2C5D00A17C68 /* CGGeometry-SBAdditions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,6 +1108,7 @@
 				50C8ED6519ACE4C700F7E17B /* SBWindowController.swift in Sources */,
 				50ACCDFD1964F14C00CE593E /* SBUpdater.swift in Sources */,
 				5093D20B19AD088D00733CC3 /* SBDocumentWindow.swift in Sources */,
+				865A92201B5E2C5D00A17C68 /* CGGeometry-SBAdditions.swift in Sources */,
 				5044E66919655AF00053CBF1 /* SBLoadButton.swift in Sources */,
 				50DF8A3019639D03005DAF26 /* SBDownloader.swift in Sources */,
 				501D1F341963CE5100AEF4D1 /* String-SBAdditions.swift in Sources */,
