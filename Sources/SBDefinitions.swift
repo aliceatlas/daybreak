@@ -67,8 +67,8 @@ let kSBToolbarSourceItemIdentifier = "Source"
 let kSBWebPreferencesIdentifier = "Daybreak"
 
 // Document type names
-let kSBDocumentTypeName = "HTML Document Type"
-let kSBStringsDocumentTypeName = "Strings Document Type"
+let kSBDocumentTypeName = "HTML document"
+let kSBStringsDocumentTypeName = "Strings document"
 
 // URLs
 let kSBUpdaterNewVersionURL = "http://www.sunrisebrowser.com/Sunrise%@.dmg"
