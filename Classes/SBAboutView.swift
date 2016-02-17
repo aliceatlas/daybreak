@@ -39,7 +39,7 @@ class SBAboutView: SBView {
         iconImageView.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin, .ViewMaxYMargin]
         image.size = r.size
         iconImageView.image = image
-        iconImageView.imageScaling = .ImageScaleProportionallyDown
+        iconImageView.imageScaling = .ScaleProportionallyDown
         return iconImageView
     }()
     
@@ -51,7 +51,7 @@ class SBAboutView: SBView {
         nameLabel.drawsBackground = false
         nameLabel.textColor = NSColor.whiteColor()
         nameLabel.font = NSFont.boldSystemFontOfSize(20)
-        nameLabel.alignment = .LeftTextAlignment
+        nameLabel.alignment = .Left
         let bundle = NSBundle.mainBundle()
         let info = bundle.infoDictionary
         let localizedInfo = bundle.localizedInfoDictionary
@@ -70,7 +70,7 @@ class SBAboutView: SBView {
         identifierLabel.drawsBackground = false
         identifierLabel.textColor = NSColor(calibratedWhite: 0.8, alpha: 1.0)
         identifierLabel.font = NSFont.systemFontOfSize(12.0)
-        identifierLabel.alignment = .LeftTextAlignment
+        identifierLabel.alignment = .Left
         if let string = NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String {
             identifierLabel.stringValue = string
         }
@@ -104,7 +104,7 @@ class SBAboutView: SBView {
         copyrightLabel.drawsBackground = false
         copyrightLabel.textColor = NSColor.grayColor()
         copyrightLabel.font = NSFont.systemFontOfSize(12.0)
-        copyrightLabel.alignment = .LeftTextAlignment
+        copyrightLabel.alignment = .Left
         if let string = NSBundle.mainBundle().localizedInfoDictionary?["NSHumanReadableCopyright"] as? String {
             copyrightLabel.stringValue = string
         }
@@ -184,7 +184,7 @@ class SBAboutView: SBView {
         if let image = NSImage(named: "Application.icns") {
             var imageRect = iconImageRect
             image.size = imageRect.size
-            image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            image.drawInRect(imageRect, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
             
             imageRect.origin.y = imageRect.size.height * 1.5 - bounds.size.height
             imageRect.size.height = imageRect.size.height * 0.5

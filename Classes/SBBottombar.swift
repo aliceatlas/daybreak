@@ -31,7 +31,7 @@ class SBBottombar: SBView {
     
     override func drawRect(rect: NSRect) {
         // Background
-        let gradient = NSGradient(startingColor: SBBottombarColors[0], endingColor: SBBottombarColors[1])
+        let gradient = NSGradient(startingColor: SBBottombarColors[0], endingColor: SBBottombarColors[1])!
         gradient.drawInRect(bounds, angle: 90)
         
         // Lines

@@ -222,10 +222,11 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
         r1.size.height = bounds.size.height - pos
         if animate {
             let duration: NSTimeInterval = 0.25
-            let animations = [[NSViewAnimationTargetKey: subview0,
-                               NSViewAnimationEndFrameKey: NSValue(rect: r0)],
-                              [NSViewAnimationTargetKey: subview1,
-                               NSViewAnimationEndFrameKey: NSValue(rect: r1)]]
+            let animations: [[String: AnyObject]] =
+                [[NSViewAnimationTargetKey: subview0,
+                  NSViewAnimationEndFrameKey: NSValue(rect: r0)],
+                 [NSViewAnimationTargetKey: subview1,
+                  NSViewAnimationEndFrameKey: NSValue(rect: r1)]]
             destructDividerAnimation()
             divideAnimation = NSViewAnimation(viewAnimations: animations)
             divideAnimation!.duration = duration
@@ -461,7 +462,7 @@ class SBSideBottombar: SBBottombar {
         
         var r = resizableRect
         let resizerImage = NSImage(named: "Resizer.png")!
-        resizerImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+        resizerImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         if position == .Left {
             r.origin.x = r.origin.x - 1
             r.size.width = 1

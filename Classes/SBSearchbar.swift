@@ -37,7 +37,7 @@ class SBSearchbar: SBFindbar {
     private lazy var _searchField: SBFindSearchField = {
         let searchField = SBFindSearchField(frame: self.searchRect)
         searchField.autoresizingMask = .ViewWidthSizable
-        searchField.delegate = self
+        (searchField as NSTextField).delegate = self
         searchField.target = self
         searchField.action = "executeDoneSelector:"
         searchField.cell!.sendsWholeSearchString = true

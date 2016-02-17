@@ -102,15 +102,15 @@ class SBUpdater: NSObject {
         }
     }
     
-    func postShouldUpdateNotification(userInfo: NSDictionary) {
-        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterShouldUpdateNotification, object: self, userInfo: userInfo as [NSObject: AnyObject])
+    func postShouldUpdateNotification(userInfo: [NSObject: AnyObject]) {
+        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterShouldUpdateNotification, object: self, userInfo: userInfo)
     }
     
-    func postNotNeedUpdateNotification(userInfo: NSDictionary) {
-        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterNotNeedUpdateNotification, object: self, userInfo: userInfo as [NSObject: AnyObject])
+    func postNotNeedUpdateNotification(userInfo: [NSObject: AnyObject]) {
+        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterNotNeedUpdateNotification, object: self, userInfo: userInfo)
     }
     
-    func postDidFailCheckingNotification(userInfo: NSDictionary) {
-        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterDidFailCheckingNotification, object: self, userInfo: userInfo as [NSObject: AnyObject])
+    func postDidFailCheckingNotification(userInfo: [NSObject: AnyObject]) {
+        NSNotificationCenter.defaultCenter().postNotificationName(SBUpdaterDidFailCheckingNotification, object: self, userInfo: userInfo)
     }
 }

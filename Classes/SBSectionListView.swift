@@ -178,7 +178,7 @@ class SBSectionGroupView: SBView {
             shadow.shadowOffset = NSMakeSize(0.0, 10.0)
             shadow.set()
             let gradient = NSGradient(startingColor: NSColor(deviceWhite: 0.9, alpha: 1.0),
-                                      endingColor: NSColor.whiteColor())
+                                      endingColor: NSColor.whiteColor())!
             gradient.drawInBezierPath(path, angle: 90)
         }
         
@@ -189,7 +189,7 @@ class SBSectionGroupView: SBView {
         strokePath.stroke()
         
         let groupTitle = group.title as NSString
-        var attributes: [NSObject: AnyObject]!
+        var attributes: [String: AnyObject]
         var tr = r
         tr.origin.x += kSBSectionInnerMarginX
         tr.size.height = 24.0
@@ -226,7 +226,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
     
     init(item: SBSectionItem) {
         self.item = item
-        super.init(frame: NSZeroRect)
+        super.init(frame: .zero)
     }
     
     required init(coder: NSCoder) {
@@ -392,7 +392,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
         let titleString: NSString = item.title + " :"
         var titleRect = self.titleRect
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .RightTextAlignment
+        paragraphStyle.alignment = .Right
         let attributes = [NSFontAttributeName: NSFont.boldSystemFontOfSize(12.0),
                           NSForegroundColorAttributeName: NSColor(calibratedWhite: 0.3, alpha: 1.0),
                           NSParagraphStyleAttributeName: paragraphStyle]

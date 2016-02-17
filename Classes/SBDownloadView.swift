@@ -90,7 +90,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     
     var paragraphStyle: NSParagraphStyle {
         let paragraph = NSMutableParagraphStyle()
-        paragraph.alignment = .CenterTextAlignment
+        paragraph.alignment = .Center
         return paragraph.copy() as! NSParagraphStyle
     }
     
@@ -195,7 +195,7 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
             r.origin.x = (bounds.size.width - r.size.width) / 2
             r.origin.y = heights + padding.y * 2
             fraction = (download.status == .Done) ? 1.0 : 0.5
-            image.drawInRect(r, fromRect: NSRect(origin: NSZeroPoint, size: size), operation: .CompositeSourceOver, fraction: fraction)
+            image.drawInRect(r, fromRect: NSRect(origin: .zero, size: size), operation: .CompositeSourceOver, fraction: fraction)
         }
         
         // name string
@@ -206,8 +206,8 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
             if selected {
                 // Background
                 var sr = r
-                var color0: NSColor!
-                var color1: NSColor!
+                let color0: NSColor
+                let color1: NSColor
                 if isFirstResponder {
                     color1 = SBAlternateSelectedControlColor
                 } else {
@@ -215,11 +215,11 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
                 }
                 sr.origin.x -= margin
                 sr.size.width += margin * 2
-                color0 = color1.shadowWithLevel(0.2)
+                color0 = color1.shadowWithLevel(0.2)!
                 
                 let radius = sr.size.height / 2
                 let path = NSBezierPath(roundedRect: sr, xRadius: radius, yRadius: radius)
-                let gradient = NSGradient(startingColor: color0, endingColor: color1)
+                let gradient = NSGradient(startingColor: color0, endingColor: color1)!
                 gradient.drawInBezierPath(path, angle: 90)
                 //CGRect sr = NSRectToCGRect(r);
                 //CGContextRef ctx = NSGraphicsContext.currentContext.graphicsPort;

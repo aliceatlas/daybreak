@@ -35,7 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     optional func tabbar(SBTabbar, didRemoveItem tag: NSInteger)
 }
 
-class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
+class SBTabbar: SBView, NSAnimationDelegate {
     var items: [SBTabbarItem] = []
     weak var delegate: SBTabbarDelegate?
     private var downPoint: NSPoint!
@@ -72,7 +72,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     init() {
-        super.init(frame: NSZeroRect)
+        super.init(frame: .zero)
         addSubview(contentView)
         registerForDraggedTypes([SBBookmarkPboardType, NSURLPboardType, NSFilenamesPboardType])
     }
@@ -143,7 +143,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
                 return (index, r)
             }
         }
-        return (items.count, NSZeroRect)
+        return (items.count, .zero)
     }
     
     func itemAtPoint(point: NSPoint) -> SBTabbarItem? {
@@ -364,7 +364,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
             size.width = itemMinimumWidth * count + addButtonWidth
             contentView.autoresizingMask = .ViewMinYMargin
         } else {
-            contentView.frame.origin = NSZeroPoint
+            contentView.frame.origin = .zero
             contentView.autoresizingMask = .ViewWidthSizable | .ViewMinYMargin
         }
         contentView.frame.size = size
@@ -448,7 +448,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     // MARK: Update
     
     func updateItems() {
-        let currentEvent = NSApplication.sharedApplication().currentEvent
+        let currentEvent = NSApp.currentEvent
         let location = currentEvent?.locationInWindow
         for (index, item) in enumerate(items) {
             // Update frame of item
@@ -478,7 +478,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     func dragItemAtPoint(point: NSPoint) {
         var r = NSZeroRect
         var index = 0
-        var animations: [[NSObject: AnyObject]] = []
+        var animations: [[String: AnyObject]] = []
         
         for item in items {
             r = itemRectAtIndex(index)
@@ -525,7 +525,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         var r = true
         let pasteboard = sender.draggingPasteboard()
-        let types = pasteboard.types as! [String]
+        let types = pasteboard.types!
         let point = contentView.convertPoint(sender.draggingLocation(), fromView: nil)
         if contains(types, SBBookmarkPboardType) {
             let pbItems = pasteboard.propertyListForType(SBBookmarkPboardType) as! [NSDictionary]
@@ -555,7 +555,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
             let location = event.locationInWindow
             draggedItem = nil
             shouldReselectItem = nil
-            draggedItemRect = NSZeroRect
+            draggedItemRect = .zero
             downPoint = contentView.convertPoint(location, fromView: nil)
         }
     }
@@ -662,7 +662,7 @@ class SBTabbar: SBView, NSAnimationDelegate, NSDraggingDestination {
             color0 = NSColor(deviceWhite: 207.0/255.0, alpha: 1.0)
             color1 = color0
         }
-        let gradient = NSGradient(colors: [color0, color1], atLocations: [0.7, 1.0], colorSpace: NSColorSpace.deviceGrayColorSpace())
+        let gradient = NSGradient(colors: [color0, color1], atLocations: [0.7, 1.0], colorSpace: NSColorSpace.deviceGrayColorSpace())!
         gradient.drawInRect(rect, angle: 90)
         
         let strokeColor = NSColor(deviceWhite: 0.3, alpha: 1.0)

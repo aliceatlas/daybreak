@@ -38,7 +38,7 @@ public class SliderCell: NSSliderCell {
         r.origin.y += 1
         let path = NSBezierPath(ovalInRect: r)
         let gradient = NSGradient(startingColor: NSColor(deviceWhite: 0.45, alpha: 1.0),
-                                  endingColor: NSColor(deviceWhite: 0.05, alpha: 1.0))
+                                  endingColor: NSColor(deviceWhite: 0.05, alpha: 1.0))!
         gradient.drawInBezierPath(path, angle: 90)
         
         path.lineWidth = 0.5

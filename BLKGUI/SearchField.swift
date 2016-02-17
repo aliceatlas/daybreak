@@ -41,7 +41,7 @@ public class SearchField: NSSearchField {
     }
     
     private func setDefaultValues() {
-        alignment = .LeftTextAlignment
+        alignment = .Left
         drawsBackground = false
         textColor = NSColor.whiteColor()
     }
@@ -54,7 +54,7 @@ public class SearchFieldCell: NSSearchFieldCell {
         setDefaultValues()
     }
     
-    required public init(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
@@ -87,7 +87,7 @@ public class SearchFieldCell: NSSearchFieldCell {
         NSColor(deviceWhite: 0.0, alpha: alpha * 0.1).set()
         path.fill()
         
-        r.inset(dx: 0.5, dy: 0.5)
+        r.insetInPlace(dx: 0.5, dy: 0.5)
         radius = r.size.height / 2
         path = NSBezierPath(roundedRect: r, xRadius: radius, yRadius: radius)
         path.lineWidth = 0.5

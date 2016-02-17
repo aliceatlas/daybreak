@@ -113,7 +113,7 @@ class SBView: NSView {
     
     // MARK: View
     
-    override func acceptsFirstMouse(event: NSEvent) -> Bool {
+    override func acceptsFirstMouse(event: NSEvent?) -> Bool {
         return true
     }
     

@@ -451,7 +451,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     func constructDownloadsViewInSidebar() -> SBDownloadsView {
         var availableRect = sidebar!.drawer!.availableRect
-        availableRect.origin = NSZeroPoint
+        availableRect.origin = .zero
         let downloadsView = SBDownloadsView(frame: availableRect)
         downloadsView.delegate = sidebar
         sidebar!.drawer!.view = downloadsView
@@ -479,7 +479,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     // MARK: Toolbar
     
-    func toolbarAllowedItemIdentifiers(toolbar: NSToolbar) -> [AnyObject] {
+    func toolbarAllowedItemIdentifiers(toolbar: NSToolbar) -> [String] {
         return [kSBToolbarURLFieldItemIdentifier, 
                 kSBToolbarLoadItemIdentifier,
                 kSBToolbarBookmarkItemIdentifier,
@@ -497,7 +497,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 NSToolbarPrintItemIdentifier]
     }
     
-    func toolbarDefaultItemIdentifiers(toolbar: NSToolbar) -> [AnyObject] {
+    func toolbarDefaultItemIdentifiers(toolbar: NSToolbar) -> [String] {
         return [kSBToolbarURLFieldItemIdentifier, 
                 kSBToolbarLoadItemIdentifier,
                 kSBToolbarBookmarkItemIdentifier,
@@ -715,7 +715,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func tabbar(aTabbar: SBTabbar, didReselection aTabbarItem: SBTabbarItem) {
-        selectedWebDocumentView!.scrollRectToVisible(NSZeroRect)
+        selectedWebDocumentView!.scrollRectToVisible(.zero)
     }
     
     func tabbar(aTabbar: SBTabbar, didRemoveItem tag: Int) {
@@ -818,7 +818,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             return NSMakeRect(center.x, center.y, kSBBottombarHeight, kSBBottombarHeight)
         } else if aSplitView === sidebar {
         }
-        return NSZeroRect
+        return .zero
     }
     
     func splitView(aSplitView: NSSplitView, constrainSplitPosition proposedPosition: CGFloat, ofSubviewAt offset: Int) -> CGFloat {
@@ -1045,7 +1045,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                resourceIdentifier = resourceIdentifiers.get(rowIndex) {
             let identifier = tableColumn.identifier
             if identifier == kSBURL {
-                cell.title = resourceIdentifier.URL.absoluteString!
+                cell.title = resourceIdentifier.URL.absoluteString
             } else if identifier == "Length" {
                 var title: String!
                 let expected = String.bytesStringForLength(resourceIdentifier.length)
@@ -2100,7 +2100,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             while confirmed == -1 {
                 // Wait event...
                 autoreleasepool {
-                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: (NSDate.distantFuture() as! NSDate), inMode: NSDefaultRunLoopMode, dequeue: true)!
+                    let event = NSApp.nextEventMatchingMask(Int(truncatingBitPattern: NSEventMask.AnyEventMask.rawValue), untilDate: NSDate.distantFuture(), inMode: NSDefaultRunLoopMode, dequeue: true)!
                     NSApp.sendEvent(event)
                 }
             }
@@ -2136,7 +2136,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             while confirmed == -1 {
                 // Wait event...
                 autoreleasepool {
-                    let event = NSApplication.sharedApplication().nextEventMatchingMask(Int(NSEventMask.AnyEventMask.rawValue), untilDate: (NSDate.distantFuture() as! NSDate), inMode: NSDefaultRunLoopMode, dequeue: true)!
+                    let event = NSApp.nextEventMatchingMask(Int(truncatingBitPattern: NSEventMask.AnyEventMask.rawValue), untilDate: NSDate.distantFuture(), inMode: NSDefaultRunLoopMode, dequeue: true)!
                     NSApp.sendEvent(event)
                 }
             }

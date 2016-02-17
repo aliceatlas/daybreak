@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import BLKGUI
 
-class SBUpdateView: SBView, SBDownloaderDelegate {
+class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDelegate {
     private let kSBMinFrameSizeWidth: CGFloat = 600
     private let kSBMaxFrameSizeWidth: CGFloat = 900
     private let kSBMinFrameSizeHeight: CGFloat = 480
@@ -233,21 +233,21 @@ class SBUpdateView: SBView, SBDownloaderDelegate {
         indicator.stopAnimation(nil)
     }
     
-    override func webView(sender: WebView, didStartProvisionalLoadForFrame frame: WebFrame) {
+    func webView(sender: WebView, didStartProvisionalLoadForFrame frame: WebFrame) {
         indicator.startAnimation(nil)
     }
 
-    override func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
+    func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
         webView.hidden = false
         indicator.stopAnimation(nil)
         doneButton.enabled = true
     }
     
-    override func webView(sender: WebView, didFailLoadWithError error: NSError, forFrame frame: WebFrame) {
+    func webView(sender: WebView, didFailLoadWithError error: NSError, forFrame frame: WebFrame) {
         indicator.stopAnimation(nil)
     }
 
-    override func webView(sender: WebView, didFailProvisionalLoadWithError error: NSError, forFrame frame: WebFrame) {
+    func webView(sender: WebView, didFailProvisionalLoadWithError error: NSError, forFrame frame: WebFrame) {
         indicator.stopAnimation(nil)
     }
     

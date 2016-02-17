@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     optional func renderWindow(renderWindow: SBRenderWindow, didFailWithError: NSError)
 }
 
-class SBRenderWindow: NSWindow {
+class SBRenderWindow: NSWindow, WebFrameLoadDelegate {
     var webView: WebView?
     var sbDelegate: SBRenderWindowDelegate? {
         get { return delegate as? SBRenderWindowDelegate }
@@ -40,7 +40,7 @@ class SBRenderWindow: NSWindow {
     }
     
     class func startRenderingWithSize(size: NSSize, delegate: SBRenderWindowDelegate?, URL: NSURL) -> SBRenderWindow {
-        let r = NSRect(origin: NSZeroPoint, size: size)
+        let r = NSRect(origin: .zero, size: size)
         let window = SBRenderWindow(contentRect: r)
         window.delegate = delegate
         window.webView!.mainFrame.loadRequest(NSURLRequest(URL: URL))
@@ -57,12 +57,12 @@ class SBRenderWindow: NSWindow {
         super.init(contentRect: contentRect, styleMask: styleMask, backing: bufferingType, defer: deferCreation)
         
         var r = contentRect
-        r.origin = NSZeroPoint
+        r.origin = .zero
         webView = WebView(frame: r, frameName: nil, groupName: nil)
         webView!.frameLoadDelegate = self
         webView!.preferences = SBGetWebPreferences
         webView!.hostWindow = self
-        (contentView as! NSView).addSubview(webView!)
+        contentView!.addSubview(webView!)
         releasedWhenClosed = true
     }
     
@@ -90,24 +90,24 @@ class SBRenderWindow: NSWindow {
     
     // MARK: Delegate
     
-    override func webView(sender: WebView, didStartProvisionalLoadForFrame frame: WebFrame) {
+    func webView(sender: WebView, didStartProvisionalLoadForFrame frame: WebFrame) {
         sbDelegate?.renderWindowDidStartRendering?(self)
     }
     
-    override func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
+    func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
         if let f: (SBRenderWindow, didFinishRenderingImage: NSImage) -> Void = sbDelegate?.renderWindow,
                webDocumentView = sender.mainFrame.frameView.documentView,
-               image = NSImage(view: webDocumentView)?.inset(size: SBBookmarkImageMaxSize, intersectRect: webDocumentView.bounds, offset: NSZeroPoint) {
+               image = NSImage(view: webDocumentView)?.inset(size: SBBookmarkImageMaxSize, intersectRect: webDocumentView.bounds, offset: .zero) {
             f(self, didFinishRenderingImage: image)
         }
         destruct()
     }
     
-    override func webView(sender: WebView, didFailProvisionalLoadWithError error: NSError, forFrame frame: WebFrame) {
+    func webView(sender: WebView, didFailProvisionalLoadWithError error: NSError, forFrame frame: WebFrame) {
         sbDelegate?.renderWindow?(self, didFailWithError: error)
     }
     
-    override func webView(sender: WebView, didFailLoadWithError error: NSError, forFrame frame: WebFrame) {
+    func webView(sender: WebView, didFailLoadWithError error: NSError, forFrame frame: WebFrame) {
         sbDelegate?.renderWindow?(self, didFailWithError: error)
     }
 }

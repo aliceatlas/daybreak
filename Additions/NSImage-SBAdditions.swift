@@ -46,8 +46,8 @@ extension NSImage {
             let leftPoint = NSZeroPoint
             let rightPoint = NSMakePoint(size.width - imageSize.width, 0)
             let fillRect = NSMakeRect(sideCapWidth, CGFloat(0), size.width - sideCapWidth * 2, size.height)
-            drawAtPoint(leftPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
-            drawAtPoint(rightPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            drawAtPoint(leftPoint, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
+            drawAtPoint(rightPoint, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
             drawInRect(fillRect, fromRect: NSMakeRect(sideCapWidth, 0, imageSize.width - sideCapWidth * 2, imageSize.height), operation: .CompositeSourceOver, fraction: 1.0)
         }
         return image
@@ -55,7 +55,7 @@ extension NSImage {
     
     func inset(#size: NSSize, intersectRect: NSRect, offset: NSPoint) -> NSImage {
         let imageSize = self.size
-        let inRect = (intersectRect == NSZeroRect) ? NSMakeRect(0, 0, imageSize.width, imageSize.height) : intersectRect
+        let inRect = (intersectRect == .zero) ? NSMakeRect(0, 0, imageSize.width, imageSize.height) : intersectRect
         var translate = NSZeroPoint
         var flippedPoint = NSZeroPoint
         var resizedSize = NSZeroSize
@@ -89,7 +89,7 @@ extension NSImage {
             transform.scaleBy(per)
             transform.translateXBy(translate.x, yBy: translate.y)
             transform.concat()
-            drawAtPoint(NSZeroPoint, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            drawAtPoint(.zero, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
         
         return image
@@ -125,7 +125,7 @@ extension NSImage {
     
     var bitmapImageRep: NSBitmapImageRep? {
         //let imageRep = bestRepresentationForDevice(nil)
-        let imageRep = bestRepresentationForRect(NSRect(origin: NSZeroPoint, size: size), context: nil, hints: [:])
+        let imageRep = bestRepresentationForRect(NSRect(origin: .zero, size: size), context: nil, hints: [:])
         if let imageRep = imageRep as? NSBitmapImageRep {
             return imageRep
         }
@@ -133,7 +133,7 @@ extension NSImage {
     }
     
     func drawInRect(rect: NSRect, operation op: NSCompositingOperation, fraction requestedAlpha: CGFloat, respectFlipped: Bool) {
-        drawInRect(rect, fromRect: NSZeroRect, operation: op, fraction: requestedAlpha, respectFlipped: respectFlipped, hints: [:])
+        drawInRect(rect, fromRect: .zero, operation: op, fraction: requestedAlpha, respectFlipped: respectFlipped, hints: [:])
     }
     
     func withFocus(@noescape block: () -> Void) {

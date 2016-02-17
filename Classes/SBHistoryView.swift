@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import BLKGUI
 
-class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource {
+class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewDataSource, NSSearchFieldDelegate {
     private let kSBMinFrameSizeWidth: CGFloat = 480
     private let kSBMinFrameSizeHeight: CGFloat = 320
     
@@ -48,13 +48,13 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         messageLabel.drawsBackground = false
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = NSFont.boldSystemFontOfSize(16)
-        messageLabel.alignment = .LeftTextAlignment
+        messageLabel.alignment = .Left
         messageLabel.cell!.wraps = true
         return messageLabel
     }()
 	private lazy var searchField: BLKGUI.SearchField = {
         let searchField = BLKGUI.SearchField(frame: self.searchFieldRect)
-        searchField.delegate = self
+        (searchField as NSTextField).delegate = self
         searchField.target = self
         searchField.action = "search:"
         searchField.cell!.sendsWholeSearchString = true

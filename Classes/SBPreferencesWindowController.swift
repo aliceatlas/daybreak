@@ -111,7 +111,7 @@ class SBPreferencesWindowController: SBWindowController {
     
     var sectionListViewRect: NSRect {
         var r = window!.contentRectForFrameRect(window!.frame)
-        r.origin = NSZeroPoint
+        r.origin = .zero
         // r.origin.x = 20
         // r.origin.y = 20
         // r.size.width -= r.origin.x * 2
@@ -120,6 +120,6 @@ class SBPreferencesWindowController: SBWindowController {
     }
     
     func prepare() {
-        (window!.contentView as! NSView).addSubview(sectionListView)
+        window!.contentView!.addSubview(sectionListView)
     }
 }

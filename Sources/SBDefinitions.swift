@@ -154,7 +154,7 @@ let SBAvailableStringEncodings: [NSStringEncoding?] = [
     } else if let enc = inEnc as? CFStringBuiltInEncodings {
         cfEnc = enc.rawValue
     }
-    return cfEnc !! { NSStringEncoding(CFStringConvertEncodingToNSStringEncoding($0)) }
+    return cfEnc !! CFStringConvertEncodingToNSStringEncoding
 }
 
 // UserDefault keys

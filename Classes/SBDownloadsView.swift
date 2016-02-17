@@ -204,8 +204,8 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         if enclosingSize.width > 0 && enclosingSize.height > 0 {
             var r = frame
             var block = NSZeroPoint
-            var animations: [[NSObject: AnyObject]] = []
-            let currentEvent = NSApplication.sharedApplication().currentEvent!
+            var animations: [[String: AnyObject]] = []
+            let currentEvent = NSApp.currentEvent!
             let location = currentEvent.locationInWindow
             var currentDownloadView: SBDownloadView?
             let count = downloadViews.count

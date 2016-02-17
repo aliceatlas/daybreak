@@ -38,8 +38,8 @@ func SBParseGoogleSuggestData(data: NSData, error: NSErrorPointer) -> [SBURLFiel
     if let document = NSXMLDocument(data: data, options: 0, error: error) {
         var items: [SBURLFieldItem] = []
         let element = document.rootElement()!
-        for suggestion in element.elementsForName(kSBGSCompleteSuggestionTagName) as! [NSXMLElement] {
-            let item = suggestion.elementsForName(kSBGSSuggestionTagName)[0] as! NSXMLElement
+        for suggestion in element.elementsForName(kSBGSCompleteSuggestionTagName) {
+            let item = suggestion.elementsForName(kSBGSSuggestionTagName)[0]
             let string = item.attributeForName(kSBGSSuggestionAttributeDataArgumentName)!.stringValue!
             items.append(SBURLFieldItem.GoogleSuggest(title: string, URL: string.searchURLString))
         }

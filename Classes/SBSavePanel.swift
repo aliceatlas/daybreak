@@ -41,8 +41,7 @@ class SBSavePanel: NSSavePanel {
     }
     
     func constructBackgroundView() {
-        if let contentView = contentView as? NSView,
-               belowView: NSView = contentView.subviews.get(0) {
+        if let contentView = contentView, belowView = contentView.subviews.get(0) {
             let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
             savePanelContentView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
             contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
@@ -50,7 +49,7 @@ class SBSavePanel: NSSavePanel {
     }
     
     func switchButtonType() {
-        switchButtonTypeInSubViews(contentView.subviews)
+        switchButtonTypeInSubViews(contentView!.subviews)
     }
     
     func switchButtonTypeInSubViews(subviews: [NSView]) {
@@ -81,8 +80,7 @@ class SBOpenPanel: NSOpenPanel {
     }
     
     func constructBackgroundView() {
-        if let contentView = contentView as? NSView,
-               belowView: NSView = contentView.subviews.get(0) {
+        if let contentView = contentView, belowView = contentView.subviews.get(0) {
             let savePanelContentView = SBSavePanelContentView(frame: contentView.frame)
             savePanelContentView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
             contentView.addSubview(savePanelContentView, positioned: .Below, relativeTo: belowView)
@@ -90,7 +88,7 @@ class SBOpenPanel: NSOpenPanel {
     }
     
     func switchButtonType() {
-        switchButtonTypeInSubViews(contentView.subviews)
+        switchButtonTypeInSubViews(contentView!.subviews)
     }
     
     func switchButtonTypeInSubViews(subviews: [NSView]) {
@@ -127,7 +125,7 @@ class SBSavePanelContentView: SBView {
         let strokePath = SBRoundedPath(CGRectInset(bounds, 0.5, 0.5), 8.0, 0.0, false, true)
         
         // Frame
-        let gradient = NSGradient(colors: colors, atLocations: [0.0, 0.95, 1.0], colorSpace: NSColorSpace.deviceRGBColorSpace())
+        let gradient = NSGradient(colors: colors, atLocations: [0.0, 0.95, 1.0], colorSpace: NSColorSpace.deviceRGBColorSpace())!
         gradient.drawInRect(bounds, angle: 90)
         
         // Stroke

@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import BLKGUI
 
-class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSourceTextViewDelegate {
+class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSourceTextViewDelegate, WebFrameLoadDelegate, WebResourceLoadDelegate, WebUIDelegate, WebPolicyDelegate {
     unowned var tabbarItem: SBTabbarItem
     override var tabView: SBTabView! {
         return super.tabView as? SBTabView
@@ -39,7 +39,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     lazy var splitView: SBTabSplitView = {
-        let splitView = SBTabSplitView(frame: NSZeroRect)
+        let splitView = SBTabSplitView(frame: .zero)
         splitView.delegate = self
         splitView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         return splitView
@@ -102,7 +102,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     init(identifier: Int, tabbarItem: SBTabbarItem) {
         self.tabbarItem = tabbarItem
         super.init(identifier: identifier)
-        view = NSView(frame: NSZeroRect)
+        view = NSView(frame: .zero)
         view!.addSubview(splitView)
     }
     
@@ -110,7 +110,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         destructWebView()
     }
     
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("NSCoding not supported")
     }
     
@@ -443,13 +443,13 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     // MARK: WebFrameLoadDelegate
     
-    override func webView(sender: WebView, didStartProvisionalLoadForFrame frame: WebFrame) {
+    func webView(sender: WebView, didStartProvisionalLoadForFrame frame: WebFrame) {
         if sender.mainFrame === frame {
             removeAllResourceIdentifiers()
         }
     }
     
-    override func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
+    func webView(sender: WebView, didFinishLoadForFrame frame: WebFrame) {
         if sender.mainFrame === frame {
             if selected {
                 tabView.executeSelectedItemDidFinishLoading(self)
@@ -460,23 +460,23 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(sender: WebView, didCommitLoadForFrame frame: WebFrame) {
+    func webView(sender: WebView, didCommitLoadForFrame frame: WebFrame) {
         if sender.mainFrame === frame && selected {
             tabView.executeSelectedItemDidStartLoading(self)
         }
     }
     
-    override func webView(sender: WebView, willCloseFrame frame: WebFrame) {
+    func webView(sender: WebView, willCloseFrame frame: WebFrame) {
         if sender.mainFrame === frame {
         }
     }
 
-    override func webView(sender: WebView, didChangeLocationWithinPageForFrame frame: WebFrame) {
+    func webView(sender: WebView, didChangeLocationWithinPageForFrame frame: WebFrame) {
         if sender.mainFrame === frame {
         }
     }
 
-    override func webView(sender: WebView, didReceiveTitle title: String, forFrame frame: WebFrame) {
+    func webView(sender: WebView, didReceiveTitle title: String, forFrame frame: WebFrame) {
         if sender.mainFrame === frame {
             tabbarItem.title = title
             if selected {
@@ -485,7 +485,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(sender: WebView, didReceiveIcon image: NSImage, forFrame frame: WebFrame) {
+    func webView(sender: WebView, didReceiveIcon image: NSImage, forFrame frame: WebFrame) {
         if sender.mainFrame === frame {
             tabbarItem.image = image
             if selected {
@@ -494,7 +494,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(sender: WebView, didFailProvisionalLoadWithError error: NSError?, forFrame frame: WebFrame) {
+    func webView(sender: WebView, didFailProvisionalLoadWithError error: NSError?, forFrame frame: WebFrame) {
         // if ([[sender mainFrame] isEqual:frame]) {
         if error != nil {
             DebugLog("%@, %@", __FUNCTION__, error!.localizedDescription)
@@ -570,7 +570,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                                 frame.loadRequest(NSURLRequest(URL: URL, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval))
                                 self.webView(self.webView, didStartProvisionalLoadForFrame: frame)
                             } else {
-                                self.showErrorPageWithTitle(aTitle, URLString: URL.absoluteString!, frame: frame)
+                                self.showErrorPageWithTitle(aTitle, URLString: URL.absoluteString, frame: frame)
                             }
                         }
                     case NSURLErrorServerCertificateHasUnknownRoot:
@@ -589,7 +589,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(sender: WebView, didFailLoadWithError error: NSError, forFrame frame: WebFrame) {
+    func webView(sender: WebView, didFailLoadWithError error: NSError, forFrame frame: WebFrame) {
         if sender.mainFrame === frame {
             DebugLog("%@, %@", __FUNCTION__, error.localizedDescription)
             if selected {
@@ -598,7 +598,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(sender: WebView, didReceiveServerRedirectForProvisionalLoadForFrame frame: WebFrame) {
+    func webView(sender: WebView, didReceiveServerRedirectForProvisionalLoadForFrame frame: WebFrame) {
         if sender.mainFrame === frame {
             if selected {
                 tabView.executeSelectedItemDidReceiveServerRedirect(self)
@@ -608,7 +608,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     // MARK: WebResourceLoadDelegate
     
-    override func webView(sender: WebView, identifierForInitialRequest request: NSURLRequest, fromDataSource dataSource: WebDataSource) -> AnyObject {
+    func webView(sender: WebView, identifierForInitialRequest request: NSURLRequest, fromDataSource dataSource: WebDataSource) -> AnyObject {
         let identifier = SBWebResourceIdentifier(URLRequest: request)
         if addResourceIdentifier(identifier) && selected {
             tabView.executeSelectedItemDidAddResourceID(identifier)
@@ -616,11 +616,11 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         return identifier
     }
     
-    override func webView(sender: WebView, resource identifier: AnyObject?, willSendRequest request: NSURLRequest, redirectResponse: NSURLResponse, fromDataSource dataSource: WebDataSource) -> NSURLRequest {
+    func webView(sender: WebView, resource identifier: AnyObject?, willSendRequest request: NSURLRequest, redirectResponse: NSURLResponse, fromDataSource dataSource: WebDataSource) -> NSURLRequest {
         return request
     }
     
-    override func webView(sender: WebView, resource identifier: AnyObject?, didReceiveResponse response: NSURLResponse, fromDataSource dataSource: WebDataSource) {
+    func webView(sender: WebView, resource identifier: AnyObject?, didReceiveResponse response: NSURLResponse, fromDataSource dataSource: WebDataSource) {
         let length = response.expectedContentLength
         if length > 0, let resourceID = identifier as? SBWebResourceIdentifier {
             resourceID.length = length
@@ -630,13 +630,13 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(sender: WebView, resource identifier: AnyObject?, didFailLoadingWithError error: NSError, fromDataSource dataSource: WebDataSource) {
+    func webView(sender: WebView, resource identifier: AnyObject?, didFailLoadingWithError error: NSError, fromDataSource dataSource: WebDataSource) {
         if let resourceID = identifier as? SBWebResourceIdentifier {
             resourceID.flag = false
         }
     }
     
-    override func webView(sender: WebView, resource identifier: AnyObject?, didReceiveContentLength length: Int, fromDataSource dataSource: WebDataSource) {
+    func webView(sender: WebView, resource identifier: AnyObject?, didReceiveContentLength length: Int, fromDataSource dataSource: WebDataSource) {
         if length > 0, let resourceID = identifier as? SBWebResourceIdentifier {
             resourceID.received += length
             if selected {
@@ -645,7 +645,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(sender: WebView, resource identifier: AnyObject?, didFinishLoadingFromDataSource dataSource: WebDataSource) {
+    func webView(sender: WebView, resource identifier: AnyObject?, didFinishLoadingFromDataSource dataSource: WebDataSource) {
         if let resourceID = identifier as? SBWebResourceIdentifier {
             if let response = NSURLCache.sharedURLCache().cachedResponseForRequest(resourceID.request) {
                 // Loaded from cache
@@ -663,13 +663,13 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     // MARK: WebUIDelegate
     
-    override func webViewShow(sender: WebView) {
+    func webViewShow(sender: WebView) {
         if let document = sender.window!.delegate as? SBDocument {
             document.showWindows()
         }
     }
     
-    override func webView(sender: WebView, setToolbarsVisible visible: Bool) {
+    func webView(sender: WebView, setToolbarsVisible visible: Bool) {
         let window = sender.window as! SBDocumentWindow
         let toolbar = window.sbToolbar!
         toolbar.autosavesConfiguration = false
@@ -685,25 +685,25 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(sender: WebView, createWebViewModalDialogWithRequest request: NSURLRequest) -> WebView {
+    func webView(sender: WebView, createWebViewModalDialogWithRequest request: NSURLRequest) -> WebView {
         return webView
     }
     
-    override func webView(sender: WebView, createWebViewWithRequest request: NSURLRequest) -> WebView {
+    func webView(sender: WebView, createWebViewWithRequest request: NSURLRequest) -> WebView! {
         var error: NSError?
         let document = SBGetDocumentController.openUntitledDocumentAndDisplay(false, sidebarVisibility: false, initialURL: request.URL, error: &error) as! SBDocument
         return document.selectedWebView!
     }
     
-    override func webView(sender: WebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WebFrame) -> Bool {
+    func webView(sender: WebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WebFrame) -> Bool {
         return tabView.executeShouldConfirmMessage(message)
     }
     
-    override func webView(sender: WebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WebFrame) {
+    func webView(sender: WebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WebFrame) {
         tabView.executeShouldShowMessage(message)
     }
     
-    override func webView(sender: WebView, runOpenPanelForFileButtonWithResultListener resultListener: WebOpenPanelResultListener) {
+    func webView(sender: WebView, runOpenPanelForFileButtonWithResultListener resultListener: WebOpenPanelResultListener) {
         let panel = SBOpenPanel()
         let window = tabView!.window!
         panel.beginSheetModalForWindow(window) {
@@ -714,11 +714,11 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(sender: WebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String, initiatedByFrame frame: WebFrame) -> String? {
+    func webView(sender: WebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String, initiatedByFrame frame: WebFrame) -> String? {
         return tabView.executeShouldTextInput(prompt)
     }
     
-    override func webView(sender: WebView, contextMenuItemsForElement element: [NSObject: AnyObject], defaultMenuItems: [AnyObject]) -> [AnyObject] {
+    func webView(sender: WebView, contextMenuItemsForElement element: [NSObject: AnyObject], defaultMenuItems: [AnyObject]) -> [AnyObject] {
         var menuItems: [NSMenuItem] = []
         var selectedString = (sender.mainFrame.frameView.documentView as! WebDocumentText).selectedString()
         if !selectedString.isEmpty {
@@ -824,7 +824,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     // MARK: WebPolicyDelegate
     
-    override func webView(webView: WebView, decidePolicyForMIMEType type: String, request: NSURLRequest, frame: WebFrame, decisionListener listener: WebPolicyDecisionListener) {
+    func webView(webView: WebView, decidePolicyForMIMEType type: String, request: NSURLRequest, frame: WebFrame, decisionListener listener: WebPolicyDecisionListener) {
         if WebView.canShowMIMETypeAsHTML(type) {
             listener.use()
         } else {
@@ -832,7 +832,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
 
-    override func webView(webView: WebView, decidePolicyForNavigationAction actionInformation: [NSObject: AnyObject], request: NSURLRequest, frame: WebFrame, decisionListener listener: WebPolicyDecisionListener) {
+    func webView(webView: WebView, decidePolicyForNavigationAction actionInformation: [NSObject: AnyObject], request: NSURLRequest, frame: WebFrame, decisionListener listener: WebPolicyDecisionListener) {
         let URL = request.URL!
         let modifierFlags = NSEventModifierFlags(rawValue: actionInformation[WebActionModifierFlagsKey] as! UInt)
         let navigationType = WebNavigationType(rawValue: actionInformation[WebActionNavigationTypeKey] as! Int)!
@@ -868,13 +868,13 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         }
     }
     
-    override func webView(webView: WebView, decidePolicyForNewWindowAction actionInformation: [NSObject: AnyObject], request: NSURLRequest, newFrameName: String, decisionListener listener: WebPolicyDecisionListener) {
+    func webView(webView: WebView, decidePolicyForNewWindowAction actionInformation: [NSObject: AnyObject], request: NSURLRequest, newFrameName: String, decisionListener listener: WebPolicyDecisionListener) {
         // open link in new tab
         tabView.executeShouldAddNewItemForURL(request.URL!, selection: true)
     }
     
-    override func webView(webView: WebView, unableToImplementPolicyWithError error: NSError, frame: WebFrame) {
-        if let string = error.userInfo?["NSErrorFailingURLStringKey"] as? String,
+    func webView(webView: WebView, unableToImplementPolicyWithError error: NSError, frame: WebFrame) {
+        if let string = error.userInfo["NSErrorFailingURLStringKey"] as? String,
                URL = NSURL(string: string) {
             if URL.hasWebScheme { // 'http', 'https', 'file'
                 // Error
@@ -937,7 +937,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     
     func saveDocumentSource(sender: AnyObject?) {
         let encodingName = webView.textEncodingName
-        var name = (pageTitle?.ifNotEmpty ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")!
+        let name = ((pageTitle?.ifNotEmpty ?? NSLocalizedString("Untitled", comment: "")) as NSString).stringByAppendingPathExtension("html")!
         let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(encodingName.ifNotEmpty ?? kSBDefaultEncodingName))
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
@@ -967,7 +967,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
            let HTMLString = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
             let formattedHTML = HTMLString.format(title, message)
             // Load
-            frame.loadHTMLString(formattedHTML, baseURL: NSURL.fileURLWithPath(path))
+            frame.loadHTMLString(formattedHTML, baseURL: NSURL(fileURLWithPath: path))
         }
     }
     

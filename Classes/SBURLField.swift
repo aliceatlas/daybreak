@@ -302,7 +302,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         
         r.size.width = bounds.size.width - buttonWidth * 2 - goButtonWidth
         r.size.height = sheetHeight
-        let position = (window?.toolbar as? SBToolbar)?.itemRectInScreenForIdentifier(kSBToolbarURLFieldItemIdentifier).origin ?? NSZeroPoint
+        let position = (window?.toolbar as? SBToolbar)?.itemRectInScreenForIdentifier(kSBToolbarURLFieldItemIdentifier).origin ?? .zero
         r.origin.x = frame.origin.x + position.x
         r.origin.y = frame.origin.y + position.y
         r.origin.x += buttonWidth * 2
@@ -425,11 +425,11 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     override func controlTextDidBeginEditing(notification: NSNotification) {
         // Show go button
         hiddenGo = false
-        updateGoTitle(NSApplication.sharedApplication().currentEvent)
+        updateGoTitle(NSApp.currentEvent)
     }
     
     override func controlTextDidChange(notification: NSNotification) {
-        let currentEvent = NSApplication.sharedApplication().currentEvent!
+        let currentEvent = NSApp.currentEvent!
         let characters: NSString = currentEvent.characters!
         let character = Int(characters.characterAtIndex(0))
         let stringValue = field.stringValue
@@ -735,9 +735,9 @@ class SBURLImageView: NSImageView, NSDraggingSource {
     }
     
     var dragImage: NSImage {
-        let URLString: NSString = URL.absoluteString!
+        let URLString: NSString = URL.absoluteString
         let margin: CGFloat = 5.0
-        let attribute: [NSObject: AnyObject] = [NSFontAttributeName: field.font!]
+        let attribute: [String: AnyObject] = [NSFontAttributeName: field.font!]
         let textSize = URLString.sizeWithAttributes(attribute)
         var size = NSZeroSize
         size.height = bounds.size.height
@@ -949,7 +949,7 @@ class SBURLFieldContentView: NSView {
         
         let cell = SBURLFieldDataCell()
         cell.font = NSFont.systemFontOfSize(12.0)
-        cell.alignment = .LeftTextAlignment
+        cell.alignment = .Left
         
         let column = NSTableColumn(identifier: kSBURL)
         column.dataCell = cell
@@ -1046,7 +1046,7 @@ class SBURLFieldContentView: NSView {
         
         let colors = [SBTableGrayCellColor, SBTableLightGrayCellColor, SBTableLightGrayCellColor, NSColor.whiteColor()]
         
-        let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: NSColorSpace.genericRGBColorSpace()) //!!! device?
+        let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: NSColorSpace.genericRGBColorSpace())! //!!! device?
         gradient.drawInRect(b, angle: 90)
         
         var r = b
@@ -1068,7 +1068,7 @@ class SBURLFieldDataCell: NSCell {
     var drawsImage = true
     
     private func setDefaultValues() {
-        alignment = .LeftTextAlignment
+        alignment = .Left
     }
     
     @objc(initImageCell:)
@@ -1083,7 +1083,7 @@ class SBURLFieldDataCell: NSCell {
         setDefaultValues()
     }
     
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("NSCoding not supported")
     }
     
@@ -1116,7 +1116,7 @@ class SBURLFieldDataCell: NSCell {
             let r = cellFrame
             let path = SBRoundedPath(NSInsetRect(r, 1.0, 1.0), (r.size.height - 1.0 * 2) / 2, 0.0, true, true)
             let gradient = NSGradient(startingColor: SBAlternateSelectedLightControlColor,
-                                        endingColor: SBAlternateSelectedControlColor)
+                                        endingColor: SBAlternateSelectedControlColor)!
             SBPreserveGraphicsState {
                 path.addClip()
                 gradient.drawInRect(r, angle: 90)

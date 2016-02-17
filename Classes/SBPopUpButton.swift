@@ -32,7 +32,7 @@ class SBPopUpButton: NSPopUpButton {
     override var menu: NSMenu? {
         didSet {
             if menu != nil {
-                for item in menu!.itemArray as! [NSMenuItem] {
+                for item in menu!.itemArray {
                     item.target = self
                     item.action = "executeAction:"
                 }
@@ -80,7 +80,7 @@ class SBPopUpButtonCell: NSPopUpButtonCell {
                 transform.translateXBy(0.0, yBy: view.bounds.size.height)
                 transform.scaleXBy(1.0, yBy:-1.0)
                 transform.concat()
-                image.drawInRect(view.bounds, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+                image.drawInRect(view.bounds, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
             }
         }
         if let itemTitle: NSString = view.menu?.selectedItem?.title.ifNotEmpty {

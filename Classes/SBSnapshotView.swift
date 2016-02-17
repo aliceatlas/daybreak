@@ -50,7 +50,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     private lazy var imageView: NSImageView = {
         let imageViewSize = NSMakeSize(self.frame.size.width - self.margin.x - self.toolWidth - 8.0, self.frame.size.height - self.margin.y - 20.0)
-        return NSImageView(frame: NSRect(origin: NSZeroPoint, size: imageViewSize))
+        return NSImageView(frame: NSRect(origin: .zero, size: imageViewSize))
     }()
     private var imageViewSize: NSSize { return imageView.bounds.size }
     
@@ -143,7 +143,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         lockButton.setButtonType(.ToggleButton)
         lockButton.image = NSImage(named: "Icon_Lock.png")
         lockButton.alternateImage = NSImage(named: "Icon_Unlock.png")
-        lockButton.cell!.imageScaling = .ImageScaleNone
+        (lockButton.cell as! NSButtonCell).imageScaling = .ScaleNone
         lockButton.bordered = false
         return lockButton
     }()
@@ -320,7 +320,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     //progressField.stringValue = NSLocalizedString("Updating...", comment: "")
     //private var progressIndicator: NSProgressIndicator
     
-    private var _visibleRect: NSRect = NSZeroRect
+    private var _visibleRect: NSRect = .zero
     override var visibleRect: NSRect {
         get { return _visibleRect }
         set(visibleRect) { _visibleRect = visibleRect }
@@ -353,7 +353,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     }()
     
     private var updateTimer: NSTimer?
-    private var successSize: NSSize = NSZeroSize
+    private var successSize = NSZeroSize
     private var successScale: CGFloat = 1.0
     var title: String?
     var data: NSData?
@@ -365,13 +365,13 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let untitled = NSLocalizedString("Untitled", comment: "")
         switch filetype {
             case NSBitmapImageFileType.NSTIFFFileType:
-                return untitled.stringByAppendingPathExtension("tiff")!
+                return (untitled as NSString).stringByAppendingPathExtension("tiff")!
             case NSBitmapImageFileType.NSGIFFileType:
-                return untitled.stringByAppendingPathExtension("gif")!
+                return (untitled as NSString).stringByAppendingPathExtension("gif")!
             case NSBitmapImageFileType.NSJPEGFileType:
-                return untitled.stringByAppendingPathExtension("jpg")!
+                return (untitled as NSString).stringByAppendingPathExtension("jpg")!
             case NSBitmapImageFileType.NSPNGFileType:
-                return untitled.stringByAppendingPathExtension("png")!
+                return (untitled as NSString).stringByAppendingPathExtension("png")!
             default:
                 return untitled
         }
@@ -516,7 +516,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     func setImage(image: NSImage?) -> Bool {
         if let image = image {
-            if image.size == NSZeroSize || image.size.width == 0 || image.size.height == 0 {
+            if image.size == .zero || image.size.width == 0 || image.size.height == 0 {
                 return false
             }
             
@@ -726,7 +726,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let tag = sender.tag
         if Int(filetype.rawValue) != tag {
             filetype = NSBitmapImageFileType(rawValue: UInt(tag))!
-            for item in filetypePopup.menu!.itemArray as! [NSMenuItem] {
+            for item in filetypePopup.menu!.itemArray {
                 item.state = (Int(filetype.rawValue) == item.tag) ? NSOnState : NSOffState
             }
             // Update image
@@ -747,7 +747,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let tag = sender.tag
         if Int(tiffCompression.rawValue) != tag {
             tiffCompression = NSTIFFCompression(rawValue: UInt(tag))!
-            for item in tiffOptionPopup.menu!.itemArray as! [NSMenuItem] {
+            for item in tiffOptionPopup.menu!.itemArray {
                 item.state = (Int(tiffCompression.rawValue) == item.tag) ? NSOnState : NSOffState
             }
             // Update image

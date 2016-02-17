@@ -47,7 +47,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         // Handle AppleScript (Open URL from other application)
         NSAppleEventManager.sharedAppleEventManager().setEventHandler(self, andSelector: "openURL:withReplyEvent:", forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         // Localize menu
-        SBLocalizeTitlesInMenu(NSApplication.sharedApplication().mainMenu!)
+        SBLocalizeTitlesInMenu(NSApp.mainMenu!)
         // Register defaults
         SBPreferences.sharedPreferences.registerDefaults()
     }
@@ -75,7 +75,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    func application(sender: NSApplication, openFiles filenames: [AnyObject]) {
+    func application(sender: NSApplication, openFiles filenames: [String]) {
         var index = 0
         let documentController = SBGetDocumentController
         
@@ -353,7 +353,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: Debug
     
     func constructDebugMenu() {
-        let mainMenu = NSApplication.sharedApplication().mainMenu!
+        let mainMenu = NSApp.mainMenu!
         let debugMenuItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
         let debugMenu = NSMenu(title: "Debug")
         let writeViewStructure = NSMenuItem(title: "Export View Structure...", action: "writeViewStructure:", keyEquivalent: "")

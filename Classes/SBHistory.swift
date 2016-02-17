@@ -42,7 +42,7 @@ class SBHistory: NSObject {
     }
     
     var URL: NSURL {
-        return NSURL.fileURLWithPath(SBHistoryFilePath)!
+        return NSURL(fileURLWithPath: SBHistoryFilePath)
     }
     
     var items: [WebHistoryItem] {

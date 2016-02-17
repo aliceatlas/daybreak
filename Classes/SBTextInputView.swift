@@ -43,7 +43,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     }()
     lazy var textLabel: BLKGUI.TextField = {
         let textLabel = BLKGUI.TextField(frame: self.textLabelRect)
-        textLabel.alignment = .LeftTextAlignment
+        textLabel.alignment = .Left
         textLabel.font = NSFont.systemFontOfSize(14.0)
         textLabel.textColor = NSColor.whiteColor()
         textLabel.delegate = self
@@ -72,7 +72,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         get { return messageLabel.stringValue }
         set(message) {
             let size = message.sizeWithAttributes([NSFontAttributeName: messageLabel.font!])
-            messageLabel.alignment = size.width > (messageLabelRect.size.width - 20.0) ? .LeftTextAlignment : .CenterTextAlignment
+            messageLabel.alignment = size.width > (messageLabelRect.size.width - 20.0) ? .Left : .Center
             messageLabel.stringValue = message
         }
     }

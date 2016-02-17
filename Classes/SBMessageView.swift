@@ -48,7 +48,7 @@ class SBMessageView: SBView {
         messageLabel.drawsBackground = false
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = NSFont.boldSystemFontOfSize(16)
-        messageLabel.alignment = .CenterTextAlignment
+        messageLabel.alignment = .Center
         messageLabel.cell!.wraps = true
         return messageLabel
     }()
@@ -80,7 +80,7 @@ class SBMessageView: SBView {
         set(text) {
             textLabel.stringValue = text
             let size = text.sizeWithAttributes([NSFontAttributeName: textFont])
-            textLabel.alignment = size.width > (textLabelRect.size.width - 20.0) ? .LeftTextAlignment : .CenterTextAlignment
+            textLabel.alignment = size.width > (textLabelRect.size.width - 20.0) ? .Left : .Center
         }
     }
     

@@ -60,7 +60,7 @@ extension String {
             var range = NSMakeRange(0, 0)
             let URL = attributedString.URLAtIndex(NSMaxRange(range), effectiveRange: &range)
             if range.location == 0 {
-                hasScheme = URL?.scheme?.ifNotEmpty &! {string.hasPrefix($0)}
+                hasScheme = URL?.scheme.ifNotEmpty &! string.hasPrefix
                 return true
             }
         }
@@ -69,7 +69,7 @@ extension String {
     
     var URLEncodedString: String {
         let requestURL = NSURL._web_URLWithUserTypedString(self)
-        return requestURL.absoluteString!
+        return requestURL.absoluteString
     }
     
     var URLDecodedString: String? {
@@ -81,7 +81,7 @@ extension String {
         if let gSearchFormat = info["SBGSearchFormat"] as? String {
             let str = gSearchFormat.format(self)
             let requestURL = NSURL._web_URLWithUserTypedString(str)
-            return requestURL.absoluteString!
+            return requestURL.absoluteString
         }
         return self
     }

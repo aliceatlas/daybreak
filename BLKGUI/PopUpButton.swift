@@ -93,7 +93,7 @@ class PopUpButtonCell: NSPopUpButtonCell {
                 transform.translateXBy(0.0, yBy: cellFrame.size.height)
                 transform.scaleXBy(1.0, yBy: -1.0)
                 transform.concat()
-                image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+                image.drawInRect(imageRect, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
             }
         }
         
@@ -105,7 +105,7 @@ class PopUpButtonCell: NSPopUpButtonCell {
             let font = NSFont(name: self.font!.fontName, size: NSFont.systemFontSizeForControlSize(controlSize))
             let foregroundColor = enabled ? (highlighted ? NSColor.lightGrayColor() : NSColor.whiteColor()) : NSColor.grayColor()
             
-            style.alignment = .CenterTextAlignment
+            style.alignment = .Center
             style.lineBreakMode = .ByTruncatingTail
             mutableTitle.beginEditing()
             mutableTitle.addAttribute(NSForegroundColorAttributeName, value: foregroundColor, range:range)

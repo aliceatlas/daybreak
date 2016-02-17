@@ -73,12 +73,12 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         let actionCell = SBWebResourceButtonCell()
         URLTextCell.font = NSFont.systemFontOfSize(12.0)
         URLTextCell.showRoundedPath = true
-        URLTextCell.alignment = .LeftTextAlignment
+        URLTextCell.alignment = .Left
         URLTextCell.lineBreakMode = .ByTruncatingMiddle
         lengthTextCell.font = NSFont.systemFontOfSize(10.0)
         lengthTextCell.showRoundedPath = false
         lengthTextCell.showSelection = false
-        lengthTextCell.alignment = .RightTextAlignment
+        lengthTextCell.alignment = .Right
         cachedCell.target = self
         cachedCell.action = "save:"
         actionCell.target = self
@@ -117,7 +117,7 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         tableView.setDelegate(self)
         tableView.focusRingType = .None
         tableView.doubleAction = "open"
-        tableView.intercellSpacing = NSZeroSize
+        tableView.intercellSpacing = .zero
         return tableView
     }()
     

@@ -52,7 +52,7 @@ class SBTableCell: NSCell {
         setDefaultValues()
     }
     
-    required init(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("NSCoding not supported")
     }
     
@@ -125,9 +125,9 @@ class SBTableCell: NSCell {
             r.size = size
             r.origin.x = cellFrame.origin.x
             switch alignment {
-                case .LeftTextAlignment: r.origin.x += side
-                case .RightTextAlignment: r.origin.x += side + ((cellFrame.size.width - side * 2) - size.width)
-                case .CenterTextAlignment: r.origin.x += ((cellFrame.size.width - side * 2) - size.width) / 2
+                case .Left: r.origin.x += side
+                case .Right: r.origin.x += side + ((cellFrame.size.width - side * 2) - size.width)
+                case .Center: r.origin.x += ((cellFrame.size.width - side * 2) - size.width) / 2
                 default: break
             }
             r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2

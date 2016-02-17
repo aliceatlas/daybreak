@@ -59,6 +59,6 @@ class SBSegmentedButton: SBView {
     // MARK: Actions
     
     func adjustFrame() {
-        frame = buttons.map({ $0.frame }).reduce(NSZeroRect, combine: NSUnionRect)
+        frame = buttons.map({ $0.frame }).reduce(.zero, combine: NSUnionRect)
     }
 }

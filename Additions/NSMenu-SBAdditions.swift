@@ -28,18 +28,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 extension NSMenu {
     var selectedItem: NSMenuItem? {
-        return (itemArray as! [NSMenuItem]).first { $0.state == NSOnState }
+        return itemArray.first { $0.state == NSOnState }
     }
     
     func selectItem(menuItem: NSMenuItem) {
-        for item in itemArray as! [NSMenuItem] {
+        for item in itemArray {
             item.state = (item === menuItem) ? NSOnState : NSOffState
         }
     }
     
     func selectItem(#representedObject: AnyObject?) -> NSMenuItem? {
         var selectedItem: NSMenuItem?
-        for item in itemArray as! [NSMenuItem] {
+        for item in itemArray {
             let repObject: AnyObject? = item.representedObject
             let equal = repObject === representedObject
             item.state = equal ? (selectedItem !! NSOffState ?? NSOnState) : NSOffState
@@ -51,9 +51,7 @@ extension NSMenu {
     }
     
     func deselectItem() {
-        for item in itemArray as! [NSMenuItem] {
-            item.state = NSOffState
-        }
+        itemArray.forEach { $0.state = NSOffState }
     }
     
     func addItem(#title: String, target: AnyObject?, action: Selector, tag: Int) -> NSMenuItem {

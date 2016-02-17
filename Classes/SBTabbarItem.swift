@@ -244,7 +244,7 @@ class SBTabbarItem: SBView {
         // Frame
         let strokeColor = NSColor(deviceWhite: strokeGrayScale, alpha: 1.0)
         let gradient = NSGradient(startingColor: NSColor(deviceWhite: grayScaleDown, alpha: 1.0),
-                                  endingColor: NSColor(deviceWhite: grayScaleUp, alpha: 1.0))
+                                  endingColor: NSColor(deviceWhite: grayScaleUp, alpha: 1.0))!
         gradient.drawInBezierPath(path, angle: 90)
         
         // Stroke

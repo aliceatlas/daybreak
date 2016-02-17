@@ -31,9 +31,8 @@ import Foundation
 func ==(first: SBDownload, second: SBDownload) -> Bool {
     return first === second
 }
-extension SBDownload: Equatable {}
 
-class SBDownloads: NSObject, NSURLDownloadDelegate {
+class SBDownloads: NSObject, NSURLDownloadDelegate, WebDownloadDelegate {
     static let sharedDownloads = SBDownloads()
     
     var items: [SBDownload] = []

@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
     private let kSBLocalizationAvailableSubversionAccess = 0
     
-    var contentView: NSView { return window!.contentView as! NSView }
+    var contentView: NSView { return window!.contentView! }
     
     private lazy var langField: NSTextField = {
         let contentRect = self.contentView.bounds
@@ -46,7 +46,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         langField.drawsBackground = false
         langField.font = NSFont.systemFontOfSize(14.0)
         langField.textColor = NSColor.blackColor()
-        langField.alignment = .RightTextAlignment
+        langField.alignment = .Right
         langField.stringValue = NSLocalizedString("Language", comment: "") + " :"
         return langField
     }()
@@ -228,7 +228,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         textField.drawsBackground = false
         textField.font = NSFont.systemFontOfSize(16.0)
         textField.textColor = NSColor.whiteColor()
-        textField.alignment = .LeftTextAlignment
+        textField.alignment = .Left
         textField.stringValue = NSLocalizedString("You can contribute the translation file for the Daybreak project if you participate in the project on Google Code.", comment: "")
         return textField
     }()
@@ -243,7 +243,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         checkoutTitleField.drawsBackground = false
         checkoutTitleField.font = NSFont.boldSystemFontOfSize(16.0)
         checkoutTitleField.textColor = NSColor.whiteColor()
-        checkoutTitleField.alignment = .LeftTextAlignment
+        checkoutTitleField.alignment = .Left
         checkoutTitleField.stringValue = NSLocalizedString("Check out", comment: "")
         return checkoutTitleField
     }()
@@ -272,7 +272,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         commitTitleField.drawsBackground = false
         commitTitleField.font = NSFont.boldSystemFontOfSize(16.0)
         commitTitleField.textColor = NSColor.whiteColor()
-        commitTitleField.alignment = .LeftTextAlignment
+        commitTitleField.alignment = .Left
         commitTitleField.stringValue = NSLocalizedString("Commit", comment: "")
         return commitTitleField
     }()
@@ -327,7 +327,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         let panel = SBOpenPanel()
         let directoryPath = SBApplicationSupportDirectory(kSBApplicationSupportDirectoryName.stringByAppendingPathComponent(kSBLocalizationsDirectoryName))!
         panel.allowedFileTypes = ["strings"]
-        panel.directoryURL = NSURL.fileURLWithPath(directoryPath)
+        panel.directoryURL = NSURL(fileURLWithPath: directoryPath)
         panel.beginSheet(window!) {
             if $0 == NSFileHandlingPanelOKButton {
                 self.mergeFilePath(panel.URL!.path!)
@@ -375,7 +375,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
      * 1 - Show the edit view
      */
     func changeView(index: Int) {
-        let contentView = window!.contentView as! NSView
+        let contentView = self.contentView
         let duration: CGFloat = 0.4
         animating = true
         var editRect0 = editView.frame
@@ -408,12 +408,13 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
             editView.frame = editRect0
             contentView.addSubview(editView)
         }
-        let animations = [[NSViewAnimationTargetKey: editView,
-                           NSViewAnimationStartFrameKey: NSValue(rect: editRect0),
-                           NSViewAnimationEndFrameKey: NSValue(rect: editRect1)],
-                          [NSViewAnimationTargetKey: contributeView,
-                           NSViewAnimationStartFrameKey: NSValue(rect: contributeRect0),
-                           NSViewAnimationEndFrameKey: NSValue(rect: contributeRect1)]]
+        let animations: [[String: AnyObject]] =
+            [[NSViewAnimationTargetKey: editView,
+              NSViewAnimationStartFrameKey: NSValue(rect: editRect0),
+              NSViewAnimationEndFrameKey: NSValue(rect: editRect1)],
+             [NSViewAnimationTargetKey: contributeView,
+              NSViewAnimationStartFrameKey: NSValue(rect: contributeRect0),
+              NSViewAnimationEndFrameKey: NSValue(rect: contributeRect1)]]
         let animation = SBViewAnimation(viewAnimations: animations)
         animation.context = index
         animation.duration = NSTimeInterval(duration)

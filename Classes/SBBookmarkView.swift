@@ -45,7 +45,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         messageLabel.drawsBackground = false
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.font = NSFont.boldSystemFontOfSize(16)
-        messageLabel.alignment = .CenterTextAlignment
+        messageLabel.alignment = .Center
         messageLabel.cell!.wraps = true
         return messageLabel
     }()
@@ -58,7 +58,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         titleLabel.drawsBackground = false
         titleLabel.textColor = NSColor.lightGrayColor()
         titleLabel.font = NSFont.systemFontOfSize(12)
-        titleLabel.alignment = .RightTextAlignment
+        titleLabel.alignment = .Right
         titleLabel.stringValue = NSLocalizedString("Title", comment: "") + " :"
         return titleLabel
     }()
@@ -71,7 +71,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         urlLabel.drawsBackground = false
         urlLabel.textColor = NSColor.lightGrayColor()
         urlLabel.font = NSFont.systemFontOfSize(12)
-        urlLabel.alignment = .RightTextAlignment
+        urlLabel.alignment = .Right
         urlLabel.stringValue = NSLocalizedString("URL", comment: "") + " :"
         return urlLabel
     }()
@@ -84,7 +84,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         colorLabel.drawsBackground = false
         colorLabel.textColor = NSColor.lightGrayColor()
         colorLabel.font = NSFont.systemFontOfSize(12)
-        colorLabel.alignment = .RightTextAlignment
+        colorLabel.alignment = .Right
         colorLabel.stringValue = NSLocalizedString("Label", comment: "") + " :"
         return colorLabel
     }()
@@ -92,7 +92,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     private lazy var titleField: BLKGUI.TextField = {
         let titleField = BLKGUI.TextField(frame: self.titleFieldRect)
         titleField.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
-        titleField.alignment = .LeftTextAlignment
+        titleField.alignment = .Left
         return titleField
     }()
     
@@ -100,7 +100,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         let urlField = BLKGUI.TextField(frame: self.urlFieldRect)
         urlField.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         urlField.delegate = self
-        urlField.alignment = .LeftTextAlignment
+        urlField.alignment = .Left
         return urlField
     }()
     
@@ -108,7 +108,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         let colorPopup = BLKGUI.PopUpButton(frame: self.colorPopupRect)
         colorPopup.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         colorPopup.pullsDown = true
-        colorPopup.alignment = .LeftTextAlignment
+        colorPopup.alignment = .Left
         colorPopup.menu = SBBookmarkLabelColorMenu(true, nil, nil, nil)
         colorPopup.selectItemAtIndex(1)
         return colorPopup
@@ -156,7 +156,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     var itemRepresentation: NSDictionary {
         let data = image!.bitmapImageRep!.data
         let labelName = SBBookmarkLabelColorNames[colorPopup.indexOfSelectedItem - 1]
-        let offset = NSStringFromPoint(NSZeroPoint)
+        let offset = NSStringFromPoint(.zero)
         return SBCreateBookmarkItem(title, URLString, data, NSDate(), labelName, offset)
     }
     
@@ -308,7 +308,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         let colors = [NSColor(deviceWhite: 0.4, alpha: 0.9),
                       NSColor.blackColor()]
         let locations: [CGFloat] = [0.0, 0.6]
-        let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: NSColorSpace.genericGrayColorSpace())
+        let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: NSColorSpace.genericGrayColorSpace())!
         var mPath: NSBezierPath!
         if fillMode == 0 {
             let r = NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.width)
@@ -336,7 +336,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         
         if let image = image {
             var imageRect = self.imageRect
-            image.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 0.85)
+            image.drawInRect(imageRect, fromRect: .zero, operation: .CompositeSourceOver, fraction: 0.85)
             
             imageRect.origin.y -= imageRect.size.height
             imageRect.size.height *= 0.5

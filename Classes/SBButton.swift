@@ -151,9 +151,9 @@ class SBButton: SBView {
                 anImage = backDisableImage ?? backImage ?? image
             }
         }
-        anImage?.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+        anImage?.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         if pressed {
-            anImage?.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeXOR, fraction: 0.3)
+            anImage?.drawInRect(r, fromRect: .zero, operation: .CompositeXOR, fraction: 0.3)
         }
         if title != nil {
             let padding: CGFloat = 10.0

@@ -26,12 +26,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 extension NSView {
-    @objc(_subviews)
-    var subviews: [NSView] {
-        let subviews: [AnyObject] = self.subviews
-        return subviews as! [NSView]
-    }
-    
     func addConstraintStrings(#metrics: [String: Double], views: [String: NSView], constraints constraintStrings: [String]) {
         for constraintString in constraintStrings {
             let layoutConstraints = NSLayoutConstraint.constraintsWithVisualFormat(constraintString, options: [], metrics: metrics, views: views)

@@ -43,12 +43,12 @@ public class Button: NSButton {
     
     public var buttonType: NSButtonType {
         get {
-            return (cell() as! ButtonCell).buttonType
+            return (cell as! ButtonCell).buttonType
         }
         
         @objc(_setButtonType:)
         set(buttonType) {
-            (cell() as! ButtonCell).buttonType = buttonType
+            (cell as! ButtonCell).buttonType = buttonType
         }
     }
     
@@ -114,7 +114,7 @@ public class ButtonCell: NSButtonCell {
                 let selectedFlag = state == NSOnState ? "-Selected" : ""
                 image = NSImage(named: "Radio\(selectedFlag)\(highlightedFlag).png")
                 
-                imageRect.size = image?.size ?? NSZeroSize
+                imageRect.size = image?.size ?? .zero
                 r.size = imageRect.size
                 r.origin.x = cellFrame.origin.x
                 r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
@@ -192,7 +192,7 @@ public class ButtonCell: NSButtonCell {
                 if let image = self.image {
                     var imageRect = NSZeroRect
                     let margin: CGFloat = 3.0
-                    imageRect.size = image.size ?? NSZeroSize
+                    imageRect.size = image.size ?? .zero
                     if r.origin.x > (imageRect.size.width + margin) {
                         let width = imageRect.size.width + r.size.width + margin
                         imageRect.origin.x = (frame.size.width - width) / 3

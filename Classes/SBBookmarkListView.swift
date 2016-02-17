@@ -31,7 +31,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     optional func bookmarkListViewShouldCloseSearchbar(SBBookmarkListView) -> Bool
 }
 
-class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
+class SBBookmarkListView: SBView, NSAnimationDelegate {
     unowned var wrapperView: SBBookmarksView
     weak var delegate: SBBookmarkListViewDelegate?
     var cellSize: NSSize!
@@ -207,7 +207,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         var r = NSZeroRect
         var pos = NSZeroPoint
         r.size = cellSize
-        let spacing = mode == .Icon ? self.spacing : NSZeroPoint
+        let spacing = mode == .Icon ? self.spacing : .zero
         pos.y = trunc(CGFloat(index) / trunc(_block.x))
         pos.x = CGFloat(SBRemainder(index, Int(_block.x)))
         r.origin.x = pos.x * cellSize.width + spacing.x * pos.x
@@ -468,10 +468,10 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     func selectPoint(point: NSPoint, toPoint: NSPoint, exclusive: Bool) {
         if selectionView != nil {
-            let r = NSMakeRect(toPoint.x, toPoint.y, 1.0, 1.0).rectByUnion(NSMakeRect(point.x, point.y, 1.0, 1.0))
+            let r = NSMakeRect(toPoint.x, toPoint.y, 1.0, 1.0).union(NSMakeRect(point.x, point.y, 1.0, 1.0))
             for itemView in itemViews {
-                let intersectionRect = r.rectByIntersecting(itemView.frame)
-                if intersectionRect == NSZeroRect {
+                let intersectionRect = r.intersect(itemView.frame)
+                if intersectionRect == .zero {
                     if exclusive {
                         itemView.selected = false
                     }
@@ -518,7 +518,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     func layoutItemViewsWithAnimationFromIndex(fromIndex: Int, duration: NSTimeInterval = 0.25) {
-        var animations: [[NSObject: AnyObject]] = []
+        var animations: [[String: AnyObject]] = []
         let count = itemViews.count
         for i in fromIndex..<count {
             let index = i + fromIndex
@@ -544,11 +544,11 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     func layoutSelectionView(point: NSPoint) {
         if selectionView == nil {
-            selectionView = SBView(frame: NSZeroRect)
+            selectionView = SBView(frame: .zero)
             selectionView!.frameColor = NSColor.alternateSelectedControlColor()
             addSubview(selectionView!)
         }
-        let r = NSMakeRect(self.point.x, self.point.y, 1.0, 1.0).rectByUnion(NSMakeRect(point.x, point.y, 1.0, 1.0))
+        let r = NSMakeRect(self.point.x, self.point.y, 1.0, 1.0).union(NSMakeRect(point.x, point.y, 1.0, 1.0))
         selectionView!.frame = r
     }
     
@@ -587,7 +587,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     func layoutDraggingLineView(point: NSPoint) {
         if draggingLineView == nil {
-            draggingLineView = SBView(frame: NSZeroRect)
+            draggingLineView = SBView(frame: .zero)
             draggingLineView!.frameColor = NSColor.alternateSelectedControlColor()
             addSubview(draggingLineView!)
         }
@@ -680,12 +680,12 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     }
     
     func showIndexes(indexes: NSIndexSet) {
-        var infos: [[NSObject: AnyObject]] = []
+        var infos: [[String: AnyObject]] = []
         var firstIndex = NSNotFound
         if animationIndex == indexes.lastIndex || !indexes.containsIndex(animationIndex) {
             animationIndex = NSNotFound
         }
-        for var index = indexes.firstIndex; index != NSNotFound; index = indexes.indexGreaterThanIndex(index) {
+        for index in indexes {
             let itemView = itemViews[index]
             if firstIndex == NSNotFound && (animationIndex == NSNotFound || animationIndex < index) {
                 // Get first index
@@ -725,7 +725,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         }
     }
     
-    func startAnimations(infos: [[NSObject: AnyObject]]) {
+    func startAnimations(infos: [[String: AnyObject]]) {
         searchAnimations = NSViewAnimation(viewAnimations: infos)
         searchAnimations!.duration = 0.25
         searchAnimations!.animationCurve = .EaseIn
@@ -792,7 +792,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 selectedViews.map { $0.selected = false }
             }
             if selection {
-                point = NSZeroPoint
+                point = .zero
             }
         }
         draggedItemView?.dragged = false
@@ -807,7 +807,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
         let point = convertPoint(location, fromView: nil)
         let modifierFlags = event.modifierFlags
         let exclusive = !modifierFlags.contains(.ShiftKeyMask)
-        if self.point == NSZeroPoint {
+        if self.point == .zero {
             // Drag
             if (draggedItemView !! draggedItems) != nil {
                 let image = NSImage(view: draggedItemView!)!
@@ -822,7 +822,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 URL?.writeToPasteboard(pasteboard)
                 title !! { pasteboard.setString($0, forType: NSStringPboardType) }
                 imageData !! { pasteboard.setData($0, forType: NSTIFFPboardType) }
-                tempDragImage(image, at: dragLocation, offset: NSZeroSize, event: event, pasteboard: pasteboard, source: window!, slideBack: true)
+                tempDragImage(image, at: dragLocation, offset: .zero, event: event, pasteboard: pasteboard, source: window!, slideBack: true)
                 draggedItemView!.dragged = false
             } else {
                 draggedItemView = itemViewAtPoint(point)
@@ -870,7 +870,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     
     override func rightMouseDown(event: NSEvent) {
         mouseDown(event)
-        point = NSZeroPoint
+        point = .zero
         draggedItemView?.dragged = false
         draggedItemView = nil
         draggedItems = nil
@@ -945,14 +945,14 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
     override func draggingUpdated(sender: NSDraggingInfo) -> NSDragOperation {
         let point = convertPoint(sender.draggingLocation(), fromView: nil)
         layoutDraggingLineView(point)
-        autoscroll(NSApplication.sharedApplication().currentEvent!)
+        autoscroll(NSApp.currentEvent!)
         return .Copy
     }
     
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         let pasteboard = sender.draggingPasteboard()
         let point = convertPoint(sender.draggingLocation(), fromView: nil)
-        let types = pasteboard.types as! [String]
+        let types = pasteboard.types!
         
         if contains(types, SBBookmarkPboardType) {
             // Daybreak bookmarks
@@ -998,7 +998,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                         shouldInset = image.size != SBBookmarkImageMaxSize
                     }
                     if shouldInset,
-                       let insetImageRep = NSImage(data: data)?.inset(size: SBBookmarkImageMaxSize, intersectRect: NSZeroRect, offset: NSZeroPoint).bitmapImageRep {
+                       let insetImageRep = NSImage(data: data)?.inset(size: SBBookmarkImageMaxSize, intersectRect: .zero, offset: .zero).bitmapImageRep {
                         data = insetImageRep.data!
                     }
                 } else {
@@ -1006,7 +1006,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate, NSDraggingDestination {
                 }
                 
                 let bookmarks = SBBookmarks.sharedBookmarks
-                let item = SBCreateBookmarkItem(title, URL, data, NSDate(), nil, NSStringFromPoint(NSZeroPoint))
+                let item = SBCreateBookmarkItem(title, URL, data, NSDate(), nil, NSStringFromPoint(.zero))
                 let fromIndex = bookmarks.containsItem(item)
                 let toIndex = indexAtPoint(point)
                 var bookmarkItems: [BookmarkItem] = []

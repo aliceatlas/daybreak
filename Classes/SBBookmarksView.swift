@@ -203,7 +203,7 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
         } else {
             colors = [NSColor(deviceWhite: 0.75, alpha: 1.0), NSColor(deviceWhite: 0.6, alpha: 1.0)]
         }
-        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
         gradient.drawInRect(bounds, angle: 90)
     }
 }

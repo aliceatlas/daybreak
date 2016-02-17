@@ -53,7 +53,6 @@ class SBFixedSplitView: NSSplitView {
     
     override func resizeSubviewsWithOldSize(oldSize: NSSize) {
         if !vertical {
-            let subviews: [NSView] = self.subviews
             if let subview1 = subviews.get(0), subview2 = subviews.get(1) {
                 var r1 = subview1.frame
                 var r2 = subview2.frame

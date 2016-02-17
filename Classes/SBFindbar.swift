@@ -277,7 +277,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     
         // Background
         let gradient = NSGradient(startingColor: NSColor.blackColor(),
-                                  endingColor: NSColor(deviceWhite: 0.50, alpha: 1.0))
+                                  endingColor: NSColor(deviceWhite: 0.50, alpha: 1.0))!
         gradient.drawInRect(bounds, angle: 90)
         
         // Lines

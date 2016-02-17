@@ -88,7 +88,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
     private lazy var field: BLKGUI.TextField = {
         let field = BLKGUI.TextField()
         field.translatesAutoresizingMaskIntoConstraints = false
-        field.alignment = .LeftTextAlignment
+        field.alignment = .Left
         field.font = NSFont.systemFontOfSize(14.0)
         field.textColor = NSColor.whiteColor()
         field.delegate = self

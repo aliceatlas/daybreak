@@ -37,7 +37,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         messageLabel.drawsBackground = false
         messageLabel.textColor = NSColor.whiteColor()
         messageLabel.cell!.font = NSFont.boldSystemFontOfSize(16)
-        messageLabel.cell!.alignment = .CenterTextAlignment
+        messageLabel.cell!.alignment = .Center
         messageLabel.cell!.wraps = true
         return messageLabel
     }()
@@ -50,7 +50,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         URLLabel.drawsBackground = false
         URLLabel.textColor = NSColor.lightGrayColor()
         URLLabel.cell!.font = NSFont.systemFontOfSize(12)
-        URLLabel.cell!.alignment = .RightTextAlignment
+        URLLabel.cell!.alignment = .Right
         URLLabel.stringValue = NSLocalizedString("URL", comment: "") + ": "
         return URLLabel
     }()
@@ -59,7 +59,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         let URLField = BLKGUI.TextField(frame: self.URLFieldRect)
         URLField.delegate = self
         URLField.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
-        URLField.cell!.alignment = .LeftTextAlignment
+        URLField.cell!.alignment = .Left
         return URLField
     }()
     

@@ -63,11 +63,11 @@ class SBToolbar: NSToolbar {
     
     // Returns whether the main toolbar contains item from item identifier
     func visibleItemForItemIdentifier(itemIdentifier: String) -> NSToolbarItem? {
-        return (items as! [NSToolbarItem]).first{$0.itemIdentifier == itemIdentifier}
+        return items.first{$0.itemIdentifier == itemIdentifier}
     }
     
     func itemRectInWindowForIdentifier(identifier: String) -> NSRect {
-        if let view = (visibleItems as! [NSToolbarItem]).first({$0.itemIdentifier == identifier})?.view {
+        if let view = visibleItems!.first({$0.itemIdentifier == identifier})?.view {
             return view.convertRect(view.bounds, toView: nil)
         }
         return NSZeroRect
@@ -78,6 +78,6 @@ class SBToolbar: NSToolbar {
     }
     
     var window: NSWindow {
-        return ((NSApp.windows as! [NSWindow]).first { $0.toolbar === self })!
+        return (NSApp.windows.first{$0.toolbar === self})!
     }
 }

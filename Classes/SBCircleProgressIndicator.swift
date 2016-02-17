@@ -130,7 +130,7 @@ class SBCircleProgressIndicator: SBView {
                 if selected && keyView {
                     let colors = [NSColor.whiteColor(), NSColor(deviceWhite: 0.15, alpha: 1.0)]
                     let path = NSBezierPath(ovalInRect: NSInsetRect(square, lw, lw))
-                    let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+                    let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
                     SBPreserveGraphicsState {
                         path.setClip()
                         gradient.drawInRect(r, angle: 90)
@@ -175,7 +175,7 @@ class SBCircleProgressIndicator: SBView {
                                       NSColor(deviceWhite: ((selected && keyView) ? 1.0 : 0.75), alpha: 1.0)]
                     }
                 }
-                let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+                let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
                 gradient.drawInBezierPath(path, angle: 90)
                 
                 if showPercentage {

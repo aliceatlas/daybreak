@@ -60,7 +60,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     var visible: Bool {
-        return frame.intersects(superview?.visibleRect ?? NSZeroRect)
+        return frame.intersects(superview?.visibleRect ?? .zero)
     }
     
     var titleFont: NSFont {
@@ -75,10 +75,10 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineBreakMode = .ByTruncatingTail
         if mode == .Icon || mode == .List {
-            paragraphStyle.alignment = .CenterTextAlignment
+            paragraphStyle.alignment = .Center
         }
         if mode == .List {
-            paragraphStyle.alignment = .LeftTextAlignment
+            paragraphStyle.alignment = .Left
         }
         return paragraphStyle.copy() as! NSParagraphStyle
     }
@@ -117,12 +117,12 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     
     var imageRect: NSRect {
         var r = NSZeroRect
-        let padding = (mode == .Icon) ? self.padding : NSZeroPoint
+        let padding = (mode == .Icon) ? self.padding : .zero
         let titleHeight /*: CGFloat */ = (mode == .Icon) ? self.titleHeight : 0.0
         let bytesHeight = (mode == .Icon) ? self.bytesHeight : 0.0
         let imageData = item[kSBBookmarkImage] as? NSData
         let image = imageData !! {NSImage(data: $0)}
-        let imageSize = image?.size ?? NSZeroSize
+        let imageSize = image?.size ?? .zero
         var p = NSZeroPoint
         var s: CGFloat!
         r.origin.x = padding.x
@@ -144,7 +144,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
     }
     
     var titleRect: NSRect {
-        return (item[kSBBookmarkTitle] as? String) !! {self.titleRect($0)} ?? NSZeroRect
+        return (item[kSBBookmarkTitle] as? String) !! {self.titleRect($0)} ?? .zero
     }
     
     func titleRect(title: String) -> NSRect {
@@ -304,7 +304,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                     }
                     SBPreserveGraphicsState {
                         path.addClip()
-                        image.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+                        image.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
                     }
                 }
                 // title string
@@ -333,7 +333,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         sr.origin.x -= tmargin
                         sr.size.width += tmargin * 2
                         if labelColor != nil {
-                            sr.inset(dx: 2.0, dy: 2.0)
+                            sr.insetInPlace(dx: 2.0, dy: 2.0)
                         }
                         let path = SBRoundedPath(sr, sr.size.height / 2, 0.0, true, true)
                         color.set()
@@ -376,7 +376,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                     path = SBRoundedPath(r, 0.0, 0.0, false, false)
                     SBPreserveGraphicsState {
                         path.addClip()
-                        image.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+                        image.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
                     }
                 }
                 
@@ -385,7 +385,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 let colors = [0.0, 0.65].map { NSColor(calibratedWhite: 0.0, alpha: $0) }
                 let center = NSMakePoint(r.size.width/2, r.size.height * 0.8)
                 let outerRadius = r.size.width * 1.5
-                let gradient = NSGradient(colors: colors, atLocations: [1/6, 1.0], colorSpace: NSColorSpace.genericGrayColorSpace())
+                let gradient = NSGradient(colors: colors, atLocations: [1/6, 1.0], colorSpace: NSColorSpace.genericGrayColorSpace())!
                 gradient.drawInBezierPath(path, relativeCenterPosition: center)
                 
                 // Label color
@@ -466,10 +466,10 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         sr.origin.x -= tmargin
                         sr.size.width += tmargin * 2
                         if labelColor != nil {
-                            sr.inset(dx: 2.0, dy: 2.0)
+                            sr.insetInPlace(dx: 2.0, dy: 2.0)
                         }
                         let darkerColor = color.shadowWithLevel(0.2)!
-                        let gradient = NSGradient(startingColor: darkerColor, endingColor: color)
+                        let gradient = NSGradient(startingColor: darkerColor, endingColor: color)!
                         gradient.drawInRect(sr, angle: 90)
                     }
                     var attributes = [NSFontAttributeName: titleFont,

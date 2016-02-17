@@ -59,7 +59,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     private lazy var summaryLabel: NSTextField = {
         let summaryLabel = NSTextField(frame: self.summaryLabelRect)
         summaryLabel.stringValue = NSLocalizedString("Summary", comment: "")
-        summaryLabel.alignment = .RightTextAlignment
+        summaryLabel.alignment = .Right
         summaryLabel.bordered = false
         summaryLabel.editable = false
         summaryLabel.selectable = false
@@ -71,7 +71,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     private lazy var summaryField: BLKGUI.TextField = {
         let summaryField = BLKGUI.TextField(frame: self.summaryFieldRect)
-        summaryField.alignment = .LeftTextAlignment
+        summaryField.alignment = .Left
         summaryField.font = NSFont.systemFontOfSize(14.0)
         summaryField.textColor = NSColor.whiteColor()
         summaryField.delegate = self
@@ -82,7 +82,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     private lazy var userAgentLabel: NSTextField = {
         let userAgentLabel = NSTextField(frame: self.userAgentLabelRect)
         userAgentLabel.stringValue = NSLocalizedString("User Agent", comment: "")
-        userAgentLabel.alignment = .RightTextAlignment
+        userAgentLabel.alignment = .Right
         userAgentLabel.bordered = false
         userAgentLabel.editable = false
         userAgentLabel.selectable = false
@@ -128,7 +128,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     private lazy var switchLabel: NSTextField = {
         let switchLabel = NSTextField(frame: self.switchLabelRect)
         switchLabel.stringValue = NSLocalizedString("Reproducibility", comment: "")
-        switchLabel.alignment = .RightTextAlignment
+        switchLabel.alignment = .Right
         switchLabel.bordered = false
         switchLabel.editable = false
         switchLabel.selectable = false
@@ -144,8 +144,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let switchMatrix = NSMatrix(frame: self.switchRect, mode: .RadioModeMatrix, prototype: cell, numberOfRows: 1, numberOfColumns: 2)
         switchMatrix.cellSize = NSMakeSize(150.0, 18.0)
         switchMatrix.drawsBackground = false
-        (switchMatrix.cellAtRow(0, column: 0) as! NSCell).title = NSLocalizedString("Describe", comment: "")
-        (switchMatrix.cellAtRow(0, column: 1) as! NSCell).title = NSLocalizedString("None", comment: "")
+        switchMatrix.cellAtRow(0, column: 0)!.title = NSLocalizedString("Describe", comment: "")
+        switchMatrix.cellAtRow(0, column: 1)!.title = NSLocalizedString("None", comment: "")
         switchMatrix.target = self
         switchMatrix.action = "switchReproducibility:"
         return switchMatrix
@@ -154,7 +154,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     private lazy var wayLabel: NSTextField = {
         let wayLabel = NSTextField(frame: self.wayLabelRect)
         wayLabel.stringValue = NSLocalizedString("A way to reproduce", comment: "")
-        wayLabel.alignment = .RightTextAlignment
+        wayLabel.alignment = .Right
         wayLabel.bordered = false
         wayLabel.editable = false
         wayLabel.selectable = false
@@ -166,7 +166,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     private lazy var wayField: BLKGUI.TextField = {
         let wayField = BLKGUI.TextField(frame: self.wayFieldRect)
-        wayField.alignment = .LeftTextAlignment
+        wayField.alignment = .Left
         wayField.font = NSFont.systemFontOfSize(14.0)
         wayField.textColor = NSColor.whiteColor()
         wayField.delegate = self

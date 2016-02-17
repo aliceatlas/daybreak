@@ -27,9 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class SBDocumentController: NSDocumentController {
-    override func defaultType() -> String {
-        return kSBDocumentTypeName
-    }
+    override var defaultType: String? { return kSBDocumentTypeName }
     
     override func typeForContentsOfURL(inAbsoluteURL: NSURL, error outError: NSErrorPointer) -> String? {
         if inAbsoluteURL.fileURL {

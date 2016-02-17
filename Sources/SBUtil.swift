@@ -31,7 +31,7 @@ import Foundation
 // MARK: Get objects
 
 var SBGetApplicationDelegate: SBApplicationDelegate {
-    return NSApplication.sharedApplication().delegate as! SBApplicationDelegate
+    return NSApp.delegate as! SBApplicationDelegate
 }
 
 var SBGetDocumentController: SBDocumentController {
@@ -39,7 +39,7 @@ var SBGetDocumentController: SBDocumentController {
 }
 
 var SBGetSelectedDocument: SBDocument? {
-    if let document = NSApplication.sharedApplication().orderedDocuments.get(0) as? SBDocument {
+    if let document = NSApp.orderedDocuments.get(0) as? SBDocument {
         return document
     }
     var error: NSError?
@@ -53,29 +53,29 @@ var SBGetWebPreferences: WebPreferences {
 }
 
 func SBMenuWithTag(tag: Int) -> NSMenu? {
-    let items = NSApplication.sharedApplication().mainMenu!.itemArray as! [NSMenuItem]
+    let items = NSApp.mainMenu!.itemArray
     return items.first{$0.tag == tag}?.submenu
 }
 
 func SBMenuItemWithTag(tag: Int) -> NSMenuItem? {
-    let items = NSApplication.sharedApplication().mainMenu!.itemArray as! [NSMenuItem]
+    let items = NSApp.mainMenu!.itemArray
     return items.optionalMap{$0.submenu!.itemWithTag(tag)}.get(0)
 }
 
 // MARK: Default values
 
 var SBDefaultDocumentWindowRect: NSRect {
-    let screens = NSScreen.screens() as! [NSScreen]
-    return screens.get(0)?.visibleFrame ?? NSZeroRect
+    let screens = NSScreen.screens()!
+    return screens.get(0)?.visibleFrame ?? .zero
 }
 
 // Return value for key in "com.apple.internetconfig.plist"
 func SBDefaultHomePage() -> String? {
     if let path = SBLibraryDirectory("Preferences") !! {SBSearchFileInDirectory("com.apple.internetconfig", $0)}
        where NSFileManager.defaultManager().fileExistsAtPath(path),
-       let internetConfig = NSDictionary(contentsOfFile: path)
+       let internetConfig = NSDictionary(contentsOfFile: path) as? [NSObject: AnyObject]
        where internetConfig.count > 0 {
-        return SBValueForKey("WWWHomePage", internetConfig as! [NSObject: AnyObject]) as? String
+        return SBValueForKey("WWWHomePage", internetConfig) as? String
     }
     return nil
 }
@@ -93,7 +93,7 @@ var SBDefaultBookmarks: NSDictionary? {
         title = title ?? NSLocalizedString("Untitled", comment: "")
         URLString = URLString ?? NSLocalizedString("http://www.example.com/", comment: "")
         imageData = imageData ?? SBEmptyBookmarkImageData
-        let items = [SBCreateBookmarkItem(title, URLString, imageData, NSDate(), nil, NSStringFromPoint(NSZeroPoint))]
+        let items = [SBCreateBookmarkItem(title, URLString, imageData, NSDate(), nil, NSStringFromPoint(.zero))]
         return SBBookmarksWithItems(items)
     }
     return nil
@@ -101,7 +101,7 @@ var SBDefaultBookmarks: NSDictionary? {
 
 var SBEmptyBookmarkImageData: NSData {
     let size = SBBookmarkImageMaxSize
-    let rect = NSRect(origin: NSZeroPoint, size: size)
+    let rect = NSRect(origin: .zero, size: size)
     let image = NSImage(size: size)
 
     image.withFocus {
@@ -221,7 +221,7 @@ func SBLibraryDirectory(subdirectory: String?) -> String? {
 
 func SBSearchFileInDirectory(filename: String, directoryPath: String) -> String? {
     let manager = NSFileManager.defaultManager()
-    let contents = manager.contentsOfDirectoryAtPath(directoryPath, error: nil) as! [String]
+    let contents = manager.contentsOfDirectoryAtPath(directoryPath, error: nil)
 
     if let findFileName = contents.first({$0.hasPrefix(filename)}) {
         return directoryPath.stringByAppendingPathComponent(findFileName)
@@ -231,7 +231,7 @@ func SBSearchFileInDirectory(filename: String, directoryPath: String) -> String?
 
 func SBSearchPath(searchPathDirectory: NSSearchPathDirectory, subdirectory: String?) -> String? {
     let manager = NSFileManager.defaultManager()
-    let paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, .UserDomainMask, true) as! [String]
+    let paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, .UserDomainMask, true)
     var path = paths.get(0)
     if path &! manager.fileExistsAtPath {
         if subdirectory != nil {
@@ -653,7 +653,7 @@ func SBBackwardIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage 
         // Background
         let color0 = NSColor(deviceWhite: backing ? 0.95 : 0.8, alpha: 1.0)
         let color1 = NSColor(deviceWhite: backing ? 0.65 : 0.5, alpha: 1.0)
-        let gradient = NSGradient(startingColor: color0, endingColor: color1)
+        let gradient = NSGradient(startingColor: color0, endingColor: color1)!
         SBPreserveGraphicsState {
             path.addClip()
             gradient.drawInRect(rect, angle: 90)
@@ -675,7 +675,7 @@ func SBBackwardIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage 
 func SBForwardIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage {
     let tPath = SBTrianglePath(NSMakeRect(9.0, 7.0, size.width - 9.0 * 2, size.height - 7.0 * 2), .Right)
     let tGray: CGFloat = enabled ? 0.2 : 0.5
-    let rect = NSRect(origin: NSZeroPoint, size: size)
+    let rect = NSRect(origin: .zero, size: size)
     
     let image = NSImage(size: size)
     image.withFocus {
@@ -689,7 +689,7 @@ func SBForwardIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage {
         // Background
         let color0 = NSColor(deviceWhite: backing ? 0.95 : 0.8, alpha: 1.0)
         let color1 = NSColor(deviceWhite: backing ? 0.65 : 0.5, alpha: 1.0)
-        let gradient = NSGradient(startingColor: color0, endingColor: color1)
+        let gradient = NSGradient(startingColor: color0, endingColor: color1)!
         SBPreserveGraphicsState {
             path.addClip()
             gradient.drawInRect(rect, angle: 90)
@@ -709,7 +709,7 @@ func SBForwardIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage {
 }
 
 func SBGoIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage {
-    let rect = NSRect(origin: NSZeroPoint, size: size)
+    let rect = NSRect(origin: .zero, size: size)
     
     let image = NSImage(size: size)
     image.withFocus {
@@ -728,7 +728,7 @@ func SBGoIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage {
             colors = colors.map { $0.colorWithAlphaComponent(0.5) }
         }
         
-        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
         SBPreserveGraphicsState {
             path.addClip()
             gradient.drawInRect(rect, angle: 90)
@@ -753,7 +753,7 @@ func SBZoomOutIconImage(size: NSSize) -> NSImage {
             r.size = frameImage.size
             r.origin.x = (size.width - r.size.width) / 2
             r.origin.y = (size.height - r.size.height) / 2
-            frameImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            frameImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
         
         // Image
@@ -761,7 +761,7 @@ func SBZoomOutIconImage(size: NSSize) -> NSImage {
             r.size = iconImage.size
             r.origin.x = (size.width - r.size.width) / 2
             r.origin.y = (size.height - r.size.height) / 2
-            iconImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            iconImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
     
@@ -778,7 +778,7 @@ func SBActualSizeIconImage(size: NSSize) -> NSImage {
             r.size = frameImage.size
             r.origin.x = (size.width - r.size.width) / 2
             r.origin.y = (size.height - r.size.height) / 2
-            frameImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            frameImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
         
         // Image
@@ -786,7 +786,7 @@ func SBActualSizeIconImage(size: NSSize) -> NSImage {
             r.size = iconImage.size
             r.origin.x = (size.width - r.size.width) / 2
             r.origin.y = (size.height - r.size.height) / 2
-            iconImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            iconImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
     
@@ -803,7 +803,7 @@ func SBZoomInIconImage(size: NSSize) -> NSImage {
             r.size = frameImage.size
             r.origin.x = (size.width - r.size.width) / 2
             r.origin.y = (size.height - r.size.height) / 2
-            frameImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            frameImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
         
         // Image
@@ -811,7 +811,7 @@ func SBZoomInIconImage(size: NSSize) -> NSImage {
             r.size = iconImage.size
             r.origin.x = (size.width - r.size.width) / 2
             r.origin.y = (size.height - r.size.height) / 2
-            iconImage.drawInRect(r, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            iconImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
     
@@ -819,7 +819,7 @@ func SBZoomInIconImage(size: NSSize) -> NSImage {
 }
 
 func SBAddIconImage(size: NSSize, backing: Bool) -> NSImage {
-    let rect = NSRect(origin: NSZeroPoint, size: size)
+    let rect = NSRect(origin: .zero, size: size)
     var p = CGPointZero
     var cp1 = CGPointZero
     var cp2 = CGPointZero
@@ -854,7 +854,7 @@ func SBAddIconImage(size: NSSize, backing: Bool) -> NSImage {
             // Background
             let color0 = NSColor(deviceWhite: 0.6, alpha: 1.0)
             let color1 = NSColor(deviceWhite: 0.55, alpha: 1.0)
-            let gradient = NSGradient(startingColor: color0, endingColor: color1)
+            let gradient = NSGradient(startingColor: color0, endingColor: color1)!
             SBPreserveGraphicsState {
                 path.addClip()
                 gradient.drawInRect(rect, angle: 90)
@@ -990,7 +990,7 @@ func SBIconImage(iconImage: NSImage?, shape: SBButtonShape, size: NSSize) -> NSI
             var insetMargin: CGFloat = 3.0
             let lineWidth: CGFloat = 2.0
             let path = NSBezierPath()
-            var insetRect = NSRect(origin: NSZeroPoint, size: size)
+            var insetRect = NSRect(origin: .zero, size: size)
             
             switch shape {
                 case .Exclusive:
@@ -1087,7 +1087,7 @@ func SBIconImage(iconImage: NSImage?, shape: SBButtonShape, size: NSSize) -> NSI
             let shadow = NSShadow()
             shadow.shadowColor = shadowColor
             shadow.shadowBlurRadius = insetMargin
-            shadow.shadowOffset = NSZeroSize
+            shadow.shadowOffset = .zero
             SBPreserveGraphicsState {
                 shadow.set()
                 NSColor.blackColor().set()
@@ -1116,7 +1116,7 @@ func SBIconImage(iconImage: NSImage?, shape: SBButtonShape, size: NSSize) -> NSI
 }
 
 func SBFindBackwardIconImage(size: NSSize, enabled: Bool) -> NSImage {
-    let rect = NSRect(origin: NSZeroPoint, size: size)
+    let rect = NSRect(origin: .zero, size: size)
     let tPath = SBTrianglePath(NSMakeRect(9.0, 5.0, size.width - 9.0 * 2, size.height - 5.0 * 2), .Left)
     var p = NSZeroPoint
     var cp1 = NSZeroPoint
@@ -1158,7 +1158,7 @@ func SBFindBackwardIconImage(size: NSSize, enabled: Bool) -> NSImage {
         
         // Background
         let colors = [NSColor(deviceWhite: 0.5, alpha: 1.0), NSColor.blackColor()]
-        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
         SBPreserveGraphicsState {
             path.addClip()
             gradient.drawInRect(rect, angle: 90)
@@ -1179,7 +1179,7 @@ func SBFindBackwardIconImage(size: NSSize, enabled: Bool) -> NSImage {
 }
 
 func SBFindForwardIconImage(size: NSSize, enabled: Bool) -> NSImage {
-    let rect = NSRect(origin: NSZeroPoint, size: size)
+    let rect = NSRect(origin: .zero, size: size)
     let tPath = SBTrianglePath(NSMakeRect(9.0, 5.0, size.width - 9.0 * 2, size.height - 5.0 * 2), .Right)
     var p = NSZeroPoint
     var cp1 = NSZeroPoint
@@ -1221,7 +1221,7 @@ func SBFindForwardIconImage(size: NSSize, enabled: Bool) -> NSImage {
         
         // Background
         let colors = [NSColor(deviceWhite: 0.5, alpha: 1.0), NSColor.blackColor()]
-        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
         SBPreserveGraphicsState {
             path.addClip()
             gradient.drawInRect(rect, angle: 90)
@@ -1246,7 +1246,7 @@ func SBBookmarkReflectionMaskImage(size: NSSize) -> NSImage {
     let image = NSImage(size: size)
     image.withFocus {
         let colors = [NSColor(deviceWhite: 1.0, alpha: 0.2), NSColor(deviceWhite: 1.0, alpha: 0.0)]
-        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])
+        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
         gradient.drawInRect(rect, angle: 90)
     }
     return image
@@ -1284,8 +1284,8 @@ func SBGreatestCommonDivisor(a: Int, b: Int) -> Int {
 // MARK: Others
 
 func SBValueForKey(keyName: String, dictionary: [NSObject: AnyObject]) -> AnyObject? {
-    var value: AnyObject? = dictionary[keyName]
-    if value == nil  {
+    var value = dictionary[keyName]
+    if value == nil {
         for object in dictionary.values {
             if let object = object as? [NSObject: AnyObject] {
                 value = SBValueForKey(keyName, object)
@@ -1373,7 +1373,7 @@ func SBAllowsDrag(downPoint: NSPoint, dragPoint: NSPoint) -> Bool {
 
 func SBLocalizeTitlesInMenu(menu: NSMenu) {
     menu.title = NSLocalizedString(menu.title, comment: "")
-    for item in menu.itemArray as! [NSMenuItem] {
+    for item in menu.itemArray {
         item.title = NSLocalizedString(item.title, comment: "")
         item.submenu !! {SBLocalizeTitlesInMenu($0)}
     }
@@ -1491,7 +1491,7 @@ func SBDebugViewStructure(view: NSView) -> [NSObject: AnyObject] {
 
 func SBDebugLayerStructure(layer: CALayer) -> [NSObject: AnyObject] {
     var info: [NSObject: AnyObject] = [:]
-    let sublayers = (layer.sublayers ?? []) as! [CALayer]
+    let sublayers = layer.sublayers ?? []
     let description = "\(layer) \(NSStringFromRect(layer.frame))"
     info["Description"] = description
     sublayers.ifNotEmpty !! { info["Children"] = $0.map(SBDebugLayerStructure) }
@@ -1499,12 +1499,12 @@ func SBDebugLayerStructure(layer: CALayer) -> [NSObject: AnyObject] {
 }
 
 func SBDebugDumpMainMenu() -> [NSObject: AnyObject] {
-    return ["MenuItems": SBDebugDumpMenu(NSApplication.sharedApplication().mainMenu!)]
+    return ["MenuItems": SBDebugDumpMenu(NSApp.mainMenu!)]
 }
 
 func SBDebugDumpMenu(menu: NSMenu) -> [[NSObject: AnyObject]] {
     var items: [[NSObject: AnyObject]] = []
-    for item in menu.itemArray as! [NSMenuItem] {
+    for item in menu.itemArray {
         var info: [NSObject: AnyObject] = [:]
         let submenu = item.submenu
         let title = item.title

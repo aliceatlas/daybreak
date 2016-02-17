@@ -41,7 +41,7 @@ public class TextField: NSTextField {
     }
     
     private func setDefaultValues() {
-        alignment = .RightTextAlignment
+        alignment = .Right
         drawsBackground = false
         textColor = NSColor.whiteColor()
     }
@@ -54,7 +54,7 @@ public class TextFieldCell: NSTextFieldCell {
         setDefaultValues()
     }
     
-    required public init(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
@@ -83,7 +83,7 @@ public class TextFieldCell: NSTextFieldCell {
         NSColor(deviceWhite: 0.0, alpha: alpha * 0.1).set()
         path.fill()
         
-        r.inset(dx: 0.5, dy: 0.5)
+        r.insetInPlace(dx: 0.5, dy: 0.5)
         path = NSBezierPath(roundedRect: r, xRadius: SBFieldRoundedCurve, yRadius: SBFieldRoundedCurve)
         path.lineWidth = 0.5
         NSColor(deviceWhite: 1.0, alpha: alpha).set()

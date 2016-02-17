@@ -100,8 +100,8 @@ class SBBookmarks: NSObject {
             for index in 0..<kSBCountOfDebugBookmarks {
                 let title = "Title \(index)"
                 let URL = "http://\(index).com/"
-                let item = SBCreateBookmarkItem(title, URL, SBEmptyBookmarkImageData, NSDate(), nil, NSStringFromPoint(NSZeroPoint))
-                items.append(NSMutableDictionary(dictionary: item as! [NSObject: AnyObject]))
+                let item = SBCreateBookmarkItem(title, URL, SBEmptyBookmarkImageData, NSDate(), nil, NSStringFromPoint(.zero))
+                items.append(NSMutableDictionary(dictionary: item))
             }
         } else {
             let info = NSDictionary(contentsOfFile: SBBookmarksFilePath!)
@@ -132,7 +132,7 @@ class SBBookmarks: NSObject {
     
     func addItem(bookmarkItem: BookmarkItem?) {
         if let item = bookmarkItem {
-            let dict = NSMutableDictionary(dictionary: item as! [NSObject: AnyObject])
+            let dict = NSMutableDictionary(dictionary: item)
             let index = indexOfURL(dict[kSBBookmarkURL] as! String)
             if index == NSNotFound {
                 items.append(dict)
@@ -145,7 +145,7 @@ class SBBookmarks: NSObject {
     }
     
     func replaceItem(item: BookmarkItem, atIndex index: Int) {
-        items[index] = NSMutableDictionary(dictionary: item as! [NSObject: AnyObject])
+        items[index] = NSMutableDictionary(dictionary: item)
         writeToFile()
         SBDispatch(notifyDidUpdate)
     }
@@ -153,7 +153,7 @@ class SBBookmarks: NSObject {
     func replaceItem(oldItem: BookmarkItem, withItem newItem: BookmarkItem) {
         let index = indexOfItem(oldItem)
         if index != NSNotFound {
-            items[index] = NSMutableDictionary(dictionary: newItem as! [NSObject: AnyObject])
+            items[index] = NSMutableDictionary(dictionary: newItem)
             writeToFile()
             SBDispatch(notifyDidUpdate)
         }
