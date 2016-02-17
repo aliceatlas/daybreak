@@ -48,7 +48,7 @@ public class PopUpButton: NSPopUpButton {
     }
 }
 
-class PopUpButtonCell: NSPopUpButtonCell {
+private class PopUpButtonCell: NSPopUpButtonCell {
     override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
         let controlView = inView as! PopUpButton
         

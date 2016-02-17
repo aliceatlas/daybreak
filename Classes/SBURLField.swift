@@ -1062,12 +1062,12 @@ class SBURLFieldContentView: NSView {
     }
 }
 
-class SBURLFieldDataCell: NSCell {
+private class SBURLFieldDataCell: NSCell {
     var separator = false
     var sectionHeader = false
     var drawsImage = true
     
-    private func setDefaultValues() {
+    func setDefaultValues() {
         alignment = .Left
     }
     

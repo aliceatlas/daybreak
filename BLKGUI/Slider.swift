@@ -32,8 +32,8 @@ public class Slider: NSSlider {
     }
 }
 
-public class SliderCell: NSSliderCell {
-    override public func drawKnob(knobRect: NSRect) {
+private class SliderCell: NSSliderCell {
+    override func drawKnob(knobRect: NSRect) {
         var r = NSInsetRect(knobRect, 2, 2)
         r.origin.y += 1
         let path = NSBezierPath(ovalInRect: r)

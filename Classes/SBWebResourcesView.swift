@@ -171,7 +171,7 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
     }
 }
 
-class SBWebResourceButtonCell: NSButtonCell {
+private class SBWebResourceButtonCell: NSButtonCell {
     var highlightedImage: NSImage?
     let side: CGFloat = 5.0
     

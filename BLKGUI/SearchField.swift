@@ -47,14 +47,14 @@ public class SearchField: NSSearchField {
     }
 }
 
-public class SearchFieldCell: NSSearchFieldCell {
+private class SearchFieldCell: NSSearchFieldCell {
     @objc(initTextCell:)
-    override public init(textCell string: String) {
+    override init(textCell string: String) {
         super.init(textCell: string)
         setDefaultValues()
     }
     
-    required public init?(coder: NSCoder) {
+    required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
@@ -67,7 +67,7 @@ public class SearchFieldCell: NSSearchFieldCell {
 
     }
     
-    override public func setUpFieldEditorAttributes(textObj: NSText) -> NSText {
+    override func setUpFieldEditorAttributes(textObj: NSText) -> NSText {
         let text = super.setUpFieldEditorAttributes(textObj)
         if let textView = text as? NSTextView {
             let attributes = [NSForegroundColorAttributeName: NSColor.whiteColor(),
@@ -78,7 +78,7 @@ public class SearchFieldCell: NSSearchFieldCell {
         return text
     }
     
-    override public func drawWithFrame(cellFrame: NSRect, inView: NSView) {
+    override func drawWithFrame(cellFrame: NSRect, inView: NSView) {
         let controlView = inView as? NSControl
         let alpha: CGFloat = (controlView?.enabled ?? true) ? 1.0 : 0.2
         var r = cellFrame
