@@ -136,6 +136,11 @@ extension NSImage {
         drawInRect(rect, fromRect: .zero, operation: op, fraction: requestedAlpha, respectFlipped: respectFlipped, hints: [:])
     }
     
+    convenience init(size: NSSize, @noescape withFocus block: () -> Void) {
+        self.init(size: size)
+        withFocus(block)
+    }
+    
     func withFocus(@noescape block: () -> Void) {
         lockFocus()
         block()
