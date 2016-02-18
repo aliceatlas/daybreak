@@ -44,16 +44,16 @@ struct SBURLFieldItem {
     var URL: String?
     var image: NSData?
     
-    static func None(#title: String, image: NSData?) -> SBURLFieldItem {
+    static func None(title title: String, image: NSData?) -> SBURLFieldItem {
         return SBURLFieldItem(type: .None, title: title, URL: nil, image: image)
     }
-    static func Bookmark(#title: String?, URL: String, image: NSData?) -> SBURLFieldItem {
+    static func Bookmark(title title: String?, URL: String, image: NSData?) -> SBURLFieldItem {
         return SBURLFieldItem(type: .Bookmark, title: title, URL: URL, image: image)
     }
-    static func History(#URL: String, image: NSData?) -> SBURLFieldItem {
+    static func History(URL URL: String, image: NSData?) -> SBURLFieldItem {
         return SBURLFieldItem(type: .History, title: nil, URL: URL, image: image)
     }
-    static func GoogleSuggest(#title: String, URL: String) -> SBURLFieldItem {
+    static func GoogleSuggest(title title: String, URL: String) -> SBURLFieldItem {
         return SBURLFieldItem(type: .GoogleSuggest, title: title, URL: URL, image: nil)
     }
 }

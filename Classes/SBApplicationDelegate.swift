@@ -235,7 +235,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         SBGetSelectedDocument!.window.hideCoverWindow()
     }
     
-    func openStrings(#path: String, anotherPath: String? = nil) {
+    func openStrings(path path: String, anotherPath: String? = nil) {
         if let (textSet, fieldSet, viewSize) = SBGetLocalizableTextSet(path) where !textSet.isEmpty {
             destructLocalizeWindowController()
             localizationWindowController = SBLocalizationWindowController(viewSize: viewSize)
@@ -250,7 +250,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: Application
     
-    @IBAction func provideFeedback(AnyObject) {
+    @IBAction func provideFeedback(_: AnyObject) {
         let title = NSLocalizedString("Daybreak Feedback", comment: "")
         if !kSBFeedbackMailAddress.isEmpty {
             var URLString = "mailto:\(kSBFeedbackMailAddress)?subject=\(title)"
@@ -259,7 +259,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func checkForUpdates(AnyObject) {
+    func checkForUpdates(_: AnyObject) {
         let updater = SBUpdater.sharedUpdater
         updater.raiseResult = true
         updater.checkSkipVersion = false
@@ -267,14 +267,14 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         updater.check()
     }
     
-    func preferences(AnyObject) {
+    func preferences(_: AnyObject) {
         let viewSize = NSSize(width: 800, height: 700)
         destructPreferencesWindowController()
         preferencesWindowController = SBPreferencesWindowController(viewSize: viewSize)
         preferencesWindowController!.showWindow(nil)
     }
     
-    func emptyAllCaches(AnyObject) {
+    func emptyAllCaches(_: AnyObject) {
         let cache = NSURLCache.sharedURLCache()
         let title = NSLocalizedString("Are you sure you want to empty the cache?", comment: "")
         var message = NSLocalizedString("Daybreak saves the contents of webpages you open, and stores them in a cache, so the pages load faster when you visit them again.", comment: "")
@@ -299,13 +299,13 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     
     // MARK: File
     
-    func newDocument(AnyObject) {
+    func newDocument(_: AnyObject) {
         var error: NSError?
         SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error)
         error !! { DebugLog("%@ %@", __FUNCTION__, $0) }
     }
     
-    func openDocument(AnyObject) {
+    func openDocument(_: AnyObject) {
         let panel = SBOpenPanel()
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
@@ -368,7 +368,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         mainMenu.addItem(debugMenuItem)
     }
     
-    func writeViewStructure(AnyObject) {
+    func writeViewStructure(_: AnyObject) {
         let document = SBGetSelectedDocument!
         if let view = document.window.contentView as? NSView {
             let panel = NSSavePanel()
@@ -379,7 +379,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func writeMainMenu(AnyObject) {
+    func writeMainMenu(_: AnyObject) {
         let panel = NSSavePanel()
         panel.nameFieldStringValue = "Menu.plist"
         if panel.runModal() == NSFileHandlingPanelOKButton {
@@ -387,7 +387,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    func validateStrings(AnyObject) {
+    func validateStrings(_: AnyObject) {
         let panel = SBOpenPanel()
         panel.allowedFileTypes = ["strings"]
         panel.directoryURL = NSBundle.mainBundle().resourceURL

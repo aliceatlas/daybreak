@@ -56,9 +56,9 @@ class SBPopUpButton: NSPopUpButton {
         }
     }
     
-    func selectItem(#representedObject: AnyObject?) {
+    func selectItem(representedObject object: AnyObject?) {
         if let menu = menu {
-            menu.selectItem(representedObject: representedObject)
+            menu.selectItem(representedObject: object)
             setNeedsDisplayInRect(bounds)
         }
     }

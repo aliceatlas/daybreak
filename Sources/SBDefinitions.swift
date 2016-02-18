@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #if __debug__
 let DebugLog = NSLog
 #else
-func DebugLog(format: String, args: AnyObject...) {}
+func DebugLog(format: String, _ args: AnyObject...) {}
 #endif
 
 // Flags for Debug

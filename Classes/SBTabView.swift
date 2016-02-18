@@ -27,22 +27,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 @objc protocol SBTabViewDelegate: NSTabViewDelegate {
-    optional func tabView(SBTabView, selectedItemDidStartLoading: SBTabViewItem)
-    optional func tabView(SBTabView, selectedItemDidFinishLoading: SBTabViewItem)
-    optional func tabView(SBTabView, selectedItemDidFailLoading: SBTabViewItem)
-    optional func tabView(SBTabView, selectedItemDidReceiveTitle: SBTabViewItem)
-    optional func tabView(SBTabView, selectedItemDidReceiveIcon: SBTabViewItem)
-    optional func tabView(SBTabView, selectedItemDidReceiveServerRedirect: SBTabViewItem)
-    optional func tabView(SBTabView, shouldAddNewItemForURL: NSURL, selection: Bool)
-    optional func tabView(SBTabView, shouldSearchString: String, newTab: Bool)
-    optional func tabView(SBTabView, shouldConfirmWithMessage: String) -> Bool
-    optional func tabView(SBTabView, shouldShowMessage: String)
-    optional func tabView(SBTabView, shouldTextInput prompt: String) -> String
-    optional func tabView(SBTabView, didAddResourceID: SBWebResourceIdentifier)
-    optional func tabView(SBTabView, didReceiveExpectedContentLengthOfResourceID: SBWebResourceIdentifier)
-    optional func tabView(SBTabView, didReceiveContentLengthOfResourceID: SBWebResourceIdentifier)
-    optional func tabView(SBTabView, didReceiveFinishLoadingOfResourceID: SBWebResourceIdentifier)
-    optional func tabView(SBTabView, didSelectTabViewItem: SBTabViewItem)
+    optional func tabView(_: SBTabView, selectedItemDidStartLoading: SBTabViewItem)
+    optional func tabView(_: SBTabView, selectedItemDidFinishLoading: SBTabViewItem)
+    optional func tabView(_: SBTabView, selectedItemDidFailLoading: SBTabViewItem)
+    optional func tabView(_: SBTabView, selectedItemDidReceiveTitle: SBTabViewItem)
+    optional func tabView(_: SBTabView, selectedItemDidReceiveIcon: SBTabViewItem)
+    optional func tabView(_: SBTabView, selectedItemDidReceiveServerRedirect: SBTabViewItem)
+    optional func tabView(_: SBTabView, shouldAddNewItemForURL: NSURL, selection: Bool)
+    optional func tabView(_: SBTabView, shouldSearchString: String, newTab: Bool)
+    optional func tabView(_: SBTabView, shouldConfirmWithMessage: String) -> Bool
+    optional func tabView(_: SBTabView, shouldShowMessage: String)
+    optional func tabView(_: SBTabView, shouldTextInput prompt: String) -> String
+    optional func tabView(_: SBTabView, didAddResourceID: SBWebResourceIdentifier)
+    optional func tabView(_: SBTabView, didReceiveExpectedContentLengthOfResourceID: SBWebResourceIdentifier)
+    optional func tabView(_: SBTabView, didReceiveContentLengthOfResourceID: SBWebResourceIdentifier)
+    optional func tabView(_: SBTabView, didReceiveFinishLoadingOfResourceID: SBWebResourceIdentifier)
+    //optional func tabView(_: SBTabView, didSelectTabViewItem: SBTabViewItem)
 }
 
 class SBTabView: NSTabView {
@@ -64,7 +64,7 @@ class SBTabView: NSTabView {
         return dropLast(desc) + " frame = \(frame)>"
     }
     
-    func tabViewItem(#identifier: Int) -> SBTabViewItem? {
+    func tabViewItem(identifier identifier: Int) -> SBTabViewItem? {
         return sbTabViewItems.first{$0.identifier as? Int == identifier}
     }
     
@@ -77,15 +77,14 @@ class SBTabView: NSTabView {
         }
     }
     
-    func addItem(#identifier: Int, tabbarItem: SBTabbarItem) -> SBTabViewItem {
+    func addItem(identifier identifier: Int, tabbarItem: SBTabbarItem) -> SBTabViewItem {
         let tabViewItem = SBTabViewItem(identifier: identifier, tabbarItem: tabbarItem)
         addTabViewItem(tabViewItem)
         return tabViewItem
     }
     
-    @objc(selectTabViewItemWithIdentifier:)
-    func selectTabViewItem(#identifier: Int) -> SBTabViewItem? {
-        super.selectTabViewItemWithIdentifier(identifier)
+    func selectTabViewItem(intIdentifier identifier: Int) -> SBTabViewItem? {
+        selectTabViewItemWithIdentifier(identifier)
         return selectedTabViewItem
     }
     

@@ -53,7 +53,7 @@ class SBHistory: NSObject {
         return items.objectsAtIndexes(indexes)
     }
     
-    func addNewItem(#URLString: String, title: String) {
+    func addNewItem(URLString URLString: String, title: String) {
         let item = WebHistoryItem(URLString: URLString, title: title, lastVisitedTimeInterval: NSDate().timeIntervalSince1970)
         history.addItems([item])
         writeToFile()

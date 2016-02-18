@@ -267,7 +267,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
     
     // MARK: Functions
     
-    func htmlString(#baseURL: NSURL, releaseNotesData data: NSData?) -> String? {
+    func htmlString(baseURL baseURL: NSURL, releaseNotesData data: NSData?) -> String? {
         if let data = data, baseHTML = String(contentsOfURL: baseURL, encoding: NSUTF8StringEncoding, error: nil) {
             let releaseNotes = String(UTF8String: UnsafePointer<CChar>(data.bytes))
             return baseHTML.format(releaseNotes ?? NSLocalizedString("No data", comment: ""))

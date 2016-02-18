@@ -27,8 +27,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 @objc protocol SBBookmarkListViewDelegate {
-    optional func bookmarkListViewShouldOpenSearchbar(SBBookmarkListView)
-    optional func bookmarkListViewShouldCloseSearchbar(SBBookmarkListView) -> Bool
+    optional func bookmarkListViewShouldOpenSearchbar(_: SBBookmarkListView)
+    optional func bookmarkListViewShouldCloseSearchbar(_: SBBookmarkListView) -> Bool
 }
 
 class SBBookmarkListView: SBView, NSAnimationDelegate {
@@ -415,7 +415,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
         addSubview(itemView)
     }
     
-    func addItemViews(#toIndex: Int, items: [NSDictionary]) {
+    func addItemViews(toIndex toIndex: Int, items: [NSDictionary]) {
         for (index, item) in enumerate(items) {
             addItemViewAtIndex(index + toIndex, item: item)
         }

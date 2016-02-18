@@ -39,7 +39,7 @@ extension NSImage {
         addRepresentation(bitmapImageRep!)
     }
     
-    func stretchableImage(#size: NSSize, sideCapWidth: CGFloat) -> NSImage {
+    func stretchableImage(size size: NSSize, sideCapWidth: CGFloat) -> NSImage {
         let image = NSImage(size: size)
         image.withFocus {
             let imageSize = self.size
@@ -53,7 +53,7 @@ extension NSImage {
         return image
     }
     
-    func inset(#size: NSSize, intersectRect: NSRect, offset: NSPoint) -> NSImage {
+    func inset(size size: NSSize, intersectRect: NSRect, offset: NSPoint) -> NSImage {
         let imageSize = self.size
         let inRect = (intersectRect == .zero) ? NSMakeRect(0, 0, imageSize.width, imageSize.height) : intersectRect
         var translate = NSZeroPoint

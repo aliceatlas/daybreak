@@ -29,7 +29,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import BLKGUI
 
 @objc protocol SBFindbarTarget {
-    func searchFor(String, direction forward: Bool, caseSensitive: Bool, wrap: Bool, continuous: Bool) -> Bool
+    func searchFor(_: String, direction forward: Bool, caseSensitive: Bool, wrap: Bool, continuous: Bool) -> Bool
 }
 
 class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {

@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import Foundation
 
 @objc protocol SBDownloaderDelegate {
-    func downloader(SBDownloader, didFinish: NSData)
-    optional func downloader(SBDownloader, didFail: NSError?)
+    func downloader(_: SBDownloader, didFinish: NSData)
+    optional func downloader(_: SBDownloader, didFail: NSError?)
 }
 
 class SBDownloader: NSObject {

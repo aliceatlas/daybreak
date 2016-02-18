@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 @objc protocol SBDownloadsViewDelegate {
-    optional func downloadsViewDidRemoveAllItems(SBDownloadsView)
+    optional func downloadsViewDidRemoveAllItems(_: SBDownloadsView)
 }
 
 class SBDownloadsView: SBView, NSAnimationDelegate {

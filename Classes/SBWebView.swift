@@ -27,8 +27,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 @objc protocol SBWebViewDelegate {
-    optional func webViewShouldOpenFindbar(SBWebView)
-    optional func webViewShouldCloseFindbar(SBWebView) -> Bool
+    optional func webViewShouldOpenFindbar(_: SBWebView)
+    optional func webViewShouldCloseFindbar(_: SBWebView) -> Bool
 }
 
 class SBWebView: WebView, SBFindbarTarget {

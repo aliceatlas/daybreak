@@ -27,8 +27,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 @objc protocol SBSourceTextViewDelegate: NSTextViewDelegate {
-    optional func textViewShouldOpenFindbar(SBSourceTextView)
-    optional func textViewShouldCloseFindbar(SBSourceTextView)
+    optional func textViewShouldOpenFindbar(_: SBSourceTextView)
+    optional func textViewShouldCloseFindbar(_: SBSourceTextView)
 }
 
 class SBSourceTextView: NSTextView, SBFindbarTarget {

@@ -29,14 +29,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import BLKGUI
 
 @objc protocol SBWebResourcesViewDataSource {
-    func numberOfRowsInWebResourcesView(SBWebResourcesView) -> Int
-    func webResourcesView(SBWebResourcesView, objectValueForTableColumn: NSTableColumn, row: Int) -> AnyObject?
-    func webResourcesView(SBWebResourcesView, willDisplayCell: AnyObject?, forTableColumn: NSTableColumn, row: Int)
+    func numberOfRowsInWebResourcesView(_: SBWebResourcesView) -> Int
+    func webResourcesView(_: SBWebResourcesView, objectValueForTableColumn: NSTableColumn, row: Int) -> AnyObject?
+    func webResourcesView(_: SBWebResourcesView, willDisplayCell: AnyObject?, forTableColumn: NSTableColumn, row: Int)
 }
 
 @objc protocol SBWebResourcesViewDelegate {
-    optional func webResourcesView(SBWebResourcesView, shouldSaveAtRow: Int)
-    optional func webResourcesView(SBWebResourcesView, shouldDownloadAtRow: Int)
+    optional func webResourcesView(_: SBWebResourcesView, shouldSaveAtRow: Int)
+    optional func webResourcesView(_: SBWebResourcesView, shouldDownloadAtRow: Int)
 }
 
 class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {

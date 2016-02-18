@@ -51,7 +51,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate, WebDownloadDelegate {
         executeDidAddItem(item)
     }
     
-    func addItem(#URL: NSURL) {
+    func addItem(URL URL: NSURL) {
         addItem(SBDownload(URL: URL))
     }
     

@@ -37,7 +37,7 @@ extension NSMenu {
         }
     }
     
-    func selectItem(#representedObject: AnyObject?) -> NSMenuItem? {
+    func selectItem(representedObject representedObject: AnyObject?) -> NSMenuItem? {
         var selectedItem: NSMenuItem?
         for item in itemArray {
             let repObject: AnyObject? = item.representedObject
@@ -54,7 +54,7 @@ extension NSMenu {
         itemArray.forEach { $0.state = NSOffState }
     }
     
-    func addItem(#title: String, target: AnyObject?, action: Selector, tag: Int) -> NSMenuItem {
+    func addItem(title title: String, target: AnyObject?, action: Selector, tag: Int) -> NSMenuItem {
         let item = NSMenuItem()
         item.title = title
         item.target = target
@@ -64,7 +64,7 @@ extension NSMenu {
         return item
     }
     
-    func addItem(#title: String, representedObject: AnyObject?, target: AnyObject?, action: Selector) -> NSMenuItem {
+    func addItem(title title: String, representedObject: AnyObject?, target: AnyObject?, action: Selector) -> NSMenuItem {
         let item = NSMenuItem()
         item.title = title
         item.target = target

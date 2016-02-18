@@ -27,8 +27,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 @objc protocol SBToolbarDelegate: NSToolbarDelegate {
-    func toolbarDidVisible(SBToolbar)
-    func toolbarDidInvisible(SBToolbar)
+    func toolbarDidVisible(_: SBToolbar)
+    func toolbarDidInvisible(_: SBToolbar)
 }
 
 class SBToolbar: NSToolbar {

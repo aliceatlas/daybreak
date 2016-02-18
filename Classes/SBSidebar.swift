@@ -35,17 +35,17 @@ enum SBSidebarPosition: Int {
 }
 
 @objc protocol SBSidebarDelegate: NSSplitViewDelegate {
-    optional func sidebarShouldOpen(SBSidebar)
-    optional func sidebarShouldClose(SBSidebar)
-    optional func sidebarDidOpenDrawer(SBSidebar)
+    optional func sidebarShouldOpen(_: SBSidebar)
+    optional func sidebarShouldClose(_: SBSidebar)
+    optional func sidebarDidOpenDrawer(_: SBSidebar)
     // func sidebar(SBSidebar, didDraggedResizer deltaX: CGFloat) -> CGFloat
 }
 
 @objc protocol SBSideBottombarDelegate {
-    optional func bottombarDidSelectedOpen(SBSideBottombar)
-    optional func bottombarDidSelectedClose(SBSideBottombar)
-    optional func bottombarDidSelectedDrawerOpen(SBSideBottombar)
-    optional func bottombarDidSelectedDrawerClose(SBSideBottombar)
+    optional func bottombarDidSelectedOpen(_: SBSideBottombar)
+    optional func bottombarDidSelectedClose(_: SBSideBottombar)
+    optional func bottombarDidSelectedDrawerOpen(_: SBSideBottombar)
+    optional func bottombarDidSelectedDrawerClose(_: SBSideBottombar)
     optional func bottombar(inBottombar: SBSideBottombar, didChangeSize: CGFloat)
     // func bottombar(SBSidebar, didDraggedResizer deltaX: CGFloat) -> CGFloat
 }

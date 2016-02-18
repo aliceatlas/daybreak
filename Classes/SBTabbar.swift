@@ -27,12 +27,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 @objc protocol SBTabbarDelegate {
-    optional func tabbar(SBTabbar, didChangeSelection: SBTabbarItem)
-    optional func tabbar(SBTabbar, didReselection: SBTabbarItem)
-    optional func tabbar(SBTabbar, shouldAddNewItemForURLs: [NSURL]?)
-    optional func tabbar(SBTabbar, shouldOpenURLs: [NSURL], startInItem: SBTabbarItem)
-    optional func tabbar(SBTabbar, shouldReload: SBTabbarItem)
-    optional func tabbar(SBTabbar, didRemoveItem tag: NSInteger)
+    optional func tabbar(_: SBTabbar, didChangeSelection: SBTabbarItem)
+    optional func tabbar(_: SBTabbar, didReselection: SBTabbarItem)
+    optional func tabbar(_: SBTabbar, shouldAddNewItemForURLs: [NSURL]?)
+    optional func tabbar(_: SBTabbar, shouldOpenURLs: [NSURL], startInItem: SBTabbarItem)
+    optional func tabbar(_: SBTabbar, shouldReload: SBTabbarItem)
+    optional func tabbar(_: SBTabbar, didRemoveItem tag: NSInteger)
 }
 
 class SBTabbar: SBView, NSAnimationDelegate {
@@ -293,52 +293,54 @@ class SBTabbar: SBView, NSAnimationDelegate {
     }
     
     func selectLastItem() {
-        if !items.isEmpty {
-            selectItem(items.last!)
-        } else {
+        guard !items.isEmpty else {
             NSBeep()
+            return
         }
+        selectItem(items.last!)
     }
     
     func selectPreviousItem() {
-        if !items.isEmpty, let prevItem = selectedTabbarItemIndex !! {items.get($0 - 1)} ?? items.last {
-            selectItem(prevItem)
-        } else {
+        guard !items.isEmpty else {
             NSBeep()
+            return
         }
+        let prevItem = selectedTabbarItemIndex !! {items.get($0 - 1)} ?? items.last!
+        selectItem(prevItem)
     }
     
     func selectNextItem() {
-        if !items.isEmpty, let nextItem = selectedTabbarItemIndex !! {items.get($0 + 1)} ?? items.first {
-            selectItem(nextItem)
-        } else {
+        guard !items.isEmpty else {
             NSBeep()
+            return
         }
+        let nextItem = selectedTabbarItemIndex !! {items.get($0 + 1)} ?? items.first!
+        selectItem(nextItem)
     }
     
     func closeItem(item: SBTabbarItem) {
-        if !items.isEmpty {
-            let shouldSelect = item.selected
-            let tag = item.tag
-            let index = indexOfItem(items, item)
-            if removeItem(item) {
-                updateItems()
-                if shouldSelect {
-                    selectItemForIndex(index!)
-                }
-                executeDidRemoveItem(tag)
-            }
-        } else {
+        guard !items.isEmpty else {
             NSBeep()
+            return
+        }
+        let shouldSelect = item.selected
+        let tag = item.tag
+        let index = items.indexOf(item)
+        if removeItem(item) {
+            updateItems()
+            if shouldSelect {
+                selectItemForIndex(index!)
+            }
+            executeDidRemoveItem(tag)
         }
     }
     
     func closeSelectedItem() {
-        if !items.isEmpty {
-            selectedTabbarItem !! closeItem
-        } else {
+        guard !items.isEmpty else {
             NSBeep()
+            return
         }
+        selectedTabbarItem !! closeItem
     }
     
     func addNewItem(sender: AnyObject?) {
@@ -350,7 +352,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
     }
     
     func closeOtherItemsFromMenu(menuItem: NSMenuItem) {
-        items.reverse().filter({indexOfItem(self.items, $0) != menuItem.tag}).map(closeItem)
+        items.reverse().filter{items.indexOf($0) != menuItem.tag}.forEach(closeItem)
     }
     
     func reloadItemFromMenu(menuItem: NSMenuItem) {
@@ -365,7 +367,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
             contentView.autoresizingMask = .ViewMinYMargin
         } else {
             contentView.frame.origin = .zero
-            contentView.autoresizingMask = .ViewWidthSizable | .ViewMinYMargin
+            contentView.autoresizingMask = [.ViewWidthSizable, .ViewMinYMargin]
         }
         contentView.frame.size = size
     }

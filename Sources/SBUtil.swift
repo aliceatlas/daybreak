@@ -142,7 +142,7 @@ func SBBookmarksWithItems(items: [NSDictionary]) -> [NSObject: AnyObject] {
             kSBBookmarkItems: items]
 }
 
-func SBCreateBookmarkItem(title: String?, URL: String?, imageData: NSData?, date: NSDate?, labelName: String?, offsetString: String?) -> BookmarkItem {
+func SBCreateBookmarkItem(title: String?, _ URL: String?, _ imageData: NSData?, _ date: NSDate?, _ labelName: String?, _ offsetString: String?) -> BookmarkItem {
     var item: [String: AnyObject] = [:]
     title !! { item[kSBBookmarkTitle] = $0 }
     URL !! { item[kSBBookmarkURL] = $0 }
@@ -153,7 +153,7 @@ func SBCreateBookmarkItem(title: String?, URL: String?, imageData: NSData?, date
     return item
 }
 
-func SBBookmarkLabelColorMenu(pullsDown: Bool, target: AnyObject?, action: Selector, representedObject: AnyObject?) -> NSMenu {
+func SBBookmarkLabelColorMenu(pullsDown: Bool, _ target: AnyObject?, _ action: Selector, _ representedObject: AnyObject?) -> NSMenu {
     let menu = NSMenu()
     if pullsDown {
         menu.addItemWithTitle("", action: nil, keyEquivalent: "")
@@ -203,7 +203,7 @@ var SBBookmarkImageMaxSize: NSSize {
 
 // MARK: File paths
 
-func SBFilePathInApplicationBundle(name: String, ext: String) -> String? {
+func SBFilePathInApplicationBundle(name: String, _ ext: String) -> String? {
     let path = NSBundle.mainBundle().pathForResource(name, ofType: ext)
     if path &! {NSFileManager.defaultManager().fileExistsAtPath($0)} {
         return path
@@ -219,7 +219,7 @@ func SBLibraryDirectory(subdirectory: String?) -> String? {
     return SBSearchPath(.LibraryDirectory, subdirectory)
 }
 
-func SBSearchFileInDirectory(filename: String, directoryPath: String) -> String? {
+func SBSearchFileInDirectory(filename: String, _ directoryPath: String) -> String? {
     let manager = NSFileManager.defaultManager()
     let contents = manager.contentsOfDirectoryAtPath(directoryPath, error: nil)
 
@@ -229,7 +229,7 @@ func SBSearchFileInDirectory(filename: String, directoryPath: String) -> String?
     return nil
 }
 
-func SBSearchPath(searchPathDirectory: NSSearchPathDirectory, subdirectory: String?) -> String? {
+func SBSearchPath(searchPathDirectory: NSSearchPathDirectory, _ subdirectory: String?) -> String? {
     let manager = NSFileManager.defaultManager()
     let paths = NSSearchPathForDirectoriesInDomains(searchPathDirectory, .UserDomainMask, true)
     var path = paths.get(0)
@@ -295,7 +295,7 @@ var SBHistoryFilePath: String {
 
 // MARK: Paths
 
-func SBRoundedPath(inRect: CGRect, curve: CGFloat, inner: CGFloat, top: Bool, bottom: Bool, close: Bool = false) -> NSBezierPath {
+func SBRoundedPath(inRect: CGRect, _ curve: CGFloat, _ inner: CGFloat, _ top: Bool, _ bottom: Bool, _ close: Bool = false) -> NSBezierPath {
     let rect = NSInsetRect(inRect, inner / 2, inner / 2)
     
     if top && bottom {
@@ -410,7 +410,7 @@ enum SBTriangleDirection {
     case Left, Top, Right, Bottom
 }
 
-func SBTrianglePath(rect: NSRect, direction: SBTriangleDirection) -> NSBezierPath {
+func SBTrianglePath(rect: NSRect, _ direction: SBTriangleDirection) -> NSBezierPath {
     let path = NSBezierPath()
     var p = NSZeroPoint
     
@@ -468,7 +468,7 @@ func SBTrianglePath(rect: NSRect, direction: SBTriangleDirection) -> NSBezierPat
     return path
 }
 
-func SBEllipsePath3D(r: NSRect, transform: CATransform3D) -> NSBezierPath {
+func SBEllipsePath3D(r: NSRect, _ transform: CATransform3D) -> NSBezierPath {
     let path = NSBezierPath()
     var p = NSZeroPoint
     var cp1 = NSZeroPoint
@@ -522,7 +522,7 @@ func SBEllipsePath3D(r: NSRect, transform: CATransform3D) -> NSBezierPath {
     return path
 }
 
-func SBRoundedPath3D(rect: NSRect, curve: CGFloat, transform: CATransform3D) -> NSBezierPath {
+func SBRoundedPath3D(rect: NSRect, _ curve: CGFloat, _ transform: CATransform3D) -> NSBezierPath {
     let path = NSBezierPath()
     var p = NSZeroPoint
     var cp1 = NSZeroPoint
@@ -596,7 +596,7 @@ func SBRoundedPath3D(rect: NSRect, curve: CGFloat, transform: CATransform3D) -> 
     return path
 }
 
-func SBCGPointApplyTransform3D(inout p: NSPoint, t: CATransform3D) {
+func SBCGPointApplyTransform3D(inout p: NSPoint, _ t: CATransform3D) {
     let px = p.x
     let py = p.y
     let w = px * t.m14 + py * t.m24 + t.m44
@@ -636,7 +636,7 @@ var SBCurrentGraphicsPort: CGContext {
 
 // MARK: Image
 
-func SBBackwardIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage {
+func SBBackwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSImage {
     let tPath = SBTrianglePath(NSMakeRect(9.0, 7.0, size.width - 9.0 * 2, size.height - 7.0 * 2), .Left)
     let tGray: CGFloat = enabled ? 0.2 : 0.5
     let rect = NSRect(origin: NSZeroPoint, size: size)
@@ -672,7 +672,7 @@ func SBBackwardIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage 
     return image
 }
 
-func SBForwardIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage {
+func SBForwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSImage {
     let tPath = SBTrianglePath(NSMakeRect(9.0, 7.0, size.width - 9.0 * 2, size.height - 7.0 * 2), .Right)
     let tGray: CGFloat = enabled ? 0.2 : 0.5
     let rect = NSRect(origin: .zero, size: size)
@@ -708,7 +708,7 @@ func SBForwardIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage {
     return image
 }
 
-func SBGoIconImage(size: NSSize, enabled: Bool, backing: Bool) -> NSImage {
+func SBGoIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSImage {
     let rect = NSRect(origin: .zero, size: size)
     
     let image = NSImage(size: size)
@@ -818,7 +818,7 @@ func SBZoomInIconImage(size: NSSize) -> NSImage {
     return image
 }
 
-func SBAddIconImage(size: NSSize, backing: Bool) -> NSImage {
+func SBAddIconImage(size: NSSize, _ backing: Bool) -> NSImage {
     let rect = NSRect(origin: .zero, size: size)
     var p = CGPointZero
     var cp1 = CGPointZero
@@ -970,11 +970,11 @@ func SBCloseIconImage() -> NSImage {
     return image
 }
 
-func SBIconImageWithName(imageName: String, shape: SBButtonShape, size: NSSize) -> NSImage {
+func SBIconImageWithName(imageName: String, _ shape: SBButtonShape, _ size: NSSize) -> NSImage {
     return SBIconImage(NSImage(named: imageName), shape, size)
 }
 
-func SBIconImage(iconImage: NSImage?, shape: SBButtonShape, size: NSSize) -> NSImage {
+func SBIconImage(iconImage: NSImage?, _ shape: SBButtonShape, _ size: NSSize) -> NSImage {
     let imageSize = iconImage?.size ?? NSZeroSize
     var imageRect = NSMakeRect((size.width - imageSize.width) / 2, (size.height - imageSize.height) / 2, imageSize.width, imageSize.height)
     
@@ -1115,7 +1115,7 @@ func SBIconImage(iconImage: NSImage?, shape: SBButtonShape, size: NSSize) -> NSI
     return image
 }
 
-func SBFindBackwardIconImage(size: NSSize, enabled: Bool) -> NSImage {
+func SBFindBackwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
     let rect = NSRect(origin: .zero, size: size)
     let tPath = SBTrianglePath(NSMakeRect(9.0, 5.0, size.width - 9.0 * 2, size.height - 5.0 * 2), .Left)
     var p = NSZeroPoint
@@ -1178,7 +1178,7 @@ func SBFindBackwardIconImage(size: NSSize, enabled: Bool) -> NSImage {
     return image
 }
 
-func SBFindForwardIconImage(size: NSSize, enabled: Bool) -> NSImage {
+func SBFindForwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
     let rect = NSRect(origin: .zero, size: size)
     let tPath = SBTrianglePath(NSMakeRect(9.0, 5.0, size.width - 9.0 * 2, size.height - 5.0 * 2), .Right)
     var p = NSZeroPoint
@@ -1254,15 +1254,15 @@ func SBBookmarkReflectionMaskImage(size: NSSize) -> NSImage {
 
 // MARK: Math
 
-func SBRemainder(value1: Int, value2: Int) -> Int {
+func SBRemainder(value1: Int, _ value2: Int) -> Int {
     return value1 - (value1 / value2) * value2
 }
 
-func SBRemainderIsZero(value1: Int, value2: Int) -> Bool {
+func SBRemainderIsZero(value1: Int, _ value2: Int) -> Bool {
     return SBRemainder(value1, value2) == 0
 }
 
-func SBGreatestCommonDivisor(a: Int, b: Int) -> Int {
+func SBGreatestCommonDivisor(a: Int, _ b: Int) -> Int {
     //!!!
     var v = 0
     if a == 0 || b == 0 {
@@ -1283,7 +1283,7 @@ func SBGreatestCommonDivisor(a: Int, b: Int) -> Int {
 
 // MARK: Others
 
-func SBValueForKey(keyName: String, dictionary: [NSObject: AnyObject]) -> AnyObject? {
+func SBValueForKey(keyName: String, _ dictionary: [NSObject: AnyObject]) -> AnyObject? {
     var value = dictionary[keyName]
     if value == nil {
         for object in dictionary.values {
@@ -1297,7 +1297,7 @@ func SBValueForKey(keyName: String, dictionary: [NSObject: AnyObject]) -> AnyObj
     return value
 }
 
-func SBEncodingMenu(target: AnyObject?, selector: Selector, showDefault: Bool) -> NSMenu {
+func SBEncodingMenu(target: AnyObject?, _ selector: Selector, _ showDefault: Bool) -> NSMenu {
     let menu = NSMenu()
     var encs: [NSStringEncoding?]!
     if kSBFlagShowAllStringEncodings {
@@ -1339,7 +1339,7 @@ func SBEncodingMenu(target: AnyObject?, selector: Selector, showDefault: Bool) -
     return menu
 }
 
-func SBStringEncodingSortFunction(num1: NSStringEncoding, num2: NSStringEncoding) -> Bool {
+func SBStringEncodingSortFunction(num1: NSStringEncoding, _ num2: NSStringEncoding) -> Bool {
     let enc1 = String.localizedNameOfStringEncoding(num1)
     let enc2 = String.localizedNameOfStringEncoding(num2)
     return enc1 < enc2
@@ -1353,7 +1353,7 @@ func SBRunAlertWithMessage(message: String) {
     alert.runModal()
 }
 
-func SBDisembedViewInSplitView(view: NSView, splitView: NSSplitView) {
+func SBDisembedViewInSplitView(view: NSView, _ splitView: NSSplitView) {
     let r = splitView.frame
     if let superview = splitView.superview {
         view.frame = r
@@ -1363,11 +1363,11 @@ func SBDisembedViewInSplitView(view: NSView, splitView: NSSplitView) {
     }
 }
 
-func SBDistancePoints(p1: NSPoint, p2: NSPoint) -> CGFloat {
+func SBDistancePoints(p1: NSPoint, _ p2: NSPoint) -> CGFloat {
     return sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y))
 }
 
-func SBAllowsDrag(downPoint: NSPoint, dragPoint: NSPoint) -> Bool {
+func SBAllowsDrag(downPoint: NSPoint, _ dragPoint: NSPoint) -> Bool {
     return SBDistancePoints(downPoint, dragPoint) > 10
 }
 
@@ -1456,7 +1456,7 @@ func SBDispatch(block: dispatch_block_t) {
     dispatch_async(dispatch_get_main_queue(), block)
 }
 
-func SBDispatchDelay(delay: Double, block: dispatch_block_t) {
+func SBDispatchDelay(delay: Double, _ block: dispatch_block_t) {
     let time = dispatch_time(DISPATCH_TIME_NOW, Int64(Double(NSEC_PER_SEC) * delay))
     let queue = dispatch_get_main_queue()
     dispatch_after(time, queue, block)
@@ -1531,12 +1531,12 @@ func SBDebugDumpMenu(menu: NSMenu) -> [[NSObject: AnyObject]] {
     return items
 }
 
-func SBDebugWriteViewStructure(view: NSView, path: String) -> Bool {
+func SBDebugWriteViewStructure(view: NSView, _ path: String) -> Bool {
     let info = SBDebugViewStructure(view) as NSDictionary
     return info.writeToFile(path, atomically: true)
 }
 
-func SBDebugWriteLayerStructure(layer: CALayer, path: String) -> Bool {
+func SBDebugWriteLayerStructure(layer: CALayer, _ path: String) -> Bool {
     let info = SBDebugLayerStructure(layer) as NSDictionary
     return info.writeToFile(path, atomically: true)
 }

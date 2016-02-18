@@ -414,13 +414,13 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         return newWindowController
     }
     
-    func constructNewTab(#string: String?, selection: Bool) {
+    func constructNewTab(string string: String?, selection: Bool) {
         let requestURLString = string?.ifNotEmpty?.requestURLString
         let URL = requestURLString?.ifNotEmpty !! {NSURL(string: $0)}
         constructNewTab(URL: URL, selection: selection)
     }
     
-    func constructNewTab(#URL: NSURL?, selection: Bool) {
+    func constructNewTab(URL URL: NSURL?, selection: Bool) {
         let tag = createdTag()
         let tabbarItem = constructTabbarItem(tag: tag)
         tabbarItem.title = displayName
@@ -441,11 +441,11 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         }
     }
     
-    func constructTabbarItem(#tag: Int) -> SBTabbarItem {
+    func constructTabbarItem(tag tag: Int) -> SBTabbarItem {
         return tabbar.addItemWithTag(tag)
     }
     
-    func constructTabViewItem(#identifier: NSNumber, tabbarItem: SBTabbarItem) -> SBTabViewItem {
+    func constructTabViewItem(identifier identifier: NSNumber, tabbarItem: SBTabbarItem) -> SBTabViewItem {
         return tabView.addItem(identifier: identifier as Int, tabbarItem: tabbarItem)
     }
     
@@ -1328,7 +1328,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     
     // MARK: Update
     
-    func updateMenu(#tag: Int) {
+    func updateMenu(tag tag: Int) {
         if let menu = SBMenuWithTag(tag) {
             menu.update()
         }
@@ -1450,7 +1450,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         return should
     }
     
-    func openAndConstructTab(#URLs: [NSURL], startInTabbarItem aTabbarItem: SBTabbarItem) {
+    func openAndConstructTab(URLs URLs: [NSURL], startInTabbarItem aTabbarItem: SBTabbarItem) {
         let tabViewItem = tabView.tabViewItem(identifier: aTabbarItem.tag)
         if URLField.isFirstResponder {
             window.makeFirstResponder(selectedWebView)

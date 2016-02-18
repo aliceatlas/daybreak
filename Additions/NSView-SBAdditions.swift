@@ -26,18 +26,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 extension NSView {
-    func addConstraintStrings(#metrics: [String: Double], views: [String: NSView], constraints constraintStrings: [String]) {
+    func addConstraintStrings(metrics metrics: [String: Double], views: [String: NSView], constraints constraintStrings: [String]) {
         for constraintString in constraintStrings {
             let layoutConstraints = NSLayoutConstraint.constraintsWithVisualFormat(constraintString, options: [], metrics: metrics, views: views)
             addConstraints(layoutConstraints)
         }
     }
     
-    func addConstraintStrings(#metrics: [String: Double], views: [String: NSView], _ constraintStrings: String...) {
+    func addConstraintStrings(metrics metrics: [String: Double], views: [String: NSView], _ constraintStrings: String...) {
         addConstraintStrings(metrics: metrics, views: views, constraints: constraintStrings)
     }
     
-    func addSubviewsAndConstraintStrings(#metrics: [String: Double], views: [String: NSView], constraints constraintStrings: [String]) {
+    func addSubviewsAndConstraintStrings(metrics metrics: [String: Double], views: [String: NSView], constraints constraintStrings: [String]) {
         for (_, subview) in views {
             if subview.superview == nil {
                 addSubview(subview)
@@ -46,7 +46,7 @@ extension NSView {
         addConstraintStrings(metrics: metrics, views: views, constraints: constraintStrings)
     }
     
-    func addSubviewsAndConstraintStrings(#metrics: [String: Double], views: [String: NSView], _ constraintStrings: String...) {
+    func addSubviewsAndConstraintStrings(metrics metrics: [String: Double], views: [String: NSView], _ constraintStrings: String...) {
         addSubviewsAndConstraintStrings(metrics: metrics, views: views, constraints: constraintStrings)
     }
 }

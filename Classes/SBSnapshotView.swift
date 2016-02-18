@@ -565,7 +565,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     }
     
     @objc(updateWithTimer:)
-    func update(#timer: NSTimer) {
+    func update(timer timer: NSTimer) {
         let field: AnyObject? = timer.userInfo
         destructUpdateTimer()
         update(forField: field)

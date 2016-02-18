@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 @objc protocol SBSplitViewDelegate: NSSplitViewDelegate {
-    optional func splitViewDidOpenDrawer(SBSplitView)
+    optional func splitViewDidOpenDrawer(_: SBSplitView)
 }
 
 class SBSplitView: NSSplitView, SBSidebarDelegate {

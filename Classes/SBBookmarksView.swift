@@ -29,9 +29,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import BLKGUI
 
 @objc protocol SBBookmarksViewDelegate {
-    optional func bookmarksView(SBBookmarksView, didChangeMode: SBBookmarkMode)
-    optional func bookmarksView(SBBookmarksView, shouldEditItemAtIndex: Int)
-    optional func bookmarksView(SBBookmarksView, didChangeCellWidth: CGFloat)
+    optional func bookmarksView(_: SBBookmarksView, didChangeMode: SBBookmarkMode)
+    optional func bookmarksView(_: SBBookmarksView, shouldEditItemAtIndex: Int)
+    optional func bookmarksView(_: SBBookmarksView, didChangeCellWidth: CGFloat)
 }
 
 class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
