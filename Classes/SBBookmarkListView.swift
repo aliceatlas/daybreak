@@ -188,9 +188,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
     }
     
     var spacing: NSPoint {
-        var s = NSZeroPoint
-        s.x = (width - _block.x * cellSize.width) / (_block.x + 1)
-        return s
+        return NSMakePoint((width - _block.x * cellSize.width) / (_block.x + 1), 0)
     }
     
     var block: NSPoint {
@@ -204,14 +202,12 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
     }
     
     func itemRectAtIndex(index: Int) -> NSRect {
-        var r = NSZeroRect
-        var pos = NSZeroPoint
-        r.size = cellSize
         let spacing = mode == .Icon ? self.spacing : .zero
-        pos.y = trunc(CGFloat(index) / trunc(_block.x))
-        pos.x = CGFloat(SBRemainder(index, Int(_block.x)))
-        r.origin.x = pos.x * cellSize.width + spacing.x * pos.x
-        r.origin.y = pos.y * cellSize.height
+        let pos = NSPoint(x: CGFloat(SBRemainder(index, Int(_block.x))),
+                          y: trunc(CGFloat(index) / trunc(_block.x)))
+        var r = NSRect(origin: pos, size: cellSize)
+        r.origin.x *= cellSize.width + spacing.x
+        r.origin.y *= cellSize.height
         return r
     }
     
@@ -328,11 +324,8 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
     }
     
     func removeButtonRect(itemView: SBBookmarkListItemView?) -> NSRect {
-        var r = NSZeroRect
-        r.size.width = 24.0
-        r.size.height = r.size.width
-        itemView !! { r.origin = $0.frame.origin }
-        return r
+        return NSRect(origin: itemView?.frame.origin ?? .zero,
+                        size: NSMakeSize(24.0, 24.0))
     }
     
     func editButtonRect(itemView: SBBookmarkListItemView?) -> NSRect {

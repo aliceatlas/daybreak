@@ -97,24 +97,20 @@ public class ButtonCell: NSButtonCell {
             var r = NSZeroRect
             var offset: CGFloat = 0
             if buttonType == .SwitchButton {
-                var imageRect = NSZeroRect
-                
                 let highlightedFlag = highlighted ? "-Highlighted" : ""
                 let selectedFlag = state == NSOnState ? "-Selected" : ""
                 image = NSImage(named: "CheckBox\(selectedFlag)\(highlightedFlag).png")
                 
-                imageRect.size = image!.size
+                let imageRect = NSRect(size: image!.size)
                 r.size = imageRect.size
                 r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
                 image!.drawInRect(r, operation: .CompositeSourceOver, fraction: (enabled ? 1.0 : 0.5), respectFlipped: true)
             } else if buttonType == .RadioButton {
-                var imageRect = NSZeroRect
-                
                 let highlightedFlag = highlighted ? "-Highlighted" : ""
                 let selectedFlag = state == NSOnState ? "-Selected" : ""
                 image = NSImage(named: "Radio\(selectedFlag)\(highlightedFlag).png")
                 
-                imageRect.size = image?.size ?? .zero
+                let imageRect = NSRect(size: image?.size ?? .zero)
                 r.size = imageRect.size
                 r.origin.x = cellFrame.origin.x
                 r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
@@ -190,9 +186,8 @@ public class ButtonCell: NSButtonCell {
                 r.origin.y = (frame.size.height - r.size.height) / 2
                 r.origin.y -= 2.0
                 if let image = self.image {
-                    var imageRect = NSZeroRect
+                    var imageRect = NSRect(size: image.size ?? .zero)
                     let margin: CGFloat = 3.0
-                    imageRect.size = image.size ?? .zero
                     if r.origin.x > (imageRect.size.width + margin) {
                         let width = imageRect.size.width + r.size.width + margin
                         imageRect.origin.x = (frame.size.width - width) / 3

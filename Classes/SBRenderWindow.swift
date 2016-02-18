@@ -40,7 +40,7 @@ class SBRenderWindow: NSWindow, WebFrameLoadDelegate {
     }
     
     class func startRenderingWithSize(size: NSSize, delegate: SBRenderWindowDelegate?, URL: NSURL) -> SBRenderWindow {
-        let r = NSRect(origin: .zero, size: size)
+        let r = NSRect(size: size)
         let window = SBRenderWindow(contentRect: r)
         window.delegate = delegate
         window.webView!.mainFrame.loadRequest(NSURLRequest(URL: URL))
@@ -56,8 +56,7 @@ class SBRenderWindow: NSWindow, WebFrameLoadDelegate {
         let deferCreation = true
         super.init(contentRect: contentRect, styleMask: styleMask, backing: bufferingType, defer: deferCreation)
         
-        var r = contentRect
-        r.origin = .zero
+        let r = NSRect(size: contentRect.size)
         webView = WebView(frame: r, frameName: nil, groupName: nil)
         webView!.frameLoadDelegate = self
         webView!.preferences = SBGetWebPreferences

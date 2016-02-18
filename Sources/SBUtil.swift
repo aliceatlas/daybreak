@@ -101,7 +101,7 @@ var SBDefaultBookmarks: NSDictionary? {
 
 var SBEmptyBookmarkImageData: NSData {
     let size = SBBookmarkImageMaxSize
-    let rect = NSRect(origin: .zero, size: size)
+    let rect = NSRect(size: size)
     let image = NSImage(size: size)
 
     image.withFocus {
@@ -367,7 +367,7 @@ func SBLeftButtonPath(size: NSSize) -> NSBezierPath {
 }
 
 func SBCenterButtonPath(size: NSSize) -> NSBezierPath {
-    return NSBezierPath(rect: NSInsetRect(NSRect(origin: NSZeroPoint, size: size), 0.5, 0.5))
+    return NSBezierPath(rect: NSInsetRect(NSRect(size: size), 0.5, 0.5))
 }
 
 func SBRightButtonPath(size: NSSize) -> NSBezierPath {
@@ -639,7 +639,7 @@ var SBCurrentGraphicsPort: CGContext {
 func SBBackwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSImage {
     let tPath = SBTrianglePath(NSMakeRect(9.0, 7.0, size.width - 9.0 * 2, size.height - 7.0 * 2), .Left)
     let tGray: CGFloat = enabled ? 0.2 : 0.5
-    let rect = NSRect(origin: NSZeroPoint, size: size)
+    let rect = NSRect(size: size)
     
     let image = NSImage(size: size)
     image.withFocus {
@@ -675,7 +675,7 @@ func SBBackwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSIm
 func SBForwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSImage {
     let tPath = SBTrianglePath(NSMakeRect(9.0, 7.0, size.width - 9.0 * 2, size.height - 7.0 * 2), .Right)
     let tGray: CGFloat = enabled ? 0.2 : 0.5
-    let rect = NSRect(origin: .zero, size: size)
+    let rect = NSRect(size: size)
     
     let image = NSImage(size: size)
     image.withFocus {
@@ -709,7 +709,7 @@ func SBForwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSIma
 }
 
 func SBGoIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSImage {
-    let rect = NSRect(origin: .zero, size: size)
+    let rect = NSRect(size: size)
     
     let image = NSImage(size: size)
     image.withFocus {
@@ -819,7 +819,7 @@ func SBZoomInIconImage(size: NSSize) -> NSImage {
 }
 
 func SBAddIconImage(size: NSSize, _ backing: Bool) -> NSImage {
-    let rect = NSRect(origin: .zero, size: size)
+    let rect = NSRect(size: size)
     var p = CGPointZero
     var cp1 = CGPointZero
     var cp2 = CGPointZero
@@ -975,7 +975,7 @@ func SBIconImageWithName(imageName: String, _ shape: SBButtonShape, _ size: NSSi
 }
 
 func SBIconImage(iconImage: NSImage?, _ shape: SBButtonShape, _ size: NSSize) -> NSImage {
-    let imageSize = iconImage?.size ?? NSZeroSize
+    let imageSize = iconImage?.size ?? .zero
     var imageRect = NSMakeRect((size.width - imageSize.width) / 2, (size.height - imageSize.height) / 2, imageSize.width, imageSize.height)
     
     let image = NSImage(size: size)
@@ -990,7 +990,7 @@ func SBIconImage(iconImage: NSImage?, _ shape: SBButtonShape, _ size: NSSize) ->
             var insetMargin: CGFloat = 3.0
             let lineWidth: CGFloat = 2.0
             let path = NSBezierPath()
-            var insetRect = NSRect(origin: .zero, size: size)
+            var insetRect = NSRect(size: size)
             
             switch shape {
                 case .Exclusive:
@@ -1116,7 +1116,7 @@ func SBIconImage(iconImage: NSImage?, _ shape: SBButtonShape, _ size: NSSize) ->
 }
 
 func SBFindBackwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
-    let rect = NSRect(origin: .zero, size: size)
+    let rect = NSRect(size: size)
     let tPath = SBTrianglePath(NSMakeRect(9.0, 5.0, size.width - 9.0 * 2, size.height - 5.0 * 2), .Left)
     var p = NSZeroPoint
     var cp1 = NSZeroPoint
@@ -1179,7 +1179,7 @@ func SBFindBackwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
 }
 
 func SBFindForwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
-    let rect = NSRect(origin: .zero, size: size)
+    let rect = NSRect(size: size)
     let tPath = SBTrianglePath(NSMakeRect(9.0, 5.0, size.width - 9.0 * 2, size.height - 5.0 * 2), .Right)
     var p = NSZeroPoint
     var cp1 = NSZeroPoint
@@ -1242,7 +1242,7 @@ func SBFindForwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
 }
 
 func SBBookmarkReflectionMaskImage(size: NSSize) -> NSImage {
-    let rect = NSRect(origin: NSZeroPoint, size: size)
+    let rect = NSRect(size: size)
     let image = NSImage(size: size)
     image.withFocus {
         let colors = [NSColor(deviceWhite: 1.0, alpha: 0.2), NSColor(deviceWhite: 1.0, alpha: 0.0)]

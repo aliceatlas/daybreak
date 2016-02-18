@@ -146,10 +146,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     }
     
     var closeRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = bounds.size.height
-        r.size.height = bounds.size.height
-        return r
+        return NSMakeRect(0, 0, bounds.size.height, bounds.size.height)
     }
     
     var searchRect: NSRect {

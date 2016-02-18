@@ -50,7 +50,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     private lazy var imageView: NSImageView = {
         let imageViewSize = NSMakeSize(self.frame.size.width - self.margin.x - self.toolWidth - 8.0, self.frame.size.height - self.margin.y - 20.0)
-        return NSImageView(frame: NSRect(origin: .zero, size: imageViewSize))
+        return NSImageView(frame: NSRect(size: imageViewSize))
     }()
     private var imageViewSize: NSSize { return imageView.bounds.size }
     
@@ -804,7 +804,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             fromRect.size = image!.size
         }
         anImage.withFocus {
-            image!.drawInRect(NSMakeRect(0, 0, size.width, size.height), fromRect: fromRect, operation: .CompositeSourceOver, fraction: 1.0)
+            image!.drawInRect(NSRect(size: size), fromRect: fromRect, operation: .CompositeSourceOver, fraction: 1.0)
         }
         
         // Change filetype

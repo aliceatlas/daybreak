@@ -317,29 +317,19 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     let imageWidth: CGFloat = 20.0
     
     var backwardRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = buttonWidth
-        r.size.height = bounds.size.height
-        r.origin = NSZeroPoint
-        return r
+        return NSMakeRect(0, 0, buttonWidth, bounds.size.height)
     }
     
     var forwardRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = buttonWidth
-        r.size.height = bounds.size.height
-        r.origin.x = buttonWidth
-        r.origin.y = 0.0
-        return r
+        return NSMakeRect(buttonWidth, 0, buttonWidth, bounds.size.height)
     }
     
     var imageRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = 16.0
-        r.size.height = r.size.width
-        r.origin.x = buttonWidth * 2 + (imageWidth - r.size.width) / 2
-        r.origin.y = (bounds.size.height - r.size.height) / 2
-        return r
+        let w: CGFloat = 16.0
+        return NSMakeRect(
+            buttonWidth * 2 + (imageWidth - w) / 2,
+            (bounds.size.height - w) / 2,
+            w, w)
     }
     
     var fieldRect: NSRect {
@@ -352,12 +342,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     }
     
     var goRect: NSRect {
-        var r = NSZeroRect
-        r.size.width = goButtonWidth
-        r.size.height = bounds.size.height
-        r.origin.x = bounds.size.width - goButtonWidth
-        r.origin.y = 0.0
-        return r
+        return NSMakeRect(bounds.size.width - goButtonWidth, 0, goButtonWidth, bounds.size.height)
     }
     
     // MARK: Construction
@@ -739,21 +724,16 @@ class SBURLImageView: NSImageView, NSDraggingSource {
         let margin: CGFloat = 5.0
         let attribute: [String: AnyObject] = [NSFontAttributeName: field.font!]
         let textSize = URLString.sizeWithAttributes(attribute)
-        var size = NSZeroSize
-        size.height = bounds.size.height
-        size.width = bounds.size.width + textSize.width + margin
-        var imageRect = NSZeroRect
-        imageRect.size = bounds.size
+        var size = bounds.size
+        size.width += textSize.width + margin
+        var imageRect = NSRect(size: bounds.size)
         imageRect.origin.x = (size.height - imageRect.size.width) / 2
         imageRect.origin.y = (size.height - imageRect.size.height) / 2
-        var textRect = NSZeroRect
-        textRect.size.height = size.height
-        textRect.size.width = textSize.width
-        textRect.origin.x = margin + imageRect.maxX
+        let textRect = NSMakeRect(margin + imageRect.maxX, 0, textSize.width, size.height)
         
         let image = NSImage(size: size)
         image.withFocus {
-            self.image?.drawInRect(imageRect, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: 1.0)
+            self.image?.drawInRect(imageRect, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
             URLString.drawInRect(textRect, withAttributes: attribute)
         }
         
@@ -944,8 +924,7 @@ class SBURLFieldContentView: NSView {
     }()
     
     private lazy var table: NSTableView = {
-        var tableRect = NSZeroRect
-        tableRect.size = self.scrollerRect.size
+        var tableRect = NSRect(size: self.scrollerRect.size)
         
         let cell = SBURLFieldDataCell()
         cell.font = NSFont.systemFontOfSize(12.0)
@@ -1126,10 +1105,9 @@ private class SBURLFieldDataCell: NSCell {
     
     func drawImageWithFrame(cellFrame: NSRect, inView controlView: NSView) {
         if let image = image {
-            var r = NSZeroRect
-            r.size = image.size
-            r.origin.x = cellFrame.origin.x + side + leftMargin + (imageWidth - r.size.width) / 2
-            r.origin.y = cellFrame.origin.y + (cellFrame.size.height - r.size.height) / 2
+            var r = NSRect(origin: cellFrame.origin, size: image.size)
+            r.origin.x += side + leftMargin + (imageWidth - r.size.width) / 2
+            r.origin.y += (cellFrame.size.height - r.size.height) / 2
             image.drawInRect(r, operation: .CompositeSourceOver, fraction: 1.0, respectFlipped: true)
         }
     }
@@ -1149,14 +1127,13 @@ private class SBURLFieldDataCell: NSCell {
             let sAttribute = [NSFontAttributeName: font, NSForegroundColorAttributeName: sTextColor, NSParagraphStyleAttributeName: paragraphStyle]
             var size = title.sizeWithAttributes(attribute)
             SBConstrain(size.width, max: titleRect.size.width - side * 2)
-            var r = NSZeroRect
-            r.size = size
+            var r = NSRect(size: size)
             switch alignment {
-                case .LeftTextAlignment:
+                case .Left:
                     r.origin.x = titleRect.origin.x + side
-                case .RightTextAlignment:
+                case .Right:
                     r.origin.x = titleRect.origin.x + side + ((titleRect.size.width - side * 2) - size.width)
-                case .CenterTextAlignment:
+                case .Center:
                     r.origin.x = titleRect.origin.x + ((titleRect.size.width - side * 2) - size.width) / 2
                 default:
                     break
@@ -1168,11 +1145,7 @@ private class SBURLFieldDataCell: NSCell {
             title.drawInRect(r, withAttributes: attribute)
             if separator {
                 let leftMargin = r.maxX + 10.0
-                var separatorRect = NSZeroRect
-                separatorRect.origin.x = cellFrame.origin.x + leftMargin
-                separatorRect.origin.y = r.midY
-                separatorRect.size.width = cellFrame.size.width - leftMargin
-                separatorRect.size.height = 1.0
+                var separatorRect = NSMakeRect(cellFrame.origin.x + leftMargin, r.midY, cellFrame.size.width - leftMargin, 1.0)
                 NSColor.whiteColor().set()
                 NSRectFill(separatorRect)
                 separatorRect.origin.y -= 1.0

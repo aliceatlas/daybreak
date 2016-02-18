@@ -84,8 +84,7 @@ private class PopUpButtonCell: NSPopUpButtonCell {
         
         let image = controlView.selectedItem?.image
         if let image = image {
-            var imageRect = NSZeroRect
-            imageRect.size = image.size
+            var imageRect = NSRect(size: image.size)
             imageRect.origin.x = cellFrame.origin.x + 5.0
             imageRect.origin.y = cellFrame.origin.y + ((cellFrame.size.height - imageRect.size.height) / 2)
             SBPreserveGraphicsState {
@@ -98,7 +97,6 @@ private class PopUpButtonCell: NSPopUpButtonCell {
         }
         
         if let attributedTitle = controlView.titleOfSelectedItem?.ifNotEmpty !! {NSAttributedString(string: $0)} {
-            var titleRect = NSZeroRect
             let mutableTitle = NSMutableAttributedString(attributedString: attributedTitle)
             let range = NSMakeRange(0, attributedTitle.length)
             let style = NSMutableParagraphStyle()
@@ -113,10 +111,9 @@ private class PopUpButtonCell: NSPopUpButtonCell {
             mutableTitle.addAttribute(NSParagraphStyleAttributeName, value: style, range: range)
             mutableTitle.endEditing()
             
-            titleRect.size.width = mutableTitle.size.width
-            titleRect.size.height = mutableTitle.size.height
-            titleRect.origin.x = cellFrame.origin.x + (leftImage?.size.width ?? 0.0) + 5.0 + (image?.size.width ?? -5.0) + 5.0
-            titleRect.origin.y = cellFrame.origin.y + ((cellFrame.size.height - titleRect.size.height) / 2) - 2
+            var titleRect = NSRect(origin: cellFrame.origin, size: mutableTitle.size())
+            titleRect.origin.x += (leftImage?.size.width ?? 0.0) + 5.0 + (image?.size.width ?? -5.0) + 5.0
+            titleRect.origin.y += ((cellFrame.size.height - titleRect.size.height) / 2) - 2
             mutableTitle.drawInRect(titleRect)
         }
     }

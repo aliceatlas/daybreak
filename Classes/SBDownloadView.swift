@@ -105,7 +105,6 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
     }
     
     func nameRect(title: String) -> NSRect {
-        var r = NSZeroRect
         var drawRect = bounds
         let margin: CGFloat = 8.0
         let availableWidth: CGFloat = bounds.size.width - titleHeight
@@ -117,12 +116,11 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
         } else {
             drawRect.size.width = availableWidth
         }
-        r = NSZeroRect
-        r.size.width = drawRect.size.width
-        r.size.height = titleHeight
-        r.origin.x = margin + drawRect.origin.x
-        r.origin.y = padding.y + bytesHeight
-        return r
+        return NSMakeRect(
+            margin + drawRect.origin.x,
+            padding.y + bytesHeight,
+            drawRect.size.width,
+            titleHeight)
     }
     
     // MARK: Actions
@@ -187,12 +185,12 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
         if let path = download.path?.ifNotEmpty {
             let image = NSWorkspace.sharedWorkspace().iconForFile(path)
             var r = NSZeroRect
-            var b = bounds
+            let b = bounds
             let size = image.size
             var fraction: CGFloat = 1.0
-            r.size.height = bounds.size.height - heights - padding.y * 3
+            r.size.height = b.size.height - heights - padding.y * 3
             r.size.width = size.width * (r.size.height / size.height)
-            r.origin.x = (bounds.size.width - r.size.width) / 2
+            r.origin.x = (b.size.width - r.size.width) / 2
             r.origin.y = heights + padding.y * 2
             fraction = (download.status == .Done) ? 1.0 : 0.5
             image.drawInRect(r, fromRect: NSRect(origin: .zero, size: size), operation: .CompositeSourceOver, fraction: fraction)

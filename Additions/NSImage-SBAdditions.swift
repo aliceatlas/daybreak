@@ -55,7 +55,7 @@ extension NSImage {
     
     func inset(size size: NSSize, intersectRect: NSRect, offset: NSPoint) -> NSImage {
         let imageSize = self.size
-        let inRect = (intersectRect == .zero) ? NSMakeRect(0, 0, imageSize.width, imageSize.height) : intersectRect
+        let inRect = (intersectRect == .zero) ? NSRect(size: imageSize) : intersectRect
         var translate = NSZeroPoint
         var flippedPoint = NSZeroPoint
         var resizedSize = NSZeroSize
@@ -100,10 +100,10 @@ extension NSImage {
         image.lockFocus()
         if let color = NSColor(labelColorName: colorName) {
             color.set()
-            NSRectFill(NSMakeRect(0, 0, size.width, size.height))
+            NSRectFill(NSRect(size: size))
         } else {
             NSColor.grayColor().set()
-            NSFrameRect(NSMakeRect(0, 0, size.width, size.height))
+            NSFrameRect(NSRect(size: size))
         }
         image.unlockFocus()
         return image
@@ -125,7 +125,7 @@ extension NSImage {
     
     var bitmapImageRep: NSBitmapImageRep? {
         //let imageRep = bestRepresentationForDevice(nil)
-        let imageRep = bestRepresentationForRect(NSRect(origin: .zero, size: size), context: nil, hints: [:])
+        let imageRep = bestRepresentationForRect(NSRect(size: size), context: nil, hints: [:])
         if let imageRep = imageRep as? NSBitmapImageRep {
             return imageRep
         }

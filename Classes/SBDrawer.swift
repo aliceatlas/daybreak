@@ -50,10 +50,9 @@ class SBDrawer: SBView {
     
     var availableRect: NSRect {
         var r = bounds
-        if subview != nil {
-            var sr = subview!.frame
-            r.size.height -= sr.maxY
-            r.origin.y = sr.maxY
+        if let maxY = subview?.frame.maxY {
+            r.size.height -= maxY
+            r.origin.y = maxY
         }
         return r
     }
