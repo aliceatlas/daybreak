@@ -631,7 +631,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
     }
     
     func needsDisplaySelectedItemViews() {
-        itemViews.filter({ $0.selected }).map({ $0.needsDisplay = true })
+        itemViews.filter{$0.selected}.forEach { $0.needsDisplay = true }
     }
     
     func executeShouldOpenSearchbar() {
@@ -745,7 +745,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
     }
     
     override func selectAll(sender: AnyObject?) {
-        itemViews.filter({ !$0.selected }).map({ $0.selected = true })
+        itemViews.filter{!$0.selected}.forEach { $0.selected = true }
     }
     
     func openSelectedItems(sender: AnyObject?) {
@@ -782,7 +782,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
                 }
             }
             if !alreadySelect && (modifierFlags & .CommandKeyMask == nil) && (modifierFlags & .ShiftKeyMask == nil) {
-                selectedViews.map { $0.selected = false }
+                selectedViews.forEach { $0.selected = false }
             }
             if selection {
                 point = .zero

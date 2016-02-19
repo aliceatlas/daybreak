@@ -443,7 +443,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
     
     func applyDisclosableAllItem() {
         destructClosableTimer()
-        items.map { $0.closable = false }
+        items.forEach { $0.closable = false }
         closableItem = nil
     }
     

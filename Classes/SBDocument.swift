@@ -1148,7 +1148,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     func downloadsWillRemoveItem(notification: NSNotification) {
         if let downloadsView = sidebar!.drawer!.view as? SBDownloadsView {
             let items = notification.userInfo![kSBDownloadsItems] as! [SBDownload]
-            items.map(downloadsView.removeForItem)
+            items.forEach { downloadsView.removeForItem($0) }
         }
     }
     
