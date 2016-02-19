@@ -1507,3 +1507,14 @@ func SBDebugWriteMainMenu(path: String) -> Bool {
     let info = SBDebugDumpMainMenu() as NSDictionary
     return info.writeToFile(path, atomically: true)
 }
+
+func SBCPUType(inout cpuType: cpu_type_t) -> kern_return_t {
+    let hostInfo = host_info_t.alloc(1)
+    var infoCount = mach_msg_type_number_t(sizeof(host_basic_info_data_t) / sizeof(integer_t))
+    let result = host_info(mach_host_self(), HOST_BASIC_INFO, hostInfo, &infoCount)
+    if result == KERN_SUCCESS {
+        let hostInfoDataPtr = UnsafeMutablePointer<host_basic_info_data_t>(hostInfo)
+        cpuType = hostInfoDataPtr.memory.cpu_type
+    }
+    return result
+}

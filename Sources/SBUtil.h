@@ -22,10 +22,8 @@ LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE 
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#import <Foundation/Foundation.h>
 #import "SBDefinitions.h"
-#import <WebKit/WebKit.h>
-#include <mach/mach_host.h>
 
 void SBPerform(id target, SEL action, id object);
 void SBPerformWithModes(id target, SEL action, id object, NSArray *modes);
-kern_return_t SBCPUType(cpu_type_t *cpuType);
