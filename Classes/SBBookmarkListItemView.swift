@@ -269,7 +269,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
             var r = NSZeroRect
             let imageData = item[kSBBookmarkImage] as? NSData
             let title = item[kSBBookmarkTitle] as? NSString
-            let urlString = item[kSBBookmarkURL] as? NSString
+            let URLString = item[kSBBookmarkURL] as? NSString
             let labelColorName = item[kSBBookmarkLabelName] as? String
             let labelColor = labelColorName !! {NSColor(labelColorName: $0)}
             var size = NSZeroSize //???

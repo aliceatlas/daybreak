@@ -61,19 +61,19 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         return toolbar
     }()
     
-    private let urlViewBounds = NSMakeRect(0, 0, 320.0, 24.0)
-    private lazy var urlView: NSView = {
-        let urlView = NSView(frame: self.urlViewBounds)
-        urlView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
-        urlView.addSubview(self.urlField)
-        return urlView
+    private let URLViewBounds = NSMakeRect(0, 0, 320.0, 24.0)
+    private lazy var URLView: NSView = {
+        let URLView = NSView(frame: self.URLViewBounds)
+        URLView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
+        URLView.addSubview(self.URLField)
+        return URLView
     }()
-    lazy var urlField: SBURLField = {
-        let urlField = SBURLField(frame: self.urlViewBounds)
-        urlField.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
-        urlField.delegate = self
-        urlField.dataSource = self
-        return urlField
+    lazy var URLField: SBURLField = {
+        let URLField = SBURLField(frame: self.URLViewBounds)
+        URLField.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
+        URLField.delegate = self
+        URLField.dataSource = self
+        return URLField
     }()
     
     private let loadViewBounds = NSMakeRect(0, 0, 24.0, 24.0)
@@ -516,7 +516,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         let item = NSToolbarItem(itemIdentifier: itemIdentifier)
         switch itemIdentifier {
             case kSBToolbarURLFieldItemIdentifier:
-                item.view = urlView
+                item.view = URLView
                 item.label = NSLocalizedString("URL Field", comment: "")
                 item.paletteLabel = NSLocalizedString("URL Field", comment: "")
                 item.toolTip = NSLocalizedString("URL Field", comment: "")
@@ -1573,7 +1573,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     }
     
     func doneDownloader() {
-        if let URL = downloaderView!.urlString.ifNotEmpty !! {NSURL(string: $0)} {
+        if let URL = downloaderView!.URLString.ifNotEmpty !! {NSURL(string: $0)} {
             startDownloading(forURL: URL)
         } else {
             // Error

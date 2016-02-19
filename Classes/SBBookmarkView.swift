@@ -63,17 +63,17 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         return titleLabel
     }()
     
-    private lazy var urlLabel: NSTextField = {
-        let urlLabel = NSTextField(frame: self.urlLabelRect)
-        urlLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
-        urlLabel.editable = false
-        urlLabel.bordered = false
-        urlLabel.drawsBackground = false
-        urlLabel.textColor = NSColor.lightGrayColor()
-        urlLabel.font = NSFont.systemFontOfSize(12)
-        urlLabel.alignment = .Right
-        urlLabel.stringValue = NSLocalizedString("URL", comment: "") + " :"
-        return urlLabel
+    private lazy var URLLabel: NSTextField = {
+        let URLLabel = NSTextField(frame: self.URLLabelRect)
+        URLLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
+        URLLabel.editable = false
+        URLLabel.bordered = false
+        URLLabel.drawsBackground = false
+        URLLabel.textColor = NSColor.lightGrayColor()
+        URLLabel.font = NSFont.systemFontOfSize(12)
+        URLLabel.alignment = .Right
+        URLLabel.stringValue = NSLocalizedString("URL", comment: "") + " :"
+        return URLLabel
     }()
     
     private lazy var colorLabel: NSTextField = {
@@ -96,12 +96,12 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         return titleField
     }()
     
-    private lazy var urlField: BLKGUI.TextField = {
-        let urlField = BLKGUI.TextField(frame: self.urlFieldRect)
-        urlField.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
-        urlField.delegate = self
-        urlField.alignment = .Left
-        return urlField
+    private lazy var URLField: BLKGUI.TextField = {
+        let URLField = BLKGUI.TextField(frame: self.URLFieldRect)
+        URLField.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
+        URLField.delegate = self
+        URLField.alignment = .Left
+        return URLField
     }()
     
     private lazy var colorPopup: BLKGUI.PopUpButton = {
