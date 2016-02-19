@@ -576,7 +576,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         showProgress()
         // Perform update
         let modes = [NSDefaultRunLoopMode, NSEventTrackingRunLoopMode, NSModalPanelRunLoopMode]
-        SBPerformWithModes(self, "updatingForField:", field, modes)
+        performSelector("updatingForField:", withObject: field, afterDelay: 0, inModes: modes)
     }
     
     @objc(updatingForField:)

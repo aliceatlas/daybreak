@@ -13,7 +13,6 @@
 		084067020FE2B53900CC80E3 /* Bookmarks-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 084066FD0FE2B53900CC80E3 /* Bookmarks-Icon.png */; };
 		084067030FE2B53900CC80E3 /* Bookmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 084066FE0FE2B53900CC80E3 /* Bookmark.png */; };
 		0840673F0FE2B57300CC80E3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0840673D0FE2B57300CC80E3 /* InfoPlist.strings */; };
-		0840676C0FE2B95200CC80E3 /* SBUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 0840676B0FE2B95200CC80E3 /* SBUtil.m */; };
 		0840677D0FE2BF8D00CC80E3 /* Application.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0840677C0FE2BF8D00CC80E3 /* Application.icns */; };
 		084A01A8102C6A46009BA913 /* style.css in Resources */ = {isa = PBXBuildFile; fileRef = 084A01A7102C6A46009BA913 /* style.css */; };
 		084A01AA102C6B3A009BA913 /* Error.html in Resources */ = {isa = PBXBuildFile; fileRef = 084A01A9102C6B3A009BA913 /* Error.html */; };
@@ -216,8 +215,6 @@
 		084066FD0FE2B53900CC80E3 /* Bookmarks-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Bookmarks-Icon.png"; path = "Resources/Images/Bookmarks-Icon.png"; sourceTree = "<group>"; };
 		084066FE0FE2B53900CC80E3 /* Bookmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Bookmark.png; path = Resources/Images/Bookmark.png; sourceTree = "<group>"; };
 		084067440FE2B5B400CC80E3 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/MainMenu.xib; sourceTree = "<group>"; };
-		0840676A0FE2B95200CC80E3 /* SBUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SBUtil.h; path = Sources/SBUtil.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		0840676B0FE2B95200CC80E3 /* SBUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBUtil.m; path = Sources/SBUtil.m; sourceTree = "<group>"; };
 		0840677C0FE2BF8D00CC80E3 /* Application.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Application.icns; path = Resources/Icons/Application.icns; sourceTree = "<group>"; };
 		084A01A7102C6A46009BA913 /* style.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = style.css; path = Resources/htmls/style.css; sourceTree = "<group>"; };
 		084A01A9102C6B3A009BA913 /* Error.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Error.html; path = Resources/htmls/Error.html; sourceTree = "<group>"; };
@@ -683,8 +680,6 @@
 				507A8E21195FFF6700BF56AD /* SBDefinitions.h */,
 				507A8E24195FFF8800BF56AD /* SBDefinitions.swift */,
 				5096684F19D27BE000596F88 /* SBOperators.swift */,
-				0840676A0FE2B95200CC80E3 /* SBUtil.h */,
-				0840676B0FE2B95200CC80E3 /* SBUtil.m */,
 				50B2A9A41960BD5200DA1B4A /* SBUtil.swift */,
 				32DBCF750370BD2300C91783 /* Daybreak_Prefix.pch */,
 			);
@@ -1036,7 +1031,6 @@
 				502DEBAD19C07197006A68C3 /* NSImage-SBAdditions.swift in Sources */,
 				506D2ADC19A2432E007A8842 /* SBWebResourcesView.swift in Sources */,
 				50D89ECB19C777B300ECA176 /* SBURLField.swift in Sources */,
-				0840676C0FE2B95200CC80E3 /* SBUtil.m in Sources */,
 				505E49F2198A1311001F5254 /* SBPopUpButton.swift in Sources */,
 				50ACCDFB196404FE00CE593E /* SBGoogleSuggestParser.swift in Sources */,
 				505E49FD198CA577001F5254 /* SBTabViewItem.swift in Sources */,

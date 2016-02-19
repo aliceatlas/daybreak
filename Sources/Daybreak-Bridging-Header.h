@@ -3,5 +3,4 @@
 //
 
 #import "SBDefinitions.h"
-#import "SBUtil.h"
 #import "NSView-SBAdditions.h"
