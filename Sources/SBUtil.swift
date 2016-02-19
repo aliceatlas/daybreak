@@ -102,9 +102,7 @@ var SBDefaultBookmarks: NSDictionary? {
 var SBEmptyBookmarkImageData: NSData {
     let size = SBBookmarkImageMaxSize
     let rect = NSRect(size: size)
-    let image = NSImage(size: size)
-
-    image.withFocus {
+    let image = NSImage(size: size) {
         // Background
         var color0: NSColor!
         var color1: NSColor!
@@ -641,8 +639,7 @@ func SBBackwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSIm
     let tGray: CGFloat = enabled ? 0.2 : 0.5
     let rect = NSRect(size: size)
     
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         let transform = NSAffineTransform()
         transform.translateXBy(0.0, yBy: size.height)
         transform.scaleXBy(1.0, yBy: -1.0)
@@ -668,8 +665,6 @@ func SBBackwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSIm
         NSColor(deviceWhite: tGray, alpha: 1.0).set()
         tPath.fill()
     }
-    
-    return image
 }
 
 func SBForwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSImage {
@@ -677,8 +672,7 @@ func SBForwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSIma
     let tGray: CGFloat = enabled ? 0.2 : 0.5
     let rect = NSRect(size: size)
     
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         let transform = NSAffineTransform()
         transform.translateXBy(0.0, yBy: size.height)
         transform.scaleXBy(1.0, yBy: -1.0)
@@ -704,15 +698,12 @@ func SBForwardIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSIma
         NSColor(deviceWhite: tGray, alpha: 1.0).set()
         tPath.fill()
     }
-    
-    return image
 }
 
 func SBGoIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSImage {
     let rect = NSRect(size: size)
     
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         let transform = NSAffineTransform()
         transform.translateXBy(0.0, yBy: size.height)
         transform.scaleXBy(1.0, yBy: -1.0)
@@ -739,13 +730,10 @@ func SBGoIconImage(size: NSSize, _ enabled: Bool, _ backing: Bool) -> NSImage {
         path.lineWidth = 0.5
         path.stroke()
     }
-    
-    return image
 }
 
 func SBZoomOutIconImage(size: NSSize) -> NSImage {
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         var r = NSZeroRect
         
         // Frame
@@ -764,13 +752,10 @@ func SBZoomOutIconImage(size: NSSize) -> NSImage {
             iconImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
-    
-    return image
 }
 
 func SBActualSizeIconImage(size: NSSize) -> NSImage {
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         var r = NSZeroRect
         
         // Frame
@@ -789,13 +774,10 @@ func SBActualSizeIconImage(size: NSSize) -> NSImage {
             iconImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
-    
-    return image
 }
 
 func SBZoomInIconImage(size: NSSize) -> NSImage {
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         var r = NSZeroRect
         
         // Frame
@@ -814,8 +796,6 @@ func SBZoomInIconImage(size: NSSize) -> NSImage {
             iconImage.drawInRect(r, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
     }
-    
-    return image
 }
 
 func SBAddIconImage(size: NSSize, _ backing: Bool) -> NSImage {
@@ -826,8 +806,7 @@ func SBAddIconImage(size: NSSize, _ backing: Bool) -> NSImage {
     let curve: CGFloat = 4.0
     let margin: CGFloat = 7.0
     
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         let transform = NSAffineTransform()
         transform.translateXBy(0.0, yBy: size.height)
         transform.scaleXBy(1.0, yBy: -1.0)
@@ -923,15 +902,12 @@ func SBAddIconImage(size: NSSize, _ backing: Bool) -> NSImage {
         path.lineWidth = 3.0
         path.stroke()
     }
-    
-    return image
 }
 
 func SBCloseIconImage() -> NSImage {
     let size = NSMakeSize(17.0, 17.0)
     
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         var transform = NSAffineTransform()
         transform.translateXBy(0.0, yBy: size.height)
         transform.scaleXBy(1.0, yBy: -1.0)
@@ -966,8 +942,6 @@ func SBCloseIconImage() -> NSImage {
         xPath.lineWidth = lineWidth
         xPath.stroke()
     }
-    
-    return image
 }
 
 func SBIconImageWithName(imageName: String, _ shape: SBButtonShape, _ size: NSSize) -> NSImage {
@@ -978,8 +952,7 @@ func SBIconImage(iconImage: NSImage?, _ shape: SBButtonShape, _ size: NSSize) ->
     let imageSize = iconImage?.size ?? .zero
     var imageRect = NSMakeRect((size.width - imageSize.width) / 2, (size.height - imageSize.height) / 2, imageSize.width, imageSize.height)
     
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         let transform = NSAffineTransform()
         transform.translateXBy(0.0, yBy: size.height)
         transform.scaleXBy(1.0, yBy: -1.0)
@@ -1111,8 +1084,6 @@ func SBIconImage(iconImage: NSImage?, _ shape: SBButtonShape, _ size: NSSize) ->
             }
         }
     }
-    
-    return image
 }
 
 func SBFindBackwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
@@ -1124,8 +1095,7 @@ func SBFindBackwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
     let curve = size.height / 2
     let tGray: CGFloat = enabled ? 0.9 : 0.5
     
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         let transform = NSAffineTransform()
         transform.translateXBy(0.0, yBy: size.height)
         transform.scaleXBy(1.0, yBy: -1.0)
@@ -1174,8 +1144,6 @@ func SBFindBackwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
         tPath.lineWidth = 0.5
         tPath.fill()
     }
-    
-    return image
 }
 
 func SBFindForwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
@@ -1187,8 +1155,7 @@ func SBFindForwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
     let curve = size.height / 2
     let tGray: CGFloat = enabled ? 0.9 : 0.5
     
-    let image = NSImage(size: size)
-    image.withFocus {
+    return NSImage(size: size) {
         let transform = NSAffineTransform()
         transform.translateXBy(0.0, yBy: size.height)
         transform.scaleXBy(1.0, yBy: -1.0)
@@ -1237,19 +1204,14 @@ func SBFindForwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
         tPath.lineWidth = 0.5
         tPath.fill()
     }
-    
-    return image
 }
 
 func SBBookmarkReflectionMaskImage(size: NSSize) -> NSImage {
-    let rect = NSRect(size: size)
-    let image = NSImage(size: size)
-    image.withFocus {
-        let colors = [NSColor(deviceWhite: 1.0, alpha: 0.2), NSColor(deviceWhite: 1.0, alpha: 0.0)]
-        let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
-        gradient.drawInRect(rect, angle: 90)
+    return NSImage(size: size) {
+        let colors = (NSColor(deviceWhite: 1.0, alpha: 0.2), NSColor(deviceWhite: 1.0, alpha: 0.0))
+        let gradient = NSGradient(startingColor: colors.0, endingColor: colors.1)!
+        gradient.drawInRect(NSRect(size: size), angle: 90)
     }
-    return image
 }
 
 // MARK: Math

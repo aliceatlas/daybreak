@@ -731,13 +731,10 @@ class SBURLImageView: NSImageView, NSDraggingSource {
         imageRect.origin.y = (size.height - imageRect.size.height) / 2
         let textRect = NSMakeRect(margin + imageRect.maxX, 0, textSize.width, size.height)
         
-        let image = NSImage(size: size)
-        image.withFocus {
+        return NSImage(size: size) {
             self.image?.drawInRect(imageRect, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
             URLString.drawInRect(textRect, withAttributes: attribute)
         }
-        
-        return image
     }
     
     override func mouseDown(event: NSEvent) {

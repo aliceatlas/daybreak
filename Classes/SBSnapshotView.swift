@@ -796,14 +796,13 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         }
         
         // Resize
-        let anImage = NSImage(size: size)
         if onlyVisibleButton.state == NSOnState {
             fromRect = visibleRect
             fromRect.origin.y = image!.size.height - visibleRect.maxY
         } else {
             fromRect.size = image!.size
         }
-        anImage.withFocus {
+        let anImage = NSImage(size: size) {
             image!.drawInRect(NSRect(size: size), fromRect: fromRect, operation: .CompositeSourceOver, fraction: 1.0)
         }
         

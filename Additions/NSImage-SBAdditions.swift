@@ -40,8 +40,7 @@ extension NSImage {
     }
     
     func stretchableImage(size size: NSSize, sideCapWidth: CGFloat) -> NSImage {
-        let image = NSImage(size: size)
-        image.withFocus {
+        return NSImage(size: size) {
             let imageSize = self.size
             let leftPoint = NSZeroPoint
             let rightPoint = NSMakePoint(size.width - imageSize.width, 0)
@@ -50,7 +49,6 @@ extension NSImage {
             drawAtPoint(rightPoint, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
             drawInRect(fillRect, fromRect: NSMakeRect(sideCapWidth, 0, imageSize.width - sideCapWidth * 2, imageSize.height), operation: .CompositeSourceOver, fraction: 1.0)
         }
-        return image
     }
     
     func inset(size size: NSSize, intersectRect: NSRect, offset: NSPoint) -> NSImage {
@@ -83,30 +81,25 @@ extension NSImage {
         translate.y += offsetSize.height
         
         // Draw in image
-        let image = NSImage(size: size)
-        image.withFocus {
+        return NSImage(size: size) {
             let transform = NSAffineTransform()
             transform.scaleBy(per)
             transform.translateXBy(translate.x, yBy: translate.y)
             transform.concat()
             drawAtPoint(.zero, fromRect: .zero, operation: .CompositeSourceOver, fraction: 1.0)
         }
-        
-        return image
     }
     
     class func colorImage(size: NSSize, colorName: String) -> NSImage {
-        let image = NSImage(size: size)
-        image.lockFocus()
-        if let color = NSColor(labelColorName: colorName) {
-            color.set()
-            NSRectFill(NSRect(size: size))
-        } else {
-            NSColor.grayColor().set()
-            NSFrameRect(NSRect(size: size))
+        return NSImage(size: size) {
+            if let color = NSColor(labelColorName: colorName) {
+                color.set()
+                NSRectFill(NSRect(size: size))
+            } else {
+                NSColor.grayColor().set()
+                NSFrameRect(NSRect(size: size))
+            }
         }
-        image.unlockFocus()
-        return image
     }
     
     convenience init?(CGImage srcImage: CGImageRef) {
