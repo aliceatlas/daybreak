@@ -90,9 +90,9 @@ extension NSImage {
         }
     }
     
-    class func colorImage(size: NSSize, colorName: String) -> NSImage {
-        return NSImage(size: size) {
-            if let color = NSColor(labelColorName: colorName) {
+    convenience init(size: NSSize, colorLabel: String) {
+        self.init(size: size) {
+            if let color = NSColor(labelColorName: colorLabel) {
                 color.set()
                 NSRectFill(NSRect(size: size))
             } else {

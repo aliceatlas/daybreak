@@ -157,7 +157,7 @@ func SBBookmarkLabelColorMenu(pullsDown: Bool, _ target: AnyObject?, _ action: S
         menu.addItemWithTitle("", action: nil, keyEquivalent: "")
     }
     for labelName in SBBookmarkLabelColorNames {
-        let image = NSImage.colorImage(NSMakeSize(24.0, 16.0), colorName: labelName)
+        let image = NSImage(size: NSMakeSize(24.0, 16.0), colorLabel: labelName)
         let item = NSMenuItem(title: NSLocalizedString(labelName, comment: ""), action: action, keyEquivalent: "")
         target !! { item.target = $0 }
         representedObject !! { item.representedObject = $0 }
