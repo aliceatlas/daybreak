@@ -165,15 +165,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
     override init(frame: NSRect) {
         super.init(frame: frame)
         animationDuration = 1.0
-        addSubview(messageLabel!)
-        addSubview(titleLabel)
-        addSubview(URLLabel)
-        addSubview(colorLabel)
-        addSubview(titleField)
-        addSubview(URLField)
-        addSubview(colorPopup)
-        addSubview(doneButton)
-        addSubview(cancelButton)
+        addSubviews(messageLabel!, titleLabel, URLLabel, colorLabel, titleField, URLField, colorPopup, doneButton, cancelButton)
         makeResponderChain()
         autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }

@@ -277,11 +277,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         r.size.width.constrain(min: minimumSize.width)
         r.size.height.constrain(min: minimumSize.height)
         super.init(frame: r)
-        addSubview(backwardButton)
-        addSubview(forwardButton)
-        addSubview(imageView)
-        addSubview(field)
-        addSubview(goButton)
+        addSubviews(backwardButton, forwardButton, imageView, field, goButton)
         hiddenGo = true
     }
 

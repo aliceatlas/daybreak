@@ -56,19 +56,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     private lazy var toolsView: NSView = {
         let toolsView = NSView(frame: NSMakeRect(self.imageViewSize.width + self.margin.x + 8.0, self.margin.y, self.toolWidth, self.imageViewSize.height))
-        toolsView.addSubview(self.onlyVisibleButton)
-        toolsView.addSubview(self.updateButton)
-        toolsView.addSubview(self.sizeLabel)
-        toolsView.addSubview(self.widthField)
-        toolsView.addSubview(self.heightField)
-        toolsView.addSubview(self.scaleLabel)
-        toolsView.addSubview(self.scaleField)
-        toolsView.addSubview(self.lockButton)
-        toolsView.addSubview(self.filetypeLabel)
-        toolsView.addSubview(self.filetypePopup)
-        toolsView.addSubview(self.optionTabView)
-        toolsView.addSubview(self.filesizeLabel)
-        toolsView.addSubview(self.filesizeField)
+        toolsView.addSubviews(self.onlyVisibleButton, self.updateButton, self.sizeLabel, self.widthField, self.heightField, self.scaleLabel, self.scaleField, self.lockButton, self.filetypeLabel, self.filetypePopup, self.optionTabView, self.filesizeLabel, self.filesizeField)
         return toolsView
     }()
     
@@ -185,12 +173,9 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         optionTabView.tabViewType = .NoTabsNoBorder
         optionTabView.drawsBackground = false
         let tabViewItem0 = NSTabViewItem(identifier: NSBitmapImageFileType.NSTIFFFileType.rawValue)
-        tabViewItem0.view!.addSubview(self.tiffOptionLabel)
-        tabViewItem0.view!.addSubview(self.tiffOptionPopup)
+        tabViewItem0.view!.addSubviews(self.tiffOptionLabel, self.tiffOptionPopup)
         let tabViewItem1 = NSTabViewItem(identifier: NSBitmapImageFileType.NSJPEGFileType.rawValue)
-        tabViewItem1.view!.addSubview(self.jpgOptionLabel)
-        tabViewItem1.view!.addSubview(self.jpgOptionSlider)
-        tabViewItem1.view!.addSubview(self.jpgOptionField)
+        tabViewItem1.view!.addSubviews(self.jpgOptionLabel, self.jpgOptionSlider, self.jpgOptionField)
         optionTabView.addTabViewItem(tabViewItem0)
         optionTabView.addTabViewItem(tabViewItem1)
         switch self.filetype {
@@ -382,9 +367,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         r.size.width.constrain(min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
         r.size.height.constrain(min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
         super.init(frame: r)
-        addSubview(toolsView)
-        addSubview(scrollView)
-        addSubview(cancelButton)
+        addSubviews(toolsView, scrollView, cancelButton)
         addSubview(doneButton)
         autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(windowDidResize(_:)), name: NSWindowDidResizeNotification, object: window)

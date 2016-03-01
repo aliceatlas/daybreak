@@ -122,8 +122,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     override init(frame: NSRect) {
         super.init(frame: frame)
         addSubview(contentView)
-        contentView.addSubview(searchField)
-        contentView.addSubview(closeButton)
+        contentView.addSubviews(searchField, closeButton)
         backwardButton !! contentView.addSubview
         forwardButton !! contentView.addSubview
         caseSensitiveCheck !! contentView.addSubview

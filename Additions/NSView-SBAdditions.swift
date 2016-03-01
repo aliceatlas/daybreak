@@ -38,15 +38,19 @@ extension NSView {
     }
     
     func addSubviewsAndConstraintStrings(metrics metrics: [String: Double], views: [String: NSView], constraints constraintStrings: [String]) {
-        for (_, subview) in views {
-            if subview.superview == nil {
-                addSubview(subview)
-            }
-        }
+        addSubviews(views.values)
         addConstraintStrings(metrics: metrics, views: views, constraints: constraintStrings)
     }
     
     func addSubviewsAndConstraintStrings(metrics metrics: [String: Double], views: [String: NSView], _ constraintStrings: String...) {
         addSubviewsAndConstraintStrings(metrics: metrics, views: views, constraints: constraintStrings)
+    }
+    
+    func addSubviews <T: SequenceType where T.Generator.Element: NSView> (views: T) {
+        views.filter{$0.superview == nil}.forEach(addSubview)
+    }
+    
+    func addSubviews(views: NSView...) {
+        addSubviews(views)
     }
 }

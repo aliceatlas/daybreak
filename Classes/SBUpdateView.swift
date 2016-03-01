@@ -131,14 +131,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
         r.size.width.constrain(min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
         r.size.height.constrain(min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
         super.init(frame: r)
-        addSubview(imageView)
-        addSubview(titleLabel)
-        addSubview(textLabel)
-        addSubview(webView)
-        addSubview(indicator)
-        addSubview(skipButton)
-        addSubview(cancelButton)
-        addSubview(doneButton)
+        addSubviews(imageView, titleLabel, textLabel, webView, indicator, skipButton, cancelButton, doneButton)
         autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
 

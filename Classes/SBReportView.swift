@@ -198,18 +198,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         r.size.width.constrain(min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
         r.size.height.constrain(min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
         super.init(frame: r)
-        addSubview(iconImageView)
-        addSubview(titleLabel)
-        addSubview(summaryLabel)
-        addSubview(summaryField)
-        addSubview(userAgentLabel)
-        addSubview(userAgentPopup)
-        addSubview(switchLabel)
-        addSubview(switchMatrix)
-        addSubview(wayLabel)
-        addSubview(wayField)
-        addSubview(cancelButton)
-        addSubview(doneButton)
+        addSubviews(iconImageView, titleLabel, summaryLabel, summaryField, userAgentLabel, userAgentPopup, switchLabel, switchMatrix, wayLabel, wayField, cancelButton, doneButton)
         autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
     

@@ -107,8 +107,7 @@ class SBMessageView: SBView {
     init(frame: NSRect, text: String) {
         super.init(frame: frame)
         self.text = text
-        addSubview(textLabel)
-        addSubview(messageLabel)
+        addSubviews(textLabel, messageLabel)
         let viewsDictionary: [NSObject: AnyObject] = ["textLabel": textLabel, "messageLabel": messageLabel, "cancelButton": cancelButton, "doneButton": doneButton]
         autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }

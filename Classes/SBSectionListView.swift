@@ -311,9 +311,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             field.cell!.placeholderString = item.context as? String
             field.stringValue = path?.stringByAbbreviatingWithTildeInPath ?? ""
             
-            addSubview(imageView)
-            addSubview(field)
-            addSubview(button)
+            addSubviews(imageView, field, button)
             currentImageView = imageView
             currentField = field
         } else if item.controlClass === NSButton.self {

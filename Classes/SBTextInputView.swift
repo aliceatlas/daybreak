@@ -85,10 +85,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
     init(frame: NSRect, prompt: String) {
         super.init(frame: frame)
         message = prompt
-        addSubview(messageLabel)
-        addSubview(textLabel)
-        addSubview(doneButton)
-        addSubview(cancelButton)
+        addSubviews(messageLabel, textLabel, doneButton, cancelButton)
         autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }
     

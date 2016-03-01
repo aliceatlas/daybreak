@@ -153,13 +153,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         r.size.height.constrain(min: kSBMinFrameSizeWidth)
         items = SBHistory.sharedHistory.items
         super.init(frame: r)
-        addSubview(iconImageView)
-        addSubview(messageLabel)
-        addSubview(searchField)
-        addSubview(scrollView)
-        addSubview(removeButton)
-        addSubview(removeAllButton)
-        addSubview(backButton)
+        addSubviews(iconImageView, messageLabel, searchField, scrollView, removeButton, removeAllButton, backButton)
         makeResponderChain()
         autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }

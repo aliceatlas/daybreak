@@ -94,11 +94,7 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
 
     override init(frame: NSRect) {
         super.init(frame: frame)
-        addSubview(messageLabel)
-        addSubview(URLLabel)
-        addSubview(URLField)
-        addSubview(doneButton)
-        addSubview(cancelButton)
+        addSubviews(messageLabel, URLLabel, URLField, doneButton, cancelButton)
         makeResponderChain()
         autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
     }

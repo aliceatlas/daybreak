@@ -97,9 +97,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         let backgroundColor = CGColorCreateGenericGray(0.8, 1.0)
         self.contentView.layer!.backgroundColor = backgroundColor
         self.editBounds = editView.bounds
-        editView.addSubview(self.openButton)
-        editView.addSubview(self.cancelButton)
-        editView.addSubview(self.createButton)
+        editView.addSubviews(self.openButton, self.cancelButton, self.createButton)
         return editView
     }()
     
@@ -201,12 +199,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         contributeRect.size.height -= self.topMargin
         let contributeView = NSView(frame: contributeRect)
         contributeView.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
-        contributeView.addSubview(self.iconImageView)
-        contributeView.addSubview(self.textField)
-        contributeView.addSubview(self.checkoutTitleField)
-        contributeView.addSubview(self.checkoutButton)
-        contributeView.addSubview(self.commitTitleField)
-        contributeView.addSubview(self.commitButton)
+        contributeView.addSubviews(self.iconImageView, self.textField, self.checkoutTitleField, self.checkoutButton, self.commitTitleField, self.commitButton)
         return contributeView
     }()
     
@@ -300,8 +293,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
             window!.maxSize = NSMakeSize(window!.frame.size.width, viewSize.height + 100)
             window!.title = NSLocalizedString("Localize", comment: "")
             contentView.wantsLayer = true
-            contentView.addSubview(langPopup)
-            contentView.addSubview(langField)
+            contentView.addSubviews(langPopup, langField)
             #if kSBLocalizationAvailableSubversionAccess
                 contentView.addSubview(switchButton)
             #endif

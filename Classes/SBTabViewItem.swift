@@ -215,10 +215,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     sourceCloseButton!.target = self
                     sourceCloseButton!.action = #selector(hideShowSource)
                     sourceCloseButton!.keyEquivalent = "\u{1B}"
-                    sourceView!.addSubview(scrollView)
-                    sourceView!.addSubview(openButton)
-                    sourceView!.addSubview(sourceSaveButton!)
-                    sourceView!.addSubview(sourceCloseButton!)
+                    sourceView!.addSubviews(scrollView, openButton, sourceSaveButton!, sourceCloseButton!)
                     if webSplitView != nil {
                         webSplitView!.frame = wr
                         splitView.addSubview(webSplitView!)

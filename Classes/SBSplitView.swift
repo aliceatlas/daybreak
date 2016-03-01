@@ -190,8 +190,7 @@ class SBSplitView: NSSplitView, SBSidebarDelegate {
     func returnSidebar() {
         if sidebarPosition == .Left {
             view.removeFromSuperview()
-            addSubview(sidebar)
-            addSubview(view)
+            addSubviews(sidebar, view)
         } else if sidebarPosition == .Right {
             addSubview(sidebar)
         }

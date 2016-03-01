@@ -30,9 +30,7 @@ class SBSegmentedButton: SBView {
     var buttons: [SBButton] = [] {
         didSet {
             if buttons != oldValue {
-                for button in buttons {
-                    addSubview(button)
-                }
+                addSubviews(buttons)
                 adjustFrame()
             }
         }
