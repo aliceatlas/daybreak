@@ -83,7 +83,7 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
         }
     }
     
-    private lazy var _bottombar: SBSideBottombar = {
+    private(set) lazy var bottombar: SBSideBottombar = {
         let bottombar = SBSideBottombar(frame: self.bottombarRect)
         bottombar.delegate = self
         bottombar.position = self.position
@@ -91,7 +91,6 @@ class SBSidebar: NSSplitView, SBDownloadsViewDelegate, SBSideBottombarDelegate, 
         bottombar.autoresizingMask = [.ViewWidthSizable, .ViewMaxYMargin]
         return bottombar
     }()
-    var bottombar: SBSideBottombar { return _bottombar }
     
     var position: SBSidebarPosition = .Left {
         didSet {

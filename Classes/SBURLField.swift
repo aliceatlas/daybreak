@@ -248,8 +248,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         }
     }
     
-    private var _isOpenSheet = false
-    var isOpenSheet: Bool { return _isOpenSheet }
+    private(set) var isOpenSheet = false
     
     var editing: Bool { return true }
     
@@ -554,7 +553,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
             window!.addChildWindow(sheet, ordered: .Above)
             contentView.deselectRow()
             sheet.orderFront(nil)
-            _isOpenSheet = true
+            isOpenSheet = true
             needsDisplay = true
             contentView.needsDisplay = true
         }
@@ -565,7 +564,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
             window!.removeChildWindow(sheet)
             needsDisplay = true
             sheet.orderOut(nil)
-            _isOpenSheet = false
+            isOpenSheet = false
             needsDisplay = true
         }
     }
