@@ -85,7 +85,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
         let skipButton = BLKGUI.Button(frame: self.skipButtonRect)
         skipButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         skipButton.target = self
-        skipButton.action = "skip"
+        skipButton.action = #selector(skip)
         skipButton.setButtonType(.MomentaryPushInButton)
         skipButton.title = NSLocalizedString("Skip This Version", comment: "")
         skipButton.font = NSFont.systemFontOfSize(11.0)
@@ -95,7 +95,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
         let cancelButton = BLKGUI.Button(frame: self.skipButtonRect)
         cancelButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         cancelButton.target = self
-        cancelButton.action = "cancel"
+        cancelButton.action = #selector(cancel)
         cancelButton.setButtonType(.MomentaryPushInButton)
         cancelButton.title = NSLocalizedString("Not Now", comment: "")
         cancelButton.font = NSFont.systemFontOfSize(11.0)
@@ -106,7 +106,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
         let doneButton = BLKGUI.Button(frame: self.skipButtonRect)
         doneButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         doneButton.target = self
-        doneButton.action = "done"
+        doneButton.action = #selector(done)
         doneButton.setButtonType(.MomentaryPushInButton)
         doneButton.title = NSLocalizedString("Download", comment: "")
         doneButton.font = NSFont.systemFontOfSize(11.0)

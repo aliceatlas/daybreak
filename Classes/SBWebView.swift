@@ -89,11 +89,11 @@ class SBWebView: WebView, SBFindbarTarget {
         } else {
             r = searchFor(searchString, direction: forward, caseSensitive: !caseFlag, wrap: wrapFlag)
         }
-        if respondsToSelector("unmarkAllTextMatches") {
+        if respondsToSelector(#selector(unmarkAllTextMatches)) {
             unmarkAllTextMatches()
         }
         if r {
-            if respondsToSelector("markAllMatchesForText:caseSensitive:highlight:limit:") {
+            if respondsToSelector(#selector(markAllMatchesForText(_:caseSensitive:highlight:limit:))) {
                 markAllMatchesForText(searchString, caseSensitive: !caseFlag, highlight: true, limit: 0)
             }
         } else {

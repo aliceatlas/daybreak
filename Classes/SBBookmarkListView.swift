@@ -100,7 +100,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
         let removeButton = SBButton(frame: removeRect)
         removeButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         removeButton.image = SBIconImage(SBCloseIconImage(), .Left, removeRect.size)
-        removeButton.action = "remove"
+        removeButton.action = #selector(SBBookmarkListItemView.remove)
         return removeButton
     }()
     
@@ -109,7 +109,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
         let editButton = SBButton(frame: editRect)
         editButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         editButton.image = SBIconImageWithName("Edit", .Center, editRect.size)
-        editButton.action = "edit"
+        editButton.action = #selector(SBBookmarkListItemView.edit)
         return editButton
     }()
     
@@ -118,7 +118,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
         let updateButton = SBButton(frame: updateRect)
         updateButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         updateButton.image = SBIconImageWithName("Update", .Right, updateRect.size) // !!! editRect.size?
-        updateButton.action = "update"
+        updateButton.action = #selector(SBBookmarkListItemView.update)
         return updateButton
     }()
     
@@ -548,7 +548,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
     func layoutToolsForItem(itemView: SBBookmarkListItemView) {
         if toolsItemView !== itemView {
             toolsItemView = itemView
-            toolsTimer = NSTimer.scheduledTimerWithTimeInterval(kSBBookmarkToolsInterval, target: self, selector: "layoutTools", userInfo: nil, repeats: false)
+            toolsTimer = NSTimer.scheduledTimerWithTimeInterval(kSBBookmarkToolsInterval, target: self, selector: #selector(layoutTools), userInfo: nil, repeats: false)
         }
     }
     

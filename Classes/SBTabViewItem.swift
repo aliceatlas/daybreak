@@ -64,9 +64,9 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         self.setUserAgent(view)
         
         // Add observer
-        center.addObserver(self, selector: "webViewProgressStarted:", name: WebViewProgressStartedNotification, object: view)
-        center.addObserver(self, selector: "webViewProgressEstimateChanged:", name: WebViewProgressEstimateChangedNotification, object: view)
-        center.addObserver(self, selector: "webViewProgressFinished:", name: WebViewProgressFinishedNotification, object: view)
+        center.addObserver(self, selector: #selector(webViewProgressStarted(_:)), name: WebViewProgressStartedNotification, object: view)
+        center.addObserver(self, selector: #selector(webViewProgressEstimateChanged(_:)), name: WebViewProgressEstimateChangedNotification, object: view)
+        center.addObserver(self, selector: #selector(webViewProgressFinished(_:)), name: WebViewProgressFinishedNotification, object: view)
         
         self.splitView.invisibleDivider = true
         self.splitView.addSubview(view)
@@ -204,16 +204,16 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     openButton.autoresizingMask = .ViewMinXMargin
                     openButton.title = NSLocalizedString("Open in other application…", comment: "")
                     openButton.target = self
-                    openButton.action = "openDocumentSource:"
+                    openButton.action = #selector(openDocumentSource(_:))
                     sourceSaveButton!.autoresizingMask = .ViewMinXMargin
                     sourceSaveButton!.title = NSLocalizedString("Save", comment: "")
                     sourceSaveButton!.target = self
-                    sourceSaveButton!.action = "saveDocumentSource:"
+                    sourceSaveButton!.action = #selector(saveDocumentSource(_:))
                     sourceSaveButton!.keyEquivalent = "\r"
                     sourceCloseButton!.autoresizingMask = .ViewMinXMargin
                     sourceCloseButton!.title = NSLocalizedString("Close", comment: "")
                     sourceCloseButton!.target = self
-                    sourceCloseButton!.action = "hideShowSource"
+                    sourceCloseButton!.action = #selector(hideShowSource)
                     sourceCloseButton!.keyEquivalent = "\u{1B}"
                     sourceView!.addSubview(scrollView)
                     sourceView!.addSubview(openButton)
@@ -250,7 +250,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             if webSplitView == nil {
                 let findbar = SBFindbar(frame: NSMakeRect(0, 0, webView.frame.size.width, 24.0))
                 findbar.target = webView
-                findbar.doneSelector = "executeCloseFindbar"
+                findbar.doneSelector = #selector(SBWebView.executeCloseFindbar)
                 (sourceSplitView ?? sourceView)?.removeFromSuperview()
                 webSplitView = SBFixedSplitView(embedViews: [findbar, webView], frameRect: webView.frame)
                 (sourceSplitView ?? sourceView) !! splitView.addSubview
@@ -275,7 +275,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             if sourceSplitView == nil {
                 let findbar = SBFindbar(frame: NSMakeRect(0, 0, sourceView!.frame.size.width, 24.0))
                 findbar.target = sourceTextView
-                findbar.doneSelector = "executeCloseFindbar"
+                findbar.doneSelector = #selector(SBSourceTextView.executeCloseFindbar)
                 sourceSaveButton!.keyEquivalent = ""
                 sourceCloseButton!.keyEquivalent = ""
                 sourceSplitView = SBFixedSplitView(embedViews: [findbar, sourceView!], frameRect: sourceView!.frame)
@@ -744,12 +744,12 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         if linkURL == nil && selectedString.isEmpty {
             if frameURL != nil {
                 // Add Open in items
-                let newItem1 = NSMenuItem(title: NSLocalizedString("Open in Application...", comment: ""), action:"openURLInSelectedApplicationFromMenu:", keyEquivalent: "")
+                let newItem1 = NSMenuItem(title: NSLocalizedString("Open in Application...", comment: ""), action: #selector(openURLInSelectedApplicationFromMenu(_:)), keyEquivalent: "")
                 newItem1.target = self
                 newItem1.representedObject = frameURL
                 var newItem2: NSMenuItem?
                 if appName != nil {
-                    newItem2 = NSMenuItem(title: NSLocalizedString("Open in %@", comment: "").format(appName!), action: "openURLInApplicationFromMenu:", keyEquivalent: "")
+                    newItem2 = NSMenuItem(title: NSLocalizedString("Open in %@", comment: "").format(appName!), action: #selector(openURLInApplicationFromMenu(_:)), keyEquivalent: "")
                     newItem2!.target = self
                     newItem2!.representedObject = frameURL
                 }
@@ -765,15 +765,15 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                 let tag = item.tag
                 if tag == 1 {
                     // Add Open link in items
-                    let newItem0 = NSMenuItem(title: NSLocalizedString("Open Link in New Tab", comment: ""), action: "openURLInNewTabFromMenu:", keyEquivalent: "")
+                    let newItem0 = NSMenuItem(title: NSLocalizedString("Open Link in New Tab", comment: ""), action: #selector(openURLInNewTabFromMenu(_:)), keyEquivalent: "")
                     newItem0.target = self
                     newItem0.representedObject = frameURL
-                    let newItem1 = NSMenuItem(title: NSLocalizedString("Open Link in Application...", comment: ""), action: "openURLInSelectedApplicationFromMenu:", keyEquivalent: "")
+                    let newItem1 = NSMenuItem(title: NSLocalizedString("Open Link in Application...", comment: ""), action: #selector(openURLInSelectedApplicationFromMenu(_:)), keyEquivalent: "")
                     newItem1.target = self
                     newItem1.representedObject = frameURL
                     var newItem2: NSMenuItem?
                     if appName != nil {
-                        let newItem2 = NSMenuItem(title: NSLocalizedString("Open Link in %@", comment: "").format(appName!), action: "openURLInApplicationFromMenu:", keyEquivalent: "")
+                        let newItem2 = NSMenuItem(title: NSLocalizedString("Open Link in %@", comment: "").format(appName!), action: #selector(openURLInApplicationFromMenu(_:)), keyEquivalent: "")
                         newItem2.target = self
                         newItem2.representedObject = frameURL
                     }
@@ -789,10 +789,10 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         if !selectedString.isEmpty {
             var replaced = false
             // Create items
-            let newItem0 = NSMenuItem(title: NSLocalizedString("Search in Google", comment: ""), action: "searchStringFromMenu:", keyEquivalent: "")
+            let newItem0 = NSMenuItem(title: NSLocalizedString("Search in Google", comment: ""), action: #selector(searchStringFromMenu(_:)), keyEquivalent: "")
             newItem0.target = self
             newItem0.representedObject = selectedString
-            let newItem1 = NSMenuItem(title: NSLocalizedString("Open Google Search Results in New Tab", comment: ""), action: "searchStringInNewTabFromMenu:", keyEquivalent: "")
+            let newItem1 = NSMenuItem(title: NSLocalizedString("Open Google Search Results in New Tab", comment: ""), action: #selector(searchStringInNewTabFromMenu(_:)), keyEquivalent: "")
             newItem1.target = self
             newItem1.representedObject = selectedString
             // Find an item
@@ -810,8 +810,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
             }
         }
         if frame !== sender.mainFrame {
-            let newItem0 = NSMenuItem(title: NSLocalizedString("Open Frame in Current Frame", comment: ""), action: "openFrameInCurrentFrameFromMenu:", keyEquivalent: "")
-            let newItem1 = NSMenuItem(title: NSLocalizedString("Open Frame in New Tab", comment: ""), action: "openURLInNewTabFromMenu:", keyEquivalent: "")
+            let newItem0 = NSMenuItem(title: NSLocalizedString("Open Frame in Current Frame", comment: ""), action: #selector(openFrameInCurrentFrameFromMenu(_:)), keyEquivalent: "")
+            let newItem1 = NSMenuItem(title: NSLocalizedString("Open Frame in New Tab", comment: ""), action: #selector(openURLInNewTabFromMenu(_:)), keyEquivalent: "")
             newItem0.target = self
             newItem1.target = self
             newItem0.representedObject = frameURL

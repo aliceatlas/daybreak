@@ -256,7 +256,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             let popUp = NSPopUpButton(frame: r, pullsDown: false)
             if let menu = item.context as? NSMenu {
                 popUp.target = self
-                popUp.action = "select:"
+                popUp.action = #selector(select(_:))
                 popUp.menu = menu
             }
             if let selectedItem = popUp.menu!.selectItem(representedObject: string) {
@@ -289,7 +289,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             br.size.height = 32.0
             let button = NSButton(frame: br)
             button.target = self
-            button.action = "open:"
+            button.action = #selector(open(_:))
             button.title = NSLocalizedString("Open…", comment: "")
             button.setButtonType(.MomentaryLightButton)
             button.bezelStyle = .RoundedBezelStyle
@@ -322,7 +322,7 @@ class SBSectionItemView: SBView, NSTextFieldDelegate {
             r.size.height = 18.0
             let button = NSButton(frame: r)
             button.target = self
-            button.action = "check:"
+            button.action = #selector(check(_:))
             button.setButtonType(.SwitchButton)
             button.title = (item.context as? String) ?? ""
             button.state = enabled ? NSOnState : NSOffState

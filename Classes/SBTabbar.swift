@@ -203,7 +203,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
         addButton!.image = SBAddIconImage(r.size, false)
         addButton!.backImage = SBAddIconImage(r.size, true)
         addButton!.target = self
-        addButton!.action = "addNewItem:"
+        addButton!.action = #selector(addNewItem(_:))
         contentView.addSubview(addButton!)
     }
     
@@ -243,8 +243,8 @@ class SBTabbar: SBView, NSAnimationDelegate {
         let newItem = SBTabbarItem(frame: newItemRect, tabbar: self)
         newItem.tag = tag
         newItem.target = self
-        newItem.closeSelector = "closeItem:"
-        newItem.selectSelector = "selectItem:"
+        newItem.closeSelector = #selector(closeItem(_:))
+        newItem.selectSelector = #selector(selectItem(_:))
         newItem.keyView = keyView
         addItem(newItem)
         updateItems()
@@ -413,7 +413,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
             let userInfo: [NSObject: AnyObject] = ["Event": event]
             let point = convertPoint(event.locationInWindow, fromView: nil)
             if autoScrollWithPoint(point) {
-                autoScrollTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "mouseDraggedWithTimer:", userInfo: userInfo, repeats: true)
+                autoScrollTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(mouseDragged(timer:)), userInfo: userInfo, repeats: true)
             }
         }
     }
@@ -432,7 +432,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
         if closableItem != item {
             closableItem = item
             destructClosableTimer()
-            closableTimer = NSTimer.scheduledTimerWithTimeInterval(kSBTabbarItemClosableInterval, target: self, selector: "applyClosableItem", userInfo: nil, repeats: false)
+            closableTimer = NSTimer.scheduledTimerWithTimeInterval(kSBTabbarItemClosableInterval, target: self, selector: #selector(applyClosableItem), userInfo: nil, repeats: false)
         }
     }
     
@@ -635,20 +635,20 @@ class SBTabbar: SBView, NSAnimationDelegate {
         let single = items.count == 1
         let index = indexOfItem(items, item)!
         let menu = NSMenu()
-        menu.addItemWithTitle(NSLocalizedString("New Tab", comment: ""), action: "addNewItem:", keyEquivalent: "")
+        menu.addItemWithTitle(NSLocalizedString("New Tab", comment: ""), action: #selector(addNewItem(_:)), keyEquivalent: "")
         if single {
         } else {
-            menu.addItem(title: NSLocalizedString("Close", comment: ""), target: self, action: "closeItemFromMenu:", tag: index)
-            menu.addItem(title: NSLocalizedString("Close Others", comment: ""), target: self, action: "closeOtherItemsFromMenu:", tag: index)
+            menu.addItem(title: NSLocalizedString("Close", comment: ""), target: self, action: #selector(closeItemFromMenu(_:)), tag: index)
+            menu.addItem(title: NSLocalizedString("Close Others", comment: ""), target: self, action: #selector(closeOtherItemsFromMenu(_:)), tag: index)
         }
         menu.addItem(NSMenuItem.separatorItem())
-        menu.addItem(title: NSLocalizedString("Reload", comment: ""), target: self, action: "reloadItemFromMenu:", tag: index)
+        menu.addItem(title: NSLocalizedString("Reload", comment: ""), target: self, action: #selector(reloadItemFromMenu(_:)), tag: index)
         return menu
     }
     
     override func menuForEvent(event: NSEvent) -> NSMenu {
         let menu = NSMenu()
-        menu.addItemWithTitle(NSLocalizedString("New Tab", comment: ""), action: "addNewItem:", keyEquivalent: "")
+        menu.addItemWithTitle(NSLocalizedString("New Tab", comment: ""), action: #selector(addNewItem(_:)), keyEquivalent: "")
         return menu
     }
     

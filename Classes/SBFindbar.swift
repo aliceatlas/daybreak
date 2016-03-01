@@ -51,7 +51,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         closeButton.autoresizingMask = .ViewMaxXMargin
         closeButton.image = SBIconImage(SBCloseIconImage(), .Exclusive, r.size)
         closeButton.target = self
-        closeButton.action = "executeClose"
+        closeButton.action = #selector(executeClose)
         return closeButton
     }()
     
@@ -61,9 +61,9 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         searchField.autoresizingMask = .ViewWidthSizable
         searchField.delegate = self
         searchField.target = self
-        searchField.action = "search:"
-        searchField.nextAction = "searchForward:"
-        searchField.previousAction = "searchBackward:"
+        searchField.action = #selector(search(_:))
+        searchField.nextAction = #selector(searchForward(_:))
+        searchField.previousAction = #selector(searchBackward(_:))
         searchField.cell!.sendsWholeSearchString = true
         searchField.cell!.sendsSearchStringImmediately = false
         string !! { searchField.stringValue = $0 }
@@ -77,7 +77,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         backwardButton.image = SBFindBackwardIconImage(r.size, true)
         backwardButton.disableImage = SBFindBackwardIconImage(r.size, false)
         backwardButton.target = self
-        backwardButton.action = "searchBackward:"
+        backwardButton.action = #selector(searchBackward(_:))
         return backwardButton
     }()
     
@@ -88,7 +88,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         forwardButton.image = SBFindForwardIconImage(r.size, true)
         forwardButton.disableImage = SBFindForwardIconImage(r.size, false)
         forwardButton.target = self
-        forwardButton.action = "searchForward:"
+        forwardButton.action = #selector(searchForward(_:))
         forwardButton.keyEquivalent = "g"
         return forwardButton
     }()
@@ -102,7 +102,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         caseSensitiveCheck.title = NSLocalizedString("Ignore Case", comment: "")
         caseSensitiveCheck.state = caseFlag ? NSOnState : NSOffState
         caseSensitiveCheck.target = self
-        caseSensitiveCheck.action = "checkCaseSensitive:"
+        caseSensitiveCheck.action = #selector(checkCaseSensitive(_:))
         return caseSensitiveCheck
     }()
     
@@ -115,7 +115,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         wrapCheck.title = NSLocalizedString("Wrap Around", comment: "")
         wrapCheck.state = wrapFlag ? NSOnState : NSOffState
         wrapCheck.target = self
-        wrapCheck.action = "checkWrap:"
+        wrapCheck.action = #selector(checkWrap(_:))
         return wrapCheck
     }()
     
@@ -203,7 +203,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
     
     func control(control: NSControl, textView: NSTextView, doCommandBySelector command: Selector) -> Bool {
         if control === searchField &&
-           command == "cancelOperation:" &&
+           command == #selector(cancelOperation(_:)) &&
            searchField.stringValue.isEmpty {
             executeClose()
             return true

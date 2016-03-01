@@ -77,7 +77,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         onlyVisibleButton.buttonType = .SwitchButton
         onlyVisibleButton.state = NSUserDefaults.standardUserDefaults().boolForKey(kSBSnapshotOnlyVisiblePortion) ? NSOnState : NSOffState
         onlyVisibleButton.target = self
-        onlyVisibleButton.action = "checkOnlyVisible:"
+        onlyVisibleButton.action = #selector(checkOnlyVisible(_:))
         onlyVisibleButton.title = NSLocalizedString("Only visible portion", comment: "")
         onlyVisibleButton.font = NSFont.systemFontOfSize(10.0)
         return onlyVisibleButton
@@ -87,7 +87,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let updateButton = BLKGUI.Button(frame: NSMakeRect(6, self.imageViewSize.height - 76, 119, 32))
         updateButton.buttonType = .MomentaryPushInButton
         updateButton.target = self
-        updateButton.action = "update:"
+        updateButton.action = #selector(update(_:))
         updateButton.image = NSImage(named: "Icon_Camera.png")
         updateButton.title = NSLocalizedString("Update", comment: "")
         updateButton.font = NSFont.systemFontOfSize(11.0)
@@ -166,7 +166,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let filetypes = [NSBitmapImageFileType.NSTIFFFileType, NSBitmapImageFileType.NSGIFFileType, NSBitmapImageFileType.NSJPEGFileType, NSBitmapImageFileType.NSPNGFileType]
         menu.addItemWithTitle("", action: nil, keyEquivalent: "")
         for i in 0..<fileTypeNames.count {
-            let item = NSMenuItem(title: fileTypeNames[i], action: "selectFiletype:", keyEquivalent: "")
+            let item = NSMenuItem(title: fileTypeNames[i], action: #selector(selectFiletype(_:)), keyEquivalent: "")
             item.target = self
             item.tag = Int(filetypes[i].rawValue)
             item.state = (self.filetype == filetypes[i]) ? NSOnState : NSOffState
@@ -224,7 +224,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let compressions: [NSTIFFCompression] = [.None, .LZW, .PackBits]
         menu.addItemWithTitle("", action: nil, keyEquivalent: "")
         for i in 0..<compressionNames.count {
-            let item = NSMenuItem(title: compressionNames[i], action: "selectTiffOption:", keyEquivalent: "")
+            let item = NSMenuItem(title: compressionNames[i], action: #selector(selectTiffOption(_:)), keyEquivalent: "")
             item.tag = Int(compressions[i].rawValue)
             item.state = (self.tiffCompression == compressions[i]) ? NSOnState : NSOffState
             if self.tiffCompression == compressions[i] {
@@ -257,7 +257,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         jpgOptionSlider.allowsTickMarkValuesOnly = true
         jpgOptionSlider.doubleValue = Double(self.jpgFactor)
         jpgOptionSlider.target = self
-        jpgOptionSlider.action = "slideJpgOption:"
+        jpgOptionSlider.action = #selector(slideJpgOption(_:))
         return jpgOptionSlider
     }()
     
@@ -298,7 +298,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let cancelButton = BLKGUI.Button(frame: self.cancelButtonRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
-        cancelButton.action = "cancel"
+        cancelButton.action = #selector(cancel)
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()
@@ -307,7 +307,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let doneButton = BLKGUI.Button(frame: self.doneButtonRect)
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
-        doneButton.action = "save:"
+        doneButton.action = #selector(save(_:))
         doneButton.enabled = false
         doneButton.keyEquivalent = "\r" // busy if button is added into a view
         return doneButton
@@ -387,7 +387,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         addSubview(cancelButton)
         addSubview(doneButton)
         autoresizingMask = [.ViewMinXMargin, .ViewMaxXMargin, .ViewMinYMargin, .ViewMaxYMargin]
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "windowDidResize:", name: NSWindowDidResizeNotification, object: window)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(windowDidResize(_:)), name: NSWindowDidResizeNotification, object: window)
     }
     
     required init(coder: NSCoder) {
@@ -444,7 +444,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: ""))
             let r = alert.runModal()
             if r == NSAlertFirstButtonReturn {
-                updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "updateWithTimer:", userInfo: field, repeats: false)
+                updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(update(timer:)), userInfo: field, repeats: false)
             } else {
                 if field === widthField {
                     widthField.integerValue = Int(successSize.width)
@@ -455,7 +455,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                 }
             }
         } else {
-            updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "updateWithTimer:", userInfo: field, repeats: false)
+            updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(update(timer:)), userInfo: field, repeats: false)
         }
     }
     
@@ -576,7 +576,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         showProgress()
         // Perform update
         let modes = [NSDefaultRunLoopMode, NSEventTrackingRunLoopMode, NSModalPanelRunLoopMode]
-        performSelector("updatingForField:", withObject: field, afterDelay: 0, inModes: modes)
+        performSelector(#selector(updating(forField:)), withObject: field, afterDelay: 0, inModes: modes)
     }
     
     @objc(updatingForField:)
@@ -765,7 +765,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         NSUserDefaults.standardUserDefaults().setDouble(value, forKey: kSBSnapshotJPGFactor)
         // Update image
         destructUpdateTimer()
-        updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "updateWithTimer:", userInfo: nil, repeats: false)
+        updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: false)
     }
     
     func save(sender: AnyObject) {

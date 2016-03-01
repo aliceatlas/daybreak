@@ -66,7 +66,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         langPopup.cell!.arrowPosition = .ArrowAtBottom
         for lang in languages {
             let title = NSLocale.systemLocale().displayNameForKey(NSLocaleIdentifier, value: lang)
-            menu.addItem(title: title!, representedObject: lang, target: self, action: "selectLanguage:")
+            menu.addItem(title: title!, representedObject: lang, target: self, action: #selector(selectLanguage(_:)))
         }
         langPopup.menu = menu
         return langPopup
@@ -84,7 +84,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         switchButton.bezelStyle = .TexturedRoundedBezelStyle
         switchButton.target = self
         switchButton.title = NSLocalizedString("Contibute", comment: "")
-        switchButton.action = "showContribute"
+        switchButton.action = #selector(showContribute)
         return switchButton
     }()
     
@@ -159,7 +159,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         openButton.bezelStyle = .TexturedRoundedBezelStyle
         openButton.title = NSLocalizedString("Open…", comment: "")
         openButton.target = self
-        openButton.action = "open"
+        openButton.action = #selector(open)
         return openButton
     }()
 
@@ -174,7 +174,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         cancelButton.bezelStyle = .TexturedRoundedBezelStyle
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
-        cancelButton.action = "cancel"
+        cancelButton.action = #selector(cancel)
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()
@@ -190,7 +190,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         createButton.setButtonType(.MomentaryPushInButton)
         createButton.bezelStyle = .TexturedRoundedBezelStyle
         createButton.target = self
-        createButton.action = "done"
+        createButton.action = #selector(done)
         createButton.keyEquivalent = "\r"
         return createButton
     }()
@@ -258,7 +258,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         checkoutButton.imagePosition = .ImageLeft
         checkoutButton.title = NSLocalizedString("Check out the translation file from the project on Google Code.", comment: "")
         checkoutButton.target = self
-        checkoutButton.action = "openCheckoutDirectory"
+        checkoutButton.action = #selector(openCheckoutDirectory)
         return checkoutButton
     }()
     
@@ -287,7 +287,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         commitButton.imagePosition = .ImageLeft
         commitButton.title = NSLocalizedString("Commit your translation file to the project.", comment: "")
         commitButton.target = self
-        commitButton.action = "openCommitDirectory"
+        commitButton.action = #selector(openCommitDirectory)
         return commitButton
     }()
 
@@ -358,7 +358,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         if !animating {
             changeView(0)
             switchButton.title = NSLocalizedString("Edit", comment: "")
-            switchButton.action = "showEdit"
+            switchButton.action = #selector(showEdit)
         }
     }
     
@@ -366,7 +366,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         if !animating {
             changeView(1)
             switchButton.title = NSLocalizedString("Contibute", comment: "")
-            switchButton.action = "showContribute"
+            switchButton.action = #selector(showContribute)
         }
     }
 

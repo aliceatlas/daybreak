@@ -39,7 +39,7 @@ class SBSearchbar: SBFindbar {
         searchField.autoresizingMask = .ViewWidthSizable
         (searchField as NSTextField).delegate = self
         searchField.target = self
-        searchField.action = "executeDoneSelector:"
+        searchField.action = #selector(executeDoneSelector(_:))
         searchField.cell!.sendsWholeSearchString = true
         searchField.cell!.sendsSearchStringImmediately = false
         if let string = NSPasteboard(name: NSFindPboard).stringForType(NSStringPboardType) {

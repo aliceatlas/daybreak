@@ -133,8 +133,8 @@ class SBBookmarksView: SBView, SBBookmarkListViewDelegate {
             if splitView == nil {
                 searchbar = SBSearchbar(frame: NSMakeRect(0, 0, scrollView!.frame.size.width, 24.0))
                 searchbar!.target = self
-                searchbar!.doneSelector = "searchWithText:"
-                searchbar!.cancelSelector = "closeSearchbar"
+                searchbar!.doneSelector = #selector(searchWithText(_:))
+                searchbar!.cancelSelector = #selector(closeSearchbar)
                 splitView = SBFixedSplitView(embedViews: [searchbar!, scrollView!], frameRect: scrollView!.frame)
                 splitView!.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
                 r = true

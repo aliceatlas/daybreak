@@ -111,7 +111,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let images = [icon0, icon1]
         menu.addItemWithTitle("", action: nil, keyEquivalent: "")
         for (i, name) in enumerate(names) {
-            let item = NSMenuItem(title: name, action: "selectApp:", keyEquivalent: "")
+            let item = NSMenuItem(title: name, action: #selector(selectApp(_:)), keyEquivalent: "")
             item.target = self
             if i < 2 {
                 item.image = images[i]
@@ -147,7 +147,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         switchMatrix.cellAtRow(0, column: 0)!.title = NSLocalizedString("Describe", comment: "")
         switchMatrix.cellAtRow(0, column: 1)!.title = NSLocalizedString("None", comment: "")
         switchMatrix.target = self
-        switchMatrix.action = "switchReproducibility:"
+        switchMatrix.action = #selector(switchReproducibility(_:))
         return switchMatrix
     }()
     
@@ -178,7 +178,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let cancelButton = BLKGUI.Button(frame: self.cancelRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
-        cancelButton.action = "cancel"
+        cancelButton.action = #selector(cancel)
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()
@@ -187,7 +187,7 @@ class SBReportView: SBView, NSTextFieldDelegate {
         let doneButton = BLKGUI.Button(frame: self.doneRect)
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
-        doneButton.action = "send"
+        doneButton.action = #selector(send)
         doneButton.enabled = false
         doneButton.keyEquivalent = "\r"
         return doneButton

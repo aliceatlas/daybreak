@@ -161,7 +161,7 @@ class SBDocumentWindow: NSWindow {
     // MARK: Menu validation
     
     override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
-        if menuItem.action == "toggleToolbarShown:" {
+        if menuItem.action == #selector(toggleToolbarShown(_:)) {
             menuItem.title = toolbar!.visible ? NSLocalizedString("Hide Toolbar", comment: "") : NSLocalizedString("Show Toolbar", comment: "")
             return coverWindow == nil
         }
@@ -221,7 +221,7 @@ class SBDocumentWindow: NSWindow {
             coverWindow!.makeKeyWindow()
         #else
             coverWindow.contentView.hidden = true
-            NSApp.beginSheet(coverWindow, modalForWindow: self, modalDelegate: self, didEndSelector: "coverWindowDidEnd:returnCode:contextInfo:", contextInfo: nil)
+            NSApp.beginSheet(coverWindow, modalForWindow: self, modalDelegate: self, didEndSelector: #selector(coverWindowDidEnd(_:returnCode:contextInfo:)), contextInfo: nil)
             
             animation = NSViewAnimation(viewAnimations: [[
                 NSViewAnimationTargetKey: coverWindow.contentView,
@@ -291,7 +291,7 @@ class SBDocumentWindow: NSWindow {
         let doneButton = BLKGUI.Button(frame: doneRect)
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
-        doneButton.action = "doneFlip"
+        doneButton.action = #selector(doneFlip)
         doneButton.enabled = true
         doneButton.keyEquivalent = "\r"
         flip(doneButton)

@@ -116,7 +116,7 @@ class SBAboutView: SBView {
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.title = NSLocalizedString("Back", comment: "")
         backButton.target = self
-        backButton.action = "cancel"
+        backButton.action = #selector(cancel)
         backButton.keyEquivalent = "\u{1B}"
         return backButton
     }()

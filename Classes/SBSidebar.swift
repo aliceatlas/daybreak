@@ -294,7 +294,7 @@ class SBSideBottombar: SBBottombar {
             drawerButton.autoresizingMask = .ViewMinXMargin
         }
         drawerButton.target = self
-        drawerButton.action = "toggleDrawer"
+        drawerButton.action = #selector(toggleDrawer)
         return drawerButton
     }()
     
@@ -305,7 +305,7 @@ class SBSideBottombar: SBBottombar {
         }
         newFolderButton.title = NSLocalizedString("New Folder", comment: "")
         newFolderButton.target = self
-        newFolderButton.action = "newFolder"
+        newFolderButton.action = #selector(newFolder)
         return newFolderButton
     }()
     
@@ -316,7 +316,7 @@ class SBSideBottombar: SBBottombar {
         sizeSlider.maxValue = kSBBookmarkCellMaxWidth
         sizeSlider.floatValue = Float(kSBBookmarkCellMinWidth)
         sizeSlider.target = self
-        sizeSlider.action = "slide"
+        sizeSlider.action = #selector(slide)
         sizeSlider.autoresizingMask = .ViewMinXMargin
         return sizeSlider
     }()

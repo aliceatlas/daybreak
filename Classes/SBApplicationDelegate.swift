@@ -45,7 +45,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         constructDebugMenu()
         #endif
         // Handle AppleScript (Open URL from other application)
-        NSAppleEventManager.sharedAppleEventManager().setEventHandler(self, andSelector: "openURL:withReplyEvent:", forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
+        NSAppleEventManager.sharedAppleEventManager().setEventHandler(self, andSelector: #selector(openURL(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
         // Localize menu
         SBLocalizeTitlesInMenu(NSApp.mainMenu!)
         // Register defaults
@@ -56,9 +56,9 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let center = NSNotificationCenter.defaultCenter()
         let updater = SBUpdater.sharedUpdater
         // Add observe notifications
-        center.addObserver(self, selector: "updaterShouldUpdate:", name: SBUpdaterShouldUpdateNotification, object: updater)
-        center.addObserver(self, selector: "updaterNotNeedUpdate:", name: SBUpdaterNotNeedUpdateNotification, object: updater)
-        center.addObserver(self, selector: "updaterDidFailChecking:", name: SBUpdaterDidFailCheckingNotification, object: updater)
+        center.addObserver(self, selector: #selector(updaterShouldUpdate(_:)), name: SBUpdaterShouldUpdateNotification, object: updater)
+        center.addObserver(self, selector: #selector(updaterNotNeedUpdate(_:)), name: SBUpdaterNotNeedUpdateNotification, object: updater)
+        center.addObserver(self, selector: #selector(updaterDidFailChecking(_:)), name: SBUpdaterDidFailCheckingNotification, object: updater)
         // Read bookmarks
         SBBookmarks.sharedBookmarks
         // Create History instance
@@ -215,8 +215,8 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         updateView!.text = NSLocalizedString("If you click the \"Download\" button, the download of the disk image file will begin. ", comment: "")
         updateView!.versionString = versionString
         updateView!.target = self
-        updateView!.doneSelector = "doneUpdate"
-        updateView!.cancelSelector = "cancelUpdate"
+        updateView!.doneSelector = #selector(doneUpdate)
+        updateView!.cancelSelector = #selector(cancelUpdate)
         updateView!.loadRequest(NSURL(string: URLString)!)
         window.showCoverWindow(updateView!)
     }
@@ -356,11 +356,10 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         let mainMenu = NSApp.mainMenu!
         let debugMenuItem = NSMenuItem(title: "", action: nil, keyEquivalent: "")
         let debugMenu = NSMenu(title: "Debug")
-        let writeViewStructure = NSMenuItem(title: "Export View Structure...", action: "writeViewStructure:", keyEquivalent: "")
-    
-        let writeMainMenu = NSMenuItem(title: "Export Menu as plist...", action: "writeMainMenu:", keyEquivalent: "")
-        let validateStrings = NSMenuItem(title: "Validate strings file...", action: "validateStrings:", keyEquivalent: "")
-        let debugUI = NSMenuItem(title: "Debug UI...", action: "debugAddDummyDownloads:", keyEquivalent: "")
+        let writeViewStructure = NSMenuItem(title: "Export View Structure...", action: #selector(writeViewStructure(_:)), keyEquivalent: "")
+        let writeMainMenu = NSMenuItem(title: "Export Menu as plist...", action: #selector(writeMainMenu(_:)), keyEquivalent: "")
+        let validateStrings = NSMenuItem(title: "Validate strings file...", action: #selector(validateStrings(_:)), keyEquivalent: "")
+        let debugUI = NSMenuItem(title: "Debug UI...", action: #selector(SBDocument.debugAddDummyDownloads(_:)), keyEquivalent: "")
         for item in [writeViewStructure, writeMainMenu, validateStrings, debugUI] {
             debugMenu.addItem(item)
         }

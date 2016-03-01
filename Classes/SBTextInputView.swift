@@ -54,7 +54,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         let doneButton = BLKGUI.Button(frame: self.doneButtonRect)
         doneButton.title = NSLocalizedString("OK", comment: "")
         doneButton.target = self
-        doneButton.action = "done"
+        doneButton.action = #selector(done)
         doneButton.enabled = true
         doneButton.keyEquivalent = "\r" // busy if button is added into a view
         return doneButton
@@ -63,7 +63,7 @@ class SBTextInputView: SBView, NSTextFieldDelegate {
         let cancelButton = BLKGUI.Button(frame: self.cancelButtonRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
-        cancelButton.action = "cancel"
+        cancelButton.action = #selector(cancel)
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()

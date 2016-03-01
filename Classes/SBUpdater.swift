@@ -35,7 +35,7 @@ class SBUpdater: NSObject {
     var checkSkipVersion = true
     
     func check() {
-        NSThread.detachNewThreadSelector("checking", toTarget: self, withObject: nil)
+        NSThread.detachNewThreadSelector(#selector(checking), toTarget: self, withObject: nil)
     }
     
     func checking() {

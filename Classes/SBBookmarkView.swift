@@ -118,7 +118,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         let doneButton = BLKGUI.Button(frame: self.doneButtonRect)
         doneButton.title = NSLocalizedString("Add", comment: "")
         doneButton.target = self
-        doneButton.action = "done"
+        doneButton.action = #selector(done)
         doneButton.keyEquivalent = "\r" // busy if button is added into a view
         doneButton.enabled = false
         return doneButton
@@ -128,7 +128,7 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         let cancelButton = BLKGUI.Button(frame: self.cancelButtonRect)
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
-        cancelButton.action = "cancel"
+        cancelButton.action = #selector(cancel)
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()

@@ -80,9 +80,9 @@ class SBWebResourcesView: SBView, NSTableViewDataSource, NSTableViewDelegate {
         lengthTextCell.showSelection = false
         lengthTextCell.alignment = .Right
         cachedCell.target = self
-        cachedCell.action = "save:"
+        cachedCell.action = #selector(save(_:))
         actionCell.target = self
-        actionCell.action = "download:"
+        actionCell.action = #selector(download(_:))
         URLColumn.dataCell = URLTextCell
         URLColumn.width = tableRect.size.width - lengthWidth - cachedWidth - actionWidth
         URLColumn.editable = false

@@ -56,7 +56,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         let searchField = BLKGUI.SearchField(frame: self.searchFieldRect)
         (searchField as NSTextField).delegate = self
         searchField.target = self
-        searchField.action = "search:"
+        searchField.action = #selector(search(_:))
         searchField.cell!.sendsWholeSearchString = true
         searchField.cell!.sendsSearchStringImmediately = true
         return searchField
@@ -113,14 +113,14 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         tableView.setDataSource(self)
         tableView.setDelegate(self)
         tableView.focusRingType = .None
-        tableView.doubleAction = "open"
+        tableView.doubleAction = #selector(open)
         return tableView
     }()
 	private lazy var removeButton: BLKGUI.Button = {
         let removeButton = BLKGUI.Button(frame: self.removeButtonRect)
         removeButton.title = NSLocalizedString("Remove", comment: "")
         removeButton.target = self
-        removeButton.action = "remove"
+        removeButton.action = #selector(remove)
         removeButton.enabled = false
         return removeButton
     }()
@@ -128,7 +128,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         let removeAllButton = BLKGUI.Button(frame: self.removeAllButtonRect)
         removeAllButton.title = NSLocalizedString("Remove All", comment: "")
         removeAllButton.target = self
-        removeAllButton.action = "removeAll"
+        removeAllButton.action = #selector(removeAll)
         removeAllButton.enabled = false
         return removeAllButton
     }()
@@ -136,7 +136,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         let backButton = BLKGUI.Button(frame: self.backButtonRect)
         backButton.title = NSLocalizedString("Back", comment: "")
         backButton.target = self
-        backButton.action = "cancel"
+        backButton.action = #selector(cancel)
         backButton.keyEquivalent = "\u{1B}"
         return backButton
     }()

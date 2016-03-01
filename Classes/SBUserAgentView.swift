@@ -72,7 +72,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         let images = [icon0, icon1]
         popup.menu!.addItemWithTitle("", action: nil, keyEquivalent: "")
         for i in 0..<count {
-            let item = NSMenuItem(title: NSLocalizedString(SBUserAgentNames[i], comment: ""), action: "selectApp:", keyEquivalent: "")
+            let item = NSMenuItem(title: NSLocalizedString(SBUserAgentNames[i], comment: ""), action: #selector(selectApp(_:)), keyEquivalent: "")
             item.target = self
             if i < 2 {
                 item.image = images[i]
@@ -102,7 +102,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         cancelButton.title = NSLocalizedString("Cancel", comment: "")
         cancelButton.target = self
-        cancelButton.action = "cancel"
+        cancelButton.action = #selector(cancel)
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()
@@ -113,7 +113,7 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         doneButton.title = NSLocalizedString("Done", comment: "")
         doneButton.target = self
         doneButton.enabled = !self.userAgentName.isEmpty
-        doneButton.action = "done"
+        doneButton.action = #selector(done)
         doneButton.keyEquivalent = "\r"
         return doneButton
     }()

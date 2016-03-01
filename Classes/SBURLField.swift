@@ -80,7 +80,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         backwardButton.backImage = SBBackwardIconImage(backwardRect.size, true, true)
         backwardButton.backDisableImage = SBBackwardIconImage(backwardRect.size, false, true)
         backwardButton.target = self
-        backwardButton.action = "executeDidSelectBackward"
+        backwardButton.action = #selector(executeDidSelectBackward)
         return backwardButton
     }()
     
@@ -92,7 +92,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         forwardButton.backImage = SBForwardIconImage(forwardRect.size, true, true)
         forwardButton.backDisableImage = SBForwardIconImage(forwardRect.size, false, true)
         forwardButton.target = self
-        forwardButton.action = "executeDidSelectForward"
+        forwardButton.action = #selector(executeDidSelectForward)
         return forwardButton
     }()
     
@@ -105,9 +105,9 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     private lazy var field: SBURLTextField = {
         let field = SBURLTextField(frame: self.fieldRect)
         field.target = self
-        field.action = "executeShouldOpenURL"
-        field.commandAction = "executeShouldOpenURLInNewTab"
-        field.optionAction = "executeShouldDownloadURL"
+        field.action = #selector(executeShouldOpenURL)
+        field.commandAction = #selector(executeShouldOpenURLInNewTab)
+        field.optionAction = #selector(executeShouldDownloadURL)
         field.bezeled = false
         field.drawsBackground = false
         field.bordered = false
@@ -130,7 +130,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         goButton.backImage = SBGoIconImage(goRect.size, true, true)
         goButton.backDisableImage = SBGoIconImage(goRect.size, false, true)
         goButton.target = self
-        goButton.action = "go"
+        goButton.action = #selector(go)
         goButton.enabled = false
         return goButton
     }()
@@ -462,7 +462,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     
     func control(control: NSControl, textView: NSTextView, doCommandBySelector commandSelector: Selector) -> Bool {
         if control === field &&
-           commandSelector == "insertNewlineIgnoringFieldEditor:" {
+           commandSelector == #selector(insertNewlineIgnoringFieldEditor(_:)) {
             // Ignore new line action
             let center = NSNotificationCenter.defaultCenter()
             center.postNotificationName(NSControlTextDidEndEditingNotification, object: self)
@@ -939,7 +939,7 @@ class SBURLFieldContentView: NSView {
         table.allowsMultipleSelection = false
         table.allowsColumnSelection = false
         table.allowsEmptySelection = true
-        table.action = "tableViewDidSingleAction:"
+        table.action = #selector(SBURLField.tableViewDidSingleAction(_:))
         table.columnAutoresizingStyle = .LastColumnOnlyAutoresizingStyle
         table.headerView = nil
         table.cornerView = nil

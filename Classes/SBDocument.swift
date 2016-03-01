@@ -104,7 +104,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         loadButton.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         loadButton.images = ["Reload.png", "Stop.png"].map {NSImage(named: $0)!}
         loadButton.target = self
-        loadButton.action = "load:"
+        loadButton.action = #selector(load(_:))
         return loadButton
     }()
     
@@ -132,9 +132,9 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         zoomButton0.target = self
         zoomButton1.target = self
         zoomButton2.target = self
-        zoomButton0.action = "zoomOutView:"
-        zoomButton1.action = "scaleToActualSizeForView:"
-        zoomButton2.action = "zoomInView:"
+        zoomButton0.action = #selector(zoomOutView(_:))
+        zoomButton1.action = #selector(scaleToActualSizeForView(_:))
+        zoomButton2.action = #selector(zoomInView(_:))
         zoomButton0.image = SBZoomOutIconImage(r0.size)
         zoomButton1.image = SBActualSizeIconImage(r1.size)
         zoomButton2.image = SBZoomInIconImage(r2.size)
@@ -404,7 +404,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         let newWindow = SBDocumentWindow(frame: r, delegate: self, tabbarVisibility: true)
         let button = newWindow.standardWindowButton(.CloseButton)!
         button.target = self
-        button.action = "performCloseFromButton:"
+        button.action = #selector(performCloseFromButton(_:))
         return newWindow
     }
     
@@ -462,12 +462,12 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     func addObserverNotifications() {
         let center = NSNotificationCenter.defaultCenter()
         let notifications: [(Selector, String, AnyObject?)] = [
-            ("bookmarksDidUpdate:", SBBookmarksDidUpdateNotification, SBBookmarks.sharedBookmarks),
-            ("downloadsDidAddItem:", SBDownloadsDidAddItemNotification, nil),
-            ("downloadsWillRemoveItem:", SBDownloadsWillRemoveItemNotification, nil),
-            ("downloadsDidUpdateItem:", SBDownloadsDidUpdateItemNotification, nil),
-            ("downloadsDidFinishItem:", SBDownloadsDidFinishItemNotification, nil),
-            ("downloadsDidFailItem:", SBDownloadsDidFailItemNotification, nil)]
+            (#selector(bookmarksDidUpdate(_:)), SBBookmarksDidUpdateNotification, SBBookmarks.sharedBookmarks),
+            (#selector(downloadsDidAddItem(_:)), SBDownloadsDidAddItemNotification, nil),
+            (#selector(downloadsWillRemoveItem(_:)), SBDownloadsWillRemoveItemNotification, nil),
+            (#selector(downloadsDidUpdateItem(_:)), SBDownloadsDidUpdateItemNotification, nil),
+            (#selector(downloadsDidFinishItem(_:)), SBDownloadsDidFinishItemNotification, nil),
+            (#selector(downloadsDidFailItem(_:)), SBDownloadsDidFailItemNotification, nil)]
         for (selector, name, object) in notifications {
             center.addObserver(self, selector: selector, name: name, object: object)
         }
@@ -534,19 +534,19 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 item.paletteLabel = NSLocalizedString("Add Bookmark", comment: "")
                 item.toolTip = NSLocalizedString("Add Bookmark", comment: "")
                 item.image = NSImage(named: "Bookmark")
-                item.action = "bookmark:"
+                item.action = #selector(bookmark(_:))
             case kSBToolbarHistoryItemIdentifier:
                 item.label = NSLocalizedString("History", comment: "")
                 item.paletteLabel = NSLocalizedString("History", comment: "")
                 item.toolTip = NSLocalizedString("History", comment: "")
                 item.image = NSImage(named: "History")
-                item.action = "showHistory:"
+                item.action = #selector(showHistory(_:))
             case kSBToolbarHomeItemIdentifier:
                 item.label = NSLocalizedString("Go Home", comment: "")
                 item.paletteLabel = NSLocalizedString("Go Home", comment: "")
                 item.toolTip = NSLocalizedString("Go Home Page", comment: "")
                 item.image = NSImage(named: "Home")
-                item.action = "openHome:"
+                item.action = #selector(openHome(_:))
             case kSBToolbarTextEncodingItemIdentifier:
                 item.view = encodingView
                 item.label = NSLocalizedString("Text Encoding", comment: "")
@@ -559,25 +559,25 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 item.paletteLabel = NSLocalizedString("Bookmarks", comment: "")
                 item.toolTip = NSLocalizedString("Bookmarks", comment: "")
                 item.image = NSImage(named: "Bookmarks-Icon")
-                item.action = "bookmarks:"
+                item.action = #selector(bookmarks(_:))
             case kSBToolbarSnapshotItemIdentifier:
                 item.label = NSLocalizedString("Snapshot", comment: "")
                 item.paletteLabel = NSLocalizedString("Snapshot", comment: "")
                 item.toolTip = NSLocalizedString("Snapshot Current Page", comment: "")
                 item.image = NSImage(named: "Snapshot")
-                item.action = "snapshot:"
+                item.action = #selector(snapshot(_:))
             case kSBToolbarBugsItemIdentifier:
                 item.label = NSLocalizedString("Bug Report", comment: "")
                 item.paletteLabel = NSLocalizedString("Bug Report", comment: "")
                 item.toolTip = NSLocalizedString("Send Bug Report", comment: "")
                 item.image = NSImage(named: "Bug")
-                item.action = "bugReport:"
+                item.action = #selector(bugReport(_:))
             case kSBToolbarUserAgentItemIdentifier:
                 item.label = NSLocalizedString("User Agent", comment: "")
                 item.paletteLabel = NSLocalizedString("User Agent", comment: "")
                 item.toolTip = NSLocalizedString("Select User Agent", comment: "")
                 item.image = NSImage(named: "UserAgent")
-                item.action = "selectUserAgent:"
+                item.action = #selector(selectUserAgent(_:))
             case kSBToolbarZoomItemIdentifier:
                 item.view = zoomView
                 item.label = NSLocalizedString("Zoom", comment: "")
@@ -590,7 +590,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 item.paletteLabel = NSLocalizedString("Source", comment: "")
                 item.toolTip = NSLocalizedString("Source", comment: "")
                 item.image = NSImage(named: "Source")
-                item.action = "source:"
+                item.action = #selector(source(_:))
             default:
                 break
         }
@@ -1179,113 +1179,98 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     override func validateMenuItem(menuItem: NSMenuItem) -> Bool {
         var r = true
         switch menuItem.action {
-            case "about:":
+            case #selector(about(_:)):
                 r = window.coverWindow == nil
-            case "bugReport:":
+            case #selector(bugReport(_:)):
                 r = window.coverWindow == nil
-            case "createNewTab:":
+            case #selector(createNewTab(_:)):
                 break
-            case "saveDocumentAs:":
+            case #selector(saveDocumentAs(_:)):
                 r = selectedWebDataSource != nil
-            case "downloadFromURL:":
+            case #selector(downloadFromURL(_:)):
                 r = window.coverWindow == nil
-            case "toggleAllbars:":
+            case #selector(toggleAllbars(_:)):
                 let shouldShow = !(window.toolbar!.visible && window.tabbarVisibility)
                 menuItem.title = shouldShow ? NSLocalizedString("Show All Bars", comment: "") : NSLocalizedString("Hide All Bars", comment: "")
                 r = window.coverWindow == nil
-            case "toggleTabbar:":
+            case #selector(toggleTabbar(_:)):
                 menuItem.title = window.tabbarVisibility ? NSLocalizedString("Hide Tabbar", comment: "") : NSLocalizedString("Show Tabbar", comment: "")
                 r = window.coverWindow == nil
-            case "sidebarPositionToLeft:":
+            case #selector(sidebarPositionToLeft(_:)):
                 menuItem.state = splitView.sidebarPosition == .Left ? NSOnState : NSOffState
-            case "sidebarPositionToRight:":
+            case #selector(sidebarPositionToRight(_:)):
                 menuItem.state = splitView.sidebarPosition == .Right ? NSOnState : NSOffState
-            case "reload:":
+            case #selector(reload(_:)):
                 break
-            case "stopLoading:":
+            case #selector(stopLoading(_:)):
                 r = selectedWebView!.loading
-            case "selectUserAgent:":
+            case #selector(selectUserAgent(_:)):
                 r = window.coverWindow == nil
-            case "scaleToActualSizeForView:":
+            case #selector(scaleToActualSizeForView(_:)):
                 let webView = selectedWebView!
-                if webView.respondsToSelector("canResetPageZoom") {
+                if webView.respondsToSelector(Selector("canResetPageZoom")) {
                     r = webView.canResetPageZoom
                 } else {
                     r = false
                 }
-            case "showHistory:":
+            case #selector(showHistory(_:)):
                 r = window.coverWindow == nil
-            case "zoomInView:":
+            case #selector(zoomInView(_:)):
                 let webView = selectedWebView!
-                if webView.respondsToSelector("canZoomPageIn") {
+                if webView.respondsToSelector(Selector("canZoomPageIn")) {
                     r = webView.canZoomPageIn
                 } else {
                     r = false
                 }
-            case "zoomOutView:":
+            case #selector(zoomOutView(_:)):
                 let webView = selectedWebView!
-                if webView.respondsToSelector("canZoomPageOut") {
+                if webView.respondsToSelector(Selector("canZoomPageOut")) {
                     r = webView.canZoomPageOut
                 } else {
                     r = false
                 }
-            case "scaleToActualSizeForText:":
-                let webView = selectedWebView!
-                if webView.respondsToSelector("canMakeTextStandardSize") {
-                    r = webView.canMakeTextStandardSize
-                } else {
-                    r = false
-                }
-            case "zoomInText:":
-                let webView = selectedWebView!
-                if webView.respondsToSelector("canMakeTextLarger") {
-                    r = webView.canMakeTextLarger
-                } else {
-                    r = false
-                }
-            case "zoomOutText:":
-                let webView = selectedWebView!
-                if webView.respondsToSelector("canMakeTextSmaller") {
-                    r = webView.canMakeTextSmaller
-                } else {
-                    r = false
-                }
-            case "source:":
+            case #selector(scaleToActualSizeForText(_:)):
+                r = selectedWebView!.canMakeTextStandardSize
+            case #selector(zoomInText(_:)):
+                r = selectedWebView!.canMakeTextLarger
+            case #selector(zoomOutText(_:)):
+                r = selectedWebView!.canMakeTextSmaller
+            case #selector(source(_:)):
                 menuItem.title = selectedTabViewItem!.showSource ? NSLocalizedString("Hide Source", comment: "") : NSLocalizedString("Show Source", comment: "")
-            case "resources:":
+            case #selector(resources(_:)):
                 menuItem.title = (splitView.visibleSidebar && resourcesView != nil) ? NSLocalizedString("Hide Resources", comment: "") : NSLocalizedString("Show Resources", comment: "")
-            case "showWebInspector:":
+            case #selector(showWebInspector(_:)):
                 r = NSUserDefaults.standardUserDefaults().boolForKey(kWebKitDeveloperExtras) && !(selectedWebView!.isEmpty)
-            case "showConsole:":
+            case #selector(showConsole(_:)):
                 r = NSUserDefaults.standardUserDefaults().boolForKey(kWebKitDeveloperExtras) && !(selectedWebView!.isEmpty)
-            case "backward:":
+            case #selector(backward(_:)):
                 r = selectedWebView?.canGoBack ?? false
-            case "forward:":
+            case #selector(forward(_:)):
                 r = selectedWebView?.canGoForward ?? false
-            case "bookmarks:":
+            case #selector(bookmarks(_:)):
                 let bookmarksView = sidebar?.view as? SBBookmarksView
                 menuItem.title = (splitView.visibleSidebar && bookmarksView != nil) ? NSLocalizedString("Hide All Bookmarks", comment: "") : NSLocalizedString("Show All Bookmarks", comment: "")
                 r = window.coverWindow == nil
-            case "bookmark:":
+            case #selector(bookmark(_:)):
                 r = !(selectedWebView!.isEmpty) && window.coverWindow == nil
-            case "searchInBookmarks:":
+            case #selector(searchInBookmarks(_:)):
                 let bookmarksView = sidebar?.view as? SBBookmarksView
                 r = bookmarksView != nil
-            case "switchToIconMode:":
+            case #selector(switchToIconMode(_:)):
                 let bookmarksView = sidebar?.view as? SBBookmarksView
                 r = splitView.visibleSidebar && sidebar != nil && bookmarksView != nil
                 menuItem.state = (bookmarksView &! {$0.mode == .Icon}) ? NSOnState : NSOffState
-            case "switchToListMode:":
+            case #selector(switchToListMode(_:)):
                 let bookmarksView = sidebar?.view as? SBBookmarksView
                 r = splitView.visibleSidebar && sidebar != nil && bookmarksView != nil
                 menuItem.state = (bookmarksView &! {$0.mode == .List}) ? NSOnState : NSOffState
-            case "switchToTileMode:":
+            case #selector(switchToTileMode(_:)):
                 let bookmarksView = sidebar?.view as? SBBookmarksView
                 r = splitView.visibleSidebar && sidebar != nil && bookmarksView != nil
                 menuItem.state = (bookmarksView &! {$0.mode == .Tile}) ? NSOnState : NSOffState
-            case "selectPreviousTab:":
+            case #selector(selectPreviousTab(_:)):
                 break
-            case "selectNextTab:":
+            case #selector(selectNextTab(_:)):
                 break
             default:
                 break
@@ -1516,7 +1501,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if (window.coverWindow ?? window.backWindow) == nil {
             let aboutView = SBAboutView.sharedView
             aboutView.target = self
-            aboutView.cancelSelector = "doneAbout"
+            aboutView.cancelSelector = #selector(doneAbout)
             window.flip(aboutView)
         } else {
             window.backWindow!.makeKeyWindow()
@@ -1563,8 +1548,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             downloaderView = SBDownloaderView(frame: NSMakeRect(0, 0, 800, 240))
             downloaderView!.message = NSLocalizedString("Download any file from typed URL.", comment: "")
             downloaderView!.target = self
-            downloaderView!.doneSelector = "doneDownloader"
-            downloaderView!.cancelSelector = "cancelDownloader"
+            downloaderView!.doneSelector = #selector(doneDownloader)
+            downloaderView!.cancelSelector = #selector(cancelDownloader)
             window.showCoverWindow(downloaderView!)
             downloaderView!.makeFirstResponderToURLField()
         } else {
@@ -1596,8 +1581,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             snapshotView!.title = selectedTabViewItem!.pageTitle
             if snapshotView!.setImage(image) {
                 snapshotView!.target = self
-                snapshotView!.doneSelector = "doneSnapshot"
-                snapshotView!.cancelSelector = "cancelSnapshot"
+                snapshotView!.doneSelector = #selector(doneSnapshot)
+                snapshotView!.cancelSelector = #selector(cancelSnapshot)
                 window.showCoverWindow(snapshotView!)
             }
         } else {
@@ -1730,8 +1715,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             historyView = SBHistoryView(frame: window.splitViewRect)
             historyView!.message = NSLocalizedString("History", comment: "")
             historyView!.target = self
-            historyView!.doneSelector = "doneHistory:"
-            historyView!.cancelSelector = "cancelHistory"
+            historyView!.doneSelector = #selector(doneHistory(_:))
+            historyView!.cancelSelector = #selector(cancelHistory)
             window.showCoverWindow(historyView!)
         } else {
             window.coverWindow!.makeKeyWindow()
@@ -1786,8 +1771,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 bookmarkView!.title = window.title
                 bookmarkView!.URLString = URLString
                 bookmarkView!.target = self
-                bookmarkView!.doneSelector = "doneBookmark"
-                bookmarkView!.cancelSelector = "cancelBookmark"
+                bookmarkView!.doneSelector = #selector(doneBookmark)
+                bookmarkView!.cancelSelector = #selector(cancelBookmark)
                 window.showCoverWindow(bookmarkView!)
                 bookmarkView!.makeFirstResponderToTitleField()
             }
@@ -1829,8 +1814,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
                 editBookmarkView!.URLString = URLString!
                 editBookmarkView!.labelName = labelName
                 editBookmarkView!.target = self
-                editBookmarkView!.doneSelector = "doneEditBookmark"
-                editBookmarkView!.cancelSelector = "cancelEditBookmark"
+                editBookmarkView!.doneSelector = #selector(doneEditBookmark)
+                editBookmarkView!.cancelSelector = #selector(cancelEditBookmark)
                 window.showCoverWindow(editBookmarkView!)
                 editBookmarkView!.makeFirstResponderToTitleField()
             }
@@ -1944,8 +1929,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if window.coverWindow == nil {
             reportView = SBReportView(frame: window.splitViewRect)
             reportView!.target = self
-            reportView!.doneSelector = "doneReport"
-            reportView!.cancelSelector = "cancelReport"
+            reportView!.doneSelector = #selector(doneReport)
+            reportView!.cancelSelector = #selector(cancelReport)
             window.showCoverWindow(reportView!)
         } else {
             window.coverWindow!.makeKeyWindow()
@@ -1966,8 +1951,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if (window.coverWindow ?? window.backWindow) == nil {
             userAgentView = SBUserAgentView(frame: NSMakeRect(0, 0, 800, 240))
             userAgentView!.target = self
-            userAgentView!.doneSelector = "doneUserAgent"
-            userAgentView!.cancelSelector = "cancelUserAgent"
+            userAgentView!.doneSelector = #selector(doneUserAgent)
+            userAgentView!.cancelSelector = #selector(cancelUserAgent)
             window.flip(userAgentView!)
         } else {
             window.backWindow!.makeKeyWindow()
@@ -2076,7 +2061,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         if window.coverWindow == nil {
             messageView = SBMessageView(frame: NSMakeRect(0, 0, 800, 240), text: message)
             messageView!.target = self
-            messageView!.doneSelector = "doneShowMessageView"
+            messageView!.doneSelector = #selector(doneShowMessageView)
             window.showCoverWindow(messageView!)
         } else {
             window.coverWindow!.makeKeyWindow()
@@ -2094,8 +2079,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             confirmed = -1
             messageView = SBMessageView(frame: NSMakeRect(0, 0, 800, 240), text: message)
             messageView!.target = self
-            messageView!.doneSelector = "doneConfirmMessageView"
-            messageView!.cancelSelector = "cancelConfirmMessageView"
+            messageView!.doneSelector = #selector(doneConfirmMessageView)
+            messageView!.cancelSelector = #selector(cancelConfirmMessageView)
             window.showCoverWindow(messageView!)
             while confirmed == -1 {
                 // Wait event...
@@ -2130,8 +2115,8 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             confirmed = -1
             textInputView = SBTextInputView(frame: NSMakeRect(0, 0, 800, 320), prompt: prompt)
             textInputView!.target = self
-            textInputView!.doneSelector = "doneTextInputView"
-            textInputView!.cancelSelector = "cancelTextInputView"
+            textInputView!.doneSelector = #selector(doneTextInputView)
+            textInputView!.cancelSelector = #selector(cancelTextInputView)
             window.showCoverWindow(textInputView!)
             while confirmed == -1 {
                 // Wait event...

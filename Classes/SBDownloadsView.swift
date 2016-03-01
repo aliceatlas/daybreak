@@ -38,7 +38,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         let removeButton = SBButton(frame: removeRect)
         removeButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin]
         removeButton.image = SBIconImage(SBCloseIconImage(), .Left, removeRect.size)
-        removeButton.action = "remove"
+        removeButton.action = #selector(SBDownloadView.remove)
         return removeButton
     }()
     private lazy var finderButton: SBButton = {
@@ -46,7 +46,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
         let finderButton = SBButton(frame: finderRect)
         finderButton.autoresizingMask = [.ViewMaxXMargin, .ViewMinYMargin];
         finderButton.image = SBIconImageWithName("Finder", .Right, finderRect.size)
-        finderButton.action = "finder"
+        finderButton.action = #selector(SBDownloadView.finder)
         return finderButton
     }()
     private var toolsItemView: SBDownloadView?
