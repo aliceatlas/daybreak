@@ -495,7 +495,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
         _block = block
         r.size.width = size.width
         r.size.height = _block.y * cellSize.height
-        SBConstrain(&r.size.height, min: size.height)
+        r.size.height.constrain(min: size.height)
         frame = r
     }
     

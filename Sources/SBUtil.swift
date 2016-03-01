@@ -1424,15 +1424,17 @@ func SBDispatchDelay(delay: Double, _ block: dispatch_block_t) {
     dispatch_after(time, queue, block)
 }
 
-func SBConstrain<T: Comparable>(value: T, min minValue: T? = nil, max maxValue: T? = nil) -> T {
-    var v = value
-    minValue !! { v = max(v, $0) }
-    maxValue !! { v = min(v, $0) }
-    return v
-}
-
-func SBConstrain<T: Comparable>(inout value: T, min minValue: T? = nil, max maxValue: T? = nil) {
-    value = SBConstrain(value, min: minValue, max: maxValue)
+extension Comparable {
+    func constrained(min minValue: Self? = nil, max maxValue: Self? = nil) -> Self {
+        var v = self
+        minValue !! { v = max(v, $0) }
+        maxValue !! { v = min(v, $0) }
+        return v
+    }
+    
+    mutating func constrain(min minValue: Self? = nil, max maxValue: Self? = nil) {
+        self = self.constrained(min: minValue, max: maxValue)
+    }
 }
 
 // MARK: Debug

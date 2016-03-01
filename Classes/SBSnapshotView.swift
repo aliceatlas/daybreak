@@ -379,8 +379,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
     
     override init(frame: NSRect) {
         var r = frame
-        SBConstrain(&r.size.width, min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
-        SBConstrain(&r.size.height, min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
+        r.size.width.constrain(min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
+        r.size.height.constrain(min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
         super.init(frame: r)
         addSubview(toolsView)
         addSubview(scrollView)
@@ -428,8 +428,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let imageSize = imageView.image!.size
         var scrollBounds = NSZeroRect
         scrollBounds.size = scrollView.frame.size
-        imageRect.size.width = SBConstrain(imageSize.width, min: scrollBounds.size.width)
-        imageRect.size.height = SBConstrain(imageSize.height, min: scrollBounds.size.height)
+        imageRect.size.width = imageSize.width.constrained(min: scrollBounds.size.width)
+        imageRect.size.height = imageSize.height.constrained(min: scrollBounds.size.height)
         imageView.frame = imageRect
     }
     
@@ -616,7 +616,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             newSize = image!.size
         }
         if field === widthField {
-            value = SBConstrain(CGFloat(widthField.integerValue), min: 1)
+            value = CGFloat(widthField.integerValue).constrained(min: 1)
             if locked {
                 if onlyVisibleButton.state == NSOnState {
                     per = value / visibleRect.size.width
@@ -625,8 +625,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                     per = value / image!.size.width
                     newSize.height = image!.size.height * per
                 }
-                SBConstrain(&newSize.height, min: 1)
-                SBConstrain(&per, min: 0.01)
+                newSize.height.constrain(min: 1)
+                per.constrain(min: 0.01)
                 heightField.integerValue = Int(newSize.height)
                 scaleField.integerValue = Int(per * 100)
             }
@@ -646,8 +646,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                     per = value / image!.size.height
                     newSize.width = image!.size.width * per
                 }
-                SBConstrain(&newSize.width, min: 1)
-                SBConstrain(&per, min: 0.01)
+                newSize.width.constrain(min: 1)
+                per.constrain(min: 0.01)
                 widthField.integerValue = Int(newSize.width)
                 scaleField.integerValue = Int(per * 100)
             }
@@ -693,8 +693,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         }
         updatePreviewImage()
         r.size = newSize
-        SBConstrain(&r.size.width, min: scrollView.frame.size.width)
-        SBConstrain(&r.size.height, min: scrollView.frame.size.height)
+        r.size.width.constrain(min: scrollView.frame.size.width)
+        r.size.height.constrain(min: scrollView.frame.size.height)
         imageView.frame = r
         imageView.display()
         imageView.scrollPoint(NSMakePoint(0, r.size.height))

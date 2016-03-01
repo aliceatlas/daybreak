@@ -864,7 +864,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
             if !splitView.animating && splitView.visibleSidebar {
                 var width = splitView.sidebar.frame.size.width
                 splitView.sidebarWidth = width
-                SBConstrain(&width, min: kSBSidebarMinimumWidth)
+                width.constrain(min: kSBSidebarMinimumWidth)
                 NSUserDefaults.standardUserDefaults().setDouble(Double(width), forKey: kSBSidebarWidth)
             }
         } else if aSplitView === sidebar {

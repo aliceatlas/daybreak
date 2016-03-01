@@ -108,7 +108,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
         let cgCount = CGFloat(count)
         if (cgCount * itemWidth) > width {
             let w = width / cgCount
-            itemWidth = SBConstrain(w, min: itemMinimumWidth)
+            itemWidth = w.constrained(min: itemMinimumWidth)
         }
         r.size.width = addButtonWidth
         r.size.height = bounds.size.height
@@ -128,7 +128,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
         }
         if (CGFloat(count) * itemWidth) > width {
             let w = width / CGFloat(count)
-            itemWidth = SBConstrain(w, min: itemMinimumWidth)
+            itemWidth = w.constrained(min: itemMinimumWidth)
         }
         r.size.width = itemWidth
         r.size.height = bounds.size.height

@@ -128,8 +128,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
     
     override init(frame: NSRect) {
         var r = frame
-        SBConstrain(&r.size.width, min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
-        SBConstrain(&r.size.height, min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
+        r.size.width.constrain(min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
+        r.size.height.constrain(min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
         super.init(frame: r)
         addSubview(imageView)
         addSubview(titleLabel)

@@ -96,7 +96,7 @@ class SBPopUpButtonCell: NSPopUpButtonCell {
                               NSShadowAttributeName:          shadow,
                               NSParagraphStyleAttributeName:  style]
             r.size = itemTitle.sizeWithAttributes(attributes)
-            SBConstrain(&r.size.width, max: view.bounds.size.width - padding * 2)
+            r.size.width.constrain(max: view.bounds.size.width - padding * 2)
             r.origin.x = padding
             r.origin.y = (view.bounds.size.height - r.size.height) / 2
             itemTitle.drawInRect(r, withAttributes: attributes)

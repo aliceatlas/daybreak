@@ -274,8 +274,8 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     
     override init(frame: NSRect) {
         var r = frame
-        SBConstrain(&r.size.width, min: minimumSize.width)
-        SBConstrain(&r.size.height, min: minimumSize.height)
+        r.size.width.constrain(min: minimumSize.width)
+        r.size.height.constrain(min: minimumSize.height)
         super.init(frame: r)
         addSubview(backwardButton)
         addSubview(forwardButton)
@@ -293,7 +293,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
     var font: NSFont? { return field.font }
     
     var sheetHeight: CGFloat {
-        let rowCount = SBConstrain(items.count, max: SBURLFieldMaxRowCount)
+        let rowCount = items.count.constrained(max: SBURLFieldMaxRowCount)
         return SBURLFieldRowHeight * CGFloat(rowCount) + SBURLFieldSheetPadding * 2
     }
     
@@ -963,7 +963,7 @@ class SBURLFieldContentView: NSView {
         var scrollerRect = scroller.frame
         var tableRect = table.frame
         let numberOfRows = dataSource?.numberOfRowsInTableView?(table) ?? 0
-        let rowCount = SBConstrain(numberOfRows, max: SBURLFieldMaxRowCount)
+        let rowCount = numberOfRows.constrained(max: SBURLFieldMaxRowCount)
         scrollerRect.size.width = bounds.size.width - 2
         scrollerRect.size.height = SBURLFieldRowHeight * CGFloat(rowCount)
         scrollerRect.origin.y = SBURLFieldSheetPadding
@@ -1123,7 +1123,7 @@ private class SBURLFieldDataCell: NSCell {
             let attribute = [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle]
             let sAttribute = [NSFontAttributeName: font, NSForegroundColorAttributeName: sTextColor, NSParagraphStyleAttributeName: paragraphStyle]
             var size = title.sizeWithAttributes(attribute)
-            SBConstrain(size.width, max: titleRect.size.width - side * 2)
+            size.width.constrain(max: titleRect.size.width - side * 2)
             var r = NSRect(size: size)
             switch alignment {
                 case .Left:

@@ -217,7 +217,7 @@ class SBDownloadsView: SBView, NSAnimationDelegate {
                 block.y += 1
             }
             r.size.width = enclosingSize.width
-            r.size.height = SBConstrain(block.y * cellSize.height, min: enclosingSize.height)
+            r.size.height = (block.y * cellSize.height).constrained(min: enclosingSize.height)
             frame = r
             
             // Set frame of item views

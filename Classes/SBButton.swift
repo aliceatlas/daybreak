@@ -169,7 +169,7 @@ class SBButton: SBView {
                 NSShadowAttributeName: shadow,
                 NSParagraphStyleAttributeName: style]
             r.size = title!.sizeWithAttributes(attributes)
-            SBConstrain(&r.size.width, max: bounds.size.width - padding * 2)
+            r.size.width.constrain(max: bounds.size.width - padding * 2)
             r.origin.x = padding + ((bounds.size.width - padding * 2) - r.size.width) / 2
             r.origin.y = (bounds.size.height - r.size.height) / 2
             title!.drawInRect(r, withAttributes: attributes)

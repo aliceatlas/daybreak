@@ -195,8 +195,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
     
     override init(frame: NSRect) {
         var r = frame
-        SBConstrain(&r.size.width, min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
-        SBConstrain(&r.size.width, min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
+        r.size.width.constrain(min: kSBMinFrameSizeWidth, max: kSBMaxFrameSizeWidth)
+        r.size.height.constrain(min: kSBMinFrameSizeHeight, max: kSBMaxFrameSizeHeight)
         super.init(frame: r)
         addSubview(iconImageView)
         addSubview(titleLabel)

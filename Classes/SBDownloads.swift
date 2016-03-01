@@ -118,7 +118,7 @@ class SBDownloads: NSObject, NSURLDownloadDelegate, WebDownloadDelegate {
     
     func download(download: NSURLDownload, didReceiveResponse response: NSURLResponse) {
         if let item = items.first({$0.download === download}) {
-            item.expectedLength = SBConstrain(Int(response.expectedContentLength), min: 0)
+            item.expectedLength = Int(response.expectedContentLength).constrained(min: 0)
             item.bytes = String.bytesString(Int64(item.receivedLength), expectedLength: Int64(item.expectedLength))
             // Update views
             executeDidUpdateItem(item)
