@@ -29,34 +29,30 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 class SBDocumentController: NSDocumentController {
     override var defaultType: String? { return kSBDocumentTypeName }
     
-    override func typeForContentsOfURL(inAbsoluteURL: NSURL, error outError: NSErrorPointer) -> String? {
+    override func typeForContentsOfURL(inAbsoluteURL: NSURL) throws -> String {
         if inAbsoluteURL.fileURL {
-            return super.typeForContentsOfURL(inAbsoluteURL, error: outError)
+            return try super.typeForContentsOfURL(inAbsoluteURL)
         } else {
             return kSBDocumentTypeName
         }
     }
     
-    override func openUntitledDocumentAndDisplay(displayDocument: Bool, error outError: NSErrorPointer) -> AnyObject? {
+    override func openUntitledDocumentAndDisplay(displayDocument: Bool) throws -> NSDocument {
         let sidebarVisibility = NSUserDefaults.standardUserDefaults().boolForKey(kSBSidebarVisibilityFlag)
         let homepage = SBPreferences.sharedPreferences.homepage(true)?.ifNotEmpty
         let URL = homepage !! {NSURL(string: $0.requestURLString)}
-        return openUntitledDocumentAndDisplay(displayDocument, sidebarVisibility: sidebarVisibility, initialURL: URL, error: outError)
+        return try openUntitledDocumentAndDisplay(displayDocument, sidebarVisibility: sidebarVisibility, initialURL: URL)
     }
     
-    func openUntitledDocumentAndDisplay(displayDocument: Bool, sidebarVisibility: Bool, initialURL URL: NSURL?, error outError: NSErrorPointer) -> AnyObject? {
-        let type = URL !! {typeForContentsOfURL($0, error: outError)}
-        if type == kSBStringsDocumentTypeName {
-        } else if let document = makeUntitledDocumentOfType(kSBDocumentTypeName, error: outError) as? SBDocument {
-            URL !! { document.initialURL = $0 }
-            document.sidebarVisibility = sidebarVisibility
-            addDocument(document)
-            document.makeWindowControllers()
-            if displayDocument {
-                document.showWindows()
-            }
-            return document
+    func openUntitledDocumentAndDisplay(displayDocument: Bool, sidebarVisibility: Bool, initialURL URL: NSURL?) throws -> NSDocument {
+        let document = try makeUntitledDocumentOfType(kSBDocumentTypeName) as! SBDocument
+        URL !! { document.initialURL = $0 }
+        document.sidebarVisibility = sidebarVisibility
+        addDocument(document)
+        document.makeWindowControllers()
+        if displayDocument {
+            document.showWindows()
         }
-        return nil
+        return document
     }
 }

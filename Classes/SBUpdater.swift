@@ -44,8 +44,7 @@ class SBUpdater: NSObject {
         let URL = NSURL(string: SBVersionFileURL)!
         let request = NSURLRequest(URL: URL, cachePolicy: .ReloadIgnoringLocalCacheData, timeoutInterval: kSBTimeoutInterval)
         var response: NSURLResponse?
-        var error: NSError?
-        let data = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        let data = try? NSURLConnection.sendSynchronousRequest(request, returningResponse: &response)
         let currentThread = NSThread.currentThread()
         let threadDictionary = currentThread.threadDictionary
         

@@ -117,13 +117,12 @@ class SBBookmarks: NSObject {
         var r = false
         if !items.isEmpty {
             let path = SBBookmarksFilePath!
-            var error: NSError?
-            let data = NSPropertyListSerialization.dataWithPropertyList(
-                SBBookmarksWithItems(items), format: NSPropertyListFormat.BinaryFormat_v1_0, options: 0, error: &error)
-            if error != nil {
-                DebugLog("%@ error = %@", __FUNCTION__, error!)
-            } else {
-                r = data!.writeToFile(path, atomically: true)
+            do {
+                let data = try NSPropertyListSerialization.dataWithPropertyList(
+                    SBBookmarksWithItems(items), format: NSPropertyListFormat.BinaryFormat_v1_0, options: 0)
+                r = data.writeToFile(path, atomically: true)
+            } catch let error as NSError {
+                DebugLog("%@ error = %@", __FUNCTION__, error)
             }
         }
         return r

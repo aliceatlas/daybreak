@@ -76,10 +76,10 @@ class SBHistory: NSObject {
     }
     
     func readFromFile() -> Bool {
-        return history.loadFromURL(URL, error: nil)
+        return (try? history.loadFromURL(URL)) != nil
     }
     
     func writeToFile() -> Bool {
-        return history.saveToURL(URL, error: nil)
+        return (try? history.saveToURL(URL)) != nil
     }
 }

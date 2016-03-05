@@ -297,24 +297,22 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         return 1 + kSBDownloadItemSize + kSBBottombarHeight
     }
     
-    func selectedWebViewImage(size: NSSize = NSZeroSize) -> NSImage? {
-        if let webDocumentView = selectedWebDocumentView {
-            var intersectRect = webDocumentView.bounds
-            if size != NSZeroSize && size != intersectRect.size {
-                return NSImage(view: webDocumentView)?.inset(size: size, intersectRect: intersectRect, offset: NSZeroPoint)
-            } else {
-                return NSImage(view: webDocumentView)
-            }
+    func selectedWebViewImage(size: NSSize = .zero) -> NSImage? {
+        guard let webDocumentView = selectedWebDocumentView else { return nil }
+        let intersectRect = webDocumentView.bounds
+        var img = NSImage(view: webDocumentView)
+        if size != .zero && size != intersectRect.size {
+            img = img?.inset(size: size, intersectRect: intersectRect, offset: .zero)
         }
-        return nil
+        return img
     }
-
+    
     func adjustedSplitPositon(proposedPosition: CGFloat) -> CGFloat {
         var pos = proposedPosition
         let bookmarksView = sidebar!.view as! SBBookmarksView
         var proposedWidth: CGFloat!
         let maxWidth = splitView.bounds.size.width
-        if splitView.sidebarPosition == SBSidebarPosition.Right {
+        if splitView.sidebarPosition == .Right {
             proposedWidth = maxWidth - pos
         } else {
             proposedWidth = pos
@@ -365,30 +363,20 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
         URLField.keyView = window.keyWindow
     }
     
-    override func dataOfType(typeName: String, error outError: NSErrorPointer) -> NSData? {
-        // Insert code here to write your document to data of the specified type. If the given outError != NULL, ensure that you set *outError when returning nil.
-    
-        // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-    
-        // For applications targeted for Panther or earlier systems, you should use the deprecated API -dataRepresentationOfType:. In this case you can also choose to override -fileWrapperRepresentationOfType: or -writeToFile:ofType: instead.
+    override func dataOfType(typeName: String) throws -> NSData {
+        // Insert code here to write your document to data of the specified type.
         
-        if outError != nil {
-            outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        }
-        return nil
+        // You can also choose to override -fileWrapperOfType:, -writeToURL:ofType:, or -writeToURL:ofType:forSaveOperation:originalContentsURL: instead.
+        
+        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
 
-    override func readFromData(data: NSData, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
-        // Insert code here to read your document from the given data of the specified type.  If the given outError != NULL, ensure that you set *outError when returning NO.
-    
-        // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead. 
-    
-        // For applications targeted for Panther or earlier systems, you should use the deprecated API -loadDataRepresentation:ofType. In this case you can also choose to override -readFromFile:ofType: or -loadFileWrapperRepresentation:ofType: instead.
-    
-        if outError != nil {
-            outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        }
-        return true
+    override func readFromData(data: NSData, ofType typeName: String) throws {
+        // Insert code here to read your document from the given data of the specified type.
+        
+        // You can also choose to override -readFromFileWrapper:ofType: or -readFromURL:ofType: instead.
+        
+        throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
     }
     
     override func updateChangeCount(changeType: NSDocumentChangeType) {
@@ -1335,8 +1323,7 @@ class SBDocument: NSDocument, SBTabbarDelegate, SBDownloaderDelegate, SBURLField
     func updateURLFieldGoogleSuggestDidEnd(data: NSData?) {
         if data != nil && URLField.isFirstResponder {
             // Parse XML
-            var error: NSError?
-            if var items = SBParseGoogleSuggestData(data!, &error)?.ifNotEmpty {
+            if var items = (try? SBParseGoogleSuggestData(data!))?.ifNotEmpty {
                 let item = SBURLFieldItem.None(title: NSLocalizedString("Suggestions", comment: ""),
                                                image: NSImage(named: "Icon_G.png")!.TIFFRepresentation!)
                 items.insert(item, atIndex: 0)

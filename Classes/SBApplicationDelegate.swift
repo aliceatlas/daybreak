@@ -79,11 +79,10 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
         var index = 0
         let documentController = SBGetDocumentController
         
-        if let filenames = filenames as? [String], document = SBGetSelectedDocument {
+        if let document = SBGetSelectedDocument {
             for filename in filenames {
-                var error: NSError?
-                let URL = NSURL.fileURLWithPath(filename)!
-                if let type = documentController.typeForContentsOfURL(URL, error: &error) {
+                let URL = NSURL(fileURLWithPath: filename)
+                if let type = try? documentController.typeForContentsOfURL(URL) {
                     if type == kSBStringsDocumentTypeName {
                         let path = NSBundle.mainBundle().pathForResource("Localizable", ofType: "strings")
                         openStrings(path: path!, anotherPath: URL.path!)
@@ -142,8 +141,7 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
                method = NSUserDefaults.standardUserDefaults().stringForKey(kSBOpenURLFromApplications) {
             switch method {
                 case "in a new window":
-                    var error: NSError?
-                    if let document = SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument {
+                    if let document = (try? SBGetDocumentController.openUntitledDocumentAndDisplay(true)) as? SBDocument {
                         document.openURLStringInSelectedTabViewItem(URLString)
                     }
 
@@ -300,9 +298,11 @@ class SBApplicationDelegate: NSObject, NSApplicationDelegate {
     // MARK: File
     
     func newDocument(_: AnyObject) {
-        var error: NSError?
-        SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error)
-        error !! { DebugLog("%@ %@", __FUNCTION__, $0) }
+        do {
+            try SBGetDocumentController.openUntitledDocumentAndDisplay(true)
+        } catch let error as NSError {
+            DebugLog("%@ %@", __FUNCTION__, error)
+        }
     }
     
     func openDocument(_: AnyObject) {

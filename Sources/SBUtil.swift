@@ -42,8 +42,7 @@ var SBGetSelectedDocument: SBDocument? {
     if let document = NSApp.orderedDocuments.get(0) as? SBDocument {
         return document
     }
-    var error: NSError?
-    return SBGetDocumentController.openUntitledDocumentAndDisplay(true, error: &error) as? SBDocument
+    return try? SBGetDocumentController.openUntitledDocumentAndDisplay(true) as? SBDocument
 }
 
 var SBGetWebPreferences: WebPreferences {
@@ -252,27 +251,24 @@ var SBBookmarksFilePath: String? {
     if manager.fileExistsAtPath(path!) {
         // Exist current bookmarks
     } else {
-        var error: NSError?
         let version1Path = SBBookmarksVersion1FilePath
         
         if manager.fileExistsAtPath(version1Path) {
             // Exist version1 bookmarks
             let plistData = NSData(contentsOfFile: version1Path)!
-            if let items = NSPropertyListSerialization.propertyListWithData(plistData, options: Int(NSPropertyListMutabilityOptions.Immutable.rawValue), format: nil, error: &error) as? [NSDictionary] {
-                if let plistData = NSPropertyListSerialization.dataWithPropertyList(SBBookmarksWithItems(items), format: .BinaryFormat_v1_0, options: 0, error: &error)
-                   where plistData.writeToFile(path!, atomically: true) {
-                } else {
-                    path = nil
-                }
-            }
+            if let items = (try? NSPropertyListSerialization.propertyListWithData(plistData, options: Int(NSPropertyListMutabilityOptions.Immutable.rawValue), format: nil)) as? [NSDictionary],
+                   plistData = try? NSPropertyListSerialization.dataWithPropertyList(SBBookmarksWithItems(items), format: .BinaryFormat_v1_0, options: 0)
+               where plistData.writeToFile(path!, atomically: true) {
+            } else { return nil }
         } else {
             // Create default bookmarks
-            if let plistData = NSPropertyListSerialization.dataWithPropertyList(SBDefaultBookmarks!, format: .BinaryFormat_v1_0, options: 0, error: &error)
-               where plistData.writeToFile(path!, atomically: true) {
-            } else {
-                path = nil
+            do {
+                let plistData = try NSPropertyListSerialization.dataWithPropertyList(SBDefaultBookmarks!, format: .BinaryFormat_v1_0, options: 0)
+                if !plistData.writeToFile(path!, atomically: true) { return nil }
+            } catch {
+                DebugLog("%@ error = %@", __FUNCTION__, "\(error)")
+                return nil
             }
-            DebugLog("%@ error = %@", __FUNCTION__, "\(error)")
         }
     }
     return path
@@ -1342,7 +1338,7 @@ func SBLocalizeTitlesInMenu(menu: NSMenu) {
 }
 
 func SBGetLocalizableTextSet(path: String) -> ([[String]], [[NSTextField]], NSSize)? {
-    if let localizableString = String(contentsOfFile: path, encoding: NSUTF16StringEncoding, error: nil)?.ifNotEmpty {
+    if let localizableString = (try? String(contentsOfFile: path, encoding: NSUTF16StringEncoding))?.ifNotEmpty {
         let fieldSize = NSSize(width: 300, height: 22)
         let offset = NSPoint(x: 45, y: 12)
         let margin = CGFloat(20)

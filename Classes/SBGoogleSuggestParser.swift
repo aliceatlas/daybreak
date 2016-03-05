@@ -34,17 +34,14 @@ private let kSBGSSuggestionTagName = "suggestion"
 private let kSBGSNum_queriesTagName = "num_queries"
 private let kSBGSSuggestionAttributeDataArgumentName = "data"
 
-func SBParseGoogleSuggestData(data: NSData, error: NSErrorPointer) -> [SBURLFieldItem]? {
-    if let document = NSXMLDocument(data: data, options: 0, error: error) {
-        var items: [SBURLFieldItem] = []
-        let element = document.rootElement()!
-        for suggestion in element.elementsForName(kSBGSCompleteSuggestionTagName) {
-            let item = suggestion.elementsForName(kSBGSSuggestionTagName)[0]
-            let string = item.attributeForName(kSBGSSuggestionAttributeDataArgumentName)!.stringValue!
-            items.append(SBURLFieldItem.GoogleSuggest(title: string, URL: string.searchURLString))
-        }
-        return items
+func SBParseGoogleSuggestData(data: NSData) throws -> [SBURLFieldItem] {
+    let document = try NSXMLDocument(data: data, options: 0)
+    var items: [SBURLFieldItem] = []
+    let element = document.rootElement()!
+    for suggestion in element.elementsForName(kSBGSCompleteSuggestionTagName) {
+        let item = suggestion.elementsForName(kSBGSSuggestionTagName)[0]
+        let string = item.attributeForName(kSBGSSuggestionAttributeDataArgumentName)!.stringValue!
+        items.append(SBURLFieldItem.GoogleSuggest(title: string, URL: string.searchURLString))
     }
-    error.memory = error.memory ?? NSError(domain: "Daybreak", code: 420, userInfo: nil)
-    return nil
+    return items
 }

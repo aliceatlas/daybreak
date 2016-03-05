@@ -687,9 +687,8 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
     }
     
     func webView(sender: WebView, createWebViewWithRequest request: NSURLRequest) -> WebView! {
-        var error: NSError?
-        let document = SBGetDocumentController.openUntitledDocumentAndDisplay(false, sidebarVisibility: false, initialURL: request.URL, error: &error) as! SBDocument
-        return document.selectedWebView!
+        let document = try? SBGetDocumentController.openUntitledDocumentAndDisplay(false, sidebarVisibility: false, initialURL: request.URL)
+        return document?.selectedWebView
     }
     
     func webView(sender: WebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WebFrame) -> Bool {
@@ -917,17 +916,18 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         openPanel.allowedFileTypes = ["app"]
         if openPanel.runModal() == NSFileHandlingPanelOKButton {
             let encodingName = webView.textEncodingName
-            var error: NSError?
             var name = (pageTitle?.ifNotEmpty ?? NSLocalizedString("Untitled", comment: "")).stringByAppendingPathExtension("html")!
             let filePath = NSTemporaryDirectory().stringByAppendingPathComponent(name)
             let encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding(encodingName.ifNotEmpty ?? kSBDefaultEncodingName))
-            if !documentSource!.writeToFile(filePath, atomically: true, encoding: encoding, error: &error) {
-                SBRunAlertWithMessage(error!.localizedDescription)
-            } else {
-                let appPath = openPanel.URL!.path!
-                if !NSWorkspace.sharedWorkspace().openFile(filePath, withApplication: appPath) {
-                    SBRunAlertWithMessage(NSLocalizedString("Could not open in %@.", comment: "").format(appPath))
-                }
+            do {
+                try documentSource!.writeToFile(filePath, atomically: true, encoding: encoding)
+            } catch let error as NSError {
+                SBRunAlertWithMessage(error.localizedDescription)
+                return
+            }
+            let appPath = openPanel.URL!.path!
+            if !NSWorkspace.sharedWorkspace().openFile(filePath, withApplication: appPath) {
+                SBRunAlertWithMessage(NSLocalizedString("Could not open in %@.", comment: "").format(appPath))
             }
         }
     }
@@ -940,9 +940,10 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         savePanel.canCreateDirectories = true
         savePanel.nameFieldStringValue = name
         if savePanel.runModal() == NSFileHandlingPanelOKButton {
-            var error: NSError?
-            if !documentSource!.writeToFile(savePanel.URL!.path!, atomically: true, encoding: encoding, error: &error) {
-                SBRunAlertWithMessage(error!.localizedDescription)
+            do {
+                try documentSource!.writeToFile(savePanel.URL!.path!, atomically: true, encoding: encoding)
+            } catch let error as NSError {
+                SBRunAlertWithMessage(error.localizedDescription)
             }
         }
     }
@@ -961,7 +962,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
         message = "\(message)<br /><br />\(searchMessage)<br /><a href=\"\(searchURLString)\">\(URLString)</a>"
         let path = bundle.pathForResource("Error", ofType: "html")!
         if NSFileManager.defaultManager().fileExistsAtPath(path),
-           let HTMLString = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil) {
+           let HTMLString = try? String(contentsOfFile: path, encoding: NSUTF8StringEncoding) {
             let formattedHTML = HTMLString.format(title, message)
             // Load
             frame.loadHTMLString(formattedHTML, baseURL: NSURL(fileURLWithPath: path))

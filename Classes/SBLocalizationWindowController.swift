@@ -450,22 +450,20 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
                 let manager = NSFileManager.defaultManager()
                 let directoryPath = NSBundle.mainBundle().resourcePath!.stringByAppendingPathComponent(langCode).stringByAppendingPathExtension("lproj")!
                 if !manager.fileExistsAtPath(directoryPath) {
-                    manager.createDirectoryAtPath(directoryPath, withIntermediateDirectories: true, attributes: nil, error: nil)
+                    do { try manager.createDirectoryAtPath(directoryPath, withIntermediateDirectories: true, attributes: nil) } catch { return }
                 }
                 let dstPath = directoryPath.stringByAppendingPathComponent("Localizable").stringByAppendingPathExtension("strings")!
-                var error: NSError?
                 if manager.fileExistsAtPath(dstPath) {
-                    manager.removeItemAtPath(dstPath, error: &error)
+                    do { try manager.removeItemAtPath(dstPath) } catch { return }
                 }
-                if manager.copyItemAtPath(URL.path!, toPath: dstPath, error: &error) {
-                    // Complete
-                    let alert = NSAlert()
-                    alert.messageText = NSLocalizedString("Complete to add new localization. Restart Daybreak.", comment: "")
-                    alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
-                    alert.beginSheetModalForWindow(window!) {
-                        (NSModalResponse) -> Void in
-                        success = true
-                    }
+                do { try manager.copyItemAtPath(URL.path!, toPath: dstPath) } catch { return }
+                // Complete
+                let alert = NSAlert()
+                alert.messageText = NSLocalizedString("Complete to add new localization. Restart Daybreak.", comment: "")
+                alert.addButtonWithTitle(NSLocalizedString("OK", comment: ""))
+                alert.beginSheetModalForWindow(window!) {
+                    (NSModalResponse) -> Void in
+                    success = true
                 }
             }
         }
