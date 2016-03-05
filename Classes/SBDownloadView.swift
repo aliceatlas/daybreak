@@ -258,8 +258,6 @@ class SBDownloadView: SBView, SBAnswersIsFirstResponder {
                 description = download.bytes
             case .Done:
                 description = NSLocalizedString("Done", comment: "")
-            default:
-                break
         }
         if description != nil {
             var r = NSZeroRect

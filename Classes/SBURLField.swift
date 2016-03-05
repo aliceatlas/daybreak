@@ -366,8 +366,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
                 matchIndex = (index == 0) || (index == gsItems.count)
             case (false, false, false):
                 matchIndex = (index == 0) || (index == gsItems.count) || (index == gsItems.count + bmItems.count)
-            default:
-                // swift bug? if i explicitly put case (true, true, true) it doesn't recognize the switch as exhaustive
+            case (true, true, true):
                 break
         }
         return !matchIndex

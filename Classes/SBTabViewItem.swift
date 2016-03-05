@@ -859,8 +859,6 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                 }
             case .FormSubmitted, .BackForward, .Reload, .FormResubmitted, .Other:
                 listener.use()
-            default:
-                listener.use()
         }
     }
     
