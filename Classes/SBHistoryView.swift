@@ -46,8 +46,8 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
-        messageLabel.textColor = NSColor.whiteColor()
-        messageLabel.font = NSFont.boldSystemFontOfSize(16)
+        messageLabel.textColor = .whiteColor()
+        messageLabel.font = .boldSystemFontOfSize(16)
         messageLabel.alignment = .Left
         messageLabel.cell!.wraps = true
         return messageLabel
@@ -68,7 +68,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         scrollView.hasVerticalScroller = true
         scrollView.hasHorizontalScroller = false
         scrollView.autohidesScrollers = true
-        scrollView.backgroundColor = NSColor.blackColor()
+        scrollView.backgroundColor = .blackColor()
         scrollView.drawsBackground = false
         scrollView.documentView = self.tableView
         return scrollView
@@ -96,7 +96,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
         dateColumn.dataCell = textCell
         dateColumn.width = (tableRect.size.width - 22.0) * 0.3
         dateColumn.editable = false
-        tableView.backgroundColor = NSColor.clearColor()
+        tableView.backgroundColor = .clearColor()
         tableView.rowHeight = 20
         tableView.addTableColumn(iconColumn)
         tableView.addTableColumn(titleColumn)
@@ -241,7 +241,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
     func updateItems() {
         let allItems = SBHistory.sharedHistory.items
         let searchFieldText = searchField.stringValue
-        if let searchWords = searchFieldText.ifNotEmpty?.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()).ifNotEmpty {
+        if let searchWords = searchFieldText.ifNotEmpty?.componentsSeparatedByCharactersInSet(.whitespaceCharacterSet()).ifNotEmpty {
             items = []
             for item in allItems {
                 var string = ""
@@ -310,7 +310,7 @@ class SBHistoryView: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableVi
                     dateFormatter.formatterBehavior = .Behavior10_4
                     dateFormatter.dateStyle = .LongStyle
                     dateFormatter.timeStyle = .ShortStyle
-                    dateFormatter.locale = NSLocale.currentLocale()
+                    dateFormatter.locale = .currentLocale()
                     string = dateFormatter.stringFromDate(NSDate(timeIntervalSince1970: interval))
                 }
             default:

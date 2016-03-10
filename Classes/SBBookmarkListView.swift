@@ -538,7 +538,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
     func layoutSelectionView(point: NSPoint) {
         if selectionView == nil {
             selectionView = SBView(frame: .zero)
-            selectionView!.frameColor = NSColor.alternateSelectedControlColor()
+            selectionView!.frameColor = .alternateSelectedControlColor()
             addSubview(selectionView!)
         }
         let r = NSMakeRect(self.point.x, self.point.y, 1.0, 1.0).union(NSMakeRect(point.x, point.y, 1.0, 1.0))
@@ -548,7 +548,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
     func layoutToolsForItem(itemView: SBBookmarkListItemView) {
         if toolsItemView !== itemView {
             toolsItemView = itemView
-            toolsTimer = NSTimer.scheduledTimerWithTimeInterval(kSBBookmarkToolsInterval, target: self, selector: #selector(layoutTools), userInfo: nil, repeats: false)
+            toolsTimer = .scheduledTimerWithTimeInterval(kSBBookmarkToolsInterval, target: self, selector: #selector(layoutTools), userInfo: nil, repeats: false)
         }
     }
     
@@ -581,7 +581,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
     func layoutDraggingLineView(point: NSPoint) {
         if draggingLineView == nil {
             draggingLineView = SBView(frame: .zero)
-            draggingLineView!.frameColor = NSColor.alternateSelectedControlColor()
+            draggingLineView!.frameColor = .alternateSelectedControlColor()
             addSubview(draggingLineView!)
         }
         let r = draggingLineRectAtPoint(point)
@@ -918,7 +918,7 @@ class SBBookmarkListView: SBView, NSAnimationDelegate {
             labelsItem.submenu = labelsMenu
             menu.addItem(openItem)
             menu.addItem(removeItem)
-            menu.addItem(NSMenuItem.separatorItem())
+            menu.addItem(.separatorItem())
             menu.addItem(labelsItem)
             return menu
         }

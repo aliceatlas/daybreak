@@ -44,8 +44,8 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         langField.selectable = false
         langField.bezeled = false
         langField.drawsBackground = false
-        langField.font = NSFont.systemFontOfSize(14.0)
-        langField.textColor = NSColor.blackColor()
+        langField.font = .systemFontOfSize(14.0)
+        langField.textColor = .blackColor()
         langField.alignment = .Right
         langField.stringValue = NSLocalizedString("Language", comment: "") + " :"
         return langField
@@ -135,7 +135,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
             let scrollRect = NSMakeRect(margin, bottomMargin, contentRect.size.width - margin * 2, contentRect.size.height - bottomMargin)
             editScrollView = NSScrollView(frame: scrollRect)
             editScrollView!.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
-            editScrollView!.backgroundColor = NSColor.clearColor()
+            editScrollView!.backgroundColor = .clearColor()
             editScrollView!.drawsBackground = false
             editScrollView!.hasVerticalScroller = true
             editScrollView!.hasHorizontalScroller = false
@@ -219,8 +219,8 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         textField.selectable = false
         textField.bezeled = false
         textField.drawsBackground = false
-        textField.font = NSFont.systemFontOfSize(16.0)
-        textField.textColor = NSColor.whiteColor()
+        textField.font = .systemFontOfSize(16.0)
+        textField.textColor = .whiteColor()
         textField.alignment = .Left
         textField.stringValue = NSLocalizedString("You can contribute the translation file for the Daybreak project if you participate in the project on Google Code.", comment: "")
         return textField
@@ -234,8 +234,8 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         checkoutTitleField.selectable = false
         checkoutTitleField.bezeled = false
         checkoutTitleField.drawsBackground = false
-        checkoutTitleField.font = NSFont.boldSystemFontOfSize(16.0)
-        checkoutTitleField.textColor = NSColor.whiteColor()
+        checkoutTitleField.font = .boldSystemFontOfSize(16.0)
+        checkoutTitleField.textColor = .whiteColor()
         checkoutTitleField.alignment = .Left
         checkoutTitleField.stringValue = NSLocalizedString("Check out", comment: "")
         return checkoutTitleField
@@ -263,8 +263,8 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
         commitTitleField.selectable = false
         commitTitleField.bezeled = false
         commitTitleField.drawsBackground = false
-        commitTitleField.font = NSFont.boldSystemFontOfSize(16.0)
-        commitTitleField.textColor = NSColor.whiteColor()
+        commitTitleField.font = .boldSystemFontOfSize(16.0)
+        commitTitleField.textColor = .whiteColor()
         commitTitleField.alignment = .Left
         commitTitleField.stringValue = NSLocalizedString("Commit", comment: "")
         return commitTitleField
@@ -409,7 +409,7 @@ class SBLocalizationWindowController: SBWindowController, NSAnimationDelegate {
               NSViewAnimationEndFrameKey: NSValue(rect: contributeRect1)]]
         let animation = SBViewAnimation(viewAnimations: animations)
         animation.context = index
-        animation.duration = NSTimeInterval(duration)
+        animation.duration = .init(duration)
         animation.delegate = self
         animation.startAnimation()
         

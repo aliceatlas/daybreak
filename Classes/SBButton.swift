@@ -159,7 +159,7 @@ class SBButton: SBView {
             let padding: CGFloat = 10.0
             var shadow = NSShadow()
             shadow.shadowOffset = NSSize(width: 0.0, height: -1.0)
-            shadow.shadowColor = keyView ? NSColor.blackColor() : NSColor.whiteColor()
+            shadow.shadowColor = keyView ? .blackColor() : .whiteColor()
             var style = NSMutableParagraphStyle()
             style.lineBreakMode = .ByTruncatingTail
             var color = NSColor(calibratedWhite: 1.0, alpha: keyView ? (pressed ? 0.5 : 1.0) : (pressed ? 0.25 : 0.5))

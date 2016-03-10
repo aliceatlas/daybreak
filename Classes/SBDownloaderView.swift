@@ -35,8 +35,8 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
-        messageLabel.textColor = NSColor.whiteColor()
-        messageLabel.cell!.font = NSFont.boldSystemFontOfSize(16)
+        messageLabel.textColor = .whiteColor()
+        messageLabel.cell!.font = .boldSystemFontOfSize(16)
         messageLabel.cell!.alignment = .Center
         messageLabel.cell!.wraps = true
         return messageLabel
@@ -48,8 +48,8 @@ class SBDownloaderView: SBView, NSTextFieldDelegate {
         URLLabel.editable = false
         URLLabel.bordered = false
         URLLabel.drawsBackground = false
-        URLLabel.textColor = NSColor.lightGrayColor()
-        URLLabel.cell!.font = NSFont.systemFontOfSize(12)
+        URLLabel.textColor = .lightGrayColor()
+        URLLabel.cell!.font = .systemFontOfSize(12)
         URLLabel.cell!.alignment = .Right
         URLLabel.stringValue = NSLocalizedString("URL", comment: "") + ": "
         return URLLabel

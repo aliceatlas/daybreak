@@ -347,7 +347,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         let shadow = NSShadow()
                         shadow.shadowOffset = NSMakeSize(0.0, -1.0)
                         shadow.shadowBlurRadius = 2.0
-                        shadow.shadowColor = NSColor.blackColor()
+                        shadow.shadowColor = .blackColor()
                         attributes[NSShadowAttributeName] = shadow
                     }
                     size = title.sizeWithAttributes(attributes)
@@ -385,7 +385,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 let colors = [0.0, 0.65].map { NSColor(calibratedWhite: 0.0, alpha: $0) }
                 let center = NSMakePoint(r.size.width/2, r.size.height * 0.8)
                 let outerRadius = r.size.width * 1.5
-                let gradient = NSGradient(colors: colors, atLocations: [1/6, 1.0], colorSpace: NSColorSpace.genericGrayColorSpace())!
+                let gradient = NSGradient(colors: colors, atLocations: [1/6, 1.0], colorSpace: .genericGrayColorSpace())!
                 gradient.drawInBezierPath(path, relativeCenterPosition: center)
                 
                 // Label color
@@ -479,7 +479,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                         let shadow = NSShadow()
                         shadow.shadowOffset = NSMakeSize(0.0, -1.0)
                         shadow.shadowBlurRadius = 2.0
-                        shadow.shadowColor = NSColor.blackColor()
+                        shadow.shadowColor = .blackColor()
                         attributes[NSShadowAttributeName] = shadow
                     }
                     size = title.sizeWithAttributes(attributes)
@@ -491,7 +491,7 @@ class SBBookmarkListItemView: SBView, SBRenderWindowDelegate, SBAnswersIsFirstRe
                 
                 // url string
                 if let URLString = URLString {
-                    let color = selected ? NSColor.whiteColor() : (labelColor !! NSColor.blackColor() ?? NSColor.lightGrayColor())
+                    let color: NSColor = selected ? .whiteColor() : (labelColor !! .blackColor() ?? .lightGrayColor())
                     let attributes = [NSFontAttributeName: URLFont,
                                       NSForegroundColorAttributeName: color,
                                       NSParagraphStyleAttributeName: paragraphStyle]

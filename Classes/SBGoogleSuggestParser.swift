@@ -41,7 +41,7 @@ func SBParseGoogleSuggestData(data: NSData) throws -> [SBURLFieldItem] {
     for suggestion in element.elementsForName(kSBGSCompleteSuggestionTagName) {
         let item = suggestion.elementsForName(kSBGSSuggestionTagName)[0]
         let string = item.attributeForName(kSBGSSuggestionAttributeDataArgumentName)!.stringValue!
-        items.append(SBURLFieldItem.GoogleSuggest(title: string, URL: string.searchURLString))
+        items.append(.GoogleSuggest(title: string, URL: string.searchURLString))
     }
     return items
 }

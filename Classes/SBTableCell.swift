@@ -74,7 +74,7 @@ class SBTableCell: NSCell {
         } else if style == .White {
             backgroundColor = SBBackgroundLightGrayColor
             cellColor = SBTableLightGrayCellColor
-            selectedCellColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+            selectedCellColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(.genericRGBColorSpace())!
         }
         backgroundColor.set()
         NSRectFill(cellFrame)
@@ -104,10 +104,10 @@ class SBTableCell: NSCell {
         
         if style == .Gray {
             textColor = SBSidebarTextColor
-            sTextColor = NSColor.blackColor()
+            sTextColor = .blackColor()
         } else if style == .White {
-            textColor = (enabled ? NSColor.blackColor() : NSColor.grayColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
-            sTextColor = highlighted ? NSColor.clearColor() : NSColor.whiteColor()
+            textColor = ((enabled ? .blackColor() : .grayColor()) as NSColor).colorUsingColorSpace(.genericRGBColorSpace())!
+            sTextColor = highlighted ? .clearColor() : .whiteColor()
         }
         
         if let title: NSString = title.ifNotEmpty {
@@ -115,7 +115,7 @@ class SBTableCell: NSCell {
             var sr = NSZeroRect
             let side = self.side + (cellFrame.size.height - 0.5 * 2) / 2
             
-            let color = highlighted ? NSColor.whiteColor() : textColor
+            let color = highlighted ? .whiteColor() : textColor
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineBreakMode = lineBreakMode
             let attribute = [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle]

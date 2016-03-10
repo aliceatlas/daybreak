@@ -43,8 +43,8 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
-        messageLabel.textColor = NSColor.whiteColor()
-        messageLabel.font = NSFont.boldSystemFontOfSize(16)
+        messageLabel.textColor = .whiteColor()
+        messageLabel.font = .boldSystemFontOfSize(16)
         messageLabel.alignment = .Center
         messageLabel.cell!.wraps = true
         return messageLabel
@@ -56,8 +56,8 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         titleLabel.editable = false
         titleLabel.bordered = false
         titleLabel.drawsBackground = false
-        titleLabel.textColor = NSColor.lightGrayColor()
-        titleLabel.font = NSFont.systemFontOfSize(12)
+        titleLabel.textColor = .lightGrayColor()
+        titleLabel.font = .systemFontOfSize(12)
         titleLabel.alignment = .Right
         titleLabel.stringValue = NSLocalizedString("Title", comment: "") + " :"
         return titleLabel
@@ -69,8 +69,8 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         URLLabel.editable = false
         URLLabel.bordered = false
         URLLabel.drawsBackground = false
-        URLLabel.textColor = NSColor.lightGrayColor()
-        URLLabel.font = NSFont.systemFontOfSize(12)
+        URLLabel.textColor = .lightGrayColor()
+        URLLabel.font = .systemFontOfSize(12)
         URLLabel.alignment = .Right
         URLLabel.stringValue = NSLocalizedString("URL", comment: "") + " :"
         return URLLabel
@@ -82,8 +82,8 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         colorLabel.editable = false
         colorLabel.bordered = false
         colorLabel.drawsBackground = false
-        colorLabel.textColor = NSColor.lightGrayColor()
-        colorLabel.font = NSFont.systemFontOfSize(12)
+        colorLabel.textColor = .lightGrayColor()
+        colorLabel.font = .systemFontOfSize(12)
         colorLabel.alignment = .Right
         colorLabel.stringValue = NSLocalizedString("Label", comment: "") + " :"
         return colorLabel
@@ -297,10 +297,9 @@ class SBBookmarkView: SBView, NSTextFieldDelegate {
         let ctx = SBCurrentGraphicsPort
         
         // Background
-        let colors = [NSColor(deviceWhite: 0.4, alpha: 0.9),
-                      NSColor.blackColor()]
+        let colors = [NSColor(deviceWhite: 0.4, alpha: 0.9), .blackColor()]
         let locations: [CGFloat] = [0.0, 0.6]
-        let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: NSColorSpace.genericGrayColorSpace())!
+        let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: .genericGrayColorSpace())!
         var mPath: NSBezierPath!
         if fillMode == 0 {
             let r = NSMakeRect(bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.width)

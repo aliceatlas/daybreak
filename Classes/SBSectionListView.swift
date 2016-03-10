@@ -177,8 +177,8 @@ class SBSectionGroupView: SBView {
         SBPreserveGraphicsState {
             shadow.shadowOffset = NSMakeSize(0.0, 10.0)
             shadow.set()
-            let gradient = NSGradient(startingColor: NSColor(deviceWhite: 0.9, alpha: 1.0),
-                                      endingColor: NSColor.whiteColor())!
+            let gradient = NSGradient(startingColor: .init(deviceWhite: 0.9, alpha: 1.0),
+                                      endingColor: .whiteColor())!
             gradient.drawInBezierPath(path, angle: 90)
         }
         

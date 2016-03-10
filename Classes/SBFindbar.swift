@@ -98,7 +98,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         let caseSensitiveCheck = BLKGUI.Button(frame: self.caseSensitiveRect)
         caseSensitiveCheck.autoresizingMask = .ViewMinXMargin
         caseSensitiveCheck.buttonType = .SwitchButton
-        caseSensitiveCheck.font = NSFont.systemFontOfSize(10.0)
+        caseSensitiveCheck.font = .systemFontOfSize(10.0)
         caseSensitiveCheck.title = NSLocalizedString("Ignore Case", comment: "")
         caseSensitiveCheck.state = caseFlag ? NSOnState : NSOffState
         caseSensitiveCheck.target = self
@@ -111,7 +111,7 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         let wrapCheck = BLKGUI.Button(frame: self.wrapRect)
         wrapCheck.autoresizingMask = .ViewMinXMargin
         wrapCheck.buttonType = .SwitchButton
-        wrapCheck.font = NSFont.systemFontOfSize(10.0)
+        wrapCheck.font = .systemFontOfSize(10.0)
         wrapCheck.title = NSLocalizedString("Wrap Around", comment: "")
         wrapCheck.state = wrapFlag ? NSOnState : NSOffState
         wrapCheck.target = self
@@ -272,8 +272,8 @@ class SBFindbar: SBView, NSTextFieldDelegate, NSControlTextEditingDelegate {
         let lh: CGFloat = 1.0
     
         // Background
-        let gradient = NSGradient(startingColor: NSColor.blackColor(),
-                                  endingColor: NSColor(deviceWhite: 0.50, alpha: 1.0))!
+        let gradient = NSGradient(startingColor: .blackColor(),
+                                  endingColor: .init(deviceWhite: 0.50, alpha: 1.0))!
         gradient.drawInRect(bounds, angle: 90)
         
         // Lines

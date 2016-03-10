@@ -151,11 +151,11 @@ public class ButtonCell: NSButtonCell {
             let frameMargin: CGFloat = 2.0
             let frame = NSMakeRect(cellFrame.origin.x + frameMargin, cellFrame.origin.y, cellFrame.size.width - frameMargin * 2, cellFrame.size.height)
             var r = frame
-            var foregroundColor: NSColor!
-            if buttonType == .SwitchButton || buttonType == .RadioButton {
-                foregroundColor = enabled ? NSColor.whiteColor() : NSColor.grayColor()
-            } else {
-                foregroundColor = enabled ? (highlighted ? NSColor.grayColor() : NSColor.whiteColor()) : (isDone ? NSColor.grayColor() : NSColor.darkGrayColor())
+            let foregroundColor: NSColor
+            switch buttonType {
+                case .SwitchButton, .RadioButton: foregroundColor = enabled ? .whiteColor() : .grayColor()
+                default:                          foregroundColor = enabled ? (highlighted ? .grayColor() : .whiteColor())
+                                                                            : (isDone ? .grayColor() : .darkGrayColor())
             }
             let attributes = [NSFontAttributeName: font!,
                               NSForegroundColorAttributeName: foregroundColor]

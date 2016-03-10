@@ -107,14 +107,14 @@ var SBEmptyBookmarkImageData: NSData {
         var color1: NSColor!
         var gradient: NSGradient!
         
-        color0 = NSColor.blackColor()
+        color0 = .blackColor()
         color1 = NSColor(deviceWhite: 0.75, alpha: 1.0)
         gradient = NSGradient(startingColor: color0, endingColor: color1)
         gradient.drawInRect(rect, angle: 90)
     
         color0 = NSColor(deviceWhite: 0.1, alpha: 1.0)
         color1 = NSColor(deviceWhite: 0.25, alpha: 1.0)
-        gradient = NSGradient(colors: [color0, color1], atLocations: [0.5, 1.0], colorSpace: NSColorSpace.deviceGrayColorSpace())
+        gradient = NSGradient(colors: [color0, color1], atLocations: [0.5, 1.0], colorSpace: .deviceGrayColorSpace())
         SBPreserveGraphicsState {
             NSRectClip(NSInsetRect(rect, 0.5, 0.5))
             gradient.drawInRect(rect, angle: 90)
@@ -607,11 +607,11 @@ func SBCenteredSquare(inRect: NSRect) -> NSRect {
 
 // MARK: Drawing
 
-let SBAlternateSelectedLightControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.whiteColor())!.colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
+let SBAlternateSelectedLightControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: .whiteColor())!.colorUsingColorSpace(.genericRGBColorSpace())!
 
-let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
+let SBAlternateSelectedControlColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(.genericRGBColorSpace())!
 
-let SBAlternateSelectedDarkControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: NSColor.blackColor())!.colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
+let SBAlternateSelectedDarkControlColor = NSColor.alternateSelectedControlColor().blendedColorWithFraction(0.3, ofColor: .blackColor())!.colorUsingColorSpace(.genericRGBColorSpace())!
 
 func SBPreserveGraphicsState(@noescape block: () -> Void) {
     NSGraphicsContext.saveGraphicsState()
@@ -1123,7 +1123,7 @@ func SBFindBackwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
         path.lineToPoint(p)
         
         // Background
-        let colors = [NSColor(deviceWhite: 0.5, alpha: 1.0), NSColor.blackColor()]
+        let colors = [NSColor(deviceWhite: 0.5, alpha: 1.0), .blackColor()]
         let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
         SBPreserveGraphicsState {
             path.addClip()
@@ -1183,7 +1183,7 @@ func SBFindForwardIconImage(size: NSSize, _ enabled: Bool) -> NSImage {
         path.lineToPoint(p)
         
         // Background
-        let colors = [NSColor(deviceWhite: 0.5, alpha: 1.0), NSColor.blackColor()]
+        let colors = [NSColor(deviceWhite: 0.5, alpha: 1.0), .blackColor()]
         let gradient = NSGradient(startingColor: colors[0], endingColor: colors[1])!
         SBPreserveGraphicsState {
             path.addClip()
@@ -1282,7 +1282,7 @@ func SBEncodingMenu(target: AnyObject?, _ selector: Selector, _ showDefault: Boo
                 menu.addItem(item)
             }
         } else {
-            menu.addItem(NSMenuItem.separatorItem())
+            menu.addItem(.separatorItem())
         }
     }
     
@@ -1290,7 +1290,7 @@ func SBEncodingMenu(target: AnyObject?, _ selector: Selector, _ showDefault: Boo
         let defaultItem = NSMenuItem(title: NSLocalizedString("Default", comment: ""), action: selector, keyEquivalent: "")
         target !! { defaultItem.target = $0 }
         defaultItem.representedObject = nil
-        menu.insertItem(NSMenuItem.separatorItem(), atIndex: 0)
+        menu.insertItem(.separatorItem(), atIndex: 0)
         menu.insertItem(defaultItem, atIndex: 0)
     }
     

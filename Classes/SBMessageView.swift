@@ -34,7 +34,7 @@ class SBMessageView: SBView {
         textLabel.editable = false
         textLabel.bordered = false
         textLabel.drawsBackground = false
-        textLabel.textColor = NSColor.whiteColor()
+        textLabel.textColor = .whiteColor()
         textLabel.font = self.textFont
         textLabel.cell!.wraps = true
         textLabel.stringValue = "JavaScript"
@@ -46,8 +46,8 @@ class SBMessageView: SBView {
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
-        messageLabel.textColor = NSColor.whiteColor()
-        messageLabel.font = NSFont.boldSystemFontOfSize(16)
+        messageLabel.textColor = .whiteColor()
+        messageLabel.font = .boldSystemFontOfSize(16)
         messageLabel.alignment = .Center
         messageLabel.cell!.wraps = true
         return messageLabel

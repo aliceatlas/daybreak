@@ -43,7 +43,7 @@ public class TextField: NSTextField {
     private func setDefaultValues() {
         alignment = .Right
         drawsBackground = false
-        textColor = NSColor.whiteColor()
+        textColor = .whiteColor()
     }
 }
 
@@ -68,8 +68,8 @@ private class TextFieldCell: NSTextFieldCell {
         let text = super.setUpFieldEditorAttributes(textObj)
         if let textView = text as? NSTextView {
             let attributes = [NSForegroundColorAttributeName: NSColor.whiteColor(),
-                              NSBackgroundColorAttributeName: NSColor.grayColor()]
-            textView.insertionPointColor = NSColor.whiteColor()
+                              NSBackgroundColorAttributeName: .grayColor()]
+            textView.insertionPointColor = .whiteColor()
             textView.selectedTextAttributes = attributes
         }
         return text

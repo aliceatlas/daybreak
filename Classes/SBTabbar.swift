@@ -413,7 +413,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
             let userInfo: [NSObject: AnyObject] = ["Event": event]
             let point = convertPoint(event.locationInWindow, fromView: nil)
             if autoScrollWithPoint(point) {
-                autoScrollTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(mouseDragged(timer:)), userInfo: userInfo, repeats: true)
+                autoScrollTimer = .scheduledTimerWithTimeInterval(0.1, target: self, selector: #selector(mouseDragged(timer:)), userInfo: userInfo, repeats: true)
             }
         }
     }
@@ -432,7 +432,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
         if closableItem != item {
             closableItem = item
             destructClosableTimer()
-            closableTimer = NSTimer.scheduledTimerWithTimeInterval(kSBTabbarItemClosableInterval, target: self, selector: #selector(applyClosableItem), userInfo: nil, repeats: false)
+            closableTimer = .scheduledTimerWithTimeInterval(kSBTabbarItemClosableInterval, target: self, selector: #selector(applyClosableItem), userInfo: nil, repeats: false)
         }
     }
     
@@ -641,7 +641,7 @@ class SBTabbar: SBView, NSAnimationDelegate {
             menu.addItem(title: NSLocalizedString("Close", comment: ""), target: self, action: #selector(closeItemFromMenu(_:)), tag: index)
             menu.addItem(title: NSLocalizedString("Close Others", comment: ""), target: self, action: #selector(closeOtherItemsFromMenu(_:)), tag: index)
         }
-        menu.addItem(NSMenuItem.separatorItem())
+        menu.addItem(.separatorItem())
         menu.addItem(title: NSLocalizedString("Reload", comment: ""), target: self, action: #selector(reloadItemFromMenu(_:)), tag: index)
         return menu
     }

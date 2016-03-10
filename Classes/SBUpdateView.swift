@@ -48,8 +48,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
         titleLabel.editable = false
         titleLabel.selectable = false
         titleLabel.drawsBackground = false
-        titleLabel.font = NSFont.boldSystemFontOfSize(16.0)
-        titleLabel.textColor = NSColor.whiteColor()
+        titleLabel.font = .boldSystemFontOfSize(16.0)
+        titleLabel.textColor = .whiteColor()
         titleLabel.autoresizingMask = .ViewWidthSizable
         return titleLabel
     }()
@@ -59,8 +59,8 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
         textLabel.editable = false
         textLabel.selectable = false
         textLabel.drawsBackground = false
-        textLabel.font = NSFont.systemFontOfSize(13.0)
-        textLabel.textColor = NSColor.lightGrayColor()
+        textLabel.font = .systemFontOfSize(13.0)
+        textLabel.textColor = .lightGrayColor()
         textLabel.autoresizingMask = .ViewWidthSizable
         return textLabel
     }()
@@ -88,7 +88,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
         skipButton.action = #selector(skip)
         skipButton.setButtonType(.MomentaryPushInButton)
         skipButton.title = NSLocalizedString("Skip This Version", comment: "")
-        skipButton.font = NSFont.systemFontOfSize(11.0)
+        skipButton.font = .systemFontOfSize(11.0)
         return skipButton
     }()
 	private lazy var cancelButton: BLKGUI.Button = {
@@ -98,7 +98,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
         cancelButton.action = #selector(cancel)
         cancelButton.setButtonType(.MomentaryPushInButton)
         cancelButton.title = NSLocalizedString("Not Now", comment: "")
-        cancelButton.font = NSFont.systemFontOfSize(11.0)
+        cancelButton.font = .systemFontOfSize(11.0)
         cancelButton.keyEquivalent = "\u{1B}"
         return cancelButton
     }()
@@ -109,7 +109,7 @@ class SBUpdateView: SBView, SBDownloaderDelegate, WebFrameLoadDelegate, WebUIDel
         doneButton.action = #selector(done)
         doneButton.setButtonType(.MomentaryPushInButton)
         doneButton.title = NSLocalizedString("Download", comment: "")
-        doneButton.font = NSFont.systemFontOfSize(11.0)
+        doneButton.font = .systemFontOfSize(11.0)
         doneButton.keyEquivalent = "\u{1B}"
         return doneButton
     }()

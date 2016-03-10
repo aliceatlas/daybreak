@@ -749,7 +749,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                     newItem2!.target = self
                     newItem2!.representedObject = frameURL
                 }
-                menuItems.insert(NSMenuItem.separatorItem(), atIndex: 0)
+                menuItems.insert(.separatorItem(), atIndex: 0)
                 if newItem2 != nil {
                     menuItems.insert(newItem2!, atIndex: 0)
                 }
@@ -800,7 +800,7 @@ class SBTabViewItem: NSTabViewItem, NSSplitViewDelegate, SBWebViewDelegate, SBSo
                 }
             }
             if !replaced {
-                menuItems.insert(NSMenuItem.separatorItem(), atIndex: 0)
+                menuItems.insert(.separatorItem(), atIndex: 0)
                 menuItems.insert(newItem0, atIndex: 0)
                 menuItems.insert(newItem1, atIndex: 1)
             }

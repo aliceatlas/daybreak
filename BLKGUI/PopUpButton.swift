@@ -101,7 +101,7 @@ private class PopUpButtonCell: NSPopUpButtonCell {
             let range = NSMakeRange(0, attributedTitle.length)
             let style = NSMutableParagraphStyle()
             let font = NSFont(name: self.font!.fontName, size: NSFont.systemFontSizeForControlSize(controlSize))
-            let foregroundColor = enabled ? (highlighted ? NSColor.lightGrayColor() : NSColor.whiteColor()) : NSColor.grayColor()
+            let foregroundColor: NSColor = enabled ? (highlighted ? .lightGrayColor() : .whiteColor()) : .grayColor()
             
             style.alignment = .Center
             style.lineBreakMode = .ByTruncatingTail

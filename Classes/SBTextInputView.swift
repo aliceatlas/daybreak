@@ -30,22 +30,21 @@ import BLKGUI
 
 class SBTextInputView: SBView, NSTextFieldDelegate {
     lazy var messageLabel: NSTextField = {
-        let font = NSFont.boldSystemFontOfSize(16)
         let messageLabel = NSTextField(frame: self.messageLabelRect)
         messageLabel.autoresizingMask = [.ViewMinXMargin, .ViewMinYMargin]
         messageLabel.editable = false
         messageLabel.bordered = false
         messageLabel.drawsBackground = false
-        messageLabel.textColor = NSColor.whiteColor()
-        messageLabel.font = font
+        messageLabel.textColor = .whiteColor()
+        messageLabel.font = .boldSystemFontOfSize(16)
         messageLabel.cell!.wraps = true
         return messageLabel
     }()
     lazy var textLabel: BLKGUI.TextField = {
         let textLabel = BLKGUI.TextField(frame: self.textLabelRect)
         textLabel.alignment = .Left
-        textLabel.font = NSFont.systemFontOfSize(14.0)
-        textLabel.textColor = NSColor.whiteColor()
+        textLabel.font = .systemFontOfSize(14.0)
+        textLabel.textColor = .whiteColor()
         textLabel.delegate = self
         textLabel.cell!.wraps = true
         return textLabel

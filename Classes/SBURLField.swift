@@ -113,7 +113,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         field.bordered = false
         field.focusRingType = .None
         field.delegate = self
-        field.font = NSFont.systemFontOfSize(13.0)
+        field.font = .systemFontOfSize(13.0)
         field.autoresizingMask = [.ViewWidthSizable, .ViewHeightSizable]
         field.cell!.wraps = false
         field.cell!.scrollable = true
@@ -139,7 +139,7 @@ class SBURLField: SBView, NSTextFieldDelegate, NSTableViewDelegate, NSTableViewD
         let sheet = SBURLFieldSheet(contentRect: self.appearedSheetRect, styleMask:(NSBorderlessWindowMask | NSNonactivatingPanelMask), backing: .Buffered, defer: true)
         sheet.alphaValue = self.window!.alphaValue
         sheet.opaque = false
-        sheet.backgroundColor = NSColor.clearColor()
+        sheet.backgroundColor = .clearColor()
         sheet.hasShadow = false
         sheet.contentView = self.contentView
         return sheet
@@ -918,7 +918,7 @@ class SBURLFieldContentView: NSView {
         var tableRect = NSRect(size: self.scrollerRect.size)
         
         let cell = SBURLFieldDataCell()
-        cell.font = NSFont.systemFontOfSize(12.0)
+        cell.font = .systemFontOfSize(12.0)
         cell.alignment = .Left
         
         let column = NSTableColumn(identifier: kSBURL)
@@ -927,7 +927,7 @@ class SBURLFieldContentView: NSView {
         column.width = self.bounds.size.width
         
         let table = NSTableView(frame: tableRect)
-        table.backgroundColor = NSColor.clearColor()
+        table.backgroundColor = .clearColor()
         table.rowHeight = SBURLFieldRowHeight - 2
         table.addTableColumn(column)
         table.allowsMultipleSelection = false
@@ -1014,9 +1014,9 @@ class SBURLFieldContentView: NSView {
                                     (b.size.height - SBURLFieldSheetPadding) / b.size.height,
                                     1.0]
         
-        let colors = [SBTableGrayCellColor, SBTableLightGrayCellColor, SBTableLightGrayCellColor, NSColor.whiteColor()]
+        let colors = [SBTableGrayCellColor, SBTableLightGrayCellColor, SBTableLightGrayCellColor, .whiteColor()]
         
-        let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: NSColorSpace.genericRGBColorSpace())! //!!! device?
+        let gradient = NSGradient(colors: colors, atLocations: locations, colorSpace: .genericRGBColorSpace())! //!!! device?
         gradient.drawInRect(b, angle: 90)
         
         var r = b
@@ -1072,7 +1072,7 @@ private class SBURLFieldDataCell: NSCell {
         var r = cellFrame
         r.origin.x += leftMargin
         r.size.width -= leftMargin
-        let selectedColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())
+        let selectedColor = NSColor.alternateSelectedControlColor().colorUsingColorSpace(.genericRGBColorSpace())
         let backgroundColor = SBBackgroundLightGrayColor
         let cellColor = SBTableLightGrayCellColor
         
@@ -1108,9 +1108,9 @@ private class SBURLFieldDataCell: NSCell {
         if let title: NSString = title?.ifNotEmpty {
             let imageWidth = self.imageWidth + side + leftMargin
             let titleRect = NSMakeRect(cellFrame.origin.x + imageWidth, cellFrame.origin.y, cellFrame.size.width - imageWidth, cellFrame.size.height)
-            let textColor = (sectionHeader ? SBTableDarkGrayCellColor : NSColor.blackColor()).colorUsingColorSpace(NSColorSpace.genericRGBColorSpace())!
-            let sTextColor = highlighted ? NSColor.clearColor() : NSColor.whiteColor()
-            let color = highlighted ? NSColor.whiteColor() : textColor
+            let textColor = (sectionHeader ? SBTableDarkGrayCellColor : .blackColor()).colorUsingColorSpace(.genericRGBColorSpace())!
+            let sTextColor: NSColor = highlighted ? .clearColor() : .whiteColor()
+            let color = highlighted ? .whiteColor() : textColor
             let font = NSFont.systemFontOfSize(sectionHeader ? 11.0 : 12.0)
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineBreakMode = .ByTruncatingTail

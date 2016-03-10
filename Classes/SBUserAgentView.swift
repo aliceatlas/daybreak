@@ -46,8 +46,8 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         titleLabel.editable = false
         titleLabel.selectable = false
         titleLabel.drawsBackground = false
-        titleLabel.font = NSFont.boldSystemFontOfSize(16.0)
-        titleLabel.textColor = NSColor.whiteColor()
+        titleLabel.font = .boldSystemFontOfSize(16.0)
+        titleLabel.textColor = .whiteColor()
         titleLabel.autoresizingMask = .ViewWidthSizable
         return titleLabel
     }()
@@ -89,8 +89,8 @@ class SBUserAgentView: SBView, NSTextFieldDelegate {
         let field = BLKGUI.TextField()
         field.translatesAutoresizingMaskIntoConstraints = false
         field.alignment = .Left
-        field.font = NSFont.systemFontOfSize(14.0)
-        field.textColor = NSColor.whiteColor()
+        field.font = .systemFontOfSize(14.0)
+        field.textColor = .whiteColor()
         field.delegate = self
         field.cell!.wraps = true
         field.hidden = true

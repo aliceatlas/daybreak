@@ -43,7 +43,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         scrollView.hasHorizontalScroller = true
         scrollView.hasVerticalScroller = true
         scrollView.autohidesScrollers = true
-        scrollView.backgroundColor = NSColor.blackColor()
+        scrollView.backgroundColor = .blackColor()
         scrollView.drawsBackground = true
         return scrollView
     }()
@@ -67,7 +67,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         onlyVisibleButton.target = self
         onlyVisibleButton.action = #selector(checkOnlyVisible(_:))
         onlyVisibleButton.title = NSLocalizedString("Only visible portion", comment: "")
-        onlyVisibleButton.font = NSFont.systemFontOfSize(10.0)
+        onlyVisibleButton.font = .systemFontOfSize(10.0)
         return onlyVisibleButton
     }()
     
@@ -78,7 +78,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         updateButton.action = #selector(update(_:))
         updateButton.image = NSImage(named: "Icon_Camera.png")
         updateButton.title = NSLocalizedString("Update", comment: "")
-        updateButton.font = NSFont.systemFontOfSize(11.0)
+        updateButton.font = .systemFontOfSize(11.0)
         updateButton.keyEquivalentModifierMask = Int(NSEventModifierFlags.CommandKeyMask.rawValue)
         updateButton.keyEquivalent = "r"
         return updateButton
@@ -89,7 +89,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         sizeLabel.bordered = false
         sizeLabel.editable = false
         sizeLabel.drawsBackground = false
-        sizeLabel.textColor = NSColor.whiteColor()
+        sizeLabel.textColor = .whiteColor()
         sizeLabel.stringValue = NSLocalizedString("Size", comment: "") + " :"
         return sizeLabel
     }()
@@ -113,7 +113,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         scaleLabel.bordered = false
         scaleLabel.editable = false
         scaleLabel.drawsBackground = false
-        scaleLabel.textColor = NSColor.whiteColor()
+        scaleLabel.textColor = .whiteColor()
         scaleLabel.stringValue = NSLocalizedString("Scale", comment: "") + " :"
         return scaleLabel
     }()
@@ -141,7 +141,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         filetypeLabel.bordered = false
         filetypeLabel.editable = false
         filetypeLabel.drawsBackground = false
-        filetypeLabel.textColor = NSColor.whiteColor()
+        filetypeLabel.textColor = .whiteColor()
         filetypeLabel.stringValue = NSLocalizedString("File Type", comment: "")
         return filetypeLabel
     }()
@@ -151,7 +151,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         let filetypePopup = BLKGUI.PopUpButton(frame: NSMakeRect(6, self.imageViewSize.height - 272, 114, 26))
         let menu = filetypePopup.menu!
         let fileTypeNames = ["TIFF", "GIF", "JPEG", "PNG"]
-        let filetypes = [NSBitmapImageFileType.NSTIFFFileType, NSBitmapImageFileType.NSGIFFileType, NSBitmapImageFileType.NSJPEGFileType, NSBitmapImageFileType.NSPNGFileType]
+        let filetypes: [NSBitmapImageFileType] = [.NSTIFFFileType, .NSGIFFileType, .NSJPEGFileType, .NSPNGFileType]
         menu.addItemWithTitle("", action: nil, keyEquivalent: "")
         for i in 0..<fileTypeNames.count {
             let item = NSMenuItem(title: fileTypeNames[i], action: #selector(selectFiletype(_:)), keyEquivalent: "")
@@ -179,11 +179,8 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         optionTabView.addTabViewItem(tabViewItem0)
         optionTabView.addTabViewItem(tabViewItem1)
         switch self.filetype {
-            case NSBitmapImageFileType.NSTIFFFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSBitmapImageFileType.NSTIFFFileType.rawValue)
-                optionTabView.hidden = false
-            case NSBitmapImageFileType.NSJPEGFileType:
-                optionTabView.selectTabViewItemWithIdentifier(NSBitmapImageFileType.NSJPEGFileType.rawValue)
+            case .NSTIFFFileType, .NSJPEGFileType:
+                optionTabView.selectTabViewItemWithIdentifier(self.filetype.rawValue)
                 optionTabView.hidden = false
             default:
                 optionTabView.hidden = true
@@ -196,7 +193,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         tiffOptionLabel.bordered = false
         tiffOptionLabel.editable = false
         tiffOptionLabel.drawsBackground = false
-        tiffOptionLabel.textColor = NSColor.whiteColor()
+        tiffOptionLabel.textColor = .whiteColor()
         tiffOptionLabel.stringValue = NSLocalizedString("Compression", comment: "") + " :"
         return tiffOptionLabel
     }()
@@ -227,7 +224,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         jpgOptionLabel.bordered = false
         jpgOptionLabel.editable = false
         jpgOptionLabel.drawsBackground = false
-        jpgOptionLabel.textColor = NSColor.whiteColor()
+        jpgOptionLabel.textColor = .whiteColor()
         jpgOptionLabel.stringValue = NSLocalizedString("Quality", comment: "") + " :"
         return jpgOptionLabel
     }()
@@ -252,7 +249,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         jpgOptionField.selectable = false
         jpgOptionField.bordered = false
         jpgOptionField.drawsBackground = false
-        jpgOptionField.textColor = NSColor.whiteColor()
+        jpgOptionField.textColor = .whiteColor()
         let formatter = NSNumberFormatter()
         formatter.positiveFormat = "0.0"
         jpgOptionField.formatter = formatter
@@ -265,7 +262,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         filesizeLabel.bordered = false
         filesizeLabel.editable = false
         filesizeLabel.drawsBackground = false
-        filesizeLabel.textColor = NSColor.whiteColor()
+        filesizeLabel.textColor = .whiteColor()
         filesizeLabel.stringValue = NSLocalizedString("File Size", comment: "") + " :"
         return filesizeLabel
     }()
@@ -275,7 +272,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         filesizeField.bordered = false
         filesizeField.editable = false
         filesizeField.drawsBackground = false
-        filesizeField.textColor = NSColor.whiteColor()
+        filesizeField.textColor = .whiteColor()
         return filesizeField
     }()
     
@@ -317,7 +314,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         if let value = NSUserDefaults.standardUserDefaults().objectForKey(kSBSnapshotFileType) as? UInt {
             return NSBitmapImageFileType(rawValue: value)!
         } else {
-            return NSBitmapImageFileType.NSTIFFFileType
+            return .NSTIFFFileType
         }
     }()
     
@@ -349,13 +346,13 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         }
         let untitled = NSLocalizedString("Untitled", comment: "")
         switch filetype {
-            case NSBitmapImageFileType.NSTIFFFileType:
+            case .NSTIFFFileType:
                 return (untitled as NSString).stringByAppendingPathExtension("tiff")!
-            case NSBitmapImageFileType.NSGIFFileType:
+            case .NSGIFFileType:
                 return (untitled as NSString).stringByAppendingPathExtension("gif")!
-            case NSBitmapImageFileType.NSJPEGFileType:
+            case .NSJPEGFileType:
                 return (untitled as NSString).stringByAppendingPathExtension("jpg")!
-            case NSBitmapImageFileType.NSPNGFileType:
+            case .NSPNGFileType:
                 return (untitled as NSString).stringByAppendingPathExtension("png")!
             default:
                 return untitled
@@ -427,7 +424,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
             alert.addButtonWithTitle(NSLocalizedString("Cancel", comment: ""))
             let r = alert.runModal()
             if r == NSAlertFirstButtonReturn {
-                updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(update(timer:)), userInfo: field, repeats: false)
+                updateTimer = .scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(update(timer:)), userInfo: field, repeats: false)
             } else {
                 if field === widthField {
                     widthField.integerValue = Int(successSize.width)
@@ -438,7 +435,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
                 }
             }
         } else {
-            updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(update(timer:)), userInfo: field, repeats: false)
+            updateTimer = .scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(update(timer:)), userInfo: field, repeats: false)
         }
     }
     
@@ -748,7 +745,7 @@ class SBSnapshotView: SBView, NSTextFieldDelegate {
         NSUserDefaults.standardUserDefaults().setDouble(value, forKey: kSBSnapshotJPGFactor)
         // Update image
         destructUpdateTimer()
-        updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: false)
+        updateTimer = .scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(update(timer:)), userInfo: nil, repeats: false)
     }
     
     func save(sender: AnyObject) {

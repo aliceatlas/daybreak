@@ -49,8 +49,8 @@ class SBAboutView: SBView {
         nameLabel.editable = false
         nameLabel.bordered = false
         nameLabel.drawsBackground = false
-        nameLabel.textColor = NSColor.whiteColor()
-        nameLabel.font = NSFont.boldSystemFontOfSize(20)
+        nameLabel.textColor = .whiteColor()
+        nameLabel.font = .boldSystemFontOfSize(20)
         nameLabel.alignment = .Left
         let bundle = NSBundle.mainBundle()
         let info = bundle.infoDictionary
@@ -69,7 +69,7 @@ class SBAboutView: SBView {
         identifierLabel.bordered = false
         identifierLabel.drawsBackground = false
         identifierLabel.textColor = NSColor(calibratedWhite: 0.8, alpha: 1.0)
-        identifierLabel.font = NSFont.systemFontOfSize(12.0)
+        identifierLabel.font = .systemFontOfSize(12.0)
         identifierLabel.alignment = .Left
         if let string = NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String {
             identifierLabel.stringValue = string
@@ -102,8 +102,8 @@ class SBAboutView: SBView {
         copyrightLabel.editable = false
         copyrightLabel.bordered = false
         copyrightLabel.drawsBackground = false
-        copyrightLabel.textColor = NSColor.grayColor()
-        copyrightLabel.font = NSFont.systemFontOfSize(12.0)
+        copyrightLabel.textColor = .grayColor()
+        copyrightLabel.font = .systemFontOfSize(12.0)
         copyrightLabel.alignment = .Left
         if let string = NSBundle.mainBundle().localizedInfoDictionary?["NSHumanReadableCopyright"] as? String {
             copyrightLabel.stringValue = string

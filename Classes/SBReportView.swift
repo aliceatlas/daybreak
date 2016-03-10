@@ -50,8 +50,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         titleLabel.editable = false
         titleLabel.selectable = false
         titleLabel.drawsBackground = false
-        titleLabel.font = NSFont.boldSystemFontOfSize(16.0)
-        titleLabel.textColor = NSColor.whiteColor()
+        titleLabel.font = .boldSystemFontOfSize(16.0)
+        titleLabel.textColor = .whiteColor()
         titleLabel.autoresizingMask = .ViewWidthSizable
         return titleLabel
     }()
@@ -64,16 +64,16 @@ class SBReportView: SBView, NSTextFieldDelegate {
         summaryLabel.editable = false
         summaryLabel.selectable = false
         summaryLabel.drawsBackground = false
-        summaryLabel.font = NSFont.systemFontOfSize(14.0)
-        summaryLabel.textColor = NSColor.whiteColor()
+        summaryLabel.font = .systemFontOfSize(14.0)
+        summaryLabel.textColor = .whiteColor()
         return summaryLabel
     }()
     
     private lazy var summaryField: BLKGUI.TextField = {
         let summaryField = BLKGUI.TextField(frame: self.summaryFieldRect)
         summaryField.alignment = .Left
-        summaryField.font = NSFont.systemFontOfSize(14.0)
-        summaryField.textColor = NSColor.whiteColor()
+        summaryField.font = .systemFontOfSize(14.0)
+        summaryField.textColor = .whiteColor()
         summaryField.delegate = self
         summaryField.cell!.wraps = true
         return summaryField
@@ -87,8 +87,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         userAgentLabel.editable = false
         userAgentLabel.selectable = false
         userAgentLabel.drawsBackground = false
-        userAgentLabel.font = NSFont.systemFontOfSize(14.0)
-        userAgentLabel.textColor = NSColor.whiteColor()
+        userAgentLabel.font = .systemFontOfSize(14.0)
+        userAgentLabel.textColor = .whiteColor()
         return userAgentLabel
     }()
     
@@ -133,8 +133,8 @@ class SBReportView: SBView, NSTextFieldDelegate {
         switchLabel.editable = false
         switchLabel.selectable = false
         switchLabel.drawsBackground = false
-        switchLabel.font = NSFont.systemFontOfSize(14.0)
-        switchLabel.textColor = NSColor.whiteColor()
+        switchLabel.font = .systemFontOfSize(14.0)
+        switchLabel.textColor = .whiteColor()
         return switchLabel
     }()
     
@@ -159,16 +159,16 @@ class SBReportView: SBView, NSTextFieldDelegate {
         wayLabel.editable = false
         wayLabel.selectable = false
         wayLabel.drawsBackground = false
-        wayLabel.font = NSFont.systemFontOfSize(14.0)
-        wayLabel.textColor = NSColor.whiteColor()
+        wayLabel.font = .systemFontOfSize(14.0)
+        wayLabel.textColor = .whiteColor()
         return wayLabel
     }()
     
     private lazy var wayField: BLKGUI.TextField = {
         let wayField = BLKGUI.TextField(frame: self.wayFieldRect)
         wayField.alignment = .Left
-        wayField.font = NSFont.systemFontOfSize(14.0)
-        wayField.textColor = NSColor.whiteColor()
+        wayField.font = .systemFontOfSize(14.0)
+        wayField.textColor = .whiteColor()
         wayField.delegate = self
         wayField.cell!.wraps = true
         return wayField

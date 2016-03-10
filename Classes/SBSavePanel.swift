@@ -30,7 +30,7 @@ class SBSavePanel: NSSavePanel {
     override init(contentRect: NSRect, styleMask: Int, backing bufferingType: NSBackingStoreType, defer: Bool) {
         super.init(contentRect: contentRect, styleMask: styleMask, backing: bufferingType, defer: defer)
         opaque = false
-        backgroundColor = NSColor.clearColor()
+        backgroundColor = .clearColor()
         showsResizeIndicator = false
         constructBackgroundView()
         switchButtonType()
@@ -69,7 +69,7 @@ class SBOpenPanel: NSOpenPanel {
     override init(contentRect: NSRect, styleMask: Int, backing bufferingType: NSBackingStoreType, defer: Bool) {
         super.init(contentRect: contentRect, styleMask: styleMask, backing: bufferingType, defer: defer)
         opaque = false
-        backgroundColor = NSColor.clearColor()
+        backgroundColor = .clearColor()
         showsResizeIndicator = false
         constructBackgroundView()
         switchButtonType()
@@ -125,7 +125,7 @@ class SBSavePanelContentView: SBView {
         let strokePath = SBRoundedPath(CGRectInset(bounds, 0.5, 0.5), 8.0, 0.0, false, true)
         
         // Frame
-        let gradient = NSGradient(colors: colors, atLocations: [0.0, 0.95, 1.0], colorSpace: NSColorSpace.deviceRGBColorSpace())!
+        let gradient = NSGradient(colors: colors, atLocations: [0.0, 0.95, 1.0], colorSpace: .deviceRGBColorSpace())!
         gradient.drawInRect(bounds, angle: 90)
         
         // Stroke

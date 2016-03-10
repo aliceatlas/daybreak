@@ -88,7 +88,7 @@ class SBPopUpButtonCell: NSPopUpButtonCell {
             let padding: CGFloat = 10.0
             let shadow = NSShadow()
             shadow.shadowOffset = NSMakeSize(0.0, -1.0)
-            shadow.shadowColor = NSColor.whiteColor()
+            shadow.shadowColor = .whiteColor()
             let style = NSMutableParagraphStyle()
             style.lineBreakMode = .ByTruncatingTail
             let attributes = [NSFontAttributeName:            NSFont.boldSystemFontOfSize(11.0),
